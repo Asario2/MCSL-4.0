@@ -1,0 +1,1607 @@
+**********************
+PowerShell transcript start
+Start time: 20260304171111
+Username: GGX-2K22\GGX
+RunAs User: GGX-2K22\GGX
+Configuration Name: 
+Machine: GGX-2K22 (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll
+Process ID: 15980
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is E:\git\MCSL 4.0\du.txt
+
+=====================================
+ GitHub SAFE Issue Migration Tool (FAST)
+=====================================
+
+⚠ ACHTUNG! Das Ziel-Repository wird GELÖSCHT:
+Asario2/MCSL-4.0
+🔹 Lösche Repository...
+🔹 Erstelle neues Repository...
+Flag --confirm has been deprecated, Pass any argument to skip confirmation prompt
+⏳ Warte kurz, bis das Repo bereit ist...
+🔹 Lade Issues...
+🔹 Lade PRs...
+Maximale Nummer: 411
+
+→ Admin Panel not working-[CLOSED] (#1) [CLOSED]
+✔ Erstellt als #1
+✔ Geschlossen: Admin Panel not working-[CLOSED] (#1)
+→ The second problem no update of values on submit-[CLOSED] (#2) [CLOSED]
+✔ Erstellt als #2
+✔ Geschlossen: The second problem no update of values on submit-[CLOSED] (#2)
+→ Image Upload in Admin Center for all needed Tables-[CLOSED] (#3) [CLOSED]
+✔ Erstellt als #3
+✔ Geschlossen: Image Upload in Admin Center for all needed Tables-[CLOSED] (#3)
+→ Sitemap for Images and Fun Tables-[CLOSED] (#4) [CLOSED]
+✔ Erstellt als #4
+✔ Geschlossen: Sitemap for Images and Fun Tables-[CLOSED] (#4)
+→ Create Images Page-[CLOSED] (#5) [CLOSED]
+✔ Erstellt als #5
+✔ Geschlossen: Create Images Page-[CLOSED] (#5)
+→ edit/delete links on Home Pages-[CLOSED] (#6) [CLOSED]
+✔ Erstellt als #6
+✔ Geschlossen: edit/delete links on Home Pages-[CLOSED] (#6)
+→ Add custom fields for profile-[CLOSED] (#7) [CLOSED]
+✔ Erstellt als #7
+✔ Geschlossen: Add custom fields for profile-[CLOSED] (#7)
+→ Add additional fields in admin/tables/show-[CLOSED] (#8) [CLOSED]
+✔ Erstellt als #8
+✔ Geschlossen: Add additional fields in admin/tables/show-[CLOSED] (#8)
+→ Feature - Add custom fields for input mask on TableForm.vue (#9) [OPEN]
+✔ Erstellt als #9
+→ Sorting of Object in tableform.vue and inputselect.vue-[CLOSED] (#10) [CLOSED]
+✔ Erstellt als #10
+✔ Geschlossen: Sorting of Object in tableform.vue and inputselect.vue-[CLOSED] (#10)
+→ fix bugs in image upload-[CLOSED] (#11) [CLOSED]
+✔ Erstellt als #11
+✔ Geschlossen: fix bugs in image upload-[CLOSED] (#11)
+→ Fixe Bugs in different Vues-[CLOSED] (#12) [CLOSED]
+✔ Erstellt als #12
+✔ Geschlossen: Fixe Bugs in different Vues-[CLOSED] (#12)
+→ Add functions to /resources/js/Application/Homepage/Pictures.vue-[CLOSED] (#13) [CLOSED]
+✔ Erstellt als #13
+✔ Geschlossen: Add functions to /resources/js/Application/Homepage/Pictures.vue-[CLOSED] (#13)
+→ fix bug in tableform.vue-[CLOSED] (#14) [CLOSED]
+✔ Erstellt als #14
+✔ Geschlossen: fix bug in tableform.vue-[CLOSED] (#14)
+→ Remove Watermarks from Thumbnails-[CLOSED] (#15) [CLOSED]
+✔ Erstellt als #15
+✔ Geschlossen: Remove Watermarks from Thumbnails-[CLOSED] (#15)
+→ Add Made with AI button on blog/show-[CLOSED] (#16) [CLOSED]
+✔ Erstellt als #16
+✔ Geschlossen: Add Made with AI button on blog/show-[CLOSED] (#16)
+→ User Rights Center for table rights and Modules-[CLOSED] (#17) [CLOSED]
+✔ Erstellt als #17
+✔ Geschlossen: User Rights Center for table rights and Modules-[CLOSED] (#17)
+→ Further Features-[CLOSED] (#18) [CLOSED]
+✔ Erstellt als #18
+✔ Geschlossen: Further Features-[CLOSED] (#18)
+→ Fix Bug in 2fa-[CLOSED] (#19) [CLOSED]
+✔ Erstellt als #19
+✔ Geschlossen: Fix Bug in 2fa-[CLOSED] (#19)
+→ [BUG] Profile Image Upload-[CLOSED] (#20) [CLOSED]
+✔ Erstellt als #20
+✔ Geschlossen: [BUG] Profile Image Upload-[CLOSED] (#20)
+→ FIx Bugs in Image Upload Script-[CLOSED] (#21) [CLOSED]
+✔ Erstellt als #21
+✔ Geschlossen: FIx Bugs in Image Upload Script-[CLOSED] (#21)
+→ Label for formatted textarea buttons-[CLOSED] (#22) [CLOSED]
+✔ Erstellt als #22
+✔ Geschlossen: Label for formatted textarea buttons-[CLOSED] (#22)
+→ FIx Bug in image Upload for textfields-[CLOSED] (#23) [CLOSED]
+✔ Erstellt als #23
+✔ Geschlossen: FIx Bug in image Upload for textfields-[CLOSED] (#23)
+→ Add RIghts Management for modules-[CLOSED] (#24) [CLOSED]
+✔ Erstellt als #24
+✔ Geschlossen: Add RIghts Management for modules-[CLOSED] (#24)
+→ Compact rating querys to data from controller-[CLOSED] (#25) [CLOSED]
+✔ Erstellt als #25
+✔ Geschlossen: Compact rating querys to data from controller-[CLOSED] (#25)
+→ Improve Experience on Mobile Devices-[CLOSED] (#26) [CLOSED]
+✔ Erstellt als #26
+✔ Geschlossen: Improve Experience on Mobile Devices-[CLOSED] (#26)
+→ Include Pagination on Blogs/Images-[CLOSED] (#27) [CLOSED]
+✔ Erstellt als #27
+✔ Geschlossen: Include Pagination on Blogs/Images-[CLOSED] (#27)
+→ Fix bug in TableForm-[CLOSED] (#28) [CLOSED]
+✔ Erstellt als #28
+✔ Geschlossen: Fix bug in TableForm-[CLOSED] (#28)
+→ Create Didyouknow & Shortpoems Pages-[CLOSED] (#29) [CLOSED]
+✔ Erstellt als #29
+✔ Geschlossen: Create Didyouknow & Shortpoems Pages-[CLOSED] (#29)
+→ Add functionality to shariff functions-[CLOSED] (#30) [CLOSED]
+✔ Erstellt als #30
+✔ Geschlossen: Add functionality to shariff functions-[CLOSED] (#30)
+→ Added Hashtags for images/Shortpoems/Didyouknow pages-[CLOSED] (#31) [CLOSED]
+✔ Erstellt als #31
+✔ Geschlossen: Added Hashtags for images/Shortpoems/Didyouknow pages-[CLOSED] (#31)
+→ Add a function wich actualize the user-table-rights on new admin_table entry-[CLOSED] (#32) [CLOSED]
+✔ Erstellt als #32
+✔ Geschlossen: Add a function wich actualize the user-table-rights on new admin_table entry-[CLOSED] (#32)
+→ Add navigation cards on admin dashboard-[CLOSED] (#33) [CLOSED]
+✔ Erstellt als #33
+✔ Geschlossen: Add navigation cards on admin dashboard-[CLOSED] (#33)
+→ Auto Toaster-[CLOSED] (#34) [CLOSED]
+✔ Erstellt als #34
+✔ Geschlossen: Auto Toaster-[CLOSED] (#34)
+→ Fix bugs in Search & entity decoding-[CLOSED] (#35) [CLOSED]
+✔ Erstellt als #35
+✔ Geschlossen: Fix bugs in Search & entity decoding-[CLOSED] (#35)
+→ Search Filter & Pagination on Shortpoems & Didyouknow-[CLOSED] (#36) [CLOSED]
+✔ Erstellt als #36
+✔ Geschlossen: Search Filter & Pagination on Shortpoems & Didyouknow-[CLOSED] (#36)
+→ Add Content to privacy Page-[CLOSED] (#37) [CLOSED]
+✔ Erstellt als #37
+✔ Geschlossen: Add Content to privacy Page-[CLOSED] (#37)
+→ users_id autoselect-[CLOSED] (#38) [CLOSED]
+✔ Erstellt als #38
+✔ Geschlossen: users_id autoselect-[CLOSED] (#38)
+→ Images Categories select and Actualized by images_categories-[CLOSED] (#39) [CLOSED]
+✔ Erstellt als #39
+✔ Geschlossen: Images Categories select and Actualized by images_categories-[CLOSED] (#39)
+→ [BUG] in darkmode saving & Purify working-[CLOSED] (#40) [CLOSED]
+✔ Erstellt als #40
+✔ Geschlossen: [BUG] in darkmode saving & Purify working-[CLOSED] (#40)
+→ User & User Details vues have to be done-[CLOSED] (#41) [CLOSED]
+✔ Erstellt als #41
+✔ Geschlossen: User & User Details vues have to be done-[CLOSED] (#41)
+→ Migrate Comments & Image Ratings to MCSL-[CLOSED] (#42) [CLOSED]
+✔ Erstellt als #42
+✔ Geschlossen: Migrate Comments & Image Ratings to MCSL-[CLOSED] (#42)
+→ Add Comments Center-[CLOSED] (#43) [CLOSED]
+✔ Erstellt als #43
+✔ Geschlossen: Add Comments Center-[CLOSED] (#43)
+→ Search FIelds on almost all pages-[CLOSED] (#44) [CLOSED]
+✔ Erstellt als #44
+✔ Geschlossen: Search FIelds on almost all pages-[CLOSED] (#44)
+→ link from comments table to entry-[CLOSED] (#45) [CLOSED]
+✔ Erstellt als #45
+✔ Geschlossen: link from comments table to entry-[CLOSED] (#45)
+→ alert field in search function-[CLOSED] (#46) [CLOSED]
+✔ Erstellt als #46
+✔ Geschlossen: alert field in search function-[CLOSED] (#46)
+→ create marblefx.de homepage-[CLOSED] (#47) [CLOSED]
+✔ Erstellt als #47
+✔ Geschlossen: create marblefx.de homepage-[CLOSED] (#47)
+→ Feature - Create monikadargies.de-[CLOSED] (#48) [CLOSED]
+✔ Erstellt als #48
+✔ Geschlossen: Feature - Create monikadargies.de-[CLOSED] (#48)
+→ Image Upload Model for other Tables-[CLOSED] (#49) [CLOSED]
+✔ Erstellt als #49
+✔ Geschlossen: Image Upload Model for other Tables-[CLOSED] (#49)
+→ Brandheader Subdomains-[CLOSED] (#50) [CLOSED]
+✔ Erstellt als #50
+✔ Geschlossen: Brandheader Subdomains-[CLOSED] (#50)
+→ Add xis_ and img_ fields to the tableform.vue-[CLOSED] (#51) [CLOSED]
+✔ Erstellt als #51
+✔ Geschlossen: Add xis_ and img_ fields to the tableform.vue-[CLOSED] (#51)
+→ slider/checkbox choosing based on field name-[CLOSED] (#52) [CLOSED]
+✔ Erstellt als #52
+✔ Geschlossen: slider/checkbox choosing based on field name-[CLOSED] (#52)
+→ Migrate Passwords-[CLOSED] (#53) [CLOSED]
+✔ Erstellt als #53
+✔ Geschlossen: Migrate Passwords-[CLOSED] (#53)
+→ BrandFooter & Cookie Banner Bugfixes-[CLOSED] (#54) [CLOSED]
+✔ Erstellt als #54
+✔ Geschlossen: BrandFooter & Cookie Banner Bugfixes-[CLOSED] (#54)
+→ Update Images without watermarks on image gallerys-[CLOSED] (#55) [CLOSED]
+✔ Erstellt als #55
+✔ Geschlossen: Update Images without watermarks on image gallerys-[CLOSED] (#55)
+→ Add json file for image gallerys-[CLOSED] (#56) [CLOSED]
+✔ Erstellt als #56
+✔ Geschlossen: Add json file for image gallerys-[CLOSED] (#56)
+→ Watermarks marblefx.de-[CLOSED] (#57) [CLOSED]
+✔ Erstellt als #57
+✔ Geschlossen: Watermarks marblefx.de-[CLOSED] (#57)
+→ Fix Bugs in Pub field-[CLOSED] (#58) [CLOSED]
+✔ Erstellt als #58
+✔ Geschlossen: Fix Bugs in Pub field-[CLOSED] (#58)
+→ Add position on Tables & Imgdirs-[CLOSED] (#59) [CLOSED]
+✔ Erstellt als #59
+✔ Geschlossen: Add position on Tables & Imgdirs-[CLOSED] (#59)
+→ Combine CSS duplicated-[CLOSED] (#60) [CLOSED]
+✔ Erstellt als #60
+✔ Geschlossen: Combine CSS duplicated-[CLOSED] (#60)
+→ publicradio default selection-[CLOSED] (#61) [CLOSED]
+✔ Erstellt als #61
+✔ Geschlossen: publicradio default selection-[CLOSED] (#61)
+→ Fallback of localhost-[CLOSED] (#62) [CLOSED]
+✔ Erstellt als #62
+✔ Geschlossen: Fallback of localhost-[CLOSED] (#62)
+→ feature - Meta Title adding for most pages-[CLOSED] (#63) [CLOSED]
+✔ Erstellt als #63
+✔ Geschlossen: feature - Meta Title adding for most pages-[CLOSED] (#63)
+→ feature - move api routes in routes/api.php-[CLOSED] (#64) [CLOSED]
+✔ Erstellt als #64
+✔ Geschlossen: feature - move api routes in routes/api.php-[CLOSED] (#64)
+→ bug - had to fix socialmedia links esp. Twitter-[CLOSED] (#65) [CLOSED]
+✔ Erstellt als #65
+✔ Geschlossen: bug - had to fix socialmedia links esp. Twitter-[CLOSED] (#65)
+→ Bug - Layout error CSS file not loaded correctly-[CLOSED] (#66) [CLOSED]
+✔ Erstellt als #66
+✔ Geschlossen: Bug - Layout error CSS file not loaded correctly-[CLOSED] (#66)
+→ bug - Password reset doesn't works-[CLOSED] (#67) [CLOSED]
+✔ Erstellt als #67
+✔ Geschlossen: bug - Password reset doesn't works-[CLOSED] (#67)
+→ Feature - Administration Cards by table-[CLOSED] (#68) [CLOSED]
+✔ Erstellt als #68
+✔ Geschlossen: Feature - Administration Cards by table-[CLOSED] (#68)
+→ bug in tables/show Deleting-[CLOSED] (#69) [CLOSED]
+✔ Erstellt als #69
+✔ Geschlossen: bug in tables/show Deleting-[CLOSED] (#69)
+→ feature - Captcha for Email-[CLOSED] (#70) [CLOSED]
+✔ Erstellt als #70
+✔ Geschlossen: feature - Captcha for Email-[CLOSED] (#70)
+→ PR Dummy #71 - Bump axios from 0.28.1 to 0.30.0 (#71) [MERGED]
+✔ Erstellt als #71
+→ Feature - Sticky Blogposts-[CLOSED] (#72) [CLOSED]
+✔ Erstellt als #72
+✔ Geschlossen: Feature - Sticky Blogposts-[CLOSED] (#72)
+→ Bug - HOTFIX - Change tailwind classes for email forms-[CLOSED] (#73) [CLOSED]
+✔ Erstellt als #73
+✔ Geschlossen: Bug - HOTFIX - Change tailwind classes for email forms-[CLOSED] (#73)
+→ BUGS in differnt vues/Controller-[CLOSED] (#74) [CLOSED]
+✔ Erstellt als #74
+✔ Geschlossen: BUGS in differnt vues/Controller-[CLOSED] (#74)
+→ PR Dummy #75 - Bump spatie/laravel-sitemap from 7.3.6 to 7.3.7-[CLOSED] (#75) [CLOSED]
+✔ Erstellt als #75
+✔ Geschlossen: PR Dummy #75 - Bump spatie/laravel-sitemap from 7.3.6 to 7.3.7-[CLOSED] (#75)
+→ PR Dummy #76 - Bump actions/checkout from 4 to 5 (#76) [MERGED]
+✔ Erstellt als #76
+→ PR Dummy #77 - Bump laravel-lang/lang from 15.22.8 to 15.24.0 (#77) [MERGED]
+✔ Erstellt als #77
+→ PR Dummy #78 - Bump dayjs from 1.11.13 to 1.11.18 (#78) [MERGED]
+✔ Erstellt als #78
+→ PR Dummy #79 - Bump laravel/sail from 1.44.0 to 1.45.0 (#79) [MERGED]
+✔ Erstellt als #79
+→ PR Dummy #80 - Bump sass from 1.90.0 to 1.91.0 (#80) [MERGED]
+✔ Erstellt als #80
+→ PR Dummy #81 - Bump @fortawesome/free-regular-svg-icons from 6.7.2 to 7.0.0 (#81) [MERGED]
+✔ Erstellt als #81
+→ PR Dummy #82 - Bump laravel/framework from 12.22.1 to 12.26.4 (#82) [MERGED]
+✔ Erstellt als #82
+→ PR Dummy #83 - Bump vue-i18n from 9.14.5 to 11.1.11 (#83) [MERGED]
+✔ Erstellt als #83
+→ PR Dummy #84 - Bump tightenco/ziggy from 2.4.2 to 2.5.3 (#84) [MERGED]
+✔ Erstellt als #84
+→ PR Dummy #85 - Bump bootstrap from 5.3.7 to 5.3.8 (#85) [MERGED]
+✔ Erstellt als #85
+→ PR Dummy #86 - Bump hotwired-laravel/turbo-laravel from 2.3.0 to 2.4.0 (#86) [MERGED]
+✔ Erstellt als #86
+→ PR Dummy #87 - Bump eslint from 9.33.0 to 9.34.0 (#87) [MERGED]
+✔ Erstellt als #87
+→ PR Dummy #88 - Bump inertiajs/inertia-laravel from 2.0.4 to 2.0.6 (#88) [MERGED]
+✔ Erstellt als #88
+→ PR Dummy #89 - Bump tailwindcss from 3.4.17 to 4.1.12 (#89) [MERGED]
+✔ Erstellt als #89
+→ PR Dummy #90 - Bump @inertiajs/vue3 from 1.3.0 to 2.1.3 (#90) [MERGED]
+✔ Erstellt als #90
+→ PR Dummy #91 - Bump laravel/fortify from 1.28.0 to 1.30.0 (#91) [MERGED]
+✔ Erstellt als #91
+→ PR Dummy #92 - Bump marked from 15.0.12 to 16.2.1 (#92) [MERGED]
+✔ Erstellt als #92
+→ PR Dummy #93 - Bump laravel-vite-plugin from 1.3.0 to 2.0.1 (#93) [MERGED]
+✔ Erstellt als #93
+→ PR Dummy #94 - Bump prettier from 3.4.2 to 3.6.2 (#94) [MERGED]
+✔ Erstellt als #94
+→ PR Dummy #95 - Bump eslint-plugin-vue from 9.33.0 to 10.4.0 (#95) [MERGED]
+✔ Erstellt als #95
+→ PR Dummy #96 - Bump vite from 6.3.5 to 7.1.4 (#96) [MERGED]
+✔ Erstellt als #96
+→ PR Dummy #97 - Bump globals from 15.15.0 to 16.3.0 (#97) [MERGED]
+✔ Erstellt als #97
+→ PR Dummy #98 - Bump axios from 0.28.1 to 1.11.0 (#98) [MERGED]
+✔ Erstellt als #98
+→ PR Dummy #99 - Bump vue from 3.5.18 to 3.5.21 (#99) [MERGED]
+✔ Erstellt als #99
+→ BUGS in captcha & dark mode on Adminpanelm & Logout route-[CLOSED] (#100) [CLOSED]
+✔ Erstellt als #100
+✔ Geschlossen: BUGS in captcha & dark mode on Adminpanelm & Logout route-[CLOSED] (#100)
+→ PR Dummy #101 - Bump spatie/laravel-sitemap from 7.3.6 to 7.3.7 (#101) [MERGED]
+✔ Erstellt als #101
+→ BUG in shariff-[CLOSED] (#102) [CLOSED]
+✔ Erstellt als #102
+✔ Geschlossen: BUG in shariff-[CLOSED] (#102)
+→ PR Dummy #103 - Bump @eslint/js from 9.33.0 to 9.34.0 (#103) [MERGED]
+✔ Erstellt als #103
+→ PR Dummy #104 - Bump axios from 0.28.1 to 0.30.0 in the npm_and_yarn group across 1 directory-[CLOSED] (#104) [CLOSED]
+✔ Erstellt als #104
+✔ Geschlossen: PR Dummy #104 - Bump axios from 0.28.1 to 0.30.0 in the npm_and_yarn group across 1 directory-[CLOSED] (#104)
+→ PR Dummy #105 - Bump esbuild from 0.25.0 to 0.25.1 in the npm_and_yarn group across 1 directory-[CLOSED] (#105) [CLOSED]
+✔ Erstellt als #105
+✔ Geschlossen: PR Dummy #105 - Bump esbuild from 0.25.0 to 0.25.1 in the npm_and_yarn group across 1 directory-[CLOSED] (#105)
+→ PR Dummy #106 - Bump esbuild from 0.25.0 to 0.25.9 (#106) [MERGED]
+✔ Erstellt als #106
+→ PR Dummy #107 - Bump @inertiajs/vue3 from 2.1.3 to 2.1.4 (#107) [MERGED]
+✔ Erstellt als #107
+→ BUG Fixed evil bugs in tailwind css modules-[CLOSED] (#108) [CLOSED]
+✔ Erstellt als #108
+✔ Geschlossen: BUG Fixed evil bugs in tailwind css modules-[CLOSED] (#108)
+→ BUG - Profile Photos paths-[CLOSED] (#109) [CLOSED]
+✔ Erstellt als #109
+✔ Geschlossen: BUG - Profile Photos paths-[CLOSED] (#109)
+→ BUGs in profile, Darkmode, Admin Panel & Co.-[CLOSED] (#110) [CLOSED]
+✔ Erstellt als #110
+✔ Geschlossen: BUGs in profile, Darkmode, Admin Panel & Co.-[CLOSED] (#110)
+→ PR Dummy #111 - Bump tailwindcss from 3.4.17 to 4.1.13-[CLOSED] (#111) [CLOSED]
+✔ Erstellt als #111
+✔ Geschlossen: PR Dummy #111 - Bump tailwindcss from 3.4.17 to 4.1.13-[CLOSED] (#111)
+→ PR Dummy #112 - Bump eslint from 9.34.0 to 9.35.0 (#112) [MERGED]
+✔ Erstellt als #112
+→ PR Dummy #113 - Bump @eslint/js from 9.34.0 to 9.35.0 (#113) [MERGED]
+✔ Erstellt als #113
+→ PR Dummy #114 - Bump @fontsource/ubuntu from 5.2.6 to 5.2.7-[CLOSED] (#114) [CLOSED]
+✔ Erstellt als #114
+✔ Geschlossen: PR Dummy #114 - Bump @fontsource/ubuntu from 5.2.6 to 5.2.7-[CLOSED] (#114)
+→ PR Dummy #115 - Bump sass from 1.92.0 to 1.92.1-[CLOSED] (#115) [CLOSED]
+✔ Erstellt als #115
+✔ Geschlossen: PR Dummy #115 - Bump sass from 1.92.0 to 1.92.1-[CLOSED] (#115)
+→ PR Dummy #116 - Bump vite from 7.1.4 to 7.1.5-[CLOSED] (#116) [CLOSED]
+✔ Erstellt als #116
+✔ Geschlossen: PR Dummy #116 - Bump vite from 7.1.4 to 7.1.5-[CLOSED] (#116)
+→ PR Dummy #117 - Bump vue-i18n from 11.1.11 to 11.1.12-[CLOSED] (#117) [CLOSED]
+✔ Erstellt als #117
+✔ Geschlossen: PR Dummy #117 - Bump vue-i18n from 11.1.11 to 11.1.12-[CLOSED] (#117)
+→ PR Dummy #118 - Bump @inertiajs/vue3 from 2.1.4 to 2.1.5-[CLOSED] (#118) [CLOSED]
+✔ Erstellt als #118
+✔ Geschlossen: PR Dummy #118 - Bump @inertiajs/vue3 from 2.1.4 to 2.1.5-[CLOSED] (#118)
+→ PR Dummy #119 - Bump tightenco/ziggy from 2.4.2 to 2.5.3 (#119) [MERGED]
+✔ Erstellt als #119
+→ PR Dummy #120 - Bump laravel-lang/lang from 15.24.1 to 15.24.2-[CLOSED] (#120) [CLOSED]
+✔ Erstellt als #120
+✔ Geschlossen: PR Dummy #120 - Bump laravel-lang/lang from 15.24.1 to 15.24.2-[CLOSED] (#120)
+→ PR Dummy #121 - Bump laravel-lang/lang from 15.24.1 to 15.24.3 (#121) [MERGED]
+✔ Erstellt als #121
+→ PR Dummy #122 - Bump @fortawesome/vue-fontawesome from 3.1.1 to 3.1.2-[CLOSED] (#122) [CLOSED]
+✔ Erstellt als #122
+✔ Geschlossen: PR Dummy #122 - Bump @fortawesome/vue-fontawesome from 3.1.1 to 3.1.2-[CLOSED] (#122)
+→ Feature - add user icon on table/show-[CLOSED] (#123) [CLOSED]
+✔ Erstellt als #123
+✔ Geschlossen: Feature - add user icon on table/show-[CLOSED] (#123)
+→ PR Dummy #124 - Bump the composer group across 1 directory with 2 updates (#124) [MERGED]
+✔ Erstellt als #124
+→ PR Dummy #125 - Bump the npm_and_yarn group across 1 directory with 1 update (#125) [MERGED]
+✔ Erstellt als #125
+→ BUG - fixed bugs in tableform.vue-[CLOSED] (#126) [CLOSED]
+✔ Erstellt als #126
+✔ Geschlossen: BUG - fixed bugs in tableform.vue-[CLOSED] (#126)
+→ Hotfix - Close Navi on mobile devices if darkmode toggle is clicked-[CLOSED] (#127) [CLOSED]
+✔ Erstellt als #127
+✔ Geschlossen: Hotfix - Close Navi on mobile devices if darkmode toggle is clicked-[CLOSED] (#127)
+→ PR Dummy #128 - Bump marked from 16.2.1 to 16.3.0 (#128) [MERGED]
+✔ Erstellt als #128
+→ PR Dummy #129 - Bump ziggy-js from 2.5.3 to 2.6.0 (#129) [MERGED]
+✔ Erstellt als #129
+→ Feature - Made by MCs in Mail Template-[CLOSED] (#130) [CLOSED]
+✔ Erstellt als #130
+✔ Geschlossen: Feature - Made by MCs in Mail Template-[CLOSED] (#130)
+→ Feature - Shrink Login/Register to 1 Page with tabs-[CLOSED] (#131) [CLOSED]
+✔ Erstellt als #131
+✔ Geschlossen: Feature - Shrink Login/Register to 1 Page with tabs-[CLOSED] (#131)
+→ Feature - add powered by mcsl linked in footer (Layout.vue)-[CLOSED] (#132) [CLOSED]
+✔ Erstellt als #132
+✔ Geschlossen: Feature - add powered by mcsl linked in footer (Layout.vue)-[CLOSED] (#132)
+→ PR Dummy #133 - Bump @fontsource/open-sans from 5.2.6 to 5.2.7 (#133) [MERGED]
+✔ Erstellt als #133
+→ PR Dummy #134 - Bump @fontsource/ubuntu from 5.2.7 to 5.2.8 (#134) [MERGED]
+✔ Erstellt als #134
+→ Feature - Email Sending Center-[CLOSED] (#135) [CLOSED]
+✔ Erstellt als #135
+✔ Geschlossen: Feature - Email Sending Center-[CLOSED] (#135)
+→ BUG - redirect to gallery on search-[CLOSED] (#136) [CLOSED]
+✔ Erstellt als #136
+✔ Geschlossen: BUG - redirect to gallery on search-[CLOSED] (#136)
+→ BUG - MetaHeader not found on Privacy.vue-[CLOSED] (#137) [CLOSED]
+✔ Erstellt als #137
+✔ Geschlossen: BUG - MetaHeader not found on Privacy.vue-[CLOSED] (#137)
+→ old functions to vue-[CLOSED] (#138) [CLOSED]
+✔ Erstellt als #138
+✔ Geschlossen: old functions to vue-[CLOSED] (#138)
+→ Hotfix - Route should exists-[CLOSED] (#139) [CLOSED]
+✔ Erstellt als #139
+✔ Geschlossen: Hotfix - Route should exists-[CLOSED] (#139)
+→ Hotfix - fix bug in privacy/imprint handling-[CLOSED] (#140) [CLOSED]
+✔ Erstellt als #140
+✔ Geschlossen: Hotfix - fix bug in privacy/imprint handling-[CLOSED] (#140)
+→ Hotfix - Search on tables/show-[CLOSED] (#141) [CLOSED]
+✔ Erstellt als #141
+✔ Geschlossen: Hotfix - Search on tables/show-[CLOSED] (#141)
+→ Hotfix - image on profiles Bug-[CLOSED] (#142) [CLOSED]
+✔ Erstellt als #142
+✔ Geschlossen: Hotfix - image on profiles Bug-[CLOSED] (#142)
+→ Bug - Admin/Layout.vue no logo on dag page-[CLOSED] (#143) [CLOSED]
+✔ Erstellt als #143
+✔ Geschlossen: Bug - Admin/Layout.vue no logo on dag page-[CLOSED] (#143)
+→ Hotfix - fixed several Bugs in Layouts-[CLOSED] (#144) [CLOSED]
+✔ Erstellt als #144
+✔ Geschlossen: Hotfix - fixed several Bugs in Layouts-[CLOSED] (#144)
+→ Feature - Smilies on Comments-[CLOSED] (#145) [CLOSED]
+✔ Erstellt als #145
+✔ Geschlossen: Feature - Smilies on Comments-[CLOSED] (#145)
+→ PR Dummy #146 - Bump eslint from 9.35.0 to 9.36.0 (#146) [MERGED]
+✔ Erstellt als #146
+→ PR Dummy #147 - Bump eslint-plugin-vue from 10.4.0 to 10.5.0 (#147) [MERGED]
+✔ Erstellt als #147
+→ PR Dummy #148 - Bump @inertiajs/vue3 from 2.1.6 to 2.1.10 (#148) [MERGED]
+✔ Erstellt als #148
+→ PR Dummy #149 - Bump @eslint/js from 9.35.0 to 9.36.0 (#149) [MERGED]
+✔ Erstellt als #149
+→ PR Dummy #150 - Bump sass from 1.92.1 to 1.93.0 (#150) [MERGED]
+✔ Erstellt als #150
+→ PR Dummy #151 - Bump @tailwindcss/typography from 0.5.16 to 0.5.18 (#151) [MERGED]
+✔ Erstellt als #151
+→ PR Dummy #152 - Bump vite from 7.1.5 to 7.1.7 (#152) [MERGED]
+✔ Erstellt als #152
+→ HOTFIX - AIContent updated-[CLOSED] (#153) [CLOSED]
+✔ Erstellt als #153
+✔ Geschlossen: HOTFIX - AIContent updated-[CLOSED] (#153)
+→ FEATURE - QR Code Generator for all domains-[CLOSED] (#154) [CLOSED]
+✔ Erstellt als #154
+✔ Geschlossen: FEATURE - QR Code Generator for all domains-[CLOSED] (#154)
+→ FEATURE - invert colors on home/pictures-[CLOSED] (#155) [CLOSED]
+✔ Erstellt als #155
+✔ Geschlossen: FEATURE - invert colors on home/pictures-[CLOSED] (#155)
+→ BUG - Message field to imageuploadmodel-[CLOSED] (#156) [CLOSED]
+✔ Erstellt als #156
+✔ Geschlossen: BUG - Message field to imageuploadmodel-[CLOSED] (#156)
+→ BUGs - In Footer links-[CLOSED] (#157) [CLOSED]
+✔ Erstellt als #157
+✔ Geschlossen: BUGs - In Footer links-[CLOSED] (#157)
+→ HOTFIX - Profile Images on ab.marblefx.net-[CLOSED] (#158) [CLOSED]
+✔ Erstellt als #158
+✔ Geschlossen: HOTFIX - Profile Images on ab.marblefx.net-[CLOSED] (#158)
+→ BUGs in images on marblefx.net-[CLOSED] (#159) [CLOSED]
+✔ Erstellt als #159
+✔ Geschlossen: BUGs in images on marblefx.net-[CLOSED] (#159)
+→ Font on Monikadarrgies..de-[CLOSED] (#160) [CLOSED]
+✔ Erstellt als #160
+✔ Geschlossen: Font on Monikadarrgies..de-[CLOSED] (#160)
+→ BUG - Evil bug in uploading images-[CLOSED] (#161) [CLOSED]
+✔ Erstellt als #161
+✔ Geschlossen: BUG - Evil bug in uploading images-[CLOSED] (#161)
+→ BUG - cookie link on ab.marblefx.net doesn't works-[CLOSED] (#162) [CLOSED]
+✔ Erstellt als #162
+✔ Geschlossen: BUG - cookie link on ab.marblefx.net doesn't works-[CLOSED] (#162)
+→ BUGs in image upload script-[CLOSED] (#163) [CLOSED]
+✔ Erstellt als #163
+✔ Geschlossen: BUGs in image upload script-[CLOSED] (#163)
+→ Feature - Change tabs on ImageUploadModal to extra buttons-[CLOSED] (#164) [CLOSED]
+✔ Erstellt als #164
+✔ Geschlossen: Feature - Change tabs on ImageUploadModal to extra buttons-[CLOSED] (#164)
+→ PR Dummy #165 - Bump @inertiajs/vue3 from 2.2.0 to 2.2.3-[CLOSED] (#165) [CLOSED]
+✔ Erstellt als #165
+✔ Geschlossen: PR Dummy #165 - Bump @inertiajs/vue3 from 2.2.0 to 2.2.3-[CLOSED] (#165)
+→ DARK BG in privacy ab.dom-[CLOSED] (#166) [CLOSED]
+✔ Erstellt als #166
+✔ Geschlossen: DARK BG in privacy ab.dom-[CLOSED] (#166)
+→ Added changelog automatic generator-[CLOSED] (#167) [CLOSED]
+✔ Erstellt als #167
+✔ Geschlossen: Added changelog automatic generator-[CLOSED] (#167)
+→ PR Dummy #168 - Bump tightenco/ziggy from 2.4.2 to 2.6.0 (#168) [MERGED]
+✔ Erstellt als #168
+→ PR Dummy #169 - Bump inertiajs/inertia-laravel from 2.0.9 to 2.0.10 (#169) [MERGED]
+✔ Erstellt als #169
+→ PR Dummy #170 - Bump laravel/framework from 12.31.1 to 12.32.5 (#170) [MERGED]
+✔ Erstellt als #170
+→ PR Dummy #171 - Bump laravel/fortify from 1.30.0 to 1.31.0 (#171) [MERGED]
+✔ Erstellt als #171
+→ Feature - Emigrate Contacts from MCS to MCSL-[CLOSED] (#172) [CLOSED]
+✔ Erstellt als #172
+✔ Geschlossen: Feature - Emigrate Contacts from MCS to MCSL-[CLOSED] (#172)
+→ Feature - Add Contactlist & fixed  several Bugs -[CLOSED] (#173) [CLOSED]
+✔ Erstellt als #173
+✔ Geschlossen: Feature - Add Contactlist & fixed  several Bugs -[CLOSED] (#173)
+→ Feature - Search has to be added to contact list-[CLOSED] (#174) [CLOSED]
+✔ Erstellt als #174
+✔ Geschlossen: Feature - Search has to be added to contact list-[CLOSED] (#174)
+→ Hotfix - Repaired Search on TableShow-[CLOSED] (#175) [CLOSED]
+✔ Erstellt als #175
+✔ Geschlossen: Hotfix - Repaired Search on TableShow-[CLOSED] (#175)
+→ PR Dummy #176 - Bump less from 4.4.1 to 4.4.2 (#176) [MERGED]
+✔ Erstellt als #176
+→ PR Dummy #177 - Bump eslint from 9.36.0 to 9.37.0 (#177) [MERGED]
+✔ Erstellt als #177
+→ PR Dummy #178 - Bump tailwindcss from 3.4.17 to 4.1.14 (#178) [MERGED]
+✔ Erstellt als #178
+→ PR Dummy #179 - Bump @tailwindcss/postcss from 4.1.13 to 4.1.14 (#179) [MERGED]
+✔ Erstellt als #179
+→ PR Dummy #180 - Bump @fortawesome/free-brands-svg-icons from 7.0.1 to 7.1.0 (#180) [MERGED]
+✔ Erstellt als #180
+→ PR Dummy #181 - Bump @eslint/js from 9.36.0 to 9.37.0-[CLOSED] (#181) [CLOSED]
+✔ Erstellt als #181
+✔ Geschlossen: PR Dummy #181 - Bump @eslint/js from 9.36.0 to 9.37.0-[CLOSED] (#181)
+→ PR Dummy #182 - Bump @fortawesome/fontawesome-svg-core from 7.0.1 to 7.1.0 (#182) [MERGED]
+✔ Erstellt als #182
+→ PR Dummy #183 - Bump @inertiajs/vue3 from 2.2.0 to 2.2.6-[CLOSED] (#183) [CLOSED]
+✔ Erstellt als #183
+✔ Geschlossen: PR Dummy #183 - Bump @inertiajs/vue3 from 2.2.0 to 2.2.6-[CLOSED] (#183)
+→ PR Dummy #184 - Bump @fortawesome/free-regular-svg-icons from 7.0.1 to 7.1.0 (#184) [MERGED]
+✔ Erstellt als #184
+→ PR Dummy #185 - Bump @fortawesome/free-solid-svg-icons from 7.0.1 to 7.1.0 (#185) [MERGED]
+✔ Erstellt als #185
+→ Hotfix - Changed profile image path-[CLOSED] (#186) [CLOSED]
+✔ Erstellt als #186
+✔ Geschlossen: Hotfix - Changed profile image path-[CLOSED] (#186)
+→ Hotfix - Cursor jumped on input-[CLOSED] (#187) [CLOSED]
+✔ Erstellt als #187
+✔ Geschlossen: Hotfix - Cursor jumped on input-[CLOSED] (#187)
+→ Feature - Add Email/Newsletter Center-[CLOSED] (#188) [CLOSED]
+✔ Erstellt als #188
+✔ Geschlossen: Feature - Add Email/Newsletter Center-[CLOSED] (#188)
+→ Hotfix - code formating failed-[CLOSED] (#189) [CLOSED]
+✔ Erstellt als #189
+✔ Geschlossen: Hotfix - code formating failed-[CLOSED] (#189)
+→ Feature ÔÇô Global Notification-[CLOSED] (#190) [CLOSED]
+✔ Erstellt als #190
+✔ Geschlossen: Feature ÔÇô Global Notification-[CLOSED] (#190)
+→ PR Dummy #191 - Bump @inertiajs/vue3 from 2.2.0 to 2.2.8 (#191) [MERGED]
+✔ Erstellt als #191
+→ PR Dummy #192 - Bump marked from 16.3.0 to 16.4.0 (#192) [MERGED]
+✔ Erstellt als #192
+→ PR Dummy #193 - Bump vite from 7.1.7 to 7.1.9 (#193) [MERGED]
+✔ Erstellt als #193
+→ Feature - create landing Page on asarios blog-[CLOSED] (#194) [CLOSED]
+✔ Erstellt als #194
+✔ Geschlossen: Feature - create landing Page on asarios blog-[CLOSED] (#194)
+→ Hotfix -  Remove double buttons on tableform-[CLOSED] (#195) [CLOSED]
+✔ Erstellt als #195
+✔ Geschlossen: Hotfix -  Remove double buttons on tableform-[CLOSED] (#195)
+→ Hotfix - changed position of back & new Button-[CLOSED] (#196) [CLOSED]
+✔ Erstellt als #196
+✔ Geschlossen: Hotfix - changed position of back & new Button-[CLOSED] (#196)
+→ Feature - Added Contacts page-[CLOSED] (#197) [CLOSED]
+✔ Erstellt als #197
+✔ Geschlossen: Feature - Added Contacts page-[CLOSED] (#197)
+→ PR Dummy #198 - Bump vite from 7.1.9 to 7.1.11 (#198) [MERGED]
+✔ Erstellt als #198
+→ PR Dummy #199 - Bump eslint from 9.37.0 to 9.38.0 (#199) [MERGED]
+✔ Erstellt als #199
+→ PR Dummy #200 - Bump eslint-plugin-vue from 10.5.0 to 10.5.1 (#200) [MERGED]
+✔ Erstellt als #200
+→ PR Dummy #201 - Bump @eslint/js from 9.37.0 to 9.38.0 (#201) [MERGED]
+✔ Erstellt als #201
+→ PR Dummy #202 - Bump marked from 16.4.0 to 16.4.1 (#202) [MERGED]
+✔ Erstellt als #202
+→ PR Dummy #203 - Bump @tailwindcss/postcss from 4.1.14 to 4.1.15 (#203) [MERGED]
+✔ Erstellt als #203
+→ PR Dummy #204 - Bump vue-router from 4.5.1 to 4.6.3 (#204) [MERGED]
+✔ Erstellt als #204
+→ PR Dummy #205 - Bump tailwindcss from 3.4.18 to 4.1.15-[CLOSED] (#205) [CLOSED]
+✔ Erstellt als #205
+✔ Geschlossen: PR Dummy #205 - Bump tailwindcss from 3.4.18 to 4.1.15-[CLOSED] (#205)
+→ PR Dummy #206 - Bump the npm_and_yarn group across 1 directory with 1 update (#206) [MERGED]
+✔ Erstellt als #206
+→ Hotfix - add content to mixed content db table-[CLOSED] (#207) [CLOSED]
+✔ Erstellt als #207
+✔ Geschlossen: Hotfix - add content to mixed content db table-[CLOSED] (#207)
+→ Feature - Added Author Image to blogshow-[CLOSED] (#208) [CLOSED]
+✔ Erstellt als #208
+✔ Geschlossen: Feature - Added Author Image to blogshow-[CLOSED] (#208)
+→ Hot Fix - set image height on blogshow-[CLOSED] (#209) [CLOSED]
+✔ Erstellt als #209
+✔ Geschlossen: Hot Fix - set image height on blogshow-[CLOSED] (#209)
+→ Hotfix change font-family on <code>-[CLOSED] (#210) [CLOSED]
+✔ Erstellt als #210
+✔ Geschlossen: Hotfix change font-family on <code>-[CLOSED] (#210)
+→ Hotfix - Artselect saving bug-[CLOSED] (#211) [CLOSED]
+✔ Erstellt als #211
+✔ Geschlossen: Hotfix - Artselect saving bug-[CLOSED] (#211)
+→ Colors on Footer links-[CLOSED] (#212) [CLOSED]
+✔ Erstellt als #212
+✔ Geschlossen: Colors on Footer links-[CLOSED] (#212)
+→ Remove Alt Tags on Smilies & Ohter bugs-[CLOSED] (#213) [CLOSED]
+✔ Erstellt als #213
+✔ Geschlossen: Remove Alt Tags on Smilies & Ohter bugs-[CLOSED] (#213)
+→ Hotfix - Changed Umlaut character on newsletter-[CLOSED] (#214) [CLOSED]
+✔ Erstellt als #214
+✔ Geschlossen: Hotfix - Changed Umlaut character on newsletter-[CLOSED] (#214)
+→ Feature - Toastbus on every Form-[CLOSED] (#215) [CLOSED]
+✔ Erstellt als #215
+✔ Geschlossen: Feature - Toastbus on every Form-[CLOSED] (#215)
+→ PR Dummy #216 - Bump vite from 7.1.11 to 7.1.12 (#216) [MERGED]
+✔ Erstellt als #216
+→ PR Dummy #217 - Bump tailwindcss from 4.1.15 to 4.1.16 (#217) [MERGED]
+✔ Erstellt als #217
+→ PR Dummy #218 - Bump @tailwindcss/postcss from 4.1.15 to 4.1.16 (#218) [MERGED]
+✔ Erstellt als #218
+→ PR Dummy #219 - Bump @inertiajs/vue3 from 2.2.8 to 2.2.12 (#219) [MERGED]
+✔ Erstellt als #219
+→ Feature - Add User Overview and Permissions-[CLOSED] (#220) [CLOSED]
+✔ Erstellt als #220
+✔ Geschlossen: Feature - Add User Overview and Permissions-[CLOSED] (#220)
+→ Feature - Added success / not successed on mail submiting-[CLOSED] (#221) [CLOSED]
+✔ Erstellt als #221
+✔ Geschlossen: Feature - Added success / not successed on mail submiting-[CLOSED] (#221)
+→ Feature - Dynamic arrow on mobile devices @ Home -[CLOSED] (#222) [CLOSED]
+✔ Erstellt als #222
+✔ Geschlossen: Feature - Dynamic arrow on mobile devices @ Home -[CLOSED] (#222)
+→ Feature - Add responsive nav on admin-[CLOSED] (#223) [CLOSED]
+✔ Erstellt als #223
+✔ Geschlossen: Feature - Add responsive nav on admin-[CLOSED] (#223)
+→ Feature -- Auto slug on Texts Table-[CLOSED] (#224) [CLOSED]
+✔ Erstellt als #224
+✔ Geschlossen: Feature -- Auto slug on Texts Table-[CLOSED] (#224)
+→ Hotfix - decrypt emails from contacts-[CLOSED] (#225) [CLOSED]
+✔ Erstellt als #225
+✔ Geschlossen: Hotfix - decrypt emails from contacts-[CLOSED] (#225)
+→ BUG - Titles on different Pages-[CLOSED] (#226) [CLOSED]
+✔ Erstellt als #226
+✔ Geschlossen: BUG - Titles on different Pages-[CLOSED] (#226)
+→ Feature - Add Contacts to navigationcards-[CLOSED] (#227) [CLOSED]
+✔ Erstellt als #227
+✔ Geschlossen: Feature - Add Contacts to navigationcards-[CLOSED] (#227)
+→ PR Dummy #228 - Bump the npm_and_yarn group across 1 directory with 2 updates (#228) [MERGED]
+✔ Erstellt als #228
+→ Hotfix - Remove Bug in TableShow-[CLOSED] (#229) [CLOSED]
+✔ Erstellt als #229
+✔ Geschlossen: Hotfix - Remove Bug in TableShow-[CLOSED] (#229)
+→ Feature - Register Mail-[CLOSED] (#230) [CLOSED]
+✔ Erstellt als #230
+✔ Geschlossen: Feature - Register Mail-[CLOSED] (#230)
+→ Hotfix - evil bug in user handling-[CLOSED] (#231) [CLOSED]
+✔ Erstellt als #231
+✔ Geschlossen: Hotfix - evil bug in user handling-[CLOSED] (#231)
+→ PR Dummy #232 - Bump laravel/framework from 12.33.0 to 12.36.1 (#232) [MERGED]
+✔ Erstellt als #232
+→ PR Dummy #233 - Bump laravel/fortify from 1.31.1 to 1.31.2 (#233) [MERGED]
+✔ Erstellt als #233
+→ PR Dummy #234 - Bump ezyang/htmlpurifier from 4.18.0 to 4.19.0 (#234) [MERGED]
+✔ Erstellt als #234
+→ PR Dummy #235 - Bump laravel-lang/lang from 15.26.1 to 15.26.2 (#235) [MERGED]
+✔ Erstellt als #235
+→ PR Dummy #236 - Bump whitecube/laravel-cookie-consent from 1.3.6 to 1.3.7 (#236) [MERGED]
+✔ Erstellt als #236
+→ PR Dummy #237 - Bump tightenco/ziggy from 2.4.2 to 2.6.0 (#237) [MERGED]
+✔ Erstellt als #237
+→ PR Dummy #238 - Bump laravel/sail from 1.46.0 to 1.47.0 (#238) [MERGED]
+✔ Erstellt als #238
+→ Hotfix - Focus lost on html editor-[CLOSED] (#239) [CLOSED]
+✔ Erstellt als #239
+✔ Geschlossen: Hotfix - Focus lost on html editor-[CLOSED] (#239)
+→ Feature - Add Mail for Birthdays/Ripdates-[CLOSED] (#240) [CLOSED]
+✔ Erstellt als #240
+✔ Geschlossen: Feature - Add Mail for Birthdays/Ripdates-[CLOSED] (#240)
+→ PR Dummy #241 - Bump globals from 16.4.0 to 16.5.0 (#241) [MERGED]
+✔ Erstellt als #241
+→ PR Dummy #242 - Bump @inertiajs/vue3 from 2.2.8 to 2.2.15 (#242) [MERGED]
+✔ Erstellt als #242
+→ PR Dummy #243 - Bump @eslint/js from 9.37.0 to 9.39.0 (#243) [MERGED]
+✔ Erstellt als #243
+→ PR Dummy #244 - Bump vue-router from 4.5.1 to 4.6.3 (#244) [MERGED]
+✔ Erstellt als #244
+→ PR Dummy #245 - Bump dayjs from 1.11.18 to 1.11.19 (#245) [MERGED]
+✔ Erstellt als #245
+→ PR Dummy #246 - Bump @hotwired/turbo from 8.0.18 to 8.0.20 (#246) [MERGED]
+✔ Erstellt als #246
+→ PR Dummy #247 - Bump sass from 1.93.2 to 1.93.3 (#247) [MERGED]
+✔ Erstellt als #247
+→ PR Dummy #248 - Bump eslint from 9.37.0 to 9.39.0 (#248) [MERGED]
+✔ Erstellt als #248
+→ PR Dummy #249 - Bump marked from 16.4.0 to 16.4.1 (#249) [MERGED]
+✔ Erstellt als #249
+→ PR Dummy #250 - Bump @tailwindcss/postcss from 4.1.14 to 4.1.16 (#250) [MERGED]
+✔ Erstellt als #250
+→ Bug - QR Code scanning bug-[CLOSED] (#251) [CLOSED]
+✔ Erstellt als #251
+✔ Geschlossen: Bug - QR Code scanning bug-[CLOSED] (#251)
+→ Feature - PHPIDS on all pages-[CLOSED] (#252) [CLOSED]
+✔ Erstellt als #252
+✔ Geschlossen: Feature - PHPIDS on all pages-[CLOSED] (#252)
+→ Hotfix - Evil bug in text-colors on light mode-[CLOSED] (#253) [CLOSED]
+✔ Erstellt als #253
+✔ Geschlossen: Hotfix - Evil bug in text-colors on light mode-[CLOSED] (#253)
+→ Bug - Gotta bug in Table Drag & Drop (#254) [OPEN]
+✔ Erstellt als #254
+→ Feature - Private Messages for Asarios Blog-[CLOSED] (#255) [CLOSED]
+✔ Erstellt als #255
+✔ Geschlossen: Feature - Private Messages for Asarios Blog-[CLOSED] (#255)
+→ PR Dummy #256 - Bump pinia from 3.0.3 to 3.0.4 (#256) [MERGED]
+✔ Erstellt als #256
+→ PR Dummy #257 - Bump vite from 7.1.12 to 7.2.2 (#257) [MERGED]
+✔ Erstellt als #257
+→ PR Dummy #258 - Bump tailwindcss from 3.4.18 to 4.1.17 (#258) [MERGED]
+✔ Erstellt als #258
+→ PR Dummy #259 - Bump @eslint/js from 9.39.0 to 9.39.1 (#259) [MERGED]
+✔ Erstellt als #259
+→ PR Dummy #260 - Bump eslint from 9.39.0 to 9.39.1 (#260) [MERGED]
+✔ Erstellt als #260
+→ PR Dummy #261 - Bump marked from 16.4.1 to 17.0.0 (#261) [MERGED]
+✔ Erstellt als #261
+→ PR Dummy #262 - Bump vue from 3.5.22 to 3.5.24 (#262) [MERGED]
+✔ Erstellt als #262
+→ PR Dummy #263 - Bump eslint-plugin-vue from 10.5.0 to 10.5.1 (#263) [MERGED]
+✔ Erstellt als #263
+→ PR Dummy #264 - Bump @tailwindcss/postcss from 4.1.16 to 4.1.17 (#264) [MERGED]
+✔ Erstellt als #264
+→ PR Dummy #265 - Bump symfony/http-foundation from 7.3.5 to 7.3.7 in the composer group across 1 directory (#265) [MERGED]
+✔ Erstellt als #265
+→ PR Dummy #266 - Bump the npm_and_yarn group across 1 directory with 1 update-[CLOSED] (#266) [CLOSED]
+✔ Erstellt als #266
+✔ Geschlossen: PR Dummy #266 - Bump the npm_and_yarn group across 1 directory with 1 update-[CLOSED] (#266)
+→ PR Dummy #267 - Bump the npm_and_yarn group across 1 directory with 2 updates (#267) [MERGED]
+✔ Erstellt als #267
+→ PR Dummy #268 - Bump globals from 16.3.0 to 16.5.0 (#268) [MERGED]
+✔ Erstellt als #268
+→ PR Dummy #269 - Bump hotwired-laravel/turbo-laravel from 2.4.0 to 2.5.0 (#269) [MERGED]
+✔ Erstellt als #269
+→ PR Dummy #270 - Bump marked from 16.4.2 to 17.0.0 (#270) [MERGED]
+✔ Erstellt als #270
+→ PR Dummy #271 - Bump pinia from 3.0.3 to 3.0.4 (#271) [MERGED]
+✔ Erstellt als #271
+→ PR Dummy #272 - Bump laravel/sail from 1.47.0 to 1.48.0 (#272) [MERGED]
+✔ Erstellt als #272
+→ PR Dummy #273 - Bump vue-router from 4.5.1 to 4.6.3 (#273) [MERGED]
+✔ Erstellt als #273
+→ PR Dummy #274 - Bump @fortawesome/free-regular-svg-icons from 7.0.1 to 7.1.0 (#274) [MERGED]
+✔ Erstellt als #274
+→ PR Dummy #275 - Bump @fortawesome/free-solid-svg-icons from 7.0.1 to 7.1.0 (#275) [MERGED]
+✔ Erstellt als #275
+→ PR Dummy #276 - Bump laravel/fortify from 1.31.2 to 1.31.3-[CLOSED] (#276) [CLOSED]
+✔ Erstellt als #276
+✔ Geschlossen: PR Dummy #276 - Bump laravel/fortify from 1.31.2 to 1.31.3-[CLOSED] (#276)
+→ PR Dummy #277 - Bump dayjs from 1.11.18 to 1.11.19-[CLOSED] (#277) [CLOSED]
+✔ Erstellt als #277
+✔ Geschlossen: PR Dummy #277 - Bump dayjs from 1.11.18 to 1.11.19-[CLOSED] (#277)
+→ PR Dummy #278 - Bump @hotwired/turbo from 8.0.13 to 8.0.20-[CLOSED] (#278) [CLOSED]
+✔ Erstellt als #278
+✔ Geschlossen: PR Dummy #278 - Bump @hotwired/turbo from 8.0.13 to 8.0.20-[CLOSED] (#278)
+→ PR Dummy #279 - Bump @fortawesome/fontawesome-svg-core from 7.0.1 to 7.1.0 (#279) [MERGED]
+✔ Erstellt als #279
+→ PR Dummy #280 - Bump laravel/framework from 12.37.0 to 12.38.1-[CLOSED] (#280) [CLOSED]
+✔ Erstellt als #280
+✔ Geschlossen: PR Dummy #280 - Bump laravel/framework from 12.37.0 to 12.38.1-[CLOSED] (#280)
+→ PR Dummy #281 - Bump less from 4.4.1 to 4.4.2 (#281) [MERGED]
+✔ Erstellt als #281
+→ Hotfix - Fixed evil bug in tablelist-[CLOSED] (#282) [CLOSED]
+✔ Erstellt als #282
+✔ Geschlossen: Hotfix - Fixed evil bug in tablelist-[CLOSED] (#282)
+→ Feature - Sign in with Google-[CLOSED] (#283) [CLOSED]
+✔ Erstellt als #283
+✔ Geschlossen: Feature - Sign in with Google-[CLOSED] (#283)
+→ Feature - Countpixel.php for counting  visits on all pages-[CLOSED] (#284) [CLOSED]
+✔ Erstellt als #284
+✔ Geschlossen: Feature - Countpixel.php for counting  visits on all pages-[CLOSED] (#284)
+→ Hotfix - Errors in positioning of entries-[CLOSED] (#285) [CLOSED]
+✔ Erstellt als #285
+✔ Geschlossen: Hotfix - Errors in positioning of entries-[CLOSED] (#285)
+→ PR Dummy #286 - Bump glob from 10.4.5 to 10.5.0 in the npm_and_yarn group across 1 directory-[CLOSED] (#286) [CLOSED]
+✔ Erstellt als #286
+✔ Geschlossen: PR Dummy #286 - Bump glob from 10.4.5 to 10.5.0 in the npm_and_yarn group across 1 directory-[CLOSED] (#286)
+→ Bug - have to fix right management functions-[CLOSED] (#287) [CLOSED]
+✔ Erstellt als #287
+✔ Geschlossen: Bug - have to fix right management functions-[CLOSED] (#287)
+→ Hotfix - Search on Contacts-[CLOSED] (#288) [CLOSED]
+✔ Erstellt als #288
+✔ Geschlossen: Hotfix - Search on Contacts-[CLOSED] (#288)
+→ PR Dummy #289 - Bump actions/checkout from 5 to 6 (#289) [MERGED]
+✔ Erstellt als #289
+→ Hotfix - Changed check of PM Setttings in user profile-[CLOSED] (#290) [CLOSED]
+✔ Erstellt als #290
+✔ Geschlossen: Hotfix - Changed check of PM Setttings in user profile-[CLOSED] (#290)
+→ Feature - Choosed another Cookie Consent Script-[CLOSED] (#291) [CLOSED]
+✔ Erstellt als #291
+✔ Geschlossen: Feature - Choosed another Cookie Consent Script-[CLOSED] (#291)
+→ Hotfix - Photoswipe now working properly-[CLOSED] (#292) [CLOSED]
+✔ Erstellt als #292
+✔ Geschlossen: Hotfix - Photoswipe now working properly-[CLOSED] (#292)
+→ Hotfix - fixed pagination on TableShow-[CLOSED] (#293) [CLOSED]
+✔ Erstellt als #293
+✔ Geschlossen: Hotfix - fixed pagination on TableShow-[CLOSED] (#293)
+→ Hotfix - Fixed font in footer-[CLOSED] (#294) [CLOSED]
+✔ Erstellt als #294
+✔ Geschlossen: Hotfix - Fixed font in footer-[CLOSED] (#294)
+→ PR Dummy #295 - Bump less from 4.4.1 to 4.4.2-[CLOSED] (#295) [CLOSED]
+✔ Erstellt als #295
+✔ Geschlossen: PR Dummy #295 - Bump less from 4.4.1 to 4.4.2-[CLOSED] (#295)
+→ PR Dummy #296 - Bump @inertiajs/vue3 from 2.2.18 to 2.2.19 (#296) [MERGED]
+✔ Erstellt als #296
+→ PR Dummy #297 - Bump @inertiajs/progress from 0.1.2 to 0.2.7 (#297) [MERGED]
+✔ Erstellt als #297
+→ PR Dummy #298 - Bump axios from 1.12.0 to 1.13.2 (#298) [MERGED]
+✔ Erstellt als #298
+→ PR Dummy #299 - Bump @fortawesome/free-brands-svg-icons from 7.0.1 to 7.1.0 (#299) [MERGED]
+✔ Erstellt als #299
+→ PR Dummy #300 - Bump @vitejs/plugin-vue from 6.0.1 to 6.0.2 (#300) [MERGED]
+✔ Erstellt als #300
+→ PR Dummy #301 - Bump marked from 16.4.2 to 17.0.1 (#301) [MERGED]
+✔ Erstellt als #301
+→ Feature - Statistics Completed-[CLOSED] (#302) [CLOSED]
+✔ Erstellt als #302
+✔ Geschlossen: Feature - Statistics Completed-[CLOSED] (#302)
+→ Hotfix - Changed Email Form-[CLOSED] (#303) [CLOSED]
+✔ Erstellt als #303
+✔ Geschlossen: Hotfix - Changed Email Form-[CLOSED] (#303)
+→ Feature - Add DB sync-[CLOSED] (#304) [CLOSED]
+✔ Erstellt als #304
+✔ Geschlossen: Feature - Add DB sync-[CLOSED] (#304)
+→ Hotfix - Fix Photoswipe Gallery on asario.de-[CLOSED] (#305) [CLOSED]
+✔ Erstellt als #305
+✔ Geschlossen: Hotfix - Fix Photoswipe Gallery on asario.de-[CLOSED] (#305)
+→ Feature - Add Adding & edit buttons for images-[CLOSED] (#306) [CLOSED]
+✔ Erstellt als #306
+✔ Geschlossen: Feature - Add Adding & edit buttons for images-[CLOSED] (#306)
+→ Feature - Add name column from Settings to Sync Diff-[CLOSED] (#307) [CLOSED]
+✔ Erstellt als #307
+✔ Geschlossen: Feature - Add name column from Settings to Sync Diff-[CLOSED] (#307)
+→ Hotfix - Bug in EmailSender Script-[CLOSED] (#308) [CLOSED]
+✔ Erstellt als #308
+✔ Geschlossen: Hotfix - Bug in EmailSender Script-[CLOSED] (#308)
+→ Hotfix Notification not loading-[CLOSED] (#309) [CLOSED]
+✔ Erstellt als #309
+✔ Geschlossen: Hotfix Notification not loading-[CLOSED] (#309)
+→ Error Description on Register-[CLOSED] (#310) [CLOSED]
+✔ Erstellt als #310
+✔ Geschlossen: Error Description on Register-[CLOSED] (#310)
+→ Hotfix - Visibility of Newsletter Registration Form-[CLOSED] (#311) [CLOSED]
+✔ Erstellt als #311
+✔ Geschlossen: Hotfix - Visibility of Newsletter Registration Form-[CLOSED] (#311)
+→ Hotfix - newsletter unsubscribe-[CLOSED] (#312) [CLOSED]
+✔ Erstellt als #312
+✔ Geschlossen: Hotfix - newsletter unsubscribe-[CLOSED] (#312)
+→ Hotfix - Fixed Bugs in Tablesow.vue-[CLOSED] (#313) [CLOSED]
+✔ Erstellt als #313
+✔ Geschlossen: Hotfix - Fixed Bugs in Tablesow.vue-[CLOSED] (#313)
+→ Bug - Had to change share functions-[CLOSED] (#314) [CLOSED]
+✔ Erstellt als #314
+✔ Geschlossen: Bug - Had to change share functions-[CLOSED] (#314)
+→ Feature - MCSL Points functions-[CLOSED] (#315) [CLOSED]
+✔ Erstellt als #315
+✔ Geschlossen: Feature - MCSL Points functions-[CLOSED] (#315)
+→ Hotfix - Bug in Birthday cron job-[CLOSED] (#316) [CLOSED]
+✔ Erstellt als #316
+✔ Geschlossen: Hotfix - Bug in Birthday cron job-[CLOSED] (#316)
+→ Feature - Added <Title>'s-[CLOSED] (#317) [CLOSED]
+✔ Erstellt als #317
+✔ Geschlossen: Feature - Added <Title>'s-[CLOSED] (#317)
+→ Feature - Icons for user navigation-[CLOSED] (#318) [CLOSED]
+✔ Erstellt als #318
+✔ Geschlossen: Feature - Icons for user navigation-[CLOSED] (#318)
+→ Hotfix - Loader Imageupload-[CLOSED] (#319) [CLOSED]
+✔ Erstellt als #319
+✔ Geschlossen: Hotfix - Loader Imageupload-[CLOSED] (#319)
+→ Hotfix - There was an issue with the Smilies function.-[CLOSED] (#320) [CLOSED]
+✔ Erstellt als #320
+✔ Geschlossen: Hotfix - There was an issue with the Smilies function.-[CLOSED] (#320)
+→ Feature - public posting for stars & Comments-[CLOSED] (#321) [CLOSED]
+✔ Erstellt als #321
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #321: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add Shortpoems functions-[CLOSED] (#322) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0B2:3A5DB7:B9B586:A74366:69A85C72 and timestamp 2026-03-04 16:23:14 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #322: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #323 - Bump tailwindcss from 3.4.19 to 4.1.18 (#323) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0B3:25C9EF:B4E17C:A276C6:69A85C72 and timestamp 2026-03-04 16:23:14 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #323: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #324 - Bump autoprefixer from 10.4.22 to 10.4.23 (#324) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0B4:3FF17E:C8FB53:B6D72C:69A85C73 and timestamp 2026-03-04 16:23:15 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #324: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #325 - Bump vue from 3.5.25 to 3.5.26 (#325) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0B5:3CC038:B58F7A:A30B56:69A85C73 and timestamp 2026-03-04 16:23:15 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #325: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #326 - Bump vite from 7.2.7 to 7.3.0 (#326) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0B6:27C6BB:BC385E:A923BC:69A85C74 and timestamp 2026-03-04 16:23:16 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #326: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #327 - Bump globals from 16.5.0 to 17.0.0 (#327) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0B7:12EF5:BB2821:A882EE:69A85C74 and timestamp 2026-03-04 16:23:16 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #327: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #328 - Bump esbuild from 0.25.0 to 0.27.2 (#328) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0B8:59223:DCA3D9:C6B8FF:69A85C75 and timestamp 2026-03-04 16:23:17 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #328: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #329 - Bump @eslint/js from 9.39.1 to 9.39.2-[CLOSED] (#329) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0B9:209D8B:B6199C:A36C09:69A85C75 and timestamp 2026-03-04 16:23:17 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #329: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #330 - Bump prettier from 3.6.2 to 3.7.4 (#330) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0BA:2D3672:BCC4FE:AA0531:69A85C76 and timestamp 2026-03-04 16:23:18 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #330: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #331 - Bump @tailwindcss/forms from 0.5.10 to 0.5.11 (#331) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0BB:2C9014:BBAC97:A92CC1:69A85C76 and timestamp 2026-03-04 16:23:18 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #331: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #332 - Bump vue-i18n from 11.2.2 to 11.2.8-[CLOSED] (#332) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0BC:2C9014:BBAFE3:A92F90:69A85C77 and timestamp 2026-03-04 16:23:19 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #332: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #333 - Bump qs from 6.14.0 to 6.14.1 in the npm_and_yarn group across 1 directory (#333) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0BD:2D3672:BCCDA5:AA0CC7:69A85C77 and timestamp 2026-03-04 16:23:19 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #333: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Changed Notification on date-[CLOSED] (#334) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0BE:281FCE:B9AADA:A76360:69A85C77 and timestamp 2026-03-04 16:23:20 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #334: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Gallery of unused Pictures-[CLOSED] (#335) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0BF:271CC6:B2C2D6:A06D2C:69A85C78 and timestamp 2026-03-04 16:23:20 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #335: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - fixed bug in Notify script-[CLOSED] (#336) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C0:3D8AE9:B86C7B:A6255B:69A85C78 and timestamp 2026-03-04 16:23:21 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #336: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - pub/unpub button in private messages-[CLOSED] (#337) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C1:3F0B8C:B4186B:A1EE0C:69A85C79 and timestamp 2026-03-04 16:23:21 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #337: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - removed bug in email center-[CLOSED] (#338) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C2:2D6308:AF916A:9DDB1D:69A85C7A and timestamp 2026-03-04 16:23:22 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #338: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Umlauts in User Show-[CLOSED] (#339) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C3:3A5DB7:B9F36C:A77AA0:69A85C7A and timestamp 2026-03-04 16:23:22 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #339: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix -  fixed bug in usershow-[CLOSED] (#340) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C4:EA4A1:B545B9:A2CD92:69A85C7A and timestamp 2026-03-04 16:23:23 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #340: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Change footer nav (#341) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C5:3F0B8C:B427A5:A1FB58:69A85C7B and timestamp 2026-03-04 16:23:23 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #341: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add Text about MCSL-Points on Landing Page-[CLOSED] (#342) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C6:59223:DCD614:C6E64B:69A85C7B and timestamp 2026-03-04 16:23:24 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #342: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add PM sending function-[CLOSED] (#343) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C7:209D8B:B64BD8:A398E9:69A85C7C and timestamp 2026-03-04 16:23:24 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #343: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Newsfeed asario.de-[CLOSED] (#344) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C8:12EF5:BB6740:A8BBCD:69A85C7C and timestamp 2026-03-04 16:23:25 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #344: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #345 - Bump preact from 10.28.1 to 10.28.2 in the npm_and_yarn group across 1 directory (#345) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0C9:3D8AE9:B88B61:A6414F:69A85C7D and timestamp 2026-03-04 16:23:25 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #345: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Fix toastbus on tableform-[CLOSED] (#346) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0CA:342526:B4D299:A23FD0:69A85C7D and timestamp 2026-03-04 16:23:25 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #346: Response status code does not indicate success: 403 (Forbidden).
+→ Bugs - have to reinstall complete project-[CLOSED] (#347) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0CB:59223:DCE85B:C6F673:69A85C7E and timestamp 2026-03-04 16:23:26 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #347: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - The login function doesn't work yet, but I'm on it.-[CLOSED] (#348) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0CC:12EF5:BB7647:A8C991:69A85C7E and timestamp 2026-03-04 16:23:26 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #348: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Mail Function doesn't works-[CLOSED] (#349) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0CD:281FCE:B9DD69:A7907D:69A85C7F and timestamp 2026-03-04 16:23:27 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #349: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - summary of individual blog entries-[CLOSED] (#350) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0CE:3CC038:B5E5A2:A357EB:69A85C7F and timestamp 2026-03-04 16:23:28 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #350: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Add functionality to ImageUpload Script-[CLOSED] (#351) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0CF:22362E:B30CFF:A06069:69A85C81 and timestamp 2026-03-04 16:23:29 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #351: Response status code does not indicate success: 403 (Forbidden).
+→ DELETED Dummy #352-[CLOSED] (#352) [closed]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D1:3D8AE9:B8ADD2:A65FF3:69A85C81 and timestamp 2026-03-04 16:23:30 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #352: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - PictureShow add status of images-[CLOSED] (#353) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D2:EA4A1:B57D7F:A2FF0A:69A85C82 and timestamp 2026-03-04 16:23:30 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #353: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add Delete Button in UserRights-[CLOSED] (#354) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D3:3D8AE9:B8B69D:A667A4:69A85C82 and timestamp 2026-03-04 16:23:31 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #354: Response status code does not indicate success: 403 (Forbidden).
+→ Bug - have to fix an evil bug in pagination-[CLOSED] (#355) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D4:3F0B8C:B460BF:A22E32:69A85C83 and timestamp 2026-03-04 16:23:31 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #355: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #356 - Bump @hotwired/turbo from 8.0.20 to 8.0.21 in the npm_and_yarn group across 1 directory (#356) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D5:25C9EF:B561E8:A2E948:69A85C83 and timestamp 2026-03-04 16:23:32 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #356: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add subject from form to mail submit-[CLOSED] (#357) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D6:EA1E:B85ED1:A618F6:69A85C84 and timestamp 2026-03-04 16:23:32 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #357: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - remove styles from mailsend to pm-[CLOSED] (#358) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D7:342526:B507D8:A26F2A:69A85C84 and timestamp 2026-03-04 16:23:33 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #358: Response status code does not indicate success: 403 (Forbidden).
+→ Feature: There should be no loading spinner in the search field.-[CLOSED] (#359) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D8:EA1E:B86CC0:A62563:69A85C86 and timestamp 2026-03-04 16:23:34 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #359: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add Python workflow for checking of watermarks-[CLOSED] (#360) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0D9:59223:DD291B:C72F55:69A85C86 and timestamp 2026-03-04 16:23:35 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #360: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Repaired Loading Spinner in axios Requests-[CLOSED] (#361) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0DA:EA4A1:B5A258:A31FC5:69A85C87 and timestamp 2026-03-04 16:23:35 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #361: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Formatting in newsletters and pm-[CLOSED] (#362) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0DB:12EF5:BBBE00:A908E9:69A85C87 and timestamp 2026-03-04 16:23:36 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #362: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Changed Mail Script-[CLOSED] (#363) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0DC:3D8AE9:B8DF1B:A68B9B:69A85C88 and timestamp 2026-03-04 16:23:36 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #363: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Fix functions in Layout..vue-[CLOSED] (#364) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0DD:271CC6:B33635:A0D2FF:69A85C88 and timestamp 2026-03-04 16:23:37 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #364: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Fixed email captcha bug-[CLOSED] (#365) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID D0DE:271CC6:B33A9E:A0D6EE:69A85C89 and timestamp 2026-03-04 16:23:37 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #365: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #366 - Bump autoprefixer from 10.4.23 to 10.4.24-[CLOSED] (#366) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC0B:EA4A1:B5B476:A32FA8:69A85C89 and timestamp 2026-03-04 16:23:38 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #366: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #367 - Bump laravel-vite-plugin from 2.0.1 to 2.1.0 (#367) [MERGED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC0C:281FCE:BA3480:A7DD70:69A85C8B and timestamp 2026-03-04 16:23:39 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #367: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #368 - Bump tailwindcss from 3.4.19 to 4.1.18-[CLOSED] (#368) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC0D:22362E:B358A5:A0A331:69A85C8B and timestamp 2026-03-04 16:23:40 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #368: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #369 - Bump preact from 10.28.2 to 10.28.3-[CLOSED] (#369) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC0E:27C6BB:BCEAB6:A9C142:69A85C8C and timestamp 2026-03-04 16:23:40 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #369: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #370 - Bump eslint-plugin-vue from 10.6.2 to 10.7.0-[CLOSED] (#370) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC0F:12EF5:BBE502:A92C0C:69A85C8C and timestamp 2026-03-04 16:23:41 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #370: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #371 - Bump vite from 7.3.0 to 7.3.1-[CLOSED] (#371) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC10:209D8B:B6C3DD:A402B7:69A85C8D and timestamp 2026-03-04 16:23:41 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #371: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #372 - Bump lodash from 4.17.21 to 4.17.23 (#372) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC11:209D8B:B6C7FD:A40672:69A85C8E and timestamp 2026-03-04 16:23:42 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #372: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #373 - Bump globals from 17.0.0 to 17.3.0-[CLOSED] (#373) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC12:271CC6:B35ECF:A0F714:69A85C8E and timestamp 2026-03-04 16:23:42 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #373: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #374 - Bump @inertiajs/progress from 0.1.2 to 0.2.7 (#374) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC13:3F0B8C:B4B395:A27793:69A85C8E and timestamp 2026-03-04 16:23:43 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #374: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #375 - Bump @hotwired/turbo from 8.0.20 to 8.0.23 (#375) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC14:25C02C:B7A5D6:A50B6A:69A85C8F and timestamp 2026-03-04 16:23:43 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #375: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Change Linkcolor to blue-[CLOSED] (#376) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC15:3FF17E:C9EC9A:B7B190:69A85C90 and timestamp 2026-03-04 16:23:44 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #376: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Change the statistics without crawling unnecessary URLs.-[CLOSED] (#377) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC16:27C6BB:BD0A38:A9DCEA:69A85C90 and timestamp 2026-03-04 16:23:44 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #377: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Fixed bug in blogs pagination-[CLOSED] (#378) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC18:25C9EF:B5BE6E:A33AF4:69A85C91 and timestamp 2026-03-04 16:23:45 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #378: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add link to user profile on comments-[CLOSED] (#379) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC19:2C9014:BC76D8:A9E182:69A85C91 and timestamp 2026-03-04 16:23:45 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #379: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - page var not wanted-[CLOSED] (#380) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC1B:25C02C:B7B72A:A51A22:69A85C92 and timestamp 2026-03-04 16:23:46 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #380: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add icons before login & register link in footer-[CLOSED] (#381) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC1C:281FCE:BA6791:A80ADB:69A85C92 and timestamp 2026-03-04 16:23:46 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #381: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Repaired sign in with google-[CLOSED] (#382) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC1D:342526:B56A0D:A2C57F:69A85C92 and timestamp 2026-03-04 16:23:47 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #382: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add Icons on PM status-[CLOSED] (#383) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC1F:EA1E:B8C8E3:A67721:69A85C93 and timestamp 2026-03-04 16:23:47 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #383: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Order of Contacts changed-[CLOSED] (#384) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC20:342526:B5711C:A2CBA8:69A85C93 and timestamp 2026-03-04 16:23:48 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #384: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add IDS functions to MCSL-[CLOSED] (#385) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC21:59223:DD8B83:C78648:69A85C94 and timestamp 2026-03-04 16:23:48 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #385: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Removed Bug in UserRights-[CLOSED] (#386) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC22:59223:DD96D3:C7904E:69A85C95 and timestamp 2026-03-04 16:23:50 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #386: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - added redirect to www.-[CLOSED] (#387) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC23:12EF5:BC2F3F:A96DAC:69A85C96 and timestamp 2026-03-04 16:23:50 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #387: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - fixed small bug in rss.xml-[CLOSED] (#388) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC24:2C9014:BC9CA0:AA02D7:69A85C96 and timestamp 2026-03-04 16:23:51 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #388: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Removed Ratings on DidYouKnow-[CLOSED] (#389) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC25:3A5DB7:BAC31A:A8319E:69A85C97 and timestamp 2026-03-04 16:23:51 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #389: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Changed smilies box-[CLOSED] (#390) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC26:12EF5:BC3946:A976C5:69A85C97 and timestamp 2026-03-04 16:23:51 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #390: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - smaller bugs eliminated-[CLOSED] (#391) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC27:EA1E:B8EC08:A69629:69A85C98 and timestamp 2026-03-04 16:23:52 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #391: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - add financial income/expenses tool-[CLOSED] (#392) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC28:209D8B:B71338:A4489D:69A85C98 and timestamp 2026-03-04 16:23:52 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #392: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfixes - include adding an alert on empty fields.-[CLOSED] (#393) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC29:3A5DB7:BACFB1:A83CC6:69A85C99 and timestamp 2026-03-04 16:23:53 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #393: Response status code does not indicate success: 403 (Forbidden).
+→ Import Contacts from mobile-[CLOSED] (#394) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC2A:59223:DDB096:C7A714:69A85C99 and timestamp 2026-03-04 16:23:53 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #394: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Repair Stats-[CLOSED] (#395) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC2B:25C9EF:B5FE0C:A37334:69A85C9A and timestamp 2026-03-04 16:23:54 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #395: Response status code does not indicate success: 403 (Forbidden).
+→ Features: - Change the date on Hackinglog. - Fetch the PM table after clicking 'Read all'.-[CLOSED] (#396) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC2C:2D3672:BDCC6F:AAEE11:69A85C9A and timestamp 2026-03-04 16:23:54 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #396: Response status code does not indicate success: 403 (Forbidden).
+→ word wrap in SQLUpdate-[CLOSED] (#397) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC2D:342526:B5A628:A2FAA1:69A85C9B and timestamp 2026-03-04 16:23:55 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #397: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Change Checkbox Handling on PM-[CLOSED] (#398) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC2E:12EF5:BC5591:A99013:69A85C9B and timestamp 2026-03-04 16:23:55 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #398: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Added User based encryption on Contacts-[CLOSED] (#399) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC2F:EA1E:B90817:A6AF27:69A85C9B and timestamp 2026-03-04 16:23:56 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #399: Response status code does not indicate success: 403 (Forbidden).
+→ Feature -  SQL Builder-[CLOSED] (#400) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC30:342526:B5AF6A:A302D1:69A85C9C and timestamp 2026-03-04 16:23:56 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #400: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add Groups Selector in Contacts-[CLOSED] (#401) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC31:27C6BB:BD603E:AA2834:69A85C9C and timestamp 2026-03-04 16:23:56 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #401: Response status code does not indicate success: 403 (Forbidden).
+→ Bugs - Login & Password Recover didn't worked-[CLOSED] (#402) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC32:3D8AE9:B97AE7:A71693:69A85C9D and timestamp 2026-03-04 16:23:57 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #402: Response status code does not indicate success: 403 (Forbidden).
+→ Hotfix - Repair of DB Syncro Tool-[CLOSED] (#403) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC33:EA4A1:B6403D:A3AACC:69A85C9D and timestamp 2026-03-04 16:23:57 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #403: Response status code does not indicate success: 403 (Forbidden).
+→ Feature - Add language files for emails & Co-[CLOSED] (#404) [CLOSED]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC34:25C9EF:B61D15:A38EB3:69A85C9E and timestamp 2026-03-04 16:23:58 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #404: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #405 - Bump tailwindcss from 3.4.19 to 4.2.1 (#405) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC35:209D8B:B74096:A4705D:69A85C9F and timestamp 2026-03-04 16:23:59 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #405: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #406 - Bump spatie/laravel-sitemap from 7.3.8 to 7.4.0 (#406) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC36:2D6308:B0AF4F:9EDB75:69A85C9F and timestamp 2026-03-04 16:23:59 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #406: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #407 - Bump prettier from 3.7.4 to 3.8.1 (#407) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC37:12EF5:BC7748:A9ADEC:69A85CA0 and timestamp 2026-03-04 16:24:00 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #407: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #408 - Bump less-loader from 7.3.0 to 12.3.1 (#408) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC38:25C9EF:B62D8C:A39D60:69A85CA0 and timestamp 2026-03-04 16:24:00 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #408: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #409 - Bump @eslint/js from 9.39.3 to 10.0.1 (#409) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC39:25C02C:B825FA:A57CB8:69A85CA1 and timestamp 2026-03-04 16:24:01 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #409: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #410 - Bump jquery from 3.7.1 to 4.0.0 (#410) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC3A:27C6BB:BD8296:AA46B2:69A85CA1 and timestamp 2026-03-04 16:24:01 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #410: Response status code does not indicate success: 403 (Forbidden).
+→ PR Dummy #411 - Bump eslint from 9.39.3 to 10.0.2 (#411) [OPEN]
+PS E:\git\MCSL 4.0> TerminatingError(Invoke-RestMethod): "
+{
+  "message": "You have exceeded a secondary rate limit and have been temporarily blocked from content creation. Please retry your request again later. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) If you reach out to GitHub Support for help, please include the request ID DC3B:25C9EF:B637E9:A3A6C3:69A85CA1 and timestamp 2026-03-04 16:24:02 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits",
+  "status": "403"
+}"
+❌ Ausnahme bei Issue/PR #411: Response status code does not indicate success: 403 (Forbidden).
+**********************
+PowerShell transcript end
+End time: 20260304172403
+**********************

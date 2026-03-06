@@ -1,0 +1,62 @@
+<template>
+
+    <layout title="Profil">
+        <MetaHeader title="Profil"></MetaHeader>
+        <template #header>
+            <breadcrumb
+                :application-name="$page.props.applications.app_admin_name"
+                :start-page="false"
+                current="Profil"
+            ></breadcrumb>
+        </template>
+        <profile
+            :confirmsTwoFactorAuthentication="confirmsTwoFactorAuthentication"
+            :sessions="sessions"
+        ></profile>
+    </layout>
+</template>
+ 
+<script>
+const layouts = {
+    ab: () => import('@/Application/Admin/Shared/ab/Layout.vue'),
+    dag: () => import('@/Application/Admin/Shared/dag/Layout.vue'),
+    mfx: () => import('@/Application/Admin/Shared/mfx/Layout.vue'),
+    default: () => import('@/Application/Admin/Shared/ab/Layout.vue'),
+}
+import { defineComponent } from "vue";
+import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
+// import Layout from "@/Application/Admin/Shared/Layout" + SD()  +".vue";
+import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
+import Profile from "@/Application/Shared/Profile.vue";
+import { defineAsyncComponent } from "vue";
+import { SD } from "@/helpers";
+
+export default defineComponent({
+    name: "Admin_Profile",
+
+    components: {
+
+        Breadcrumb,
+        Profile,
+        MetaHeader,
+        Layout: defineAsyncComponent(() => {
+            const key = SD()
+            return (layouts[key] || layouts.default)()
+        }),
+    
+
+    },
+
+    props: {
+        sessions: {
+            type: Array,
+            default: () => [],
+        },
+        confirmsTwoFactorAuthentication: {
+            type: Boolean,
+            default: false,
+        },
+    },
+});
+</script>
+

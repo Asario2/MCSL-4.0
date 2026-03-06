@@ -1,0 +1,50 @@
+**********************
+PowerShell transcript start
+Start time: 20260304154953
+Username: GGX-2K22\GGX
+RunAs User: GGX-2K22\GGX
+Configuration Name: 
+Machine: GGX-2K22 (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll
+Process ID: 15980
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is migration_log.txt
+
+=====================================
+ GitHub SAFE Issue + PR Migration Tool
+=====================================
+
+⚠ ACHTUNG!
+Das Ziel-Repository wird GELÖSCHT:
+Asario2/MCSL-4.0
+
+🔹 Lösche Repository...
+
+🔹 Erstelle neues Repository...
+
+🔹 Lade Issues...
+🔹 Lade Pull Requests...
+Maximale Nummer: 411
+
+→ Deleted Dummy #1
+✔ Erstellt als #1
+✔ Geschlossen
+→ Deleted Dummy #2
+✔ Erstellt als #2
+PS E:\git\MCSL 4.0> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS E:\git\MCSL 4.0> .\complete_issues.ps1 -OldRepo "Asario2/MCSL-Marble-Content-System-Laravel" -NewRepo "Asario2/MCSL-4.0" -DryRun
+**********************
+PowerShell transcript end
+End time: 20260304155334
+**********************

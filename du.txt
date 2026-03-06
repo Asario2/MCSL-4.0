@@ -1,0 +1,1275 @@
+**********************
+PowerShell transcript start
+Start time: 20260305171724
+Username: GGX-2K22\GGX
+RunAs User: GGX-2K22\GGX
+Configuration Name: 
+Machine: GGX-2K22 (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll
+Process ID: 21292
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is E:\git\MCSL 4.0\du.txt
+
+=====================================
+ GitHub SAFE Issue Migration Tool (FAST)
+=====================================
+
+⚠ ACHTUNG! Das Ziel-Repository wird GELÖSCHT:
+Asario2/MCSL-4.0
+🔹 Prüfe, ob Repository existiert...
+🔹 Lösche Repository Asario2/MCSL-4.0...
+
+✔ Repository gelöscht.
+🔹 Erstelle neues Repository Asario2/MCSL-4.0...
+
+🔹 Lade Issues...
+🔹 Lade PRs...
+Maximale Nummer: 411
+
+🔹 Lade alle Kommentare (Batch)...
+→ Admin Panel not working (#1) [CLOSED]
+RateLimit: 4962/5000 remaining
+✔ Erstellt als #1
+→ The second problem no update of values on submit (#2) [CLOSED]
+RateLimit: 4960/5000 remaining
+✔ Erstellt als #2
+→ Image Upload in Admin Center for all needed Tables (#3) [CLOSED]
+RateLimit: 4958/5000 remaining
+✔ Erstellt als #3
+→ Sitemap for Images and Fun Tables (#4) [CLOSED]
+RateLimit: 4956/5000 remaining
+✔ Erstellt als #4
+→ Create Images Page (#5) [CLOSED]
+RateLimit: 4954/5000 remaining
+✔ Erstellt als #5
+→ edit/delete links on Home Pages (#6) [CLOSED]
+RateLimit: 4952/5000 remaining
+✔ Erstellt als #6
+→ Add custom fields for profile (#7) [CLOSED]
+RateLimit: 4950/5000 remaining
+✔ Erstellt als #7
+→ Add additional fields in admin/tables/show (#8) [CLOSED]
+RateLimit: 4948/5000 remaining
+✔ Erstellt als #8
+→ Feature - Add custom fields for input mask on TableForm.vue (#9) [OPEN]
+RateLimit: 4946/5000 remaining
+✔ Erstellt als #9
+→ Sorting of Object in tableform.vue and inputselect.vue (#10) [CLOSED]
+RateLimit: 4945/5000 remaining
+✔ Erstellt als #10
+→ fix bugs in image upload (#11) [CLOSED]
+RateLimit: 4943/5000 remaining
+✔ Erstellt als #11
+→ Fixe Bugs in different Vues (#12) [CLOSED]
+RateLimit: 4941/5000 remaining
+✔ Erstellt als #12
+→ Add functions to /resources/js/Application/Homepage/Pictures.vue (#13) [CLOSED]
+RateLimit: 4939/5000 remaining
+✔ Erstellt als #13
+→ fix bug in tableform.vue (#14) [CLOSED]
+RateLimit: 4937/5000 remaining
+✔ Erstellt als #14
+→ Remove Watermarks from Thumbnails (#15) [CLOSED]
+RateLimit: 4935/5000 remaining
+✔ Erstellt als #15
+→ Add Made with AI button on blog/show (#16) [CLOSED]
+RateLimit: 4933/5000 remaining
+✔ Erstellt als #16
+→ User Rights Center for table rights and Modules (#17) [CLOSED]
+RateLimit: 4931/5000 remaining
+✔ Erstellt als #17
+→ Further Features (#18) [CLOSED]
+RateLimit: 4929/5000 remaining
+✔ Erstellt als #18
+→ Fix Bug in 2fa (#19) [CLOSED]
+RateLimit: 4927/5000 remaining
+✔ Erstellt als #19
+→ [BUG] Profile Image Upload (#20) [CLOSED]
+RateLimit: 4925/5000 remaining
+✔ Erstellt als #20
+→ FIx Bugs in Image Upload Script (#21) [CLOSED]
+RateLimit: 4923/5000 remaining
+✔ Erstellt als #21
+→ Label for formatted textarea buttons (#22) [CLOSED]
+RateLimit: 4921/5000 remaining
+✔ Erstellt als #22
+→ FIx Bug in image Upload for textfields (#23) [CLOSED]
+RateLimit: 4919/5000 remaining
+✔ Erstellt als #23
+→ Add RIghts Management for modules (#24) [CLOSED]
+RateLimit: 4917/5000 remaining
+✔ Erstellt als #24
+→ Compact rating querys to data from controller (#25) [CLOSED]
+RateLimit: 4915/5000 remaining
+✔ Erstellt als #25
+→ Improve Experience on Mobile Devices (#26) [CLOSED]
+RateLimit: 4913/5000 remaining
+✔ Erstellt als #26
+→ Include Pagination on Blogs/Images (#27) [CLOSED]
+RateLimit: 4911/5000 remaining
+✔ Erstellt als #27
+→ Fix bug in TableForm (#28) [CLOSED]
+RateLimit: 4909/5000 remaining
+✔ Erstellt als #28
+→ Create Didyouknow & Shortpoems Pages (#29) [CLOSED]
+RateLimit: 4907/5000 remaining
+✔ Erstellt als #29
+→ Add functionality to shariff functions (#30) [CLOSED]
+RateLimit: 4905/5000 remaining
+✔ Erstellt als #30
+→ Added Hashtags for images/Shortpoems/Didyouknow pages (#31) [CLOSED]
+RateLimit: 4903/5000 remaining
+✔ Erstellt als #31
+→ Add a function wich actualize the user-table-rights on new admin_table entry (#32) [CLOSED]
+RateLimit: 4901/5000 remaining
+✔ Erstellt als #32
+→ Add navigation cards on admin dashboard (#33) [CLOSED]
+RateLimit: 4899/5000 remaining
+✔ Erstellt als #33
+→ Auto Toaster (#34) [CLOSED]
+RateLimit: 4897/5000 remaining
+✔ Erstellt als #34
+→ Fix bugs in Search & entity decoding (#35) [CLOSED]
+RateLimit: 4895/5000 remaining
+✔ Erstellt als #35
+→ Search Filter & Pagination on Shortpoems & Didyouknow (#36) [CLOSED]
+RateLimit: 4893/5000 remaining
+✔ Erstellt als #36
+→ Add Content to privacy Page (#37) [CLOSED]
+RateLimit: 4891/5000 remaining
+✔ Erstellt als #37
+→ users_id autoselect (#38) [CLOSED]
+RateLimit: 4889/5000 remaining
+✔ Erstellt als #38
+→ Images Categories select and Actualized by images_categories (#39) [CLOSED]
+RateLimit: 4887/5000 remaining
+✔ Erstellt als #39
+→ [BUG] in darkmode saving & Purify working (#40) [CLOSED]
+RateLimit: 4885/5000 remaining
+✔ Erstellt als #40
+→ User & User Details vues have to be done (#41) [CLOSED]
+RateLimit: 4883/5000 remaining
+✔ Erstellt als #41
+→ Migrate Comments & Image Ratings to MCSL (#42) [CLOSED]
+RateLimit: 4881/5000 remaining
+✔ Erstellt als #42
+→ Add Comments Center (#43) [CLOSED]
+RateLimit: 4879/5000 remaining
+✔ Erstellt als #43
+→ Search FIelds on almost all pages (#44) [CLOSED]
+RateLimit: 4877/5000 remaining
+✔ Erstellt als #44
+→ link from comments table to entry (#45) [CLOSED]
+RateLimit: 4875/5000 remaining
+✔ Erstellt als #45
+→ alert field in search function (#46) [CLOSED]
+RateLimit: 4873/5000 remaining
+✔ Erstellt als #46
+→ create marblefx.de homepage (#47) [CLOSED]
+RateLimit: 4871/5000 remaining
+✔ Erstellt als #47
+→ Feature - Create monikadargies.de (#48) [CLOSED]
+RateLimit: 4869/5000 remaining
+✔ Erstellt als #48
+→ Image Upload Model for other Tables (#49) [CLOSED]
+RateLimit: 4867/5000 remaining
+✔ Erstellt als #49
+→ Brandheader Subdomains (#50) [CLOSED]
+RateLimit: 4865/5000 remaining
+✔ Erstellt als #50
+→ Add xis_ and img_ fields to the tableform.vue (#51) [CLOSED]
+RateLimit: 4863/5000 remaining
+✔ Erstellt als #51
+→ slider/checkbox choosing based on field name (#52) [CLOSED]
+RateLimit: 4861/5000 remaining
+✔ Erstellt als #52
+→ Migrate Passwords (#53) [CLOSED]
+RateLimit: 4859/5000 remaining
+✔ Erstellt als #53
+→ BrandFooter & Cookie Banner Bugfixes (#54) [CLOSED]
+RateLimit: 4857/5000 remaining
+✔ Erstellt als #54
+→ Update Images without watermarks on image gallerys (#55) [CLOSED]
+RateLimit: 4855/5000 remaining
+✔ Erstellt als #55
+→ Add json file for image gallerys (#56) [CLOSED]
+RateLimit: 4853/5000 remaining
+✔ Erstellt als #56
+→ Watermarks marblefx.de (#57) [CLOSED]
+RateLimit: 4851/5000 remaining
+✔ Erstellt als #57
+→ Fix Bugs in Pub field (#58) [CLOSED]
+RateLimit: 4849/5000 remaining
+✔ Erstellt als #58
+→ Add position on Tables & Imgdirs (#59) [CLOSED]
+RateLimit: 4847/5000 remaining
+✔ Erstellt als #59
+→ Combine CSS duplicated (#60) [CLOSED]
+RateLimit: 4845/5000 remaining
+✔ Erstellt als #60
+→ publicradio default selection (#61) [CLOSED]
+RateLimit: 4843/5000 remaining
+✔ Erstellt als #61
+→ Fallback of localhost (#62) [CLOSED]
+RateLimit: 4841/5000 remaining
+✔ Erstellt als #62
+→ feature - Meta Title adding for most pages (#63) [CLOSED]
+RateLimit: 4839/5000 remaining
+✔ Erstellt als #63
+→ feature - move api routes in routes/api.php (#64) [CLOSED]
+RateLimit: 4837/5000 remaining
+✔ Erstellt als #64
+→ bug - had to fix socialmedia links esp. Twitter (#65) [CLOSED]
+RateLimit: 4835/5000 remaining
+✔ Erstellt als #65
+→ Bug - Layout error CSS file not loaded correctly (#66) [CLOSED]
+RateLimit: 4833/5000 remaining
+✔ Erstellt als #66
+→ bug - Password reset doesn't works (#67) [CLOSED]
+RateLimit: 4831/5000 remaining
+✔ Erstellt als #67
+→ Feature - Administration Cards by table (#68) [CLOSED]
+RateLimit: 4829/5000 remaining
+✔ Erstellt als #68
+→ bug in tables/show Deleting (#69) [CLOSED]
+RateLimit: 4827/5000 remaining
+✔ Erstellt als #69
+→ feature - Captcha for Email (#70) [CLOSED]
+RateLimit: 4825/5000 remaining
+✔ Erstellt als #70
+→ PR Dummy #71 - Bump axios from 0.28.1 to 0.30.0 (#71) [MERGED]
+RateLimit: 4823/5000 remaining
+✔ Erstellt als #71
+→ Feature - Sticky Blogposts (#72) [CLOSED]
+RateLimit: 4822/5000 remaining
+✔ Erstellt als #72
+→ Bug - HOTFIX - Change tailwind classes for email forms (#73) [CLOSED]
+RateLimit: 4820/5000 remaining
+✔ Erstellt als #73
+→ BUGS in differnt vues/Controller (#74) [CLOSED]
+RateLimit: 4818/5000 remaining
+✔ Erstellt als #74
+→ PR Dummy #75 - Bump spatie/laravel-sitemap from 7.3.6 to 7.3.7 (#75) [CLOSED]
+RateLimit: 4816/5000 remaining
+✔ Erstellt als #75
+→ PR Dummy #76 - Bump actions/checkout from 4 to 5 (#76) [MERGED]
+RateLimit: 4814/5000 remaining
+✔ Erstellt als #76
+→ PR Dummy #77 - Bump laravel-lang/lang from 15.22.8 to 15.24.0 (#77) [MERGED]
+RateLimit: 4813/5000 remaining
+✔ Erstellt als #77
+→ PR Dummy #78 - Bump dayjs from 1.11.13 to 1.11.18 (#78) [MERGED]
+RateLimit: 4812/5000 remaining
+✔ Erstellt als #78
+→ PR Dummy #79 - Bump laravel/sail from 1.44.0 to 1.45.0 (#79) [MERGED]
+RateLimit: 4811/5000 remaining
+✔ Erstellt als #79
+→ PR Dummy #80 - Bump sass from 1.90.0 to 1.91.0 (#80) [MERGED]
+RateLimit: 4810/5000 remaining
+✔ Erstellt als #80
+→ PR Dummy #81 - Bump @fortawesome/free-regular-svg-icons from 6.7.2 to 7.0.0 (#81) [MERGED]
+RateLimit: 4809/5000 remaining
+✔ Erstellt als #81
+→ PR Dummy #82 - Bump laravel/framework from 12.22.1 to 12.26.4 (#82) [MERGED]
+RateLimit: 4808/5000 remaining
+✔ Erstellt als #82
+→ PR Dummy #83 - Bump vue-i18n from 9.14.5 to 11.1.11 (#83) [MERGED]
+RateLimit: 4807/5000 remaining
+✔ Erstellt als #83
+→ PR Dummy #84 - Bump tightenco/ziggy from 2.4.2 to 2.5.3 (#84) [MERGED]
+RateLimit: 4806/5000 remaining
+✔ Erstellt als #84
+→ PR Dummy #85 - Bump bootstrap from 5.3.7 to 5.3.8 (#85) [MERGED]
+RateLimit: 4805/5000 remaining
+✔ Erstellt als #85
+→ PR Dummy #86 - Bump hotwired-laravel/turbo-laravel from 2.3.0 to 2.4.0 (#86) [MERGED]
+RateLimit: 4804/5000 remaining
+✔ Erstellt als #86
+→ PR Dummy #87 - Bump eslint from 9.33.0 to 9.34.0 (#87) [MERGED]
+RateLimit: 4803/5000 remaining
+✔ Erstellt als #87
+→ PR Dummy #88 - Bump inertiajs/inertia-laravel from 2.0.4 to 2.0.6 (#88) [MERGED]
+RateLimit: 4802/5000 remaining
+✔ Erstellt als #88
+→ PR Dummy #89 - Bump tailwindcss from 3.4.17 to 4.1.12 (#89) [MERGED]
+RateLimit: 4801/5000 remaining
+✔ Erstellt als #89
+→ PR Dummy #90 - Bump @inertiajs/vue3 from 1.3.0 to 2.1.3 (#90) [MERGED]
+RateLimit: 4800/5000 remaining
+✔ Erstellt als #90
+→ PR Dummy #91 - Bump laravel/fortify from 1.28.0 to 1.30.0 (#91) [MERGED]
+RateLimit: 4799/5000 remaining
+✔ Erstellt als #91
+→ PR Dummy #92 - Bump marked from 15.0.12 to 16.2.1 (#92) [MERGED]
+RateLimit: 4798/5000 remaining
+✔ Erstellt als #92
+→ PR Dummy #93 - Bump laravel-vite-plugin from 1.3.0 to 2.0.1 (#93) [MERGED]
+RateLimit: 4797/5000 remaining
+✔ Erstellt als #93
+→ PR Dummy #94 - Bump prettier from 3.4.2 to 3.6.2 (#94) [MERGED]
+RateLimit: 4796/5000 remaining
+✔ Erstellt als #94
+→ PR Dummy #95 - Bump eslint-plugin-vue from 9.33.0 to 10.4.0 (#95) [MERGED]
+RateLimit: 4795/5000 remaining
+✔ Erstellt als #95
+→ PR Dummy #96 - Bump vite from 6.3.5 to 7.1.4 (#96) [MERGED]
+RateLimit: 4794/5000 remaining
+✔ Erstellt als #96
+→ PR Dummy #97 - Bump globals from 15.15.0 to 16.3.0 (#97) [MERGED]
+RateLimit: 4793/5000 remaining
+✔ Erstellt als #97
+→ PR Dummy #98 - Bump axios from 0.28.1 to 1.11.0 (#98) [MERGED]
+RateLimit: 4792/5000 remaining
+✔ Erstellt als #98
+→ PR Dummy #99 - Bump vue from 3.5.18 to 3.5.21 (#99) [MERGED]
+RateLimit: 4791/5000 remaining
+✔ Erstellt als #99
+→ BUGS in captcha & dark mode on Adminpanelm & Logout route (#100) [CLOSED]
+RateLimit: 4790/5000 remaining
+✔ Erstellt als #100
+→ PR Dummy #101 - Bump spatie/laravel-sitemap from 7.3.6 to 7.3.7 (#101) [MERGED]
+RateLimit: 4788/5000 remaining
+✔ Erstellt als #101
+→ BUG in shariff (#102) [CLOSED]
+RateLimit: 4787/5000 remaining
+✔ Erstellt als #102
+→ PR Dummy #103 - Bump @eslint/js from 9.33.0 to 9.34.0 (#103) [MERGED]
+RateLimit: 4785/5000 remaining
+✔ Erstellt als #103
+→ PR Dummy #104 - Bump axios from 0.28.1 to 0.30.0 in the npm_and_yarn group across 1 directory (#104) [CLOSED]
+RateLimit: 4784/5000 remaining
+✔ Erstellt als #104
+→ PR Dummy #105 - Bump esbuild from 0.25.0 to 0.25.1 in the npm_and_yarn group across 1 directory (#105) [CLOSED]
+RateLimit: 4782/5000 remaining
+✔ Erstellt als #105
+→ PR Dummy #106 - Bump esbuild from 0.25.0 to 0.25.9 (#106) [MERGED]
+RateLimit: 4780/5000 remaining
+✔ Erstellt als #106
+→ PR Dummy #107 - Bump @inertiajs/vue3 from 2.1.3 to 2.1.4 (#107) [MERGED]
+RateLimit: 4779/5000 remaining
+✔ Erstellt als #107
+→ BUG Fixed evil bugs in tailwind css modules (#108) [CLOSED]
+RateLimit: 4778/5000 remaining
+✔ Erstellt als #108
+→ BUG - Profile Photos paths (#109) [CLOSED]
+RateLimit: 4776/5000 remaining
+✔ Erstellt als #109
+→ BUGs in profile, Darkmode, Admin Panel & Co. (#110) [CLOSED]
+RateLimit: 4774/5000 remaining
+✔ Erstellt als #110
+→ PR Dummy #111 - Bump tailwindcss from 3.4.17 to 4.1.13 (#111) [CLOSED]
+RateLimit: 4772/5000 remaining
+✔ Erstellt als #111
+→ PR Dummy #112 - Bump eslint from 9.34.0 to 9.35.0 (#112) [MERGED]
+RateLimit: 4770/5000 remaining
+✔ Erstellt als #112
+→ PR Dummy #113 - Bump @eslint/js from 9.34.0 to 9.35.0 (#113) [MERGED]
+RateLimit: 4769/5000 remaining
+✔ Erstellt als #113
+→ PR Dummy #114 - Bump @fontsource/ubuntu from 5.2.6 to 5.2.7 (#114) [CLOSED]
+RateLimit: 4768/5000 remaining
+✔ Erstellt als #114
+→ PR Dummy #115 - Bump sass from 1.92.0 to 1.92.1 (#115) [CLOSED]
+RateLimit: 4766/5000 remaining
+✔ Erstellt als #115
+→ PR Dummy #116 - Bump vite from 7.1.4 to 7.1.5 (#116) [CLOSED]
+RateLimit: 4764/5000 remaining
+✔ Erstellt als #116
+→ PR Dummy #117 - Bump vue-i18n from 11.1.11 to 11.1.12 (#117) [CLOSED]
+RateLimit: 4762/5000 remaining
+✔ Erstellt als #117
+→ PR Dummy #118 - Bump @inertiajs/vue3 from 2.1.4 to 2.1.5 (#118) [CLOSED]
+RateLimit: 4760/5000 remaining
+✔ Erstellt als #118
+→ PR Dummy #119 - Bump tightenco/ziggy from 2.4.2 to 2.5.3 (#119) [MERGED]
+RateLimit: 4758/5000 remaining
+✔ Erstellt als #119
+→ PR Dummy #120 - Bump laravel-lang/lang from 15.24.1 to 15.24.2 (#120) [CLOSED]
+RateLimit: 4757/5000 remaining
+✔ Erstellt als #120
+→ PR Dummy #121 - Bump laravel-lang/lang from 15.24.1 to 15.24.3 (#121) [MERGED]
+RateLimit: 4755/5000 remaining
+✔ Erstellt als #121
+→ PR Dummy #122 - Bump @fortawesome/vue-fontawesome from 3.1.1 to 3.1.2 (#122) [CLOSED]
+RateLimit: 4754/5000 remaining
+✔ Erstellt als #122
+→ Feature - add user icon on table/show (#123) [CLOSED]
+RateLimit: 4752/5000 remaining
+✔ Erstellt als #123
+→ PR Dummy #124 - Bump the composer group across 1 directory with 2 updates (#124) [MERGED]
+RateLimit: 4750/5000 remaining
+✔ Erstellt als #124
+→ PR Dummy #125 - Bump the npm_and_yarn group across 1 directory with 1 update (#125) [MERGED]
+RateLimit: 4749/5000 remaining
+✔ Erstellt als #125
+→ BUG - fixed bugs in tableform.vue (#126) [CLOSED]
+RateLimit: 4748/5000 remaining
+✔ Erstellt als #126
+→ Hotfix - Close Navi on mobile devices if darkmode toggle is clicked (#127) [CLOSED]
+RateLimit: 4746/5000 remaining
+✔ Erstellt als #127
+→ PR Dummy #128 - Bump marked from 16.2.1 to 16.3.0 (#128) [MERGED]
+RateLimit: 4744/5000 remaining
+✔ Erstellt als #128
+→ PR Dummy #129 - Bump ziggy-js from 2.5.3 to 2.6.0 (#129) [MERGED]
+RateLimit: 4743/5000 remaining
+✔ Erstellt als #129
+→ Feature - Made by MCs in Mail Template (#130) [CLOSED]
+RateLimit: 4742/5000 remaining
+✔ Erstellt als #130
+→ Feature - Shrink Login/Register to 1 Page with tabs (#131) [CLOSED]
+RateLimit: 4740/5000 remaining
+✔ Erstellt als #131
+→ Feature - add powered by mcsl linked in footer (Layout.vue) (#132) [CLOSED]
+RateLimit: 4738/5000 remaining
+✔ Erstellt als #132
+→ PR Dummy #133 - Bump @fontsource/open-sans from 5.2.6 to 5.2.7 (#133) [MERGED]
+RateLimit: 4736/5000 remaining
+✔ Erstellt als #133
+→ PR Dummy #134 - Bump @fontsource/ubuntu from 5.2.7 to 5.2.8 (#134) [MERGED]
+RateLimit: 4735/5000 remaining
+✔ Erstellt als #134
+→ Feature - Email Sending Center (#135) [CLOSED]
+RateLimit: 4734/5000 remaining
+✔ Erstellt als #135
+→ BUG - redirect to gallery on search (#136) [CLOSED]
+RateLimit: 4732/5000 remaining
+✔ Erstellt als #136
+→ BUG - MetaHeader not found on Privacy.vue (#137) [CLOSED]
+RateLimit: 4730/5000 remaining
+✔ Erstellt als #137
+→ old functions to vue (#138) [CLOSED]
+RateLimit: 4728/5000 remaining
+✔ Erstellt als #138
+→ Hotfix - Route should exists (#139) [CLOSED]
+RateLimit: 4726/5000 remaining
+✔ Erstellt als #139
+→ Hotfix - fix bug in privacy/imprint handling (#140) [CLOSED]
+RateLimit: 4724/5000 remaining
+✔ Erstellt als #140
+→ Hotfix - Search on tables/show (#141) [CLOSED]
+RateLimit: 4722/5000 remaining
+✔ Erstellt als #141
+→ Hotfix - image on profiles Bug (#142) [CLOSED]
+RateLimit: 4720/5000 remaining
+✔ Erstellt als #142
+→ Bug - Admin/Layout.vue no logo on dag page (#143) [CLOSED]
+RateLimit: 4718/5000 remaining
+✔ Erstellt als #143
+→ Hotfix - fixed several Bugs in Layouts (#144) [CLOSED]
+RateLimit: 4716/5000 remaining
+✔ Erstellt als #144
+→ Feature - Smilies on Comments (#145) [CLOSED]
+RateLimit: 4714/5000 remaining
+✔ Erstellt als #145
+→ PR Dummy #146 - Bump eslint from 9.35.0 to 9.36.0 (#146) [MERGED]
+RateLimit: 4712/5000 remaining
+✔ Erstellt als #146
+→ PR Dummy #147 - Bump eslint-plugin-vue from 10.4.0 to 10.5.0 (#147) [MERGED]
+RateLimit: 4711/5000 remaining
+✔ Erstellt als #147
+→ PR Dummy #148 - Bump @inertiajs/vue3 from 2.1.6 to 2.1.10 (#148) [MERGED]
+RateLimit: 4710/5000 remaining
+✔ Erstellt als #148
+→ PR Dummy #149 - Bump @eslint/js from 9.35.0 to 9.36.0 (#149) [MERGED]
+RateLimit: 4709/5000 remaining
+✔ Erstellt als #149
+→ PR Dummy #150 - Bump sass from 1.92.1 to 1.93.0 (#150) [MERGED]
+RateLimit: 4708/5000 remaining
+✔ Erstellt als #150
+→ PR Dummy #151 - Bump @tailwindcss/typography from 0.5.16 to 0.5.18 (#151) [MERGED]
+RateLimit: 4707/5000 remaining
+✔ Erstellt als #151
+→ PR Dummy #152 - Bump vite from 7.1.5 to 7.1.7 (#152) [MERGED]
+RateLimit: 4706/5000 remaining
+✔ Erstellt als #152
+→ HOTFIX - AIContent updated (#153) [CLOSED]
+RateLimit: 4705/5000 remaining
+✔ Erstellt als #153
+→ FEATURE - QR Code Generator for all domains (#154) [CLOSED]
+RateLimit: 4703/5000 remaining
+✔ Erstellt als #154
+→ FEATURE - invert colors on home/pictures (#155) [CLOSED]
+RateLimit: 4701/5000 remaining
+✔ Erstellt als #155
+→ BUG - Message field to imageuploadmodel (#156) [CLOSED]
+RateLimit: 4699/5000 remaining
+✔ Erstellt als #156
+→ BUGs - In Footer links (#157) [CLOSED]
+RateLimit: 4697/5000 remaining
+✔ Erstellt als #157
+→ HOTFIX - Profile Images on ab.marblefx.net (#158) [CLOSED]
+RateLimit: 4695/5000 remaining
+✔ Erstellt als #158
+→ BUGs in images on marblefx.net (#159) [CLOSED]
+RateLimit: 4693/5000 remaining
+✔ Erstellt als #159
+→ Font on Monikadarrgies..de (#160) [CLOSED]
+RateLimit: 4691/5000 remaining
+✔ Erstellt als #160
+→ BUG - Evil bug in uploading images (#161) [CLOSED]
+RateLimit: 4689/5000 remaining
+✔ Erstellt als #161
+→ BUG - cookie link on ab.marblefx.net doesn't works (#162) [CLOSED]
+RateLimit: 4687/5000 remaining
+✔ Erstellt als #162
+→ BUGs in image upload script (#163) [CLOSED]
+RateLimit: 4685/5000 remaining
+✔ Erstellt als #163
+→ Feature - Change tabs on ImageUploadModal to extra buttons (#164) [CLOSED]
+RateLimit: 4683/5000 remaining
+✔ Erstellt als #164
+→ PR Dummy #165 - Bump @inertiajs/vue3 from 2.2.0 to 2.2.3 (#165) [CLOSED]
+RateLimit: 4681/5000 remaining
+✔ Erstellt als #165
+→ DARK BG in privacy ab.dom (#166) [CLOSED]
+RateLimit: 4679/5000 remaining
+✔ Erstellt als #166
+→ Added changelog automatic generator (#167) [CLOSED]
+RateLimit: 4677/5000 remaining
+✔ Erstellt als #167
+→ PR Dummy #168 - Bump tightenco/ziggy from 2.4.2 to 2.6.0 (#168) [MERGED]
+RateLimit: 4675/5000 remaining
+✔ Erstellt als #168
+→ PR Dummy #169 - Bump inertiajs/inertia-laravel from 2.0.9 to 2.0.10 (#169) [MERGED]
+RateLimit: 4674/5000 remaining
+✔ Erstellt als #169
+→ PR Dummy #170 - Bump laravel/framework from 12.31.1 to 12.32.5 (#170) [MERGED]
+RateLimit: 4673/5000 remaining
+✔ Erstellt als #170
+→ PR Dummy #171 - Bump laravel/fortify from 1.30.0 to 1.31.0 (#171) [MERGED]
+RateLimit: 4672/5000 remaining
+✔ Erstellt als #171
+→ Feature - Emigrate Contacts from MCS to MCSL (#172) [CLOSED]
+RateLimit: 4671/5000 remaining
+✔ Erstellt als #172
+→ Feature - Add Contactlist & fixed  several Bugs  (#173) [CLOSED]
+RateLimit: 4669/5000 remaining
+✔ Erstellt als #173
+→ Feature - Search has to be added to contact list (#174) [CLOSED]
+RateLimit: 4667/5000 remaining
+✔ Erstellt als #174
+→ Hotfix - Repaired Search on TableShow (#175) [CLOSED]
+RateLimit: 4665/5000 remaining
+✔ Erstellt als #175
+→ PR Dummy #176 - Bump less from 4.4.1 to 4.4.2 (#176) [MERGED]
+RateLimit: 4663/5000 remaining
+✔ Erstellt als #176
+→ PR Dummy #177 - Bump eslint from 9.36.0 to 9.37.0 (#177) [MERGED]
+RateLimit: 4662/5000 remaining
+✔ Erstellt als #177
+→ PR Dummy #178 - Bump tailwindcss from 3.4.17 to 4.1.14 (#178) [MERGED]
+RateLimit: 4661/5000 remaining
+✔ Erstellt als #178
+→ PR Dummy #179 - Bump @tailwindcss/postcss from 4.1.13 to 4.1.14 (#179) [MERGED]
+RateLimit: 4660/5000 remaining
+✔ Erstellt als #179
+→ PR Dummy #180 - Bump @fortawesome/free-brands-svg-icons from 7.0.1 to 7.1.0 (#180) [MERGED]
+RateLimit: 4659/5000 remaining
+✔ Erstellt als #180
+→ PR Dummy #181 - Bump @eslint/js from 9.36.0 to 9.37.0 (#181) [CLOSED]
+RateLimit: 4658/5000 remaining
+✔ Erstellt als #181
+→ PR Dummy #182 - Bump @fortawesome/fontawesome-svg-core from 7.0.1 to 7.1.0 (#182) [MERGED]
+RateLimit: 4656/5000 remaining
+✔ Erstellt als #182
+→ PR Dummy #183 - Bump @inertiajs/vue3 from 2.2.0 to 2.2.6 (#183) [CLOSED]
+RateLimit: 4655/5000 remaining
+✔ Erstellt als #183
+→ PR Dummy #184 - Bump @fortawesome/free-regular-svg-icons from 7.0.1 to 7.1.0 (#184) [MERGED]
+RateLimit: 4653/5000 remaining
+✔ Erstellt als #184
+→ PR Dummy #185 - Bump @fortawesome/free-solid-svg-icons from 7.0.1 to 7.1.0 (#185) [MERGED]
+RateLimit: 4652/5000 remaining
+✔ Erstellt als #185
+→ Hotfix - Changed profile image path (#186) [CLOSED]
+RateLimit: 4651/5000 remaining
+✔ Erstellt als #186
+→ Hotfix - Cursor jumped on input (#187) [CLOSED]
+RateLimit: 4649/5000 remaining
+✔ Erstellt als #187
+→ Feature - Add Email/Newsletter Center (#188) [CLOSED]
+RateLimit: 4647/5000 remaining
+✔ Erstellt als #188
+→ Hotfix - code formating failed (#189) [CLOSED]
+RateLimit: 4645/5000 remaining
+✔ Erstellt als #189
+→ Feature ÔÇô Global Notification (#190) [CLOSED]
+RateLimit: 4643/5000 remaining
+✔ Erstellt als #190
+→ PR Dummy #191 - Bump @inertiajs/vue3 from 2.2.0 to 2.2.8 (#191) [MERGED]
+RateLimit: 4641/5000 remaining
+✔ Erstellt als #191
+→ PR Dummy #192 - Bump marked from 16.3.0 to 16.4.0 (#192) [MERGED]
+RateLimit: 4640/5000 remaining
+✔ Erstellt als #192
+→ PR Dummy #193 - Bump vite from 7.1.7 to 7.1.9 (#193) [MERGED]
+RateLimit: 4639/5000 remaining
+✔ Erstellt als #193
+→ Feature - create landing Page on asarios blog (#194) [CLOSED]
+RateLimit: 4638/5000 remaining
+✔ Erstellt als #194
+→ Hotfix -  Remove double buttons on tableform (#195) [CLOSED]
+RateLimit: 4636/5000 remaining
+✔ Erstellt als #195
+→ Hotfix - changed position of back & new Button (#196) [CLOSED]
+RateLimit: 4634/5000 remaining
+✔ Erstellt als #196
+→ Feature - Added Contacts page (#197) [CLOSED]
+RateLimit: 4632/5000 remaining
+✔ Erstellt als #197
+→ PR Dummy #198 - Bump vite from 7.1.9 to 7.1.11 (#198) [MERGED]
+RateLimit: 4630/5000 remaining
+✔ Erstellt als #198
+→ PR Dummy #199 - Bump eslint from 9.37.0 to 9.38.0 (#199) [MERGED]
+RateLimit: 4629/5000 remaining
+✔ Erstellt als #199
+→ PR Dummy #200 - Bump eslint-plugin-vue from 10.5.0 to 10.5.1 (#200) [MERGED]
+RateLimit: 4628/5000 remaining
+✔ Erstellt als #200
+→ PR Dummy #201 - Bump @eslint/js from 9.37.0 to 9.38.0 (#201) [MERGED]
+RateLimit: 4627/5000 remaining
+✔ Erstellt als #201
+→ PR Dummy #202 - Bump marked from 16.4.0 to 16.4.1 (#202) [MERGED]
+RateLimit: 4626/5000 remaining
+✔ Erstellt als #202
+→ PR Dummy #203 - Bump @tailwindcss/postcss from 4.1.14 to 4.1.15 (#203) [MERGED]
+RateLimit: 4625/5000 remaining
+✔ Erstellt als #203
+→ PR Dummy #204 - Bump vue-router from 4.5.1 to 4.6.3 (#204) [MERGED]
+RateLimit: 4624/5000 remaining
+✔ Erstellt als #204
+→ PR Dummy #205 - Bump tailwindcss from 3.4.18 to 4.1.15 (#205) [CLOSED]
+RateLimit: 4623/5000 remaining
+✔ Erstellt als #205
+→ PR Dummy #206 - Bump the npm_and_yarn group across 1 directory with 1 update (#206) [MERGED]
+RateLimit: 4621/5000 remaining
+✔ Erstellt als #206
+→ Hotfix - add content to mixed content db table (#207) [CLOSED]
+RateLimit: 4620/5000 remaining
+✔ Erstellt als #207
+→ Feature - Added Author Image to blogshow (#208) [CLOSED]
+RateLimit: 4618/5000 remaining
+✔ Erstellt als #208
+→ Hot Fix - set image height on blogshow (#209) [CLOSED]
+RateLimit: 4616/5000 remaining
+✔ Erstellt als #209
+→ Hotfix change font-family on <code> (#210) [CLOSED]
+RateLimit: 4614/5000 remaining
+✔ Erstellt als #210
+→ Hotfix - Artselect saving bug (#211) [CLOSED]
+RateLimit: 4612/5000 remaining
+✔ Erstellt als #211
+→ Colors on Footer links (#212) [CLOSED]
+RateLimit: 4610/5000 remaining
+✔ Erstellt als #212
+→ Remove Alt Tags on Smilies & Ohter bugs (#213) [CLOSED]
+RateLimit: 4608/5000 remaining
+✔ Erstellt als #213
+→ Hotfix - Changed Umlaut character on newsletter (#214) [CLOSED]
+RateLimit: 4606/5000 remaining
+✔ Erstellt als #214
+→ Feature - Toastbus on every Form (#215) [CLOSED]
+RateLimit: 4604/5000 remaining
+✔ Erstellt als #215
+→ PR Dummy #216 - Bump vite from 7.1.11 to 7.1.12 (#216) [MERGED]
+RateLimit: 4602/5000 remaining
+✔ Erstellt als #216
+→ PR Dummy #217 - Bump tailwindcss from 4.1.15 to 4.1.16 (#217) [MERGED]
+RateLimit: 4601/5000 remaining
+✔ Erstellt als #217
+→ PR Dummy #218 - Bump @tailwindcss/postcss from 4.1.15 to 4.1.16 (#218) [MERGED]
+RateLimit: 4600/5000 remaining
+✔ Erstellt als #218
+→ PR Dummy #219 - Bump @inertiajs/vue3 from 2.2.8 to 2.2.12 (#219) [MERGED]
+RateLimit: 4599/5000 remaining
+✔ Erstellt als #219
+→ Feature - Add User Overview and Permissions (#220) [CLOSED]
+RateLimit: 4598/5000 remaining
+✔ Erstellt als #220
+→ Feature - Added success / not successed on mail submiting (#221) [CLOSED]
+RateLimit: 4596/5000 remaining
+✔ Erstellt als #221
+→ Feature - Dynamic arrow on mobile devices @ Home  (#222) [CLOSED]
+RateLimit: 4594/5000 remaining
+✔ Erstellt als #222
+→ Feature - Add responsive nav on admin (#223) [CLOSED]
+RateLimit: 4592/5000 remaining
+✔ Erstellt als #223
+→ Feature -- Auto slug on Texts Table (#224) [CLOSED]
+RateLimit: 4590/5000 remaining
+✔ Erstellt als #224
+→ Hotfix - decrypt emails from contacts (#225) [CLOSED]
+RateLimit: 4588/5000 remaining
+✔ Erstellt als #225
+→ BUG - Titles on different Pages (#226) [CLOSED]
+RateLimit: 4586/5000 remaining
+✔ Erstellt als #226
+→ Feature - Add Contacts to navigationcards (#227) [CLOSED]
+RateLimit: 4584/5000 remaining
+✔ Erstellt als #227
+→ PR Dummy #228 - Bump the npm_and_yarn group across 1 directory with 2 updates (#228) [MERGED]
+RateLimit: 4582/5000 remaining
+✔ Erstellt als #228
+→ Hotfix - Remove Bug in TableShow (#229) [CLOSED]
+RateLimit: 4581/5000 remaining
+✔ Erstellt als #229
+→ Feature - Register Mail (#230) [CLOSED]
+RateLimit: 4579/5000 remaining
+✔ Erstellt als #230
+→ Hotfix - evil bug in user handling (#231) [CLOSED]
+RateLimit: 4577/5000 remaining
+✔ Erstellt als #231
+→ PR Dummy #232 - Bump laravel/framework from 12.33.0 to 12.36.1 (#232) [MERGED]
+RateLimit: 4575/5000 remaining
+✔ Erstellt als #232
+→ PR Dummy #233 - Bump laravel/fortify from 1.31.1 to 1.31.2 (#233) [MERGED]
+RateLimit: 4574/5000 remaining
+✔ Erstellt als #233
+→ PR Dummy #234 - Bump ezyang/htmlpurifier from 4.18.0 to 4.19.0 (#234) [MERGED]
+RateLimit: 4573/5000 remaining
+✔ Erstellt als #234
+→ PR Dummy #235 - Bump laravel-lang/lang from 15.26.1 to 15.26.2 (#235) [MERGED]
+RateLimit: 4572/5000 remaining
+✔ Erstellt als #235
+→ PR Dummy #236 - Bump whitecube/laravel-cookie-consent from 1.3.6 to 1.3.7 (#236) [MERGED]
+RateLimit: 4571/5000 remaining
+✔ Erstellt als #236
+→ PR Dummy #237 - Bump tightenco/ziggy from 2.4.2 to 2.6.0 (#237) [MERGED]
+RateLimit: 4570/5000 remaining
+✔ Erstellt als #237
+→ PR Dummy #238 - Bump laravel/sail from 1.46.0 to 1.47.0 (#238) [MERGED]
+RateLimit: 4569/5000 remaining
+✔ Erstellt als #238
+→ Hotfix - Focus lost on html editor (#239) [CLOSED]
+RateLimit: 4568/5000 remaining
+✔ Erstellt als #239
+→ Feature - Add Mail for Birthdays/Ripdates (#240) [CLOSED]
+RateLimit: 4566/5000 remaining
+✔ Erstellt als #240
+→ PR Dummy #241 - Bump globals from 16.4.0 to 16.5.0 (#241) [MERGED]
+RateLimit: 4564/5000 remaining
+✔ Erstellt als #241
+→ PR Dummy #242 - Bump @inertiajs/vue3 from 2.2.8 to 2.2.15 (#242) [MERGED]
+RateLimit: 4563/5000 remaining
+✔ Erstellt als #242
+→ PR Dummy #243 - Bump @eslint/js from 9.37.0 to 9.39.0 (#243) [MERGED]
+RateLimit: 4562/5000 remaining
+✔ Erstellt als #243
+→ PR Dummy #244 - Bump vue-router from 4.5.1 to 4.6.3 (#244) [MERGED]
+RateLimit: 4561/5000 remaining
+✔ Erstellt als #244
+→ PR Dummy #245 - Bump dayjs from 1.11.18 to 1.11.19 (#245) [MERGED]
+RateLimit: 4560/5000 remaining
+✔ Erstellt als #245
+→ PR Dummy #246 - Bump @hotwired/turbo from 8.0.18 to 8.0.20 (#246) [MERGED]
+RateLimit: 4559/5000 remaining
+✔ Erstellt als #246
+→ PR Dummy #247 - Bump sass from 1.93.2 to 1.93.3 (#247) [MERGED]
+RateLimit: 4558/5000 remaining
+✔ Erstellt als #247
+→ PR Dummy #248 - Bump eslint from 9.37.0 to 9.39.0 (#248) [MERGED]
+RateLimit: 4557/5000 remaining
+✔ Erstellt als #248
+→ PR Dummy #249 - Bump marked from 16.4.0 to 16.4.1 (#249) [MERGED]
+RateLimit: 4556/5000 remaining
+✔ Erstellt als #249
+→ PR Dummy #250 - Bump @tailwindcss/postcss from 4.1.14 to 4.1.16 (#250) [MERGED]
+RateLimit: 4555/5000 remaining
+✔ Erstellt als #250
+→ Bug - QR Code scanning bug (#251) [CLOSED]
+RateLimit: 4554/5000 remaining
+✔ Erstellt als #251
+→ Feature - PHPIDS on all pages (#252) [CLOSED]
+RateLimit: 4552/5000 remaining
+✔ Erstellt als #252
+→ Hotfix - Evil bug in text-colors on light mode (#253) [CLOSED]
+RateLimit: 4550/5000 remaining
+✔ Erstellt als #253
+→ Bug - Gotta bug in Table Drag & Drop (#254) [OPEN]
+RateLimit: 4548/5000 remaining
+✔ Erstellt als #254
+→ Feature - Private Messages for Asarios Blog (#255) [CLOSED]
+RateLimit: 4547/5000 remaining
+✔ Erstellt als #255
+→ PR Dummy #256 - Bump pinia from 3.0.3 to 3.0.4 (#256) [MERGED]
+RateLimit: 4545/5000 remaining
+✔ Erstellt als #256
+→ PR Dummy #257 - Bump vite from 7.1.12 to 7.2.2 (#257) [MERGED]
+RateLimit: 4544/5000 remaining
+✔ Erstellt als #257
+→ PR Dummy #258 - Bump tailwindcss from 3.4.18 to 4.1.17 (#258) [MERGED]
+RateLimit: 4543/5000 remaining
+✔ Erstellt als #258
+→ PR Dummy #259 - Bump @eslint/js from 9.39.0 to 9.39.1 (#259) [MERGED]
+RateLimit: 4542/5000 remaining
+✔ Erstellt als #259
+→ PR Dummy #260 - Bump eslint from 9.39.0 to 9.39.1 (#260) [MERGED]
+RateLimit: 4541/5000 remaining
+✔ Erstellt als #260
+→ PR Dummy #261 - Bump marked from 16.4.1 to 17.0.0 (#261) [MERGED]
+RateLimit: 4540/5000 remaining
+✔ Erstellt als #261
+→ PR Dummy #262 - Bump vue from 3.5.22 to 3.5.24 (#262) [MERGED]
+RateLimit: 4539/5000 remaining
+✔ Erstellt als #262
+→ PR Dummy #263 - Bump eslint-plugin-vue from 10.5.0 to 10.5.1 (#263) [MERGED]
+RateLimit: 4538/5000 remaining
+✔ Erstellt als #263
+→ PR Dummy #264 - Bump @tailwindcss/postcss from 4.1.16 to 4.1.17 (#264) [MERGED]
+RateLimit: 4537/5000 remaining
+✔ Erstellt als #264
+→ PR Dummy #265 - Bump symfony/http-foundation from 7.3.5 to 7.3.7 in the composer group across 1 directory (#265) [MERGED]
+RateLimit: 4536/5000 remaining
+✔ Erstellt als #265
+→ PR Dummy #266 - Bump the npm_and_yarn group across 1 directory with 1 update (#266) [CLOSED]
+RateLimit: 4535/5000 remaining
+✔ Erstellt als #266
+→ PR Dummy #267 - Bump the npm_and_yarn group across 1 directory with 2 updates (#267) [MERGED]
+RateLimit: 4533/5000 remaining
+✔ Erstellt als #267
+→ PR Dummy #268 - Bump globals from 16.3.0 to 16.5.0 (#268) [MERGED]
+RateLimit: 4532/5000 remaining
+✔ Erstellt als #268
+→ PR Dummy #269 - Bump hotwired-laravel/turbo-laravel from 2.4.0 to 2.5.0 (#269) [MERGED]
+RateLimit: 4531/5000 remaining
+✔ Erstellt als #269
+→ PR Dummy #270 - Bump marked from 16.4.2 to 17.0.0 (#270) [MERGED]
+RateLimit: 4530/5000 remaining
+✔ Erstellt als #270
+→ PR Dummy #271 - Bump pinia from 3.0.3 to 3.0.4 (#271) [MERGED]
+RateLimit: 4529/5000 remaining
+✔ Erstellt als #271
+→ PR Dummy #272 - Bump laravel/sail from 1.47.0 to 1.48.0 (#272) [MERGED]
+RateLimit: 4528/5000 remaining
+✔ Erstellt als #272
+→ PR Dummy #273 - Bump vue-router from 4.5.1 to 4.6.3 (#273) [MERGED]
+RateLimit: 4527/5000 remaining
+✔ Erstellt als #273
+→ PR Dummy #274 - Bump @fortawesome/free-regular-svg-icons from 7.0.1 to 7.1.0 (#274) [MERGED]
+RateLimit: 4526/5000 remaining
+✔ Erstellt als #274
+→ PR Dummy #275 - Bump @fortawesome/free-solid-svg-icons from 7.0.1 to 7.1.0 (#275) [MERGED]
+RateLimit: 4525/5000 remaining
+✔ Erstellt als #275
+→ PR Dummy #276 - Bump laravel/fortify from 1.31.2 to 1.31.3 (#276) [CLOSED]
+RateLimit: 4524/5000 remaining
+✔ Erstellt als #276
+→ PR Dummy #277 - Bump dayjs from 1.11.18 to 1.11.19 (#277) [CLOSED]
+RateLimit: 4522/5000 remaining
+✔ Erstellt als #277
+→ PR Dummy #278 - Bump @hotwired/turbo from 8.0.13 to 8.0.20 (#278) [CLOSED]
+RateLimit: 4520/5000 remaining
+✔ Erstellt als #278
+→ PR Dummy #279 - Bump @fortawesome/fontawesome-svg-core from 7.0.1 to 7.1.0 (#279) [MERGED]
+RateLimit: 4518/5000 remaining
+✔ Erstellt als #279
+→ PR Dummy #280 - Bump laravel/framework from 12.37.0 to 12.38.1 (#280) [CLOSED]
+RateLimit: 4517/5000 remaining
+✔ Erstellt als #280
+→ PR Dummy #281 - Bump less from 4.4.1 to 4.4.2 (#281) [MERGED]
+RateLimit: 4515/5000 remaining
+✔ Erstellt als #281
+→ Hotfix - Fixed evil bug in tablelist (#282) [CLOSED]
+RateLimit: 4514/5000 remaining
+✔ Erstellt als #282
+→ Feature - Sign in with Google (#283) [CLOSED]
+RateLimit: 4512/5000 remaining
+✔ Erstellt als #283
+→ Feature - Countpixel.php for counting  visits on all pages (#284) [CLOSED]
+RateLimit: 4510/5000 remaining
+✔ Erstellt als #284
+→ Hotfix - Errors in positioning of entries (#285) [CLOSED]
+RateLimit: 4508/5000 remaining
+✔ Erstellt als #285
+→ PR Dummy #286 - Bump glob from 10.4.5 to 10.5.0 in the npm_and_yarn group across 1 directory (#286) [CLOSED]
+RateLimit: 4506/5000 remaining
+✔ Erstellt als #286
+→ Bug - have to fix right management functions (#287) [CLOSED]
+RateLimit: 4504/5000 remaining
+✔ Erstellt als #287
+→ Hotfix - Search on Contacts (#288) [CLOSED]
+RateLimit: 4502/5000 remaining
+✔ Erstellt als #288
+→ PR Dummy #289 - Bump actions/checkout from 5 to 6 (#289) [MERGED]
+RateLimit: 4500/5000 remaining
+✔ Erstellt als #289
+→ Hotfix - Changed check of PM Setttings in user profile (#290) [CLOSED]
+RateLimit: 4499/5000 remaining
+✔ Erstellt als #290
+→ Feature - Choosed another Cookie Consent Script (#291) [CLOSED]
+RateLimit: 4497/5000 remaining
+✔ Erstellt als #291
+→ Hotfix - Photoswipe now working properly (#292) [CLOSED]
+RateLimit: 4495/5000 remaining
+✔ Erstellt als #292
+→ Hotfix - fixed pagination on TableShow (#293) [CLOSED]
+RateLimit: 4493/5000 remaining
+✔ Erstellt als #293
+→ Hotfix - Fixed font in footer (#294) [CLOSED]
+RateLimit: 4491/5000 remaining
+✔ Erstellt als #294
+→ PR Dummy #295 - Bump less from 4.4.1 to 4.4.2 (#295) [CLOSED]
+RateLimit: 4489/5000 remaining
+✔ Erstellt als #295
+→ PR Dummy #296 - Bump @inertiajs/vue3 from 2.2.18 to 2.2.19 (#296) [MERGED]
+RateLimit: 4487/5000 remaining
+✔ Erstellt als #296
+→ PR Dummy #297 - Bump @inertiajs/progress from 0.1.2 to 0.2.7 (#297) [MERGED]
+RateLimit: 4486/5000 remaining
+✔ Erstellt als #297
+→ PR Dummy #298 - Bump axios from 1.12.0 to 1.13.2 (#298) [MERGED]
+RateLimit: 4485/5000 remaining
+✔ Erstellt als #298
+→ PR Dummy #299 - Bump @fortawesome/free-brands-svg-icons from 7.0.1 to 7.1.0 (#299) [MERGED]
+RateLimit: 4484/5000 remaining
+✔ Erstellt als #299
+→ PR Dummy #300 - Bump @vitejs/plugin-vue from 6.0.1 to 6.0.2 (#300) [MERGED]
+RateLimit: 4483/5000 remaining
+✔ Erstellt als #300
+→ PR Dummy #301 - Bump marked from 16.4.2 to 17.0.1 (#301) [MERGED]
+RateLimit: 4482/5000 remaining
+✔ Erstellt als #301
+→ Feature - Statistics Completed (#302) [CLOSED]
+RateLimit: 4481/5000 remaining
+✔ Erstellt als #302
+→ Hotfix - Changed Email Form (#303) [CLOSED]
+RateLimit: 4479/5000 remaining
+✔ Erstellt als #303
+→ Feature - Add DB sync (#304) [CLOSED]
+RateLimit: 4477/5000 remaining
+✔ Erstellt als #304
+→ Hotfix - Fix Photoswipe Gallery on asario.de (#305) [CLOSED]
+RateLimit: 4475/5000 remaining
+✔ Erstellt als #305
+→ Feature - Add Adding & edit buttons for images (#306) [CLOSED]
+RateLimit: 4473/5000 remaining
+✔ Erstellt als #306
+→ Feature - Add name column from Settings to Sync Diff (#307) [CLOSED]
+RateLimit: 4471/5000 remaining
+✔ Erstellt als #307
+→ Hotfix - Bug in EmailSender Script (#308) [CLOSED]
+RateLimit: 4469/5000 remaining
+✔ Erstellt als #308
+→ Hotfix Notification not loading (#309) [CLOSED]
+RateLimit: 4467/5000 remaining
+✔ Erstellt als #309
+→ Error Description on Register (#310) [CLOSED]
+RateLimit: 4465/5000 remaining
+✔ Erstellt als #310
+→ Hotfix - Visibility of Newsletter Registration Form (#311) [CLOSED]
+RateLimit: 4463/5000 remaining
+✔ Erstellt als #311
+→ Hotfix - newsletter unsubscribe (#312) [CLOSED]
+RateLimit: 4461/5000 remaining
+✔ Erstellt als #312
+→ Hotfix - Fixed Bugs in Tablesow.vue (#313) [CLOSED]
+RateLimit: 4459/5000 remaining
+✔ Erstellt als #313
+→ Bug - Had to change share functions (#314) [CLOSED]
+RateLimit: 4457/5000 remaining
+✔ Erstellt als #314
+→ Feature - MCSL Points functions (#315) [CLOSED]
+RateLimit: 4455/5000 remaining
+✔ Erstellt als #315
+→ Hotfix - Bug in Birthday cron job (#316) [CLOSED]
+RateLimit: 4453/5000 remaining
+✔ Erstellt als #316
+→ Feature - Added <Title>'s (#317) [CLOSED]
+RateLimit: 4451/5000 remaining
+✔ Erstellt als #317
+→ Feature - Icons for user navigation (#318) [CLOSED]
+RateLimit: 4449/5000 remaining
+✔ Erstellt als #318
+→ Hotfix - Loader Imageupload (#319) [CLOSED]
+RateLimit: 4447/5000 remaining
+✔ Erstellt als #319
+→ Hotfix - There was an issue with the Smilies function. (#320) [CLOSED]
+RateLimit: 4445/5000 remaining
+✔ Erstellt als #320
+→ Feature - public posting for stars & Comments (#321) [CLOSED]
+RateLimit: 4443/5000 remaining
+✔ Erstellt als #321
+→ Feature - Add Shortpoems functions (#322) [CLOSED]
+RateLimit: 4441/5000 remaining
+✔ Erstellt als #322
+→ PR Dummy #323 - Bump tailwindcss from 3.4.19 to 4.1.18 (#323) [MERGED]
+RateLimit: 4439/5000 remaining
+✔ Erstellt als #323
+→ PR Dummy #324 - Bump autoprefixer from 10.4.22 to 10.4.23 (#324) [MERGED]
+RateLimit: 4438/5000 remaining
+✔ Erstellt als #324
+→ PR Dummy #325 - Bump vue from 3.5.25 to 3.5.26 (#325) [MERGED]
+RateLimit: 4437/5000 remaining
+✔ Erstellt als #325
+→ PR Dummy #326 - Bump vite from 7.2.7 to 7.3.0 (#326) [MERGED]
+RateLimit: 4436/5000 remaining
+✔ Erstellt als #326
+→ PR Dummy #327 - Bump globals from 16.5.0 to 17.0.0 (#327) [MERGED]
+RateLimit: 4435/5000 remaining
+✔ Erstellt als #327
+→ PR Dummy #328 - Bump esbuild from 0.25.0 to 0.27.2 (#328) [MERGED]
+RateLimit: 4434/5000 remaining
+✔ Erstellt als #328
+→ PR Dummy #329 - Bump @eslint/js from 9.39.1 to 9.39.2 (#329) [CLOSED]
+RateLimit: 4433/5000 remaining
+✔ Erstellt als #329
+→ PR Dummy #330 - Bump prettier from 3.6.2 to 3.7.4 (#330) [MERGED]
+RateLimit: 4431/5000 remaining
+✔ Erstellt als #330
+→ PR Dummy #331 - Bump @tailwindcss/forms from 0.5.10 to 0.5.11 (#331) [MERGED]
+RateLimit: 4430/5000 remaining
+✔ Erstellt als #331
+→ PR Dummy #332 - Bump vue-i18n from 11.2.2 to 11.2.8 (#332) [CLOSED]
+RateLimit: 4429/5000 remaining
+✔ Erstellt als #332
+→ PR Dummy #333 - Bump qs from 6.14.0 to 6.14.1 in the npm_and_yarn group across 1 directory (#333) [MERGED]
+RateLimit: 4427/5000 remaining
+✔ Erstellt als #333
+→ Hotfix - Changed Notification on date (#334) [CLOSED]
+RateLimit: 4426/5000 remaining
+✔ Erstellt als #334
+→ Feature - Gallery of unused Pictures (#335) [CLOSED]
+RateLimit: 4424/5000 remaining
+✔ Erstellt als #335
+→ Hotfix - fixed bug in Notify script (#336) [CLOSED]
+RateLimit: 4422/5000 remaining
+✔ Erstellt als #336
+→ Feature - pub/unpub button in private messages (#337) [CLOSED]
+RateLimit: 4420/5000 remaining
+✔ Erstellt als #337
+→ Hotfix - removed bug in email center (#338) [CLOSED]
+RateLimit: 4418/5000 remaining
+✔ Erstellt als #338
+→ Hotfix - Umlauts in User Show (#339) [CLOSED]
+RateLimit: 4416/5000 remaining
+✔ Erstellt als #339
+→ Hotfix -  fixed bug in usershow (#340) [CLOSED]
+RateLimit: 4414/5000 remaining
+✔ Erstellt als #340
+→ Feature - Change footer nav (#341) [OPEN]
+RateLimit: 4412/5000 remaining
+✔ Erstellt als #341
+→ Feature - Add Text about MCSL-Points on Landing Page (#342) [CLOSED]
+RateLimit: 4411/5000 remaining
+✔ Erstellt als #342
+→ Feature - Add PM sending function (#343) [CLOSED]
+RateLimit: 4409/5000 remaining
+✔ Erstellt als #343
+→ Feature - Newsfeed asario.de (#344) [CLOSED]
+RateLimit: 4407/5000 remaining
+✔ Erstellt als #344
+→ PR Dummy #345 - Bump preact from 10.28.1 to 10.28.2 in the npm_and_yarn group across 1 directory (#345) [MERGED]
+RateLimit: 4405/5000 remaining
+✔ Erstellt als #345
+→ Hotfix - Fix toastbus on tableform (#346) [CLOSED]
+RateLimit: 4404/5000 remaining
+✔ Erstellt als #346
+→ Bugs - have to reinstall complete project (#347) [CLOSED]
+RateLimit: 4402/5000 remaining
+✔ Erstellt als #347
+→ Hotfix - The login function doesn't work yet, but I'm on it. (#348) [CLOSED]
+RateLimit: 4400/5000 remaining
+✔ Erstellt als #348
+→ Hotfix - Mail Function doesn't works (#349) [CLOSED]
+RateLimit: 4398/5000 remaining
+✔ Erstellt als #349
+→ Feature - summary of individual blog entries (#350) [CLOSED]
+RateLimit: 4396/5000 remaining
+✔ Erstellt als #350
+→ Hotfix - Add functionality to ImageUpload Script (#351) [CLOSED]
+RateLimit: 4394/5000 remaining
+✔ Erstellt als #351
+→ DELETED Dummy #352 (#352) [closed]
+RateLimit: 4392/5000 remaining
+✔ Erstellt als #352
+→ Feature - PictureShow add status of images (#353) [CLOSED]
+RateLimit: 4390/5000 remaining
+✔ Erstellt als #353
+→ Feature - Add Delete Button in UserRights (#354) [CLOSED]
+RateLimit: 4388/5000 remaining
+✔ Erstellt als #354
+→ Bug - have to fix an evil bug in pagination (#355) [CLOSED]
+RateLimit: 4386/5000 remaining
+✔ Erstellt als #355
+→ PR Dummy #356 - Bump @hotwired/turbo from 8.0.20 to 8.0.21 in the npm_and_yarn group across 1 directory (#356) [OPEN]
+RateLimit: 4384/5000 remaining
+✔ Erstellt als #356
+→ Feature - Add subject from form to mail submit (#357) [CLOSED]
+RateLimit: 4383/5000 remaining
+✔ Erstellt als #357
+→ Hotfix - remove styles from mailsend to pm (#358) [CLOSED]
+RateLimit: 4381/5000 remaining
+✔ Erstellt als #358
+→ Feature: There should be no loading spinner in the search field. (#359) [CLOSED]
+RateLimit: 4379/5000 remaining
+✔ Erstellt als #359
+→ Feature - Add Python workflow for checking of watermarks (#360) [CLOSED]
+RateLimit: 4377/5000 remaining
+✔ Erstellt als #360
+→ Hotfix - Repaired Loading Spinner in axios Requests (#361) [CLOSED]
+RateLimit: 4375/5000 remaining
+✔ Erstellt als #361
+→ Hotfix - Formatting in newsletters and pm (#362) [CLOSED]
+RateLimit: 4373/5000 remaining
+✔ Erstellt als #362
+→ Feature - Changed Mail Script (#363) [CLOSED]
+RateLimit: 4371/5000 remaining
+✔ Erstellt als #363
+→ Hotfix - Fix functions in Layout..vue (#364) [CLOSED]
+RateLimit: 4369/5000 remaining
+✔ Erstellt als #364
+→ Hotfix - Fixed email captcha bug (#365) [CLOSED]
+RateLimit: 4367/5000 remaining
+✔ Erstellt als #365
+→ PR Dummy #366 - Bump autoprefixer from 10.4.23 to 10.4.24 (#366) [CLOSED]
+RateLimit: 4365/5000 remaining
+✔ Erstellt als #366
+→ PR Dummy #367 - Bump laravel-vite-plugin from 2.0.1 to 2.1.0 (#367) [MERGED]
+RateLimit: 4363/5000 remaining
+✔ Erstellt als #367
+→ PR Dummy #368 - Bump tailwindcss from 3.4.19 to 4.1.18 (#368) [CLOSED]
+RateLimit: 4362/5000 remaining
+✔ Erstellt als #368
+→ PR Dummy #369 - Bump preact from 10.28.2 to 10.28.3 (#369) [CLOSED]
+RateLimit: 4360/5000 remaining
+✔ Erstellt als #369
+→ PR Dummy #370 - Bump eslint-plugin-vue from 10.6.2 to 10.7.0 (#370) [CLOSED]
+RateLimit: 4358/5000 remaining
+✔ Erstellt als #370
+→ PR Dummy #371 - Bump vite from 7.3.0 to 7.3.1 (#371) [CLOSED]
+RateLimit: 4356/5000 remaining
+✔ Erstellt als #371
+→ PR Dummy #372 - Bump lodash from 4.17.21 to 4.17.23 (#372) [OPEN]
+RateLimit: 4354/5000 remaining
+✔ Erstellt als #372
+→ PR Dummy #373 - Bump globals from 17.0.0 to 17.3.0 (#373) [CLOSED]
+RateLimit: 4353/5000 remaining
+✔ Erstellt als #373
+→ PR Dummy #374 - Bump @inertiajs/progress from 0.1.2 to 0.2.7 (#374) [OPEN]
+RateLimit: 4351/5000 remaining
+✔ Erstellt als #374
+→ PR Dummy #375 - Bump @hotwired/turbo from 8.0.20 to 8.0.23 (#375) [OPEN]
+RateLimit: 4350/5000 remaining
+✔ Erstellt als #375
+→ Feature - Change Linkcolor to blue (#376) [CLOSED]
+RateLimit: 4349/5000 remaining
+✔ Erstellt als #376
+→ Hotfix - Change the statistics without crawling unnecessary URLs. (#377) [CLOSED]
+RateLimit: 4347/5000 remaining
+✔ Erstellt als #377
+→ Hotfix - Fixed bug in blogs pagination (#378) [CLOSED]
+RateLimit: 4345/5000 remaining
+✔ Erstellt als #378
+→ Feature - Add link to user profile on comments (#379) [CLOSED]
+RateLimit: 4343/5000 remaining
+✔ Erstellt als #379
+→ Hotfix - page var not wanted (#380) [CLOSED]
+RateLimit: 4341/5000 remaining
+✔ Erstellt als #380
+→ Feature - Add icons before login & register link in footer (#381) [CLOSED]
+RateLimit: 4339/5000 remaining
+✔ Erstellt als #381
+→ Hotfix - Repaired sign in with google (#382) [CLOSED]
+RateLimit: 4337/5000 remaining
+✔ Erstellt als #382
+→ Feature - Add Icons on PM status (#383) [CLOSED]
+RateLimit: 4335/5000 remaining
+✔ Erstellt als #383
+→ Feature - Order of Contacts changed (#384) [CLOSED]
+RateLimit: 4333/5000 remaining
+✔ Erstellt als #384
+→ Feature - Add IDS functions to MCSL (#385) [CLOSED]
+RateLimit: 4331/5000 remaining
+✔ Erstellt als #385
+→ Hotfix - Removed Bug in UserRights (#386) [CLOSED]
+RateLimit: 4329/5000 remaining
+✔ Erstellt als #386
+→ Hotfix - added redirect to www. (#387) [CLOSED]
+RateLimit: 4327/5000 remaining
+✔ Erstellt als #387
+→ Hotfix - fixed small bug in rss.xml (#388) [CLOSED]
+RateLimit: 4325/5000 remaining
+✔ Erstellt als #388
+→ Hotfix - Removed Ratings on DidYouKnow (#389) [CLOSED]
+RateLimit: 4323/5000 remaining
+✔ Erstellt als #389
+→ Hotfix - Changed smilies box (#390) [CLOSED]
+RateLimit: 4321/5000 remaining
+✔ Erstellt als #390
+→ Hotfix - smaller bugs eliminated (#391) [CLOSED]
+RateLimit: 4319/5000 remaining
+✔ Erstellt als #391
+→ Feature - add financial income/expenses tool (#392) [CLOSED]
+RateLimit: 4317/5000 remaining
+✔ Erstellt als #392
+→ Hotfixes - include adding an alert on empty fields. (#393) [CLOSED]
+RateLimit: 4315/5000 remaining
+✔ Erstellt als #393
+→ Import Contacts from mobile (#394) [CLOSED]
+RateLimit: 4313/5000 remaining
+✔ Erstellt als #394
+→ Hotfix - Repair Stats (#395) [CLOSED]
+RateLimit: 4311/5000 remaining
+✔ Erstellt als #395
+→ Features: - Change the date on Hackinglog. - Fetch the PM table after clicking 'Read all'. (#396) [CLOSED]
+RateLimit: 4309/5000 remaining
+✔ Erstellt als #396
+→ word wrap in SQLUpdate (#397) [CLOSED]
+RateLimit: 4307/5000 remaining
+✔ Erstellt als #397
+→ Hotfix - Change Checkbox Handling on PM (#398) [CLOSED]
+RateLimit: 4305/5000 remaining
+✔ Erstellt als #398
+→ Feature - Added User based encryption on Contacts (#399) [CLOSED]
+RateLimit: 4303/5000 remaining
+✔ Erstellt als #399
+→ Feature -  SQL Builder (#400) [CLOSED]
+RateLimit: 4301/5000 remaining
+✔ Erstellt als #400
+→ Feature - Add Groups Selector in Contacts (#401) [CLOSED]
+RateLimit: 4299/5000 remaining
+✔ Erstellt als #401
+→ Bugs - Login & Password Recover didn't worked (#402) [CLOSED]
+RateLimit: 4297/5000 remaining
+✔ Erstellt als #402
+→ Hotfix - Repair of DB Syncro Tool (#403) [CLOSED]
+RateLimit: 4295/5000 remaining
+✔ Erstellt als #403
+→ Feature - Add language files for emails & Co (#404) [CLOSED]
+RateLimit: 4293/5000 remaining
+✔ Erstellt als #404
+→ PR Dummy #405 - Bump tailwindcss from 3.4.19 to 4.2.1 (#405) [OPEN]
+RateLimit: 4291/5000 remaining
+✔ Erstellt als #405
+→ PR Dummy #406 - Bump spatie/laravel-sitemap from 7.3.8 to 7.4.0 (#406) [OPEN]
+RateLimit: 4290/5000 remaining
+✔ Erstellt als #406
+→ PR Dummy #407 - Bump prettier from 3.7.4 to 3.8.1 (#407) [OPEN]
+RateLimit: 4289/5000 remaining
+✔ Erstellt als #407
+→ PR Dummy #408 - Bump less-loader from 7.3.0 to 12.3.1 (#408) [OPEN]
+RateLimit: 4288/5000 remaining
+✔ Erstellt als #408
+→ PR Dummy #409 - Bump @eslint/js from 9.39.3 to 10.0.1 (#409) [OPEN]
+RateLimit: 4287/5000 remaining
+✔ Erstellt als #409
+→ PR Dummy #410 - Bump jquery from 3.7.1 to 4.0.0 (#410) [OPEN]
+RateLimit: 4286/5000 remaining
+✔ Erstellt als #410
+→ PR Dummy #411 - Bump eslint from 9.39.3 to 10.0.2 (#411) [OPEN]
+RateLimit: 4285/5000 remaining
+✔ Erstellt als #411
+**********************
+PowerShell transcript end
+End time: 20260305175117
+**********************
