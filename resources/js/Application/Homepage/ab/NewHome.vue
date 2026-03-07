@@ -49,7 +49,7 @@
                 <p>
                     Hier gibt’s fast alles von mir: <a class='as' href="home/pictures" itemprop="hasOccupation">Bilder</a> & <a class='as' href="home/shortpoems" itemprop="hasOccupation">Gedichte</a>.<br />
                 </p><br />
-                <p class="border border-gray-300 dark:border-gray-700 text-center max-w-xl mx-auto my-8 p-8">
+                <span class="border border-gray-300 dark:border-gray-700 text-center max-w-xl mx-auto my-8 p-8">
                ⭐⭐⭐ <strong>MCSL-Points.</strong> ⭐⭐⭐<br />
                 Registrierte Nutzer sammeln Punkte, indem sie lesen, bleiben und wiederkommen.
                 Die Punkte sind kein Spielzeug. Sie haben einen Zweck.
@@ -63,7 +63,7 @@
                 </ul>
                 Wer mehr wissen will, findet weitere Informationen hier:<br />
                 <a class="as font-semibold" href="/about/mcs-points">MCSL-Points</a>.
-                </p>
+            </span>
 
 
                 <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -71,7 +71,7 @@
                 </div><br />
 
                 <p>
-                    Schreib mir: <span itemprop="email"><a class='as' href="mailto:[EMAIL]">paul.rieser[at]marblefx.net</a></span>
+                    Schreib mir: <span itemprop="email"><a class='as' href="mailto:paul.rieser@marblefx.net">paul.rieser[at]marblefx.net</a></span>
                     oder ruf an: <span itemprop="telephone"><a class='as' href='tel:+49 162 7716325'>+49 162 7716325</a></span> 📞<br />
                 </p><br />
 

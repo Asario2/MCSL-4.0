@@ -2747,6 +2747,12 @@ return Inertia::render('Admin/Kontakte', [
         if (Schema::hasColumn($table, 'image_path') && empty($formData['image_path'])) {
             $formData['image_path'] = "008.jpg";
         }
+        if($table ==  "people")
+        {
+            $formData['email']        = !empty($formData['email'])
+                ? encval($formData['email'])
+                : null;
+        }
         if($table == "contacts" && !$formData['xis_public_con'])
         {
             $userId = Auth::id();
@@ -2995,6 +3001,12 @@ return Inertia::render('Admin/Kontakte', [
                 }
 
             }
+            if($table ==  "people")
+        {
+            $formData['email']        = !empty($formData['email'])
+                ? encval($formData['email'])
+                : null;
+        }
             if($table == "contacts" && !$formData['xis_public_con'])
         {
             $userId = Auth::id();

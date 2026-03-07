@@ -101,7 +101,7 @@ export default defineComponent({
         this.processedHtml = await this.processHtmlWithVcard(this.data.message);
     }
 
-    const url = 'https://api.github.com/search/issues?q=repo:Asario2/MCSL-based-on-Starter-Eleven+is:issue+state:open';
+    const url = 'https://api.github.com/search/issues?q=repo:Asario2/MCSL-4.0:issue+state:open';
   const resp = await fetch(url);
   const data = await resp.json();
 
@@ -187,7 +187,7 @@ export default defineComponent({
         },
 
         linkit(str) {
-            return str.replace(/(?<!&)#(\d+)/g, "<a href='https://github.com/Asario2/MCSL-based-on-Starter-Eleven/issues/$1'>#$1</a>");
+            return str.replace(/(?<!&)#(\d+)/g, "<a href='https://github.com/Asario2/MCSL-4.0/issues/$1'>#$1</a>");
         },
 
         async loadVotez() {
@@ -208,7 +208,7 @@ export default defineComponent({
 
         async loadChangelog() {
             try {
-                const response = await fetch('https://raw.githubusercontent.com/Asario2/MCSL-based-on-Starter-Eleven/main/CHANGELOG.md');
+                const response = await fetch('https://raw.githubusercontent.com/Asario2/MCSL-4.0/main/CHANGELOG.md');
                 const markdown = await response.text();
                 this.changelogText = this.repimg(marked(markdown)); // ✅ Markdown in HTML umwandeln
             } catch (err) {

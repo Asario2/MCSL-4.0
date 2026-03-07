@@ -21,7 +21,7 @@
     },
     mounted() {
       // Ersetze URL hier durch deine tatsächliche GitHub raw URL zur CHANGELOG.md
-      const url = 'https://raw.githubusercontent.com/Asario2/MCSL-based-on-Starter-Eleven/main/CHANGELOG.md';
+      const url = `https://raw.githubusercontent.com/Asario2/MCSL-4.0/main/CHANGELOG.md?t=${Date.now()}`;p
 
       fetch(url)
         .then(res => {
@@ -42,7 +42,7 @@
     methods:{
         linkit(str)
         {
-            return str.replace(/(?<!&)#(\d+)/g, "<a href='https://github.com/Asario2/MCSL-based-on-Starter-Eleven/issues/$1'>#$1</a>");
+            return str.replace(/(?<!&)#(\d+)/g, "<a href='https://github.com/Asario2/MCSL-4.0/issues/$1'>#$1</a>");
         },
         quote(str)
         {
