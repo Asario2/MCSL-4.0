@@ -23,7 +23,10 @@ vendor/
 **/tmp/**
 *.bat
 *.cmd
-
+First_Commmit_dag_No_User.sql
+First_Commmit_mfx_No_User.sql
+Newer_Data_dag.sql
+Newer_Data_mfx.sql
 !README.md
 info.php
 **/DATAFILES/**
