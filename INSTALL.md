@@ -17,7 +17,7 @@
     DB_PORT=3306  
     DB_DATABASE=yourdb  
     DB_USERNAME=root  
-    DB_PASSWORD=mypasswort```   
+    DB_PASSWORD=mypasswort```  
 12. run `php artisan key:generate` in a shell
 13. run `php artisan storage:link` in shell
 14. run `npm run dev` & `php artisan serve -host 0.0.0.0 --port 80`
