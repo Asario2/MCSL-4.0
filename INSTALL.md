@@ -4,7 +4,7 @@
 2. Install `node/js`
 3. Install `composer`
 4. download the repository and copy the content to `htdocsc/Yourpath` or `www/Yourpath` directory  
-5. import the `tables.sql` into your MySql/MariaDB database
+5. import the `datanas/dumps/First_Commit_ab_No_User` into your MySql/MariaDB database
 6.  run a shell in `htdocs/Yourpath` or `www/Yourpath` and run `npm install`
 7. Run a shell in Yourpath and execute `composer install` & `composer update`
 8. run this in a shell: `cp .env.example .env`
