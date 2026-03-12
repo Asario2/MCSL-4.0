@@ -6,7 +6,7 @@
     <a
       v-for="(image, index) in images"
       :key="index"
-      :href="`${basePath}/big/${image.filename}`"
+      :href="`${basePath}/big/${image.fileName}`"
       :data-pswp-width="image.width"
       :data-pswp-height="image.height"
       @click.prevent="openLightbox(index)"
@@ -14,7 +14,7 @@
     >
       <ZoomImage
         awidth="a_320"
-        :src="`${basePath}/thumbs/${cc(image.filename)}`"
+        :src="`${basePath}/thumbs/${cc(image.fileName)}`"
         :alt="image.label"
         :title="image?.label"
         :width="346"

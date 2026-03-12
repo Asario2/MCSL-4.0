@@ -169,6 +169,8 @@
         'DumpGItDataBase' => 'Speichern von DB Dumps for Github',
         'sdfsdf' => 'adsd',
         'addddddddddddddd' => 'asadad',
+        'ActivityLog' => 'All actions in one List',
+        'test func' => 'TEst zum checken',
     ];
     public static array $regdom =   ['ab'=>true];
     public static array $domss =   ['ab',"mfx","dag"];
@@ -272,7 +274,7 @@
             "notifications"=>'name',
             ];
     public static array $searchable = [
-        'ab' => ["images","blogs","didyouknow","shortpoems","users"],
+        'ab' => ["images","blogs","didyouknow","shortpoems","users","xgen_activitylog"],
         'mfx' => ['images',"people","projects"],
     ];
     public static array $statusvals  = ["empty"=>"keine Angabe","forsale"=>"Zu Verkaufen","givenaway"=>"Verschenkt","sold"=>"Verkauft","unsaleable"=>"Unverkäuflich","lost"=>"Verloren","inwork"=>"In Arbeit"];

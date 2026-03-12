@@ -172,6 +172,33 @@ class HomeController extends Controller
 
         return Inertia::render('Components/Social/mcs-points-ov', ["text"=>nl2br($text),"MCSL_GLOB_PTS"=>$MCSL_GLOB_PTS]);
     }
+    public function admin_actlog()
+    {
+    if(!CheckZRights("ActivityLog")){
+            return redirect("no-rights");
+        }
+    return Inertia::render('Admin/ActivityLog',["users"=>$this->GetUserImages(),'breadcrumbs' => [
+            'ActivityLog'=>''
+        ]
+        ]);
+
+    }
+    public function GetUserImages()
+    {
+
+        $users_img = DB::table('users')
+            ->where('xis_disabled', 0)
+            ->select('id', 'profile_photo_path', 'name')
+            ->get()
+            ->keyBy('id')
+            ->map(function ($user) {
+                return [
+                    'img' => $user->profile_photo_path,
+                    'name' => $user->name,
+                ];
+            });
+            return $users_img;
+    }
     //
     public function home_blog_index(Request $request)
     {

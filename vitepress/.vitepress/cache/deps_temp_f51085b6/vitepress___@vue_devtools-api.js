@@ -239,8 +239,8 @@ function toUpper(_, c) {
 function classify(str) {
   return str && `${str}`.replace(classifyRE, toUpper);
 }
-function basename(filename, ext) {
-  let normalizedFilename = filename.replace(/^[a-z]:/i, "").replace(/\\/g, "/");
+function basename(fileName, ext) {
+  let normalizedFilename = fileName.replace(/^[a-z]:/i, "").replace(/\\/g, "/");
   if (normalizedFilename.endsWith(`index${ext}`)) {
     normalizedFilename = normalizedFilename.replace(`/index${ext}`, ext);
   }

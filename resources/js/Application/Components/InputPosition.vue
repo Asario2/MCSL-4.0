@@ -14,13 +14,13 @@
 <option
   v-for="item in filteredEntries"
   :key="item.id"
-  :value="Number(item.position + 1)"
+  :value="Number(item.position+1)"
 >
   Nach "{{ item.title }}"
 </option>
       </select>
     </div>
-    <input type="hidden" :name="name" id="position_alt" :value="selectedPosition || currentPosition">
+    <input type="hidden" :name="name" id="position_alt" :value="selectedPosition ?? currentPosition">
   </template>
 
   <script>
@@ -28,7 +28,7 @@
     name: "InputPosition",
     props: {
       entries: { type: Array, required: true }, // [{id, title, position}, ...]
-      currentPosition: { type: Number, default: 1 },
+      currentPosition: { type: Number, default: 0  },
       currentId: { type: Number, required: true },
       name: { type: String, default: "position" },
     },

@@ -29,7 +29,7 @@ class CopyImagesFromDirectories extends Command
 
         foreach ($this->directories as $dir) {
             $this->searchAndCopy($dir, $imagePathsInDb, $targetDir);
-        }   
+        }
 
         $this->info("Fertig!");
     }
@@ -52,22 +52,22 @@ class CopyImagesFromDirectories extends Command
                 continue;
             }
 
-            $filename = $file->getFilename();
+            $fileName = $file->getFilename();
             $filepath = $file->getRealPath();
 
-            $md5Filename = md5($filename . "_1");
+            $md5Filename = md5($fileName . "_1");
 
-            if (in_array($filename, $imagePathsInDb) || in_array($md5Filename, $imagePathsInDb)) {
-                $destination = $targetDir . DIRECTORY_SEPARATOR . $filename;
+            if (in_array($fileName, $imagePathsInDb) || in_array($md5Filename, $imagePathsInDb)) {
+                $destination = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
                 if (!File::exists($destination)) {
                     File::copy($filepath, $destination);
-                    $this->info("Kopiert: $filename");
+                    $this->info("Kopiert: $fileName");
                 } elseif (filesize($filepath) > filesize($destination)) {
                     File::copy($filepath, $destination);
-                    $this->info("Ersetzt (größer): $filename");
+                    $this->info("Ersetzt (größer): $fileName");
                 } else {
-                    $this->line("Bereits vorhanden (und gleich oder größer): $filename");
+                    $this->line("Bereits vorhanden (und gleich oder größer): $fileName");
                 }
             }
         }

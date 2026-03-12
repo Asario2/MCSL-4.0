@@ -53,7 +53,7 @@ class GenerateJson extends Command
 
                 $data[] = [
                     'position'     => $position++,
-                    'filename'    => $basename,
+                    'fileName'    => $basename,
                     'label' => $titleMap[$basename] ?? $basename,
                     'width'        => $info[0],
                     'height'       => $info[1],
@@ -94,8 +94,8 @@ class GenerateJson extends Command
         foreach ($lines as $line) {
             $parts = explode('|||', trim($line));
             if (count($parts) === 3) {
-                [, $filename, $description] = $parts;
-                $map[strtolower(trim($filename))] = trim($description);
+                [, $fileName, $description] = $parts;
+                $map[strtolower(trim($fileName))] = trim($description);
             }
         }
 

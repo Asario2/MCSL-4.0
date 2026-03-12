@@ -249,9 +249,10 @@
             return;
         }
 
+
             const data = JSON.parse(xhr.responseText);
             if (!data.image_url) return;
-
+            window.toastBus.emit({type:"success",message:"Bild wurde erfolgreich hochgeladen"});
             const filePath = data.image_url;
 
             this.$emit('update:modelValue', filePath);

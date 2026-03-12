@@ -233,3 +233,4 @@
 ![Version](https://img.shields.io/badge/version-4.87.6-orange) Feature - Add language files for emails & Co (#404)  
 ![Version](https://img.shields.io/badge/version-4.88.7-orange) Upload Complete Project (#413)  
 ![Version](https://img.shields.io/badge/version-4.89.6-orange) Hotfix - Fixed Changelog show (#414)  
+

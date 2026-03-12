@@ -1,6 +1,6 @@
 <template>
 <Layout>
-    <MetaHeader :title="'Ein/Ausgabem'" />
+    <MetaHeader :title="'GitHubDataBaseCreator'" />
 
         <template #header>
             <breadcrumb :breadcrumbs="data.breadcrumbs" />

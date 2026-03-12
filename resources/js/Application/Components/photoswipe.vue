@@ -3,7 +3,7 @@
       <a
         v-for="(image, index) in images"
         :key="index"
-        :href="`${basePath}/big/${image.filename}`"
+        :href="`${basePath}/big/${image.fileName}`"
         :data-pswp-width="image.width"
         :data-pswp-height="image.height"
         target="_blank"
@@ -12,7 +12,7 @@
       >
         <img
           class="rounded-lg  w-full aspect-[4/3] object-cover cursor-pointer no-bra"
-          :src="`${basePath}/thumbs/${image.filename}`"
+          :src="`${basePath}/thumbs/${image.fileName}`"
           :alt="image.label"
           :title="image.label"
         />
@@ -30,8 +30,9 @@
 
 
 <script>
-import PhotoSwipeLightbox from 'photoswipe/lightbox'
-import 'photoswipe/style.css'
+// import PhotoSwipeLightbox from 'photoswipe/lightbox'
+import 'photoswipe/dist/photoswipe.css';
+
 
 export default {
   name: 'PhotoSwipeGallery',

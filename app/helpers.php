@@ -265,8 +265,42 @@ function decval($value)
 }
 
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Http\Request; // oben in der Datei
 
+if(!function_exists("ActLog"))
+{
+    function ActLog(Request $request,$action,$info,$id)
+    {
+        $action = $action;
+        $info = $info;
+        $excl_id = $id ?? null;
+        $URL = $request->url();
+        $users_id = Auth::id();
+        $session_id = session_id();
+        $created_at = now();
+        // $ip = $request->ip();
+        $IP = AnoIP($request);
 
+        DB::connection("mariadb")->table("xgen_activitylog")->insert(['xkis_checked'=>0,"created_at"=>$created_at,"action"=>$action,"excl_id"=>$excl_id,"URL"=>$URL,"info"=>$info,"users_id"=>$users_id,"IP"=>$IP,"session_id"=>$session_id]);
+    }
+}
+if(!function_exists("AnoIP"))
+{
+    function AnoIP(Request $request)
+    {
+        $ip = $request->ip();
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                $ipParts = explode('.', $ip);
+                $ipParts[3] = '0';
+                $ip = implode('.', $ipParts);
+            } elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+                $ipParts = explode(':', $ip);
+                $ipParts[count($ipParts) - 1] = '0000';
+                $ip = implode(':', $ipParts);
+            }
+        return $ip;
+    }
+}
 if (!function_exists("user_key")) {
     function user_key(int $userId): string
     {
@@ -276,7 +310,7 @@ if (!function_exists("user_key")) {
         // user-spezifische Key-Derivation mit HKDF
         $info = 'user-specific-key:' . $userId;
         $length = 32; // 256 Bit
-        $userKey = hash_hkdf('sha256', $appKey, $length, $info, true); // true = raw binary
+        $userKey = @hash_hkdf('sha256', @$appKey, $length, $info, true); // true = raw binary
 
         // Laravel erwartet base64-encoded key
         return base64_encode($userKey);
@@ -705,7 +739,7 @@ if(!function_exists("updatePositions"))
         ->get();
 
     // Beginne bei Position 23 und reduziere die Position für jeden weiteren Eintrag
-    $position = $count - 2;
+    $position = $count - 1;
 
     foreach ($entries as $entry) {
         DB::table($table)
@@ -2025,8 +2059,8 @@ function processFiles($content, $publicPath, $type, $regex)
         $regex,
         function ($matches) use ($publicPath, $type) {
             $url = $matches[1];
-            $filename = basename(parse_url($url, PHP_URL_PATH));
-            $localPath = "$publicPath/$filename";
+            $fileName = basename(parse_url($url, PHP_URL_PATH));
+            $localPath = "$publicPath/$fileName";
 
             // Lade die Datei herunter und speichere sie im Zielverzeichnis
             if (!file_exists($localPath)) {
@@ -2035,7 +2069,7 @@ function processFiles($content, $publicPath, $type, $regex)
             }
 
             // Ersetze den externen Pfad durch einen `asset()`-Pfad
-            $assetPath = "{{ asset('$type/$filename') }}";
+            $assetPath = "{{ asset('$type/$fileName') }}";
             return $type === 'js' ? "<script src=\"$assetPath\"></script>" : "<link href=\"$assetPath\" rel=\"stylesheet\">";
         },
         $content

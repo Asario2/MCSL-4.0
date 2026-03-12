@@ -9,7 +9,7 @@ use Imagick;
 class FixImageJson extends Command
 {
     protected $signature = 'images:fix-json';
-    protected $description = 'Fix image JSON filenames and update width/height using ImageMagick';
+    protected $description = 'Fix image JSON fileNames and update width/height using ImageMagick';
 
     public function handle()
     {
@@ -41,23 +41,23 @@ class FixImageJson extends Command
             $hasChanges = false;
 
             foreach ($json as &$entry) {
-                if (!isset($entry['filename'])) continue;
+                if (!isset($entry['fileName'])) continue;
 
-                $originalFilename = $entry['filename'];
+                $originalFilename = $entry['fileName'];
                 $lower = strtolower($originalFilename);
 
                 // Korrigiere Dateinamen falls nötig
                 if (isset($fileMap[$lower]) && $originalFilename !== $fileMap[$lower]) {
                     $this->line("Korrigiere Dateiname {$originalFilename} → {$fileMap[$lower]}");
-                    $entry['filename'] = $fileMap[$lower];
+                    $entry['fileName'] = $fileMap[$lower];
                     $hasChanges = true;
                 }
 
                 // Versuche verschiedene Pfade für die Bilddatei
-                $imagePath = $this->findImageFile($dir, $entry['filename']);
+                $imagePath = $this->findImageFile($dir, $entry['fileName']);
 
                 if (!$imagePath) {
-                    $this->warn("Datei nicht gefunden: {$entry['filename']}");
+                    $this->warn("Datei nicht gefunden: {$entry['fileName']}");
                     continue;
                 }
 
@@ -67,7 +67,7 @@ class FixImageJson extends Command
                 if ($dimensions) {
                     $entry['width'] = $dimensions['width'];
                     $entry['height'] = $dimensions['height'];
-                    $this->line("Setze Dimensionen für {$entry['filename']}: {$dimensions['width']}x{$dimensions['height']}");
+                    $this->line("Setze Dimensionen für {$entry['fileName']}: {$dimensions['width']}x{$dimensions['height']}");
                     $hasChanges = true;
                 } else {
                     $this->warn("Kann Größe von {$imagePath} nicht ermitteln");
@@ -78,7 +78,7 @@ class FixImageJson extends Command
                     $format = $this->getImageFormat($imagePath);
                     if ($format) {
                         $entry['format'] = $format;
-                        $this->line("Setze Format für {$entry['filename']}: {$format}");
+                        $this->line("Setze Format für {$entry['fileName']}: {$format}");
                         $hasChanges = true;
                     }
                 }
@@ -88,7 +88,7 @@ class FixImageJson extends Command
                     $filesize = filesize($imagePath);
                     if ($filesize) {
                         $entry['filesize'] = $filesize;
-                        $this->line("Setze Dateigröße für {$entry['filename']}: " . $this->formatBytes($filesize));
+                        $this->line("Setze Dateigröße für {$entry['fileName']}: " . $this->formatBytes($filesize));
                         $hasChanges = true;
                     }
                 }
@@ -108,13 +108,13 @@ class FixImageJson extends Command
     /**
      * Findet die Bilddatei in verschiedenen Unterverzeichnissen
      */
-    private function findImageFile(string $dir, string $filename): ?string
+    private function findImageFile(string $dir, string $fileName): ?string
     {
         $possiblePaths = [
-            $dir . '/big/' . $filename,
-            $dir . '/thumbs/' . $filename,
-            $dir . '/' . $filename,
-            $dir . '/original/' . $filename,
+            $dir . '/big/' . $fileName,
+            $dir . '/thumbs/' . $fileName,
+            $dir . '/' . $fileName,
+            $dir . '/original/' . $fileName,
         ];
 
         foreach ($possiblePaths as $path) {

@@ -460,11 +460,11 @@ class TablesController extends Controller
         }
 
 
-            foreach($columns as $column)
-            {
-                // \Log::info(json_encode([$column,$tables->$column]));
-              $fields[] = FormController::Fields($column,$tables->$column,$table,$id,$create);
-            }
+            foreach ($columns as $column)
+                {
+                    $value = $tables?->$column ?? null;
+                    $fields[] = FormController::Fields($column, $value, $table, $id, $create);
+                }
             $formFields = array_filter($fields);
 
 
@@ -1121,9 +1121,9 @@ public function ShowTable(Request $request, $table_alt = null)
 
                         foreach (File::files($folderPath) as $file) {
 
-                            $filename = $file->getFilename();
+                            $fileName = $file->getFilename();
 
-                            if (in_array($filename, ['008.jpg','009.jpg','spacer.gif'])) {
+                            if (in_array($fileName, ['008.jpg','009.jpg','spacer.gif'])) {
                                 continue;
                             }
 
@@ -1132,12 +1132,12 @@ public function ShowTable(Request $request, $table_alt = null)
                                 continue;
                             }
 
-                            $uniqueKey = "$manid|$table|$column|$filename";
+                            $uniqueKey = "$manid|$table|$column|$fileName";
 
                             // 🔍 DB nur einmal prüfen
                             if (!isset($seen[$uniqueKey])) {
                                 $existsInDb = DB::connection($db)->table($table)
-                                    ->where($column,"LIKE","%".$filename."%")
+                                    ->where($column,"LIKE","%".$fileName."%")
                                     ->exists();
 
                                 if ($existsInDb) continue;
@@ -1146,7 +1146,7 @@ public function ShowTable(Request $request, $table_alt = null)
                             // 🆕 Erstfund
                             if(!isset($seen[$uniqueKey])) {
 
-                                $bigPath = public_path("images/$mandant/$table/$column/big/$filename");
+                                $bigPath = public_path("images/$mandant/$table/$column/big/$fileName");
                                 $imgPath = file_exists($bigPath)
                                     ? $bigPath
                                     : $file->getPathname();
@@ -1161,10 +1161,10 @@ public function ShowTable(Request $request, $table_alt = null)
                                     'mandant'  => $mandant,
                                     'table'    => $table,
                                     'column'   => $column,
-                                    'filename' => $filename,
+                                    'fileName' => $fileName,
                                     'width'    => $width,
                                     'height'   => $height,
-                                    'label'    => $filename,
+                                    'label'    => $fileName,
                                     'basepath' => "/images/$mandKey/$table/$column/",
                                     'apath'    => $folderName === 'default' ? '' : $folderName,
                                     'folders'  => [], // ⭐ HIER ALLES REIN
@@ -1177,7 +1177,7 @@ public function ShowTable(Request $request, $table_alt = null)
                             $idx = $seen[$uniqueKey];
                             $relativePath = "/images/$mandant/$table/$column/"
                                 . ($folderName === 'default' ? '' : "$folderName/")
-                                . $filename;
+                                . $fileName;
 
                             $unus[$idx]['folders'][] = [
                                 'folder' => $folderName,
@@ -1448,9 +1448,9 @@ public function ShowTable(Request $request, $table_alt = null)
 {
     $request->validate([
         'id' => 'required|integer',
-        'position' => 'required|integer|min:1',
+        'position' => 'required|integer|min:-1',
     ]);
-
+    \Log::info([$request,$table]);
     $entry = DB::table($table)->where('id', $request->id)->first();
     if (!$entry) {
         return response()->json(['error' => 'Entry not found'], 404);
@@ -2024,6 +2024,7 @@ public function ShowTable(Request $request, $table_alt = null)
                 $data['date_begin'] = strtotime($data['date_begin']);
                 $data['date_end'] = strtotime($data['date_end']);
             }
+
             return $this->insertIntoTable($request,$data,$table,$hcode);
 
 
@@ -2079,7 +2080,7 @@ public function ShowTable(Request $request, $table_alt = null)
 
         // Log-Eintrag für Debug-Zwecke
 //         Log::info('User roles updated:', $updated);
-
+        ActLog($request,"store_user_rights","users_rights",$entry['id']);
         return response()->json([
             'message' => 'Benutzerrollen wurden gespeichert.',
             'updated' => $updated,
@@ -2094,7 +2095,7 @@ public function ShowTable(Request $request, $table_alt = null)
         $user = User::findOrFail($request->id);
         $user->xis_disabled = $request->xis_disabled;
         $user->save();
-
+        ActLog($request,"saveUserDisabled","users",$request->id);
         return response()->json(['message' => 'Status gespeichert']);
     }
 
@@ -2110,6 +2111,7 @@ public function ShowTable(Request $request, $table_alt = null)
             {
                 if($destroy && !$nn)
                 {
+
                     DB::table($table)
                         ->where("position", ">", $destroy)  // Condition: only update rows where position > 0
                         ->update(['position' => DB::raw('position - 1')]);
@@ -2747,6 +2749,23 @@ return Inertia::render('Admin/Kontakte', [
         if (Schema::hasColumn($table, 'image_path') && empty($formData['image_path'])) {
             $formData['image_path'] = "008.jpg";
         }
+        if(isset($formData['position']))
+            {
+                if($formData['position'] == 1)
+                {
+                    DB::table($table)
+                    ->update([
+                        "position" => DB::raw("position + 1")
+                    ]);
+                    $formData['position'] = 1;
+                }
+                else
+                {
+                    DB::table($table)->where("position",">=",$formData['position'])->update(["position"=>DB::raw("position + 1")]);
+                    //$formData['position']++;
+                }
+
+            }
         if($table ==  "people")
         {
             $formData['email']        = !empty($formData['email'])
@@ -2931,7 +2950,7 @@ return Inertia::render('Admin/Kontakte', [
         if(@$orig_posi){
             $this->UP_POSI($table,'',@$orig_posi);
         }
-
+        ActLog($request,"StoreTable",$table,$newId);
         if (CheckZRights("UserRights") && $table == "admin_table") {
             return response()->json(["status" => "success", "message" => "Gespeichert, Bitte <a href='/admin/User_Rights'>Benutzerrechte</a> aktualisieren"]);
         }
@@ -2974,6 +2993,45 @@ return Inertia::render('Admin/Kontakte', [
         //\Log::info("UNULL".$unull);
         return response()->json($unull);
     }
+        public function markChecked(Request $request)
+    {
+        // sendBeacon sendet JSON im Body
+        $payload = json_decode($request->getContent(), true);
+        $ids = $payload['ids'] ?? [];
+        \Log::info("gc:",$request->getContent());
+
+        if (!empty($ids)) {
+            DB::connection('mariadb')
+                ->table('xgen_activitylog')
+                ->whereIn('id', $ids)
+                ->update(['xkis_checked' => 1]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    // Logs laden
+    public function getLogs()
+    {
+        $logs = DB::connection('mariadb')
+            ->table('xgen_activitylog')
+            ->orderByDesc('id')
+            ->get();
+
+        return response()->json($logs);
+    }
+
+    public function Add_Actlog(Request $request)
+    {
+        $action = $request->action;
+        $info = $request->info;
+        $URL = $request->url();
+        $users_id = Auth::id();
+        $session_id = session_id();
+        $IP = AnoIP($request->ip());
+        DB::connection("mariadb")->table("xgen_activitylog")->insert(compact($info,$action,$URL,$users_id,$session_id,$IP));
+
+    }
     public function UpdateTable(Request $request,$table, $id)
     {
             // Zugriff auf die übergebenen Daten
@@ -2998,6 +3056,23 @@ return Inertia::render('Admin/Kontakte', [
                 {
 
                     $formData[$key] = (int)$val;
+                }
+
+            }
+            if(isset($formData['position']))
+            {
+                if($formData['position'] == 1)
+                {
+                    DB::table($table)
+                    ->update([
+                        "position" => DB::raw("position + 1")
+                    ]);
+                    $formData['position'] = 1;
+                }
+                else
+                {
+                    DB::table($table)->where("position",">=",$formData['position'])->update(["position"=>DB::raw("position + 1")]);
+                    //$formData['position']++;
                 }
 
             }
@@ -3116,6 +3191,7 @@ return Inertia::render('Admin/Kontakte', [
 
             // $this->debugUpdateQuery($table,$id,$formData);
             // if ($updated) {
+            ActLog($request,"UpdateTable",$table,$id);
                 return response()->json(['type' => 'success','message' => 'Daten erfolgreich aktualisiert!']);
             // } else {
 
@@ -3267,7 +3343,7 @@ return Inertia::render('Admin/Kontakte', [
                     }
                 }
             } else {
-                \Log::warning("Position für zu löschenden Eintrag nicht gefunden.");
+                \Log::error("Position für zu löschenden Eintrag nicht gefunden.");
             }
 
             // 3. Neue Positionierung vorbereiten → position_alt
@@ -3385,9 +3461,14 @@ return response()->json($user);
 
         $table = $request->input('table');
 
-        $public = $request->input("public");
+        $public = @$request->input("public");
         $id    = $request->input('id');
         $pub   = $request->boolean('pub');
+        $unp = "Veröffentlicht";
+        if(!$pub)
+        {
+            $unp = "Unveröffentlicht";
+        }
         if(!$public)
         {
             DB::table($table)->where('id', $id)->update(['pub' => $pub]);
@@ -3397,7 +3478,7 @@ return response()->json($user);
             DB::table($table)->where('id', $id)->where('public',$public)->update(['checked' => $pub]);
         }
 
-
+        ActLog($request,"Publish",$unp,$id);
         return response()->json(['success' => true, 'pub' => $pub]);
     }
 

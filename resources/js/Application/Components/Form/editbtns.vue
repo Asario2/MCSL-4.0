@@ -55,7 +55,6 @@ export default {
     console.error("editbtns: table prop ist leer oder falsch!");
 
   }
-console.log(this.table);
     this.rights.edit = await CheckTRights("edit", this.table);
     this.rights.delete = await CheckTRights("delete", this.table);
 

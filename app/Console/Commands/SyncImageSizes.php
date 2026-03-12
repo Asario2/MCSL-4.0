@@ -25,14 +25,14 @@ class SyncImageSizes extends Command
 
         foreach ($withImages as $withFile) {
 
-            $filename = $withFile->getFilename();
+            $fileName = $withFile->getFilename();
             $withFilePath = $withFile->getPathname();
-            $withoutFilePath = $withoutPath . DIRECTORY_SEPARATOR . $filename;
+            $withoutFilePath = $withoutPath . DIRECTORY_SEPARATOR . $fileName;
 
             // ❗ Wenn in WITHOUT fehlt → BOTH löschen
             if (!File::exists($withoutFilePath)) {
                 File::delete($withFilePath);
-                $this->warn("⚠️ Missing WITHOUT image: {$filename} → deleted BOTH");
+                $this->warn("⚠️ Missing WITHOUT image: {$fileName} → deleted BOTH");
                 continue;
             }
 
@@ -56,7 +56,7 @@ class SyncImageSizes extends Command
                     File::delete($withoutFilePath);
 
                     $this->error(
-                        "🗑️ ASPECT RATIO MISMATCH ({$withW}x{$withH} vs {$withoutW}x{$withoutH}) → deleted BOTH {$filename}"
+                        "🗑️ ASPECT RATIO MISMATCH ({$withW}x{$withH} vs {$withoutW}x{$withoutH}) → deleted BOTH {$fileName}"
                     );
                     continue;
                 }
@@ -65,14 +65,14 @@ class SyncImageSizes extends Command
                 $withoutImg->resizeImage($withW, $withH, \Imagick::FILTER_LANCZOS, 1);
                 $withoutImg->writeImage($withoutFilePath);
 
-                $this->info("✅ Synced {$filename} ({$withW}x{$withH})");
+                $this->info("✅ Synced {$fileName} ({$withW}x{$withH})");
 
             } catch (\Throwable $e) {
                 // Wenn irgendwas kaputt ist → beide löschen
                 File::delete($withFilePath);
                 File::delete($withoutFilePath);
 
-                $this->error("❌ ERROR {$filename}: " . $e->getMessage() . " → deleted BOTH");
+                $this->error("❌ ERROR {$fileName}: " . $e->getMessage() . " → deleted BOTH");
             }
         }
 

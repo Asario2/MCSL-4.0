@@ -13,7 +13,7 @@
       <div v-if="images.length > 0">
         <div
           v-for="(element, index) in images"
-          :key="element.filename"
+          :key="element.fileName"
           class="flex items-center gap-4 border-b border-gray-200 dark:border-gray-700 py-3"
           draggable="true"
           @dragstart="onDragStart(index)"
@@ -26,10 +26,10 @@
 
           <span class="min-w-[100px] cursor-move">
             <img
-              :src="`${localFolder}/thumbs/${element.filename}`"
-              :alt="element.filename"
+              :src="`${localFolder}/thumbs/${element.fileName}`"
+              :alt="element.fileName"
               class="max-w-[100px] max-h-[75px] rounded shadow"
-              @error="handleImageError(element.filename)"
+              @error="handleImageError(element.fileName)"
             />
           </span>
 
@@ -159,7 +159,7 @@
         try {
           await axios.post('/api/save-json', { folder: this.localFolder, images: this.images });
           this.fetchImages();
-          window.toastBus.emit( { status: 'success', message: 'Galerie gespeichert' });
+          window.toastBus.emit( { status: 'success', message: 'Galerie gespeichert', action:'img_json' });
         } catch (err) {
           console.error(err);
           alert('Fehler beim Speichern');
@@ -214,7 +214,7 @@
 
             // Debug: Log each image
             this.images.forEach((img, index) => {
-//               console.log(`🖼️ ${index + 1}: ${img.filename} (pos: ${img.position})`);
+//               console.log(`🖼️ ${index + 1}: ${img.fileName} (pos: ${img.position})`);
             });
           } else {
 //             console.log('⚠️ Response is not an array:', response.data);
@@ -229,8 +229,8 @@
         }
       },
 
-      handleImageError(filename) {
-//         console.log(`❌ Image failed to load: ${filename}`);
+      handleImageError(fileName) {
+//         console.log(`❌ Image failed to load: ${fileName}`);
       },
 
       // Vom Parent aufrufbar

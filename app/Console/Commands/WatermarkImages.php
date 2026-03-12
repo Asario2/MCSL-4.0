@@ -65,13 +65,13 @@ class WatermarkImages extends Command
             $image->compositeImage($watermark, Imagick::COMPOSITE_OVER, $x, $y);
 
             // Bild speichern
-            $filename = basename($file);
-            $image->writeImage($bigDir . '/' . $filename);
+            $fileName = basename($file);
+            $image->writeImage($bigDir . '/' . $fileName);
 
             $image->clear();
             $image->destroy();
 
-            $this->info("Verarbeitet: $filename");
+            $this->info("Verarbeitet: $fileName");
         }
     }
         $watermark->clear();

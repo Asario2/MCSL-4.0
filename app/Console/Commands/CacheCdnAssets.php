@@ -29,10 +29,10 @@ class CacheCdnAssets extends Command
                     $ext = $match[3];
 
                     // Lokaler Zielordner: public/js oder public/css
-                    $filename = basename(parse_url($url, PHP_URL_PATH));
+                    $fileName = basename(parse_url($url, PHP_URL_PATH));
                     $localDir = public_path($ext);
-                    $localPath = "$localDir/$filename";
-                    $localUrl = "/$ext/$filename";
+                    $localPath = "$localDir/$fileName";
+                    $localUrl = "/$ext/$fileName";
 
                     // Datei nur laden, wenn noch nicht vorhanden
                     if (!File::exists($localPath)) {

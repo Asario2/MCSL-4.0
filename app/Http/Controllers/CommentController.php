@@ -138,7 +138,7 @@ class CommentController extends Controller
 
         $content = $comment->content;
         // $MailHelper = NEW MailHelper();
-        Mail::to('[EMAIL]')->send(
+        Mail::to('parie@gmx.de')->send(
             new CommentMail(
                 '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
                 'https://' . request()->getHost() . '/admin/tables/comments/show?search=' . $now,
@@ -151,7 +151,7 @@ class CommentController extends Controller
         //     ->with('success', 'Kommentar erfolgreich gepostet!');
         $url = url()->previous() . "#comment_{$request->post_id}";
         // \Log::info("TABLE: ".$table.auth()->user()->name);
-       // Mail::to('[EMAIL]')->send(new CommentMail('Asario.de', 'http://localhost:8081/admin/tables/comments/show',auth()->user()->name,$comment->content));
+       // Mail::to('parie@gmx.de')->send(new CommentMail('Asario.de', 'http://localhost:8081/admin/tables/comments/show',auth()->user()->name,$comment->content));
        return response()->json([
         'status' => 'success',
         'comment' => [
@@ -174,7 +174,7 @@ class CommentController extends Controller
                 'created_at'=> now(),
                 'updated_at'=> now(),
             ]);
-            $email = "[EMAIL]";
+            $email = "shortpoems@asario.de";
             $uhash = Auth::user()->uhash;
             $link = "https://www.asario.de/admin/tables/edit/$id/shortpoems";
             $cont = MCSL_GRAD()."<h2>Nutzer ".Auth::user()->name." hat Wörter für eine Shortpoem gepostet</h2>
@@ -301,7 +301,7 @@ public function sendmc(Request $request)
         $comment = $comment->content;
         $content = $comment;
         // $MailHelper = NEW MailHelper();
-        Mail::to('[EMAIL]')->send(
+        Mail::to('parie@gmx.de')->send(
             new CommentMail(
                 '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
                 'https://' . request()->getHost() . '/' . $table . '/?search=' . $now,
@@ -310,7 +310,7 @@ public function sendmc(Request $request)
             )
         );
 //         \Log::info("MAIL SENDED");
-        // $MailHelper->SendMailer("[EMAIL]","Neuer Kommentar auf www.asario.net","",'','','','newcomment',["name"=>$nick,"table"=>$table,"comment"=>$comment]);
+        // $MailHelper->SendMailer("parie@gmx.de","Neuer Kommentar auf www.asario.net","",'','','','newcomment',["name"=>$nick,"table"=>$table,"comment"=>$comment]);
 
 
 
@@ -389,7 +389,7 @@ return response()->json([
         return response()->json(['error' => $e->getMessage()], 504);
     }
 }
-    public function checkComment()
+    public function checkLogs()
     {
         $userId = Auth::id();
 
