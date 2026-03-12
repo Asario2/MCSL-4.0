@@ -60,7 +60,7 @@
                 <PublishButton
                     :table="CleanTable()"
                     :id="data.datarow.id"
-                    :published="data.datarow.pub === 1"
+                   v-model="data.datarow.pub"
                 />
                 </td>
 

@@ -55,9 +55,9 @@ class CopyImages_imgdir extends Command
 
                 $ext = strtolower($file->getExtension());
                 if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
-                    $filename = ($file->getFilename());
-                    $imageList[$filename] = $targetOrig;
-                    // $this->line("📝 Hinzugefügt: $filename → $targetOrig");
+                    $fileName = ($file->getFilename());
+                    $imageList[$fileName] = $targetOrig;
+                    // $this->line("📝 Hinzugefügt: $fileName → $targetOrig");
                 }
             }
         }
@@ -94,19 +94,19 @@ class CopyImages_imgdir extends Command
             $ext = strtolower($file->getExtension());
             if (!in_array($ext, $allowedExtensions)) continue;
 
-            $filename = ($file->getFilename());
+            $fileName = ($file->getFilename());
             $sourcePath = $file->getRealPath();
 
-            if (!isset($imageList[$filename])) {
+            if (!isset($imageList[$fileName])) {
                 continue; // Nicht referenziert
             }
 
-            $destination = $imageList[$filename] . DIRECTORY_SEPARATOR . $filename;
+            $destination = $imageList[$fileName] . DIRECTORY_SEPARATOR . $fileName;
 
             if (!File::exists($destination)) {
                 File::copy($sourcePath, $destination);
                 $this->ic++;
-                $this->info("🆕 Kopiert: $filename → $destination");
+                $this->info("🆕 Kopiert: $fileName → $destination");
             } else {
                 $srcSize = filesize($sourcePath);
                 $dstSize = filesize($destination);
@@ -114,7 +114,7 @@ class CopyImages_imgdir extends Command
                 // if ($srcSize > $dstSize || !is_file($destination)) {
                     File::copy($sourcePath, $destination);
                     $this->ic++;
-                    $this->info("🔁 Ersetzt (größer): $filename");
+                    $this->info("🔁 Ersetzt (größer): $fileName");
                 // }
             }
         }

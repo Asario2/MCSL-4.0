@@ -15,6 +15,9 @@ use App\Http\Controllers\hackinglog;
 use App\Http\Controllers\PMController;
 use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\ActivityPubController;
+
+
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SQLUpdateController;
 use App\Http\Controllers\DarkModeController;
@@ -103,7 +106,8 @@ GlobalController::SetDomain();
         Route::get('/api/delTempz/{path}', [TablesController::class, 'RemoveTempFiles'])->name('remove.temp');
         Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name("ggle.login")->middleware('web');
         Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']) ->middleware('web');
-
+            Route::post('/api/activity-log/check', [ActivityPubController::class, 'check_alt']);
+            Route::post('/activity-log/mark-all', [ActivityPubController::class, 'markAll']);
 
         Route::get('/ri', function () {
             header("Location: /");
@@ -179,7 +183,6 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::post("/newsl_subscribe", [MailController::class, "Subscribe_Newsl"])->name("mail.subscribe_newsl");
 Route::get("/unsubscribe/{uhash}/{email}", [MailController::class, "UnSubscribe_Newsl"])->name("mail.unsubscribe_newsl");
-Route::get('/rss.xml', [RssController::class, 'feed']);
 Route::get("/mail/subscribe/{uhash}/{email}",[TablesController::class, "newsletter_save"])->name("mail.savenewsletter");
 Route::get('/home/ai', [HomeController::class, 'home_AI'])->name('home.ai');
 //
@@ -189,6 +192,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     Route::get("/       ",function(){
         return "ASD";
     });
+    Route::get('/rss.xml', [RssController::class, 'feed']);
     Route::get('/about/mcs-points', [HomeController::class, 'mcspoints'])->name('mcs.points');
     Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
     Route::get('/dashboard', function () {
@@ -414,9 +418,9 @@ Route::get('/api/getVotez', [HomeController::class,"getVotez"])->name("mfx.getvo
 
 Route::get('/mail-test', function () {
     // $nick = "Animal";
-    // $content = "[EMAIL]";
+    // $content = "test@example.com";
 
-    // Mail::to('[EMAIL]')->send(
+    // Mail::to('parie@gmx.de')->send(
     //     new RegisterMail(
     //         '[MCSL] - Neuer Nutzer auf '.request()->getHost(),
     //         'http://' . request()->getHost() . '/admin/tables/users/show?search=' . $nick,
@@ -435,7 +439,7 @@ Route::get('/mail-test', function () {
 
 
 // Route::get('/mail-test', function () {
-    // Mail::to('[EMAIL]')->send(new CommentMail('Asario.de', 'http://localhost:8081/admin/tables/comments/show',auth()->user()->name,$comment->content));
+    // Mail::to('parie@gmx.de')->send(new CommentMail('Asario.de', 'http://localhost:8081/admin/tables/comments/show',auth()->user()->name,$comment->content));
     // return 'Mail gesendet!';
 // });
 
@@ -596,8 +600,27 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         )->name('admin.dashboard');
 
 ### ============== API ISADMIN QI ================ ###
+        Route::get('/api/activity-log/pub', [ActivityPubController::class, 'getPub']);
+        Route::post('/api/activity-log/pub', [ActivityPubController::class, 'updatePub']);
+
 
         Route::delete("api/del/function/userrights/{xkis}",[RightsController::class,"remFN"])->name('del.uright.function');
+        Route::get('/api/activity-log', function () {
+            if(!CheckZRights("ActivityLog")){
+                return redirect("no-rights");
+            }
+
+            return DB::connection("mariadb")
+                ->table('xgen_activitylog')
+                ->orderBy('id','desc')
+                ->limit(100)
+                ->get();
+        });
+        Route::post('/api/activity-log',[TablesController::class,"Add_Actlog"])
+            ->name("act.log.save");
+        Route::get('/api/chkcom_log/{id?}', [ActivityPubController::class,'checkLogs'])->name("logs.check");
+        Route::get("admin/ActLog", [HomeController::class, "admin_actlog"])
+            ->name("admin.actlog");
         Route::get("api/getGitDump/{dom?}/{usdis?}",[DumpgitdatabaseController::class,"GetFIrst"])->name("api.get.firstdump");
         Route::get("api/saveAlt/{dom?}",[DumpgitdatabaseController::class,"GetAfter"])->name("api.get.after");
         Route::get("/ggi", [DumpgitdatabaseController::class, "show"])->name("api.showgit");
@@ -636,6 +659,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         //
         Route::post('/api/user/batch-rights', [TablesController::class, 'GetBatchRights'])->name("get.bash.rights");
         Route::get('/api/chkcom/{id?}', [CommentController::class, 'checkComment'])->name("comments.check");
+
         Route::get('/api/contacts', [TablesController::class, 'api_contacts'])->name("admin.contacts");
         Route::post("/personal_update", [PersonalController::class, 'update'])->name("personal.update");
         Route::get('/api/created-at', [TablesController::class, 'getCreatedAt'])->name("created.at");

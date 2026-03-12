@@ -37,15 +37,15 @@ class CleanDuplicateCss extends Command
         $files = File::files($cssDir);
 
         foreach ($files as $file) {
-            $filename = $file->getFilename();
+            $fileName = $file->getFilename();
 
             // ⛔ Nur .css-Dateien verarbeiten
-            if (pathinfo($filename, PATHINFO_EXTENSION) !== 'css') {
-                $this->line("Skipping non-CSS file: {$filename}");
+            if (pathinfo($fileName, PATHINFO_EXTENSION) !== 'css') {
+                $this->line("Skipping non-CSS file: {$fileName}");
                 continue;
             }
 
-            $this->info("Processing: " . $filename);
+            $this->info("Processing: " . $fileName);
 
             $content = File::get($file->getPathname());
             preg_match_all('/[^{]+\{[^}]+\}/s', $content, $matches);
@@ -55,7 +55,7 @@ class CleanDuplicateCss extends Command
                 $trimmedBlock = trim($block);
 
                 if (isset($seenBlocks[$trimmedBlock])) {
-                    if ($filename !== 'extra.css') {
+                    if ($fileName !== 'extra.css') {
                         $duplicates[] = $trimmedBlock;
                     }
                 } else {
@@ -65,7 +65,7 @@ class CleanDuplicateCss extends Command
             }
 
             // Nur Dateien außer extra.css überschreiben
-            if ($filename !== 'extra.css') {
+            if ($fileName !== 'extra.css') {
                 File::put($file->getPathname(), implode(PHP_EOL . PHP_EOL, $uniqueBlocks));
             }
         }

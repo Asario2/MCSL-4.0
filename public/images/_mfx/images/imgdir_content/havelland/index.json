@@ -1,56 +1,56 @@
 [
     {
         "position": 1,
-        "filename": "53.jpg",
+        "fileName": "53.jpg",
         "label": "Winterweide",
         "width": 600,
         "height": 800
     },
     {
         "position": 2,
-        "filename": "54.jpg",
+        "fileName": "54.jpg",
         "label": "Wolf im Tierpark",
         "width": 800,
         "height": 600
     },
     {
         "position": 3,
-        "filename": "145.jpg",
+        "fileName": "145.jpg",
         "label": "Eid-echse",
         "width": 800,
         "height": 600
     },
     {
         "position": 4,
-        "filename": "P5121721.jpg",
+        "fileName": "P5121721.jpg",
         "label": "Frisch gem&auml;ht",
         "width": 1350,
         "height": 1012
     },
     {
         "position": 5,
-        "filename": "P5281763.jpg",
+        "fileName": "P5281763.jpg",
         "label": "Trabant auf der Brala 06",
         "width": 1350,
         "height": 1012
     },
     {
         "position": 6,
-        "filename": "P7062060.jpg",
+        "fileName": "P7062060.jpg",
         "label": "Brandenburger Allee",
         "width": 1350,
         "height": 1012
     },
     {
         "position": 7,
-        "filename": "P7152065.jpg",
+        "fileName": "P7152065.jpg",
         "label": "Abendstimmung am Riewensee",
         "width": 1350,
         "height": 1012
     },
     {
         "position": 8,
-        "filename": "P8042317.jpg",
+        "fileName": "P8042317.jpg",
         "label": "Sonnenuntergang in Berge",
         "width": 1350,
         "height": 1012

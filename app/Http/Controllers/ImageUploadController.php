@@ -212,7 +212,7 @@ class ImageUploadController extends Controller
         'Message' => $Message,
         'final_fileName' => $fileName // Sollte MD5 sein
     ]);
-
+    ActLog($request,"image_upload",$fileName,CleanId());
     return response()->json([
         'message' => 'Bild erfolgreich hochgeladen.',
         'image_url' => $fullPath,
@@ -300,17 +300,24 @@ class ImageUploadController extends Controller
         $oldjs = json_decode($oldjs, true);
         $newjs = $this->deleteImageByPosition($oldjs ?? [], ($posi + 1), $path);
         file_put_contents($path . "index.json", json_encode($newjs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+
+        // "action"=>"img_del","info"=>implode(", ",$this->dfn)
+
+
         return response()->json(["success" => "true", "message" => "Bild wurde erfolgreich gelöscht"]);
     }
 
     protected function deleteImageByPosition(array $images, int $deletePosition, string $path): array
     {
+        // \Log::info("IM:",$images);
         if (count($images) === 1 && ($images[0]['position'] ?? null) == $deletePosition) {
             $file = $images[0]['fileName'];
             @unlink($path . "thumbs/" . $file);
             @unlink($path . "orig/" . $file);
             @unlink($path . "big/" . $file);
             @unlink($path . $file);
+            $this->dfn[] = $file;
             file_put_contents($path . "index.json", "[]");
             return [];
         }
@@ -322,6 +329,7 @@ class ImageUploadController extends Controller
                 @unlink($path . "orig/" . $file);
                 @unlink($path . "big/" . $file);
                 @unlink($path . $file);
+               $this->dfn[] = $file;
                 return false;
             }
             return true;

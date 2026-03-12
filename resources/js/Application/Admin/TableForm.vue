@@ -396,7 +396,6 @@
                         :xname="field.name"
                         :required="isRequired(field.required)"
                     ></InputSelectU>
-                    {{field.value}}
                 </input-container>
 
             <input-container
@@ -881,7 +880,7 @@ export default defineComponent({
 
                 let conta = '';
                 for (let i = 0; i < Math.min(5, this.images.length); i++) {
-                    const filename = this.images[i]['filename'];
+                    const fileName = this.images[i]['fileName'];
                     if(CleanTable() != "users")
                     {
                         this.thumb = "thumbs/";
@@ -890,7 +889,7 @@ export default defineComponent({
                     else{
                         this.thumb ='';
                     }
-                    const src = `/images/_${window.subdomain}/images/${field.name}/${field.value}/${this.thumb}/${this.cc(filename)}`;
+                    const src = `/images/_${window.subdomain}/images/${field.name}/${field.value}/${this.thumb}/${this.cc(fileName)}`;
                     conta += `<img width="100" class='mt-3' alt="Vorschau33" title="Vorschau33" id="comm_${field.name}"
                                 style="float:left;margin-right:12px;" src="${src}" />`;
                 }

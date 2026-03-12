@@ -37,7 +37,7 @@ class RightsController extends Controller
                 'redirect' => url('/no-rights') // optional, falls Frontend umleiten soll
             ], 403);
     }
-\Log::info("XKIS2: ".$request->xkis);
+
         DB::statement("ALTER TABLE users_rights DROP COLUMN ".$request->xkis);
         return response()->json(1);
     }
@@ -195,7 +195,7 @@ public function AddFunction(Request $request)
         $first = $xkisColumns[0] ?? null;
 
         if ($first) {
-            $sql = "ALTER TABLE `$table` ADD COLUMN `$column` TINYINT(1) NOT NULL DEFAULT 0 BEFORE `$first`";
+            $sql = "ALTER TABLE `$table` ADD COLUMN `$column` TINYINT(1) NOT NULL DEFAULT 0 AFTER updated_at";
         } else {
             // Es gibt noch keine xkis-Spalten → einfach ans Ende
             $sql = "ALTER TABLE `$table` ADD COLUMN `$column` TINYINT(1) NOT NULL DEFAULT 0";

@@ -12,7 +12,7 @@ class FixImageJsonFilenames extends Command
      *
      * @var string
      */
-    protected $signature = 'images:fix-json-filenames';
+    protected $signature = 'images:fix-json-fileNames';
 
     /**
      * The console command description.
@@ -57,14 +57,14 @@ class FixImageJsonFilenames extends Command
             $changed = false;
 
             foreach ($jsonContent as &$entry) {
-                if (!isset($entry['filename'])) {
+                if (!isset($entry['fileName'])) {
                     continue;
                 }
 
-                $lower = strtolower($entry['filename']);
-                if ($imageFiles->has($lower) && $entry['filename'] !== $imageFiles[$lower]) {
-                    $this->line(" - Korrigiere {$entry['filename']} → {$imageFiles[$lower]}");
-                    $entry['filename'] = $imageFiles[$lower];
+                $lower = strtolower($entry['fileName']);
+                if ($imageFiles->has($lower) && $entry['fileName'] !== $imageFiles[$lower]) {
+                    $this->line(" - Korrigiere {$entry['fileName']} → {$imageFiles[$lower]}");
+                    $entry['fileName'] = $imageFiles[$lower];
                     $changed = true;
                 }
             }

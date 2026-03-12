@@ -104,7 +104,7 @@
         <input type="hidden" id="token" value="{{ csrf_token() }}">
 
 <script type="module">
-import { reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+import { reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
 
 const toastBus = reactive({ toasts: [] });
 toastBus.toasts.push({ message: 'Hallo', type: 'success', duration: 5000 });

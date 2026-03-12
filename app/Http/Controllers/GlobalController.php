@@ -40,13 +40,13 @@ class GlobalController extends Controller
                 ->update(['uhash' => $this->randomString64()]);
         }
         }
-        $exi = DB::table("admin_table")->where("position","0")->exists();
-        if(!@$exi)
-        {
-            DB::table('admin_table')->update([
-                'position' => DB::raw('position - 1')
-            ]);
-        }
+        // $exi = DB::table("admin_table")->where("position","0")->exists();
+        // if(!@$exi)
+        // {
+        //     DB::table('admin_table')->update([
+        //         'position' => DB::raw('position - 1')
+        //     ]);
+        // }
     // w
     }
     // public static function Redirect(){

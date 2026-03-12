@@ -17,6 +17,7 @@ class DumpgitdatabaseController extends Controller
         $this->connectionName = (!empty($request->dom) && $request->dom != 'ab')
             ? 'mariadb_' . $request->dom
             : 'mariadb';
+        $this->mcsl_version = config('starter_eleven.version.versionnr');
 
     }
 
@@ -27,8 +28,8 @@ class DumpgitdatabaseController extends Controller
         : 'mariadb';
 
     $this->usdis = $request->usdis ?? 0;
-    $er = $this->usdis ? "With_User" : "No_User";
-    $filename = base_path('database/dumps/First_Commmit_' . ($request->dom) . "_" . $er .'.sql');
+    $er = $this->usdis ? "_With_User" : "_No_User";
+    $fileName = base_path('database/dumps/First_Commmit_' . ($request->dom) . $er .'.sql');
 
     if (!File::exists(base_path('database/dumps/'))) {
         File::makeDirectory(base_path('database/dumps/'), 0755, true);
@@ -81,29 +82,52 @@ class DumpgitdatabaseController extends Controller
     }
 
     $output .= "\nSET FOREIGN_KEY_CHECKS=1;\n";
-    File::put($filename, $output);
+    File::put($fileName, $output);
 
-    \Log::info("GetFirst(): Dump erstellt für Dom {$request->dom}", ['file' => $filename]);
-    return $filename;
+    \Log::info("GetFirst(): Dump erstellt für Dom {$request->dom}", ['file' => $fileName]);
+    return $fileName;
 }
     // Dummy User
     private function GetUser()
     {
         return "INSERT INTO `users` (`id`, `pub`, `users_rights_id`, `name`,  `password`, `email_verified_at`, `email`, `first_name`, `last_login_at`, `created_at`, `is_admin`, `profile_photo_path`, `uhash`, `updated_at`) VALUES
-        (2, 1, 1, 'Developer', '\$2y\$12\$EXn0jqj9QLRxnLzSkU7DguiMc4Z10RAbwzHkn9Dh0Gp2V7bCl0vXS','2026-02-24 12:08:26', '[EMAIL]', 'Devel',  '2026-02-25 12:34:39', '2026-02-25 12:07:00', 1, NULL, 'py9Q9fupN6goi52WMgghh3-s2XZb6nO48NnIZImy4EDrMQvi6JO33um5aRrSiMCb', '2026-02-25 12:36:17');";
+        (2, 1, 1, 'Developer', '\$2y\$12\$EXn0jqj9QLRxnLzSkU7DguiMc4Z10RAbwzHkn9Dh0Gp2V7bCl0vXS','2026-02-24 12:08:26', 'email@example.com', 'Devel',  '2026-02-25 12:34:39', '2026-02-25 12:07:00', 1, NULL, 'py9Q9fupN6goi52WMgghh3-s2XZb6nO48NnIZImy4EDrMQvi6JO33um5aRrSiMCb', '2026-02-25 12:36:17');";
     }
 
+    public function ScanForNew($dom)
+    {
+    $path = base_path('database/dumps');
+    $files = File::files($path);
 
+    $matches = [];
+    $cont = '';
+    foreach ($files as $file) {
 
+        $name = $file->getFilename();
+
+        if (preg_match('/^Newer_Data_'.$dom.'_(.+)\.sql$/', $name, $match)) {
+            $matches[] = [
+                'file' => $name,
+                'version' => $match[1],
+                'path' => $file->getPathname()
+            ];
+        }
+    }
+    foreach($matches as $m){
+    $cont .= file_get_contents($path."/".$m['file']);
+    }
+    return $cont;
+    }
 
 public function GetAfter(Request $request)
 {
     $this->connectionName = (!empty($request->dom) && $request->dom != 'ab')
         ? 'mariadb_' . $request->dom
         : 'mariadb';
-    $dom = $request->dom ?: 'default';
+    $dom = $request->dom ?: 'ab';
     $dumpFile = base_path("database/dumps/First_Commmit_{$dom}_No_User.sql");
-    $changesFile = base_path("database/dumps/Newer_Data_{$dom}.sql");
+    $changesFile = base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql");
+    $cfiles = $this->ScanForNew($dom);
     $addfield = @file_get_contents($changesFile) ?? '';
 
     if (!file_exists($dumpFile)) {
@@ -111,7 +135,7 @@ public function GetAfter(Request $request)
     }
 
     // 1️⃣ Dump einlesen und CREATE TABLEs extrahieren
-    $dumpContent = file_get_contents($dumpFile);
+    $dumpContent = file_get_contents($dumpFile).$cfiles;
     preg_match_all('/CREATE TABLE `(.*?)`\s*\((.*?)\)\s*ENGINE=/is', $dumpContent, $matches, PREG_SET_ORDER);
 
     $dumpTables = [];
@@ -200,8 +224,8 @@ public function alterTableCont($arr, $connectionName, $dom)
     \Log::info("alterTableCont gestartet", $arr);
 
     $this->ddr = '';
-    $addfield = file_exists(base_path("database/dumps/Newer_Data_{$dom}.sql"))
-        ? file_get_contents(base_path("database/dumps/Newer_Data_{$dom}.sql"))
+    $addfield = file_exists(base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql"))
+        ? file_get_contents(base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql"))
         : '';
 
     foreach ($arr as $cont) {

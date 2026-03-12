@@ -53,15 +53,22 @@ class RssController extends Controller
                     $head  = "Neuer Blog Eintrag auf <a href='https://www.asario.de/$table2/$row->slug'>https://www.asario.de</a>";
                 }
                 else{
-                    $row->slug = "?search=".$row->created_at;
+                    $row->slug = "?search=".urlencode($row->created_at);
                     $table2 = "home/".$table;
                     $head  = "Neue $table auf <a href='https://www.asario.de/$table2/$row->slug'>https://www.asario.de</a>";
                 }
+                $text = html_entity_decode($row->$textField);
+
+                $text = str_replace(['<p>', '</p>'], '', $text);
+
+                $text = strip_tags($text, "<br><h2><b><strong><i><em>");
+
+
                 $items[] = [
                     'table' => $table,
                     'headline' => $row->{$headlineField} ?? '',
                     'head' => $head,
-                    'text' => strip_tags($row->{$textField},"<br><h2><b><strong><i><em>") ?? '',
+                    'text' => $text ?? '',
                     'image' => $hasImage ? ($row->image_path ?? null) : null,
                     'created_at' => $row->created_at,
                     'link' => url("/{$table2}/{$row->slug}"),
@@ -128,11 +135,11 @@ class RssController extends Controller
             }
 
             $content .= "<h2>{$headline}</h2>";
-            $content .= "<p>{$text}</p>";
+            $content .= "{$text}";
 
             $rss .= '<item>';
             $rss .= "<title>{$headline}</title>";
-            $rss .= "<link>{$item['link']}</link>";
+            $rss .= "<link>".($item['link'])."</link>";
             $rss .= "<pubDate>" . date(DATE_RSS, strtotime($item['created_at'])) . "</pubDate>";
             $rss .= "<description><![CDATA[<h2>{$item['head']}</h2>{$content}]]></description>";
             $rss .= '</item>';
@@ -142,5 +149,11 @@ class RssController extends Controller
         $rss .= '</rss>';
 
         return $rss;
+    }
+    public function urld($url) : String {
+        $url = str_replace(":","%3A",$url);
+        $url = str_replace(["http%3A//","https%3A//"],["http://","https://"],$url);
+        return $url;
+
     }
 }

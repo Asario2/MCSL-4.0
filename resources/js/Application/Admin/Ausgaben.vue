@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <MetaHeader :title="'Ein/Ausgabem'" />
+        <MetaHeader :title="'Ein/Ausgaben'" />
 
         <template #header>
             <breadcrumb :breadcrumbs="breadcrumbs" />
