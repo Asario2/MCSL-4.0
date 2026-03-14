@@ -460,8 +460,9 @@ public static array $image_sizes =
     13 => 'ab_users_two_factor_enabled',
     14 => 'ab_users_two_factor_confirmed_at',
     15 => 'ab_users_password',
-    16 => "contacts_hasyear",
-    17 => "contacts_hasryear",
+    16 => 'contacts_hasyear',
+    17 => 'contacts_hasryear',
+    18 => 'mfx_images_updated_at',
 ];
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",

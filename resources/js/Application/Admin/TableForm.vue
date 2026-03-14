@@ -212,10 +212,10 @@
                     <input type="hidden" :id="field.name" :name="field.name"  v-model="field.value" />
                 </input-container>
                 <input-container v-else-if="field.type === 'auto_version'">
-                <InputFormText
+                <InputFormAutoVersion
                         :id="field.name"
                         :name="field.name"
-                        v-model="$page.props.version.versionnr"
+                        v-model="field.value"
                         :placeholder="field.placeholder || ''"
                         readonly
                         :disabled="true"
@@ -225,7 +225,7 @@
 
                 >
 
-                </InputFormText>
+                </InputFormAutoVersion>
                 </input-container>
                 <input-container v-else-if="field.type ==='imgal'">
                     <ImageUploadModal
@@ -614,7 +614,6 @@ import InputFormPrice from "@/Application/Components/Form/InputFormPrice.vue";
 import InputTextarea from "@/Application/Components/Form/InputTextarea.vue";
 import Editor from "@/Application/Components/Form/InputHtml.vue";
 // import InputError from "@/Application/Components/Form/InputError.vue";
-
 import DialogModal from "@/Application/Components/DialogModal.vue";
 
 // import { toastBus } from '@/utils/toastBus';
@@ -625,6 +624,7 @@ import { nextTick } from 'vue'
 // import Alert from "@/Application/Components/Content/Alert.vue";
 import ImageJsonEditor from "@/Application/Admin/ImageJsonEditor.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
+import InputFormAutoVersion from "@/Application/Components/Form/InputFormAutoVersion.vue";
 
 
 export default defineComponent({
@@ -638,6 +638,7 @@ export default defineComponent({
         PublicRadio,
         InputSelectU,
         InputFormDateTime,
+        InputFormAutoVersion,
         InputFormText,
         SectionForm,
         ButtonGroup,

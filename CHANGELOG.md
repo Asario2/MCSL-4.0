@@ -233,4 +233,6 @@
 ![Version](https://img.shields.io/badge/version-4.87.6-orange) Feature - Add language files for emails & Co (#404)  
 ![Version](https://img.shields.io/badge/version-4.88.7-orange) Upload Complete Project (#413)  
 ![Version](https://img.shields.io/badge/version-4.89.6-orange) Hotfix - Fixed Changelog show (#414)  
-![Version](https://img.shields.io/badge/version-4.90.7-orange) Features (#416) and (#417)  
+![Version](https://img.shields.io/badge/version-4.90.7-orange) Features (#416) and (#417)  ![Version](https://img.shields.io/badge/version-4.91.0-orange) Feature - ActivityLog (#420)  
+![Version](https://img.shields.io/badge/version-4.92.5-orange) Hotfix - Save Checkbox Handling (#421)  
+![Version](https://img.shields.io/badge/version-4.93.3-orange) Feature - Save the version for blogs (#422)  
