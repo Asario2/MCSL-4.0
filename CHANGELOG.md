@@ -234,4 +234,3 @@
 ![Version](https://img.shields.io/badge/version-4.88.7-orange) Upload Complete Project (#413)  
 ![Version](https://img.shields.io/badge/version-4.89.6-orange) Hotfix - Fixed Changelog show (#414)  
 ![Version](https://img.shields.io/badge/version-4.90.7-orange) Features (#416) and (#417)  
-

@@ -396,6 +396,9 @@ public static function getOptions($name)
             case "autoslug":
                 return "autoSlug";
             break;
+            case "auto_version":
+                return "auto_version";
+            break;
             case "birthday":
                 return "date";
             break;

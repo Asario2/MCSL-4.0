@@ -140,6 +140,7 @@ class ImageUploadController extends Controller
             // Standard
             $resizedPath = public_path("/images/_{$subdomain}/{$table_ori}/{$column}/{$big[$size]}{$fileName}");
         }
+        $rp2 = "/images/_{$subdomain}/{$table_ori}/{$column}/{$fileName}";
         $rp = basename($is_imgdir);
 
         \Log::debug("Creating image for size {$size}", [
@@ -212,7 +213,8 @@ class ImageUploadController extends Controller
         'Message' => $Message,
         'final_fileName' => $fileName // Sollte MD5 sein
     ]);
-    ActLog($request,"image_upload",$fileName,CleanId());
+    $rp3 = "http://".$_SERVER['HTTP_HOST'].$rp2;
+    ActLog($request,"image_upload","<a href='".$rp3."' target='_blank'>$rp3</a><br /><img src='".$rp2."' />",$request->id,$table);
     return response()->json([
         'message' => 'Bild erfolgreich hochgeladen.',
         'image_url' => $fullPath,

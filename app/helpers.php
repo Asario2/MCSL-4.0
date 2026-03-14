@@ -263,25 +263,43 @@ function decval($value)
     }
 }
 }
+if(!function_exists("CleanId"))
+{
+    function CleanId() {
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    // Beispiel: /admin/tables/show/123
+
+    $segments = explode('/', $path);
+
+    foreach ($segments as $segment) {
+        if (is_numeric($segment) && trim($segment) !== '') {
+            return $segment; // erste gefundene ID zurückgeben
+        }
+    }
+
+    return null; // falls keine ID gefunden wird
+}
+}
 
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request; // oben in der Datei
 
 if(!function_exists("ActLog"))
 {
-    function ActLog(Request $request,$action,$info,$id)
+    function ActLog(Request $request,$action,$info,$id,$table='')
     {
         $action = $action;
         $info = $info;
-        $excl_id = $id ?? null;
+        $excl_id = (int)$id;
         $URL = $request->url();
         $users_id = Auth::id();
         $session_id = session_id();
         $created_at = now();
+        $table =  $table ?? CleanTable();
         // $ip = $request->ip();
         $IP = AnoIP($request);
 
-        DB::connection("mariadb")->table("xgen_activitylog")->insert(['xkis_checked'=>0,"created_at"=>$created_at,"action"=>$action,"excl_id"=>$excl_id,"URL"=>$URL,"info"=>$info,"users_id"=>$users_id,"IP"=>$IP,"session_id"=>$session_id]);
+        DB::connection("mariadb")->table("xgen_activitylog")->insert(['xkis_checked'=>0,"tablename"=>$table,"created_at"=>$created_at,"action"=>$action,"excl_id"=>$excl_id,"URL"=>$URL,"info"=>$info,"users_id"=>$users_id,"IP"=>$IP,"session_id"=>$session_id]);
     }
 }
 if(!function_exists("AnoIP"))

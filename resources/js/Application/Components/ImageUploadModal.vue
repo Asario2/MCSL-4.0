@@ -97,7 +97,7 @@
   <script>
   import CopyLeftSelect from '@/Application/Components/Content/CopyLeftSelect.vue';
   import ImageJsonEditor from '@/Application/Admin/ImageJsonEditor.vue';
-  import { CleanTable as cleanTableFn, GetAuth, SD } from '@/helpers';
+  import { CleanTable as cleanTableFn, GetAuth, SD, CleanId } from '@/helpers';
   import { nextTick } from 'vue';
 
   export default {
@@ -162,7 +162,7 @@
     },
     methods: {
       SD,
-
+      CleanId,
       tabClass(tab) {
         return [
           'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
@@ -224,6 +224,7 @@
         formData.append('copyleft', this.form.copyleft);
         formData.append('Message', this.Message ? 1 : 0);
         formData.append('is_imgdir', this.finalPath);
+        formData.append("id",CleanId());
         for (const [key, value] of formData.entries()) {
 //             console.log(key, value);
         }

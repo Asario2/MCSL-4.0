@@ -16,6 +16,7 @@
               <th class="px-4 py-3">Pub</th>
               <th class="px-4 py-3">Datum</th>
               <th class="px-4 py-3">Action</th>
+              <th class="px-4 py-3">Tabelle</th>
               <th class="px-4 py-3">ID</th>
               <th class="px-4 py-3">URL</th>
               <th class="px-4 py-3">User</th>
@@ -41,6 +42,7 @@
                 {{ getDate(row.created_at) }}
               </td>
               <td class="px-4 py-3">{{ row.action }}</td>
+              <td class="px-4 py-3">{{ row.tablename }}</td>
               <td class="px-4 py-3">{{ row.excl_id }}</td>
 
               <td class="px-4 py-3">
@@ -69,7 +71,7 @@
               </td>
 
               <td class="px-4 py-3">{{ row.IP }}</td>
-              <td class="px-4 py-3 max-w-[200px] truncate">{{ row.session_id }}</td>
+              <td class="px-4 py-3 max-w-[200px] truncate"><img :src="'/images/icons/session.png'" class='w-8 h-8' :alt="'SessionID: ' + row.session_id" :title="'SessionID: ' + row.session_id"></td>
             </tr>
           </tbody>
         </table>
@@ -91,9 +93,7 @@
             </button>
           </div>
 
-          <pre class="p-4 text-xs overflow-auto max-h-[70vh] bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100">
-{{ modalContent }}
-          </pre>
+          <pre class="p-4 text-xs overflow-auto max-h-[70vh] bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100"  v-html="modalContent"></pre>
         </div>
       </div>
 
@@ -105,12 +105,12 @@
 import axios from 'axios';
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
-import CreatedAt from '@/Application/Components/Form/CreatedAt.vue';
 import { CleanTable, ucf, SD, rumLaut, GetProfileImagePath } from "@/helpers";
+import MetaHeader from '@/Application/Homepage/Shared/MetaHeader.vue';
 
 export default {
   name: "ActivityLogTable",
-  components: { Layout, Breadcrumb },
+  components: { Layout, Breadcrumb,MetaHeader },
 
   props: {
     users: [Object,Array],

@@ -609,7 +609,6 @@ public function ShowTable(Request $request, $table_alt = null)
     foreach ($joins as $relatedTable => $join) {
         $query->leftJoin($relatedTable, $join['to'], '=', $join['from']);
     }
-    \Log::info("auth:".Auth::user()->users_rights_id);
     if(in_array($table,Settings::$private_tables) && Auth::user()->users_rights_id != '1')
     {
         $query->where("users_id",Auth::id());
@@ -1602,6 +1601,22 @@ public function ShowTable(Request $request, $table_alt = null)
                 $table->name = ucf($table->name);
                 return $table;
             });
+                $pagination = [
+        'current_page' => $tables->currentPage(),
+        'last_page'    => $tables->lastPage(),
+        'per_page'     => $tables->perPage(),
+        'total'        => $tables->total(),
+        'from'         => $tables->firstItem(),
+        'to'           => $tables->lastItem(),
+        'data'         => $tables->items(),
+        'links'        => collect($tables->linkCollection())->map(function ($link) {
+            return [
+                'url'    => $link['url'],
+                'label'  => $link['label'],
+                'active' => $link['active'],
+            ];
+        }),
+    ];
 //         \Log::info('tab:'.json_encode($tables, JSON_PRETTY_PRINT));
         return Inertia::render('Admin/TableList', [
             'filters' => Request()->all('search'),
@@ -1610,6 +1625,7 @@ public function ShowTable(Request $request, $table_alt = null)
             "table_alt"=> $table,
             "tablez" => ucf($table),
             "tables"  => $tables,
+            "pag"    => $pagination,
         ]);
     }
     public function ListTables_old()
@@ -2080,7 +2096,7 @@ public function ShowTable(Request $request, $table_alt = null)
 
         // Log-Eintrag für Debug-Zwecke
 //         Log::info('User roles updated:', $updated);
-        ActLog($request,"store_user_rights","users_rights",$entry['id']);
+        ActLog($request,"store_user_rights","users_rights - ".$formData[Settings::$headline[$table]],$entry['id'],"users_rights");
         return response()->json([
             'message' => 'Benutzerrollen wurden gespeichert.',
             'updated' => $updated,
@@ -2095,7 +2111,7 @@ public function ShowTable(Request $request, $table_alt = null)
         $user = User::findOrFail($request->id);
         $user->xis_disabled = $request->xis_disabled;
         $user->save();
-        ActLog($request,"saveUserDisabled","users",$request->id);
+        ActLog($request,"saveUserDisabled","users",$request->id,"users_rights");
         return response()->json(['message' => 'Status gespeichert']);
     }
 
@@ -2950,7 +2966,7 @@ return Inertia::render('Admin/Kontakte', [
         if(@$orig_posi){
             $this->UP_POSI($table,'',@$orig_posi);
         }
-        ActLog($request,"StoreTable",$table,$newId);
+        ActLog($request,"StoreTable",$formData[Settings::$headline[$table]],$newId,$table);
         if (CheckZRights("UserRights") && $table == "admin_table") {
             return response()->json(["status" => "success", "message" => "Gespeichert, Bitte <a href='/admin/User_Rights'>Benutzerrechte</a> aktualisieren"]);
         }
@@ -3191,7 +3207,7 @@ return Inertia::render('Admin/Kontakte', [
 
             // $this->debugUpdateQuery($table,$id,$formData);
             // if ($updated) {
-            ActLog($request,"UpdateTable",$table,$id);
+            ActLog($request,"UpdateTable",$formData[Settings::$headline[$table]],$id,$table);
                 return response()->json(['type' => 'success','message' => 'Daten erfolgreich aktualisiert!']);
             // } else {
 
@@ -3387,11 +3403,12 @@ return Inertia::render('Admin/Kontakte', [
         $q2 = $query->get();
         // Exklusionsbedingungen anwenden
         $query = $this->applyExclWhere($table, $query);
-
+        $name = DB::table($table)->where("id",$id)->value(Settings::$headline[$table]);
         // Jetzt löschen
         $query->delete();
 
 
+        ActLog($request,"DeleteTable",$name,$id,$table);
         return response()->json(["type" => "success", "message" => "Eintrag erfolgreich gelöscht"]);
         return redirect("admin/tables/$table/show");
     }
@@ -3478,7 +3495,7 @@ return response()->json($user);
             DB::table($table)->where('id', $id)->where('public',$public)->update(['checked' => $pub]);
         }
 
-        ActLog($request,"Publish",$unp,$id);
+        ActLog($request,"Publish",$unp." - ".$formData[Settings::$headline[$table]],$id,$table);
         return response()->json(['success' => true, 'pub' => $pub]);
     }
 
