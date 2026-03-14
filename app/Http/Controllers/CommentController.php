@@ -344,42 +344,42 @@ return response()->json([
     //         \Log::info("aff:".json_encode($res,JSON_PRETTY_PRINT));
     //     return true;
     // }
-    // public function checkComment(Request $request)
-    // {
-    //     $id = $request->id;
+    public function checkComment(Request $request)
+    {
+        $id = $request->id;
 
-    //     // Rechte-ID des aktuellen Users holen
-    //     $userRight = DB::table("users_rights")
-    //         ->join("users", "users.users_rights_id", "=", "users_rights.id")
-    //         ->where("users.id", Auth::id())
-    //         ->value("users_rights.unique_id");
+        // Rechte-ID des aktuellen Users holen
+        $userRight = DB::table("users_rights")
+            ->join("users", "users.users_rights_id", "=", "users_rights.id")
+            ->where("users.id", Auth::id())
+            ->value("users_rights.unique_id");
 
-    //     if (!$userRight) {
-    //         \Log::warning("Keine Rechte für User ".Auth::id());
-    //         return response()->json(['error' => 'Keine Rechte vorhanden'], 403);
-    //     }
-    //     $ids = DB::table("comments")->pluck("id");
-    //     foreach($ids as $id){
-    //     // Prüfen, ob das Kommentarfeld schon als gelesen markiert wurde
-    //     $commentSeen = DB::table('comments')
-    //         ->where("comments.id", $id)
-    //         ->whereRaw('ischecked & ? > 0', [$userRight])
-    //         ->exists();
+        if (!$userRight) {
+            \Log::warning("Keine Rechte für User ".Auth::id());
+            return response()->json(['error' => 'Keine Rechte vorhanden'], 403);
+        }
+        $ids = DB::table("comments")->pluck("id");
+        foreach($ids as $id){
+        // Prüfen, ob das Kommentarfeld schon als gelesen markiert wurde
+        $commentSeen = DB::table('comments')
+            ->where("comments.id", $id)
+            ->whereRaw('ischecked & ? > 0', [$userRight])
+            ->exists();
 
-    //     \Log::info("Kommentar $id schon gesehen? " . ($commentSeen ? 'ja' : 'nein'));
-    //     \Log::info("UR:".json_encode($request->input('ids')));
+        // \Log::info("Kommentar $id schon gesehen? " . ($commentSeen ? 'ja' : 'nein'));
+        // \Log::info("UR:".json_encode($request->input('ids')));
 
-    //     if (!$commentSeen) {
-    //         // Kommentar aktualisieren (nur EINEN!)
-    //         DB::table("comments")
-    //             ->where("id", $id)
-    //             ->update([
-    //                 'ischecked' => DB::raw("ischecked + " . $userRight)
-    //             ]);
-    //     }
-    // }
-    //     return response()->json(['success' => true]);
-    // }
+        if (!$commentSeen) {
+            // Kommentar aktualisieren (nur EINEN!)
+            DB::table("comments")
+                ->where("id", $id)
+                ->update([
+                    'ischecked' => DB::raw("ischecked + " . $userRight)
+                ]);
+        }
+    }
+        return response()->json(['success' => true]);
+    }
     public function checkComment_old()
 {
     try {

@@ -211,7 +211,22 @@
                     </button>
                     <input type="hidden" :id="field.name" :name="field.name"  v-model="field.value" />
                 </input-container>
+                <input-container v-else-if="field.type === 'auto_version'">
+                <InputFormText
+                        :id="field.name"
+                        :name="field.name"
+                        v-model="$page.props.version.versionnr"
+                        :placeholder="field.placeholder || ''"
+                        readonly
+                        :disabled="true"
+                        class="cursor-not-allowed"
+                        :required="isRequired(field.required)"
+                        @input="handleInput_alt(field.name)"
 
+                >
+
+                </InputFormText>
+                </input-container>
                 <input-container v-else-if="field.type ==='imgal'">
                     <ImageUploadModal
                         v-if="modals[field.name]"

@@ -43,9 +43,14 @@
           <td class="np-dl-td-normal" v-if="rights.view[data.datarow.full_name] == '1'">
             {{ data.datarow.description }}
           </td>
+
         </template>
+
       </list-container>
+
     </section>
+
+    <pagination class="dark:bg-black" :links="pag?.links" basePath="show" />
   </layout>
 </template>
 
@@ -59,6 +64,7 @@ import { CleanTable,CheckTRights } from '@/helpers'; // NEU: Import der Batch-Fu
 import { hasRightSync } from '@/utils/rights';
 import { route } from 'ziggy-js';
 import axios from "axios";
+import Pagination from "@/Application/Components/Lists/Pagination.vue";
 export default defineComponent({
   name: "Admin_TableList",
 
@@ -67,6 +73,7 @@ export default defineComponent({
     Breadcrumb,
     MetaHeader,
     ListContainer,
+    Pagination,
   },
 
   props: {
@@ -75,6 +82,7 @@ export default defineComponent({
       required: true,
       default: () => ({ data: [] }),
     },
+    pag:Object,
   },
 
   data() {

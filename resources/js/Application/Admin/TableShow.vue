@@ -173,6 +173,7 @@
 
     </div>
         </section>
+        <pagination :links="pag?.links" v-if="data" basePath="show" />
     </layout>
     </template>
 
@@ -182,7 +183,7 @@
     import CreatedAt from "@/Application/Components/Form/CreatedAt.vue";
     import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
     import ListContainer from "@/Application/Components/Lists/ListContainer.vue";
-
+    import Pagination from "@/Application/Components/Pagination.vue";
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import PublishButton from "@/Application/Components/Form/PublishButton.vue";
     import IconStar from "@/Application/Components/Icons/IconStar.vue";
@@ -208,6 +209,7 @@
         ListContainer,
         PublishButton,
         IconStar,
+        Pagination,
         },
         props: {
         applicationName: { type: String, default: "Administrator-Anwendung" },

@@ -49,7 +49,7 @@
                 <p>
                     Hier gibt’s fast alles von mir: <a class='as' href="home/pictures" itemprop="hasOccupation">Bilder</a> & <a class='as' href="home/shortpoems" itemprop="hasOccupation">Gedichte</a>.<br />
                 </p><br />
-                <span class="border border-gray-300 dark:border-gray-700 text-center max-w-xl mx-auto my-8 p-8">
+                <p class="border border-gray-300 dark:border-gray-700 text-center max-w-xl mx-auto my-8 p-8">
                ⭐⭐⭐ <strong>MCSL-Points.</strong> ⭐⭐⭐<br />
                 Registrierte Nutzer sammeln Punkte, indem sie lesen, bleiben und wiederkommen.
                 Die Punkte sind kein Spielzeug. Sie haben einen Zweck.
@@ -63,7 +63,7 @@
                 </ul>
                 Wer mehr wissen will, findet weitere Informationen hier:<br />
                 <a class="as font-semibold" href="/about/mcs-points">MCSL-Points</a>.
-            </span>
+                </p>
 
 
                 <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -85,7 +85,7 @@
                         class="flex items-center gap-2 px-3 py-2 rounded-lg font-semibold bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white text-center tog-tab transition-all"
                         @click="redirect"
                     >
-                        Zu meinem Blog
+                    Zu meinem Blog
                     </button><br />
                 </div>
             </div>
