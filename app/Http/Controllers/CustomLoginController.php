@@ -60,7 +60,7 @@ public function resetPassword(Request $request)
      */
     public function loginSilent(Request $request)
     {
-        \Log::info('LOGIN-SILENT HIT');
+//         \Log::info('LOGIN-SILENT HIT');
 
         if(empty($request->password)) {
             return response()->json([

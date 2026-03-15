@@ -970,7 +970,7 @@ public function ShowTable(Request $request, $table_alt = null)
 
 
         // dd($content);
-        \Log::info("asd:".json_encode($request));
+//         \Log::info("asd:".json_encode($request));
 
         return $ma->PrevMail($request,$title,"emails.newsletter",$email,$nick,$link,$content,$signatur,$uhash='',$chash='');
 
@@ -1449,7 +1449,7 @@ public function ShowTable(Request $request, $table_alt = null)
         'id' => 'required|integer',
         'position' => 'required|integer|min:-1',
     ]);
-    \Log::info([$request,$table]);
+//     \Log::info([$request,$table]);
     $entry = DB::table($table)->where('id', $request->id)->first();
     if (!$entry) {
         return response()->json(['error' => 'Entry not found'], 404);
@@ -1576,39 +1576,39 @@ public function ShowTable(Request $request, $table_alt = null)
     return response()->json($rights);
   }
 
-    public function ListTables(Request $request,$table_alt='')
-    {
-        $table = $table_alt;
+public function ListTables(Request $request, $table_alt = '')
+{
+    $table = $table_alt;
 
-        if(!CheckZRights("DataBases"))
-        {
-            header("Location: /no-rights");
-            exit;
-        }
+    if (!CheckZRights("DataBases")) {
+        return redirect('/no-rights');
+    }
 
-        $ob = "name";
+    $orderBy = Schema::hasColumn("admin_table", "position") ? "position" : "name";
 
-        if(Schema::hasColumn("admin_table","position"))
-        {
-            $ob = "position";
-        }
-        $tables = Table::select("admin_table.name as full_name","admin_table.name","admin_table.*")->filterBlog($request->only('search'))
-            ->orderBy($ob, 'ASC')
-            ->paginate(20)
-            ->withQueryString();
+    $tables = Table::select("admin_table.name as full_name", "admin_table.name", "admin_table.*")
+        ->filterBlog($request->only('search'))
+        ->orderBy($orderBy, 'ASC')
+        ->paginate(
+            20,
+            ['*'],
+            'page',
+            $request->input('page', 1)
+        )
+        ->withQueryString();
 
-            $tables->getCollection()->transform(function ($table) {
-                $table->name = ucf($table->name);
-                return $table;
-            });
-                $pagination = [
+    $tables->getCollection()->transform(function ($table) {
+        $table->name = ucf($table->name);
+        return $table;
+    });
+
+    $pagination = [
         'current_page' => $tables->currentPage(),
         'last_page'    => $tables->lastPage(),
         'per_page'     => $tables->perPage(),
         'total'        => $tables->total(),
         'from'         => $tables->firstItem(),
         'to'           => $tables->lastItem(),
-        'data'         => $tables->items(),
         'links'        => collect($tables->linkCollection())->map(function ($link) {
             return [
                 'url'    => $link['url'],
@@ -1617,17 +1617,19 @@ public function ShowTable(Request $request, $table_alt = null)
             ];
         }),
     ];
-//         \Log::info('tab:'.json_encode($tables, JSON_PRETTY_PRINT));
-        return Inertia::render('Admin/TableList', [
-            'filters' => Request()->all('search'),
-            'datarows' => $tables,
-            "rows" => $tables,
-            "table_alt"=> $table,
-            "tablez" => ucf($table),
-            "tables"  => $tables,
-            "pag"    => $pagination,
-        ]);
-    }
+
+    return Inertia::render('Admin/TableList', [
+        'filters'   => $request->only('search'),
+        'rows'      => $tables,
+        'datarows'  => $tables,
+        'tables'    => $tables,
+        'pagination'=> $pagination,
+        'table_alt' => $table,
+        'tablez'    => ucf($table),
+        'pag'       => $pagination,
+    ]);
+}
+
     public function ListTables_old()
     {
                 // Hole die Daten aus der Tabelle adm_table
@@ -3014,7 +3016,7 @@ return Inertia::render('Admin/Kontakte', [
         // sendBeacon sendet JSON im Body
         $payload = json_decode($request->getContent(), true);
         $ids = $payload['ids'] ?? [];
-        \Log::info("gc:",$request->getContent());
+//         \Log::info("gc:",$request->getContent());
 
         if (!empty($ids)) {
             DB::connection('mariadb')

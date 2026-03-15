@@ -148,7 +148,7 @@
                             const data = await response.json();
                             mode = data.darkMode || mode;
                         } catch (error) {
-                            console.warn("Dark Mode API Fehler, Standard wird benutzt:", error);
+                            console.error("Dark Mode API Fehler, Standard wird benutzt:", error);
                         }
                         localStorage.setItem("theme", mode);
                         document.documentElement.setAttribute("data-theme", mode);

@@ -635,7 +635,7 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
                     if (window.LaravelCookieConsent && typeof window.LaravelCookieConsent.show === 'function') {
                     window.LaravelCookieConsent.reset();
                     } else {
-                    console.warn("CookieConsent noch nicht geladen");
+                    console.error("CookieConsent noch nicht geladen");
                     }
                 });
 

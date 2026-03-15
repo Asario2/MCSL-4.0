@@ -34,7 +34,7 @@ export function hasRightSync(right, table) {
     const key = `${right}_${table}`;
 
     // if (!rightsLoaded) {
-    //     console.warn("hasRightSync aufgerufen BEVOR Rechte geladen!");
+    //     console.error("hasRightSync aufgerufen BEVOR Rechte geladen!");
     //     return false;
     // }
 // console.log(GetBatchRights(table, right));
@@ -50,7 +50,7 @@ export function isRightsReady() {
  */
 export function hasRight(right, table) {
   if (!rightsReady || !isAuthenticated) {
-    // console.warn(`⚠️ Rechteprüfung fehlgeschlagen – ready=${rightsReady}, auth=${isAuthenticated}`);
+    // console.error(`⚠️ Rechteprüfung fehlgeschlagen – ready=${rightsReady}, auth=${isAuthenticated}`);
     return false;
   }
 

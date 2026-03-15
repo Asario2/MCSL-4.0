@@ -112,7 +112,7 @@
           const res = await axios.get(`/tables/sort-data/${this.name}`);
           const key = `${this.name}.sortedOptions`;
 
-          console.log(`[${this.name}] API-Rohdaten:`, res.data);
+//           console.log(`[${this.name}] API-Rohdaten:`, res.data);
 
           if (Array.isArray(res.data)) {
             this.fetchedOptions = res.data;

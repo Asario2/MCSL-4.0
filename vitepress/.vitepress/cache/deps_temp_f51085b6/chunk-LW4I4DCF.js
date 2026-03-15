@@ -304,7 +304,7 @@ var stringifySymbol = (v, i = "") => {
 
 // node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js
 function warn(msg, ...args) {
-  console.warn(`[Vue warn] ${msg}`, ...args);
+  console.error(`[Vue warn] ${msg}`, ...args);
 }
 var activeEffectScope;
 var EffectScope = class {
@@ -2113,7 +2113,7 @@ function warn$1(msg, ...args) {
       warnArgs.push(`
 `, ...formatTrace(trace));
     }
-    console.warn(...warnArgs);
+    console.error(...warnArgs);
   }
   resetTracking();
   isWarning = false;
@@ -2597,7 +2597,7 @@ function reload(id, newComp) {
     } else if (typeof window !== "undefined") {
       window.location.reload();
     } else {
-      console.warn(
+      console.error(
         "[HMR] Root or manually mounted instance modified. Full reload required."
       );
     }
@@ -2623,7 +2623,7 @@ function tryWrap(fn) {
       return fn(id, arg);
     } catch (e) {
       console.error(e);
-      console.warn(
+      console.error(
         `[HMR] Something went wrong during Vue component hot-reload. Full reload required.`
       );
     }
@@ -6687,7 +6687,7 @@ function initFeatureFlags() {
   }
   if (needWarn.length) {
     const multi = needWarn.length > 1;
-    console.warn(
+    console.error(
       `Feature flag${multi ? `s` : ``} ${needWarn.join(", ")} ${multi ? `are` : `is`} not explicitly defined. You are running the esm-bundler build of Vue, which expects these compile-time feature flags to be globally injected via the bundler config in order to get better tree-shaking in the production bundle.
 
 For more details, see https://link.vuejs.org/feature-flags.`

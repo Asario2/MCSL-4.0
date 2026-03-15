@@ -66,8 +66,8 @@ export default {
       const editorId = "editor_" + this.editor;
       const el = document.getElementById(editorId);
       if (!el) {
-        console.warn(`Editor with id '${editorId}' not found`);
-        console.warn('Available editors:', document.querySelectorAll('[contenteditable="true"]'));
+        console.error(`Editor with id '${editorId}' not found`);
+        console.error('Available editors:', document.querySelectorAll('[contenteditable="true"]'));
       }
       return el;
     },
@@ -115,7 +115,7 @@ export default {
           sel.removeAllRanges();
           sel.addRange(range);
         } catch (e) {
-          console.warn('Failed to restore saved range:', e);
+          console.error('Failed to restore saved range:', e);
           range = null;
         }
       }

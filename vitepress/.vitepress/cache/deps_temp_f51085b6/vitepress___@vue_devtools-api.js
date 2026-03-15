@@ -380,7 +380,7 @@ var Hookable = class {
         this._deprecatedMessages = /* @__PURE__ */ new Set();
       }
       if (!this._deprecatedMessages.has(message)) {
-        console.warn(message);
+        console.error(message);
         this._deprecatedMessages.add(message);
       }
     }
@@ -3458,15 +3458,15 @@ function normalizeRouterInfo(appRecord, activeAppRecord2) {
     const router = (_a25 = appRecord.app) == null ? void 0 : _a25.config.globalProperties.$router;
     const currentRoute = filterCurrentRoute(router == null ? void 0 : router.currentRoute.value);
     const routes = filterRoutes(getRoutes(router));
-    const c = console.warn;
-    console.warn = () => {
+    const c = console.error;
+    console.error = () => {
     };
     target[ROUTER_INFO_KEY] = {
       currentRoute: currentRoute ? deepClone(currentRoute) : {},
       routes: deepClone(routes)
     };
     target[ROUTER_KEY] = router;
-    console.warn = c;
+    console.error = c;
   }
   init();
   hook.on.componentUpdated(debounce(() => {

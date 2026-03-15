@@ -60,7 +60,7 @@ class hackinglogService
     }
     if($score > $this->maxScore)
     {
-        \Log::info("SC:".$score."MS:".$this->maxScore);
+//         \Log::info("SC:".$score."MS:".$this->maxScore);
     DB::connection("mariadb")->table('xgen_hackinglog')->insert([
             'ip'           => $ip,
             'dom'          => SD(),

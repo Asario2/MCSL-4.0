@@ -84,7 +84,7 @@ class DumpgitdatabaseController extends Controller
     $output .= "\nSET FOREIGN_KEY_CHECKS=1;\n";
     File::put($fileName, $output);
 
-    \Log::info("GetFirst(): Dump erstellt für Dom {$request->dom}", ['file' => $fileName]);
+//     \Log::info("GetFirst(): Dump erstellt für Dom {$request->dom}", ['file' => $fileName]);
     return $fileName;
 }
     // Dummy User
@@ -208,7 +208,7 @@ public function GetAfter(Request $request)
     if (!empty($alterStatements)) {
         file_put_contents($changesFile, $alterStatements, FILE_APPEND);
     }
-
+    file_put_contents(public_path("/timespy/gitdbmake.dat"),date("Y-m-d H:i:s"));
     return response()->json([
         "dom"=>$dom,
         'message' => 'Vergleich abgeschlossen.',
@@ -221,7 +221,7 @@ public function GetAfter(Request $request)
 
 public function alterTableCont($arr, $connectionName, $dom)
 {
-    \Log::info("alterTableCont gestartet", $arr);
+//     \Log::info("alterTableCont gestartet", $arr);
 
     $this->ddr = '';
     $addfield = file_exists(base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql"))
@@ -254,7 +254,7 @@ public function alterTableCont($arr, $connectionName, $dom)
         }
     }
 
-    \Log::info("Kompletter DDR SQL:", ['sql' => $this->ddr]);
+//     \Log::info("Kompletter DDR SQL:", ['sql' => $this->ddr]);
     return $this->ddr;
 }
 

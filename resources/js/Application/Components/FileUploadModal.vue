@@ -271,7 +271,7 @@
 
                     axios.post('/contacts/import-preview', formData)
                     .then(res => {
-                        console.log(res.data.contacts); // ✅ hier sind die Kontakte
+//                         console.log(res.data.contacts); // ✅ hier sind die Kontakte
                         this.$emit('open-import-contacts', res.data.contacts);
                     });
                     // axios.post('/contacts/import-preview/'+file, formData, {

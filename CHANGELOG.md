@@ -236,3 +236,5 @@
 ![Version](https://img.shields.io/badge/version-4.90.7-orange) Features (#416) and (#417)  ![Version](https://img.shields.io/badge/version-4.91.0-orange) Feature - ActivityLog (#420)  
 ![Version](https://img.shields.io/badge/version-4.92.5-orange) Hotfix - Save Checkbox Handling (#421)  
 ![Version](https://img.shields.io/badge/version-4.93.3-orange) Feature - Save the version for blogs (#422)  
+![Version](https://img.shields.io/badge/version-4.94.3-orange) Hotfix - Add CleanId() (#419)  
+![Version](https://img.shields.io/badge/version-4.95.4-orange) Hotfix - Tableshow (#415)  

@@ -304,7 +304,7 @@ var isDef = (val) => typeof val !== "undefined";
 var notNullish = (val) => val != null;
 var assert = (condition, ...infos) => {
   if (!condition)
-    console.warn(...infos);
+    console.error(...infos);
 };
 var toString = Object.prototype.toString;
 var isObject = (val) => toString.call(val) === "[object Object]";

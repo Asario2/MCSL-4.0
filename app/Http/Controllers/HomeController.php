@@ -206,7 +206,7 @@ class HomeController extends Controller
         Paginator::currentPageResolver(fn () => 1);
     }
     $zeitpunkt = Carbon::now();
-        \Log::info('[HomeController] Zeitpunkt: ' . $zeitpunkt);
+//         \Log::info('     Zeitpunkt: ' . $zeitpunkt);
 
         // Nur gültige Page-Nummer akzeptieren
         $page = (int) $request->input('page', 1);
@@ -218,7 +218,7 @@ class HomeController extends Controller
         $lastPage = ceil($totalItems / 19);
         if ($page > $lastPage) $page = 1;
 
-        \Log::info('[HomeController] Requested Page after validation: ' . $page);
+//         \Log::info('[HomeController] Requested Page after validation: ' . $page);
 
 
         // Base Query
@@ -247,7 +247,7 @@ class HomeController extends Controller
                 $q->where('blogs.title', 'like', "%{$search}%")
                 ->orWhere('blogs.summary', 'like', "%{$search}%");
             });
-            \Log::info('[HomeController] Filter applied: search=' . $search);
+//             \Log::info('[HomeController] Filter applied: search=' . $search);
         }
 
         // Ordering
@@ -272,11 +272,11 @@ class HomeController extends Controller
             $blog->title = html_entity_decode($blog->title);
             return $blog;
         });
-        \Log::info('[HomeController] Blogs transformiert: Anzahl=' . $blogs->count());
+//         \Log::info('[HomeController] Blogs transformiert: Anzahl=' . $blogs->count());
 
         // AI Overlay
         $blogs->aiOverlayImage = "ai-".(@$_SESSION['dm'] ?? 'default').".png";
-        \Log::info('[HomeController] AI Overlay gesetzt: ' . $blogs->aiOverlayImage);
+//         \Log::info('[HomeController] AI Overlay gesetzt: ' . $blogs->aiOverlayImage);
 
         return Inertia::render('Homepage/BlogList', [
             'filters' => $request->only('search'),
@@ -410,7 +410,7 @@ return Inertia::render('Homepage/Pictures', [
             return request()->input('page', 1);
         });
 
-        \Log::info('PAGE PARAM: ' . $request->input('page'));
+//         \Log::info('PAGE PARAM: ' . $request->input('page'));
 
         DB::enableQueryLog();
         Paginator::currentPageResolver(function () {
@@ -434,7 +434,7 @@ return Inertia::render('Homepage/Pictures', [
             ->withQueryString();
 
 
-        \Log::info(DB::getQueryLog());
+//         \Log::info(DB::getQueryLog());
 
         $rat = RatingController::getTotalRating("images");
         $ocont = DB::table("image_categories")->where("slug", $slug)->first();

@@ -658,7 +658,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/SubmitPremiums/{users_id}/{img_id}', [MCSLPointsController::class, 'SendMail'])->name('send.mcslpoints');
         //
         Route::post('/api/user/batch-rights', [TablesController::class, 'GetBatchRights'])->name("get.bash.rights");
-        Route::get('/api/chkcom/{id?}', [CommentController::class, 'checkComment'])->name("comments.check");
+        Route::get('/api/chkcom/{id?}', [CommentController::class, 'checklogs'])->name("comments.check");
 
         Route::get('/api/contacts', [TablesController::class, 'api_contacts'])->name("admin.contacts");
         Route::post("/personal_update", [PersonalController::class, 'update'])->name("personal.update");

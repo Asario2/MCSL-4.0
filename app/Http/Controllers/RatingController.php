@@ -50,7 +50,7 @@ class RatingController extends Controller
         $postId = $validated['postId'];
         $table = $validated["table"];
         $email = $validated["email"] ?? Auth::user()->email;
-        \Log::info($validated);
+//         \Log::info($validated);
 
             $userId = Auth::id() ?? '7';
             if($userId != "7")
@@ -69,7 +69,7 @@ class RatingController extends Controller
 
             $existingRate = $this->GetExistingRate($table,$postId,$email,$userId);
             $id = is_object($existingRate) ? $existingRate->id : $existingRate;
-            \Log::info("ID: ".$id);
+//             \Log::info("ID: ".$id);
             $duration = 30000;
             if(!$id && $userId)
             {
@@ -130,7 +130,7 @@ class RatingController extends Controller
         //         ]);
         // }
         $id = DB::table("ratings")->where("table",$table)->where("images_id",$postId)->where("users_id",$users_id)->where("email",$email)->select("id")->first();
-        \Log::info("idnew:".json_encode([$table,Auth::id(),$postId,$email]));
+//         \Log::info("idnew:".json_encode([$table,Auth::id(),$postId,$email]));
         $id = !$id ? null : $id;
         return $id;
     }

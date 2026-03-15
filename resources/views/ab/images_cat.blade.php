@@ -81,7 +81,7 @@
                     const imgElement = lightbox.pswp.currSlide.data.src; // Das aktuelle Bild
                     // console.log('Aktuelles Bild:', imgElement); // Protokolliere das aktuelle Bild
                 } else {
-                    console.warn('Aktuelle Folie oder Daten nicht verfügbar');
+                    console.error('Aktuelle Folie oder Daten nicht verfügbar');
                 }
             });
 

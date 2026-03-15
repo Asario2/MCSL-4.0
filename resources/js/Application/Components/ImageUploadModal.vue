@@ -225,7 +225,7 @@
         formData.append('Message', this.Message ? 1 : 0);
         formData.append('is_imgdir', this.finalPath);
         formData.append("id",CleanId());
-        for (const [key, value] of formData.entries()) {
+                    for (const [key, value] of formData.entries()) {
 //             console.log(key, value);
         }
 

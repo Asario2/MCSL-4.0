@@ -128,7 +128,7 @@
                             const parsed = JSON.parse(`[${cleanJson}]`);
                             options.push(...parsed);
                         } catch (error) {
-                            console.warn('❌ Failed to parse options JSON:', error);
+                            console.error('❌ Failed to parse options JSON:', error);
 //                             console.log('Raw string:', item);
                         }
                     }
@@ -160,7 +160,7 @@
                             this.internalValue = String(dbValue);
                             this.isInitialized = true;
                         } else {
-                            console.warn('❌ DB value not found in options:', dbValue);
+                            console.error('❌ DB value not found in options:', dbValue);
 //                             console.log('Available options:', this.parsedOptions.map(opt => opt.id));
                             this.internalValue = "0";
                             this.isInitialized = true;
@@ -234,7 +234,7 @@
                                     processed.push(item);
                                 }
                             } catch (error) {
-                                console.warn('JSON parse error:', error);
+                                console.error('JSON parse error:', error);
                                 processed.push(item);
                             }
                         } else {
