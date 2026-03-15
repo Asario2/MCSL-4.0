@@ -369,7 +369,7 @@ closeGroupPicker() {
 },
     async changeGroup(contactId, newGroup) {
         try {
-            console.log((contactId));
+//             console.log((contactId));
             await axios.put(`/admin/contacts/${contactId.id}/group`, {
                 Gruppe: newGroup
             });

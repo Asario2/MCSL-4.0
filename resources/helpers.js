@@ -396,7 +396,7 @@ export async function GetRightsParallel(tables, rightType = 'view') {
 
 //     const targetTable = tables.find(t => t.name === tableName);
 //     if (!targetTable) {
-//       console.warn(`Tabelle "${tableName}" nicht gefunden.`);
+//       console.error(`Tabelle "${tableName}" nicht gefunden.`);
 //       return false;
 //     }
 
@@ -405,7 +405,7 @@ export async function GetRightsParallel(tables, rightType = 'view') {
 //     // Lade Benutzerrechte
 //     const rights = await loadAllRights();
 //     if (!rights || !rights[rightType]) {
-//       console.warn(`Rechttyp "${rightType}" nicht gefunden.`);
+//       console.error(`Rechttyp "${rightType}" nicht gefunden.`);
 //       return false;
 //     }
 

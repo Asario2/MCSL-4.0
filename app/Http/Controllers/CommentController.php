@@ -132,7 +132,7 @@ class CommentController extends Controller
         $gnow = str_replace(array('["','"]'),'',$gnow);
         $cid = $comment->id;
         $nick = '';
-        \Log::info($request->all());
+//         \Log::info($request->all());
         $nick = $comment->nick;
         $content = '';
 
@@ -378,7 +378,7 @@ return response()->json([
                 ]);
         }
     }
-        return response()->json(['success' => true]);
+        return response()->json(["success"=>$com]);
     }
     public function checkComment_old()
 {
@@ -389,7 +389,8 @@ return response()->json([
         return response()->json(['error' => $e->getMessage()], 504);
     }
 }
-    public function checkLogs()
+
+    public function cl_def()
     {
         $userId = Auth::id();
 
@@ -442,7 +443,36 @@ return response()->json([
         }
         return response()->json(["success"=>$com]);
     }
+public function checkLogs()
+    {
+        $userId = Auth::id();
 
+    if (!$userId) {
+        // throw new \Exception('User not authenticated');
+    }
+    if(!Schema::hasTable("comments")){
+        return;
+    }
+
+    // 2. Hole alle Kommentare
+    $logs = DB::table('comments')->select('id', 'ischecked')->get();
+
+    // 3. Für jeden Kommentar prüfen und ischecked aktualisieren
+    foreach ($logs as $log) {
+
+            $com[$log->id] = $log->ischecked;
+
+        // // Update, falls Wert sich geändert hat
+        DB::table('comments')
+                ->where('ischecked', '0')
+                ->update([
+                    'ischecked' =>"1",
+                    'checked_at' => now(),
+                ]);
+
+        }
+        return response()->json(["success"=>$com]);
+    }
 
 
     //     $userId = Auth::id();

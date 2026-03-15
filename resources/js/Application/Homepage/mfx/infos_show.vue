@@ -142,7 +142,7 @@ export default defineComponent({
         if (processed.includes("{{ vcard }}")) {
 //             console.log("%c[FOUND {{ vcard }}] ✔", "color:green;font-weight:bold");
         } else {
-            console.warn("[WARN] {{ vcard }} wurde nicht gefunden in:", processed);
+            console.error("[WARN] {{ vcard }} wurde nicht gefunden in:", processed);
         }
 
         processed = processed.replace(/{{\s*vcard\s*}}/g, "__VCARD__");

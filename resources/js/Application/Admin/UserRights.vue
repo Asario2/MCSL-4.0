@@ -384,8 +384,8 @@ export default {
       name: this.addedF,
       desc: this.fdesc,
     });
-    console.log("res:", res);
-    console.log("res.data:", res.data);
+//     console.log("res:", res);
+//     console.log("res.data:", res.data);
     // Toast richtig benutzen
     window.toastBus.emit({
       message: res.data?.message || 'Funktion hinzugefügt!2',
@@ -650,7 +650,7 @@ export default {
     },
 
     saveRights() {
-      console.log("PAYLOAD");
+//       console.log("PAYLOAD");
         const payload = {};
       // tables
       for (const [key, value] of Object.entries(this.rights)) payload[key] = value.map(v => v ? '1' : '0').join('');

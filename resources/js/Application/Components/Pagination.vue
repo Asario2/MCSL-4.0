@@ -1,5 +1,5 @@
-<template>
-  <div v-if="links?.length > 1" class="flex justify-center gap-2 mt-6">
+    <template>
+  <div v-if="links?.length > 1" class="flex justify-center gap-2">
     <button
       v-for="(link, i) in links"
       :key="i"
@@ -33,19 +33,47 @@ export default {
   },
   methods: {
 go(link) {
-  if (!link.url) return;
+    if (!link.url) return;
 
-  const url = new URL(link.url, window.location.origin);
+    const url = new URL(link.url, window.location.origin);
 
-  const params = new URLSearchParams(window.location.search);
-  if (params.has('search')) {
-    url.searchParams.set('search', params.get('search'));
-  }
+    const params = new URLSearchParams(url.search);
+    const page = params.get('page');
 
-  this.$inertia.visit(this.basePath + url.pathname + url.search, {
-    preserveState: false,
-  });
-}
+    const searchParams = new URLSearchParams(window.location.search);
+    const search = searchParams.get('search');
+
+    let finalUrl = "/" + this.basePath + "?page=" + page;
+
+    if (search) {
+        finalUrl += "&search=" + encodeURIComponent(search);
+    }
+
+    this.$inertia.visit(finalUrl, {
+        preserveState: false,
+        replace: false,
+    });
+},
+// OLD GO
+//     go(link) {
+//   if (!link.url) return;
+
+//   const url = new URL(link.url, window.location.origin);
+
+//   const params = new URLSearchParams(window.location.search);
+//   if (params.has('search')) {
+//     url.searchParams.set('search', params.get('search'));
+//   }
+// //   alert(this.basePath);
+// //   return "";
+//   this.$inertia.visit(this.basePath + url.pathname + url.search, {
+//     preserveState: false,
+//   });
+// }
+
+
+// old go end
+
     //     go(link) {
 //       if (!link.url) return;
 

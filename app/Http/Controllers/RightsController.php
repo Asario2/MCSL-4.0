@@ -168,7 +168,7 @@ public function AddFunction(Request $request)
 
     // Alphabetisch sortieren
     sort($xkisColumns, SORT_NATURAL);
-    \Log::info("cols:".json_encode($xkisColumns,JSON_PRETTY_PRINT)."col:".$column);
+//     \Log::info("cols:".json_encode($xkisColumns,JSON_PRETTY_PRINT)."col:".$column);
     // 2) Prüfen, ob Spalte schon existiert
     if (in_array($column, $xkisColumns)) {
         return response()->json(['message' => "Feld $column existiert bereits"], 400);

@@ -49,7 +49,7 @@ export default {
       .then(response => {
         this.headline = response.data?.headline ?? "";
         this.textbody = response.data?.textbody ?? "";
-        console.log(response);
+//         console.log(response);
       })
       .catch(error => {
         console.error(error);

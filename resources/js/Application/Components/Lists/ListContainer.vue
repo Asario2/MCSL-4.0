@@ -88,7 +88,7 @@
 
                     </table>
                     <!-- Pagination -->
-                    <pagination :links="pag?.links" v-if="numberOfRows > 0" basePath="show" />
+                    <pagination :links="pag?.links" v-if="numberOfRows > 0" :basePath="'admin/tables/' + CleanTable() + '/show'" />
                     <div v-else class="np-dl-td-no-entries">
                         <alert type="info">{{ noEntries }}</alert>
                     </div>

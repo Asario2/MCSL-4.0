@@ -50,7 +50,7 @@
 
     </section>
 
-    <pagination class="dark:bg-black" :links="pag?.links" basePath="show" />
+    <pagination class="dark:bg-black" :links="pag?.links" basePath="admin/tables" />
   </layout>
 </template>
 
@@ -64,7 +64,7 @@ import { CleanTable,CheckTRights } from '@/helpers'; // NEU: Import der Batch-Fu
 import { hasRightSync } from '@/utils/rights';
 import { route } from 'ziggy-js';
 import axios from "axios";
-import Pagination from "@/Application/Components/Lists/Pagination.vue";
+import Pagination from "@/Application/Components/Pagination.vue";
 export default defineComponent({
   name: "Admin_TableList",
 

@@ -5709,7 +5709,7 @@ function Lu(e, t) {
                                         decodeURIComponent(f.hash).slice(1),
                                     );
                                 } catch (D) {
-                                    console.warn(D);
+                                    console.error(D);
                                 }
                                 if (q) {
                                     qs(q, f.hash);
@@ -5828,7 +5828,7 @@ function qs(e, t, n = !1) {
             ? e
             : document.getElementById(decodeURIComponent(t).slice(1));
     } catch (s) {
-        console.warn(s);
+        console.error(s);
     }
     if (r) {
         let s = function () {

@@ -57,7 +57,7 @@
 
     },
     mounted(){
-        console.log(this.entries);
+//         console.log(this.entries);
     },
     methods: {
       emitPosition() {

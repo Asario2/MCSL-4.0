@@ -141,7 +141,7 @@ export default {
   },
 
   async mounted() {
-    console.log("ActivityLogTable mounted");
+//     console.log("ActivityLogTable mounted");
     this.loadLogs();
 
     // Beim verlassen der Seite
@@ -164,10 +164,10 @@ export default {
     return `${day}.${month}.${year} ${time}`;
 },
     loadLogs() {
-      console.log("Loading logs...");
+//       console.log("Loading logs...");
       axios.get("/api/activity-log")
         .then(res => {
-          console.log("Logs geladen:", res.data);
+//           console.log("Logs geladen:", res.data);
           this.logs = res.data;
           this.fetchStatus();
         })
@@ -181,7 +181,7 @@ export default {
 
       if (!unchecked.length) return;
 
-      console.log("Setze pub=1 für IDs:", unchecked);
+//       console.log("Setze pub=1 für IDs:", unchecked);
 
       // Frontend sofort updaten
       this.logs.forEach(row => {

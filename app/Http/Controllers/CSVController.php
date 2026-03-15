@@ -296,7 +296,7 @@ public function saveImportedContacts(Request $request)
         // \Log::info("NumberMap:", $numberMap);
 
         if (empty($allNumbers)) {
-            \Log::info("Keine gültigen Nummern → Überspringe Kontakt");
+//             \Log::info("Keine gültigen Nummern → Überspringe Kontakt");
             continue;
         }
 
@@ -358,7 +358,7 @@ public function saveImportedContacts(Request $request)
         // --------------------------------------------------
         if ($existingContact) {
 
-            \Log::info("Bestehender Kontakt gefunden: ".decval_user($existingContact->Name,Auth::id()));
+//             \Log::info("Bestehender Kontakt gefunden: ".decval_user($existingContact->Name,Auth::id()));
 
             $existingNumbers = [];
 

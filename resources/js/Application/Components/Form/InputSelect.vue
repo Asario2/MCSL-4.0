@@ -64,7 +64,7 @@
           // console.log(`[${this.name}] FetchedOptions als Array:`, this.fetchedOptions);
           opts = this.fetchedOptions;
         } else if (typeof this.fetchedOptions === "object") {
-          console.warn(`[${this.name}] FetchedOptions ist Objekt – versuche in Array umzuwandeln`, this.fetchedOptions);
+          console.error(`[${this.name}] FetchedOptions ist Objekt – versuche in Array umzuwandeln`, this.fetchedOptions);
 
           // Objekt → Array umwandeln
           opts = Object.entries(this.fetchedOptions).map(([key, value]) => {

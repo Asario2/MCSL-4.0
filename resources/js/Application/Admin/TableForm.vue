@@ -1062,7 +1062,7 @@ export default defineComponent({
                 if (response.data.url) {
                     this.ulimage = response.data.url;
                 } else {
-                    console.warn("Keine URL gefunden für ID:", id);
+                    console.error("Keine URL gefunden für ID:", id);
                 }
             } catch (error) {
                 console.error("Fehler beim Laden des Bildes:", error);
@@ -1270,7 +1270,7 @@ updateReadingTime() {
 
         getsel_enum(name,table,iscope='getselenumroute') {
             var sortedOptions_sel = this.sortedOptions_sel ?? [];
-            console.log(iscope);
+//             console.log(iscope);
             let sdata_sel = this.sdata_sel ?? {};
             axios
                 .get(routes[iscope](table, name))

@@ -483,8 +483,8 @@ export default {
 },
 
     deleteMessages(tab) {
-      console.log('selectedOutbox:', this.selectedOutbox);
-      console.log('selectedOutboxIds:', this.selectedOutboxIds);
+//       console.log('selectedOutbox:', this.selectedOutbox);
+//       console.log('selectedOutboxIds:', this.selectedOutboxIds);
         const ids = tab === 'inbox'
         ? this.selectedInboxIds
         : this.selectedOutboxIds;

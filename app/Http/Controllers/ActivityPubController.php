@@ -68,7 +68,7 @@ class ActivityPubController extends Controller
 
     public function markAll()
     {
-        \Log::info("ActivityLog markAll triggered");
+//         \Log::info("ActivityLog markAll triggered");
 
         $updated = DB::table('xgen_activitylog')
             ->where('pub', 0)
@@ -91,7 +91,7 @@ public function check_alt(Request $request)
 {
     $raw = $request->getContent();
 
-    \Log::info("RAW Beacon:", [$raw]);
+//     \Log::info("RAW Beacon:", [$raw]);
 
     $data = json_decode($raw, true);
 

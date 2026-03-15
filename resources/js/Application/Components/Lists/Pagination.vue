@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="links && links.length > 1"
-    class="flex items-center justify-center flex-wrap mt-6 -mb-1 text-xs md:text-base
+    class="flex items-center justify-center flex-wrap mb-1 text-xs md:text-base
            bg-transparent text-layout-sun-700 dark:text-layout-night-700"
   >
     <template v-for="(link, index) in links" :key="index">
