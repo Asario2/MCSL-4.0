@@ -44,7 +44,7 @@
                 ]"
                 >
                         <td class="p-3">
-                            {{ item.name }}
+                            <span v-html="item.name"></span>
                         </td>
 
                         <td class="p-3">
