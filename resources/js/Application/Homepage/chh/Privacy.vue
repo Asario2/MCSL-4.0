@@ -2,9 +2,7 @@
   <Layout>
     <MetaHeader title="Datenschutzerklärung" />
 
-    <div
-      class="bg-layout-sun-100 dark:bg-layout-night-100 p-7"
-    >
+
       <div ref="content" v-html="ch(processedHtml)"></div>
 
       <!-- ContactCard wird versteckt gerendert und später eingefügt -->
@@ -15,7 +13,7 @@
         style="display:none"
       />
 
-    </div>
+
   </Layout>
 </template>
 

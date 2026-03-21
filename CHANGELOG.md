@@ -239,3 +239,5 @@
 ![Version](https://img.shields.io/badge/version-4.94.3-orange) Hotfix - Add CleanId() (#419)  
 ![Version](https://img.shields.io/badge/version-4.95.4-orange) Hotfix - Tableshow (#415)  
 ![Version](https://img.shields.io/badge/version-4.96.0-orange) Feature - add tippy to actlog (#418)  
+![Version](https://img.shields.io/badge/version-4.97.3-orange) Hotfix - HTML Handling on Expenses/Revenue (#423)  
+![Version](https://img.shields.io/badge/version-4.98.8-orange) Privacy page rebuilded (#424)  

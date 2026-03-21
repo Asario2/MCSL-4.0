@@ -11,18 +11,19 @@ use App\Http\Controllers\GlobalController;
 
 class ExportPrivacyMarkdown extends Command
 {
-    protected $signature = 'export:privacy-markdown {--table= : Die Tabelle, die exportiert werden soll}';
+    protected $signature = 'export:privacy-markdown';
     protected $description = 'Exportiert die privacy-Tabelle als Markdown-Datei mit Inhaltsverzeichnis und Anchors';
 
     public function handle()
     {
         GlobalController::SetDomain();
-        $table = $this->option('table');
-        if (!$table) {
-            $this->error('Bitte die Tabelle angeben mit --table=TABELLENNAME');
-            return;
-        }
+        $tabs = ["ab_mcsl","chh","dag_mcsl","mfx_mcsl"];
+        foreach($tabs as $table)
+        {
+
+
         $sda = $table;
+        $sdd = str_replace("_mcsl",'',$sda);
         $entries = DB::connection("mariadb")->table('privacy')->where("xico_doms", "LIKE", "%" . $sda . "%")->orderBy('position',"ASC")->get();
 
         if ($entries->isEmpty()) {
@@ -49,22 +50,23 @@ class ExportPrivacyMarkdown extends Command
 
             $markdown .= "<a id=\"{$anchor}\"></a>\n";
             $markdown .= "## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>$i) {$entry->headline}</span>\n\n";
-            $markdown .= nl2br($this->convertToMarkdown($entry->message)) . "\n\n";
+            $markdown .= ($this->convertToMarkdown($entry->message)) . "";
             $markdown .= "---\n\n";
-            // $markdown = $this->nobsp($markdown);
+            $markdown = $this->noemtyli($markdown);
             $i++;
         }
+    // Datei speichern
+        Storage::disk('md')->put('privacy_'.$sdd.'.md', $markdown);
+        $this->info("Markdown-Datei wurde unter ressources/markdown/privacy_".$sdd.".md gespeichert.");
+        }
 
-        // Datei speichern
-        Storage::disk('md')->put('privacy_'.$sda.'.md', $markdown);
-        $this->info("Markdown-Datei wurde unter storage/app/privacy_".$sda.".md gespeichert.");
     }
     protected function convertToMarkdown(string $message): string
     {
         // Optional: HTML zu Markdown konvertieren
         // Hier sehr einfach gehalten – kann bei Bedarf z. B. mit `league/html-to-markdown` ersetzt werden
 
-        $text = strip_tags($message, '<br><ul><ol><li><strong><h3><h4><h2><em><b><i><a>');
+        $text = strip_tags($message, '<br><ul><di   v><ol><li><strong><h3><h4><h2><em><b><i><a>');
         $text = str_replace(['<br>', '<br/>', '<br />'], "\n", $text);
         $text = str_replace("{{ vcard }}",$this->vcard(),$text);
 
@@ -77,5 +79,9 @@ class ExportPrivacyMarkdown extends Command
 
 
     return $xx;
+    }
+    function noemtyli($str)
+    {
+        return preg_replace('#<li>[\s\:marker<br\s*/?>]*</li>#i', '', $str);
     }
 }
