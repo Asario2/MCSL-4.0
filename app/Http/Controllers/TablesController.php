@@ -3496,8 +3496,9 @@ return response()->json($user);
         {
             DB::table($table)->where('id', $id)->where('public',$public)->update(['checked' => $pub]);
         }
-
-        ActLog($request,"Publish",$unp." - ".$formData[Settings::$headline[$table]],$id,$table);
+        $field = Settings::$headline[$table];
+        $formData = DB::table($table)->where("id",$id)->value($field);
+        ActLog($request,"Publish",$unp." - ".$formData,$id,$table);
         return response()->json(['success' => true, 'pub' => $pub]);
     }
 

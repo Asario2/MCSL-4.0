@@ -206,8 +206,8 @@
         if (!file) return;
 
         const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-        if (sizeInMB > 5) {
-            alert("Bild zu groß, max. 5 MB");
+        if (sizeInMB > 15) {
+            alert("Bild zu groß, max. 15 MB");
             return;
         }
 

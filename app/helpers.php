@@ -1315,12 +1315,15 @@ if(!function_exists("SD"))
                 $subb = "chh";
 
             break;
+            case "chh":
+                $subb = 'chh';
+            break;
             case "localhost":
             $subb = "ab";
             break;
-            case "test.mcs":
-            $subb = "ab";
-            break;
+            // case "test.mcs":
+            // $subb = "ab";
+            // break;
             case "241":
                 $subb = "ab";
             break;

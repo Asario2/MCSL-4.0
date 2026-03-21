@@ -1,5 +1,5 @@
 <template>
-    <layout title="Admin-Dashboard">
+    <Layout title="Admin-Dashboard">
         <template #header>
             <breadcrumb
                 :application-name="$page.props.applications.app_admin_name"
@@ -57,6 +57,19 @@
                     Deine Kontakte
                 </template>
             </navigation-card>
+            <!-- Ein / Ausgaben -->
+            <navigation-card v-if="modulRights?.Ausgaben"
+                class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
+                title="Ein / Ausgaben"
+                :routeName="route('admin.ausgaben')"
+                linkName="Zur Liste"
+                target="_self"
+                :withIcon="true"
+                icon="IconMoney"
+            >
+
+                <template #description> Finanzdaten </template>
+            </navigation-card>
             <navigation-card v-if="modulRights?.SendMail"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
                 title="Email Center"
@@ -70,6 +83,7 @@
                     Email / Newsletter
                 </template>
             </navigation-card>
+
             <!-- Statistics -->
             <navigation-card v-if="modulRights?.Statistics"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
@@ -149,18 +163,7 @@
 
                 <template #description> MCSL Intrusion Detection System</template>
             </navigation-card>
-                        <navigation-card v-if="modulRights?.Ausgaben"
-                class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
-                title="Ein / Ausgaben"
-                :routeName="route('admin.ausgaben')"
-                linkName="Zur Liste"
-                target="_self"
-                :withIcon="true"
-                icon="IconMoney"
-            >
 
-                <template #description> Finanzdaten </template>
-            </navigation-card>
 
             <!-- User Rights -->
             <navigation-card v-if="modulRights?.UserRights"
@@ -177,7 +180,7 @@
             </navigation-card>
 
         </div>
-    </layout>
+    </Layout>
 </template>
 
 <script>
@@ -196,7 +199,7 @@ export default defineComponent({
 
     components: {
 Layout: defineAsyncComponent(() => {
-        const sd = SD()
+        const sd = SD();
 
         if (sd === 'ab') {
             return import('@/Application/Admin/Shared/ab/Layout.vue');
@@ -208,6 +211,10 @@ Layout: defineAsyncComponent(() => {
 
         if (sd === 'mfx') {
             return import('@/Application/Admin/Shared/mfx/Layout.vue');
+        }
+        if (sd === 'chh') {
+
+            return import('@/Application/Admin/Shared/chh/Layout.vue');
         }
         return import('@/Application/Admin/Shared/ab/Layout.vue');
     }),

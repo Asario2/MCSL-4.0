@@ -33,6 +33,7 @@ class RssController extends Controller
             ->when(Schema::hasColumn($table, 'pub'), function ($q) {
                 $q->where('pub', 1);
             })
+            ->where("xkis_feed","1")
             ->whereNotNull('created_at')
             ->orderByDesc('created_at')
             ->limit(5)
@@ -124,7 +125,7 @@ class RssController extends Controller
         $rss .= "<description>{$feedDesc}</description>";
 
         foreach ($items as $item) {
-
+        // dd($item);
             $headline = $item['headline'];
             $text = $item['text'];
 

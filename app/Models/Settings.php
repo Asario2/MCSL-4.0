@@ -35,6 +35,8 @@
         'edit_table' => 'Bearbeiten',
         'content' => 'Text',
         'xis_ai' => 'KI Bild',
+        'file_pdf'=>"PDF Uploaden",
+        'xkis_feed'=>'Für Newsletter verwenden',
         'summary' => 'Zusammenfassung',
         'blog_authors_id' => 'Autor',
         'date_end' => 'Online Von/Bis',
@@ -173,8 +175,8 @@
         'test func' => 'TEst zum checken',
     ];
     public static array $regdom =   ['ab'=>true];
-    public static array $domss =   ['ab',"mfx","dag"];
-    public static array $connect_dbname = ["ab"=>"mariadb","dag"=>"mariadb_dag","mfx"=>"mariadb_mfx"];
+    public static array $domss =   ['ab',"mfx","dag","chh"];
+    public static array $connect_dbname = ["ab"=>"mariadb","dag"=>"mariadb_dag","mfx"=>"mariadb_mfx","chh"=>"mariadb_chh"];
 
     /*
 
@@ -245,6 +247,7 @@
             "blog_authors" => 'name',
             "blog_categories" => 'name',
             "blog_images" => 'name',
+            "visitcard"=>"headline",
             "images"=>'name',
             "comments" => 'content',
             "image_categories" => 'name',
@@ -272,10 +275,13 @@
             "ausgaben"=>'name',
             "private_messages"=>"subject",
             "notifications"=>'name',
+            "publikationen"=>'name',
+            'quellen'=>'name',
             ];
     public static array $searchable = [
         'ab' => ["images","blogs","didyouknow","shortpoems","users","xgen_activitylog"],
         'mfx' => ['images',"people","projects"],
+        "chh" => ["quellen","publikationen"],
     ];
     public static array $statusvals  = ["empty"=>"keine Angabe","forsale"=>"Zu Verkaufen","givenaway"=>"Verschenkt","sold"=>"Verkauft","unsaleable"=>"Unverkäuflich","lost"=>"Verloren","inwork"=>"In Arbeit"];
     public static array $searchFields =
@@ -291,6 +297,7 @@
             "didyouknow" => ['headline',"answer"],
             "image_categories"=>['heading_alt'],
             "users" => ['name',"email"],
+            "visitcard"=>['slug',"headline","details"],
             "projects_sheets"=>["headline","users.name","projects.name"],
             "projects"=>['headline',"Umfang"],
             "users_rights" => ['name'],
@@ -313,6 +320,8 @@
             "private_messages"=>["subject"],
             "users_rights"=>["name","shortname"],
             "notifications"=>["name","text"],
+            'publikationen'=>['name',"file_pdf","quellen.name"],
+            "quellen"=>["name","quellurl"],
     ];
     public static array $otherField = [
         'admin_table'=> "description",
@@ -346,10 +355,14 @@
         "types" => 'name_en',
         "users_rights"=>"shortname",
         "ausgaben"=>"plus_minus",
+        "publikationen"=>"file_pdf",
+        "quellen"=>'quellurl',
         "notifications"=>"text",
+        "visitcard"=>'slug'
     ];
     public static array $namealias = [
         "comments"=>"Kommentar",
+        "quellen"=>"Quelle",
         "ratings"=>"Galerie",
         "projects_sheets"=>"Projekt",
         "lostnfound"=>"Überschrift",
@@ -360,6 +373,7 @@
         "users_rights"=>"Name",
         "blogs"=>"Headline",
         "ausgaben"=>"Name",
+        "visitcard"=>"Headline"
     ];
     public static array $descalias = [
         "comments"=>"Autor",
@@ -380,6 +394,9 @@
         'contacts'=>"Name",
         'users_rights'=>"Kurzname",
         "ausgaben"=>"Autor",
+        'publikationen'=>"PDF",
+        'quellen'=>"URL",
+        "visitcard"=>"Beschreibung"
     ];
     public static array $underCals=[
     'comments' => "name",
@@ -467,6 +484,8 @@ public static array $image_sizes =
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",
     "mfx_lh"=>"http://mfx.test.mcs",
+    "chh_lh" => 'http://chh,test.mcs',
+    "chh_ol" => 'https://www.ra-c-henning.de',
     "dag_lh"=>"http://mfx.test.mcs",
     "ab_ol"=>"https://www.asario.de",
     "mfx_ol"=>"https://www.marblefx.de",

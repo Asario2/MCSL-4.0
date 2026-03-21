@@ -693,6 +693,8 @@ export function GetSRights(modul) {
 }
 export function nl2br(str)
 {
+    if(!str) return;
+    str = str.replace('%5B', '[').replace('%5D', ']');
     return str.replace("\n","<br />");
 }
 export function rumLaut(input, table = '') {

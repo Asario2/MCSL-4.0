@@ -1,16 +1,17 @@
-    <template>
+S<template>
+
   <div v-if="links?.length > 1" class="flex justify-center gap-2">
     <button
       v-for="(link, i) in links"
       :key="i"
       :disabled="!link.url"
       @click="go(link)"
-      class="px-3 py-1 border rounded"
+      class="px-3 py-1 border rounded lolink"
       :class="{
-        'flex items-center rounded-md border font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-900': link.active,
-        'opacity-50 cursor-not-allowed': !link.url,
+            'flex items-center font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-900': link.active,
+            'opacity-50 cursor-not-allowed': !link.url
       }"
-    >
+      >
       <span v-if="link.label === 'pagination.previous'">« Zurück</span>
       <span v-else-if="link.label === 'pagination.next'">Weiter »</span>
       <span v-else v-html="link.label"></span>

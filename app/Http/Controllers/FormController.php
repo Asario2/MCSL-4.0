@@ -372,6 +372,10 @@ public static function getOptions($name)
         {
             return "imgal";
         }
+        elseif(str_starts_with($name,"file_"))
+        {
+            return "file";
+        }
         switch($name)
         {
             case "id":
@@ -490,6 +494,9 @@ public static function getOptions($name)
                 }
                 return "datetime";
             break;
+            case "details":
+                return "textarea";
+            break;
             case "markdown_on":
                 if ($cl) {
                     return "xis";
@@ -532,6 +539,9 @@ public static function getOptions($name)
             break;
             case "pub":
                 return "pub";
+            break;
+            case "quellen_id":
+                return "select_id";
             break;
             case "reading_time":
                 return "reading_time";

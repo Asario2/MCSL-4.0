@@ -221,10 +221,11 @@
                         :disabled="true"
                         class="cursor-not-allowed"
                         :required="isRequired(field.required)"
+                        label="Version"
                         @input="handleInput_alt(field.name)"
 
                 >
-
+                 <template #label>MCSL Version</template>
                 </InputFormAutoVersion>
                 </input-container>
                 <input-container v-else-if="field.type ==='imgal'">
@@ -298,7 +299,40 @@
                         </template>
                     </PublicRadio>
                 </input-container>
+                <input-container v-else-if="field.type === 'file'">
+                        <FileUploadModal
+                             v-model:isModalOpen="modals.fileup"
+                        :column="field.name"
 
+                        :is_imgdir = "false"
+                        @close="modals['fileup'] = false"
+                        @imageUploaded="handleImageUploaded('fileup', $event)"
+                        v-model="field.value"
+                        :namee="fileval"
+                        :alt_path="'_' + SD() + '/_' + CleanTable()  + '/' + field.name + '/'"
+                        :domain="subdomain"
+                        :tablex="table_x"
+                        :path="tablex"
+                        :ref="'fileup'"
+                        :value="imageId"
+                        :image="fileval"
+                        :namee2="'fileup'"
+                        :Message="false"
+                        :field="field"
+                    />
+                    <button type="button" @click="openModal('fileup')" class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+
+           <IconUpload class="w-6 h-6 mr-2" fill="#fff"/> Datei Hochladen
+        </button>
+            <div class="flex items-center gap-2 px-4">
+                <IconPDF v-if="field.value && field.value.toLowerCase().endsWith('.pdf')" class="w-7 h-7"/>
+                <IconCSV v-if="field.value && field.value.toLowerCase().endsWith('.csv')" class="w-7 h-7"/>
+                <IconMP3 v-if="field.value && field.value.toLowerCase().endsWith('.mp3')" class="w-7 h-7"/>
+                <a :href="shorthandler(field.value, field.name)">
+                    {{ shorthand(field.value, field.name) }}
+                </a>
+            </div>
+            </input-container>
                 <input-container v-else-if="field.type ==='IID'">
                     <ImageUploadModal
                         :alt_path="field.class === 'profile' ? 'profile_photos' : ''"
@@ -578,8 +612,10 @@ import emitter from "@/eventBus";
 import { GetSettings } from "@/helpers";
 import axios from "axios";
 
-import { CleanTable, CleanId, CheckTRights } from '@/helpers';
+import { CleanTable, CleanId, CheckTRights,SD } from '@/helpers';
 import ImageUploadModal from '@/Application/Components/ImageUploadModal.vue';
+import FileUploadModal from '@/Application/Components/FileUploadModal.vue';
+
 import InputPosition from '@/Application/Components/InputPosition.vue';
 
 
@@ -605,6 +641,10 @@ import InputSubtitle from "@/Application/Components/Form/InputSubtitle.vue"; // 
 import InputGroup from "@/Application/Components/Form/InputGroup.vue";
 import InputContainer from "@/Application/Components/Form/InputContainer.vue";
 import InputLabel from "@/Application/Components/Form/InputLabel.vue";
+import IconUpload from "@/Application/Components/Icons/IconUpload.vue"
+import IconPDF from "@/Application/Components/Icons/IconPDF.vue"
+import IconCSV from "@/Application/Components/Icons/IconCSV.vue"
+import IconMP3 from "@/Application/Components/Icons/IconMP3.vue"
 import InputCheckbox from "@/Application/Components/Form/InputCheckbox.vue";
 import InputIsbox from "@/Application/Components/Form/InputIsBox.vue";
 import InputSelect from "@/Application/Components/Form/InputSelect.vue";
@@ -641,10 +681,14 @@ export default defineComponent({
         InputFormAutoVersion,
         InputFormText,
         SectionForm,
+        IconCSV,
+        IconMP3,
         ButtonGroup,
+        IconUpload,
         InputButton,
         InputIsbox,
         InputDangerButton,
+        FileUploadModal,
         // InputLoading,
         ErrorList,
         InputSubtitle, // KORREKTUR: Komponente registriert
@@ -656,6 +700,7 @@ export default defineComponent({
         InputSelectEnum,
         InputTextarea,
         InputPWD,
+        IconPDF,
         Editor,
         MetaHeader,
         InputFormDate,
@@ -845,7 +890,9 @@ export default defineComponent({
             },
             immediate: true,
         },
-
+        fileval(newVal) {
+            this.field.value = newVal;
+        },
         'field.value': {
             immediate: true,
             handler(newId) {
@@ -864,7 +911,44 @@ export default defineComponent({
     },
 
     methods: {
+        SD,
         CleanTable,
+        fileicon(path)
+        {
+            if(path.endsWith(".pdf"))
+            {
+                return "<IconPDF />";
+            }
+        },
+        shorthand(url,fieldName)
+        {
+
+            if (!url) return '';
+
+            const prefix = `/files/_${this.SD()}/${this.CleanTable()}/${fieldName}/`;
+            return url.replace(prefix, '');
+        },
+        shorthandler(url,fieldName)
+        {
+
+            if (!url) return '';
+
+            const prefix = `/files/_${this.SD()}/${this.CleanTable()}/${fieldName}/`;
+
+            // zählen wie oft "/files/" vorkommt
+            const count = (url.match(/\/files\//g) || []).length;
+
+            if (count > 1) {
+                return url.replace(prefix, ''); // entfernt nur das erste Vorkommen
+            }
+            if (count == 0)
+            {
+                return prefix+url;
+            }
+
+            return url;
+
+        },
         handleModalClose(fieldName) {
 //     console.log('Modal close requested, but checking if we should close...');
 
@@ -918,23 +1002,26 @@ export default defineComponent({
         },
 
         handleImageUploaded(fieldName, fileName) {
-            // Aktualisieren Sie den Feldwert
-            this.localFfo.original[fieldName].value = fileName;
 
-            // Vorschau aktualisieren (Vue 3 way - kein $set mehr nötig)
-            if(CleanTable() != "users")
-            {
-                this.thumb = "thumbs/";
+    if (!this.localFfo?.original?.[fieldName]) {
+        console.error('Feld existiert nicht:', fieldName);
+        console.log('Available fields:', this.localFfo?.original);
+        return;
+    }
 
-            }
-            else{
-                this.thumb ='';
-            }
-            this.previewImages[fieldName] = `/images/_${this.subdomain}/${this.CleanTable_alt()}/${fieldName}/${this.thumb}${fileName}`;
+    this.localFfo.original[fieldName].value = fileName;
 
-            // Schließen Sie das Modal
-            this.modals[fieldName] = false;
-        },
+    if (this.CleanTable() != "users") {
+        this.thumb = "thumbs/";
+    } else {
+        this.thumb = '';
+    }
+
+    this.previewImages[fieldName] =
+        `/images/_${this.subdomain}/${this.CleanTable_alt()}/${fieldName}/${this.thumb}${fileName}`;
+
+    this.modals[fieldName] = false;
+},
         remom(data) {
             if (!data || typeof data !== 'object') return {};
 

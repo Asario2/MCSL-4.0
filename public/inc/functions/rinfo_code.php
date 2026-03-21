@@ -21,11 +21,15 @@ function rinfo_code($txt)
             $o = str_replace("|",'',$key);
             @$orige = @$cf['search_term'][$o];
             $ex = (@$_SESSION[$pref."_dev_mod"] ? " ($key)($orige)" : '');
-            $txt = str_replace($key,@$fs.$val.$ex.@$fe,$txt);
+            $txt = str_replace($key,@$fs.$val.$ex.@$fe,strrep($txt));
         }
     }
 
 return $txt;
 
+}
+function strrep($string)
+{
+    return $string;
 }
 ?>

@@ -23,7 +23,7 @@ class ExportPrivacyMarkdown extends Command
             return;
         }
         $sda = $table;
-        $entries = DB::connection("mariadb")->table('privacy')->where("xico_doms", "LIKE", "%" . $sda . "_mcsl%")->orderBy('position',"ASC")->get();
+        $entries = DB::connection("mariadb")->table('privacy')->where("xico_doms", "LIKE", "%" . $sda . "%")->orderBy('position',"ASC")->get();
 
         if ($entries->isEmpty()) {
             $this->error('Keine Einträge in der Tabelle "privacy" gefunden.');

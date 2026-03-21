@@ -33,7 +33,7 @@ class FileUploadController extends Controller
 
     public function upload(Request $request, string $table, string $iswatermark = '1', string|int $oripath = '0',    $orifileName=false): JsonResponse
 {
-    \Log::debug('UPLOAD DEBUG', [
+    \Log::info('UPLOAD DEBUG', [
         'table'   => $request->table,
         'column'  => $request->column,
         'is_imgdir' => $request->is_imgdir,
@@ -41,7 +41,7 @@ class FileUploadController extends Controller
         'hasFile' => $request->hasFile('image'),
         'Message' => $request->Message,
     ]);
-    \Log::debug('FILES', [
+    \Log::info('FILES', [
     'files' => $request->files->all(),
     'content_length' => $request->server('CONTENT_LENGTH'),
     'post_max_size' => ini_get('post_max_size'),
@@ -210,6 +210,81 @@ class FileUploadController extends Controller
         'fileName' => $fileName,
         'fullPath' => $fullPath,
         'Message' => $Message,
+        'final_fileName' => $fileName // Sollte MD5 sein
+    ]);
+
+    return response()->json([
+        'message' => 'Bild erfolgreich hochgeladen.',
+        'image_url' => $fullPath,
+        "debug_fileName" => $fileName // Zur Kontrolle
+    ]);
+}
+   public function upload_o(Request $request, string $table, string $iswatermark = '1', string|int $oripath = '0',    $orifileName=false): JsonResponse
+{
+    \Log::info('UPLOAD DEBUG', [
+        'table'   => $request->table,
+        'column'  => $request->column,
+        'is_imgdir' => $request->is_imgdir,
+        'ulpath'  => $request->ulpath,
+        'hasFile' => $request->hasFile('image'),
+        'Message' => $request->Message,
+    ]);
+    \Log::info('FILES', [
+    'files' => $request->files->all(),
+    'content_length' => $request->server('CONTENT_LENGTH'),
+    'post_max_size' => ini_get('post_max_size'),
+    'upload_max_filesize' => ini_get('upload_max_filesize'),
+]);
+
+//     \Log::info("IMA: ".$request->ulpath);
+    if (!$request->hasFile('image')) {
+        return response()->json(['error' => 'Keine Datei empfangen!'], 400);
+    }
+
+    $image = $request->file('image');
+    $orifileName = true;
+    \Log::info($request->ulpath);
+    $subdomain = SD();
+
+//     \Log::info("POST",$request->all());
+    $path = $request->ulpath;
+    if ($path === "undefined" || empty($path)) $path = '';
+    $watermarkfile = $request->copyleft;
+    $column = $request->column;
+
+    // WICHTIG: MD5 Name VOR table-Zuweisung generieren
+    if(!$orifileName)
+    {
+        $imageName = md5($image->getClientOriginalName() . "_" . Auth::id()) . "." . $image->getClientOriginalExtension();
+    }
+    else
+    {
+        $imageName = $image->getClientOriginalName();
+    }
+    $fileName = basename($imageName);
+
+    $sizes = [1200]; // default
+    $tmpname = $image->getRealPath();
+
+    // Table-Logik korrigiert
+    $table_ori = $request->table;
+    $table = $table_ori; // Standardwert
+
+    if (!array_key_exists($table_ori, Settings::$impath)) {
+        // Nur orig Ordner erstellen wenn nicht Message und nicht special table
+        $IMOpath = public_path("files/_".SD()."/".$request->table."/".$request->column."/". $fileName);
+        if (!File::exists(dirname($IMOpath))) {
+            File::makeDirectory(dirname($IMOpath), 0777, true, true);
+        }
+    }
+        copy($tmpname, $IMOpath);
+
+
+    $fullPath = "/files/_{$subdomain}/{$table_ori}/{$column}/{$fileName}";
+    \Log::info('Upload completed successfully', [
+        'fileName' => $fileName,
+        'fullPath' => $fullPath,
+        // 'Message' => $Message,
         'final_fileName' => $fileName // Sollte MD5 sein
     ]);
 

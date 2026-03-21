@@ -200,7 +200,18 @@
 
                                             </dropdown-link>
 
+                                            <dropdown-link
+                                                :with-icon="false"
+                                                :with-route="true"
+                                                :route-name="
+                                                    route('admin.ausgaben')
+                                                ">
+                                            <span class="inline-flex items-center gap-1">
+                                                <IconMoney class="w-4 h-4" color="#ffa500" />
+                                                <span>Ein / Ausgaben</span>
+                                            </span>
 
+                                            </dropdown-link>
                                         <div
                                             class="my-2 border-t border-layout-sun-200 dark:border-layout-night-200"
                                         />
@@ -390,7 +401,7 @@ import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { Inertia } from '@inertiajs/inertia';
-
+import IconMoney from "@/Application/Components/Icons/IconMoney.vue";
 import IconStar_thin from "@/Application/Components/Icons/IconStar_thin.vue";
 import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
 import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
@@ -423,6 +434,7 @@ export default {
         Loader,
         IconLogout,
         IconProfile,
+        IconMoney,
         IconPM,
         IconContacts_alt,
         IconStar_thin,

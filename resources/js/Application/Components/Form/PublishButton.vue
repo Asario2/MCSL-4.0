@@ -1,7 +1,7 @@
     <template>
     <div>
         <!-- Veröffentlicht -->
-        <button v-if="isPublished" @click="togglePub" title="Veröffentlicht" :disabled="loading">
+        <button  v-if="isPublishedLocal" @click="togglePub" title="Veröffentlicht" :disabled="loading">
         <svg class="w-6 h-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
             <circle cx="12" cy="12" r="10"/>
         </svg>
@@ -38,6 +38,7 @@
         return {
         //   isPublished: this.published,
         loading: false,
+        isPublishedLocal: Number(this.modelValue),
         };
     },
     watch: {
@@ -47,29 +48,29 @@
         }
     },
     methods: {
-    async togglePub() {
-    if (this.loading) return;
+     async togglePub() {
+        if (this.loading) return;
 
-    this.loading = true;
+        this.loading = true;
+        const newStatus = !this.isPublishedLocal;
 
-    const newStatus = this.isPublished ? false : true;
+        try {
+            await axios.post(route("toggle.pub"), {
+                table: this.table,
+                id: this.id,
+                pub: newStatus ? 1 : 0,
+                public: this.public,
+            });
 
-    try {
-        await axios.post(route("toggle.pub"), {
-        table: this.table,
-        id: this.id,
-        pub: newStatus ? 1 : 0,
-        public: this.public,
-        });
+            this.isPublishedLocal = newStatus; // Aktualisiert Anzeige sofort
 
-        this.isPublished = newStatus;
-
-    } catch (error) {
-        console.error("Fehler beim Speichern:", error.response?.data || error.message);
-    } finally {
-        this.loading = false;
+        } catch (error) {
+            console.error(error.response?.data || error.message);
+        } finally {
+            this.loading = false;
+        }
     }
-    }
+
     }
     };
     </script>

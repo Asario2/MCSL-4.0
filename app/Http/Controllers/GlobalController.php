@@ -76,6 +76,9 @@ class GlobalController extends Controller
         elseif(SD() === "dag"){
             config(['database.default' => 'mariadb_dag']);
         }
+         elseif(SD() === "chh"){
+            config(['database.default' => 'mariadb_chh']);
+        }
         else {
             config(['database.default' => 'mariadb']);
         }
