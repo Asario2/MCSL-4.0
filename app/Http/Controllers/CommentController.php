@@ -298,6 +298,7 @@ public function sendmc(Request $request)
         $comment->post_id = $request->post_id;
         $comment->save();
         $nick = $user->name ?? $request->name;
+        $comment2 = $comment;
         $comment = $comment->content;
         $content = $comment;
         // $MailHelper = NEW MailHelper();
@@ -312,6 +313,7 @@ public function sendmc(Request $request)
 //         \Log::info("MAIL SENDED");
         // $MailHelper->SendMailer("parie@gmx.de","Neuer Kommentar auf www.asario.net","",'','','','newcomment',["name"=>$nick,"table"=>$table,"comment"=>$comment]);
 
+        ActLog($request,"StoreTable",$comment2->content,$comment2->id,"comments");
 
 
 return response()->json([

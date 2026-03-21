@@ -30,8 +30,8 @@ class HomeController extends Controller
 {
     //
     public  function home_ausgaben(){
-        $entries_in = DB::table("ausgaben")->where("users_id",Auth::id())->orderBy("plus_minus","DESC")->orderBy(DB::raw('CAST(cur_amount AS DECIMAL(10,2))'), 'DESC')->get();
-    $res = DB::table('ausgaben')->where("users_id",Auth::id())
+        $entries_in = DB::table("ausgaben")->where('pub',"1")->where("users_id",Auth::id())->orderBy("plus_minus","DESC")->orderBy(DB::raw('CAST(cur_amount AS DECIMAL(10,2))'), 'DESC')->get();
+    $res = DB::table('ausgaben')->where("users_id",Auth::id())->where("pub","1")
         ->selectRaw("
         SUM(CASE WHEN plus_minus = 'Einnahme'
             THEN CAST(cur_amount AS DECIMAL(15,2))
@@ -61,7 +61,67 @@ class HomeController extends Controller
         ],
         ]);
     }
+    public function home_publication(Request $request)
+{
+    $tables = DB::table("publikationen")
+        ->leftJoin('quellen', 'quellen.id', '=', 'publikationen.quellen_id')
+        ->where("publikationen.pub", "1")
+        ->select(
+            'publikationen.*',
+            'quellen.*',
+            "publikationen.name as name",
+            "quellen.name as qname",
+            "publikationen.id as pid"
+        )
+        ->orderBy("publikationen.id", "DESC")
+        ->paginate(
+            14,
+            ['*'],
+            'page',
+            $request->input('page', 1)
+        )
+        ->withQueryString()
+        ->through(function ($item) {
+            $path = 'files/_chh/publikationen/file_pdf/' . $item->file_pdf;
 
+            if (file_exists(public_path($path))) {
+                $bytes = filesize(public_path($path));
+                if ($bytes < 1024 * 1024) {
+                    $kb = $bytes / 1024;
+                    $item->filesize = ($kb < 10 ? round($kb, 2) : round($kb)) . ' KB';
+                } else {
+                    $mb = $bytes / 1024 / 1024;
+                    $item->filesize = ($mb < 10 ? round($mb, 2) : round($mb)) . ' MB';
+                }
+            } else {
+                $item->filesize = '0 KB';
+            }
+            return $item;
+        });
+
+    // Laravel liefert die Links schon fertig für das Frontend
+   // $links = $tables->links()->elements[0]; // Array mit url, label, active
+    $tablesArray = $tables->toArray();
+    return Inertia::render('Homepage/chh/home_publication', [
+        'data' => $tablesArray['data'], // Items der aktuellen Seite
+        'pag' => [
+            'links' => $tablesArray['links'], // Laravel liefert Array mit url, label, active
+            'current_page' => $tablesArray['current_page'],
+            'last_page' => $tablesArray['last_page'],
+            'per_page' => $tablesArray['per_page'],
+            'total' => $tablesArray['total'],
+            'from' => $tablesArray['from'],
+            'to' => $tablesArray['to'],
+        ],
+    ]);
+}
+    public function home_visit()
+    {
+    $data = DB::table("visitcard")->where("id","1")->select("headline","details")->first();
+    $datb = DB::table("visitcard")->where("id","8")->select("headline","details")->first();
+    return Inertia::render('Homepage/chh/home_visit',["data"=>$data,"datb"=>$datb]);
+
+    }
 
     public function home_index_old()
     {

@@ -22,7 +22,7 @@
                     <input
                     ref="fileInput"
                     type="file"
-                    accept=".csv,.mp3"
+                    accept=".csv,.mp3,.pdf"
 
                     class="hidden"
                     @change="handleFileChange"
@@ -56,17 +56,10 @@
                     Hochladen
                     </button>
                 </div>
-                <div v-show="activeTab === 'gallery' && is_imgdir">
-                <ImageJsonEditor
-                :folder="path"
-                :column="column"
-                @jsonUpdated="onJsonUpdated"
-                @imageUploaded="refreshGallery"
-                @refresh-gallery="$emit('refresh-preview')"
-                ref="editor2"
-                @close="closeModal"
-                />
-            </div>
+
+
+
+
                 </form>
 
             </div>
@@ -87,12 +80,13 @@
             </div>
         </div>
         </div>
+        <input type="hidden" :name="field.name" :value="shorthand(modelValue,field.name)" :id="field.name">
     </template>
 
     <script>
     import CopyLeftSelect from '@/Application/Components/Content/CopyLeftSelect.vue';
     import ImageJsonEditor from '@/Application/Admin/ImageJsonEditor.vue';
-    import { CleanTable as cleanTableFn, GetAuth, SD } from '@/helpers';
+    import { CleanTable as cleanTableFn, GetAuth, SD, CleanTable } from '@/helpers';
     import { nextTick } from 'vue';
     import { route } from 'ziggy-js';
     import axios from 'axios';
@@ -159,7 +153,14 @@
         },
         methods: {
         SD,
+        CleanTable,
+        shorthand(url,fieldName)
+        {
 
+            if (!url) return '';
+
+            return url.replace("/files/_" + SD() + "/" + CleanTable() + "/" + fieldName + "/",'');
+        },
         tabClass(tab) {
             return [
             'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
@@ -202,8 +203,8 @@
             if (!file) return;
 
             const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-            if (sizeInMB > 5) {
-                alert("Bild zu groß, max. 5 MB");
+            if (sizeInMB > 15) {
+                alert("Datei zu groß, max. 15 MB");
                 return;
             }
 
@@ -225,7 +226,7 @@
             }
 
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', `/upload-file/${this.tablex}`, true);
+            xhr.open('POST', `/upload-ofile/${this.tablex}`, true);
 
             // 🔥 Fortschritt
             xhr.upload.onprogress = (event) => {
@@ -287,8 +288,19 @@
                 // });
                     // this.$emit('open-import-contacts');
                     this.closeModal();
-                } else {
+                } else if(file.name.endsWith('.pdf') || file.name.endsWith('.mp3')) {
+
+                    const formData = new FormData();
+                    formData.append('ofile', file);
+                    axios.post('/upload-ofile/'+this.table,formData).then(res=>{
+                        alert("yes");
+                        this.$emit('upload.ofile',res.data.file);
+                    });
                     this.closeModal();
+                }
+                else{
+                    this.closeModal();
+
                 }
                 }
             };

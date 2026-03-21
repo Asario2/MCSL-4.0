@@ -238,3 +238,4 @@
 ![Version](https://img.shields.io/badge/version-4.93.3-orange) Feature - Save the version for blogs (#422)  
 ![Version](https://img.shields.io/badge/version-4.94.3-orange) Hotfix - Add CleanId() (#419)  
 ![Version](https://img.shields.io/badge/version-4.95.4-orange) Hotfix - Tableshow (#415)  
+![Version](https://img.shields.io/badge/version-4.96.0-orange) Feature - add tippy to actlog (#418)  

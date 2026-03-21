@@ -34,9 +34,9 @@
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
                             <NavLink
-                                    :routeName="route('home.index')"
-                                    :active="route().current('home.index')"
-                                    label="Home"
+                                    :routeName="route('home.visit')"
+                                    :active="route().current('home.visit')"
+                                    label="Home2"
                                 >
                                 </NavLink>
                             <NavLink
@@ -75,7 +75,6 @@
                                                         .full_name
                                                 "
                                             />
-                                            {{  }}
                                         </button>
 
                                         <span
@@ -221,10 +220,10 @@
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            :href="route('home.index')"
+                            :href="route('home.visit')"
                             target="_self"
                         >
-                            Home
+                            Home3
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('admin.dashboard')"

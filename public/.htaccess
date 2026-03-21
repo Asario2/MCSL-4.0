@@ -4,6 +4,11 @@
     </IfModule>
 
     RewriteEngine On
+    # ----- Redirect für Root der Domain/Subdomain -----
+    # chh.test.mcs oder ra-c-henning.de → /visitcard
+    RewriteCond %{HTTP_HOST} ^(chh\.test\.mcs|ra-c-henning\.de)$ [NC]
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteRule ^$ /visitcard [R=302,L]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

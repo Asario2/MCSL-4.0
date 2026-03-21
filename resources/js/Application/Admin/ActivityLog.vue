@@ -32,7 +32,9 @@
               :key="row.id"
               class="transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800/60"
             >
-              <td class="px-4 py-3 font-medium">{{ row.id }}</td>
+              <td class="px-4 py-3 font-bold" :style="`background-color: ${bgcol(row.session_id)}; color: #000`">
+                {{ row.id }}
+              </td>
 
               <td class="px-4 py-3">
                 <span v-if="Number(checkedStatus?.[row.id]) === 1" style="font-size:24px;">✅</span>
@@ -155,6 +157,16 @@ export default {
   methods: {
 
     CleanTable, ucf, SD, rumLaut, GetProfileImagePath,
+    bgcol(SID) {
+        // einfache Hash-Funktion: wandelt String in Zahl, dann in hex
+        let hash = 0;
+        for (let i = 0; i < SID.length; i++) {
+            hash = SID.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        // letze 6 Stellen für Hex-Farbe
+        let color = '#' + ((hash & 0x00FFFFFF).toString(16).padStart(6, '0'));
+        return color;
+    },
     getDate(ts) {
     if (!ts) return '';
 

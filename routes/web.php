@@ -16,8 +16,6 @@ use App\Http\Controllers\PMController;
 use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\ActivityPubController;
-
-
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SQLUpdateController;
 use App\Http\Controllers\DarkModeController;
@@ -171,6 +169,22 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':dag,monikadargies')-
     Route::get("/links", [HomeController::class, "dag_links"])->name("home.links");
 
 });
+#
+#  CHHH CHRISTIAN HENNING
+#
+
+
+Route::middleware(\App\Http\Middleware\CheckSubd::class . ':chh,ra-c-henning')->group(function () {
+
+    // Weiterleitung vom Root zur visitcard
+    Route::get('/', function () {
+        return redirect()->route('home.visit');
+    });
+
+    // Die eigentlichen Seiten
+    Route::get('/visitcard', [HomeController::class, 'home_visit'])->name('home.visit');
+    Route::get('/publikationen', [HomeController::class, 'home_publication'])->name('home.publication');
+});
 
 //
 // PHOTOS
@@ -185,6 +199,8 @@ Route::post("/newsl_subscribe", [MailController::class, "Subscribe_Newsl"])->nam
 Route::get("/unsubscribe/{uhash}/{email}", [MailController::class, "UnSubscribe_Newsl"])->name("mail.unsubscribe_newsl");
 Route::get("/mail/subscribe/{uhash}/{email}",[TablesController::class, "newsletter_save"])->name("mail.savenewsletter");
 Route::get('/home/ai', [HomeController::class, 'home_AI'])->name('home.ai');
+
+
 //
 //     AB- Asarios BLog
 //
@@ -490,6 +506,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/namebindings', [NameBindingsController::class, 'RefreshFields'])->name("ColumnFetcher");
 Route::post('/upload-image/{table}/{isw?}', [ImageUploadController::class, 'upload'])->name('upload.image');
 Route::post('/upload-file/{table}', [FileUploadController::class, 'upload'])->name('upload.file');
+Route::post('/upload-ofile/{table}', [FileUploadController::class, 'upload_o'])->name('upload.ofile');
 Route::post('/upload-image_alt/{table}/{isw?}/{oripath?}', [ImageUploadController::class, 'upload_ori'])->name('upload.gen');
 Route::get('/GetUserNull', [TablesController::class, 'GetUserNull'])->name('GetUserNull');
 
