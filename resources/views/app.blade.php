@@ -72,7 +72,7 @@
         <link rel="stylesheet" href="/Shariff/shariff.complete.css">
         <script src="/Shariff/shariff.min.js"></script>
 
-        <img src="{{ route('countpixel', [
+        <img width='1' height='1' src="{{ route('countpixel', [
             'url'   => urlencode(request()->fullUrl()),
             'route' => request()->route()?->getName() ?? 'unknown'
         ]) }}">

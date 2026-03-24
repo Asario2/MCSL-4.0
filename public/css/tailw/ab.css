@@ -19,10 +19,15 @@
         color:#0994df !important;
 
     }
+
     a.twi:link,a.twi:visited{
-        color: #fff  !important;
+        color: #000  !important;
     }
-    A:link,a:visited{
+    /* A:link,a:visited{
+        color: #000 !important;
+    } */
+    .dark a.twi:link,
+    .dark a.twi:visited {
         color: #fff !important;
     }
     a.button_text_case_border:link:hover,a.button_text_case_border:visited:hover{
@@ -43,13 +48,13 @@
     A.button_text_case_border:link:hover DIV,A.button_text_case_border:visited:hover DIV{
         color:#fff !important;
     }
-    a.nul_wh SPAN{
-    color:inherit;
-    }
-    a.nul_bla SPAN{
-        color:inherit;
-    }
 
+    a.nul_bla SPAN{
+        color:#000;
+    }
+    .dark a.nul_bla SPAN{
+    color:#fff !important;
+    }
     .shariff-button SPAN{
         color:#fff !important;
     }

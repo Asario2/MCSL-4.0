@@ -249,6 +249,7 @@
             "blog_images" => 'name',
             "visitcard"=>"headline",
             "images"=>'name',
+            'impressum'=>'name',
             "comments" => 'content',
             "image_categories" => 'name',
             "didyouknow" => 'headline',
@@ -322,6 +323,7 @@
             "notifications"=>["name","text"],
             'publikationen'=>['name',"file_pdf","quellen.name"],
             "quellen"=>["name","quellurl"],
+            'impressum'=>['name'."details"],
     ];
     public static array $otherField = [
         'admin_table'=> "description",
@@ -330,6 +332,7 @@
         "blog_categories" => "summary",
         "image_categories"=>'heading_alt',
         "images"=> "message",
+        'impressum'=>'details',
         "didyouknow"=>"answer",
         "private_messages"=>"subject",
         'infos'=>"message",
@@ -373,13 +376,15 @@
         "users_rights"=>"Name",
         "blogs"=>"Headline",
         "ausgaben"=>"Name",
-        "visitcard"=>"Headline"
+        "visitcard"=>"Headline",
+        'impressum'=>'Überschrift',
     ];
     public static array $descalias = [
         "comments"=>"Autor",
         "blog_authors"=>"Benutzer",
         "ratings"=>"Benutzer",
         "users"=>"E-Mail",
+        'impressum'=>'Text',
         "shortpoems"=>"Autor",
         "didyouknow"=>"Autor",
         "texts"=>"Autor",

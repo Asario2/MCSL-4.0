@@ -6,24 +6,24 @@
 ---
 
 <a id="datenschutzerklarung"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>1) Datenschutzerklärung</span>
+## 1) Datenschutzerklärung
 
 Wir freuen uns sehr über Ihr Interesse |anunsun|. Datenschutz hat einen besonders hohen Stellenwert für die Geschäftsleitung |der|. Eine Nutzung der Internetseiten |der| ist grundsätzlich ohne jede Angabe personenbezogener Daten möglich. Sofern eine betroffene Person besondere Services |unsunts| über unsere Internetseite in Anspruch nehmen möchte, könnte jedoch eine Verarbeitung personenbezogener Daten erforderlich werden. Ist die Verarbeitung personenbezogener Daten erforderlich und besteht für eine solche Verarbeitung keine gesetzliche Grundlage, holen wir generell eine Einwilligung der betroffenen Person ein.
 
 Die Verarbeitung personenbezogener Daten, beispielsweise des Namens, der Anschrift, E-Mail-Adresse oder Telefonnummer einer betroffenen Person, erfolgt stets im Einklang mit der Datenschutz-Grundverordnung und in Übereinstimmung mit den für |die| geltenden landesspezifischen Datenschutzbestimmungen. Mittels dieser Datenschutzerklärung möchte |unser| die Öffentlichkeit über Art, Umfang und Zweck der von uns erhobenen, genutzten und verarbeiteten personenbezogenen Daten informieren. Ferner werden betroffene Personen mittels dieser Datenschutzerklärung über die ihnen zustehenden Rechte aufgeklärt.
 
-|Die| hat als für die Verarbeitung Verantwortlicher zahlreiche technische und organisatorische Maßnahmen umgesetzt, um einen möglichst lückenlosen Schutz der über diese Internetseite verarbeiteten personenbezogenen Daten sicherzustellen. Dennoch können Internetbasierte Datenübertragungen grundsätzlich Sicherheitslücken aufweisen, sodass ein absoluter Schutz nicht gewährleistet werden kann. Aus diesem Grund steht es jeder betroffenen Person frei, personenbezogene Daten auch auf alternativen Wegen, beispielsweise telefonisch, an uns zu übermitteln.---
+|Die| hat als für die Verarbeitung Verantwortlicher zahlreiche technische und organisatorische Maßnahmen umgesetzt, um einen möglichst lückenlosen Schutz der über diese Internetseite verarbeiteten personenbezogenen Daten sicherzustellen. Dennoch können Internetbasierte Datenübertragungen grundsätzlich Sicherheitslücken aufweisen, sodass ein absoluter Schutz nicht gewährleistet werden kann. Aus diesem Grund steht es jeder betroffenen Person frei, personenbezogene Daten auch auf alternativen Wegen, beispielsweise telefonisch, an uns zu übermitteln.
 
 <a id="name-und-anschrift-des-fuumlr-die-verarbeitung-verantwortlichen"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>2) Name und Anschrift des f&uuml;r die Verarbeitung Verantwortlichen</span>
+## 2) Name und Anschrift des f&uuml;r die Verarbeitung Verantwortlichen
 
 Verantwortlicher im Sinne der Datenschutz-Grundverordnung, sonstiger in den Mitgliedstaaten der Europ&auml;ischen Union geltenden Datenschutzgesetze und anderer Bestimmungen mit datenschutzrechtlichem Charakter ist|diee|
-<div class="vcard"><address class="mt-2"><div class="subheader"><b>Paul Rieser</b><br /><span class="adr">Dorfplatz 10<br /><span class="postalCode">24576</span>&nbsp;<span class="locality">Bim&ouml;hlen</span></span><div>Mobil: <a href="tel:+491627716325">+491627716325</a></div><div>E-Mail: <a href="mailto:paul.rieser@marblefx.de">paul.rieser [at] marblefx.de</a></div></div></address></div>---
+<div class="vcard"><address class="mt-2"><div class="subheader"><b>Monika Dargies</b><br /><span class="adr">Schäferberg 8b<br /><span class="postalCode">24576</span>&nbsp;<span class="locality">Bad Bramstedt</span></span><div>Telefon: <a href="tel:04192/8140467">04192/8140467</a></div><div>E-Mail: <a href="mailto:matotap@gmx.de">matotap [at] gmx.de</a></div></div></address></div>
 
 <a id="begriffsbestimmungen"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>3) Begriffsbestimmungen</span>
+## 3) Begriffsbestimmungen
 
-Die Datenschutzerklärung |der| beruht auf den Begrifflichkeiten, die durch den Europäischen Richtlinien- und Verordnungsgeber beim Erlass der Datenschutz-Grundverordnung (DS-GVO) verwendet wurden. Unsere Datenschutzerklärung soll sowohl für die Öffentlichkeit als auch für unsere Kunden und Geschäftspartner einfach lesbar und verständlich sein. Um dies zu gewährleisten, möchten wir vorab die verwendeten Begrifflichkeiten erläutern.
+Die Datenschutzerklärung |der| beruht auf den Begrifflichkeiten, die durch den Europäischen Richtlinien- und Verordnungsgeber beim Erlass der Datenschutz-Grundverordnung (DS-GVO) verwendet wurden. Unsere Datenschutzerklärung soll sowohl für die Öffentlichkeit als auch für unsere Kunden und Geschäftspartner einfach lesbar und verständlich sein. Um dies zu gewährleisten, möchten wir vorab die verwendeten Begrifflichkeiten erläutern.<div>
 Wir verwenden in dieser Datenschutzerklärung unter anderem die folgenden Begriffe:
 
 <ul><li><h4>a) personenbezogene Daten</h4>Personenbezogene Daten sind alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person (im Folgenden "betroffene Person") beziehen. Als identifizierbar wird eine natürliche Person angesehen, die direkt oder indirekt, insbesondere mittels Zuordnung zu einer Kennung wie einem Namen, zu einer Kennnummer, zu Standortdaten, zu einer Online-Kennung oder zu einem oder mehreren besonderen Merkmalen, die Ausdruck der physischen, physiologischen, genetischen, psychischen, wirtschaftlichen, kulturellen oder sozialen Identität dieser natürlichen Person sind, identifiziert werden kann.
@@ -38,19 +38,17 @@ Wir verwenden in dieser Datenschutzerklärung unter anderem die folgenden Begrif
 
 </li><li><h4>f) Pseudonymisierung</h4>Pseudonymisierung ist die Verarbeitung personenbezogener Daten in einer Weise, auf welche die personenbezogenen Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer spezifischen betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass die personenbezogenen Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden.
 
-
 </li><li><h4>g) Verantwortlicher oder für die Verarbeitung Verantwortlicher</h4>Verantwortlicher oder für die Verarbeitung Verantwortlicher ist die natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet. Sind die Zwecke und Mittel dieser Verarbeitung durch das Unionsrecht oder das Recht der Mitgliedstaaten vorgegeben, so kann der Verantwortliche beziehungsweise können die bestimmten Kriterien seiner Benennung nach dem Unionsrecht oder dem Recht der Mitgliedstaaten vorgesehen werden.
-
 
 </li><li><h4>h) Auftragsverarbeiter</h4></li><li>Auftragsverarbeiter ist eine natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die personenbezogene Daten im Auftrag des Verantwortlichen verarbeitet.
 </li><li><h4>i) Empfänger</h4>Empfänger ist eine natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, der personenbezogene Daten offengelegt werden, unabhängig davon, ob es sich bei ihr um einen Dritten handelt oder nicht. Behörden, die im Rahmen eines bestimmten Untersuchungsauftrags nach dem Unionsrecht oder dem Recht der Mitgliedstaaten möglicherweise personenbezogene Daten erhalten, gelten jedoch nicht als Empfänger.
 
 </li><li><h4>j) Dritter</h4>Dritter ist eine natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle außer der betroffenen Person, dem Verantwortlichen, dem Auftragsverarbeiter und den Personen, die unter der unmittelbaren Verantwortung des Verantwortlichen oder des Auftragsverarbeiters befugt sind, die personenbezogenen Daten zu verarbeiten.
 
-</li><li><h4>k) Einwilligung</h4>Einwilligung ist jede von der betroffenen Person freiwillig für den bestimmten Fall in informierter Weise und unmissverständlich abgegebene Willensbekundung in Form einer Erklärung oder einer sonstigen eindeutigen bestätigenden Handlung, mit der die betroffene Person zu verstehen gibt, dass sie mit der Verarbeitung der sie betreffenden personenbezogenen Daten einverstanden ist.</li></ul>---
+</li><li><h4>k) Einwilligung</h4>Einwilligung ist jede von der betroffenen Person freiwillig für den bestimmten Fall in informierter Weise und unmissverständlich abgegebene Willensbekundung in Form einer Erklärung oder einer sonstigen eindeutigen bestätigenden Handlung, mit der die betroffene Person zu verstehen gibt, dass sie mit der Verarbeitung der sie betreffenden personenbezogenen Daten einverstanden ist.</li></ul></div>
 
 <a id="cookies"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>4) Cookies</span>
+## 4) Cookies
 
 Die Internetseiten |der| verwenden Cookies. Cookies sind Textdateien, welche über einen Internetbrowser auf einem Computersystem abgelegt und gespeichert werden.
 
@@ -60,29 +58,29 @@ Durch den Einsatz von Cookies kann |die| den Nutzern dieser Internetseite nutzer
 
 Mittels eines Cookies können die Informationen und Angebote auf unserer Internetseite im Sinne des Benutzers optimiert werden. Cookies ermöglichen uns, wie bereits erwähnt, die Benutzer unserer Internetseite wiederzuerkennen. Zweck dieser Wiedererkennung ist es, den Nutzern die Verwendung unserer Internetseite zu erleichtern. Der Benutzer einer Internetseite, die Cookies verwendet, muss beispielsweise nicht bei jedem Besuch der Internetseite erneut seine Zugangsdaten eingeben, weil dies von der Internetseite und dem auf dem Computersystem des Benutzers abgelegten Cookie übernommen wird. Ein weiteres Beispiel ist das Cookie eines Warenkorbes im Online-Shop. Der Online-Shop merkt sich die Artikel, die ein Kunde in den virtuellen Warenkorb gelegt hat, über ein Cookie.
 
-Die betroffene Person kann die Setzung von Cookies durch unsere Internetseite jederzeit mittels einer entsprechenden Einstellung des genutzten Internetbrowsers verhindern und damit der Setzung von Cookies dauerhaft widersprechen. Ferner können bereits gesetzte Cookies jederzeit über einen Internetbrowser oder andere Softwareprogramme gelöscht werden. Dies ist in allen gängigen Internetbrowsern möglich. Deaktiviert die betroffene Person die Setzung von Cookies in dem genutzten Internetbrowser, sind unter Umständen nicht alle Funktionen unserer Internetseite vollumfänglich nutzbar.---
+Die betroffene Person kann die Setzung von Cookies durch unsere Internetseite jederzeit mittels einer entsprechenden Einstellung des genutzten Internetbrowsers verhindern und damit der Setzung von Cookies dauerhaft widersprechen. Ferner können bereits gesetzte Cookies jederzeit über einen Internetbrowser oder andere Softwareprogramme gelöscht werden. Dies ist in allen gängigen Internetbrowsern möglich. Deaktiviert die betroffene Person die Setzung von Cookies in dem genutzten Internetbrowser, sind unter Umständen nicht alle Funktionen unserer Internetseite vollumfänglich nutzbar.
 
 <a id="erfassung-von-allgemeinen-daten-und-informationen"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>5) Erfassung von allgemeinen Daten und Informationen</span>
+## 5) Erfassung von allgemeinen Daten und Informationen
 
 Die Internetseite |der| erfasst mit jedem Aufruf der Internetseite durch eine betroffene Person oder ein automatisiertes System eine Reihe von allgemeinen Daten und Informationen. Diese allgemeinen Daten und Informationen werden in den Logfiles des Servers gespeichert. Erfasst werden können die (1) verwendeten Browsertypen und Versionen, (2) das vom zugreifenden System verwendete Betriebssystem, (3) die Internetseite, von welcher ein zugreifendes System auf unsere Internetseite gelangt (sogenannte Referrer), (4) die Unterwebseiten, welche über ein zugreifendes System auf unserer Internetseite angesteuert werden, (5) das Datum und die Uhrzeit eines Zugriffs auf die Internetseite, (6) eine Internet-Protokoll-Adresse (IP-Adresse), (7) der Internet-Service-Provider des zugreifenden Systems und (8) sonstige ähnliche Daten und Informationen, die der Gefahrenabwehr im Falle von Angriffen auf unsere informationstechnologischen Systeme dienen.
 
-Bei der Nutzung dieser allgemeinen Daten und Informationen zieht |die| keine Rückschlüsse auf die betroffene Person. Diese Informationen werden vielmehr benötigt, um (1) die Inhalte unserer Internetseite korrekt auszuliefern, (2) die Inhalte unserer Internetseite sowie die Werbung für diese zu optimieren, (3) die dauerhafte Funktionsfähigkeit unserer informationstechnologischen Systeme und der Technik unserer Internetseite zu gewährleisten sowie (4) um Strafverfolgungsbehörden im Falle eines Cyberangriffes die zur Strafverfolgung notwendigen Informationen bereitzustellen. Diese anonym erhobenen Daten und Informationen werden durch |die| daher einerseits statistisch und ferner mit dem Ziel ausgewertet, den Datenschutz und die Datensicherheit |auf| zu erhöhen, um letztlich ein optimales Schutzniveau für die von uns verarbeiteten personenbezogenen Daten sicherzustellen. Die anonymen Daten der Server-Logfiles werden getrennt von allen durch eine betroffene Person angegebenen personenbezogenen Daten gespeichert.---
+Bei der Nutzung dieser allgemeinen Daten und Informationen zieht |die| keine Rückschlüsse auf die betroffene Person. Diese Informationen werden vielmehr benötigt, um (1) die Inhalte unserer Internetseite korrekt auszuliefern, (2) die Inhalte unserer Internetseite sowie die Werbung für diese zu optimieren, (3) die dauerhafte Funktionsfähigkeit unserer informationstechnologischen Systeme und der Technik unserer Internetseite zu gewährleisten sowie (4) um Strafverfolgungsbehörden im Falle eines Cyberangriffes die zur Strafverfolgung notwendigen Informationen bereitzustellen. Diese anonym erhobenen Daten und Informationen werden durch |die| daher einerseits statistisch und ferner mit dem Ziel ausgewertet, den Datenschutz und die Datensicherheit |auf| zu erhöhen, um letztlich ein optimales Schutzniveau für die von uns verarbeiteten personenbezogenen Daten sicherzustellen. Die anonymen Daten der Server-Logfiles werden getrennt von allen durch eine betroffene Person angegebenen personenbezogenen Daten gespeichert.
 
 <a id="kontaktmoumlglichkeit-uumlber-die-internetseite"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>6) Kontaktm&ouml;glichkeit &uuml;ber die Internetseite</span>
+## 6) Kontaktm&ouml;glichkeit &uuml;ber die Internetseite
 
-Die Internetseite |der| enth&auml;lt aufgrund von gesetzlichen Vorschriften Angaben, die eine schnelle elektronische Kontaktaufnahme zu |unsuntm| sowie eine unmittelbare Kommunikation mit uns erm&ouml;glichen, was ebenfalls eine allgemeine Adresse der sogenannten elektronischen Post (E-Mail-Adresse) umfasst. Sofern eine betroffene Person per E-Mail oder &uuml;ber ein Kontaktformular den Kontakt mit dem f&uuml;r die Verarbeitung Verantwortlichen aufnimmt, werden die von der betroffenen Person &uuml;bermittelten personenbezogenen Daten automatisch gespeichert. Solche auf freiwilliger Basis von einer betroffenen Person an den f&uuml;r die Verarbeitung Verantwortlichen &uuml;bermittelten personenbezogenen Daten werden f&uuml;r Zwecke der Bearbeitung oder der Kontaktaufnahme zur betroffenen Person gespeichert. Es erfolgt keine Weitergabe dieser personenbezogenen Daten an Dritte.---
+Die Internetseite |der| enth&auml;lt aufgrund von gesetzlichen Vorschriften Angaben, die eine schnelle elektronische Kontaktaufnahme zu |unsuntm| sowie eine unmittelbare Kommunikation mit uns erm&ouml;glichen, was ebenfalls eine allgemeine Adresse der sogenannten elektronischen Post (E-Mail-Adresse) umfasst. Sofern eine betroffene Person per E-Mail oder &uuml;ber ein Kontaktformular den Kontakt mit dem f&uuml;r die Verarbeitung Verantwortlichen aufnimmt, werden die von der betroffenen Person &uuml;bermittelten personenbezogenen Daten automatisch gespeichert. Solche auf freiwilliger Basis von einer betroffenen Person an den f&uuml;r die Verarbeitung Verantwortlichen &uuml;bermittelten personenbezogenen Daten werden f&uuml;r Zwecke der Bearbeitung oder der Kontaktaufnahme zur betroffenen Person gespeichert. Es erfolgt keine Weitergabe dieser personenbezogenen Daten an Dritte.
 
 <a id="routinemassige-loschung-und-sperrung-von-personenbezogenen-daten"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>7) Routinemäßige Löschung und Sperrung von personenbezogenen Daten</span>
+## 7) Routinemäßige Löschung und Sperrung von personenbezogenen Daten
 
 Der für die Verarbeitung Verantwortliche verarbeitet und speichert personenbezogene Daten der betroffenen Person nur für den Zeitraum, der zur Erreichung des Speicherungszwecks erforderlich ist oder sofern dies durch den Europäischen Richtlinien- und Verordnungsgeber oder einen anderen Gesetzgeber in Gesetzen oder Vorschriften, welchen der für die Verarbeitung Verantwortliche unterliegt, vorgesehen wurde.
 
-Entfällt der Speicherungszweck oder läuft eine vom Europäischen Richtlinien- und Verordnungsgeber oder einem anderen zuständigen Gesetzgeber vorgeschriebene Speicherfrist ab, werden die personenbezogenen Daten routinemäßig und entsprechend den gesetzlichen Vorschriften gesperrt oder gelöscht.---
+Entfällt der Speicherungszweck oder läuft eine vom Europäischen Richtlinien- und Verordnungsgeber oder einem anderen zuständigen Gesetzgeber vorgeschriebene Speicherfrist ab, werden die personenbezogenen Daten routinemäßig und entsprechend den gesetzlichen Vorschriften gesperrt oder gelöscht.
 
 <a id="rechte-der-betroffenen-person"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>8) Rechte der betroffenen Person</span>
+## 8) Rechte der betroffenen Person
 
 <ul><li><h4>a) Recht auf Bestätigung</h4>Jede betroffene Person hat das vom Europäischen Richtlinien- und Verordnungsgeber eingeräumte Recht, von dem für die Verarbeitung Verantwortlichen eine Bestätigung darüber zu verlangen, ob sie betreffende personenbezogene Daten verarbeitet werden. Möchte eine betroffene Person dieses Bestätigungsrecht in Anspruch nehmen, kann sie sich hierzu jederzeit an einen Mitarbeiter des für die Verarbeitung Verantwortlichen wenden.
 
@@ -131,65 +129,59 @@ Möchte die betroffene Person Rechte mit Bezug auf automatisierte Entscheidungen
 
 Möchte die betroffene Person ihr Recht auf Widerruf einer Einwilligung geltend machen, kann sie sich hierzu jederzeit an einen Mitarbeiter des für die Verarbeitung Verantwortlichen wenden.
 
-</li></ul>---
+</li></ul>
 
 <a id="rechtsgrundlage-der-verarbeitung"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>9) Rechtsgrundlage der Verarbeitung</span>
+## 9) Rechtsgrundlage der Verarbeitung
 
-Art. 6 I lit. a DS-GVO dient |unsuntm| als Rechtsgrundlage für Verarbeitungsvorgänge, bei denen wir eine Einwilligung für einen bestimmten Verarbeitungszweck einholen. Ist die Verarbeitung personenbezogener Daten zur Erfüllung eines Vertrags, dessen Vertragspartei die betroffene Person ist, erforderlich, wie dies beispielsweise bei Verarbeitungsvorgängen der Fall ist, die für eine Lieferung von Waren oder die Erbringung einer sonstigen Leistung oder Gegenleistung notwendig sind, so beruht die Verarbeitung auf Art. 6 I lit. b DS-GVO.
- Gleiches gilt für solche Verarbeitungsvorgänge die zur Durchführung vorvertraglicher Maßnahmen erforderlich sind, etwa in Fällen von Anfragen zur unseren Produkten oder Leistungen. Unterliegt |unser| einer rechtlichen Verpflichtung durch welche eine Verarbeitung von personenbezogenen Daten erforderlich wird, wie beispielsweise zur Erfüllung steuerlicher Pflichten, so basiert die Verarbeitung auf Art. 6 I lit. c DS-GVO. In seltenen Fällen könnte die Verarbeitung von personenbezogenen Daten erforderlich werden, um lebenswichtige Interessen der betroffenen Person oder einer anderen natürlichen Person zu schützen. Dies wäre beispielsweise der Fall, wenn ein Besucher in unserem Betrieb verletzt werden würde und daraufhin sein Name, sein Alter, seine Krankenkassendaten oder sonstige lebenswichtige Informationen an einen Arzt, ein Krankenhaus oder sonstige Dritte weitergegeben werden müssten. Dann würde die Verarbeitung auf Art. 6 I lit. d DS-GVO beruhen.
+Art. 6 I lit. a DS-GVO dient |unsuntm| als Rechtsgrundlage für Verarbeitungsvorgänge, bei denen wir eine <div>Einwilligung für einen bestimmten Verarbeitungszweck einholen. Ist die Verarbeitung personenbezogener Daten zur Erfüllung eines Vertrags, dessen Vertragspartei die betroffene Person ist, erforderlich, wie dies beispielsweise bei Verarbeitungsvorgängen der Fall ist, die für eine Lieferung von Waren oder die Erbringung einer sonstigen Leistung oder Gegenleistung notwendig sind, so beruht die Verarbeitung auf Art. 6 I lit. b DS-GVO.</div><div>
+</div><div> Gleiches gilt für solche Verarbeitungsvorgänge die zur Durchführung vorvertraglicher Maßnahmen erforderlich sind, etwa in Fällen von Anfragen zur unseren Produkten oder Leistungen. Unterliegt |unser| einer rechtlichen Verpflichtung durch welche eine Verarbeitung von personenbezogenen Daten erforderlich wird, wie beispielsweise zur Erfüllung steuerlicher Pflichten, so basiert die Verarbeitung auf Art. 6 I lit. c DS-GVO. In seltenen Fällen könnte die Verarbeitung von personenbezogenen Daten erforderlich werden, um lebenswichtige Interessen der betroffenen Person oder einer anderen natürlichen Person zu schützen. Dies wäre beispielsweise der Fall, wenn ein Besucher in unserem Betrieb verletzt werden würde und daraufhin sein Name, sein Alter, seine Krankenkassendaten oder sonstige lebenswichtige Informationen an einen Arzt, ein Krankenhaus oder sonstige Dritte weitergegeben werden müssten. Dann würde die Verarbeitung auf Art. 6 I lit. d DS-GVO beruhen.
 
 Letztlich könnten Verarbeitungsvorgänge auf Art. 6 I lit. f DS-GVO beruhen. Auf dieser Rechtsgrundlage basieren Verarbeitungsvorgänge, die von keiner der vorgenannten Rechtsgrundlagen erfasst werden, wenn die Verarbeitung zur Wahrung eines berechtigten Interesses |unsunts| oder eines Dritten erforderlich ist, sofern die Interessen, Grundrechte und Grundfreiheiten des Betroffenen nicht überwiegen. Solche Verarbeitungsvorgänge sind uns insbesondere deshalb gestattet, weil sie durch den Europäischen Gesetzgeber besonders erwähnt wurden. Er vertrat insoweit die Auffassung, dass ein berechtigtes Interesse anzunehmen sein könnte, wenn die betroffene Person ein Kunde des Verantwortlichen ist (Erwägungsgrund 47 Satz 2 DS-GVO).
----
+</div>
 
 <a id="website-analyse-countpixel"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>10) Website-Analyse (CountPixel)</span>
+## 10) Website-Analyse (CountPixel)
 
-Wir verwenden auf dieser Website ein eigenes datenschutzfreundliches Analyse-System
-(<strong>„CountPixel“</strong>), um das Nutzungsverhalten auf unseren Seiten statistisch auszuwerten. Die Verarbeitung erfolgt auf Grundlage unseres <strong>berechtigten interesses gemäß Art. 6 Abs. 1 lit. f DSGVO</strong>.<h3>Berechtigtes Interesse</h3>Die statistische Auswertung dient der technischen Optimierung unserer Website,
+Wir verwenden auf dieser Website ein eigenes datenschutzfreundliches Analyse-System (<strong>„CountPixel“</strong>),<div>um das Nutzungsverhalten auf unseren Seiten statistisch auszuwerten. Die Verarbeitung erfolgt auf Grundlage unseres <strong>berechtigten interesses gemäß Art. 6 Abs. 1 lit. f DSGVO</strong>.<h3>Berechtigtes Interesse</h3>Die statistische Auswertung dient der technischen Optimierung unserer Website,
 der Analyse von Seitenaufrufen sowie der Erkennung technischer Probleme oder fehlerhafter Seiten. Das Analyse-System wird ausschließlich zu diesen Zwecken eingesetzt.
 
-Es werden <strong>keine Cookies</strong> gesetzt und <strong>keine vergleichbaren Identifikationsmerkmale</strong> verwendet.<h3>Welche Daten werden verarbeitet?</h3>
-Zur rein statistischen Analyse erheben wir ausschließlich folgende technisch notwendige Informationen:  <ul><li>die aufgerufene URL  </li><li>ein anonymisiertes IP-Adresssegment
+Es werden <strong>keine Cookies</strong> gesetzt und <strong>keine vergleichbaren Identifikationsmerkmale</strong> verwendet.<h3>Welche Daten werden verarbeitet?</h3>Zur rein statistischen Analyse erheben wir ausschließlich folgende technisch notwendige Informationen:  <ul><li>die aufgerufene URL  </li><li>ein anonymisiertes IP-Adresssegment
 (IPv4: letzten  drei Stellen auf „0“, IPv6: letzter Block „0000“)</li><li>Zeitpunkt des Seitenaufrufs
 
-</li></ul>Die IP-Adresse wird <strong>vor der Speicherung anonymisiert</strong>, sodass ein Personenbezug nicht hergestellt werden kann. Eine Wiedererkennung einzelner Besucher ist nicht möglich.<h3>Zweck der Verarbeitung</h3>
-Die Verarbeitung erfolgt ausschließlich zur:
+</li></ul>Die IP-Adresse wird <strong>vor der Speicherung anonymisiert</strong>, sodass ein Personenbezug nicht hergestellt werden kann. Eine Wiedererkennung einzelner Besucher ist nicht möglich.<h3>Zweck der Verarbeitung</h3>Die Verarbeitung erfolgt ausschließlich zur:
 <ul><li>Auswertung von Seitenaufrufen</li><li>Verbesserung der Website</li><li>Erkennung technischer Probleme oder fehlerhafter Inhalte
-</li></ul>Es findet <strong>keine Profilbildung</strong>, <strong>kein Tracking über mehrere Websites hinweg</strong> und <strong>keine Weitergabe der Daten an Dritte</strong> statt. Das System verwendet <strong>keine personenbezogenen Identifikatoren</strong>.<h3>Speicherdauer</h3>
-Die anonymisierten Statistikdaten werden für <strong>150 Tage</strong> gespeichert und anschließend automatisch gelöscht.<h3>Widerspruchsrecht</h3>
-Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Ihrer personenbezogenen Daten Widerspruch einzulegen (Art. 21 DSGVO). In diesem Fall werden Ihre Daten nicht weiter verarbeitet, sofern keine zwingenden schutzwürdigen Gründe entgegenstehen.<h3>Rechtsgrundlage</h3>
-Die Verarbeitung erfolgt gemäß <strong>Art. 6 Abs. 1 lit. f DSGVO</strong> (berechtigtes Interesse).
----
+</li></ul>Es findet <strong>keine Profilbildung</strong>, <strong>kein Tracking über mehrere Websites hinweg</strong> und <strong>keine Weitergabe der Daten an Dritte</strong> statt. Das System verwendet <strong>keine personenbezogenen Identifikatoren</strong>.<h3>Speicherdauer</h3>Die anonymisierten Statistikdaten werden für <strong>150 Tage</strong> gespeichert und anschließend automatisch gelöscht.<h3>Widerspruchsrecht</h3>Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Ihrer personenbezogenen Daten Widerspruch einzulegen (Art. 21 DSGVO). In diesem Fall werden Ihre Daten nicht weiter verarbeitet, sofern keine zwingenden schutzwürdigen Gründe entgegenstehen.<h3>Rechtsgrundlage</h3>Die Verarbeitung erfolgt gemäß <strong>Art. 6 Abs. 1 lit. f DSGVO</strong> (berechtigtes Interesse).
+</div>
 
 <a id="dauer-fuumlr-die-die-personenbezogenen-daten-gespeichert-werden"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>11) Dauer, f&uuml;r die die personenbezogenen Daten gespeichert werden</span>
+## 11) Dauer, f&uuml;r die die personenbezogenen Daten gespeichert werden
 
-Das Kriterium f&uuml;r die Dauer der Speicherung von personenbezogenen Daten ist die jeweilige gesetzliche Aufbewahrungsfrist. Nach Ablauf der Frist werden die entsprechenden Daten routinem&auml;&szlig;ig gel&ouml;scht, sofern sie nicht mehr zur Vertragserf&uuml;llung oder Vertragsanbahnung erforderlich sind.---
+Das Kriterium f&uuml;r die Dauer der Speicherung von personenbezogenen Daten ist die jeweilige gesetzliche Aufbewahrungsfrist. Nach Ablauf der Frist werden die entsprechenden Daten routinem&auml;&szlig;ig gel&ouml;scht, sofern sie nicht mehr zur Vertragserf&uuml;llung oder Vertragsanbahnung erforderlich sind.
 
 <a id="gesetzliche-oder-vertragliche-vorschriften-zur-bereitstellung-der-personenbezogenen-daten-erforderlichkeit-fur-den-vertragsabschluss-verpflichtung-der-betroffenen-person-die-personenbezogenen-daten-bereitzustellen-mogliche-folgen-der-nichtbereitstellung"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>12) Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten; Erforderlichkeit für den Vertragsabschluss; Verpflichtung der betroffenen Person, die personenbezogenen Daten bereitzustellen; mögliche Folgen der Nichtbereitstellung</span>
+## 12) Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten; Erforderlichkeit für den Vertragsabschluss; Verpflichtung der betroffenen Person, die personenbezogenen Daten bereitzustellen; mögliche Folgen der Nichtbereitstellung
 
-Wir klären Sie darüber auf, dass die Bereitstellung personenbezogener Daten zum Teil gesetzlich vorgeschrieben ist (z.B. Steuervorschriften) oder sich auch aus vertraglichen Regelungen (z.B. Angaben zum Vertragspartner) ergeben kann.
-
+Wir klären Sie darüber auf, dass die Bereitstellung personenbezogener Daten zum Teil gesetzlich vorgeschrieben ist (z.B. Steuervorschriften) oder sich auch aus vertraglichen Regelungen (z.B. Angaben zum Vertragspartner) ergeben kann.<div>
+</div><div>
 Mitunter kann es zu einem Vertragsschluss erforderlich sein, dass eine betroffene Person uns personenbezogene Daten zur Verfügung stellt, die in der Folge durch uns verarbeitet werden müssen. Die betroffene Person ist beispielsweise verpflichtet uns personenbezogene Daten bereitzustellen, wenn |unser| mit ihr einen Vertrag abschließt. Eine Nichtbereitstellung der personenbezogenen Daten hätte zur Folge, dass der Vertrag mit dem Betroffenen nicht geschlossen werden könnte.
-
+</div><div>
 
 Vor einer Bereitstellung personenbezogener Daten durch den Betroffenen muss sich der Betroffene an einen unserer Mitarbeiter wenden. Unser Mitarbeiter klärt den Betroffenen einzelfallbezogen darüber auf, ob die Bereitstellung der personenbezogenen Daten gesetzlich oder vertraglich vorgeschrieben oder für den Vertragsabschluss erforderlich ist, ob eine Verpflichtung besteht, die personenbezogenen Daten bereitzustellen, und welche Folgen die Nichtbereitstellung der personenbezogenen Daten hätte.
----
+</div>
 
 <a id="berechtigte-interessen-an-der-verarbeitung-die-von-dem-verantwortlichen-oder-einem-dritten-verfolgt-werden"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>13) Berechtigte Interessen an der Verarbeitung, die von dem Verantwortlichen oder einem Dritten verfolgt werden</span>
+## 13) Berechtigte Interessen an der Verarbeitung, die von dem Verantwortlichen oder einem Dritten verfolgt werden
 
-Basiert die Verarbeitung personenbezogener Daten auf Artikel 6 I lit. f DS-GVO ist unser berechtigtes Interesse die Durchführung unserer Geschäftstätigkeit zugunsten des Wohlergehens all unserer Mitarbeiter und unserer Anteilseigner.---
+Basiert die Verarbeitung personenbezogener Daten auf Artikel 6 I lit. f DS-GVO ist unser berechtigtes Interesse die Durchführung unserer Geschäftstätigkeit zugunsten des Wohlergehens all unserer Mitarbeiter und unserer Anteilseigner.
 
 <a id="bestehen-einer-automatisierten-entscheidungsfindung"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>14) Bestehen einer automatisierten Entscheidungsfindung</span>
+## 14) Bestehen einer automatisierten Entscheidungsfindung
 
-Als |veruns| verzichten wir auf eine automatische Entscheidungsfindung oder ein Profiling.---
+Als |veruns| verzichten wir auf eine automatische Entscheidungsfindung oder ein Profiling.
 
 <a id="quellenangabe"></a>
-## <span class='dark:text-layout-night-1050 text-layout-sun-1000'>15) Quellenangabe</span>
+## 15) Quellenangabe
 
-Diese Datenschutzerklärung wurde durch den <a href="https://dsgvo-muster-datenschutzerklaerung.dg-datenschutz.de/">Datenschutzerklärungs-Generator</a> der Deutschen Gesellschaft für Datenschutz, in Kooperation mit den <a href="https://www.wbs-law.de/taetigkeitsgebiete/medienrecht/">Medienrecht</a> Anwälten WILDE BEUGER SOLMECKE | Rechtsanwälte erstellt.---
+Diese Datenschutzerklärung wurde durch den <a href="https://dsgvo-muster-datenschutzerklaerung.dg-datenschutz.de/">Datenschutzerklärungs-Generator</a> der Deutschen Gesellschaft für Datenschutz, in Kooperation mit den <a href="https://www.wbs-law.de/taetigkeitsgebiete/medienrecht/">Medienrecht</a> Anwälten WILDE BEUGER SOLMECKE | Rechtsanwälte erstellt.
 

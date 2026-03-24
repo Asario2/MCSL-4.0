@@ -1183,6 +1183,49 @@ $ad2 = str_replace("@","[at]",$ad);
  return "<a class='l".@$_GET['page']."' href='mailto:$ad'>". htmlentities($ad2) ."</a>";
 }
 }
+if(!function_exists("impr_mcs_alt"))
+{
+    function impr_mcs_alt($dom)
+    {
+    include_once public_path("inc/functions/gen_hidemail.php");
+    $row = DB::connection("mariadb")
+    ->table("kontaktdaten")
+    ->where("dom",$dom)
+    ->first();
+
+    $row = (array) $row;
+
+    $tel = (@$row['mobil'] ? "Tel. <a href='tel:".$row['mobil']."'>".$row['mobil']."</a>" : "Tel. <a href='tel:".@$row['Festnetz']."'>".@$row['Festnetz']."</a>");
+    $tel .= (@$row['fax'] ? "<br />FAX:<span class='tel'>".$row['fax']."</span>" : '');
+    return "<span style='font-size:1.2em;'><a style='font-size:1.2em;' href='https://www.marblefx.de'>MarbleFX</a> - Webdesign von Morgen schon Heute</span><div class=\"vcard\">
+            <address class='not-italic'>
+            <span class=\"fn\">".$row['name']."</span>
+            <span class=\"adr\">".$row['strasse']."
+            <span class='postalCode'>".$row['plz']."</span> <span class=\"locality\">".$row['ort']."</span><br />
+            Email: ".gen_hidemail($row['email'])."
+            $tel<br />
+            <div style='float:left;'>Diese Seite ist <a href='https://www.marblefx.de/powered-by-mcs'>Powered by </div><img class='h-5 mt-1 ml-1' style='float:left;' src='/images/icons/MCSL_sm.png' alt='MCSL' title='MCSL' />
+            </a><br />
+            </address>
+            </div>";
+
+
+
+
+
+
+
+
+    return "<br /><span style='font-size:1.2em;'><a style='font-size:1.2em;' href='https://www.marblefx.de'>MarbleFX</a> - Webdesign von Morgen schon Heute</span><br /> <br />".
+
+        $row['name']."<br />".
+        $row['strasse']."<br />".
+        $row['plz']." ".$row['ort']."<br />".
+        "E-Mail: ".gen_hidemail($row['email'])."<br />".
+        $tel."<br />".
+        "Diese Seite ist <a href='https://www.marblefx.de/powered-by-mcs'>Powered by <img class='h-5 mt-1' src='/images/icons/MCSL_sm.png' alt='Powered by MCS' title='Powered by MCS' /></a><br /><br />";
+    }
+}
 if(!function_exists("gen_cont_info"))
 {
 function gen_cont_info($dom2='')

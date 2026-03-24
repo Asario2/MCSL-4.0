@@ -22,6 +22,7 @@
         :route-create="routeCreate"
         :delete-on="false"
         route-delete="admin.tables.destroy"
+        :view="rights.view[rows?.full_name]"
       >
 
         <template #header>
@@ -49,7 +50,6 @@
       </list-container>
 
     </section>
-
     <pagination class="dark:bg-black" :links="pag?.links" basePath="admin/tables" />
   </layout>
 </template>

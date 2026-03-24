@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\GlobalController;
+use Illuminate\Support\Facades\Schema;
 
-class ExportPrivacyMarkdown extends Command
+class ExportImprintMarkdown extends Command
 {
-    protected $signature = 'export:privacy-markdown';
+    protected $signature = 'export:imprint-markdown';
     protected $description = 'Exportiert die privacy-Tabelle als Markdown-Datei mit Inhaltsverzeichnis und Anchors';
 
     public function handle()
@@ -24,51 +25,59 @@ class ExportPrivacyMarkdown extends Command
 
         $sda = $table;
         $sdd = str_replace("_mcsl",'',$sda);
-        $entries = DB::connection("mariadb")->table('privacy')->where("xico_doms", "LIKE", "%" . $sda . "%")->orderBy('position',"ASC")->get();
+        $channel = '';
+        if($sdd != "ab")
+        {
+            $channel = "_".$sdd;
+        }
+        if(!Schema::connection("mariadb".@$channel)->hasTable("impressum"))
+        {
+            continue;
+        }
+        $entries = DB::connection("mariadb".@$channel)->table('impressum')->where("pub", "1")->orderBy('position',"ASC")->get();
 
         if ($entries->isEmpty()) {
             $this->error('Keine Einträge in der Tabelle "privacy" gefunden.');
             return;
         }
 
-        $markdown = "# Datenschutzerklärung\n\n## Inhaltsverzeichnis\n\n";
+        $markdown = '';
 
         // Inhaltsverzeichnis aufbauen
         $o = 1;
-        foreach ($entries as $entry) {
-            $anchor = $entry->slug ?? Str::slug($entry->headline);
-            $markdown .= "- [$o)&nbsp; $entry->headline](#{$anchor})<br />";
-            $o++;
-        }
+        // foreach ($entries as $entry) {
+        //     $anchor = $entry->slug ?? Str::slug($entry->headline);
+        //     $markdown .= "- [$o)&nbsp; $entry->headline](#{$anchor})<br />";
+        //     $o++;
+        // }
 
-        $markdown .= "\n---\n\n";
+        // $markdown .= "\n---\n\n";
 
         // Abschnitte
         $i = 1;
         foreach ($entries as $entry) {
-            $anchor = $entry->slug ?? Str::slug($entry->headline);
-
-            $markdown .= "<a id=\"{$anchor}\"></a>\n";
-            $markdown .= "## $i) {$entry->headline}\n\n";
-            $markdown .= ($this->convertToMarkdown($entry->message,$sdd)) . "";
-            $markdown .= "\n\n";
+            $markdown .= "\n## {$entry->name}\n\n";
+            $markdown .= ($this->convertToMarkdown($entry->details,"ab")) . "";
+            $markdown .= "\n";
             $markdown = $this->noemtyli($markdown);
             $i++;
         }
     // Datei speichern
-        Storage::disk('md')->put('privacy_'.$sdd.'.md', $markdown);
-        $this->info("Markdown-Datei wurde unter ressources/markdown/privacy_".$sdd.".md gespeichert.");
+        Storage::disk('md')->put('imprint_'.$sdd.'.md', $markdown);
+        $this->info("Markdown-Datei wurde unter ressources/markdown/imprint_".$sdd.".md gespeichert.");
         }
 
     }
-    protected function convertToMarkdown(string $message,$dom): string
+    protected function convertToMarkdown(string $details,$sdd): string
     {
         // Optional: HTML zu Markdown konvertieren
         // Hier sehr einfach gehalten – kann bei Bedarf z. B. mit `league/html-to-markdown` ersetzt werden
 
-        $text = strip_tags($message, '<br><ul><div><ol><li><strong><h3><h4><h2><em><b><i><a>');
+        $text = strip_tags($details, '<br><ul><div><ol><li><strong><h3><h4><h2><em><b><i><a>');
         $text = str_replace(['<br>', '<br/>', '<br />'], "\n", $text);
-        $text = str_replace("{{ vcard }}",$this->vcard($dom),$text);
+        $text = str_replace("{{ vcard }}",$this->vcard($sdd),$text);
+        $text = str_replace("fx_impr_mcs_alt()",impr_mcs_alt($sdd),$text);
+        $text = str_replace(["<code>","</code>"],'',$text);
 
         return $text;
     }
@@ -82,9 +91,6 @@ class ExportPrivacyMarkdown extends Command
     }
     function noemtyli($str)
     {
-        $str = preg_replace('#(<br\s*/?>\s*){3,}#i', '<br /><br />', $str);
-        $str = preg_replace("/(\r?\n\s*){3,}/", "\n\n", $str);
-
         return preg_replace('#<li>[\s\:marker<br\s*/?>]*</li>#i', '', $str);
     }
 }

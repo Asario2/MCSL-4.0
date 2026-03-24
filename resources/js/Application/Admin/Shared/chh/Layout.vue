@@ -28,7 +28,7 @@
                                     "
                                 ></brand-header>
                             </div>
-
+                            <ChhLogo></ChhLogo>
                             <!-- Navigation Links -->
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
@@ -36,7 +36,7 @@
                             <NavLink
                                     :routeName="route('home.visit')"
                                     :active="route().current('home.visit')"
-                                    label="Home2"
+                                    label="Home"
                                 >
                                 </NavLink>
                             <NavLink
@@ -223,7 +223,7 @@
                             :href="route('home.visit')"
                             target="_self"
                         >
-                            Home3
+                            Home
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('admin.dashboard')"
@@ -337,6 +337,7 @@
 
 <script>
 import { Head } from "@inertiajs/vue3";
+import ChhLogo from "@/Application/Shared/ChhLogo.vue";
 
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
@@ -356,6 +357,7 @@ export default {
 
     components: {
         Head,
+        ChhLogo,
         BrandHeader,
         Toast,
         ButtonChangeMode,

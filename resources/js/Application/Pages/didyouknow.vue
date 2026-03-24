@@ -63,7 +63,7 @@
       </div>
     </section>
 
-    <Pagination :links="items.links" basePath="didyouknow" />
+    <Pagination :links="items.links" basePath="home/didyouknow" />
   </Layout>
 </template>
 

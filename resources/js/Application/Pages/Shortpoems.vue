@@ -94,7 +94,7 @@
     </section>
 
     <!-- Pagination -->
-    <Pagination :links="items.links" basePath="shortpoems" />
+    <Pagination :links="items.links" basePath="home/shortpoems" />
     </Layout>
 </template>
 

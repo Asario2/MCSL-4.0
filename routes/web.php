@@ -184,6 +184,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':chh,ra-c-henning')->
     // Die eigentlichen Seiten
     Route::get('/visitcard', [HomeController::class, 'home_visit'])->name('home.visit');
     Route::get('/publikationen', [HomeController::class, 'home_publication'])->name('home.publication');
+     Route::get('/imprint',[HomeController::class, 'home_imprint_chh'])->name('home.imprint.chh');
 });
 
 //

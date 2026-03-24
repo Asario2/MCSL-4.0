@@ -2,7 +2,10 @@
         <template v-if="routeName">
             <Link
             :href="routeName"
-            class="text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000 nul nul_bla dark:nul_wh"
+            class="text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block
+                rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-layout-sun-200
+                hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200
+                 dark:hover:text-layout-night-1000 nul nul_bla dark:nul_wh"
             :preserve-state="false"
             :preserve-scroll="false"
             replace
@@ -57,5 +60,6 @@
     A.text-layout-sun-600 dark:text-layout-night-900{
         color:rgb(20,20,20) !important;
     } */
+     .nul_bla{color:#000 !important}
     </style>
 

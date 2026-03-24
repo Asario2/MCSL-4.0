@@ -12,7 +12,7 @@ const __dirname = dirname(__fileName);
 const builds = [
   { name: 'ab', config: 'tailwind.ab.config.js', out: 'public/css/tailw/ab.css' },
   { name: 'mfx', config: 'tailwind.mfx.config.js', out: 'public/css/tailw/mfx.css' },
-  { name: 'default', config: 'tailwind.default.config.js', out: 'public/css/tailw/default.css' },
+  { name: 'default', config: 'tailwind.default.config.js', out: 'public/css/tailw/ab.css' },
 ];
 
 if (!existsSync('public/css/tailw')) {

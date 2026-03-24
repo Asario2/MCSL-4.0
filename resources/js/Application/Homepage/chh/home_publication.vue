@@ -2,7 +2,7 @@
     <Layout>
         <MetaHeader title="Rechtsanwalt Christian Henning" />
         <div>
-
+            <h1>Auszug Veröffentlichungen / Presse</h1>
   <div class="flex justify-between items-center">
                 <search-filter
                 v-if="searchFilter"
@@ -11,41 +11,49 @@
                 ref="searchField"
                 @reset="reset"
                 /></div>
-<div>
-<table class="w-full table-fixed">
-  <tbody>
-    <tr
-      v-for="(db) in filteredContacts"
-      :key="db.pid"
-        class="odd:bg-gray-100/40 even:bg-transparent hover:bg-gray-300/60 transition-colors"
+<div class="w-full">
+
+    <div
+        v-for="(db) in filteredContacts"
+        :key="db.pid"
+        class="odd:bg-gray-100/40 even:bg-transparent hover:bg-gray-300/60 transition-colors p-1"
     >
-      <td width="75%" class="pl-3">
-        <h2 class="bl mt-0 mb-0" v-html="rumLaut(db.name)"></h2>
-        <span class="text-sm">
-          <a class="quelle mt-[-4px]" :href="db.quellurl">
-            {{ rumLaut(db.qname) }}
-          </a>
-          - <b>Ausgabe:</b> {{ db.QuellenAusgabe || '-' }}
-          <b>Seite:</b> {{ db.QuellenSeite || '-' }}
-        </span>
-      </td>
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
 
-      <td width="15%">
-        <a
-          class="inline-flex items-center gap-2 whitespace-nowrap quelle"
-          :href="'files/_chh/publikationen/file_pdf/' + db.file_pdf"
-        >
-          <img :src="'/images/icons/PDF.png'" class="h-8" />
-          <span>Download ({{ db.filesize }})</span>
-        </a>
-      </td>
+            <!-- LEFT CONTENT -->
+            <div class="flex-1">
+                <h2 class="font-semibold text-xl" v-html="rumLaut(db.name)"></h2>
 
-      <td v-if="hasr" class="text-right">
-        <editbtns table="publikationen" :id="db.pid" />
-      </td>
-    </tr>
-  </tbody>
-</table>
+                <span class="text-sm text-gray-600">
+                    Veröffentlicht am {{ db.oeff }} in
+                    <a class="quelle ml-1" :href="db.quellurl">
+                        {{ rumLaut(db.qname) }}
+                    </a>
+                    - <b>Ausgabe:</b> {{ db.QuellenAusgabe || '-' }}
+                    <b class="ml-2">Seite:</b> {{ db.QuellenSeite || '-' }}
+                </span>
+            </div>
+
+            <!-- DOWNLOAD -->
+            <div class="flex items-center">
+                <a
+                    class="inline-flex items-center gap-2 quelle"
+                    :href="'files/_chh/publikationen/file_pdf/' + db.file_pdf"
+                >
+                    <img :src="'/images/icons/PDF.png'" class="h-8" />
+                    <span>Download ({{ db.filesize }})</span>
+                </a>
+            </div>
+
+            <!-- EDIT BUTTONS -->
+            <div v-if="hasr" class="flex justify-start md:justify-end">
+                <editbtns table="publikationen" :id="db.pid" />
+            </div>
+
+        </div>
+    </div>
+
+
 
 
 </div>
@@ -64,6 +72,8 @@ import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 import Pagination from "@/Application/Components/Pagination.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import {nl2br,rumLaut,GetRights} from "@/helpers";
+import pickBy from "lodash/pickBy";
+import { throttle } from "lodash";
 export default {
     name: 'NewHome',
     components: { Layout, MetaHeader,editbtns, SearchFilter, Pagination},
@@ -71,47 +81,74 @@ export default {
         data:[Object,Array],
         datb:[Object,Array],
         pag:[Object,Array],
-
+        filters: { type: Object, default: () => ({}) },
+        searchFilter: { type: Boolean, default: true },
+        searchText: { type: String, default: "Hier kannst du den Suchbegriff eingeben" },
     },
     data() {
         return {
-            searchFilter: true,
-             form: {
-            search: ""
-        }
+
+            form: {
+                search: new URLSearchParams(window.location.search).get('search') || ''
+            },
+            open:false,
         }
     },
     methods: {
         nl2br,
         rumLaut,
         GetRights,
-    // andere Methoden hier...
+        reset() { this.form.search = null },
   },
   computed:
   {
     hasr(){
+
     return GetRights("edit","publikationen");
     },
     filteredContacts() {
-        if (!this.form.search) return this.data;
-
-        const s = this.form.search.toLowerCase();
-
-        return this.data.filter(c => {
-            return [
-                c.name,
-                c.QuellenAusgabe,
-                c.QuellenSeite,
-                c.file_pdf,
-                c.qname,
-                c.QuellUrl
-            ].some(val =>
-                val && String(val).toLowerCase().includes(s)
-            );
-        });
+        return this.data;
     },
+},
+watch: {
+    form: {
+      handler: throttle(function () {
+        const query = pickBy(this.form, v => v != null && v !== '');
+        this.$inertia.get(
+        this.route("home.publication"),
+        query,
+        {
+            preserveState: true,
+            preserveScroll: false,
+            replace: true,
+            skipLoading: true,
+        }
+        );
 
-  }
+      }, 150),
+      deep: true
+    },
+}
+    // filteredContacts() {
+    //     if (!this.form.search) return this.data;
+
+    //     const s = this.form.search.toLowerCase();
+
+    //     return this.data.filter(c => {
+    //         return [
+    //             c.name,
+    //             c.QuellenAusgabe,
+    //             c.QuellenSeite,
+    //             c.file_pdf,
+    //             c.qname,
+    //             c.QuellUrl
+    //         ].some(val =>
+    //             val && String(val).toLowerCase().includes(s)
+    //         );
+    //     });
+    // },
+
+
 };
 </script>
 <style>
