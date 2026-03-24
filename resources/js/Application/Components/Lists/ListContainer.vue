@@ -56,7 +56,7 @@
         <!-- Slot für normale Datenzellen -->
     <slot name="datarow" :datarow="row" draggable="false"></slot>
         <!-- Created At -->
-        <td v-if="row.created_at" class="np-dl-td-normal">
+        <td v-if="row.created_at && view" class="np-dl-td-normal">
             {{ new Date(row.created_at).toLocaleString('de-DE', {
                 day: '2-digit', month: '2-digit', year: 'numeric',
                 hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -136,6 +136,7 @@
         },
         props: {
             items: {},
+            view:[Number,String,Boolean],
             pag:[Object,Array],
             withinAccordion: { type: Boolean, default: false },
             title: { type: String, required: false },

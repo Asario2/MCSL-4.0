@@ -64,44 +64,64 @@ class HomeController extends Controller
     public function home_publication(Request $request)
 {
     $tables = DB::table("publikationen")
-        ->leftJoin('quellen', 'quellen.id', '=', 'publikationen.quellen_id')
-        ->where("publikationen.pub", "1")
-        ->select(
-            'publikationen.*',
-            'quellen.*',
-            "publikationen.name as name",
-            "quellen.name as qname",
-            "publikationen.id as pid"
-        )
-        ->orderBy("publikationen.id", "DESC")
-        ->paginate(
-            14,
-            ['*'],
-            'page',
-            $request->input('page', 1)
-        )
-        ->withQueryString()
-        ->through(function ($item) {
-            $path = 'files/_chh/publikationen/file_pdf/' . $item->file_pdf;
+    ->leftJoin('quellen', 'quellen.id', '=', 'publikationen.quellen_id')
+    ->where("publikationen.pub", "1")
 
-            if (file_exists(public_path($path))) {
-                $bytes = filesize(public_path($path));
-                if ($bytes < 1024 * 1024) {
-                    $kb = $bytes / 1024;
-                    $item->filesize = ($kb < 10 ? round($kb, 2) : round($kb)) . ' KB';
-                } else {
-                    $mb = $bytes / 1024 / 1024;
-                    $item->filesize = ($mb < 10 ? round($mb, 2) : round($mb)) . ' MB';
-                }
-            } else {
-                $item->filesize = '0 KB';
-            }
-            return $item;
+    // Suche hinzufügen
+    ->when(request('search'), function ($query) {
+        $query->where(function ($q) {
+            $q->filterdefault(['search' => request('search')]);
         });
+    })
 
+    ->select(
+        'publikationen.*',
+        'publikationen.dt_veroeff_datum as oeff',
+        'quellen.*',
+        "publikationen.name as name",
+        "quellen.name as qname",
+        "publikationen.id as pid",
+        "publikationen.dt_veroeff_datum as oeff",
+    )
+    ->orderBy("publikationen.id", "DESC")
+    ->paginate(
+        14,
+        ['*'],
+        'page',
+        $request->input('page', 1)
+    )
+    ->withQueryString()
+    ->through(function ($item) {
+        // Datum formatieren
+        if (!empty($item->oeff)) {
+        $item->oeff = Carbon::createFromTimestamp($item->oeff)
+            ->locale('de')
+            ->translatedFormat('d.m.Y');
+    } else {
+        $item->oeff = null; // oder z.B. ''
+    }
+
+        // Dateigröße berechnen
+        $path = 'files/_chh/publikationen/file_pdf/' . $item->file_pdf;
+        if (file_exists(public_path($path))) {
+            $bytes = filesize(public_path($path));
+            if ($bytes < 1024 * 1024) {
+                $kb = $bytes / 1024;
+                $item->filesize = ($kb < 10 ? round($kb, 2) : round($kb)) . ' KB';
+            } else {
+                $mb = $bytes / 1024 / 1024;
+                $item->filesize = ($mb < 10 ? round($mb, 2) : round($mb)) . ' MB';
+            }
+        } else {
+            $item->filesize = '0 KB';
+        }
+
+        return $item;
+    });
     // Laravel liefert die Links schon fertig für das Frontend
    // $links = $tables->links()->elements[0]; // Array mit url, label, active
     $tablesArray = $tables->toArray();
+
     return Inertia::render('Homepage/chh/home_publication', [
         'data' => $tablesArray['data'], // Items der aktuellen Seite
         'pag' => [
@@ -857,10 +877,20 @@ return Inertia::render('Homepage/Pictures', [
     //
     public function home_imprint()
     {
-        $imprintFile = Jetstream::localizedMarkdownPath('imprint.md');
+        $imprintFile = Jetstream::localizedMarkdownPath('imprint_chh.md');
         $imprint = Str::markdown(file_get_contents($imprintFile));
         //
         return Inertia::render('Homepage/Imprint', [
+            'imprint' => $imprint,
+        ]);
+    }
+    public function home_imprint_chh()
+    {
+        $imprintFile = Jetstream::localizedMarkdownPath('imprint_chh.md');
+        $imprint = Str::markdown(file_get_contents($imprintFile));
+        $imprint = nl2br($imprint);
+        //
+        return Inertia::render('Homepage/chh/Imprint', [
             'imprint' => $imprint,
         ]);
     }

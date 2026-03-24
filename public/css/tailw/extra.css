@@ -15,6 +15,9 @@
 .tw{
 color:#fff !important;
 }
+ADDRESS{
+    font-style:normal !important;
+}
     .ai-image-corner{
     border-bottom-right-radius: 64px !important;
 }

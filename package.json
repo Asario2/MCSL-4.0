@@ -8,7 +8,7 @@
         "docs:build": "vitepress build handbook_new",
         "docs:preview": "vitepress preview handbook_new",
         "fetch.colors": "node fetch.colors.js",
-        "build:tailwind": "npm run fetch.colors && tailwindcss -c tailwind.ab.config.js -o public/css/tailw/ab.css && tailwindcss -c tailwind.mfx.config.js -o public/css/tailw/mfx.css && tailwindcss -c tailwind.default.config.js -o public/css/tailw/default.css"
+        "build:tailwind": "npm run fetch.colors && tailwindcss -c tailwind.ab.config.js -o public/css/tailw/ab.css && tailwindcss -c tailwind.mfx.config.js -o public/css/tailw/mfx.css && tailwindcss -c tailwind.default.config.js -o public/css/tailw/ab.css"
     },
     "devDependencies": {
         "@babel/plugin-proposal-decorators": "^7.25.9",

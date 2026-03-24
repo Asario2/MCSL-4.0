@@ -144,9 +144,12 @@ class CountPixelController extends Controller
         $pixel = base64_decode(
             'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII='
         );
-        return response($pixel)->header('Content-Type', 'image/png');
-    }
 
+        return response($pixel, 200)
+            ->header('Content-Type', 'image/png')
+            ->header('Content-Length', strlen($pixel))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
     public function SH($str)
     {
 

@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\ApiRoutesCommand::class,
         \App\Console\Commands\FixImageJson::class,
         \App\Console\Commands\CheckBirthdays::class,
-
+        \App\Console\Commands\FixUtf8Tables::class, 
 
     ];
 

@@ -244,7 +244,7 @@ methods:{
 },
 };
 </script>
-<style scoped>
+<style>
 .SmMaTable{
 margin-left:-7px;
 
@@ -260,7 +260,8 @@ margin-left:-7px;
     border-radius:50%;
 }
 .twi{
-    color:#fff !important;
+    color:#000 !important;
 }
+
 </style>
 

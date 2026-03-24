@@ -1588,6 +1588,7 @@ public function ListTables(Request $request, $table_alt = '')
 
     $tables = Table::select("admin_table.name as full_name", "admin_table.name", "admin_table.*")
         ->filterBlog($request->only('search'))
+        ->where("admin_table.name","!=","x_dummy")
         ->orderBy($orderBy, 'ASC')
         ->paginate(
             20,

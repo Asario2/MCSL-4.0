@@ -15,14 +15,14 @@ class ReorderNews extends Command
         $this->info("Starte Neu-Sortierung...");
 
         // Alle News holen, newest first
-        $news = DB::table('cleo.news')
-            ->orderBy('id', 'DESC')
+        $news = DB::table('chhh.impressum')
+            ->orderBy('ordering', 'DESC')
             ->get();
 
         $position = 1;
 
         foreach ($news as $item) {
-            DB::table('cleo.news')
+            DB::table('chhh.impressum')
                 ->where('id', $item->id)
                 ->update(['position' => $position]);
 

@@ -122,11 +122,11 @@ public function SendMail(
 
         try {
             $mailPassword = env('MAIL_PASSWORD');
-            $transport = Transport::fromDsn('smtp://[EMAIL]:'.$mailPassword.'@smtp.ionos.de:587');
+            $transport = Transport::fromDsn('smtp://info@marblefx.net:'.$mailPassword.'@smtp.ionos.de:587');
             $mailer = new Mailer($transport);
 
             $email = (new Email())
-                ->from('[EMAIL]')
+                ->from('no-reply@marblefx.net')
                 ->to($emmail)
                 ->subject($title)
                 ->html($html);
@@ -147,9 +147,9 @@ public function SendMail(
 $mailPassword = env('MAIL_PASSWORD');
 
       Mail::send([], [], function ($message) {
-    $message->to('[EMAIL]')
+    $message->to('empfaenger@example.com')
             ->subject('Test Mail')
-            ->from('[EMAIL]', 'MCSL')
+            ->from('no-reply@marblefx.net', 'MCSL')
             ->setBody('<h1>Hallo Welt</h1>', 'text/html');
 });
     }
@@ -467,7 +467,7 @@ $mailPassword = env('MAIL_PASSWORD');
         return $txt;
     }
     function SendReg(Request $request) {
-        $email = "[EMAIL]";
+        $email = "parie@gmx.de";
         $nick  = htmlspecialchars($request->name, ENT_QUOTES, 'UTF-8');
         $link  = route('users.show', $request->id); // Beispiel-Link
 
