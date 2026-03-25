@@ -101,7 +101,7 @@ export default defineComponent({
         this.processedHtml = await this.processHtmlWithVcard(this.data.message);
     }
 
-    const url = 'https://api.github.com/search/issues?q=repo:Asario2/MCSL-4.0:issue+state:open';
+    const url = 'https://api.github.com/search/issues?q=repo:Asario2/MCSL-4.0+is:issue+state:open';
   const resp = await fetch(url);
   const data = await resp.json();
 

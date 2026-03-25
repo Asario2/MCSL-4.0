@@ -46,53 +46,20 @@
                 Impressum
                 </a>
             </div>
-
-            <button @click="open = !open" class="md:hidden">
+            <a class="md:hidden navbtn_res p-4 block text-left" href="/visitcard">Visitenkarte</a>
+            <a class="md:hidden navbtn_res p-4 block" href="/publikationen">Publikationen</a>
+            <button @click="open = !open" class="md:hidden mr-4 text-xl">
                 ☰
             </button>
+
         </div>
     </div>
 
     <div v-if="open" class="md:hidden px-4 pb-4 space-y-2">
-        <a
-        class="navbtn p-4"
-        href="/visitcard"
-        :class="{ active: isActive('/visitcard') }"
-        @mouseenter="hovered = '/visitcard'"
-        @mouseleave="hovered = null"
-        >
-        Visitenkarte
-        </a>
 
-        <a
-        class="navbtn p-4"
-        href="/publikationen"
-        :class="{ active: isActive('/publikationen') }"
-        @mouseenter="hovered = '/publikationen'"
-        @mouseleave="hovered = null"
-        >
-        Publikationen
-        </a>
 
-        <a
-        class="navbtn p-4"
-        href="/home/privacy"
-        :class="{ active: isActive('/home/privacy') }"
-        @mouseenter="hovered = '/home/privacy'"
-        @mouseleave="hovered = null"
-        >
-        Datenschutzerklärung
-        </a>
-
-        <a
-        class="navbtn p-4"
-        href="/imprint"
-        :class="{ active: isActive('/imprint') }"
-        @mouseenter="hovered = '/imprint'"
-        @mouseleave="hovered = null"
-        >
-        Impressum
-        </a>
+    <a class="navbtn_res p-4 block" href="/home/privacy">Datenschutzerklärung</a>
+    <a class="navbtn_res p-4 block" href="/imprint">Impressum</a>
     </div>
 </nav>
  <header
@@ -179,7 +146,7 @@ methods: {
 
     // Normaler active check
     return window.location.pathname.startsWith(path);
-  } 
+  }
 }
 };
 </script>
