@@ -620,7 +620,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 ### ============== API ISADMIN QI ================ ###
         Route::get('/api/activity-log/pub', [ActivityPubController::class, 'getPub']);
         Route::post('/api/activity-log/pub', [ActivityPubController::class, 'updatePub']);
-
+        Route::post('/api/delete-stat', [CountPixelController::class, 'delete_stats']);
 
         Route::delete("api/del/function/userrights/{xkis}",[RightsController::class,"remFN"])->name('del.uright.function');
         Route::get('/api/activity-log', function () {

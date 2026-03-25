@@ -242,3 +242,5 @@
 ![Version](https://img.shields.io/badge/version-4.96.0-orange) Feature - add tippy to actlog (#418)  
 ![Version](https://img.shields.io/badge/version-4.97.3-orange) Hotfix - HTML Handling on Expenses/Revenue (#423)  
 ![Version](https://img.shields.io/badge/version-4.98.8-orange) Privacy page rebuilded (#424)  
+![Version](https://img.shields.io/badge/version-4.99.5-orange) Hotfix - Fixed Dark/Lightmode bugs (#425)  
+![Version](https://img.shields.io/badge/version-5.00.1-orange) Feature - Add Links to stats (#426)  

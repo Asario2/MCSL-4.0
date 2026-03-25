@@ -14,9 +14,9 @@
 <div class="w-full">
 
     <div
-        v-for="(db) in filteredContacts"
+        v-for="(db, index) in filteredContacts"
         :key="db.pid"
-        class="odd:bg-gray-100/40 even:bg-transparent hover:bg-gray-300/60 transition-colors p-1"
+        :class="rowClass(index)"
     >
         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
 
@@ -52,9 +52,6 @@
 
         </div>
     </div>
-
-
-
 
 </div>
 <Pagination :links="pag.links" basePath="publikationen" />
@@ -99,6 +96,21 @@ export default {
         rumLaut,
         GetRights,
         reset() { this.form.search = null },
+        rowClass_alt(index) {
+        const even = index % 2 === 0;
+
+        return {
+            'bg-gray-100/40': even,
+            'bg-transparent': !even,
+            'hover:bg-gray-300/60 transition-colors p-1': true
+        };
+    },
+    rowClass(index) {
+    return [
+        index % 2 === 0 ? '!bg-gray-100/40' : '!bg-gray-200',
+        'p-1 rounded-lg hover:!bg-gray-300/60 transition-colors p-1'
+    ];
+}
   },
   computed:
   {
