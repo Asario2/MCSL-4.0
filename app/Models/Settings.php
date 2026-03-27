@@ -183,13 +183,24 @@
     SQLUPDATE EXCUDED
 
     */
-
-
-    public static array $FilterUrls = [
-        "/ri",
-        '/email/verify',
-        'email/verify'
+    public static array $notondb = [
+        "xkis_DumbDB",
+        "xkis_DumpGItDataBase",
+        "xkis_SQLUpdate",   
     ];
+
+
+    //     "/ri",
+    //     '/email/verify',
+    //     'email/verify',
+    //     '?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEerIa0dVP9oZ_89briEebzwJcq6UHKy7RXDTvoohg1Y1Ewl9ecDiZAsDrzH4I_aem_oPCBQXUjvG5Q0GhZ9up0lA',
+    //     '?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEeuYQaJidgZiZkhEyvUGFBLkOamh-PCKDHg5CrtblZ2aAS4MXYrWLAxim2pJ4_aem_orChAySPlKKYMkk_FGk0GQ',
+    //     'blogs9',
+    //     '?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEe5mGqmO5flB_jLjuIpq9tsLmMi1_bL1G-bKeBJAb93bHn_RYnW5l_pfK0Cnw_aem_piKFltz3urhMZChwrisIAA',
+    //     '?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMzUwNjg1NTMxNzI4AAEevbNOnNPmkSuI1gFwjxfkrKk3kZ3SAaxNdX3lhOLMtzf0Oe_xK5px6JvN3hU_aem_ZJsFC12f7OaKXE4kDay8iA',
+    //     'home/didyouknow2020-03-06%2020%3A21%3A26',
+    //     'home/didyouknow2026-01-29%2016%3A51%3A54',
+    // ];
 
     public static array $excl_dump_tables = ["newsletter_blacklist","newsletter_reci","contacts_temp","xgen_migrations","mcs_backup_doku","mcsdoku2","password_reset_tokens","personal_access_tokens","blog_images","private_messages","xgen_hackinglog","xgen_page_views","xgen_migrations","privacy_orig","colors","dbhash","tenant","cache","cache_locks","comments","countpixel","newsletter_blacklist","newsletter_reci","prvacy_orig","private_messages","private_messages_text","ratings","sessions"];
 
@@ -493,6 +504,8 @@ public static array $image_sizes =
     17 => 'contacts_hasryear',
     18 => 'mfx_images_updated_at',
     19 => 'mfx_infos_message',
+    20 => 'ab_users_rights_xkis_DumpDB',
+    21 => 'ab_users_rights_xkis_DumpGItDataBase',
 ];
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",

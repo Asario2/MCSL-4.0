@@ -254,6 +254,7 @@ export default {
             // Optional: Chart neu rendern
             this.renderChart(this.labels, this.chart?.data?.datasets || []);
         } else {
+            console.log(res.data);
             alert("Eintrag wurde nicht gefunden oder konnte nicht gelöscht werden.");
         }
 

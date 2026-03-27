@@ -142,6 +142,10 @@ export default {
             type: String,
             default: "",
         },
+        settingsname:{
+            type: String,
+            default:'',
+        }
     },
     //
     computed: {

@@ -244,3 +244,4 @@
 ![Version](https://img.shields.io/badge/version-4.98.8-orange) Privacy page rebuilded (#424)  
 ![Version](https://img.shields.io/badge/version-4.99.5-orange) Hotfix - Fixed Dark/Lightmode bugs (#425)  
 ![Version](https://img.shields.io/badge/version-5.00.1-orange) Feature - Add Links to stats (#426)  
+![Version](https://img.shields.io/badge/version-5.01.3-orange) Feature - Add hidden functions on online version (Admin Dashboard) (#427)  
