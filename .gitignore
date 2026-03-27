@@ -1,6 +1,6 @@
 *.py
 !/public/**
-_work/*
+_work/**
 *.pth
 **/kontakte/**
 *.csv
@@ -78,3 +78,4 @@ public/images/_ab/images/image_path/big/681128f911efc17943da7084bc69b784.jpg
 public/images/_ab/images/image_path/681128f911efc17943da7084bc69b784.jpg
 *.ps1
 *.dat
+**/toolz/fontz/**

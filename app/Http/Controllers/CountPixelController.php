@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Models\Settings;
+use \App\Models\FilterUrls;
 use App\Models\PageView;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -74,7 +75,7 @@ class CountPixelController extends Controller
                     return $this->pixelResponse();
                 }
             }
-            foreach (Settings::$FilterUrls as $pattern) {
+            foreach (FilterUrls::$FilterUrls as $pattern) {
                 if (fnmatch($pattern, $rawUrl)) {
                     return $this->pixelResponse();
                 }
@@ -140,14 +141,14 @@ class CountPixelController extends Controller
     public function delete_stats(Request $request)
     {
         try {
-    $url = ltrim($request->url, "/");
+    $url = $request->url;
     $url = $this->killtimestamp($url);
     \Log::info("DELETE URL: {$url} | dom: {$request->dom}");
 
     $dom = $request->dom ?? SD();
 
     $query = DB::connection('mariadb')->table('xgen_page_views')
-        ->where("url", "LIKE", "%{$url}%");
+        ->where("url",$url);
 
     // Prüfen, ob "all" angefragt und Rechte vorhanden
     if ($dom !== "all" || !CheckZRights("StatisticsAll")) {
@@ -159,7 +160,7 @@ class CountPixelController extends Controller
 
     // Optional: dauerhaft in FilterUrls speichern
     if ($request->save) {
-        $file = app_path('Models/Settings.php');
+        $file = app_path('Models/FilterUrls.php');
         $urlToAdd = "'" . addslashes($url) . "'";
         $content = file_get_contents($file);
 
