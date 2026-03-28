@@ -35,8 +35,8 @@
         'edit_table' => 'Bearbeiten',
         'content' => 'Text',
         'xis_ai' => 'KI Bild',
-        'file_pdf'=>"PDF Uploaden",
-        'xkis_feed'=>'Für Newsletter verwenden',
+        'file_pdf' => 'PDF Uploaden',
+        'xkis_feed' => 'Für Newsletter verwenden',
         'summary' => 'Zusammenfassung',
         'blog_authors_id' => 'Autor',
         'date_end' => 'Online Von/Bis',
@@ -173,6 +173,8 @@
         'addddddddddddddd' => 'asadad',
         'ActivityLog' => 'All actions in one List',
         'test func' => 'TEst zum checken',
+        'FontographerToolz' => 'Schriftartentool',
+
     ];
     public static array $regdom =   ['ab'=>true];
     public static array $domss =   ['ab',"mfx","dag","chh"];

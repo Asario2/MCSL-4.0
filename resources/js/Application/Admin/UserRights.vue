@@ -271,6 +271,7 @@
         </td>
         <!-- Checkbox -->
         <td class="px-4 py-3 text-left">
+            <input type="hidden" :name="'xis_disabled_' + u.id" :id="'xis_disabled_' + u.id" :value="u.xis_disabled">
           <input-checkbox v-model="selectedUsers[u.id]"  @change="toggleDisabled(u)"/>
 
         </td>
@@ -384,8 +385,8 @@ export default {
       name: this.addedF,
       desc: this.fdesc,
     });
-//     console.log("res:", res);
-//     console.log("res.data:", res.data);
+    console.log("res:", res);
+    console.log("res.data:", res.data);
     // Toast richtig benutzen
     window.toastBus.emit({
       message: res.data?.message || 'Funktion hinzugefügt!2',
@@ -544,7 +545,7 @@ export default {
     saveAllUserRoles() {
       const payload = this.users
         .filter(u => u.selectedRoleId)
-        .map(u => ({ id: u.id, users_rights_id: u.selectedRoleId }));
+        .map(u => ({ id: u.id, users_rights_id: u.selectedRoleId,xis_disabled: u.xis_disabled }));
 
       if (payload.length === 0) {
         window.toastBus.emit( { message: 'Keine Rollen zum Speichern ausgewählt!', type: 'error' });
@@ -650,7 +651,7 @@ export default {
     },
 
     saveRights() {
-//       console.log("PAYLOAD");
+      console.log("PAYLOAD");
         const payload = {};
       // tables
       for (const [key, value] of Object.entries(this.rights)) payload[key] = value.map(v => v ? '1' : '0').join('');

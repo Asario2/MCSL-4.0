@@ -2086,7 +2086,7 @@ public function ListTables(Request $request, $table_alt = '')
 
                 // User aktualisieren
                 User::where('id', $entry['id'])
-                    ->update(['users_rights_id' => $entry['users_rights_id'],"xis_disabled"=>@$entry["xis_disabled"]]);
+                    ->update(['users_rights_id' => $entry['users_rights_id'],"xis_disabled"=>$entry["xis_disabled"]]);
 
                 $updated[] = [
                     'user_id' => $entry['id'],
@@ -2096,10 +2096,12 @@ public function ListTables(Request $request, $table_alt = '')
             }
             }
         }
-
+        $table = CleanTable();
+        \Log::info($table);
         // Log-Eintrag für Debug-Zwecke
+        $headline = @$formData[Settings::$headline[$table]] ?? 'name';
 //         Log::info('User roles updated:', $updated);
-        ActLog($request,"store_user_rights","users_rights - ".$formData[Settings::$headline[$table]],$entry['id'],"users_rights");
+        ActLog($request,"store_user_rights","users_rights - ".$headline,$entry['id'],"users_rights");
         return response()->json([
             'message' => 'Benutzerrollen wurden gespeichert.',
             'updated' => $updated,

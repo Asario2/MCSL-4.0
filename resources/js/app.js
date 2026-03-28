@@ -1,3 +1,4 @@
+import './ziggy-global'; // <-- ganz oben
 import "./bootstrap";
 import '../css/app.css';
 import '@fontsource/open-sans/index.css';
@@ -11,8 +12,8 @@ import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { i18nVue } from "laravel-vue-i18n";
-import {route} from 'ziggy-js';
-import { Ziggy } from './ziggy'; // ✅ NEU
+import { route } from 'ziggy-js';
+import { Ziggy } from './ziggy';
 import { Inertia } from '@inertiajs/inertia';
 import { createPinia } from "pinia";
 import axios from "axios";
@@ -24,6 +25,7 @@ import { faPencilAlt, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 library.add(faPencilAlt, faTrashCan, faXTwitter);
 
+// Trusted Types (falls benötigt)
 if (window.trustedTypes) {
     window.trustedTypes.createPolicy('default', {
         createScript: (input) => input,
@@ -38,7 +40,7 @@ import Toast from './Application/Components/Content/Toast.vue';
 window.toast = (type, message, duration = 5000) =>
     toastBus.emit({ type, message, duration });
 
-// ✅ Sichere Ziggy-Route MIT deiner ziggy.js
+// Sichere Ziggy-Route
 function safeRoute(name, params = {}) {
     try {
         return route(name, params, false, Ziggy);
@@ -51,8 +53,6 @@ function safeRoute(name, params = {}) {
         throw error;
     }
 }
-
-// global verfügbar (für alten Code)
 window.route = safeRoute;
 
 // Tooltip Plugin
@@ -78,7 +78,6 @@ Inertia.on("start", (event) => {
     if (event.detail?.visit?.skipLoading) return;
     window.dispatchEvent(new CustomEvent("loader:show"));
 });
-
 Inertia.on("finish", (event) => {
     if (event.detail?.visit?.skipLoading) return;
     window.dispatchEvent(new CustomEvent("loader:hide"));
@@ -100,8 +99,8 @@ loadAllRights().then(() => {
 
             const app = createApp({ render: () => h(App, props) });
 
+            // Plugins
             app.use(createPinia());
-
             app.use(plugin)
                 .use(i18nVue, {
                     resolve: async lang => {
@@ -112,11 +111,9 @@ loadAllRights().then(() => {
                 })
                 .use(TippyPlugin);
 
-            // ✅ GLOBAL in Vue verfügbar
+            // Globale Properties
             app.config.globalProperties.$route = safeRoute;
             app.config.globalProperties.route = safeRoute;
-
-            // Rechte
             app.config.globalProperties.$hasRight = hasRight;
             app.config.globalProperties.$isRightsReady = isRightsReady;
 
@@ -124,6 +121,7 @@ loadAllRights().then(() => {
             app.component("font-awesome-icon", FontAwesomeIcon);
             app.component("ToastB", Toast);
 
+            // Mount
             app.mount(el);
 
             // Reload nach Logout

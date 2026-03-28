@@ -155,7 +155,8 @@ public function GetAfter(Request $request)
                 continue;
             }
 
-            $dumpTables[$tableName][$colName] = $colType;
+            $dumpTables[$tableName]['columns'][$colName] = $colType;
+            $dumpTables[$tableName]['order'][] = $colName;
         }
     }
 
@@ -176,7 +177,7 @@ public function GetAfter(Request $request)
         foreach ($currentColumns as $col) {
             $colName = $col->Field;
 
-            if (!isset($dumpTables[$tableName][$colName])) {
+            if (!isset($dumpTables[$tableName]['columns'][$colName])){
 
                 $colDef = $col->Type;
                 $colDef .= ($col->Null === 'NO') ? ' NOT NULL' : ' NULL';
@@ -192,13 +193,22 @@ public function GetAfter(Request $request)
                 if (!empty($col->Extra)) {
                     $colDef .= " " . $col->Extra;
                 }
+                // 🔥 AFTER-Spalte bestimmen
+                $afterCol = $this->getAfterColumn($dumpTables[$tableName], $colName);
 
-                $sql_q = "ALTER TABLE `$tableName` ADD COLUMN `$colName` $colDef;\n";
+                // vorhandene Spalten
+                $existingColumns = collect($currentColumns)->pluck('Field')->toArray();
 
+                // SQL bauen
+                if ($afterCol && in_array($afterCol, $existingColumns)) {
+                    $sql_q = "ALTER TABLE `$tableName` ADD COLUMN `$colName` $colDef AFTER `$afterCol`;\n";
+                } else {
+                    $sql_q = "ALTER TABLE `$tableName` ADD COLUMN `$colName` $colDef;\n";
+                }
                 if (!str_contains($addfield, $sql_q)) {
                     $alterStatements .= $sql_q;
                     $added_fields[] = [$tableName,$colName];
-                    $alterStatements .= $this->alterTableCont($added_fields,$this->connectionName,$dom);
+                    $alterStatements .= $this->alterTableCont([[$tableName,$colName]], $this->connectionName, $dom);
                     $this->changesCount++;
                 }
             }
@@ -217,12 +227,22 @@ public function GetAfter(Request $request)
         'QueryString' => $alterStatements
     ]);
 }
+private function getAfterColumn($dumpTable, $columnName)
+{
+    $order = $dumpTable['order'] ?? [];
+    $index = array_search($columnName, $order);
 
+    if ($index === false || $index === 0) {
+        return null; // FIRST
+    }
+
+    return $order[$index - 1];
+}
 
 public function alterTableCont($arr, $connectionName, $dom)
 {
 //     \Log::info("alterTableCont gestartet", $arr);
-
+    $allOldContent = $this->ScanForNew($dom);
     $this->ddr = '';
     $addfield = file_exists(base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql"))
         ? file_get_contents(base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql"))
@@ -247,7 +267,12 @@ public function alterTableCont($arr, $connectionName, $dom)
 
             $sql_q = "UPDATE `$table` SET `$column` = $valueSql WHERE `id` = '$id';";
 
-            if (!str_contains($addfield . $this->ddr, $sql_q) && $column != 'position') {
+            if (
+                    !str_contains($addfield, $sql_q) &&
+                    !str_contains($this->ddr, $sql_q) &&
+                    !str_contains($allOldContent, $sql_q) &&
+                    $column != 'position'
+                ) {
                 $this->ddr .= $sql_q . "\n";
                 $this->changesCount++;
             }
