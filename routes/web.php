@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FontController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CustomLoginController;
 use App\Http\Controllers\PersonalController;
@@ -622,6 +623,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/api/activity-log/pub', [ActivityPubController::class, 'updatePub']);
         Route::post('/api/delete-stat', [CountPixelController::class, 'delete_stats']);
 
+
+        Route::get('/api/fonts', [FontController::class, 'index']);
+        Route::post('/api/fonts/zip', [FontController::class, 'zip']);
+        Route::get('/fonts', [FontController::class, 'show'])->name('fonts');
         Route::delete("api/del/function/userrights/{xkis}",[RightsController::class,"remFN"])->name('del.uright.function');
         Route::get('/api/activity-log', function () {
             if(!CheckZRights("ActivityLog")){
