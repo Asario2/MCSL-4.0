@@ -18,6 +18,9 @@ color:#fff !important;
 ADDRESS{
     font-style:normal !important;
 }
+#app[data-page] {
+    display: contents;
+}
     .ai-image-corner{
     border-bottom-right-radius: 64px !important;
 }

@@ -1,0 +1,37 @@
+[
+    {
+        "position": 1,
+        "fileName": "bb8b7baafc1f90b4a22a45577f716195.jpg",
+        "label": "Butterfly",
+        "width": 1344,
+        "height": 768
+    },
+    {
+        "position": 2,
+        "fileName": "7bc17c16dbc62aec719d7b372b19a678.jpg",
+        "label": "",
+        "width": 512,
+        "height": 512
+    },
+    {
+        "position": 3,
+        "fileName": "7af60bc378fb196c9d71f6fa90d68604.jpg",
+        "label": "",
+        "width": 512,
+        "height": 512
+    },
+    {
+        "position": 4,
+        "fileName": "af8fa8b3c9127b5597d8f5800c0000cd.jpg",
+        "label": "",
+        "width": 1024,
+        "height": 1024
+    },
+    {
+        "position": 5,
+        "fileName": "5a58039e532675fd74ce45f4ea7ef186.jpg",
+        "label": "",
+        "width": 1400,
+        "height": 800
+    }
+]

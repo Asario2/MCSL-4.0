@@ -186,7 +186,7 @@
     public static array $notondb = [
         "xkis_DumbDB",
         "xkis_DumpGItDataBase",
-        "xkis_SQLUpdate",   
+        "xkis_SQLUpdate",
     ];
 
 
@@ -524,6 +524,7 @@ public static array $mariaDBs = [
     "ab"=>"mariadb",
     "dag"=>"mariadb_dag",
     "mfx"=>"mariadb_mfx",
+    "chh"=>"mariadb_chh",
 ];
     public static array $nostats = [
     '/admin',

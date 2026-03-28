@@ -197,6 +197,10 @@ if (!function_exists('Notify')) {
 
                 $output .= "<h3>{$entry['name']}</h3>";
                 $output .= $entry['text']." ";
+                if(!empty($entry['url']) && !empty($entry['linkname']))
+                {
+                    $output .= "<br /><a href='".$entry['url']."'>".$entry['linkname']."</a>";
+                }
 
                 if (!empty($entry['function_link']) && function_exists($entry['function_link'])) {
                     $fn = $entry['function_link'];

@@ -62,7 +62,7 @@
         <script src="/js/jquery-3.6.0.min.js"></script>
         <script src="/js/users.js"></script>
 
-        @routes
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -113,7 +113,7 @@ toastBus.toasts.push({ message: 'Hallo', type: 'success', duration: 5000 });
     </script>
         @php Notify(); @endphp
 
-        @routes
+
         @inertia
 
 

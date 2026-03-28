@@ -641,7 +641,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
             ->name("admin.actlog");
         Route::get("api/getGitDump/{dom?}/{usdis?}",[DumpgitdatabaseController::class,"GetFIrst"])->name("api.get.firstdump");
         Route::get("api/saveAlt/{dom?}",[DumpgitdatabaseController::class,"GetAfter"])->name("api.get.after");
-        Route::get("/ggi", [DumpgitdatabaseController::class, "show"])->name("api.showgit");
+        Route::get("admin/githubdb", [DumpgitdatabaseController::class, "show"])->name("api.showgit");
         Route::delete("/api/remlog/{id}",[RightsController::class,"remLog"])->name("remlogg");
         Route::get("/admin/get_unused_imgz/{dom?}", [TablesController::class,"getunused"])->name("admin.getunused");
         Route::get("/admin/hackinglog", [hackinglog::class,"show"])->name("admin.hackinglog");
