@@ -2,8 +2,8 @@
     <div v-if="xis_enabled" :class="['ai-button', big ? 'big' : 'small', bigger ? 'bigger' : '']" @click.stop>
         <a :href="AiRoute">
             <img :key="localDma" :src="'/images/icons/ai-' + (localDma || 'dark') + '.png'"
-                 alt="Made with AI"
-                 title="Made with AI"
+                 alt="Image Made with AI"
+                 title="Image Made with AI"
                  class="ai-button-image"
                  @error="handleImageError" />
         </a>
