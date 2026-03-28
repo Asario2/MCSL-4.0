@@ -246,3 +246,4 @@
 ![Version](https://img.shields.io/badge/version-5.00.1-orange) Feature - Add Links to stats (#426)  
 ![Version](https://img.shields.io/badge/version-5.01.3-orange) Feature - Add hidden functions on online version (Admin Dashboard) (#427)  
 ![Version](https://img.shields.io/badge/version-5.02.2-orange) Feature - added all domains for statisitics (#428)  
+![Version](https://img.shields.io/badge/version-5.03.8-orange) Show headings on unused images script (#429)  
