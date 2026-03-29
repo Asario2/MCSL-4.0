@@ -55,12 +55,12 @@
         const newStatus = !this.isPublishedLocal;
 
         try {
-            await axios.post(route("toggle.pub"), {
-                table: this.table,
-                id: this.id,
-                pub: newStatus ? 1 : 0,
-                public: this.public,
-            });
+                    await axios.post("/toggle-pub", {
+                        table: this.table,
+                        id: this.id,
+                        pub: newStatus ? 1 : 0,
+                        public: this.public,
+                    });
 
             this.isPublishedLocal = newStatus; // Aktualisiert Anzeige sofort
 
