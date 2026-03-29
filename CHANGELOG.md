@@ -248,3 +248,4 @@
 ![Version](https://img.shields.io/badge/version-5.02.2-orange) Feature - added all domains for statisitics (#428)  
 ![Version](https://img.shields.io/badge/version-5.03.8-orange) Show headings on unused images script (#429)  
 ![Version](https://img.shields.io/badge/version-5.04.2-orange) Hotfix - Changed Handling in UserRights (#430)  
+![Version](https://img.shields.io/badge/version-5.05.2-orange) Hotfix - The bug in the publish actions has been fixed. (#433)  
