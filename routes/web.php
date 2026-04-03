@@ -327,7 +327,7 @@ Route::get('/home/privacy', [HomeController::class, 'home_privacy'])->name('home
 // Route::get('login', [AuthenticatedSessionController::class, 'create'])
 //     // ->middleware(HandleSocialitePlusProviders::class)
 //     ->name('login');
-    Route::post('/logout', [CustomLoginController::class, 'logpout'])->name('logout');
+    Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
 //     Route::get('/login', function () {
 //     return Inertia::render('Auth/Login');
 // })->middleware('guest')->name('login');

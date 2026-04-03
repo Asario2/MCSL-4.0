@@ -7,10 +7,10 @@
                 <div class="grid grid-cols-12 gap-6">
                     <!-- Linke Spalte: Text (9 von 12) -->
                     <div class="col-span-12 md:col-span-9">
-                        <h1 class="text-black blackcan">Meine Links</h1>
+                        <h1 class="text-black blackcan dark:bg-layout-night-100 p-3 border-[2px] rounded-lg border-black">Meine Links</h1>
                         <div v-for="(entry, index) in data[0]" :key="index" class="mb-6">
                             <!-- Flex-Box: Bild links, Text rechts -->
-                            <div class="flex gap-4">
+                            <div class="flex gap-4 dark:bg-layout-night-100 border-[2px] rounded-lg border-black p-3">
                                 <!-- Linkes Bild -->
                                 <div class="flex-shrink-0">
                                     <a :href="entry.url" target="_blank">

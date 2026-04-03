@@ -6,7 +6,7 @@
                 <template #content>
                 <div class="grid grid-cols-12 gap-6">
                     <!-- Linke Spalte: Text (9 von 12) -->
-                    <div class="col-span-12 md:col-span-9">
+                    <div class="col-span-12 md:col-span-9 dark:bg-layout-night-100 p-3 border-[2px] rounded-lg border-black">
                         <h1 class="text-black blackcan">Willkommen liebe Besucher</h1>
                         <b>
                         <span v-html="rumLaut(text)"></span>

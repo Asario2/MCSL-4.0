@@ -57,10 +57,10 @@ class CountPixelController extends Controller
             $routeName = request()->route()?->getName()
                 ?? $request->query('route')
                 ?? 'unknown';
-                \Log::info([
-                    'routeName' => $routeName,
-                    'exists' => Route::getRoutes()->getByName($routeName) !== null
-                ]);
+                // \Log::info([
+                //     'routeName' => $routeName,
+                //     'exists' => Route::getRoutes()->getByName($routeName) !== null
+                // ]);
 
                 $routeName = $request->query('route');
 
@@ -78,7 +78,7 @@ class CountPixelController extends Controller
                 }
             }
             }
-            \Log::info('Pixel hit');
+            // \Log::info('Pixel hit');
 
             // 0️⃣ Leere, ungültige oder 404-Routen ausschließen
             if ($routeName && Route::getRoutes()->getByName($routeName) === null) {

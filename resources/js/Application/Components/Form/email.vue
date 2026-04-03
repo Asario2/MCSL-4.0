@@ -3,10 +3,10 @@
         <h1 v-if="!nohead" class="text-2xl font-bold mb-4">Kontakt</h1>
 
         <form @submit.prevent="submitForm"
-            class="block p-4 w-full rounded-lg border text-sm text-layout-sun-900
-                    bg-layout-sun-50 border-layout-sun-600 focus:ring-primary-sun-500 focus:border-primary-sun-500
-                    dark:text-layout-night-900 dark:bg-layout-night-50 dark:border-layout-night-1050
-                    dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500">
+    class="em_bg block p-4 w-full rounded-lg border text-sm text-layout-sun-900
+           border-layout-sun-600 focus:ring-primary-sun-500 focus:border-primary-sun-500
+           dark:text-layout-night-900 dark:border-layout-night-1050
+           dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500">
 
         <!-- Name -->
         <div class="mb-4">
@@ -145,7 +145,7 @@
     });
     </script>
 
-    <style scoped>
+    <style>
     .button-primary {
     background-color: #222;
     padding: 5px 7px !important;
@@ -165,4 +165,10 @@
     border: 2px solid #ff9600 !important;
     padding: 5px 7px !important;
     }
+    FORM.em_bg{
+        background-color:rgba(200,200,200,0.4) !important;
+    }
+    .dark .em_bg {
+    background-color: rgba(255,189,103,0.5) !important;
+}
     </style>

@@ -6,7 +6,7 @@
                 <template #content>
                 <div class="grid grid-cols-12 gap-6">
                     <!-- Linke Spalte: Text (9 von 12) -->
-                    <div class="col-span-12 md:col-span-9">
+                    <div class="col-span-12 md:col-span-9 dark:bg-layout-night-100 p-3 border-[2px] rounded-lg border-black">
                         <h1 class="text-black blackcan">Lost & Found</h1>
                         <div v-for="(entry, index) in data[0]" :key="index" class="mb-4">
                             <div class="shadow-[inset_0_0_10px_rgba(0,0,0,0.5)] pt-2 lg:rounded-lg dark:bg-layout-night-3000 border-[2px] border-black">
