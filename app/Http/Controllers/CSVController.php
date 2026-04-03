@@ -20,8 +20,13 @@ class CSVController extends Controller
 {
     public function importContacts(Request $request)
 {
-    $uploadedFile = $request->file('csv');
+    
 
+    $uploadedFile = $request->file('fileup');
+     \Log::info('CSV Upload Request', [
+    'hasFile' => $request->hasFile('fileup'),
+    'all_request' => $request->all()
+]);
     if (!$uploadedFile) {
         return response()->json(['error' => 'Keine Datei hochgeladen'], 400);
     }
@@ -32,14 +37,20 @@ class CSVController extends Controller
     $content = str_replace(";", ",", file_get_contents($uploadedFile->getRealPath()));
 
     // Memory-Stream öffnen
-    $handle = fopen('php://memory', 'r+');
-    fwrite($handle, $content);
-    rewind($handle);
+    $handle = new \SplFileObject($uploadedFile->getRealPath());
+        $handle->setFlags(
+            \SplFileObject::READ_CSV |
+            \SplFileObject::SKIP_EMPTY |
+            \SplFileObject::DROP_NEW_LINE
+        );
+        $handle->setCsvControl(','); // oder ';' je nach CSV
 
-    if ($handle !== false) {
         $header = null;
 
-        while (($row = fgetcsv($handle, 0, ',')) !== false) {
+        foreach ($handle as $row) {
+
+            if (!$row || $row === [null]) continue;
+
             $row = array_map(function ($v) {
                 return mb_convert_encoding($v, 'UTF-8', mb_detect_encoding($v, 'UTF-8, ISO-8859-1, Windows-1252', true));
             }, $row);
@@ -49,8 +60,9 @@ class CSVController extends Controller
                 continue;
             }
 
-            $row = array_combine($header, $row);
+            if (count($header) !== count($row)) continue;
 
+            $row = array_combine($header, $row);
             $phoneNumbers = [];
             $mobileNumbers = [];
 
@@ -125,8 +137,9 @@ class CSVController extends Controller
         }
 
         fclose($handle);
-    }
 
+
+    \Log::info("CON: ",$contacts);
     return response()->json(['contacts' => $contacts]);
 }
 
@@ -157,7 +170,7 @@ function isGermanMobile(string $phone): bool
     public function importContacts_old(Request $request, $file='')
     {
         // Datei vom Request
-        $uploadedFile = $request->file('csv');
+        $uploadedFile = $request->file('fileup');
 
         if (!$uploadedFile) {
             return response()->json(['error' => 'Keine Datei hochgeladen'], 400);
@@ -237,6 +250,7 @@ function isGermanMobile(string $phone): bool
 
         $this->DUMPTEMP();
         // JSON an Vue zurückgeben
+
         return response()->json([
             'contacts' => $contacts
         ]);

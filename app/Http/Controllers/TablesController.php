@@ -320,12 +320,20 @@ class TablesController extends Controller
         $breadcrumbs = collect($tablez)->mapWithKeys(function ($item) {
             //return [$item->title => route('admin.tables.show', $item->id)];
         });
-        if(CleanTable() !== 'contacts'){
+        if(CleanTable() !== 'contacts' && CleanTable() !== "ausgaben"){
                 $breadcrumbs = $breadcrumbs->put('Liste der Tabellen', route('admin.tables.index'));
         }
+        if(CleanTable() !== "ausgaben")
+        {
+            $breadcrumbs->put('Tabelle '.ucf($table), route('admin.tables.show',(["table"=>$table])));
+        }
+        else
+        {
+            $breadcrumbs->put('Ein / Ausgaben', route('admin.ausgaben'));
+        }
 
-        $breadcrumbs->put('Tabelle '.ucf($table), route('admin.tables.show',(["table"=>$table])));
         $breadcrumbs = $breadcrumbs->toArray();
+
         DB::enableQueryLog();
 
         $query = DB::table($table);
@@ -1078,7 +1086,7 @@ public function ShowTable(Request $request, $table_alt = null)
          if(@$request->dom){
             $db = Settings::$mariaDBs[$request->dom];
          }
-        //  dd(@$db);
+        // dd(@$db);
         $bp   = public_path('images');
         $unus = [];
         $ptz = [];
@@ -1092,7 +1100,7 @@ public function ShowTable(Request $request, $table_alt = null)
             if (!str_starts_with($mandant, '_')) continue;
 
             $manid = ltrim($mandant, '_');
-            $db = Settings::$mariaDBs[$manid];
+            //$db = Settings::$mariaDBs[$request->dom];
             foreach (File::directories($mandantPath) as $tablePath) {
 
                 $table = basename($tablePath);
@@ -2097,7 +2105,7 @@ public function ListTables(Request $request, $table_alt = '')
             }
         }
         $table = CleanTable();
-        \Log::info($table);
+//         \Log::info($table);
         // Log-Eintrag für Debug-Zwecke
         $headline = @$formData[Settings::$headline[$table]] ?? 'name';
 //         Log::info('User roles updated:', $updated);
@@ -2758,8 +2766,12 @@ return Inertia::render('Admin/Kontakte', [
             }
 
         }
+        if($formData['cur_amount'])
+        {
+            $formData['cur_amount'] = str_replace(",",".",$formData['cur_amount']);
+        }
         if ((isset($formData['pub']) || Schema::hasColumn($table, 'pub')) && (empty($formData['pub']) || is_null($formData['pub']))) {
-            $formData['pub'] = "1";
+            //$formData['pub'] = "1";
         }
 
         if(Schema::hasColumn($table, 'password'))
@@ -3103,6 +3115,10 @@ return Inertia::render('Admin/Kontakte', [
                 ? encval($formData['email'])
                 : null;
         }
+            if($formData['cur_amount'])
+            {
+                $formData['cur_amount'] = str_replace(",",".",$formData['cur_amount']);
+            }
             if($table == "contacts" && !$formData['xis_public_con'])
         {
             $userId = Auth::id();

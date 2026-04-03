@@ -327,7 +327,7 @@ Route::get('/home/privacy', [HomeController::class, 'home_privacy'])->name('home
 // Route::get('login', [AuthenticatedSessionController::class, 'create'])
 //     // ->middleware(HandleSocialitePlusProviders::class)
 //     ->name('login');
-    Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
+    Route::post('/logout', [CustomLoginController::class, 'logpout'])->name('logout');
 //     Route::get('/login', function () {
 //     return Inertia::render('Auth/Login');
 // })->middleware('guest')->name('login');
@@ -929,10 +929,15 @@ Route::get('/tables/sort-enumis/{table}/{name}', [TablesController::class, 'getO
         });
 
         // Route::get('/ri', [HomeController::class, 'home_rindex'])->name('home.rindex');
-        Route::fallback(function () {
-            CountPixelController::o404();
-            return Inertia::render('Homepage/NoPageFound_'.SD());
-        });
+    Route::fallback(function () {
+
+    // ❗ NICHT für echte Seiten löschen
+    if (!request()->expectsJson() && !request()->is('pixel*')) {
+        CountPixelController::o404();
+    }
+
+    return Inertia::render('Homepage/NoPageFound_'.SD());
+});
 
 
 

@@ -259,9 +259,7 @@ margin-left:-7px;
     width: 200px;
     border-radius:50%;
 }
-.twi{
-    color:#000 !important;
-}
+
 
 </style>
 

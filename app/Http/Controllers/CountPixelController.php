@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Request as HttpRequest;
 use \App\Models\Settings;
 use \App\Models\FilterUrls;
 use App\Models\PageView;
@@ -33,7 +34,6 @@ class CountPixelController extends Controller
         '*.webp*',
         '*.gif*',
         '*.ico*',
-        '%20',
     ];
 
     public static array $nostats = [
@@ -47,23 +47,49 @@ class CountPixelController extends Controller
 
     public function track(Request $request)
     {
+
         try {
             $host = $request->getHost();
             if ($host === 'mail.marblefx.net') {
                 return $this->pixelResponse();
             }
 
-            $routeName = $request->query('route') ?? 'unknown';
+            $routeName = request()->route()?->getName()
+                ?? $request->query('route')
+                ?? 'unknown';
+                \Log::info([
+                    'routeName' => $routeName,
+                    'exists' => Route::getRoutes()->getByName($routeName) !== null
+                ]);
+
+                $routeName = $request->query('route');
+
+                if (!$routeName) {
+
+
+            $referer = $request->headers->get('referer');
+            if ($referer) {
+                try {
+                    $fakeRequest = HttpRequest::create($referer);
+                    $route = app('router')->getRoutes()->match($fakeRequest);
+                    $routeName = $route->getName() ?? 'unknown';
+                } catch (\Exception $e) {
+                    // fallback bleibt 'unknown'
+                }
+            }
+            }
+            \Log::info('Pixel hit');
 
             // 0️⃣ Leere, ungültige oder 404-Routen ausschließen
-            if ($routeName === null || $routeName === '' || $routeName === 'unknown' || Route::getRoutes()->getByName($routeName) === null) {
-                return $this->pixelResponse();
+            if ($routeName && Route::getRoutes()->getByName($routeName) === null) {
+               return $this->pixelResponse();
             }
 
             // 1️⃣ Route anhand der Muster ausschließen
             foreach ($this->excludeRoutes as $pattern) {
                 if (fnmatch($pattern, $routeName)) {
-                    return $this->pixelResponse();
+                // \Log::info("HIER WE GO");
+                return $this->pixelResponse();
                 }
             }
             // URL bereinigen
@@ -72,11 +98,13 @@ class CountPixelController extends Controller
             // 2️⃣ URL anhand Dateiendungen ausschließen
             foreach ($this->excludeURLs as $pattern) {
                 if (fnmatch($pattern, $rawUrl)) {
+
                     return $this->pixelResponse();
                 }
             }
             foreach (FilterUrls::$FilterUrls as $pattern) {
                 if (fnmatch($pattern, $rawUrl)) {
+
                     return $this->pixelResponse();
                 }
             }
@@ -85,9 +113,9 @@ class CountPixelController extends Controller
             $routeAction = Route::getRoutes()->getByName($routeName)?->action ?? [];
             $middlewares = $routeAction['middleware'] ?? [];
             $middlewares = is_array($middlewares) ? $middlewares : [$middlewares];
-
             if (in_array('auth', $middlewares)) {
-                return $this->pixelResponse();
+            \Log::info("AUTH HIT");
+            return $this->pixelResponse();
             }
 
             // 4️⃣ IP anonymisieren
@@ -110,7 +138,7 @@ class CountPixelController extends Controller
                 'visited_at' => now(),
             ]);
         } catch (\Throwable $e) {
-            Log::error("CountPixel DB Error: " . $e->getMessage());
+            \Log::error("CountPixel DB Error: " . $e->getMessage());
         }
 
         return $this->pixelResponse();
@@ -119,11 +147,18 @@ class CountPixelController extends Controller
     public static function o404()
     {
         $path = request()->getPathInfo();
+
+        // ❗ nur löschen wenn wirklich 404 typische URL
+        if (str_contains($path, 'api') || str_contains($path, 'admin')) {
+            return;
+        }
+
         DB::connection("mariadb")->table("xgen_page_views")
             ->where("url", $path)
             ->where("visited_at", ">", now()->subMinutes(2))
             ->delete();
-        DB::connection("mariadb")->statement('ALTER TABLE xgen_page_views AUTO_INCREMENT = 1');
+
+            DB::connection("mariadb")->statement('ALTER TABLE xgen_page_views AUTO_INCREMENT = 1');
     }
 
     protected function pixelResponse()
@@ -143,7 +178,7 @@ class CountPixelController extends Controller
         try {
     $url = $request->url;
     $url = $this->killtimestamp($url);
-    \Log::info("DELETE URL: {$url} | dom: {$request->dom}");
+//     \Log::info("DELETE URL: {$url} | dom: {$request->dom}");
 
     $dom = $request->dom ?? SD();
 
@@ -156,7 +191,7 @@ class CountPixelController extends Controller
     }
 
     $deleted = $query->delete(); // Anzahl der gelöschten Zeilen
-    \Log::info("Deleted rows: {$deleted}");
+//     \Log::info("Deleted rows: {$deleted}");
 
     // Optional: dauerhaft in FilterUrls speichern
     if ($request->save) {
@@ -211,10 +246,11 @@ class CountPixelController extends Controller
 
         if (substr_count($clean, "home/infos/show")) $clean = "/home/infos_show";
         if (substr_count($clean, "blogs/show")) $clean = "/blogs_show";
-        if (substr_count($clean, "images/show/")) $clean = "images_show";
+        if (substr_count($clean, "images/show/")) $clean = "/images_show";
         if (substr_count($clean, "?page=")) $clean = str_replace("?page=" . @$_GET['page'], '', $clean);
         if (substr_count($clean, "?search=")) $clean = str_replace("?search=" . @$_GET['search'], '', $clean);
         if (substr_count($clean, "home/show/pictures/")) $clean = "/picures_show";
+        if (substr_count($clean, "home/users/show/")) $clean = "/users_show";
 
         return empty($clean) ? '/' : $clean;
     }
@@ -227,7 +263,7 @@ class CountPixelController extends Controller
         // "all" als KEIN Filter behandeln
         $isAll = ($domm === 'all' || $domm === '' || $domm === null);
 
-        Log::info("DOM: {$domm}, Month: {$m}");
+//         Log::info("DOM: {$domm}, Month: {$m}");
 
         $query = DB::connection('mariadb')
             ->table('xgen_page_views')
@@ -241,7 +277,7 @@ class CountPixelController extends Controller
                 $query->whereRaw("TRIM(LOWER(dom)) = ?", [trim($domm)]);
             }
             // sonst: ALL → kein WHERE → alle Domains
-            Log::info("WHERE applied: dom = {$domm}");
+//             Log::info("WHERE applied: dom = {$domm}");
 
         // $rawRows = DB::connection('mariadb')->table('xgen_page_views')->get();
         // Log::info("All DB rows: " . json_encode($rawRows));
@@ -251,7 +287,7 @@ class CountPixelController extends Controller
             ->orderBy('url', "ASC")
             ->get();
 
-        Log::info("Rows fetched: " . count($rows));
+//         Log::info("Rows fetched: " . count($rows));
 
         $rows = $rows->filter(function ($row) {
             foreach (Settings::$nostats as $ignore) {
@@ -260,10 +296,10 @@ class CountPixelController extends Controller
             return true;
         })->sortBy('url')->values();
 
-        Log::info("Rows after filter: " . count($rows));
+//         Log::info("Rows after filter: " . count($rows));
 
         $labels = $rows->pluck('url')->unique()->values()->all();
-        Log::info("Labels: " . json_encode($labels));
+//         Log::info("Labels: " . json_encode($labels));
 
         $domColors = [
             'ab'  => '#4F86F7',
@@ -283,7 +319,7 @@ class CountPixelController extends Controller
             $doms = $rows->pluck('dom')->unique()->values()->all();
         }
 
-        Log::info("DOMs to display: " . json_encode($doms));
+//         Log::info("DOMs to display: " . json_encode($doms));
 
         $datasets = [];
         foreach ($doms as $dom) {
@@ -307,7 +343,7 @@ class CountPixelController extends Controller
             ];
         }
 
-        Log::info("Datasets: " . json_encode($datasets));
+//         Log::info("Datasets: " . json_encode($datasets));
 
         return response()->json([
             'labels' => array_values($labels),
@@ -324,7 +360,7 @@ class CountPixelController extends Controller
             ->orderBy('url', 'ASC')
             ->get();
 
-        Log::info("Stats data: " . json_encode($data));
+//         Log::info("Stats data: " . json_encode($data));
 
         return response()->json($data);
     }
