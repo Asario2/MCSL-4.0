@@ -36,7 +36,6 @@
 
 
 }
-
 .dark\:border-layout-night-1050:is(.dark *){
     border-color:#000 !important;
     border-width:2px !important;
@@ -116,3 +115,6 @@ a:link:hover, a:visited:hover, a:active:hover
      text-shadow: 1px 1px #333 !important;
     font-size:20px !important;
  }
+FORM.em_bg{
+        background-color:rgba(200,200,200,0.4) !important;
+    }

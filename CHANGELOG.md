@@ -251,3 +251,4 @@
 ![Version](https://img.shields.io/badge/version-5.05.2-orange) Hotfix - The bug in the publish actions has been fixed. (#433)  
 ![Version](https://img.shields.io/badge/version-5.06.4-orange) Hotfix - Removed Bug in CountPixel (#436)  
 ![Version](https://img.shields.io/badge/version-5.07.8-orange) Hotfix - Changed link color in dark mode to white (#434)  
+![Version](https://img.shields.io/badge/version-5.08.2-orange) Hotfix - Fixed Layout of monika dargies page (#441)  

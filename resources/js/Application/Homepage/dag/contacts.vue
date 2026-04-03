@@ -30,10 +30,10 @@
                 </div>
 
                     <!-- Rechte Spalte: 8 von 12 -->
-                    <div class="col-span-12 md:col-span-6 flex justify-end">
-                    <div class="w-full md:w-auto">
+                    <div class="col-span-12 md:col-span-6 flex justify-end ">
+                    <div class="w-full md:w-auto "">
                         <h2 class="text-xl font-semibold mb-4">Kontaktformular</h2>
-                        <emailview :nohead="true"></emailview>
+                        <emailview :nohead="true" class="bg-layout-sun-100 dark:bg-layout-night-100"></emailview>
                     </div>
                     </div>
                 </div>
