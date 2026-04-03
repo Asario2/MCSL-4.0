@@ -129,7 +129,11 @@ export default {
     },
     props: {
         imageId: [String, Number],
-        modelValue: [String, Number],
+        modelValue: {
+            type: [String, Number],
+            default: '',
+        },
+
         name: String,
         id: [String, Number],
         value: [String, Number],
@@ -169,9 +173,8 @@ export default {
     async mounted() {
         this.settings = await GetSettings();
 
-        if (this.$refs.editor) {
-            this.$refs.editor.innerHTML = this.decodeBrackets(nl2br(rumLaut(this.modelValue))) || "";
-        }
+        this.$refs.editor.innerHTML =
+        this.decodeBrackets(nl2br(rumLaut(this.modelValue ?? ""))) || "";
 
         this.$nextTick(() => {
             tippy('[data-tippy-content]', { placement: 'right', animation: 'scale' });
@@ -186,26 +189,33 @@ export default {
                 return this.modelValue;
             },
             set(value) {
-                this.$emit("update:modelValue", nl2br(rumLaut(value)).replace('%5B', '[').replace('%5D', ']'));
+                const safeVal = value ?? '';
+                this.$emit("update:modelValue", nl2br(rumLaut(safeVal)).replace('%5B', '[').replace('%5D', ']'));
             },
         },
     },
 
     watch: {
-        modelValue(newVal) {
-            const editor = this.$refs.editor;
-            if (!editor) return;
+       modelValue(newVal) {
+        const editor = this.$refs.editor;
+        if (!editor) return;
 
-            const currentHtml = editor.innerHTML;
-            let decodedNewVal = nl2br(this.decodeBrackets(rumLaut(newVal)));
+        // 🔥 FIX
+        if (newVal === undefined || newVal === null) {
+            editor.innerHTML = "";
+            return;
+        }
 
-            if (!this.isFocused && currentHtml !== decodedNewVal) {
+        const currentHtml = editor.innerHTML;
+        let safeVal = newVal ?? '';
+        let decodedNewVal = nl2br(this.decodeBrackets(rumLaut(safeVal))) || '';
 
-                this.saveSelection();
-                editor.innerHTML = decodedNewVal;
-                this.restoreSelection();
-            }
-        },
+        if (!this.isFocused && currentHtml !== decodedNewVal) {
+            this.saveSelection();
+            editor.innerHTML = decodedNewVal;
+            this.restoreSelection();
+        }
+    },
     },
 
     methods: {

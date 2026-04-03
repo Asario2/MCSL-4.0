@@ -16,6 +16,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.24",
         "laravel/tinker": "^2.9",
+        "league/csv": "^9.28",
         "rap2hpoutre/laravel-log-viewer": "^2.4",
         "reinink/remember-query-strings": "^0.1.2",
         "scify/laravel-cookies-consent": "^4.1",

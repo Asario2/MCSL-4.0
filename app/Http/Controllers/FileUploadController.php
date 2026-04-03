@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Settings;
+use League\Csv\Reader;
+use League\Csv\Statement;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\File;
@@ -33,20 +36,20 @@ class FileUploadController extends Controller
 
     public function upload(Request $request, string $table, string $iswatermark = '1', string|int $oripath = '0',    $orifileName=false): JsonResponse
 {
-    \Log::info('UPLOAD DEBUG', [
-        'table'   => $request->table,
-        'column'  => $request->column,
-        'is_imgdir' => $request->is_imgdir,
-        'ulpath'  => $request->ulpath,
-        'hasFile' => $request->hasFile('image'),
-        'Message' => $request->Message,
-    ]);
-    \Log::info('FILES', [
-    'files' => $request->files->all(),
-    'content_length' => $request->server('CONTENT_LENGTH'),
-    'post_max_size' => ini_get('post_max_size'),
-    'upload_max_filesize' => ini_get('upload_max_filesize'),
-]);
+//      \Log::info('UPLOAD DEBUG', [
+//         'table'   => $request->table,
+//         'column'  => $request->column,
+//         'is_imgdir' => $request->is_imgdir,
+//         'ulpath'  => $request->ulpath,
+//         'hasFile' => $request->hasFile('image'),
+//         'Message' => $request->Message,
+//     ]);
+//      \Log::info('FILES', [
+//     'files' => $request->files->all(),
+//     'content_length' => $request->server('CONTENT_LENGTH'),
+//     'post_max_size' => ini_get('post_max_size'),
+//     'upload_max_filesize' => ini_get('upload_max_filesize'),
+// ]);
 
 //     \Log::info("IMA: ".$request->ulpath);
     if (!$request->hasFile('image')) {
@@ -206,7 +209,7 @@ class FileUploadController extends Controller
     //     $fullPath = $fileName; //"/images/_{$subdomain}/{$table_ori}/{$column}/{$fileName}";
     // }
     $fullPath = "/files/_{$subdomain}/{$table_ori}/{$fileName}";
-    \Log::info('Upload completed successfully', [
+     \Log::info('Upload completed successfully', [
         'fileName' => $fileName,
         'fullPath' => $fullPath,
         'Message' => $Message,
@@ -219,31 +222,32 @@ class FileUploadController extends Controller
         "debug_fileName" => $fileName // Zur Kontrolle
     ]);
 }
-   public function upload_o(Request $request, string $table, string $iswatermark = '1', string|int $oripath = '0',    $orifileName=false): JsonResponse
+   public function upload_o(Request $request, string $table, string $iswatermark = '1', string|int $oripath = '0',    $orifileName=false)
 {
-    \Log::info('UPLOAD DEBUG', [
-        'table'   => $request->table,
-        'column'  => $request->column,
-        'is_imgdir' => $request->is_imgdir,
-        'ulpath'  => $request->ulpath,
-        'hasFile' => $request->hasFile('image'),
-        'Message' => $request->Message,
-    ]);
-    \Log::info('FILES', [
-    'files' => $request->files->all(),
-    'content_length' => $request->server('CONTENT_LENGTH'),
-    'post_max_size' => ini_get('post_max_size'),
-    'upload_max_filesize' => ini_get('upload_max_filesize'),
-]);
+//      \Log::info('UPLOAD DEBUG', [
+//         'table'   => $request->table,
+//         'column'  => $request->column,
+//         'is_imgdir' => $request->is_imgdir,
+//         'ulpath'  => $request->ulpath,
+//         'hasFile' => $request->hasFile('fileup'),
+//         'Message' => $request->Message,
+//     ]);
+//      \Log::info('FILES', [
+//     'files' => $request->files->all(),
+//     'content_length' => $request->server('CONTENT_LENGTH'),
+//     'post_max_size' => ini_get('post_max_size'),
+//     'upload_max_filesize' => ini_get('upload_max_filesize'),
+// ]);
 
 //     \Log::info("IMA: ".$request->ulpath);
-    if (!$request->hasFile('image')) {
+    if (!$request->hasFile('fileup')) {
         return response()->json(['error' => 'Keine Datei empfangen!'], 400);
     }
 
-    $image = $request->file('image');
+    $image = $request->file('fileup');
+    $file = $image;
     $orifileName = true;
-    \Log::info($request->ulpath);
+//     \Log::info($request->ulpath);
     $subdomain = SD();
 
 //     \Log::info("POST",$request->all());
@@ -270,27 +274,119 @@ class FileUploadController extends Controller
     $table_ori = $request->table;
     $table = $table_ori; // Standardwert
 
-    if (!array_key_exists($table_ori, Settings::$impath)) {
-        // Nur orig Ordner erstellen wenn nicht Message und nicht special table
-        $IMOpath = public_path("files/_".SD()."/".$request->table."/".$request->column."/". $fileName);
-        if (!File::exists(dirname($IMOpath))) {
-            File::makeDirectory(dirname($IMOpath), 0777, true, true);
-        }
+   if (!array_key_exists($table_ori, Settings::$impath)) {
+    $IMOpath = public_path("files/_".SD()."/".$request->table."/".$request->column."/". $fileName);
+
+    if (!File::exists(dirname($IMOpath))) {
+        File::makeDirectory(dirname($IMOpath), 0777, true, true);
     }
-        copy($tmpname, $IMOpath);
+
+    copy($tmpname, $IMOpath);
+}
+
 
 
     $fullPath = "/files/_{$subdomain}/{$table_ori}/{$column}/{$fileName}";
-    \Log::info('Upload completed successfully', [
-        'fileName' => $fileName,
-        'fullPath' => $fullPath,
-        // 'Message' => $Message,
-        'final_fileName' => $fileName // Sollte MD5 sein
-    ]);
+    //  \Log::info('Upload completed successfully', [
+    //     'fileName' => $fileName,
+    //     'fullPath' => $fullPath,
+    //     // 'Message' => $Message,
+    //     'final_fileName' => $fileName // Sollte MD5 sein
+    // ]);
+    $contacts = [];
+
+    if ($file && $file->getClientOriginalExtension() === 'csv') {
+                 // CSV-Inhalt auslesen
+        $csvContent = file_get_contents($file->getRealPath());
+
+        // Delimiter automatisch erkennen: Semikolon oder Komma
+        $firstLine = strtok($csvContent, "\n"); // Erste Zeile
+        $delimiter = substr_count($firstLine, ';') > substr_count($firstLine, ',') ? ';' : ',';
+
+        // $firstline = str_replace($in,$out,$firstline);
+        // CSV Reader von String
+        $csv = Reader::createFromString($csvContent);
+        $csv->setDelimiter($delimiter);
+        $csv->setHeaderOffset(0); // Header-Zeile
+
+        $stmt = new Statement();
+        $records = $stmt->process($csv);
+        foreach ($records as $row) {
+        $phoneNumbers = [];
+            $mobileNumbers = [];
+
+            $firstName = '';
+            $lastName = '';
+            $fullName = '';
+            $email = '';
+        if (substr_count($firstLine,'E-mail 1 - Value')) {
+                // Google/Android CSV
+                $firstName = $row['First Name'] ?? '';
+                $lastName = $row['Last Name'] ?? '';
+                $fullName = trim($firstName . ' ' . $lastName);
+                $email = $row['E-mail 1 - Value'] ?? '';
+
+                for ($i = 1; $i <= 2; $i++) {
+                    $phone = trim($row["Phone {$i} - Value"] ?? '');
+                    $label = strtolower($row["Phone {$i} - Label"] ?? '');
+                    if (!$phone) continue;
+
+                    $phone = preg_replace('/^\+49\s?/', '0', $phone);
+
+                    if ($label === 'Mobile' || $this->isGermanMobile($phone)) {
+                        $mobileNumbers[] = $phone;
+                    } else {
+                        $phoneNumbers[] = $phone;
+                    }
+                }
+        }
+        else {
+                // iOS CSV
+                $fullName = trim($row['Kompletter Name'] ?? '');
+                $firstName = trim($row['Vorname'] ?? '');
+                $lastName = trim($row['Nachname'] ?? '');
+                $email = '';
+
+                $phonesRaw = [$row['Telefon - Telefon'] ?? ''];
+                $mobilesRaw = [$row['Telefon - Mobil'] ?? ''];
+
+                foreach ($phonesRaw as $p) {
+                    $p = trim($p);
+                    if ($p === '') continue;
+                    $normalized = preg_replace('/[^0-9]/', '', $p);
+                    if ($this->isGermanMobile($normalized)) {
+                        $mobileNumbers[] = $p;
+                    } else {
+                        $phoneNumbers[] = $p;
+                    }
+                }
+
+                foreach ($mobilesRaw as $m) {
+                    $m = trim($m);
+                    if ($m === '') continue;
+                    $normalized = preg_replace('/[^0-9]/', '', $m);
+                    if ($this->isGermanMobile($normalized)) {
+                        $mobileNumbers[] = $m;
+                    } else {
+                        $phoneNumbers[] = $m;
+                    }
+                }
+            }
+            $contacts[] = [
+                'full_name'    => $fullName ?? '',
+                'first_name'  => $firstName ?? '',
+                'last_name'   => $lastName ?? '',
+                'email'       => $email ?? '',
+                'phones'       => $mobileNumbers ?? '',  // Festnetz
+                'mobiles'     => $phoneNumbers ?? '',
+            ];
+        }
+        }
 
     return response()->json([
         'message' => 'Bild erfolgreich hochgeladen.',
         'image_url' => $fullPath,
+        "contacts"=>$contacts,
         "debug_fileName" => $fileName // Zur Kontrolle
     ]);
 }
@@ -301,7 +397,29 @@ class FileUploadController extends Controller
         // noch zu implementieren
         return response("save() Platzhalter", 200);
     }
+    function isGermanMobile(string $phone): bool
+    {
+        // Leerzeichen, Bindestriche, Klammern entfernen
+        $phone = preg_replace('/[\s\-\(\)]/', '', $phone);
 
+        // +49 durch 0 ersetzen
+        if (str_starts_with($phone, '+49')) {
+            $phone = '0' . substr($phone, 3);
+        }
+
+        // Nur Ziffern prüfen
+        if (!preg_match('/^\d+$/', $phone)) {
+            return false;
+        }
+
+        // Mobilnummern beginnen mit 015, 016, 017 (nicht 0180)
+        if (preg_match('/^01[567]\d{7,}$/', $phone)) {
+            // \Log::info($phone);
+            return true;
+        }
+
+        return false;
+    }
     public function CopyLeft(): JsonResponse
     {
         $cl = DB::table('copyleft')->select('tag', 'name')->get();

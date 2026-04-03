@@ -254,7 +254,8 @@ public function logout(Request $request)
     $request->session()->regenerateToken();
 
     // Wichtig: url.intended entfernen, sonst redirect nach Dashboard
-    // session()->forget('url.intended');
+    session()->forget('url.intended');
+    return redirect()->intended('/');
     // dd(Auth::user());
     // SPA-kompatibel redirect
      return Inertia::location(url('/'));
