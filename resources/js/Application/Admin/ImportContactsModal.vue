@@ -47,8 +47,8 @@
             <th class="px-4 py-2 border-b border-r border-black text-left">Vorname</th>
             <th class="px-4 py-2 border-b border-r border-black text-left">Nachname</th>
             <th class="px-4 py-2 border-b border-r border-black text-left">Email</th>
-            <th class="px-4 py-2 border-b border-r border-black text-left">Telefon</th>
             <th class="px-4 py-2 border-b border-r border-black text-left">Handy</th>
+            <th class="px-4 py-2 border-b border-r border-black text-left">Festnetz</th>
           </tr>
         </thead>
 
@@ -109,7 +109,10 @@ import InputCheckbox from "@/Application/Components/Form/InputCheckbox.vue";
 import axios from "axios";
 export default {
   props: {
-    contacts: Array,
+      contacts: {
+    type: Array,
+    default: () => []  // ← default Array
+  }
   },
   components:{
     InputCheckbox,
@@ -120,9 +123,23 @@ export default {
   },
   methods: {
       check_all() {
-    const allChecked = this.contacts.every(c => c.selected);
+     const allChecked = this.contacts.every(c => c.selected);
     this.contacts.forEach(c => c.selected = !allChecked);
   },
+    async importContacts(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await axios.post('/api/contacts/import-preview', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            console.log('Import Response:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Import Fehler:', error.response?.data || error.message);
+        }
+    },
   saveSelected() {
     const selectedContacts = this.contacts.filter(c => c.selected);
        if (selectedContacts.length === 0) {

@@ -25,7 +25,8 @@ class CommentMail extends Mailable
 
     public function build()
     {
-        return $this->subject($this->domain)
+        return  $this->from('no-reply@marblefx.net', 'MCSL Kommentare')
+                ->$this->subject($this->domain)
                 ->markdown('emails.comments')
                 ->with([
                     'domain' => $this->domain,

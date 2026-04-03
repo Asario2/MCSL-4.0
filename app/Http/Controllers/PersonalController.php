@@ -60,7 +60,7 @@ class PersonalController
 
             'updated_at' => now(),
         ]))->save();
-    \Log::info("fil:".json_encode($filtered))   ;
+//     \Log::info("fil:".json_encode($filtered))   ;
 //     \Log::info($request->birthday);
     return response()->json(["success"=>true,"Messsage"=>"Profil gespeichert"]);
     }

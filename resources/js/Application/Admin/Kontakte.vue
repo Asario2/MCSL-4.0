@@ -134,7 +134,7 @@
                         <div
                         class="w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center cursor-pointer shadow hover:scale-110 transition mr-2"
                         @click.stop="toggleGroupPicker(contact.id)"
-                        :title="contact.Gruppe + contact.id"
+                        :title="contact.Gruppe"
                         >
                         <img
                             :src="`/images/icons/Con_Groups/${contact.Gruppe}.gif`"

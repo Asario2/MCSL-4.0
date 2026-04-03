@@ -106,7 +106,7 @@ class AddWatermarksDebug extends Command
 
                 $this->line("📤 Response Status: " . $response->getStatusCode());
                 $this->line("📤 Response Body: " . $response->getContent());
-
+//
                 Log::info("WATERMARK DEBUG OK", [
                     'file' => $file->getFilename(),
                     'response' => $response->getContent()

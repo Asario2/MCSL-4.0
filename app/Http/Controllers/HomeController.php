@@ -336,14 +336,14 @@ class HomeController extends Controller
         // Pagination: Page explizit übergeben
         $blogs = $query->distinct('blogs.id')
             ->paginate(19, ['*'], 'page', $page);
+//
 
-
-        \Log::info('[HomeController] Pagination erstellt', [
-            'current_page' => $blogs->currentPage(),
-            'last_page' => $blogs->lastPage(),
-            'per_page' => $blogs->perPage(),
-            'total' => $blogs->total(),
-        ]);
+        // \Log::info('[HomeController] Pagination erstellt', [
+        //     'current_page' => $blogs->currentPage(),
+        //     'last_page' => $blogs->lastPage(),
+        //     'per_page' => $blogs->perPage(),
+        //     'total' => $blogs->total(),
+        // ]);
 
         // Transform data
         $blogs->getCollection()->transform(function ($blog) {

@@ -138,6 +138,7 @@
         }
         },
         resetForm() {
+
         this.form = { name: '', email: '', subject: '', message: '', captcha: '', accepted: false };
         }
     }
