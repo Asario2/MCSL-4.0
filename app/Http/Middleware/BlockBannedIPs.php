@@ -21,9 +21,12 @@ class BlockBannedIPs
     {
         $ip = $request->ip();
 
-        // Prüfen, ob die IP aktuell auf dieser Subdomain gebannt ist
-        $record = DB::connection("mariadb")->table('xgen_hackinglog')
-            ->where('ip', $ip)
+        DB::purge('mariadb');
+        DB::reconnect('mariadb');
+
+        $record = DB::connection("mariadb")
+        ->table('xgen_hackinglog')
+        ->where('ip', $ip)
             ->where('dom', SD())
             ->whereNotNull('banned_until')
             ->where('banned_until', '>', now())
