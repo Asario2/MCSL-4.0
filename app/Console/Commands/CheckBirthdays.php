@@ -74,7 +74,8 @@ Email: {$email}<br />
 EOT;
 
                         Mail::html($text, function ($message) use ($vorname, $nachname) {
-                            $message->to('[EMAIL]')
+                            $message->to('parie@gmx.de')
+                                    ->from('no-reply@marblefx.net', 'MCSL Geburtstage')
                                     ->subject("🎉 Geburtstag: {$vorname} {$nachname}");
                         });
 
@@ -119,8 +120,9 @@ Email: {$email}<br />
 EOT;
 
                         Mail::html($text, function ($message) use ($vorname, $nachname) {
-                            $message->to('[EMAIL]')
-                                    ->subject("Todestag: {$vorname} {$nachname}");
+                            $message->to('parie@gmx.de')
+                                ->from('no-reply@marblefx.net', 'MCSL Geburtstage')
+                                ->subject("Todestag: {$vorname} {$nachname}");
                         });
 
                         // Jahr aktualisieren, um Doppel-Mails zu vermeiden

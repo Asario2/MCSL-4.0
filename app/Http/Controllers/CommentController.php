@@ -139,13 +139,13 @@ class CommentController extends Controller
         $content = $comment->content;
         // $MailHelper = NEW MailHelper();
         Mail::to('parie@gmx.de')->send(
-            new CommentMail(
-                '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
-                'https://' . request()->getHost() . '/admin/tables/comments/show?search=' . $now,
-                $nick,
-                $content
-            )
-        );
+    (new CommentMail(
+        '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
+        'https://' . request()->getHost() . '/admin/tables/comments/show?search=' . $now,
+        $nick,
+        $content
+    ))->from('no-reply@marblefx.net', 'MCSL Kommentare')
+);
 //         \Log::info("MAIL SENDED");
         // return redirect(url()->previous() . '#comment_' . $request->postid)
         //     ->with('success', 'Kommentar erfolgreich gepostet!');
@@ -226,15 +226,18 @@ public function sendmc(Request $request)
 
         // Mail versenden
         try {
-            Mail::to(config('mail.maintainer'))->send(new ContactMail(
-                $request->getHost(),
-                $request->name,
-                $request->email,
-                $request->subject,
-                $request->message
-            ));
+    Mail::to(config('mail.maintainer'))->send(
+        (new ContactMail(
+            $request->getHost(),
+            $request->name,
+            $request->email,
+            $request->subject,
+            $request->message
+        ))->from('no-reply@marblefx.net', 'MCSL Kontaktformular ('.Settings::$dom[SD()].')')
+    );
 
-            return response()->json("1", 200);
+    return response()->json("1", 200);
+
 
         } catch (\Exception $e) {
             \Log::error('Fehler beim Mailversand', [
@@ -303,12 +306,12 @@ public function sendmc(Request $request)
         $content = $comment;
         // $MailHelper = NEW MailHelper();
         Mail::to('parie@gmx.de')->send(
-            new CommentMail(
+            (new CommentMail(
                 '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
                 'https://' . request()->getHost() . '/' . $table . '/?search=' . $now,
                 $nick,
                 $content
-            )
+            ))->from('no-reply@marblefx.net', 'MCSL Kommentare')
         );
 //         \Log::info("MAIL SENDED");
         // $MailHelper->SendMailer("parie@gmx.de","Neuer Kommentar auf www.asario.net","",'','','','newcomment',["name"=>$nick,"table"=>$table,"comment"=>$comment]);
