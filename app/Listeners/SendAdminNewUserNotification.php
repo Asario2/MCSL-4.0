@@ -15,7 +15,7 @@ class SendAdminNewUserNotification
         $user = $event->user;
 
         // Admin-Mail hier eintragen
-        $adminEmail = '[EMAIL]';
+        $adminEmail = 'parie@gmx.de';
 
         // Mail senden
 
@@ -23,6 +23,7 @@ class SendAdminNewUserNotification
         Mail::send([], [], function ($message) use ($adminEmail, $user) {
             $message->to($adminEmail)
                 ->subject('Neuer Benutzer auf '.request()->getHost().' registriert')
+                ->from('no-reply@marblefx.net', 'MCSL Benutzerregistrierung')
                 ->html(
                     MCSL_GRAD().
                     "<h2>Hallo Admin,</h2>

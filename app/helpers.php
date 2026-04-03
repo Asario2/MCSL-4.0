@@ -325,18 +325,25 @@ if(!function_exists("AnoIP"))
 }
 if (!function_exists("user_key")) {
     function user_key(int $userId): string
-    {
-        // APP_KEY als Binärstring (Laravel base64 format)
-        $appKey = base64_decode(Str::after(env('APP_KEY'), 'base64:'));
+{
+    $appKey = config('app.key');
 
-        // user-spezifische Key-Derivation mit HKDF
-        $info = 'user-specific-key:' . $userId;
-        $length = 32; // 256 Bit
-        $userKey = @hash_hkdf('sha256', @$appKey, $length, $info, true); // true = raw binary
-
-        // Laravel erwartet base64-encoded key
-        return base64_encode($userKey);
+    // base64 entfernen + dekodieren
+    if (Str::startsWith($appKey, 'base64:')) {
+        $appKey = base64_decode(Str::after($appKey, 'base64:'));
     }
+
+    if (empty($appKey)) {
+        throw new \RuntimeException('APP_KEY is empty!');
+    }
+
+    $info = 'user-specific-key:' . $userId;
+    $length = 32;
+
+    $userKey = hash_hkdf('sha256', $appKey, $length, $info, true);
+
+    return base64_encode($userKey);
+}
 }
 
 if (!function_exists('encval_user')) {

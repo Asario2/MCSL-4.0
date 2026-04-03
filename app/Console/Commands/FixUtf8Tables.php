@@ -24,8 +24,8 @@ class FixUtf8Tables extends Command
 
             $str = html_entity_decode($str, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
-            $search = ['Ã¼','Ã¶','Ã¤','ÃŸ','Ãœ','Ã–','Ã„'];
-            $replace = ['ü','ö','ä','ß','Ü','Ö','Ä'];
+            $search = ['ÃÂ¼','ÃÂ¤','ÃÂ¶','ÃÅ¸','Ã¼','Ã¶','Ã¤','ÃŸ','Ãœ','Ã–','Ã„'];
+            $replace = ['ä','ö','ß','ü','ö','ä','ß','Ü','Ö','Ä','ü'];
             $str = str_replace($search, $replace, $str);
 
             $str2 = @iconv('UTF-8', 'ISO-8859-1//IGNORE', $str);
