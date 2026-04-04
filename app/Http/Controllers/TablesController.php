@@ -2766,7 +2766,7 @@ return Inertia::render('Admin/Kontakte', [
             }
 
         }
-        if($formData['cur_amount'])
+        if(@$formData['cur_amount'])
         {
             $formData['cur_amount'] = str_replace(",",".",$formData['cur_amount']);
         }
@@ -3115,7 +3115,7 @@ return Inertia::render('Admin/Kontakte', [
                 ? encval($formData['email'])
                 : null;
         }
-            if($formData['cur_amount'])
+            if(@$formData['cur_amount'])
             {
                 $formData['cur_amount'] = str_replace(",",".",$formData['cur_amount']);
             }

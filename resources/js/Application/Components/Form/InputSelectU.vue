@@ -4,7 +4,8 @@
       <select
         v-bind="$attrs"
         class="w-fully wf_2 wff p-2.5 text-sm rounded-lg block border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 placeholder-layout-sun-400 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500"
-        v-model="internalValue"
+        :value="modelValue || UID"
+
         @change="handleChange"
         :name="xname"
         :id="name"
@@ -21,7 +22,7 @@
         </option>
       </select>
     </div>
-    <input type="hidden" :name="xname" :id="name + '_alt'" :value="resolvedValue">
+    <input type="hidden" :name="xname" :id="name + '_alt'" :value="modelValue">
  </template>
 
   <script>
@@ -36,7 +37,9 @@
     inheritAttrs: false,          // verhindert doppelte :class‑Warnung (optional)
 
     props: {
-      modelValue: [String, Number.Array,Object],
+      modelValue:{type: [String, Number.Array,Object],
+        default:'',
+      },
       name: { type: String, required: true },
       xname: { type: String, default: "select-field" },
       required: { type: [Boolean, String], default: false },
@@ -57,6 +60,14 @@
     },
 
     computed: {
+        // selectedValue: {
+        //     get() {
+        //         return !this.modelValue ? this.UID : this.modelValue;
+        //     },
+        //     set(value) {
+        //         this.$emit('update:modelValue', value);
+        //     }
+        // },
         resolvedValue() {
             return this.internalValue < 1 ? "0" : this.internalValue;
         },
@@ -98,13 +109,19 @@
       internalValue(val) {
         this.$emit("update:modelValue", val);
       },
+       modelValue(newVal) {
+        if (!newVal && this.UID) {
+            this.$emit('update:modelValue', this.UID);
+        }
+    },
     },
 
     methods: {
       handleChange(event) {
-        const value = event.target.value;
+        const value = Number(event.target.value);
         this.$emit("update:modelValue", value);
         this.$emit("input-change", value, this.xname);
+
       },
 
       async getOptions() {
@@ -130,7 +147,9 @@
     },
 
     mounted() {
-
+// if (!this.modelValue) {
+//         this.$emit('update:modelValue', this.UID);
+//     }
        const isCreatePage = window.location.pathname.includes("create");
 
 if (isCreatePage && !this.internalValue && this.currentUserId) {
