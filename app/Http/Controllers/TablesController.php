@@ -1077,130 +1077,159 @@ public function ShowTable(Request $request, $table_alt = null)
         return "not deleteable";
 
     }
-    public function getunused(Request $request)
-    {
-        if (!CheckZRights('UnusedImages')) {
-            abort(403);
-        }
-        $db = 'mariadb';
-         if(@$request->dom){
-            $db = Settings::$mariaDBs[$request->dom];
-         }
-        // dd(@$db);
-        $bp   = public_path('images');
-        $unus = [];
-        $ptz = [];
-        $seen = []; // uniqueKey => index in $unus
-        $xid  = 0;
+        public function getunused(Request $request)
+        {
+            if (!CheckZRights('UnusedImages')) {
+                abort(403);
+            }
 
-        foreach (File::directories($bp) as $mandantPath) {
+            $dom = $request->dom ?? SD();
 
-            $mandant = basename($mandantPath); // "_ab"
-            $mandKey  = $mandant;
-            if (!str_starts_with($mandant, '_')) continue;
+            // DB sauber anhand dom
+            $db = Settings::$mariaDBs[$dom] ?? 'mariadb';
 
-            $manid = ltrim($mandant, '_');
-            //$db = Settings::$mariaDBs[$request->dom];
-            foreach (File::directories($mandantPath) as $tablePath) {
+            $bp = public_path('images');
 
-                $table = basename($tablePath);
-                if (!Schema::connection($db)->hasTable($table)) continue;
-                foreach (File::directories($tablePath) as $columnPath) {
+            $unus = [];
+            $ptz = [];
+            $seen = [];
+            $xid = 0;
 
-                    $column = basename($columnPath);
-                    if (!Schema::connection($db)->hasColumn($table, $column)) continue;
+            foreach (File::directories($bp) as $mandantPath) {
 
-                    // 🔥 Priorität
-                    $folders = [
-                        'big'     => "$columnPath/big",
-                        'thumbs'  => "$columnPath/thumbs",
-                        'default' => $columnPath,
-                        'bthumbs' => "$columnPath/bthumbs",
-                        'orig'    => "$columnPath/orig",
-                        'ret'     => "$columnPath/ret",
-                        'sm'      => "$columnPath/sm",
-                    ];
+                $mandant = basename($mandantPath); // z.B. "_ab"
 
-                    foreach ($folders as $folderName => $folderPath) {
+                if (!str_starts_with($mandant, '_')) {
+                    continue;
+                }
 
-                        if (!is_dir($folderPath)) continue;
+                $mandantDom = ltrim($mandant, '_');
 
+                // 🚨 WICHTIG: nur passenden Tenant laden
+                if ($mandantDom !== $dom) {
+                    continue;
+                }
 
-                        foreach (File::files($folderPath) as $file) {
+                $mandKey = $mandant;
 
-                            $fileName = $file->getFilename();
+                foreach (File::directories($mandantPath) as $tablePath) {
 
-                            if (in_array($fileName, ['008.jpg','009.jpg','spacer.gif'])) {
+                    $table = basename($tablePath);
+
+                    if (!Schema::connection($db)->hasTable($table)) {
+                        continue;
+                    }
+
+                    foreach (File::directories($tablePath) as $columnPath) {
+
+                        $column = basename($columnPath);
+
+                        if (!Schema::connection($db)->hasColumn($table, $column)) {
+                            continue;
+                        }
+
+                        $folders = [
+                            'big'     => "$columnPath/big",
+                            'thumbs'  => "$columnPath/thumbs",
+                            'default' => $columnPath,
+                            'bthumbs' => "$columnPath/bthumbs",
+                            'orig'    => "$columnPath/orig",
+                            'ret'     => "$columnPath/ret",
+                            'sm'      => "$columnPath/sm",
+                        ];
+
+                        foreach ($folders as $folderName => $folderPath) {
+
+                            if (!is_dir($folderPath)) {
                                 continue;
                             }
 
-                            if(substr_count($file->getPathname(),"\message\\") || substr_count($file->getPathname(),"_abimage_path")){
-                            $ptz[] = $file->getPathname();
-                                continue;
-                            }
+                            foreach (File::files($folderPath) as $file) {
 
-                            $uniqueKey = "$manid|$table|$column|$fileName";
+                                $fileName = $file->getFilename();
 
-                            // 🔍 DB nur einmal prüfen
-                            if (!isset($seen[$uniqueKey])) {
-                                $existsInDb = DB::connection($db)->table($table)
-                                    ->where($column,"LIKE","%".$fileName."%")
-                                    ->exists();
+                                if (in_array($fileName, ['008.jpg', '009.jpg', 'spacer.gif'])) {
+                                    continue;
+                                }
 
-                                if ($existsInDb) continue;
-                            }
+                                if (
+                                    str_contains($file->getPathname(), "\message\\") ||
+                                    str_contains($file->getPathname(), "_abimage_path")
+                                ) {
+                                    $ptz[] = $file->getPathname();
+                                    continue;
+                                }
 
-                            // 🆕 Erstfund
-                            if(!isset($seen[$uniqueKey])) {
+                                $uniqueKey = $mandantDom . "|" . $table . "|" . $column . "|" . $fileName;
 
-                                $bigPath = public_path("images/$mandant/$table/$column/big/$fileName");
-                                $imgPath = file_exists($bigPath)
-                                    ? $bigPath
-                                    : $file->getPathname();
+                                // DB check nur einmal
+                                if (!isset($seen[$uniqueKey])) {
 
-                                [$width, $height] = @getimagesize($imgPath) ?: [null, null];
+                                    $existsInDb = DB::connection($db)
+                                        ->table($table)
+                                        ->where($column, 'LIKE', '%' . $fileName . '%')
+                                        ->exists();
 
-                                $xid++;
+                                    if ($existsInDb) {
+                                        continue;
+                                    }
+                                }
 
-                                $unus[] = [
-                                    'id'       => $xid,
-                                    'dom'      => $manid,
-                                    'mandant'  => $mandant,
-                                    'table'    => $table,
-                                    'column'   => $column,
-                                    'fileName' => $fileName,
-                                    'width'    => $width,
-                                    'height'   => $height,
-                                    'label'    => $fileName,
-                                    'basepath' => "/images/$mandKey/$table/$column/",
-                                    'apath'    => $folderName === 'default' ? '' : $folderName,
-                                    'folders'  => [], // ⭐ HIER ALLES REIN
+                                if (!isset($seen[$uniqueKey])) {
+
+                                    $bigPath = public_path("images/$mandant/$table/$column/big/$fileName");
+
+                                    $imgPath = file_exists($bigPath)
+                                        ? $bigPath
+                                        : $file->getPathname();
+
+                                    [$width, $height] = @getimagesize($imgPath) ?: [null, null];
+
+                                    $xid++;
+
+                                    $unus[] = [
+                                        'id'       => $xid,
+                                        'dom'      => $mandantDom,
+                                        'mandant'  => $mandant,
+                                        'table'    => $table,
+                                        'column'   => $column,
+                                        'fileName' => $fileName,
+                                        'width'    => $width,
+                                        'height'   => $height,
+                                        'label'    => $fileName,
+                                        'basepath' => "/images/$mandant/$table/$column/",
+                                        'apath'    => $folderName === 'default' ? '' : $folderName,
+                                        'folders'  => [],
+                                    ];
+
+                                    $seen[$uniqueKey] = count($unus) - 1;
+                                }
+
+                                $idx = $seen[$uniqueKey];
+
+                                $relativePath = "/images/$mandant/$table/$column/"
+                                    . ($folderName === 'default' ? '' : "$folderName/")
+                                    . $fileName;
+
+                                $unus[$idx]['folders'][] = [
+                                    'folder' => $folderName,
+                                    'path'   => $relativePath,
                                 ];
-
-                                $seen[$uniqueKey] = count($unus) - 1;
                             }
-
-                            // ➕ Ordner + Datei speichern
-                            $idx = $seen[$uniqueKey];
-                            $relativePath = "/images/$mandant/$table/$column/"
-                                . ($folderName === 'default' ? '' : "$folderName/")
-                                . $fileName;
-
-                            $unus[$idx]['folders'][] = [
-                                'folder' => $folderName,
-                                'path'   => $relativePath,
-                            ];
                         }
                     }
                 }
             }
-        }
-        file_put_contents(public_path("timespy/unused.dat"),date("Y-m-d H:i:s"));
-        return Inertia::render('Admin/gallery_old', [
-            'images_container' => $unus
-        ]);
-    }
 
+            file_put_contents(
+                public_path("timespy/unused.dat"),
+                date("Y-m-d H:i:s")
+            );
+
+            return Inertia::render('Admin/gallery_old', [
+                'images_container' => $unus
+            ]);
+        }
         public function SetNewsl_alt(
         string $uhash = '',
         string $comphash = '',

@@ -11,27 +11,49 @@
       class="block max-w-sm mx-auto sm:max-w-full p-4 bg-layout-sun-100 dark:bg-layout-night-100"
     >
       <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-    <h1 class="text-3xl font-bold text-layout-title">
-        Unused Images
-    </h1>
 
-   </div>
+        <!-- LEFT -->
+        <h1 class="text-3xl font-bold text-layout-title">
+          Unused Images
+        </h1>
 
+        <!-- RIGHT -->
+        <div class="flex items-center gap-2 ml-auto">
+          <label class="text-sm font-medium text-layout-title">
+            Domain
+          </label>
 
-      <photoswipe_old :dom="dom" :images="images_container" :basePath="images_container.basepath" :checkable="true">
+          <select
+            v-model="dom"
+            @change="domres"
+            class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-layout-night-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="ab">ab</option>
+            <option value="mfx">mfx</option>
+            <option value="dag">dag</option>
+            <option value="chh">chh</option>
+          </select>
+        </div>
 
-      </photoswipe_old>
+      </div>
+
+      <photoswipe_old
+        :dom="dom"
+        :images="images_container"
+        :basePath="images_container.basepath"
+        :checkable="true"
+      />
+
     </section>
   </Layout>
 </template>
 
 <script>
-// import axios from "axios";
-// import { router } from "@inertiajs/vue3";
 import photoswipe_old from "@/Application/Components/photoswipe_old.vue";
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
+import { SD } from "@/helpers";
 
 export default {
   name: "OldGallery",
@@ -42,33 +64,37 @@ export default {
     MetaHeader,
     photoswipe_old,
   },
-  props:{
-    images_container:Object,
-    im_cont:Object,
+
+  props: {
+    images_container: Object,
+    im_cont: Object,
   },
-  data(){
+
+  data() {
     return {
-       dom: this.dom ?? 'ab',
-    }
+      dom: SD(), // initial Wert
+    };
   },
-  mounted(){
 
+  methods: {
+    SD,
+
+    domres() {
+      // optional alert entfernen wenn nicht nötig
+      // alert(this.dom);
+
+      location.href = "/admin/get_unused_imgz/" + this.dom;
+    },
   },
-  methods:{
-    domres()
-    {
-        alert(this.dom);
-       location.href='/admin/get_unused_imgz/' + this.dom;
-    }
-  }
 };
-
 </script>
 
-
-        <style>
-        button { outline: none; }
-        .w-fully{min-width:100% !important;
-                max-width:100% !important;}
-        </style>
-
+<style>
+button {
+  outline: none;
+}
+.w-fully {
+  min-width: 100% !important;
+  max-width: 100% !important;
+}
+</style>
