@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { cc } from "@/helpers";
+import { cc,SD } from "@/helpers";
 import ZoomImage from "@/Application/Components/Content/ZoomImage.vue";
 import axios from "axios";
 
@@ -122,7 +122,7 @@ export default {
       zipUrl: null,
       md5: null,
       Host: window.ahost,
-      dom_alt: this.dom,
+      dom_alt: SD(),
     };
   },
 
@@ -135,6 +135,7 @@ export default {
     });
 
     this.lightbox.init();
+    
   },
 
   beforeUnmount() {
@@ -164,6 +165,7 @@ export default {
 
   methods: {
     cc,
+    SD,
 
     async zipFiles() {
       const files = Array.from(
