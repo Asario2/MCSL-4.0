@@ -228,6 +228,7 @@
 
     </div>
 <table class="w-full">
+        <tbody>
         <tr class="border-t">
             <td class="px-3 py-3 w-[20%]"></td>
 
@@ -250,6 +251,7 @@
             </td>
             <td></td>
           </tr>
+          </tbody>
       </table>
   </div>
 </div>

@@ -60,7 +60,7 @@
     </div>
 </div> <!-- ← das ist die einzig notwendige schließende div -->
 
-<Pagination :links="users.links" :basePath="'users/'"/>
+<Pagination :links="users.links" :basePath="'home/users/'"/>
 
         </section>
     </layout>
