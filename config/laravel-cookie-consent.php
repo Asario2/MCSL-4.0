@@ -49,7 +49,7 @@ return [
      * @default 7
      * @env COOKIE_REJECT_LIFETIME
      */
-    'reject_lifetime' => env('COOKIE_REJECT_LIFETIME', 7),
+    'reject_lifetime' => env('COOKIE_REJECT_LIFETIME', 365),
 
     /**
      * Consent modal layout style

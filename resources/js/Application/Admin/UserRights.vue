@@ -211,7 +211,7 @@
         <td class="px-4 py-3">
           <img
             v-if="u.profile_photo_path"
-            :src="`/images/_ab/users/profile_photo_path/${u.profile_photo_path}`"
+            :src="`/images/_${SD()}/users/profile_photo_path/${u.profile_photo_path}`"
             class="w-8 h-8 rounded-full object-cover"
             alt="Profilbild"
           />
@@ -297,7 +297,7 @@
 
 <script>
 // import { toastBus } from '@/utils/toastBus';
-import { GetSettings } from "@/helpers";
+import { GetSettings,SD } from "@/helpers";
 import axios from "axios";
 import InputFormText from "@/Application/Components/Form/InputFormText.vue";
 import InputSelect from "@/Application/Components/Form/InputSelect.vue";
@@ -376,7 +376,7 @@ export default {
     addFunc() {
       this.addF = !this.addF;
     },
-
+    SD,
     async addfsubm(event) {
   if (event) event.preventDefault(); // optional, @click.prevent reicht eigentlich
 

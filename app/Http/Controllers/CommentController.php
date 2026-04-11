@@ -458,7 +458,10 @@ public function checkLogs()
     if(!Schema::hasTable("comments")){
         return;
     }
-
+    if(!Schema::hasTable("commments"))
+    {
+        return;
+    }
     // 2. Hole alle Kommentare
     $logs = DB::table('comments')->select('id', 'ischecked')->get();
 

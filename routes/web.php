@@ -210,6 +210,9 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     Route::get("/       ",function(){
         return "ASD";
     });
+    Route::get('register', [RegisteredUserController::class, 'create'])
+    // ->middleware(HandleSocialitePlusProviders::class)
+    ->name('register');
     Route::get('/rss.xml', [RssController::class, 'feed']);
     Route::get('/about/mcs-points', [HomeController::class, 'mcspoints'])->name('mcs.points');
     Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
@@ -320,9 +323,7 @@ Route::get('/home/privacy', [HomeController::class, 'home_privacy'])->name('home
     Route::get('/home/contacts', [HomeController::class, 'contacts'])->name('home.contacts');
     // Login absenden
     // Route::post('/login', [CustomLoginController::class, 'login']);
-    Route::get('register', [RegisteredUserController::class, 'create'])
-    // ->middleware(HandleSocialitePlusProviders::class)
-    ->name('register');
+
 
 // Route::get('login', [AuthenticatedSessionController::class, 'create'])
 //     // ->middleware(HandleSocialitePlusProviders::class)
