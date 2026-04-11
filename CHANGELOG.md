@@ -255,3 +255,4 @@
 ![Version](https://img.shields.io/badge/version-5.09.4-orange) Hotfix - auto-user-selet (#442)  
 ![Version](https://img.shields.io/badge/version-5.10.6-orange) Hotfix - Change User Icon (#446)  
 ![Version](https://img.shields.io/badge/version-5.11.3-orange) Hotfix - Change Expiration time on Cookies (#445)  
+![Version](https://img.shields.io/badge/version-5.12.1-orange) Feature - add icons to dashboard (#447)  
