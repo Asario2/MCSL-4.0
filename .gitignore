@@ -1,6 +1,7 @@
 *.py
 !/public/**
 _work/**
+*.kdbx
 *.pth
 **/kontakte/**
 *.csv
