@@ -10,7 +10,7 @@
 
   <!-- Dein Bild -->
   <img
-    class="relative z-10 h-full mx-auto"
+    class="relative z-10 h-16 mx-auto"
     :src="'/images/logos/chh.jpg'"
     alt="Logo"
   />

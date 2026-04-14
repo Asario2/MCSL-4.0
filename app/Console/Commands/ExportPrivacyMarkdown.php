@@ -37,7 +37,7 @@ class ExportPrivacyMarkdown extends Command
         $o = 1;
         foreach ($entries as $entry) {
             $anchor = $entry->slug ?? Str::slug($entry->headline);
-            $markdown .= "- [$o)&nbsp; $entry->headline](#{$anchor})<br />";
+            $markdown .= "[$o)&nbsp; $entry->headline](#{$anchor})<br />";
             $o++;
         }
 
