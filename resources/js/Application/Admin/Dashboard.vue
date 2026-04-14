@@ -70,6 +70,19 @@
 
                 <template #description> Finanzdaten </template>
             </navigation-card>
+            <navigation-card v-if="modulRights?.FontographerToolz"
+                class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
+                title="Schriftarten Selector"
+                linkName="Finde Schriftarten"
+                target="_self"
+                :routeName="route('admin.fonts')"
+                :withIcon="true"
+                icon="IconFont"
+            >
+                <template #description>
+                    Fontographer Toolz
+                </template>
+            </navigation-card>
             <navigation-card v-if="modulRights?.SendMail"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
                 title="Email Center"
@@ -83,7 +96,6 @@
                     Email / Newsletter
                 </template>
             </navigation-card>
-
             <!-- Statistics -->
             <navigation-card v-if="modulRights?.Statistics"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
