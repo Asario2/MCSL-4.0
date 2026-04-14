@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\Settings;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
+
 
 class GenerateSitemap extends Command
 {
@@ -18,47 +20,65 @@ class GenerateSitemap extends Command
         $this->info('Sitemap wird erstellt …');
 
         $currentSD = $this->argument('SD');
+        $conn = Settings::$mariaDBs[$currentSD];
+
+        $globalRoutes = [
+            'home/privacy',
+        ];
+
 
         // === 1️⃣ Statische Laravel-Routen erfassen ===
         $routes = collect(Route::getRoutes())
-            ->filter(function ($route) use ($currentSD) {
-                if (!in_array('GET', $route->methods()) || str_contains($route->uri(), '{')) {
-                    return false;
-                }
-
-                if (str_starts_with($route->uri(), 'api/')) {
-                    return false;
-                }
-
-                $middlewares = $route->gatherMiddleware();
-                $excluded = ['is_admin', 'auth', 'verified'];
-                foreach ($excluded as $mw) {
-                    if (in_array($mw, $middlewares)) {
-                        return false;
-                    }
-                }
-
-                foreach ($middlewares as $mw) {
-                    if (is_string($mw) && str_starts_with($mw, \App\Http\Middleware\CheckSubd::class)) {
-                        $parts = explode(':', $mw, 2);
-                        if (count($parts) === 2) {
-                            $allowed = explode(',', $parts[1]);
-                            if (in_array($currentSD, $allowed)) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    }
-                }
-
+           ->filter(function ($route) use ($currentSD, $globalRoutes) {
+            if (!in_array('GET', $route->methods()) || str_contains($route->uri(), '{')) {
                 return false;
-            })
+            }
+
+            if (str_starts_with($route->uri(), 'api/')) {
+                return false;
+            }
+
+            // ❌ Admin / Auth etc. raus
+            $middlewares = $route->gatherMiddleware();
+            $excluded = ['is_admin', 'auth', 'verified'];
+            foreach ($excluded as $mw) {
+                if (in_array($mw, $middlewares)) {
+                    return false;
+                }
+            }
+
+            // ✅ 1. GLOBAL ROUTES explizit erlauben
+            if (in_array($route->uri(), $globalRoutes)) {
+                return true;
+            }
+
+            // ✅ 2. CheckSubd Middleware prüfen
+            foreach ($middlewares as $mw) {
+                if (is_string($mw) && str_starts_with($mw, \App\Http\Middleware\CheckSubd::class)) {
+
+                    $parts = explode(':', $mw, 2);
+
+                    if (count($parts) === 2) {
+                        $allowed = explode(',', $parts[1]);
+                        return in_array($currentSD, $allowed);
+                    }
+
+                    return false;
+                }
+            }
+
+            // ❌ Alles andere fliegt raus
+            return false;
+        })
             ->map(fn($route) => url($route->uri()))
             ->unique()
             ->values();
 
+        if(Schema::connection($conn)->hasTable("image_categories"))
+        {
         // === 2️⃣ Dynamische Picture-Seiten ergänzen ===
-        $pictures = DB::table('image_categories')
+        $pictures = DB::connection($conn)->table('image_categories')
+            ->where("pub","1")
             ->select('name as slug', 'updated_at')
             ->get(); // Erst get() liefert Collection
 
@@ -68,7 +88,22 @@ class GenerateSitemap extends Command
                 'lastmod' => $p->updated_at ?? now(),
             ];
         });
+        }
+        if($currentSD == "mfx")
+        {
+        // === 2️⃣ Dynamische Picture-Seiten ergänzen ===
+        $infos = DB::connection($conn)->table('infos')
+            ->where("pub","1")
+            ->select('id as slug', 'updated_at')
+            ->get(); // Erst get() liefert Collection
 
+        $infosLinks = $infos->map(function ($p) use ($currentSD) {
+            return [
+                'loc' => $this->EXTR_LNK(url('/home/infos/show/' . $p->slug), $currentSD),
+                'lastmod' => $p->updated_at ?? now(),
+            ];
+        });
+        }
         // === 3️⃣ XML zusammenbauen ===
         $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset/>');
         $xml->addAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
@@ -81,16 +116,26 @@ class GenerateSitemap extends Command
             $url->addChild('changefreq', 'weekly');
             $url->addChild('priority', '0.5');
         }
-
+        if(Schema::connection($conn)->hasTable("image_categories")){
         // Dynamische Picture-Seiten hinzufügen
         foreach ($pictureLinks as $entry) {
+            $url = $xml->addChild('url');
+            $url->addChild('loc', htmlspecialchars($entry['loc'], ENT_XML1));
+            $url->addChild('lastmod', Carbon::parse($entry['lastmod'])->toAtomString());
+            $url->addChild('changefreq', 'weekly');
+            $url->addChild('priority', '0.7');
+        }
+        }
+         if($currentSD == "mfx"){
+        // Dynamische Picture-Seiten hinzufügen
+        foreach ($infosLinks as $entry) {
             $url = $xml->addChild('url');
             $url->addChild('loc', htmlspecialchars($entry['loc'], ENT_XML1));
             $url->addChild('lastmod', Carbon::parse($entry['lastmod'])->toAtomString());
             $url->addChild('changefreq', 'monthly');
             $url->addChild('priority', '0.7');
         }
-
+        }
         // === 4️⃣ Datei speichern ===
         $path = public_path("sitemap." . $currentSD . ".xml");
         $xml->asXML($path);
@@ -100,6 +145,6 @@ class GenerateSitemap extends Command
 
     function EXTR_LNK($url, $sd)
     {
-        return str_replace(["http://localhost/","http://test.mcs/"], "https://" . Settings::$dom[$sd] . "/", $url);
+        return str_replace(["http://localhost/","http://test.mcs/","http://chh.test.mcs","http://mfx.test.mcs","http://dag.test.mcs","http://ab.test.mcs"], "https://" . Settings::$dom[$sd], $url);
     }
 }
