@@ -259,3 +259,4 @@
 ![Version](https://img.shields.io/badge/version-5.13.7-orange) Hotfix - Changed Position starting at 1 (#449)  
 ![Version](https://img.shields.io/badge/version-5.14.5-orange) Hotfix - change pagination on pictures (#448)  
 ![Version](https://img.shields.io/badge/version-5.15.6-orange) Feature - Add Fontographer Tools (#450)  
+![Version](https://img.shields.io/badge/version-5.16.6-orange) Hotfix - Add Logo to admin Dashboard (#451)  
