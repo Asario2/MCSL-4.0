@@ -41,7 +41,7 @@ class ExportPrivacyMarkdown extends Command
             $o++;
         }
 
-        $markdown .= "\n---\n\n";
+        $markdown .= "\n\n---\n\n";
 
         // Abschnitte
         $i = 1;
