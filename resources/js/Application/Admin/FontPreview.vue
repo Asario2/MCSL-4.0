@@ -1,71 +1,94 @@
 <template>
-  <div class="p-4 space-y-4">
+<Layout>
+        <MetaHeader :title="'Fontographer'" />
+<div class="p-4 space-y-4">
+
 
     <!-- TEXT INPUT -->
-        <div class="fixed top-0 left-0 right-0 bg-white border-b p-4 flex items-center gap-2 z-50 shadow">
-      <input
+        <div class="fixed top-0 left-0 right-0 bg-white border-b p-4 flex items-center gap-2 z-50 shadow max-h-24 overflow-y-auto">
+    <input
         v-model="textInput"
         type="text"
         placeholder="Text eingeben..."
-        class="border p-2 rounded flex-1"
-      />
-      <button
+        class="border p-2 rounded flex-1 text-layout-sun-100 dark:text-layout-sun-1000"
+    />
+    <button
         @click="applyFilter"
         class="bg-blue-500 text-white px-4 py-2 rounded"
-      >
+    >
         Filter anwenden
-      </button>
-      <button
+    </button>
+    <button
         @click="resetSelection"
         class="bg-gray-500 text-white px-4 py-2 rounded"
-      >
+    >
         Auswahl zurücksetzen
-      </button>
+    </button>
     </div>
 
     <!-- Hinweis -->
     <div v-if="!textInput" class="text-gray-500">
-      Bitte Text eingeben, um Vorschau zu sehen
+    Bitte Text eingeben, um Vorschau zu sehen
     </div>
 
     <!-- Fonts untereinander -->
     <div v-if="textInput && displayedFonts.length" class="space-y-4">
-      <div
+    <div
         v-for="font in displayedFonts"
         :key="font"
-        class="flex items-center gap-4 border p-2 rounded"
-      >
+        class="flex flex-col sm:flex-row sm:items-center gap-4 border p-2 rounded w-full"
+    >
         <!-- Bild -->
-        <img
-          :src="getImage(font)"
-          class="w-[40%] h-auto border"
+        <label :for="font">
+            <img
+            :src="getImage(font)"
+            class="max-w-[400px] h-[50px] border"
+            />
+        </label>
+        <!-- Checkbox + Label -->
+        <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-[30%]">
+        <input
+            type="checkbox"
+            v-model="selected"
+            :value="font"
+            :id="font"
+            class="accent-blue-500 dark:accent-blue-400"
         />
 
-        <!-- Checkbox + Label -->
-        <div class="flex items-center gap-2">
-          <input type="checkbox" v-model="selected" :value="font" :id="font" />
-          <label :for="font">{{ font.replace('.ttf','') }}</label>
+        <label
+            class="text-black dark:text-white truncate"
+            :for="font"
+        >
+            {{ font.replace('.ttf','') }}
+        </label>
         </div>
-      </div>
+    </div>
     </div>
 
     <!-- ZIP Download -->
     <div v-if="selected.length" class="mt-4">
-      <button
+    <button
         @click="downloadZip"
         class="bg-green-500 text-white px-4 py-2 rounded"
-      >
+    >
         ZIP herunterladen
-      </button>
+    </button>
     </div>
 
-  </div>
+</div>
+</Layout>
 </template>
 
 <script>
 import axios from 'axios'
-
+import Layout from '@/Application/admin/Shared/ab/Layout.vue';
+import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 export default {
+
+  components:{
+    Layout,
+    MetaHeader,
+  },
   data() {
     return {
       fonts: [],          // Alle Fonts vom Backend
@@ -121,5 +144,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+@media (max-width: 640px) {
+  .text-blacked {
+    color: #000;
+  }
+}
 </style>
