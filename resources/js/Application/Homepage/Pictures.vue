@@ -123,7 +123,7 @@
 </div>
 
 <!-- Pagination -->
-<Pagination :links="entries.links" :basePath="this.ocont.slug + '/'"/>
+<Pagination :links="entries.links" :basePath="'home/show/pictures/' + this.ocont.slug + '/'"/>
 
 </div>
 
