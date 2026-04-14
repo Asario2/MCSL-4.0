@@ -1580,7 +1580,7 @@ public function ShowTable(Request $request, $table_alt = null)
             if(isset($row['id'],$row['position']) && $table)
             {
             DB::table($table) ->where('id', $row['id'])
-            ->update(['position' => $row['position']]);
+            ->update(['position' => ($row['position']+1)]);
             }
         }
 
@@ -2811,6 +2811,10 @@ return Inertia::render('Admin/Kontakte', [
         if (Schema::hasColumn($table, 'image_path') && empty($formData['image_path'])) {
             $formData['image_path'] = "008.jpg";
         }
+        if (Schema::hasColumn($table, 'image_path')){
+            $formData['image_path'] = strtolower($formData['image_path']);
+        }
+
         if(isset($formData['position']))
             {
                 if($formData['position'] == 1)
@@ -2882,6 +2886,7 @@ return Inertia::render('Admin/Kontakte', [
                 : null;
 
         }
+
         $columns = Schema::getColumnListing($table);
         $hasOnColumn = collect($columns)->contains(fn($column) => str_contains($column, '_on'));
 
@@ -2892,15 +2897,11 @@ return Inertia::render('Admin/Kontakte', [
         }
 
         if (Schema::hasColumn($table, 'img_x')) {
-            $imgPath = public_path("/images/_".SD()."{$table}/big/{$formData['image_path']}");
-            if (file_exists($imgPath)) {
-                list($width, $height) = getimagesize($imgPath);
+            list($width,$height) = getimagesize(public_path()."/images/_".SD()."/".$table."/image_path/big/".$formData['image_path']);
+
                 $formData['img_x'] = $width;
                 $formData['img_y'] = $height;
-            }
-            else{
-                // dd($imgPath);
-            }
+
         }
 
         if (Schema::hasColumn($table, 'preis') || isset($formData['preis'])) {
@@ -3012,6 +3013,7 @@ return Inertia::render('Admin/Kontakte', [
         if(@$orig_posi){
             $this->UP_POSI($table,'',@$orig_posi);
         }
+
         ActLog($request,"StoreTable",$formData[Settings::$headline[$table]],$newId,$table);
         if (CheckZRights("UserRights") && $table == "admin_table") {
             return response()->json(["status" => "success", "message" => "Gespeichert, Bitte <a href='/admin/User_Rights'>Benutzerrechte</a> aktualisieren"]);
