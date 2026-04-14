@@ -33,6 +33,12 @@
     <div v-else-if="GetSd() == 'mfx'">
     <a href="/admin/dashboard"><mfxlogo :ab="'_mfx' + this.GetLogin()"></mfxlogo></a>
     </div>
+    <div v-else-if="GetSd() == 'chh'">
+    <a href="/admin/dashboard"><chhlogo :ab="'_chh' + this.GetLogin()"></chhlogo></a>
+    </div>
+    <div v-else-if="GetSd() == 'dag'">
+    <a href="/admin/dashboard"><daglogo :ab="'_chh' + this.GetLogin()"></daglogo></a>
+    </div>
 </template>
 
 <script>
@@ -40,11 +46,15 @@ import { Link } from "@inertiajs/vue3";
 
 import Favicon from "@/Application/Components/Logo/Favicon.vue";
 import mfxlogo from "@/Application/Shared/mfxlogo.vue";
+import chhlogo from "@/Application/Shared/ChhLogo.vue";
+import Daglogo from "@/Application/Shared/daglogo.vue";
 export default {
     name: "Shared_BrandHeader",
     //
     components: {
         Link,
+        chhlogo,
+        Daglogo,
         Favicon,
         mfxlogo,
     },
