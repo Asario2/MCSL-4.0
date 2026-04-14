@@ -225,7 +225,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     Route::post("/personal_update", [PersonalController::class, 'update'])->name("personal.update");
     Route::get('/home/QRCodaH', [HomeController::class, 'QRCodaH'])->name('home.qrcodah');
     Route::get('/home/aboutme', [HomeController::class, 'home_about'])->name('home.about');
-    Route::get("/admin/Kontakte", [TablesController::class, "show_contacts"])->name('admin.kontakte');
+
     // Imprint
     Route::get('/home/imprint', [HomeController::class, 'home_imprint'])->name('home.imprint');
     // Privacy
@@ -237,7 +237,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     // Pictures
     Route::get('/home/show/pictures/{slug}', [HomeController::class, 'home_images'])->name('home.images.gallery');
     Route::get('/home/search/pictures/{slug}', [HomeController::class, 'home_images_search'])->name('home.images.gallery.search');
-    Route::get('/home/search_cat/pictures/', [HomeController::class, 'home_images_search_cat'])->name('home.images.search.cat');
+    //Route::get('/home/search_cat/pictures/', [HomeController::class, 'home_images_search_cat'])->name('home.images.search.cat');
     Route::get('/home/pictures', [HomeController::class, 'home_images_index'])->name('home.images.index');
 
     // Shortpoems
@@ -624,10 +624,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/api/activity-log/pub', [ActivityPubController::class, 'updatePub']);
         Route::post('/api/delete-stat', [CountPixelController::class, 'delete_stats']);
 
-
+        Route::get('/home/QRCodaH', [HomeController::class, 'QRCodaH'])->name('home.qrcodah');
+        Route::get("/admin/Kontakte", [TablesController::class, "show_contacts"])->name('admin.kontakte');
         Route::get('/api/fonts', [FontController::class, 'index']);
         Route::post('/api/fonts/zip', [FontController::class, 'zip']);
-        Route::get('/fonts', [FontController::class, 'show'])->name('fonts');
+        Route::get('/fonts', [FontController::class, 'show'])->name('admin.fonts');
         Route::delete("api/del/function/userrights/{xkis}",[RightsController::class,"remFN"])->name('del.uright.function');
         Route::get('/api/activity-log', function () {
             if(!CheckZRights("ActivityLog")){

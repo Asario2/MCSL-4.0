@@ -61,6 +61,7 @@ import IconLost from "@/Application/Components/Icons/IconLost.vue";
 import IconProjects from "@/Application/Components/Icons/IconProjects.vue";
 import IconProjectsSheets from "@/Application/Components/Icons/IconProjectsSheets.vue";
 import IconStar from "@/Application/Components/Icons/IconStar.vue";
+import IconFont from "@/Application/Components/Icons/IconFont.vue";
 import IconTexts from "@/Application/Components/Icons/IconTexts.vue";
 import IconSync from "@/Application/Components/Icons/IconSync.vue";
 import texts from "@/Application/Components/Icons/texts.vue";
@@ -107,6 +108,7 @@ export default {
         IconNews,
         IconTexts,
         IconInfos,
+        IconFont,
         texts,
         IconStar,
         IconPublicat,
@@ -182,6 +184,7 @@ export default {
                 IconMoney,
                 IconPublicat,
                 IconSources,
+                IconFont,
             };
             //
             return icons[this.icon];
