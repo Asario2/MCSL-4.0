@@ -256,3 +256,6 @@
 ![Version](https://img.shields.io/badge/version-5.10.6-orange) Hotfix - Change User Icon (#446)  
 ![Version](https://img.shields.io/badge/version-5.11.3-orange) Hotfix - Change Expiration time on Cookies (#445)  
 ![Version](https://img.shields.io/badge/version-5.12.1-orange) Feature - add icons to dashboard (#447)  
+![Version](https://img.shields.io/badge/version-5.13.7-orange) Hotfix - Changed Position starting at 1 (#449)  
+![Version](https://img.shields.io/badge/version-5.14.5-orange) Hotfix - change pagination on pictures (#448)  
+![Version](https://img.shields.io/badge/version-5.15.6-orange) Feature - Add Fontographer Tools (#450)  
