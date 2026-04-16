@@ -86,7 +86,7 @@
         </h2>
 
         <div class="text-layout-sun-700 dark:text-layout-night-700 whitespace-pre-line">
-            <p v-html="stripTagsCom(item?.message)"></p>
+            <p v-html="stripTagsCom(remBrackets(item?.message))"></p>
         </div>
 
             <SocialButtons :postId="item?.id" :slug="item.slug" :sslug="true"/>
@@ -136,7 +136,7 @@ import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import PhotoSwipeLightbox from 'photoswipe/dist/photoswipe-lightbox.esm.js';
 import Pagination from "@/Application/Components/Pagination.vue";
 import 'photoswipe/dist/photoswipe.css'
-import {stripTags} from "@/helpers";
+import {stripTags,remBrackets} from "@/helpers";
 import ZoomImage from "@/Application/Components/Content/ZoomImage.vue";
 import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
 import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
@@ -355,12 +355,13 @@ export default {
     //     }, 50);
     //   }
     // },
+    remBrackets,
     reset() {
         this.form = mapValues(this.form, () => null);
     },
     stripTagsCom(txt)
     {
-        txt = stripTags(txt,"br,i");
+        txt = stripTags(txt,"br,i,a");
         return txt.replace(/(<br\s*\/?>\s*){2,}/gi, '<br>');
     },
     decodeEntities(text) {

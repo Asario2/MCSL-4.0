@@ -1229,7 +1229,7 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
         $v3 = shorter($value);
 
         $xx = "<textarea style='display:none;' id='text_hidden_".$name."_".$id."' class='full-text' rows='4' cols='65'>$value</textarea>";
-        return $xx."<span class='short-text'>".smilies(strip_tags(stripcslashes($v3)))."</span>";
+        return $xx."<span class='short-text'>".smilies(strip_tags(stripcslashes($v3),"<a>"))."</span>";
     }
     public static function age($n,$v,$t,$id)
     {

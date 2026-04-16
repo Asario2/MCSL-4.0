@@ -79,7 +79,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
     {
         return;
     }
-    $data = strip_tags($data);
+    $data = strip_tags($data,"<a>");
     $data = trim($data);
     $enc = NEW OldEncController();
     if($enc->decryptString($enc->decryptString($enc->decryptString($enc->decryptString($data)))) !== false)
@@ -232,7 +232,7 @@ if (!function_exists('Notify')) {
         $text = preg_replace('/\*(.*?)\*/', '$1', $text); // Entfernt *italic*
         $text = preg_replace('/\#\s?(.*)/', '$1', $text); // Entfernt # Überschriften
         $text = preg_replace('/\[(.*?)\]\((.*?)\)/', '$1', $text); // Entfernt Links
-        $text = strip_tags($text); // Entfernt HTML-Tags
+        $text = strip_tags($text,"<a>"); // Entfernt HTML-Tags
         return shorter($text,$count);
     }
 }
