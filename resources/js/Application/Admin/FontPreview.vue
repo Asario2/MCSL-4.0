@@ -81,7 +81,7 @@
 
 <script>
 import axios from 'axios'
-import Layout from '@/Application/admin/Shared/ab/Layout.vue';
+import Layout from '@/Application/Admin/Shared/ab/Layout.vue';
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 export default {
 

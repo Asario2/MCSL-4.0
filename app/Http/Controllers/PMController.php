@@ -95,7 +95,8 @@ class PMController extends Controller
         }
         $lastinsertid = DB::table("private_messages_text")
         ->insertGetId([
-            'message' => encval($this->rembr($request->message)),
+            // encval $this->rembr
+            'message' => ($this->remBR2($request->message)),
         ]);
 
         $uid = $request->uid ?? Auth::id();
@@ -103,8 +104,9 @@ class PMController extends Controller
         $ts = NOW();
         // \Log::info(["subject"=>$request->subject,"private_message_texts_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>Auth::id(),"public"=>"1"]);
         // \Log::info(["subject"=>$request->subject,"private_message_texts_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>Auth::id(),"public"=>"2"]);
-        DB::table("private_messages")->insert(["created_at"=>$ts,"subject"=>encval($request->subject),"private_messages_text_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>$uid,"public"=>"1"]);
-        DB::table("private_messages")->insert(["created_at"=>$ts,"subject"=>encval($request->subject),"private_messages_text_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>$uid,"public"=>"2"]);
+                                                                        //encval
+        DB::table("private_messages")->insert(["created_at"=>$ts,"subject"=>($request->subject),"private_messages_text_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>$uid,"public"=>"1"]);
+        DB::table("private_messages")->insert(["created_at"=>$ts,"subject"=>($request->subject),"private_messages_text_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>$uid,"public"=>"2"]);
 
 
     }
@@ -112,6 +114,11 @@ class PMController extends Controller
     /**
      * Display the specified resource.
      */
+    public function remBR2($string)
+    {
+        $st = str_replace("<br />",'',$string);
+        return str_replace("<br>","<br />",$st);
+    }
     public function rembr(string $text)
     {
         //

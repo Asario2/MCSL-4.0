@@ -772,7 +772,14 @@ export const selectionHelper = {
   },
 };
 
-
+export function remBrackets(str)
+{
+    if(!str)
+    {
+        return "";
+    }
+    return str.replace('%5B', '[').replace('%5D', ']');
+}
 /**
  * stripTags(text, allowed = [])
  * @param {String} text      – Eingabestring (kann HTML enthalten)

@@ -247,7 +247,7 @@ $mailPassword = env('MAIL_PASSWORD');
     $signatur = $this->replink($signatur,$title,$email,$nick,$link,@$chash);
 
 
-
+    $content2 = $content;
     $content  = $this->replink($this->subquote($content),$title,$email,$nick,$link,@$chash);
 
     $signatur2 = $signatur.$this->subm_btn();
@@ -261,7 +261,8 @@ $mailPassword = env('MAIL_PASSWORD');
             compact('title', 'link', 'nick', 'content_alt', 'template', 'signatur'))->render()
     ));
     // $html2 = str_replace("%uhash%",$uhash,$html2);
-    session(['signatur' => $signatur,"reci"=>$request->recipients, "content"=>$this->subquote(html_entity_decode($html2)), "title"=>$title,"email"=>$email,"nick"=>$nick,"template"=>$template]);
+
+    session(['signatur' => $signatur,"reci"=>$request->recipients,"co"=>$content2, "content"=>$this->subquote(html_entity_decode($html2)), "title"=>$title,"email"=>$email,"nick"=>$nick,"template"=>$template]);
     return $html;
 
 
@@ -328,7 +329,7 @@ $mailPassword = env('MAIL_PASSWORD');
                 $request->merge([
                     'to_id' => $id2,
                     "subject"  => session('title'),
-                    "message" => $this->clean((session('content')),$uhash,session('title')),
+                    "message" => $this->clean((session('co')),$uhash,session('title')),
                     "uid" => "4",
                 ]);
 
@@ -453,13 +454,13 @@ $mailPassword = env('MAIL_PASSWORD');
 
         $txt = str_replace(["%uhash%","%40"],[$uhash,'@'],$txt);
         $txt = preg_replace('/(<br\s*\/?>\s*){12,25}/siU', '', $txt);
-        // $txt = str_replace("<br />","\n",$txt);
+        $txt = str_replace("<br />","\n",$txt);
         $txt = preg_replace(
             "#<div\s+id=['\"]remst['\"]>\s*</div>.*?<div\s+id=['\"]remen['\"]>\s*</div>#si",
             "",
             $txt
         );
-        return strip_tags($txt,"<br><h2><h3><h4><h5><b><i><a><strong><em><h6><hr>");
+        return strip_tags($txt,"<br><h2><h3><h4><h5><b><i><div><a><strong><em><h6><hr>");
     }
     function subquote($txt)
     {

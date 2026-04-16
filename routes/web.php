@@ -168,7 +168,14 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':dag,monikadargies')-
     Route::get('/ai', [HomeController::class, 'home_AI'])->name('home.ai.dag');
     Route::get("/contacts", [HomeController::class, "dag_contacts"])->name("home.contacts.dag");
     Route::get("/links", [HomeController::class, "dag_links"])->name("home.links");
-
+    Route::get("home.htm",function(){
+        header("Location: /");
+        exit;
+    });
+Route::get("kontakt.htm",function(){
+        header("Location: /contacts");
+        exit;
+    });
 });
 #
 #  CHHH CHRISTIAN HENNING
