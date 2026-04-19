@@ -507,6 +507,12 @@ segments = segments.join('').replace(/[[\]']/g, '');
     return segments.toLowerCase() || '';
 
 }
+
+export function CleanTab(rem) {
+    const path = window.location.pathname; // Gibt "/admin/tables/show/Example" zur�ck
+    return path.replace(rem,'').replace("/",'');
+}
+
 export function SD(pn = '') {
     // Hostname ohne www.
     let subb = window.location.hostname.replace(/^www\./, '').split('.')[0];

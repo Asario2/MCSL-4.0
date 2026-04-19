@@ -10,65 +10,134 @@ use Illuminate\Support\Facades\DB;
 
 class PMController extends Controller
 {
+    function __construct()
+    {
+        $this->perPage = DB::table('users_config')
+            ->where('users_id', Auth::id())
+            ->value('cnt_numrows') ?? 15;
+    }
     /**
      * Display a listing of the resource.
      */
-    private function getInbox()
+    private function getInbox(Request $request)
     {
+
+
         $inboxArr = DB::table('private_messages')
         ->leftJoin('private_messages_text', 'private_messages.private_messages_text_id', '=', 'private_messages_text.id')
         ->leftJoin('users', 'private_messages.users_id', '=', 'users.id')
+        ->leftJoin("users_config","users_config.users_id", "=","users.id")
         ->where('private_messages.to_id', Auth::id())
         ->where('private_messages.xis_disabled', '0')
-        ->where("private_messages.public","1")
-        ->select('private_messages.subject','private_messages.id as id',"users.first_name","users.id AS UID","users.website","private_messages.public","users.last_login_at as lastlogin","private_messages.to_id", 'private_messages.checked',"users.birthday",'private_messages_text.message as message',"private_messages.created_at as created_at","users_id as users_id",'users.name as user',"users.profile_photo_path as avatar")
+        ->where('private_messages.public','1')
+        ->when(request('search'), function ($query) {
+        $query->where(function ($q) {
+            $q->filterdefault(['search' => request('search')]);
+        });
+    })
+        ->select(
+            'private_messages.subject',
+            'private_messages.id as id',
+            "users.first_name",
+            "users.id AS UID",
+            "users.website",
+            "private_messages.public",
+            "users.last_login_at as lastlogin",
+            "private_messages.to_id",
+            'private_messages.checked',
+            "users.birthday",
+            'private_messages_text.message as message',
+            "private_messages.created_at as created_at",
+            "private_messages.users_id as users_id",
+            'users.name as user',
+            "users.profile_photo_path as avatar"
+        )
         ->orderBy("private_messages.created_at","DESC")
-        ->get();
+        ->paginate(
+            $this->perPage,
+            ['*'],
+            'page',
+            $request->input('page', 1)
+        )
+        ->withQueryString();
 
-        $inboxArr = $inboxArr->map(function ($msg) {
+        $inboxArr->getCollection()->transform(function ($msg) {
             $msg->subject = decval($msg->subject);
             $msg->message = decval($msg->message);
-                if (!empty($msg->birthday)) {
-                $msg->age = Carbon::parse($msg->birthday)->age;
-            } else {
-                $msg->age = null;
-            }
+
+            $msg->age = $msg->birthday
+                ? \Carbon\Carbon::parse($msg->birthday)->age
+                : null;
+
             return $msg;
         });
-         return $inboxArr;
+        return [
+            "data" => $inboxArr->items(),
+            "links" => $inboxArr->linkCollection(),
+            'filters'   => $request->only('search'),
+            "meta" => [
+                "current_page" => $inboxArr->currentPage(),
+                "last_page" => $inboxArr->lastPage(),
+                "per_page" => $inboxArr->perPage(),
+                "total" => $inboxArr->total(),
+            ]
+        ];
     }
-    private function getOutbox(){
+    private function getOutbox(Request $request){
         $outbox = DB::table('private_messages')
         ->leftJoin('private_messages_text', 'private_messages.private_messages_text_id', '=', 'private_messages_text.id')
         ->leftJoin('users', 'private_messages.to_id', '=', 'users.id')
         ->where('private_messages.users_id', Auth::id())
         ->where('private_messages.xis_disabled', '0')
         ->where("private_messages.public","2")
+        ->when(request('search'), function ($query) {
+            $query->where(function ($q) {
+                $q->filterdefault(['search' => request('search')]);
+            });
+        })
         ->select('private_messages.subject','private_messages.id as id',"users_id as users_id","users.first_name","users.last_login_at as lastlogin","private_messages.public","private_messages.to_id","users.birthday",'private_messages_text.message as message',"private_messages.created_at as created_at",'users.name as user',"users.profile_photo_path as avatar")
         ->orderBy("private_messages.created_at","DESC")
-        ->get();
+        ->paginate(
+            $this->perPage,
+            ['*'],
+            'page',
+            $request->input('page', 1)
+        )
+        ->withQueryString();
 
-        $outbox = $outbox->map(function ($msg) {
+        $outbox->getCollection()->transform(function ($msg) {
             $msg->subject = decval($msg->subject);
             $msg->message = decval($msg->message);
-            if (!empty($msg->birthday)) {
-                $msg->age = Carbon::parse($msg->birthday)->age;
-            } else {
-                $msg->age = null;
-            }
+
+            $msg->age = !empty($msg->birthday)
+                ? Carbon::parse($msg->birthday)->age
+                : null;
+
             return $msg;
         });
-         return $outbox;
+
+
+         return [
+    "data" => $outbox->items(),
+    "links" => $outbox->linkCollection(),
+    'filters'   => $request->only('search'),
+    "meta" => [
+        "current_page" => $outbox->currentPage(),
+        "last_page" => $outbox->lastPage(),
+        "per_page" => $outbox->perPage(),
+        "total" => $outbox->total(),
+    ]
+];
     }
-    public function pm_index()
+    public function pm_index(Request $request)
     {
         //
 
 
 
     return Inertia::render('Homepage/ab/PM', [
-    'inboxArr' => fn () => $this->getInbox() ?? [],
-    'outboxArr' => fn () => $this->getOutbox() ?? [],
+    'inboxArr' => fn () => $this->getInbox($request) ?? [],
+    'outboxArr' => fn () => $this->getOutbox($request) ?? [],
     'form' => fn () => DB::table("users_config")
         ->where("users_id", Auth::id())
         ->get(),
@@ -95,7 +164,7 @@ class PMController extends Controller
         }
         $lastinsertid = DB::table("private_messages_text")
         ->insertGetId([
-            // encval $this->rembr
+            //  $this->rembr
             'message' => ($this->remBR2($request->message)),
         ]);
 
@@ -104,7 +173,7 @@ class PMController extends Controller
         $ts = NOW();
         // \Log::info(["subject"=>$request->subject,"private_message_texts_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>Auth::id(),"public"=>"1"]);
         // \Log::info(["subject"=>$request->subject,"private_message_texts_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>Auth::id(),"public"=>"2"]);
-                                                                        //encval
+                                                                        //
         DB::table("private_messages")->insert(["created_at"=>$ts,"subject"=>($request->subject),"private_messages_text_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>$uid,"public"=>"1"]);
         DB::table("private_messages")->insert(["created_at"=>$ts,"subject"=>($request->subject),"private_messages_text_id"=>$lastinsertid,"to_id"=>$request->to_id,"users_id"=>$uid,"public"=>"2"]);
 

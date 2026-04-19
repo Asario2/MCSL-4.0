@@ -37,8 +37,9 @@
     inheritAttrs: false,          // verhindert doppelte :class‑Warnung (optional)
 
     props: {
-      modelValue:{type: [String, Number.Array,Object],
-        default:'',
+      modelValue: {
+        type: [String, Number, Array, Object],
+        default: '',
       },
       name: { type: String, required: true },
       xname: { type: String, default: "select-field" },
@@ -47,8 +48,12 @@
       disabled:  { type: Boolean, default: false },
       owner: {type:[String,Number],
         default:null,
-      }
+      },
+      to_id:{
+        type:[String,Number],
+        default:0,
 
+    },
     },
 
     data() {
@@ -117,12 +122,18 @@
     },
 
     methods: {
-      handleChange(event) {
-        const value = Number(event.target.value);
-        this.$emit("update:modelValue", value);
-        this.$emit("input-change", value, this.xname);
+    //   handleChange(event) {
+    //     const value = Number(event.target.value);
+    //     this.$emit("update:modelValue", value);
+    //     this.$emit("input-change", value, this.xname);
 
-      },
+    //   }
+    handleChange(event) {
+    const value = Number(event.target.value);
+    if (value === undefined || value === null) return
+       this.$emit("update:modelValue", value);
+       this.$emit("input-change", value, this.xname);
+    },
 
       async getOptions() {
         try {

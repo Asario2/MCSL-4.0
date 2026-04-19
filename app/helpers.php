@@ -498,6 +498,7 @@ if(!function_exists("renderText"))
     Builder::macro('filterdefault', function ($filters) {
         $path = request()->path();
         $path = strtolower($path);
+
         $parts = explode("/", $path);
 
         foreach(gettables() as $ta) {
@@ -506,7 +507,10 @@ if(!function_exists("renderText"))
                 $_GET['table'] = $ta;
             }
         }
-
+        if(substr_count($path,'pm/index'))
+        {
+            $table = 'private_messages';
+        }
         if(@$table == "pictures" || $table == "image_categories") {
             $table = "images";
             $_GET['table'] = $table;
@@ -587,6 +591,7 @@ if(!function_exists("gettables"))
     {
         $tables = DB::table("admin_table")->pluck("name");
         $tables[] = "pictures";
+        $tables[] = "private_messages";
         // \Log::info("asd:".json_encode($tables));
         return $tables;
     }

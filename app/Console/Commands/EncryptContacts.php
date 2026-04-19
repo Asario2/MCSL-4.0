@@ -15,24 +15,25 @@ class EncryptContacts extends Command
     {
         $decrypt = $this->option('decrypt');
 
-        $rows = DB::connection("mariadb")->table('contacts')->get();
+        $rows = DB::connection("mariadb")->table('private_messages_text')->get();
         $this->info("Gefundene Datensätze: " . $rows->count());
 
         foreach ($rows as $row) {
             $update = [];
 
             foreach ([
-                'Name','Vorname','Nachname','Email','Telefon','Handy',"Strasse",'Plz','Geburtsdatum','ripdate','Kommentar','hasyear','hasryear'
+                // 'Name','Vorname','Nachname','Email','Telefon','Handy',"Strasse",'Plz','Geburtsdatum','ripdate','Kommentar','hasyear','hasryear'
+                'message'
             ] as $field) {
                 if ($decrypt) {
-                    $update[$field] = decval_user($row->$field,$row->us_poster);
+                    $update[$field] = decval($row->$field);
                 } elseif(!$row->xis_public_con) {
                     $update[$field] = encval_user($row->$field,$row->us_poster);
                 }
             }
             if (!empty($update)) {
                 DB::connection("mariadb")
-                    ->table('contacts')
+                    ->table('private_messages_text')
                     ->where('id', $row->id)
                     ->update($update);
             }
