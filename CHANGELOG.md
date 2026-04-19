@@ -263,3 +263,4 @@
 ![Version](https://img.shields.io/badge/version-5.17.3-orange) Feature - Changed Format of Privacy (#453)  
 ![Version](https://img.shields.io/badge/version-5.18.5-orange) Bug - fixed evil bug in Newsletter to PM Script (#454)  
 ![Version](https://img.shields.io/badge/version-5.19.5-orange) Hotfix - Newsletter to MSCL-Points not working (#456)  
+![Version](https://img.shields.io/badge/version-5.20.1-orange) Bugs - Fixed several bugs in private messages (#455)  
