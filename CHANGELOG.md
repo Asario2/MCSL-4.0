@@ -262,3 +262,4 @@
 ![Version](https://img.shields.io/badge/version-5.16.6-orange) Hotfix - Add Logo to admin Dashboard (#451)  
 ![Version](https://img.shields.io/badge/version-5.17.3-orange) Feature - Changed Format of Privacy (#453)  
 ![Version](https://img.shields.io/badge/version-5.18.5-orange) Bug - fixed evil bug in Newsletter to PM Script (#454)  
+![Version](https://img.shields.io/badge/version-5.19.5-orange) Hotfix - Newsletter to MSCL-Points not working (#456)  

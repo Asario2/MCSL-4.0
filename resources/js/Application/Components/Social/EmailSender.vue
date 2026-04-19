@@ -201,7 +201,9 @@ export default {
     },
   },
   mounted(){
-//     console.log("th:" + this.comphash);
+
+        // console.log("th:" + this.comphash);
+
   },
   methods: {
     submitPreview() {
@@ -209,7 +211,7 @@ export default {
         alert("Bitte Empfänger angeben");
             return;
         }
-                            
+
     router.post("/email/preview", {
         recipients: this.recipientNames,
         subject: this.subject,
@@ -238,7 +240,7 @@ export default {
         subject: this.subject,
         Body: this.mailbodyText,
         signatur_id: this.selectedSigId,
-      });
+          });
 
       this.newsletterName = "";
     },
