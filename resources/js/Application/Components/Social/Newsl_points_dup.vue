@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <MetaHeader title="8 MCSL Points wurden deinem Konto gutgeschrieben" />
+    <MetaHeader title="Dieser Newsletter wurde schon verpunktet" />
     <div class="flex flex-col items-center justify-center h-screen space-y-4 mt-[-80px]">
       <ErrorSVG color="#FFC900"></ErrorSVG>
       <div class="text-center text-lg font-semibold">
