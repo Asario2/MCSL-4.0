@@ -180,9 +180,8 @@
                                                 <dropdown-link v-if="rights?.delete == 1"
                                                     :with-icon="false"
                                                     :with-route="true"
-                                                    :route-name="
-                                                        route('pm.index')
-                                                    ">
+                                                    :route-name="route('pm.index', { tab: 'inbox' })"
+                                                    >
                                                 <span class="inline-flex items-center gap-1">
                                                     <IconPM class="w-4 h-4" color="#ffa500" />
                                                     <span>Private Nachrichten</span>

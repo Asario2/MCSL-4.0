@@ -228,7 +228,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     })->name('dashboard');
     // Route::get('/ri', [HomeController::class, 'home_rindex'])->name('home.rindex');
 
-    Route::get('/newslToMCSLPoints/{uhash?}/{comphash?}/{email?}', [TablesController::class, 'SetNewsl_alt'])->name('newsl.to.mcsp');
+    Route::get('newslToMCSLPoints/{uhash?}/{comphash?}/{email?}', [TablesController::class, 'SetNewsl_alt'])->name('newsl.to.mcsp');
     Route::post("/personal_update", [PersonalController::class, 'update'])->name("personal.update");
     Route::get('/home/QRCodaH', [HomeController::class, 'QRCodaH'])->name('home.qrcodah');
     Route::get('/home/aboutme', [HomeController::class, 'home_about'])->name('home.about');

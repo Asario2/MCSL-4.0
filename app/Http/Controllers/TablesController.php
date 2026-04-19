@@ -951,7 +951,7 @@ public function ShowTable(Request $request, $table_alt = null)
         $content = $request->mailbodyText;
         $signatur = $request->signatureText;
         $title = @$request->subject;
-
+        \Log::info($request);
         $ma = NEW MailController();
 
 
@@ -968,10 +968,11 @@ public function ShowTable(Request $request, $table_alt = null)
             {
                 $res = DB::table("contacts")->where("name",$nick)->select("email","uhash","name")->first();
             }
+            $ch = DB::table("newsletter")->where("id",$request->mailbodyId)->select("comphash")->first();
             $uhash = @$res->uhash;
             $email = @decval_user($res->email,Auth::id());
-            $link[2] = "http://".request()->getHost()."/newslToMCSLPoints/%uhash%/%chash%/".rawurlencode($email);
-            $link[1] = "http://".request()->getHost()."/unsubscribe/%uhash%/".rawurlencode($email);
+            $link[2] = "http://".request()->getHost()."/newslToMCSLPoints/".$uhash."/".$ch->comphash."/".rawurlencode($email);
+            $link[1] = "http://".request()->getHost()."/unsubscribe/$uhash/".rawurlencode($email);
             $link[0] = "http://".request()->getHost();
 
 

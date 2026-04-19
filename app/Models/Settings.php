@@ -508,6 +508,7 @@ public static array $image_sizes =
     19 => 'mfx_infos_message',
     20 => 'ab_users_rights_xkis_DumpDB',
     21 => 'ab_users_rights_xkis_DumpGItDataBase',
+    22 => 'ab_contacts_hasyear',
 ];
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",

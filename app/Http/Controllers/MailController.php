@@ -524,12 +524,13 @@ $mailPassword = env('MAIL_PASSWORD');
             "name" => 'required|string',
             'signatur_id' => 'nullable|integer',
         ]);
-
+        $chash = $this->randomString64();
         DB::table('newsletter')->insert([
             'subject' => $validated['subject'],
             'body' => $validated['Body'],
             'name' => $validated['name'],
             'signatur_id' => $validated['signatur_id'],
+            'comphash'=> $chash,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
