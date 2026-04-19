@@ -43,8 +43,9 @@ go(link) {
 
     const searchParams = new URLSearchParams(window.location.search);
     const search = searchParams.get('search');
-
-    let finalUrl = "/" + this.basePath + "?page=" + page;
+    // const amp = !location.href.includes('tab') ? '&' : '?';
+    const amp = "?";
+    let finalUrl = "/" + this.basePath + amp + "page=" + page;
 
     if (search) {
         finalUrl += "&search=" + encodeURIComponent(search);

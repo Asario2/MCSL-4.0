@@ -8,21 +8,21 @@
     <div class="max-w-none bg-layout-sun-100 dark:bg-layout-night-100 p-7 rounded-2xl shadow">
 
       <!-- Tabs -->
-        <div class="flex border-b border-gray-300 dark:border-gray-700 mb-6 overflow-x-auto">
-            <button
-            v-for="tabItem in tabs"
-            :key="tabItem.id"
-            @click="tab = tabItem.id"
-            :class="[
-                'flex-1 text-center p-3 border-b-2 font-medium transition',
-                tab === tabItem.id
-                ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                : 'border-transparent hover:text-gray-600 dark:hover:text-gray-300'
-            ]"
-            >
-            {{ tabItem.icon }} {{ tabItem.label }}
-            </button>
-        </div>
+            <div class="flex border-b border-gray-300 dark:border-gray-700 mb-6 overflow-x-auto">
+                <button
+                v-for="tabItem in tabs"
+                :key="tabItem.id"
+                @click="changeTab(tabItem.id)"
+                :class="[
+                    'flex-1 text-center p-3 border-b-2 font-medium transition',
+                    tab === tabItem.id
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent hover:text-gray-600 dark:hover:text-gray-300'
+                ]"
+                >
+                {{ tabItem.icon }} {{ tabItem.label }}
+                </button>
+            </div>
 
       <!-- Inhalte -->
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow px-4 pt-1">
@@ -56,7 +56,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(msg, index) in paginatedInbox" :key="msg.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <tr v-for="msg in inboxArr?.data ?? []" :key="msg.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
                   <td class="border border-gray-300 dark:border-gray-700 text-center pl-3">
                 <InputCheckbox
                 :model-value="selectedInbox[msg.id] || 0"
@@ -90,7 +90,8 @@
                 </tr>
               </tbody>
             </table>
-          </div>
+
+        </div>
 
           <!-- Buttons Inbox -->
           <div class="mt-4 flex gap-2">
@@ -108,19 +109,10 @@
             >
               Löschen
             </button>
+            <pagination basePath="pm/index/inbox" :links="inboxArr.links"></pagination>
           </div>
 
-          <!-- Pagination Inbox -->
-          <div class="mt-4 flex justify-center space-x-1">
-            <button
-              v-for="page in inboxTotalPages"
-              :key="page"
-              @click="currentPageInbox = page"
-              :class="['px-3 py-1 rounded', currentPageInbox === page ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300']"
-            >
-              {{ page }}
-            </button>
-          </div>
+
         </div>
 
         <!-- Outbox -->
@@ -173,7 +165,7 @@
                   </td>
                 </tr>
 
-                <tr v-if="paginatedOutbox.length === 0">
+                <tr v-if="paginatedOutbox?.length === 0">
                   <td colspan="4" class="text-center py-4 text-gray-500 dark:text-gray-300">Keine Nachrichten gefunden</td>
                 </tr>
               </tbody>
@@ -192,7 +184,7 @@
           </div>
 
           <!-- Pagination Outbox -->
-          <div class="mt-4 flex justify-center space-x-1">
+          <!-- <div class="mt-4 flex justify-center space-x-1">
             <button
               v-for="page in outboxTotalPages"
               :key="page"
@@ -201,7 +193,9 @@
             >
               {{ page }}
             </button>
-          </div>
+          </div> -->
+
+          <pagination basePath="pm/index/outbox" :links="outboxArr.links"></pagination>
         </div>
 
         <!-- Nachricht lesen -->
@@ -305,14 +299,15 @@ import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import MessageSettings from "@/Application/Shared/MessageSettings.vue";
 import PublishButton from "@/Application/Components/Form/PublishButton.vue";
-import { SD, GetProfileImagePath,rumLaut,nl2br, GetSettings } from "@/helpers";
+import { SD, GetProfileImagePath,rumLaut,nl2br, CleanTab, GetSettings } from "@/helpers";
 import InputSelectU from "@/Application/Components/Form/InputSelectU.vue";
 import InputHtml from "@/Application/Components/Form/InputHtml.vue";
 import InputCheckbox from "@/Application/Components/Form/InputCheckbox.vue";
 import axios from "axios";
-import { router } from '@inertiajs/vue3'
+// import { router } from '@inertiajs/vue3'
 import {route} from 'ziggy-js';
 import InputFormText from "@/Application/Components/Form/InputFormText.vue";
+import Pagination from "@/Application/Components/Pagination.vue";
 
 export default {
   components: {
@@ -326,382 +321,250 @@ export default {
     PublishButton,
     InputCheckbox,
     MessageSettings,
+    Pagination,
   },
 
   props: {
-    inboxArr: { type: Array, default: () => [] },
-    outboxArr: { type: Array, default: () => [] },
+    inboxArr: {
+      type: Object,
+      default: () => ({ data: [], links: [] })
+    },
+    outboxArr: {
+      type: Object,
+      default: () => ({ data: [], links: [] })
+    },
     form: { type: Array, default: () => [] },
-    settings: {type: [Array,Object], default: () => [] },
+    settings: { type: [Array, Object], default: () => [] },
   },
 
   data() {
     return {
-      tab: "inbox",
+      // 🔥 SAFE INIT (kein direct URL parsing im data!)
+      tab: CleanTab("pm/index/") ?? 'inbox',
+
       message: "",
       subject: "",
-      to_id: null,
+      to_id: 0,
+
       tabs: [
         { id: "inbox", label: "Inbox", icon: "📥" },
         { id: "outbox", label: "Outbox", icon: "📤" },
         { id: "new", label: "Neue Nachricht", icon: "✉️" },
         { id: "settings", label: "Einstellungen", icon: "⚙️" },
       ],
-      searchQuery: '',
-      perPage: this.form[0]?.cnt_numrows || 10,
-      currentPageInbox: 1,
-      currentPageOutbox: 1,
+
+      searchInbox: this.inboxArr?.filters?.search || '',
+      searchOutbox: this.outboxArr?.filters?.search || '',
+
       selectedMessage: null,
+
+      perPage: this.form[0]?.cnt_numrows || 10,
+
       UID: window?.Laravel?.userId || null,
-      searchInbox: '',
-      searchOutbox: '',
+
       selectAllInbox: 0,
       selectAllOutbox: 0,
-      inbox: this.inboxArr ?? [],
+
       selectedInbox: {},
       selectedOutbox: {},
+
+      // 🔥 IMPORTANT: prevents race condition crashes
+
     };
   },
 
-  computed: {
-    filteredInbox() {
-      if (!this.searchInbox) return this.inboxArr;
-      const q = this.searchInbox.toLowerCase();
-      return this.inboxArr.filter(msg =>
-        msg.user.toLowerCase().includes(q) ||
-        msg.subject.toLowerCase().includes(q)
-      );
-    },
-    paginatedInbox() {
-       return (this.inbox ?? []).slice(this.start, this.end)
-    },
-    inboxTotalPages() {
-      return Math.ceil(this.filteredInbox.length / this.perPage) || 1;
-    },
-    selectedInboxIds() {
-  return Object.keys(this.selectedInbox)
-    .filter(id => this.selectedInbox[id])
-    .map(id => parseInt(id));
-},
-
-    filteredOutbox() {
-      if (!this.searchOutbox) return this.outboxArr;
-      const q = this.searchOutbox.toLowerCase();
-      return this.outboxArr.filter(msg =>
-        msg.user.toLowerCase().includes(q) ||
-        msg.subject.toLowerCase().includes(q)
-      );
-    },
-    paginatedOutbox() {
-      const start = (this.currentPageOutbox - 1) * this.perPage;
-      return this.filteredOutbox.slice(start, start + this.perPage);
-    },
-    outboxTotalPages() {
-      return Math.ceil(this.filteredOutbox.length / this.perPage) || 1;
-    },
-    selectedOutboxIds() {
-      return Object.keys(this.selectedOutbox)
-        .filter(id => this.selectedOutbox[id] === 1)
-        .map(id => parseInt(id));
-    },
+  mounted() {
+    // 🔥 URL sync SAFE (after mount only)
+    const urlTab = new URLSearchParams(window.location.search).get('tab');
+    if (urlTab) this.tab = urlTab;
   },
 
-  async mounted() {
-     const settings = await GetSettings();
+  computed: {
+
+    paginatedInbox() {
+      return this.inboxArr.data;
+    },
+
+    paginatedOutbox() {
+      return this.outboxArr.data;
+    },
+
+    selectedInboxIds() {
+      return Object.keys(this.selectedInbox)
+        .filter(id => this.selectedInbox[id])
+        .map(Number);
+    },
+
+    selectedOutboxIds() {
+      return Object.keys(this.selectedOutbox)
+        .filter(id => this.selectedOutbox[id])
+        .map(Number);
+    },
   },
 
   methods: {
-    SD,
-    rumLaut,
-    nl2br,
-    GetProfileImagePath,
-    GetSettings,
-    setSelected(box, id, val) {
 
-    if (box === 'inbox') {
-        if (val) {
-        this.selectedInbox[id] = 1;
-        } else {
-        delete this.selectedInbox[id];
+    SD, GetProfileImagePath, rumLaut, nl2br, GetSettings, CleanTab,
+
+    // 🔥 FIXED TAB SWITCH (NO RACE CONDITION)
+    changeTab(newTab) {
+      if (this._navigating) return;
+
+      this._navigating = true;
+      this.tab = newTab;
+
+      this.$inertia.get('/pm/index/' + newTab, {
+      }, {
+        replace: true,
+        preserveState: false,
+        preserveScroll: true,
+        only: ['inboxArr', 'outboxArr'],
+        onFinish: () => {
+          this._navigating = false;
         }
-    }
-
-    if (box === 'outbox') {
-        if (val) {
-        this.selectedOutbox[id] = 1;
-        } else {
-        delete this.selectedOutbox[id];
-        }
-    }
-
-    },
-
-    toggleSelectAll(tab, value) {
-      if (tab === 'inbox') {
-        this.selectAllInbox = value;
-        this.paginatedInbox.forEach(msg => {
-          this.selectedInbox[msg.id] = value ? 1 : 0;
-        });
-      } else if (tab === 'outbox') {
-        this.selectAllOutbox = value;
-        this.paginatedOutbox.forEach(msg => {
-          this.selectedOutbox[msg.id] = value ? 1 : 0;
-        });
-      }
-    },
-
-   async markAsRead() {
-
-  if (!this.selectedInboxIds.length) {
-    alert('Keine Nachrichten ausgewählt.');
-    return;
-  }
-
-  try {
-
-    await axios.post(route('admin.pm.mark'), {
-      ids: this.selectedInboxIds.join(',')
-    });
-
-    // Nachrichten lokal updaten
-    this.inboxArr.forEach(msg => {
-      if (this.selectedInboxIds.includes(msg.id)) {
-        msg.checked = 1;
-      }
-    });
-
-    // Auswahl zurücksetzen
-    this.selectedInbox = {};
-    this.$forceUpdate();
-    this.selectAllInbox = 0;
-    //  this.selectAllInbox = false;
-
-  } catch (err) {
-    console.error(err);
-    alert('Fehler beim Markieren.');
-  }
-},
-
-    deleteMessages(tab) {
-//       console.log('selectedOutbox:', this.selectedOutbox);
-//       console.log('selectedOutboxIds:', this.selectedOutboxIds);
-        const ids = tab === 'inbox'
-        ? this.selectedInboxIds
-        : this.selectedOutboxIds;
-
-      if (ids.length === 0) {
-        alert('Keine Nachrichten ausgewählt.');
-        return;
-      }
-
-      if (!confirm(`Sind Sie sicher, dass Sie ${ids.length} Nachricht(en) löschen möchten?`)) return;
-
-      const idsStr = ids.join(',');
-
-      axios.post(route('admin.pm.delmore'), { ids: idsStr })
-        .then(() => {
-          if (tab === 'inbox') {
-            ids.forEach(id => { this.selectedInbox[id] = 0; });
-            this.selectAllInbox = 0;
-          } else {
-            ids.forEach(id => { this.selectedOutbox[id] = 0; });
-            this.selectAllOutbox = 0;
-          }
-
-          this.$inertia.reload({ only: ['inboxArr', 'outboxArr'] });
-        })
-        .catch(err => {
-          console.error('Fehler beim Löschen:', err);
-          alert('Fehler beim Löschen der Nachrichten.');
-        });
-    },
-
-    checkAll() {
-      if (!this.selectedMessage?.id) return;
-
-      axios.post(route('admin.pm.check', this.selectedMessage.id))
-        .then(() => {
-          this.$inertia.reload({
-            only: ['inboxArr', 'outboxArr'],
-            preserveScroll: true,
-            onFinish: () => {
-              this.tab = 'read';
-            }
-          });
-        })
-        .catch(err => console.error(err));
-    },
-
-    resetPage() {
-      if (this.tab === "inbox") {
-        this.currentPageInbox = 1;
-        this.selectAllInbox = 0;
-      } else if (this.tab === "outbox") {
-        this.currentPageOutbox = 1;
-        this.selectAllOutbox = 0;
-      }
-    },
-
-    answer(msg) {
-//       console.log('Answer function called with message:', msg);
-
-      if (!msg) {
-        console.error('No message provided for answer');
-        return;
-      }
-
-      // Zur "Neue Nachricht" Tab wechseln
-      this.tab = "new";
-
-      // Empfänger-ID setzen - verschiedene mögliche Felder prüfen
-      this.to_id = msg.users_id || msg.user_id || msg.from_id || msg.UID;
-//       console.log('Set to_id:', this.to_id, 'from message fields:', {
-    //     users_id: msg.users_id,
-    //     user_id: msg.user_id,
-    //     from_id: msg.from_id,
-    //     UID: msg.UID
-    //   });
-
-      // Betreff vorbereiten
-      const subj = msg.subject || "";
-      this.subject = subj.startsWith("Re:") ? subj : "Re: " + subj;
-//       console.log('Set subject:', this.subject);
-
-      // Nachricht vorbereiten
-      let original = msg.message || "";
-//       console.log('Original message:', original);
-
-      // HTML zu Text konvertieren (vereinfacht)
-      if (original.includes('<') || original.includes('>')) {
-        // Einfache HTML-Bereinigung
-        original = original
-          .replace(/<br\s*\/?>/gi, "\n")
-          .replace(/<\/p>/gi, "\n\n")
-          .replace(/<[^>]*>/g, "")
-          .trim();
-      }
-
-//       console.log('Cleaned message:', original);
-
-      // Zitat erstellen
-      const quoted = original
-        .split("\n")
-        .filter(line => line.trim()) // Leere Zeilen entfernen
-        .map(line => `> ${line.trim()}`)
-        .join("\n");
-
-      this.message = `<blockquote>${quoted}</blockquote><br><br>`;
-//       console.log('Final message set');
-
-      // Kurze Verzögerung für UI-Update
-      this.$nextTick(() => {
-//         console.log('UI updated, ready for input');
       });
     },
 
-    rewrite(msg) {
-//       console.log('Rewrite function called with message:', msg);
+    setSelected(box, id, val) {
+      const target = box === 'inbox'
+        ? this.selectedInbox
+        : this.selectedOutbox;
 
-      if (!msg) return;
-      this.tab = "new";
-      this.to_id = msg.users_id || msg.user_id || msg.from_id || msg.UID;
-      this.subject = "";
-      this.message = "";
-
-//       console.log('Rewrite completed:', { to_id: this.to_id });
+      if (val) target[id] = 1;
+      else delete target[id];
     },
 
-    sendMessage() {
-//       console.log('Sending message:', {
-    //     to_id: this.to_id,
-    //     subject: this.subject,
-    //     message: document.getElementById("editor_message").innerHTML,
-    //     message_length: this.message.length
-    //   });
-      this.message = document.getElementById("editor_message").innerHTML;
-      if (!this.message.trim()) {
-        alert("Bitte gib eine Nachricht ein.");
-        return;
-      }
+    toggleSelectAll(tab, value) {
+      const list = tab === 'inbox'
+        ? this.paginatedInbox
+        : this.paginatedOutbox;
 
-      if (!this.to_id) {
-        alert("Bitte wählen Sie einen Empfänger aus.");
-        return;
-      }
+      const target = tab === 'inbox'
+        ? this.selectedInbox
+        : this.selectedOutbox;
 
-      if (!this.subject.trim()) {
-        alert("Bitte geben Sie einen Betreff ein.");
-        return;
-      }
+      list.forEach(msg => {
+        if (value) target[msg.id] = 1;
+        else delete target[msg.id];
+      });
 
-      axios.post(route('pm.save'), {
-        message: document.getElementById("editor_message").innerHTML,
-        to_id: this.to_id,
-        subject: this.subject,
-      })
-      .then(response => {
-//         console.log('Gespeichert:', response.data);
-        this.message = "";
-        this.subject = '';
-        this.to_id = null;
-        this.tab = "outbox";
-        this.$inertia.reload();
-      })
-      .catch(error => {
-        console.error('Fehler beim Speichern:', error);
-        alert('Fehler beim Senden der Nachricht: ' + error.message);
+      if (tab === 'inbox') this.selectAllInbox = value;
+      else this.selectAllOutbox = value;
+    },
+
+    async markAsRead() {
+      if (!this.selectedInboxIds.length) return;
+
+      await axios.post(route('admin.pm.mark'), {
+        ids: this.selectedInboxIds.join(',')
+      });
+
+      this.selectedInbox = {};
+      this.selectAllInbox = 0;
+
+      this.$inertia.reload({ only: ['inboxArr'] });
+    },
+
+    deleteMessages(tab) {
+
+      const ids = tab === 'inbox'
+        ? this.selectedInboxIds
+        : this.selectedOutboxIds;
+      if (!confirm("Sind Sie sicher, dass Sie diese " + ids.length + " Einträge löschen möchten?"))
+          return;
+      if (!ids.length) return;
+
+      axios.post(route('admin.pm.delmore'), {
+        ids: ids.join(',')
+      }).then(() => {
+        this.selectedInbox = {};
+        this.selectedOutbox = {};
+        this.selectAllInbox = 0;
+        this.selectAllOutbox = 0;
+
+        this.$inertia.reload({ only: ['inboxArr', 'outboxArr'] });
       });
     },
 
     ShowMessage(msg) {
-//       console.log('ShowMessage called with:', msg);
       this.selectedMessage = msg;
 
-      const exists = this.tabs.find(t => t.id === "read");
-      if (!exists) {
-        this.tabs.unshift({ id: "read", label: "Nachricht lesen", icon: "📖" });
+      if (!this.tabs.find(t => t.id === "read")) {
+        this.tabs.unshift({
+          id: "read",
+          label: "Nachricht",
+          icon: "📖"
+        });
       }
 
       this.tab = "read";
-      this.checkAll();
     },
 
-    formatDate(dateStr) {
-      const date = new Date(dateStr);
-      return date.toLocaleString();
+    sendMessage() {
+      const el = document.getElementById("editor_message");
+      if (!el) return;
+
+      const msg = el.innerHTML;
+
+      if (!msg || !this.to_id || !this.subject) return;
+
+      axios.post(route('pm.save'), {
+        message: msg,
+        to_id: this.to_id,
+        subject: this.subject,
+      }).then(() => {
+        this.message = "";
+        this.subject = "";
+        this.to_id = null;
+
+        this.changeTab("outbox");
+      });
     },
 
-    updateFormData(value) {
-      this.to_id = value;
-//       console.log('Form data updated - to_id:', value);
+    answer(msg) {
+      this.tab = "new";
+      this.to_id = msg.users_id;
+      this.subject = msg.subject?.startsWith("Re:")
+        ? msg.subject
+        : "Re: " + msg.subject;
+    },
+
+    rewrite(msg) {
+      this.tab = "new";
+      this.to_id = msg.users_id;
+      this.subject = "";
+      this.message = "";
+    },
+
+    formatDate(date) {
+      return new Date(date).toLocaleString();
     },
   },
-
   watch: {
-    tab(newTab) {
-//       console.log('Tab changed to:', newTab);
-      this.searchInbox = '';
-      this.searchOutbox = '';
-      this.resetPage();
-    },
-    searchQuery() { this.resetPage(); },
-    inboxArr(newVal) {
-    this.inbox = newVal ?? [];
+  searchInbox(value) {
+    this.$inertia.get('/pm/index/inbox', {
+      search: value
+    }, {
+      preserveState: true,
+      replace: true,
+      preserveScroll: true,
+      only: ['inboxArr']
+    });
   },
-    form: {
-      handler(newVal) {
-        if (newVal && newVal[0] && newVal[0].cnt_numrows) {
-          this.perPage = parseInt(newVal[0].cnt_numrows);
-          this.resetPage();
-        }
-      },
-      deep: true,
-      immediate: true
-    }
+
+  searchOutbox(value) {
+    this.$inertia.get('/pm/index/outbox', {
+      search: value
+    }, {
+      preserveState: true,
+      replace: true,
+      preserveScroll: true,
+      only: ['outboxArr']
+    });
   }
+}
 };
 </script>
-
 <style>
 .w-fully{
     min-width:100% !important;

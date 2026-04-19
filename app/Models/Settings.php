@@ -338,7 +338,7 @@
             "links"=>["headline","url","messsage"],
             "contacts"=>["Name","Gruppe"],
             "categories"=>["name","name_en"],
-            "private_messages"=>["subject"],
+            "private_messages"=>["subject","users.name"],
             "users_rights"=>["name","shortname"],
             "notifications"=>["name","text"],
             'publikationen'=>['name',"file_pdf","quellen.name"],
