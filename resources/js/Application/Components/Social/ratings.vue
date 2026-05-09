@@ -33,23 +33,23 @@ dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white">
             }
         },
         initShariff() {
-      nextTick(() => {
-        if (this.$refs.shariff) {
-            // console.log('Shariff Element:', this.$refs.shariff);
-            const shariffElement = document.getElementById('shariff-container');
+    //   nextTick(() => {
+    //     if (this.$refs.shariff) {
+    //         // console.log('Shariff Element:', this.$refs.shariff);
+    //         const shariffElement = document.getElementById('shariff-container');
 
-        if (shariffElement) {
-        new Shariff(shariffElement, {
-            services: ['facebook', 'twitter', 'xing', 'whatsapp'],  // Deine gewünschten Dienste
-            theme: 'classic', // Oder ein anderes Thema
-            orientation: 'horizontal', // Oder 'vertical'
-        });
-        }
-    }
-        else {
-          console.error('Shariff Element nicht gefunden');
-        }
-      });
+    //     if (shariffElement) {
+    //     new Shariff(shariffElement, {
+    //         services: ['facebook', 'twitter', 'xing', 'whatsapp'],  // Deine gewünschten Dienste
+    //         theme: 'classic', // Oder ein anderes Thema
+    //         orientation: 'horizontal', // Oder 'vertical'
+    //     });
+    //     }
+    // }
+    //     else {
+    //       console.error('Shariff Element nicht gefunden');
+    //     }
+    //   });
     },
 
     toggleShareBox() {

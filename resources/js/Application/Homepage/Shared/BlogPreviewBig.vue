@@ -84,7 +84,7 @@
             </div>
         </Link>
         <div class="mt-4">
-            <socialButtons :postId="blog.id" :slug="blog.autoslug" :nostars="true" :big="true"/>
+            <socialButtons :postId="blog.id" :slug="blog.autoslug" :title="'Blog: '+blog.title" :nostars="true" :big="true"/>
         </div>
         </div>
     </div>
@@ -125,7 +125,11 @@ export default {
         //     type: Number,
         // },
     },
-
+    data(){
+        return{
+            isCommentActive:false,
+        }
+    },
 methods:{
     smilies(text){
                     return replaceSmilies(this.nl2br(text));

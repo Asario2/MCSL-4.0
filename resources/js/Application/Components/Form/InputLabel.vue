@@ -1,8 +1,9 @@
 <template>
-    <label
+<ClientOnly>
+    <label :title="helptext"
         :for="name"
         class="w-full block text-sm font-medium text-layout-sun-900 dark:text-layout-night-900"
-        v-tippy
+
     >
         <div class="inline-flex items-center">
             <div v-if="label">{{ label }}</div>
@@ -13,10 +14,11 @@
             ></icon-exclamation-circle>
         </div>
     </label>
-    <tippy v-if="helptext" v-html="helptext" placement="left"></tippy>
+    </ClientOnly>
 </template>
 
 <script>
+import ClientOnly from "@/Application/Components/ClientOnly.vue"
 import IconExclamationCircle from "@/Application/Components/Icons/ExclamationCircle.vue";
 
 export default {
@@ -24,6 +26,7 @@ export default {
 
     components: {
         IconExclamationCircle,
+        ClientOnly
     },
 
     props: {

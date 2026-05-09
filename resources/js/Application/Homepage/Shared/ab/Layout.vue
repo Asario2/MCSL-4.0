@@ -1,8 +1,8 @@
     <template>
         <meta-header :title="headerTitle">
         <template #robots>
-            <meta head-key="robots" name="robots" content="noindex, nofollow" v-if="noIndexNoFollow" />
-            <meta head-key="robots" name="robots" content="index, follow" v-else />
+
+            <meta head-key="robots" name="robots" content="index, follow"/>
         </template>
 
         <template #description>
@@ -256,7 +256,7 @@
             <div class="container mx-auto max-w-6xl min-h-screen py-32 px-2">
             <!-- Toast -->
             <div>
-                <toast></toast>
+                <Toast></Toast>
             </div>
 
             <!-- Slot für Content -->
@@ -376,16 +376,16 @@
     import BrandFooter from "@/Application/Shared/BrandFooter.vue";
     import Loader from "@/Application/Components/Loader.vue";
     import LinkFooter from "@/Application/Shared/LinkFooter.vue";
-    import { Inertia } from '@inertiajs/inertia';
+    import { router } from '@inertiajs/vue3'
     import IconMenu from "@/Application/Components/Icons/Menu.vue"
     import Toast from "@/Application/Components/Content/Toast.vue";
     import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
     import { SD,GetProfileImagePath,CheckTRights } from '@/helpers';
-    import { throttle } from 'lodash';
+    import throttle from 'lodash/throttle';
     import pickBy from "lodash/pickBy";
 
     export default {
-        name: "Homepage_Shared_Layout",
+        name: "Homepage_Shared_Layout_ab",
 
         components: {
         MetaHeader,
@@ -411,25 +411,29 @@
     props: {
         sd: {
         type: String,
-        required: true
+        required: false,
         }
     },
 
-    setup() {
-        const loadingStore = useLoadingStore();
-        return { loadingStore };
-    },
+    // setup() {
+    //     const loadingStore = useLoadingStore();
+    //     return { loadingStore };
+    // },
 
     data() {
         return {
-        mode: localStorage.theme ? localStorage.theme : "dark",
+        headerTitle: this.$page?.props?.title ?? "",
+        headerDescription: this.$page?.props?.description ?? "",
+        headerUrl: this.$page?.props?.url ?? null,
+        headerImage: this.$page?.props?.image ?? null,
+        mode:typeof window !== "undefined" ? localStorage.theme : "dark",
         isOpen_Menu: false,
         year: new Date().getFullYear(),
         pendingRequests: 0,
         rights: {
             edit: null,
                     },
-        isLoading: localStorage.getItem('loading') === 'true',
+        // isLoading: localStorage.getItem('loading') === 'true',
         search: '',
         searchval: false,
         imagesLoaded: false,
@@ -437,8 +441,10 @@
         };
     },
 
+
     async mounted() {
-        const params = new URLSearchParams(window.location.search);
+        if(typeof window !== "undefined"){
+    const params = new URLSearchParams(window.location.search);
     const search = params.get("search");
     // Wenn search gesetzt ist, verstecke das Loading-Div
     if (search && search.trim() !== "") {
@@ -448,13 +454,15 @@
     else{
         //this.setLoading(true);
     }
+        }
+
     this.rights.delete = await CheckTRights("delete", 'private_messages');
 
-        const shouldReload = localStorage.getItem('reload_dashboard');
+        // const shouldReload = localStorage.getItem('reload_dashboard');
 
-        if (shouldReload) {
-        localStorage.removeItem('reload_dashboard');
-        }
+        // if (shouldReload) {
+        // localStorage.removeItem('reload_dashboard');
+        // }
 
         // Den 'search' Parameter prüfen
         const urlParams = new URLSearchParams(window.location.search);
@@ -497,7 +505,10 @@
         this.waitForImagesToLoad();
 
         if (this.isLoading) {
-        localStorage.setItem('loading', 'true');
+        if(typeof window !== "undefined")
+            {
+            localStorage.setItem('loading', 'true');
+            }
         }
     },
     watch: {
@@ -527,8 +538,11 @@
         CheckTRights,
         setLoadingState(state) {
         this.isLoading = state;
-        localStorage.setItem('loading', state ? state.toString():'');
-        },
+        if(typeof window !== "undefined")
+        {
+            localStorage.setItem('loading', state ? state.toString():'');
+        }
+    },
         checkLoadingState() {
         if (this.pendingRequests === 0 && this.imagesLoaded) {
             this.setLoadingState(false);
@@ -565,22 +579,6 @@
             this.checkLoadingState();
         }
         },
-        reopenCookieBanner() {
-//         console.log("test");
-//             console.log(window.LaravelCookieConsent);
-
-         setTimeout(() => {
-            if (window.LaravelCookieConsent && typeof window.LaravelCookieConsent.show === 'function') {
-            window.LaravelCookieConsent.reset();
-            alert("yes");
-                window.LaravelCookieConsent.show();
-
-            }
-            else{
-                alert("no_function");
-
-            }
-        }, 50);
         },
         checkLoadingState() {
         if (this.pendingRequests === 0 && this.imagesLoaded) {
@@ -625,7 +623,10 @@
 
         changeMode() {
         this.mode = this.mode === "dark" ? "light" : "dark";
+        if(typeof window !== "undefined")
+        {
         localStorage.theme = this.mode;
+        }
         },
 
         logoutUser() {
@@ -647,7 +648,7 @@
         this.search = event.target.value;
         this.startSearchTimeout();
         },
-    },
+
     };
     </script>
 

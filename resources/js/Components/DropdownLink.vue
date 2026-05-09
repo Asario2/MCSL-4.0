@@ -1,14 +1,5 @@
-<script setup>
-import { Link } from "@inertiajs/vue3";
-
-defineProps({
-    href: String,
-    as: String,
-});
-</script>
-
 <template>
-    <div>
+    <div v-if="isClient">
         <button
             v-if="as == 'button'"
             type="submit"
@@ -34,4 +25,35 @@ defineProps({
         </Link>
     </div>
 </template>
+<script>
+import { Link } from "@inertiajs/vue3";
+
+export default {
+    name: "Dropdown_new",
+
+    components: {
+        Link,
+    },
+
+    props: {
+        href: {
+            type: String,
+            default: null,
+        },
+        as: {
+            type: String,
+            default: null,
+        },
+    },
+    data(){
+        return {
+            isClient:false,
+        }
+    },
+    mounted()
+    {
+        this.isClient = true;
+    }
+};
+</script>
 

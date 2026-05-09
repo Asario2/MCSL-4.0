@@ -146,7 +146,7 @@
 
                     <div v-else v-html="decodedContent"></div>
                     <div>
-                        <socialButtons :postId="blog.id" :empty="true" :nostars="true" />
+                        <socialButtons :postId="blog.id" :title="'Blog: '+blog.title" :empty="true" :nostars="true" />
                     </div>
                     <div class="flex items-start gap-4">
                         <!-- Profilbild -->
@@ -225,6 +225,7 @@ export default {
         return {
             currentTime: 0,
             seekValue: 0,
+            dmaa:'',
         };
     },
     computed: {

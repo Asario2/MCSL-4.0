@@ -37,15 +37,15 @@
                     </div>
                 </div>
                 <p>
-                    <display-number :value="user.reading_time" :after-digits="0"
+                    <!-- <display-number :value="user.reading_time" :after-digits="0"
                         value-unit="Minuten Lesezeit"
-                        value-single-unit="Minute Lesezeit"></display-number>
+                        value-single-unit="Minute Lesezeit"></display-number> -->
                 </p>
             </div>
         </Link>
 
         <!-- **Tabelle direkt unterhalb des Blog-Containers (fixiert)** -->
-        <SocialButtons :postId="user.id" sm="Sm" :nostars="true" :ublock="user.name"      />
+        <SocialButtons :postId="user.id" :title="'Benutzer '+user.name" sm="Sm" :nostars="true" :ublock="user.name"      />
 
     </div>
 </template>
@@ -64,7 +64,7 @@ import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 import IconCamera from "@/Application/Components/Icons/Camera.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import IconComment from "@/Application/Components/Icons/IconComment.vue";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 import mapValues from "lodash/mapValues";
 import pickBy from "lodash/pickBy";
 import IconEye from "@/Application/Components/Icons/Eye.vue";
@@ -113,7 +113,7 @@ export default {
     },
     data() {
     return {
-        dma: localStorage.getItem('theme'),
+        // dma: localStorage.getItem('theme'),
         showShareBox: {} ,
         showStarBox: {}, // Wert aus localStorage speichern
         showComments: null, // Zustand für die Anzeige der Kommentarfunktion
@@ -189,20 +189,20 @@ methods:{
 },
 
         initShariff(id) {
-    nextTick(() => {
-        const shariffRef = this.$refs['shariff_' + id];
-        if (!shariffRef) {
-            console.error(`Shariff-Element für ID ${id} nicht gefunden`);
-            return;
-        }
+    // nextTick(() => {
+    //     const shariffRef = this.$refs['shariff_' + id];
+    //     if (!shariffRef) {
+    //         console.error(`Shariff-Element für ID ${id} nicht gefunden`);
+    //         return;
+    //     }
 
-        // console.log(`Shariff wird für ID ${id} initialisiert`, shariffRef);
-        new Shariff(shariffRef, {
-            services: ["facebook", "telegram", "whatsapp", "xing", "twitter"],
-            theme: "classic",
-            orientation: "horizontal",
-        });
-    });
+    //     // console.log(`Shariff wird für ID ${id} initialisiert`, shariffRef);
+    //     new Shariff(shariffRef, {
+    //         services: ["facebook", "telegram", "whatsapp", "xing", "twitter"],
+    //         theme: "classic",
+    //         orientation: "horizontal",
+    //     });
+    // });
 
 
     },

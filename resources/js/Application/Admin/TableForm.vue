@@ -513,7 +513,7 @@
                             :xname="field.name"
                             :tablex="tablex"
                             :required="isRequired(field.required)"
-                            :disabled="field.disabled"
+
                             :class="field.disabled ? 'cursor-not-allowed' : ''"
                         ></InputSelectEnum>
                     </input-container>
@@ -989,7 +989,15 @@
                         else{
                             this.thumb ='';
                         }
-                        const src = `/images/_${window.subdomain}/images/${field.name}/${field.value}/${this.thumb}/${this.cc(fileName)}`;
+                        let subdomain = ''
+
+                        if (typeof window !== 'undefined') {
+                            subdomain = window.subdomain
+                        }
+
+                        
+
+                        const src = `/images/_${String(subdomain)}/images/${String(field.name)}/${String(field.value)}/${String(this.thumb)}/${String(this.cc(fileName))}`
                         conta += `<img width="100" class='mt-3' alt="Vorschau33" title="Vorschau33" id="comm_${field.name}"
                                     style="float:left;margin-right:12px;" src="${src}" />`;
                     }
@@ -1163,7 +1171,7 @@
         //    handleInput_alt(field) {
         //         this.updateReadingTime("editor_" + field);
         //     },
-    async handleInput_alt(fieldName, content) {
+    async handleInput_alt() {
             await nextTick()
     this.updateReadingTime("content_alt");
     },
@@ -1302,7 +1310,7 @@
                         let input = response.data;
                         const output = [];
                         if (typeof input === 'object' && !Array.isArray(input)) {
-                            input = Object.entries(input).map(([key, value]) => value);
+                            input = Object.entries(input).map(([value]) => value);
 
                         }
 
@@ -1494,7 +1502,7 @@
                         if (field && typeof field === 'object') {
                             const element = document.getElementById(field.name);
                             const element_alt = document.getElementById(field.name + "_alt");
-                            
+
                             if (element_alt?.value) {
                                 this.formData[field.name] = element_alt.value
                                     .replace(/\[/g, '%5B')
@@ -1548,7 +1556,7 @@
                     }
                 });
                 // console.log(response.data);
-                window.window.toastBus.emit( response.data); // ← erwartet { status: "...", message: "..." }
+               window.toastBus.emit( response.data); // ← erwartet { status: "...", message: "..." }
                 this.$inertia.reload();
                 // Optional: Seite neu laden oder Liste aktualisieren
             } catch (error) {

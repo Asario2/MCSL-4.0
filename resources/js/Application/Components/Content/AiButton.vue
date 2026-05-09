@@ -16,7 +16,7 @@ export default {
     props: {
         big: Boolean,
         bigger: Boolean,
-        dma: String,
+        dma: {type:[String,Boolean]},
         nohome: Boolean,
         xis_enabled:{
             type:[Boolean,Number],

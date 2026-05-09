@@ -34,6 +34,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import axios from "axios";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import Layout from "@/Application/Homepage/Shared/dag/Layout.vue";
 import { selectionHelper, GetSettings,rumLaut } from "@/helpers";

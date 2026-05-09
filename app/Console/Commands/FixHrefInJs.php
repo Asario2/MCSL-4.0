@@ -8,15 +8,14 @@ use Illuminate\Support\Facades\File;
 class FixHrefInJs extends Command
 {
     protected $signature = 'fix:href-js';
-    protected $description = 'Fix JS files with hardcoded absolute paths';
+    protected $description = 'Fix JS files with hardcoded absolute paths + Vue SSR fix';
 
     public function handle()
     {
-        // ⚠️ HIER absolute Pfade eintragen (Windows oder Linux)
         $files = [
             base_path('node_modules/@inertiajs/core/dist/index.esm.js'),
             base_path('node_modules/@inertiajs/core/dist/index.js'),
-            base_path('node_modules\.vite\deps\@inertiajs_vue3.js'),
+            base_path('node_modules/.vite/deps/@inertiajs_vue3.js'),
         ];
 
         foreach ($files as $filePath) {
@@ -28,13 +27,11 @@ class FixHrefInJs extends Command
 
             $content = File::get($filePath);
 
-            // Wenn der Block schon existiert -> skip
             if (strpos($content, "if(!href){\n  href = '';\n}") !== false) {
                 $this->info("Already fixed: $filePath");
                 continue;
             }
 
-            // Wenn die Zielzeile existiert -> ersetzen
             if (strpos($content, "const hasHost = urlHasProtocol(href.toString());") !== false) {
 
                 $content = str_replace(
@@ -48,6 +45,42 @@ class FixHrefInJs extends Command
                 $this->info("Fixed: $filePath");
             } else {
                 $this->warn("No match in: $filePath");
+            }
+        }
+
+        // 🔥 NEUER TEIL: Vue shared fix
+        $vueFile = base_path('node_modules/@vue/shared/dist/shared.cjs.js');
+
+        if (!File::exists($vueFile)) {
+            $this->warn("Vue shared file not found: $vueFile");
+        } else {
+            $content = File::get($vueFile);
+
+            // Prüfen ob Fix schon drin ist
+            if (strpos($content, 'if(typeof src !== "string")') !== false) {
+                $this->info("Vue shared already fixed.");
+            } else {
+
+                $search = 'return src.replace(commentStripRE, "");';
+
+                if (strpos($content, $search) !== false) {
+
+                    $replace = <<<JS
+if(typeof src !== "string")
+{
+  src = '';
+}
+return src.replace(commentStripRE, "");
+JS;
+
+                    $content = str_replace($search, $replace, $content);
+
+                    File::put($vueFile, $content);
+
+                    $this->info("$vueFile patched.");
+                } else {
+                    $this->warn("Pattern not found in Vue shared.");
+                }
             }
         }
 

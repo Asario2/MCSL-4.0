@@ -121,7 +121,7 @@ import { router } from "@inertiajs/vue3";
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-import SelectRecipient from "./SelectRecipient.vue";
+import SelectRecipient from "@/Application/Components/Social/SelectRecipient.vue";
 import InputHtml from "@/Application/Components/Form/InputHtml.vue";
 import InputTextarea from "@/Application/Components/Form/InputTextarea.vue";
 import InputFormText from "@/Application/Components/Form/InputFormText.vue";

@@ -85,7 +85,7 @@
             table="shortpoems"
             />
 
-          <SocialButtons :postId="item.id" :xslug="true" :sse="item.headline"/>
+          <SocialButtons :postId="item.id" :title="'Shortpoem ' + item.headline" :xslug="true" :sse="item.headline"/>
         </div>
 
         <!-- Accordion Button -->
@@ -113,8 +113,7 @@ import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
 import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
 import pickBy from "lodash/pickBy";
 // import Toast from "@/Application/Components/Content/Toast.vue";
-import { toastBus } from '@/utils/toastBus';
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 
 
 export default {
@@ -138,28 +137,25 @@ export default {
   },
   computed:{
     AID(){
-        return window.authid;
-    }
+if (typeof window === "undefined") return null;
+return this.$page?.props?.auth?.user?.id;
 
   },
+},
   watch: {
     form: {
-      handler: throttle(function () {
-        const query = pickBy(this.form, v => v != null && v !== '');
-        this.$inertia.get(
-        this.route("home.shortpoems"),
-        query,
-        {
-            preserveState: true,
-            preserveScroll: false,
-            replace: true,
-            skipLoading: true,
-        }
-        );
+handler: throttle(function () {
+  const query = pickBy(this.form, v => v != null && v !== '');
 
-      }, 150),
-      deep: true
+  this.$inertia.get(this.route("home.shortpoems"), query, {
+    preserveState: true,
+    preserveScroll: false,
+    replace: true,
+    skipLoading: true,
+  });
+}, 300, { leading: false, trailing: true }),
     },
+
     items: {
       immediate: true,
       async handler() {
@@ -186,7 +182,9 @@ export default {
       this.$nextTick(() => this.scrollToItem(item.id));
     },
 
-    async scrollToHash() {
+   async scrollToHash() {
+  if (typeof window === "undefined") return;
+
   const hash = window.location.hash;
   if (!hash) return;
 
@@ -197,17 +195,12 @@ export default {
   );
   if (index === -1) return;
 
-  // Accordion öffnen
   this.openIndex = index;
 
-  // 1️⃣ Warten bis Vue gerendert hat
   await this.$nextTick();
-
-  // 2️⃣ Warten bis Layout stabil ist (SEHR wichtig)
   await new Promise(r => requestAnimationFrame(r));
   await new Promise(r => requestAnimationFrame(r));
 
-  // 3️⃣ Marker verwenden (NICHT content!)
   const marker = document.getElementById(`st${id}`);
   if (!marker) return;
 
@@ -218,7 +211,7 @@ export default {
 
   window.scrollTo({
     top: y,
-    behavior: 'auto' // ❗ beim Laden niemals smooth
+    behavior: 'auto'
   });
 },
 

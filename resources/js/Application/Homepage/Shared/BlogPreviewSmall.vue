@@ -68,7 +68,7 @@
         </Link>
 
         <!-- **Tabelle direkt unterhalb des Blog-Containers (fixiert)** -->
-        <SocialButtons :postId="blog.id" sm="Sm" :slug="blog.autoslug"  :nostars="true"       />
+        <SocialButtons :postId="blog.id" sm="Sm" :slug="blog.autoslug"  :title="'Blog: '+blog.title"  :nostars="true"       />
 
     </div>
 </template>
@@ -87,7 +87,7 @@ import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 import IconCamera from "@/Application/Components/Icons/Camera.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import IconComment from "@/Application/Components/Icons/IconComment.vue";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 import { CleanTable_alt, replaceSmilies } from '@/helpers';
 import mapValues from "lodash/mapValues";
 import pickBy from "lodash/pickBy";
@@ -135,11 +135,16 @@ export default {
     },
     data() {
     return {
-        dma: localStorage.getItem('theme'),
+        dma: false,
         showShareBox: {} ,
         showStarBox: {}, // Wert aus localStorage speichern
         showComments: null, // Zustand für die Anzeige der Kommentarfunktion
+        dmaa:false,
     };
+},
+mounted(){
+        this.dma = localStorage.getItem('theme')
+
 },
 methods:{
     smilies(text){
@@ -209,20 +214,20 @@ return replaceSmilies(text);
 },
 
         initShariff(id) {
-    nextTick(() => {
-        const shariffRef = this.$refs['shariff_' + id];
-        if (!shariffRef) {
-            console.error(`Shariff-Element für ID ${id} nicht gefunden`);
-            return;
-        }
+    // nextTick(() => {
+    //     const shariffRef = this.$refs['shariff_' + id];
+    //     if (!shariffRef) {
+    //         console.error(`Shariff-Element für ID ${id} nicht gefunden`);
+    //         return;
+    //     }
 
-        // console.log(`Shariff wird für ID ${id} initialisiert`, shariffRef);
-        new Shariff(shariffRef, {
-            services: ["facebook", "telegram", "whatsapp", "xing", "twitter"],
-            theme: "classic",
-            orientation: "horizontal",
-        });
-    });
+    //     // console.log(`Shariff wird für ID ${id} initialisiert`, shariffRef);
+    //     new Shariff(shariffRef, {
+    //         services: ["facebook", "telegram", "whatsapp", "xing", "twitter"],
+    //         theme: "classic",
+    //         orientation: "horizontal",
+    //     });
+    // });
 
 
     },

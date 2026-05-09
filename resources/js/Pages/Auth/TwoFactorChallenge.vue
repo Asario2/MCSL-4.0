@@ -45,7 +45,7 @@
 
   <script>
   import { ref } from 'vue';
-  import { Inertia } from '@inertiajs/inertia';
+  import { router } from '@inertiajs/vue3'
 
   export default {
     setup() {

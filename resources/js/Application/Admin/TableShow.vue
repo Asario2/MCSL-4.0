@@ -118,22 +118,22 @@
                 v-if="table != 'people' && (users[data.datarow.users_id]?.img || data.datarow.nick || data.datarow.users)"
                 >
                 <div v-if="users[data.datarow.users_id]?.img && users[data.datarow.users_id].img !== '008.jpg'">
-                    <nobr>
+                    <span class="whitespace-nowrap">
                     <img
                         :src="GetProfileImagePath(users[data.datarow.users_id].img)"
                         class="w-[24px] h-[24px] object-cover rounded-full inline"
                     />
                     &nbsp;{{ data.datarow.users }}
-                    </nobr>
+                    </span>
                 </div>
                 <div v-else>
-                    <nobr>
+                    <span class="whitespace-nowrap">
                     <img
                         :src="'/images/_' + SD() + '/users/profile_photo_path/008.jpg'"
                         class="max-w-[24px] max-h-[24px] object-cover rounded-full inline"
                     />
                     <span class="inline">&nbsp;&nbsp;{{ data.datarow.nick || data.datarow.users }}</span>
-                    </nobr>
+                    </span>
                 </div>
                 </td>
 
@@ -173,7 +173,6 @@
 
     </div>
         </section>
-        <pagination :links="pag?.links" v-if="data" basePath="show" />
     </layout>
     </template>
 
@@ -183,13 +182,13 @@
     import CreatedAt from "@/Application/Components/Form/CreatedAt.vue";
     import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
     import ListContainer from "@/Application/Components/Lists/ListContainer.vue";
-    import Pagination from "@/Application/Components/Pagination.vue";
+
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import PublishButton from "@/Application/Components/Form/PublishButton.vue";
     import IconStar from "@/Application/Components/Icons/IconStar.vue";
     import { CleanTable, ucf, SD, GetSettings, rumLaut,GetProfileImagePath } from "@/helpers";
     //import { safeInertiaGet } from '@/utils/inertia';
-    import { Inertia } from '@inertiajs/inertia';
+    import { router } from '@inertiajs/vue3'
 
     import {route} from 'ziggy-js';
     import Sortable from "sortablejs";
@@ -209,7 +208,6 @@
         ListContainer,
         PublishButton,
         IconStar,
-        Pagination,
         },
         props: {
         applicationName: { type: String, default: "Administrator-Anwendung" },
@@ -280,7 +278,7 @@
         },
         watch: {
         searchValue(newVal) {
-        Inertia.get(route('admin.tables.show', this.table_q ?? ''), { search: newVal ?? '' }, { preserveState: true, replace: true });
+        router.get(route('admin.tables.show', this.table_q ?? ''), { search: newVal ?? '' }, { preserveState: true, replace: true });
         }
         },
 

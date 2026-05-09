@@ -309,7 +309,7 @@
                     <div class="w-full max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <!-- Toast -->
                         <div>
-                            <toast></toast>
+                            <Toast></Toast>
                         </div>
 
                         <!-- Slot für Content -->
@@ -351,7 +351,7 @@ import { router } from '@inertiajs/vue3';
 import FooterGrid from "@/Application/Components/Content/FooterGrid.vue";
 
 export default {
-    name: "Admin_Shared_Layout",
+    name: "Admin_Shared_Layout_mfx",
 
     components: {
         Head,
@@ -382,11 +382,11 @@ export default {
     },
 
     mounted() {
-        let shouldReload = localStorage.getItem('reload_dashboard');
-        if (shouldReload) {
-            localStorage.removeItem('reload_dashboard');
-            window.location.reload();
-        }
+        // let shouldReload = localStorage.getItem('reload_dashboard');
+        // if (shouldReload) {
+        //     localStorage.removeItem('reload_dashboard');
+        //     window.location.reload();
+        // }
     },
 
     methods: {
@@ -399,17 +399,23 @@ export default {
                     // this.$inertia.reload();
                 }
             } catch (error) {
-                window.toastBus.emit( {
+                if(typeof window !== "undefined")
+                {
+                    window,toastBus.emit( {
                     status: 'error',
                     message: error.response?.data?.message || 'Fehler beim Laden.',
                 });
+                }
             }
         },
 
         changeMode(value) {
             this.mode = value;
             this.isOpen = false;
-            localStorage.theme = this.mode;
+           if(typeof window !== "undefined")
+            {
+                localStorage.theme = this.mode;
+            }
         },
 
         toggleNavbar() {

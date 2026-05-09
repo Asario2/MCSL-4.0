@@ -24,6 +24,7 @@
     </div>
     </template>
 <script>
+import axios from "axios";
 import { defineComponent } from "vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import Layout from "@/Application/Homepage/Shared/dag/Layout.vue";
@@ -47,8 +48,8 @@ export default defineComponent({
         editbtns, MetaHeader,
     Poems},
     props:{
-        news:[Array,Object],
-        text: [Array,Object],
+        news:[Array,Object,String],
+        text: [Array,Object,String],
 
     },
     data() {

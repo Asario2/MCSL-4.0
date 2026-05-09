@@ -163,21 +163,32 @@ export default {
   components: { Layout, MetaHeader,Breadcrumb, },
 
   props: {
-    mcslpoints: { type: Object, required: true },
+    mcslpoints: {
+    type: Object,
+    default: () => ({
+        ratings: 0,
+        comments: 0,
+        newsletter: 0,
+        shortpoems: 0,
+    }),
+    },
     commentsStats: { type: Object, required: true },
     ratingsStats: { type: Object, required: true },
     activity: { type: Object, required: true },
-    text: [Array, Object],
+    text: [Array, Object,String],
     count_mcs: Number,
     count_com: Number,
      stackedUserStats: {
     type: Object,
     required: true,
   },
-  MCSL_GLOB_PTS:String,
+  MCSL_GLOB_PTS:[Number,String],
   nick:String,
   MCS_POINTS_TOTAL:Number,
-  breadcrumbs:String,
+  breadcrumbs: {
+  type: [Array, String, Object],
+  default: () => [],
+},
   },
 
   data() {
@@ -209,6 +220,7 @@ watch: {
     deep: true,
     immediate: true,
     handler() {
+        if(typeof window === "undefined")return;
       if (!window.location.hash) return;
 
       requestAnimationFrame(() => {
@@ -220,7 +232,7 @@ watch: {
 computed:{
     AID()
     {
-        return window.authid;
+        return this.$page?.props?.auth?.user?.id;
     }
 
 },
@@ -252,7 +264,7 @@ computed:{
   methods: {
     CleanId,
       getHashElement() {
-        const hash = window.location.hash;
+        const hash = window?.location.hash;
 //         console.log('DEBUG: window.location.hash =', hash);
 
         if (!hash) return null;

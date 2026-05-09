@@ -95,21 +95,12 @@
                         <input-checkbox name="terms" v-model="form.terms">
                             <div class="ml-2">
                                 Ich akzeptiere die
-                                <input-display
-                                    target="_blank"
-                                    :href="route('home.terms')"
-                                    display_type="inline"
-                                >
-                                    Nutzungsbedingungen</input-display
-                                >
-
-                                und die
-                                <input-display
+                <DisplayHyperlink
                                     target="_blank"
                                     :href="route('home.privacy')"
-                                    display_type="inline"
+                                    displayType="inline"
                                 >
-                                    Datenschutzerklärung</input-display
+                                    Datenschutzerklärung</DisplayHyperlink
                                 >
                             </div>
                         </input-checkbox>
@@ -145,6 +136,7 @@ import InputGroup from "@/Application/Components/Form/InputGroup.vue";
 import InputContainer from "@/Application/Components/Form/InputContainer.vue";
 import InputLabel from "@/Application/Components/Form/InputLabel.vue";
 import InputElement from "@/Application/Components/Form/InputElement.vue";
+// import InputDisplay from "@/Application/Components/Form/InputDisplay.vue";
 import InputCheckbox from "@/Application/Components/Form/InputCheckbox.vue";
 import InputError from "@/Application/Components/Form/InputError.vue";
 
@@ -159,6 +151,7 @@ export default defineComponent({
         PageContent,
         SectionForm,
         Favicon,
+        // InputDisplay,
         DisplayHyperlink,
         InputLoading,
         ErrorList,

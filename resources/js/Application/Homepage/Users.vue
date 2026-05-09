@@ -120,6 +120,7 @@ export default defineComponent({
             form: {
                 search: this.filters.search,
             },
+            searchFilter:false, 
         };
     },
 

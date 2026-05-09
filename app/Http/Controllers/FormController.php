@@ -916,7 +916,7 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
         ->select('name','shortname')->first(); // Get the value of the 'name' column
       //     return $nick;
 
-        return "<nobr><span data-id='$id' data-column='$name'></span>".FormController::USelect($name,$value,'',$id,'',$table,$ugroup->shortname,$uid);
+        return "<span class='whitespace-nowrap'><span data-id='$id' data-column='$name'></span>".FormController::USelect($name,$value,'',$id,'',$table,$ugroup->shortname,$uid);
     }
     public static function USelect($name,$value,$hidden,$id,$alt='',$table,$sn,$uid)
     {
@@ -942,7 +942,7 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
         }
         $alt  = $alt ? "_alt" : '';
     // \Log::info("uid:".$uid);
-        return "<input type='hidden' id='f_".$id."' value='{$name}'><select class='form-control b_sel {$hidden} usel' data-uid='{$uid}' data-id='{$id}' data-column='{$name}' name='{$name}' id='usel-{$id}'>{$options}</select></nobr>";
+        return "<input type='hidden' id='f_".$id."' value='{$name}'><select class='form-control b_sel {$hidden} usel' data-uid='{$uid}' data-id='{$id}' data-column='{$name}' name='{$name}' id='usel-{$id}'>{$options}</select></span>";
     }
     public static function save_ugroup(Request $request)
 {
@@ -1241,12 +1241,12 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
             $v = 0;
         }
         return '<div class="age-wrapper" id="w_'.$id.'" style="display:none;">
-                   <nobr> <input data-id="'.$id.'" data-table="'.$t.'" data-column="'.$n.'"  class="age datetimepicker2 datetime-input_alt" id="age_'.$id.'" name="'.$n.'" type="date" value="'.$v.'" maxlength="12" size="12">
+                   <span class="whitespace-nowrap"> <input data-id="'.$id.'" data-table="'.$t.'" data-column="'.$n.'"  class="age datetimepicker2 datetime-input_alt" id="age_'.$id.'" name="'.$n.'" type="date" value="'.$v.'" maxlength="12" size="12">
 
                     <span class="log">
                     <i class="fa-regular fa-calendar calendar-icon"></i>
                     </span>
-                    </nobr>
+                    </span>
                  </div>
                  <div class="preview" id="pfield_'.$id.'">'.$age.'</div>'.FormController::AgeScript($n,$v,$t,$id);
 
@@ -1344,8 +1344,8 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
         $dm = $_SESSION['dm'] ?? "dark";
         return "<div class='datetime-wrapper' id='dtw'>
     <!-- Erster Datetimepicker -->
-        <nobr><span style='border-radius:4px;'>Von: <input type='datetime-local' id='datetimepicker1_".$id."' value='".$v1."' name='date_begin' class=' xtop datetimepicker3 datetime-input'>
-        <i class='fa-regular fa-calendar datetime-icon' style='position:relative;right:25px;top:-0px;'></i></span></nobr>
+        <span class="whitespace-nowrap"><span style='border-radius:4px;'>Von: <input type='datetime-local' id='datetimepicker1_".$id."' value='".$v1."' name='date_begin' class=' xtop datetimepicker3 datetime-input'>
+        <i class='fa-regular fa-calendar datetime-icon' style='position:relative;right:25px;top:-0px;'></i></span></span>
         <br />
     <!-- Wrapper für zweiten Datetimepicker -->
         <div id='graphicWrapper' class='datetime-wrapper'  style='position: relative; display: inline-block;'>
@@ -1597,7 +1597,7 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
         $btn =  "<span class='btn btn-default' id='openPicker_".$id."'><i class='fas fa-dateweek'></i></span>";
 
     }
-        return "<div align='left'><nobr><span id='desc_".$id."'>$date2</span>&nbsp;&nbsp;&nbsp;<input type='text' id='datetimepicker_".$id."' value='".$date2."' class='hidden' >".@$btn."</nobr></div>$scr";
+        return "<div align='left'><span class="whitespace-nowrap"><span id='desc_".$id."'>$date2</span>&nbsp;&nbsp;&nbsp;<input type='text' id='datetimepicker_".$id."' value='".$date2."' class='hidden' >".@$btn."</span></div>$scr";
     }
     public static function image($n,$v,$t)
     {

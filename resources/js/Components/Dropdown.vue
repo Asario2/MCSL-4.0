@@ -1,59 +1,15 @@
-<script setup>
-import { computed, onMounted, onUnmounted, ref } from "vue";
-
-const props = defineProps({
-    align: {
-        type: String,
-        default: "right",
-    },
-    width: {
-        type: String,
-        default: "48",
-    },
-    contentClasses: {
-        type: Array,
-        default: () => ["py-1", "bg-white dark:bg-gray-700"],
-    },
-});
-
-let open = ref(false);
-
-const closeOnEscape = (e) => {
-    if (open.value && e.key === "Escape") {
-        open.value = false;
-    }
-};
-
-onMounted(() => document.addEventListener("keydown", closeOnEscape));
-onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
-
-const widthClass = computed(() => {
-    return {
-        48: "w-48",
-    }[props.width.toString()];
-});
-
-const alignmentClasses = computed(() => {
-    if (props.align === "left") {
-        return "ltr:origin-top-left rtl:origin-top-right start-0";
-    }
-
-    if (props.align === "right") {
-        return "ltr:origin-top-right rtl:origin-top-left end-0";
-    }
-
-    return "origin-top";
-});
-</script>
-
 <template>
-    <div class="relative">
-        <div @click="open = !open">
+    <div class="relative" v-if="isClient">
+        <div @click="toggle">
             <slot name="trigger" />
         </div>
 
-        <!-- Full Screen Dropdown Overlay -->
-        <div v-show="open" class="fixed inset-0 z-40" @click="open = false" />
+        <!-- Overlay -->
+        <div
+            v-show="open"
+            class="fixed inset-0 z-40"
+            @click="close"
+        />
 
         <transition
             enter-active-class="transition ease-out duration-200"
@@ -68,7 +24,7 @@ const alignmentClasses = computed(() => {
                 class="absolute z-50 mt-2 rounded-md shadow-lg"
                 :class="[widthClass, alignmentClasses]"
                 style="display: none"
-                @click="open = false"
+                @click="close"
             >
                 <div
                     class="rounded-md ring-1 ring-black ring-opacity-5"
@@ -80,4 +36,80 @@ const alignmentClasses = computed(() => {
         </transition>
     </div>
 </template>
+<script>
+export default {
+    name: "Dropdown",
 
+    props: {
+        align: {
+            type: String,
+            default: "right",
+        },
+        width: {
+            type: String,
+            default: "48",
+        },
+        contentClasses: {
+            type: Array,
+            default: () => ["py-1", "bg-white dark:bg-gray-700"],
+        },
+    },
+
+    data() {
+        return {
+            open: false,
+            isClient: false,
+        };
+    },
+
+    computed: {
+        widthClass() {
+            return {
+                48: "w-48",
+            }[this.width.toString()];
+        },
+
+        alignmentClasses() {
+            if (this.align === "left") {
+                return "ltr:origin-top-left rtl:origin-top-right start-0";
+            }
+
+            if (this.align === "right") {
+                return "ltr:origin-top-right rtl:origin-top-left end-0";
+            }
+
+            return "origin-top";
+        },
+    },
+
+    mounted() {
+        this.isClient = true;
+
+        if (typeof window !== "undefined") {
+            document.addEventListener("keydown", this.closeOnEscape);
+        }
+    },
+
+    beforeUnmount() {
+        if (typeof window !== "undefined") {
+            document.removeEventListener("keydown", this.closeOnEscape);
+        }
+    },
+
+    methods: {
+        toggle() {
+            this.open = !this.open;
+        },
+
+        close() {
+            this.open = false;
+        },
+
+        closeOnEscape(e) {
+            if (this.open && e.key === "Escape") {
+                this.open = false;
+            }
+        },
+    },
+};
+</script>

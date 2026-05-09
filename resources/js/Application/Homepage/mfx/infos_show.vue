@@ -68,7 +68,7 @@ export default defineComponent({
         editbtns, MetaHeader},
     props: {
         news: [Array, Object],
-        text: [Array, Object],
+        text: [Array, Object,String],
         data: [Array, Object],
         privacy: String,
     },
@@ -317,7 +317,7 @@ export default defineComponent({
             }
         },
         scrollToHashAnchor() {
-    const hash = window.location.hash;
+    const hash = window?.location.hash;
     if (hash && hash.startsWith("#")) {
       setTimeout(() => {
         const el = document.getElementById(hash.substring(1));

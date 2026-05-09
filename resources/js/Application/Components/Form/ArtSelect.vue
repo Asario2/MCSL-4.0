@@ -58,6 +58,9 @@ export default {
       this.form.type_id = newVal;
     }
   },
+  mounted(){
+    
+  },
   computed: {
     sortedCategories() {
       return [...this.categories].sort((a, b) => a.name.localeCompare(b.name));
@@ -75,7 +78,8 @@ export default {
   async created() {
   try {
     // 1. Kategorien laden
-    const response = await axios.get(route("ArtAct", [this.table, this.id]));
+
+    const response = await axios.get(window.chost + '/act-category/' + this.table + "/" +this.id);
     this.categories = response.data.categories || [];
 
     // 2. Gespeicherte Werte laden

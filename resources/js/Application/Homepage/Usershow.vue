@@ -99,7 +99,7 @@
 
 
             <!-- Lesezeit anzeigen -->
-            <socialButtons :postId="users?.id" :empty="true" :nostars="true" />
+            <socialButtons :postId="users?.id" :title="'Benutzer: '+users.name" :empty="true" :nostars="true" />
         </div>
 
     </div>
@@ -199,6 +199,11 @@ export default {
         return date.toLocaleDateString('de-DE'); // ergibt z. B. 14.05.2025
     },
   },
+  data(){
+    return{
+        isCommentActive:false,
+    }
+  }
 };
 </script>
 

@@ -58,7 +58,7 @@
         >
           <p>{{ item.answer || 'Kein Text vorhanden.' }}</p>
           <editbtns :id="item.id" table="didyouknow" /><br />
-          <SocialButtons :postId="item.id" :xslug="true" :nostars="true" :sse="item.headline"/>
+          <SocialButtons :postId="item.id"  :title="'Wussten Sie schon, '+item.headline" :xslug="true" :nostars="true" :sse="item.headline"/>
         </div>
       </div>
     </section>
@@ -75,14 +75,14 @@ import SearchFilter from '@/Application/Components/Lists/SearchFilter.vue';
 import Alert from '@/Application/Components/Content/Alert.vue';
 import editbtns from '@/Application/Components/Form/editbtns.vue';
 import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
-import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
+// import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
 import pickBy from "lodash/pickBy";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 import Pagination from "@/Application/Components/Pagination.vue";
 
 export default {
   name:"DidYouKnow",
-  components: { Pagination, Layout, MetaHeader, newbtn, SearchFilter, Alert, editbtns, SocialButtons, RatingWrapper },
+  components: { Pagination, Layout, MetaHeader, newbtn, SearchFilter, Alert, editbtns, SocialButtons },
   props: {
     items: { type: Object, required: true },
     ratings: { type: [Array, Object], default: () => ({}) },
@@ -126,41 +126,60 @@ export default {
     },
 
     async scrollToHash() {
-      const hash = window.location.hash;
-      if (!hash) return;
-      const id = hash.replace('#st', '');
-      const index = this.items.data.findIndex(item => String(item.id) === id);
-      if (index === -1) return;
+  // 👉 SSR Guard ganz am Anfang
+  if (typeof window === 'undefined') return;
 
-      this.openIndex = index;
-      await this.$nextTick();
-      await new Promise(r => requestAnimationFrame(r));
-      await new Promise(r => requestAnimationFrame(r));
+  const hash = window.location.hash;
+  if (!hash) return;
 
-      const marker = document.getElementById(`st${id}`);
-      if (!marker) return;
+  const id = hash.replace('#st', '');
+  const index = this.items?.data?.findIndex(item => String(item.id) === id);
+  if (index === -1) return;
 
-      const content = this.$refs[`content-${id}`]?.[0];
-      const imgs = content ? content.querySelectorAll('img') : [];
+  this.openIndex = index;
 
-      const doScroll = () => {
-        const y = marker.getBoundingClientRect().top + window.pageYOffset - 180;
-        window.scrollTo({ top: y, behavior: 'auto' });
-      };
+  await this.$nextTick();
+  await new Promise(r => requestAnimationFrame(r));
+  await new Promise(r => requestAnimationFrame(r));
 
-      if (imgs.length === 0) doScroll();
-      else {
-        let loaded = 0;
-        imgs.forEach(img => {
-          if (img.complete) loaded++;
-          else img.addEventListener('load', () => {
-            loaded++;
-            if (loaded === imgs.length) doScroll();
-          });
-        });
-        if (loaded === imgs.length) doScroll();
-      }
-    },
+  const marker = document.getElementById(`st${id}`);
+  if (!marker) return;
+
+  // 👉 Funktion außerhalb definieren
+  const doScroll = () => {
+    const y = marker.getBoundingClientRect().top + window.pageYOffset - 180;
+    window.scrollTo({ top: y, behavior: 'auto' });
+  };
+
+  const content = this.$refs[`content-${id}`]?.[0];
+  const imgs = content ? content.querySelectorAll('img') : [];
+
+  if (!imgs.length) {
+    doScroll();
+    return;
+  }
+
+  let loaded = 0;
+
+  const check = () => {
+    loaded++;
+    if (loaded === imgs.length) doScroll();
+  };
+
+  imgs.forEach(img => {
+    if (img.complete) {
+      check();
+    } else {
+      img.addEventListener('load', check, { once: true });
+      img.addEventListener('error', check, { once: true }); // 👈 wichtig!
+    }
+  });
+
+  // Falls alle schon geladen sind
+  if ([...imgs].every(img => img.complete)) {
+    doScroll();
+  }
+},
 
     scrollToItem(id) {
       const content = this.$refs[`content-${id}`]?.[0];
@@ -189,6 +208,7 @@ export default {
     this.scrollToHash();
   },
   created() {
+    if (typeof window === 'undefined') return;
     document.addEventListener('inertia:finish', () => {
         this.$nextTick(() => {
         this.scrollToHash();

@@ -19,6 +19,7 @@ f<template>
                                 :data-post-id="postId">
                             <icon-share /> Teilen
                         </button>
+{{ blog }}
                     </td>
 
                     <td class="text-center" v-if="!nostars">
@@ -52,10 +53,11 @@ f<template>
                 <!-- Teilen -->
                 <tr v-if="showShareBox[postId]">
                     <td colspan="3" class="p-4">
-                        <div align="center" :ref="'shariff_' + postId" :added="urlAdded"
+                        <!-- <div align="center" :ref="'shariff_' + postId" :added="urlAdded"
                              class="shariff w-full w300 relative border border-gray-300 p-4 pb-2 rounded-lg shadow-sm bg-white dark:bg-gray-800"
                              data-button-style="icon">
-                        </div>
+                        </div> -->
+                        <ShareButtons :url="Murl" :title="title"/>
                     </td>
                 </tr>
 
@@ -68,10 +70,13 @@ f<template>
             </tbody>
         </table>
     </div>
+
 </template>
 
 <script>
 import { nextTick } from "vue";
+import axios from "axios";
+import ShareButtons from "@/Application/Components/Social/ShareButtons.vue";
 import { Link } from "@inertiajs/vue3";
 import Comments from "@/Application/Components/Social/comments.vue";
 import RatingInput from "@/Application/Components/Social/RatingInput.vue";
@@ -81,7 +86,7 @@ import IconStar from "@/Application/Components/Icons/IconStar.vue";
 import averageRating from "@/Application/Components/Social/averageratings.vue";
 import { CleanTable } from '@/helpers';
 import he from "he";
-import Shariff from 'shariff';
+// import Shariff from 'shariff';
 
 export default {
     name: "SocialButtons",
@@ -91,11 +96,13 @@ export default {
         RatingInput,
         IconComment,
         IconShare,
+        ShareButtons,
         IconStar,
         averageRating,
 
     },
     props: {
+        title:String,
         blog: Object,
         aiOverlayImage: String,
         postId: [Number, String],
@@ -111,17 +118,29 @@ export default {
     },
     data() {
         return {
-            dma: localStorage.getItem('theme'),
+            // dma: localStorage.getItem('theme'),
             urlAdded: this.urlAdder(this.postId),
             showShareBox: {},
             showStarBox: {},
             showComments: null,
+             shariffLoaded: false
             // url2:'',
         };
     },
-    mounted() {
+    computed:{
+        Murl()
+        {
+            return location.href + this.urlAdded;
+        }
+    },
+   async mounted() {
         this.urlAdded = this.urlAdder(this.postId);
-        this.imageRemove(this.postId);
+//         this.imageRemove(this.postId);
+//     if (typeof window === 'undefined') return;
+
+//   import('shariff').then(({ default: Shariff }) => {
+//     new Shariff(document.querySelector('.shariff'), {});
+//   });
     },
     methods: {
         CleanTable,
@@ -151,24 +170,24 @@ export default {
                 });
             }
         },
-        initShariff(id) {
-            nextTick(() => {
-                const shariffRef = this.$refs['shariff_' + id];
-                if (!shariffRef) return;
-                this.ssez =  this.sse ? "?search=" + encodeURIComponent(this.sse) : this.urlAdded || '';
+      initShariff(id) {
+//             nextTick(() => {
+//                 const shariffRef = this.$refs['shariff_' + id];
+//                 if (!shariffRef) return;
+//                 this.ssez =  this.sse ? "?search=" + encodeURIComponent(this.sse) : this.urlAdded || '';
 
-                const url = `${window.location.origin}${window.location.pathname}${this.ssez || ''}`;
-                const url_alt = url.replace(CleanTable() + CleanTable() + "/",CleanTable()+"/");
-//                 console.log(url_alt);
+//                 const url = `${window.location.origin}${window.location.pathname}${this.ssez || ''}`;
+//                 const url_alt = url.replace(CleanTable() + CleanTable() + "/",CleanTable()+"/");
+// //                 console.log(url_alt);
 
-                shariffRef.setAttribute('data-url', url_alt);
-                new Shariff(shariffRef, {
-                    services: ["facebook", "telegram", "whatsapp", "xing", "twitter"],
-                    theme: "classic",
-                    orientation: "horizontal",
-                });
-            });
-        },
+//                 shariffRef.setAttribute('data-url', url_alt);
+//                 new Shariff(shariffRef, {
+//                     services: ["facebook", "telegram", "whatsapp", "xing", "twitter"],
+//                     theme: "classic",
+//                     orientation: "horizontal",
+//                 });
+//             });
+         },
         toggleCommentBox(postId) {
             this.imageRemove(postId);
             this.showComments = this.showComments === postId ? null : postId;

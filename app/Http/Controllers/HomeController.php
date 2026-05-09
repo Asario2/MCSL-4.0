@@ -226,7 +226,9 @@ class HomeController extends Controller
             {
                 return $this->$ho();
             }
-            return Inertia::render('Homepage/NoPageFound_'.SD());
+            return Inertia::render('Homepage/NoPageFound_'.SD(),[
+                'subdomain' => request()->getHost(),
+            ]);
         }
 
     }
@@ -928,7 +930,7 @@ public function imprint_dag()
         // }
         $pf = "privacy".@$set.".md";
             $privacyFile = Jetstream::localizedMarkdownPath($pf);
-
+// dd(request()->headers->all());
         include_once "inc/functions/rinfo_code.php";
         // dd($privacyFile);
         $privacy = @Str::markdown(file_get_contents(@$privacyFile)); // HTML erzeugt

@@ -28,7 +28,10 @@
 
 <script>
     import $ from "jquery";
-    window.$ = window.jQuery = $;
+    if (typeof window !== 'undefined'){
+        window.$ = window.jQuery = $;
+    }
+    import axios from "axios";
 
     export default {
         name: "InputSelectEnum",

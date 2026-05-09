@@ -29,30 +29,30 @@ export default {
         }
     },
   mounted() {
+  if (typeof window === "undefined") return;
+
+  import('gsap').then(({ gsap }) => {
     const bg = this.$refs.bg;
 
     const timeline = gsap.timeline({ repeat: -1 });
 
-    // Scroll nach rechts
     timeline.to(bg, {
       x: '-50%',
       duration: 20,
       ease: 'power1.inOut',
     });
 
-    // Pause 30 Sekunden
     timeline.to({}, { duration: 30 });
 
-    // Scroll zur�ck nach links
     timeline.to(bg, {
       x: '0%',
       duration: 20,
       ease: 'power1.inOut',
     });
 
-    // Wieder Pause 30 Sekunden
     timeline.to({}, { duration: 30 });
-  },
+  });
+}
 };
 </script>
 

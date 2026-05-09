@@ -27,6 +27,7 @@
     import PlusCircle from "@/Application/Components/Icons/PlusCircle.vue";
     import { toastBus } from '@/utils/toastBus';
     import IconTrash from "@/Application/Components/Icons/Trash.vue";
+    import ButtonGroup from "@/Application/Components/Form/ButtonGroup.vue";
     import { hasRight,loadAllRights,isRightsReady,hasRightSync } from '@/utils/rights';
     import { CleanTable, CleanId,CheckTRights } from '@/helpers';
     export default {
@@ -36,6 +37,7 @@
             PlusCircle,
             InputIconHyperlink,
             toastBus,
+            ButtonGroup,
         },
         props: {
             Redit: {

@@ -2,34 +2,41 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Validation\ValidationException; // <-- hier
 use Throwable;
+use Inertia\Inertia;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * Register the exception handling callbacks for the application.
-     */
     public function register(): void
     {
-        $this->renderable(function (NotFoundHttpException $e, $request) {
+        $this->renderable(function (Throwable $e, $request) {
+
+            // 👉 API bleibt JSON
             if ($request->is('api/*')) {
                 return response()->json([
-                    'message' => 'Route not found.'
-                ], 404);
+                    'message' => $e->getMessage() ?: 'Server Error'
+                ], $this->getStatusCode($e));
             }
 
-            return redirect()->to('/403'); // oder '/404'
-        });
+            // 👉 Inertia Requests (inkl. SSR!)
+            if ($request->header('X-Inertia')) {
 
-        $this->renderable(function (Throwable $e, $request) {
-            if (config('app.debug')) {
-                return null;
+                $status = $this->getStatusCode($e);
+
+                return Inertia::render("Errors/{$status}", [
+                    'status' => $status,
+                ])->toResponse($request)->setStatusCode($status);
             }
 
-            return response()->view('errors.generic', [], 500);
+            // 👉 Fallback (z.B. ohne JS, direkte Requests)
+            $status = $this->getStatusCode($e);
+
+            return Inertia::render("Errors/{$status}", [
+                'status' => $status,
+            ])->toResponse($request)->setStatusCode($status);
         });
     }
 
@@ -41,4 +48,13 @@ class Handler extends ExceptionHandler
             'errors' => $exception->errors(),
         ], $exception->status);
     }
-}
+
+    private function getStatusCode(Throwable $e): int
+    {
+        if ($e instanceof HttpExceptionInterface) {
+            return $e->getStatusCode();
+        }
+
+        return 500;
+    }
+}   

@@ -34,7 +34,7 @@ export default {
   components: { IconTrash, IconPencil, toastBus },
 
   props: {
-    id: Number,
+    id: [ String,Number ],
     table: String,
     noedit: { default: false },
     pm: Boolean,

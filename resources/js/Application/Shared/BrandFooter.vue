@@ -1,5 +1,5 @@
 <template>
-    <div v-if="GetSd() == 'ab'">
+    <div v-if="sd == 'ab'">
         <Link :href="routeName" class="flex items-center">
             <div>
                 <favicon class="h-10 w-10 mr-2"></favicon>
@@ -28,7 +28,7 @@
             </div>
         </Link>
     </div>
-    <div v-if="GetSd() == 'mfx'">
+    <div v-if="sd == 'mfx'">
         <a href="/"><mfxlogo :ab="'_mfx_alt' + this.GetLogin()"></mfxlogo></a>
     </div>
 </template>
@@ -40,13 +40,27 @@ import Favicon from "@/Application/Components/Logo/Favicon.vue";
 import mfxlogo from "@/Application/Shared/mfxlogo.vue";
 export default {
     name: "Shared_BrandFooter",
-    //
+
     components: {
         Link,
         Favicon,
         mfxlogo,
     },
-    //
+
+    data() {
+        return {
+            sd: null,
+            loginFlag: "",
+        };
+    },
+
+    mounted() {
+        if (typeof window !== "undefined") {
+            this.sd = window.subdomain;
+            this.loginFlag = this.calcLogin();
+        }
+    },
+
     props: {
         routeName: {
             type: String,
@@ -65,20 +79,36 @@ export default {
             default: null,
         },
     },
-    methods:{
-        GetSd(){
-        return window.subdomain;
-    },
-    GetLogin()
-    {
-        const url = location.href;
-        if(!url.includes("/login") && !url.includes("/forgot-password") && !url.includes("/register") && !url.includes("/email/verify") && !url.includes("/reset-password") && !url.includes("/confirm-password") && !url.includes("/verify-email"))
+
+    methods: {
+        calcLogin() {
+            const url = window?.location?.href || "";
+
+            if (
+                !url.includes("/login") &&
+                !url.includes("/forgot-password") &&
+                !url.includes("/register") &&
+                !url.includes("/email/verify") &&
+                !url.includes("/reset-password") &&
+                !url.includes("/confirm-password") &&
+                !url.includes("/verify-email")
+            ) {
+                return "";
+            }
+
+            return "l";
+        },
+        GetLogin()
         {
-            return "";
+            const url = location.href;
+            if(!url.includes("/login") && !url.includes("/forgot-password") && !url.includes("/register") && !url.includes("/email/verify") && !url.includes("reset-password") && !url.includes("/confirm-password") && !url.includes("/verify-email"))
+            {
+                return "";
+            }
+            return "l";
         }
-        return "l";
+
     },
-    }
 };
 </script>
 

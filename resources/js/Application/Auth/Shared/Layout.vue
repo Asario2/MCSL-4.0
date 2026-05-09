@@ -127,11 +127,12 @@ export default {
     methods:{
         GetPageName()
         {
+            if(typeof window === "undefined") return '';
             return window.pagename;
         }
     },
     mounted(){
-    
+
   },
 
 };

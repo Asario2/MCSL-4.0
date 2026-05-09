@@ -104,7 +104,7 @@ import { rumLaut, nl2br } from "@/helpers";
 import { Inertia } from '@inertiajs/inertia'
 
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
-import SelectRecipient from "./SelectRecipient.vue";
+import SelectRecipient from "@/Application/Components/Social/SelectRecipient.vue";
 import InputHtml from "@/Application/Components/Form/InputHtml.vue";
 import InputTextarea from "@/Application/Components/Form/InputTextarea.vue";
 import InputSelect from "@/Application/Components/Form/InputSelect.vue";

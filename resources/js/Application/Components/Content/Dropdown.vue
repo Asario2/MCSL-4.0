@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full h-full">
+    <div class="relative w-full h-full" v-if="isClient">
         <div @click="open = !open">
             <slot name="trigger"></slot>
         </div>
@@ -72,6 +72,7 @@ export default {
     data() {
         return {
             open: false,
+            isClient: false,
         };
     },
 
@@ -117,11 +118,18 @@ export default {
     },
 
     mounted() {
+            if (typeof window !== "undefined") {
         document.addEventListener("keydown", this.closeOnEscape);
+    }
+    this.isClient = true;
+
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
+        if (typeof window !== "undefined") {
         document.removeEventListener("keydown", this.closeOnEscape);
+    }
+
     },
 };
 </script>

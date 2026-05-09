@@ -1,4 +1,4 @@
-    <template>
+<template>
 <div v-if="showComments" class="w-full zi relative" @click.stop>
 <div v-if="comments && comments.length > 0" class="space-y-4">
     <div v-for="comment in comments" :key="comment?.id"
@@ -70,7 +70,9 @@
 <script>
 import axios from "axios";
 import $ from 'jquery';
+if (typeof window !== 'undefined'){
 window.$ = window.jQuery = $;
+}
 import { CleanTable_alt, replaceSmilies, SD } from '@/helpers';
 import SmiliesBox from "@/Application/Components/Social/SmiliesBox.vue";
 import IconTrash from "@/Application/Components/Icons/Trash.vue";
@@ -110,8 +112,9 @@ data() {
 
 async mounted() {
     // Prüfe, ob User bereits authid hat
-    this.logged = !!window.authid;
-    this.AID = window.authid ? Number(window.authid) : null;
+
+    this.logged = !!this.$page?.props?.auth?.user?.id;
+    this.AID = this.$page?.props?.auth?.user?.id ? Number(this.$page?.props?.auth?.user?.id) : null;
 
 
     await this.fetchComments();
@@ -198,7 +201,7 @@ async ensureLogin() {
     });
 
     // 🔥 Reaktive Updates
-    if(data?.user_id && data?.user_id != "7" && !window.authid)
+    if(data?.user_id && data?.user_id != "7" && !this.$page?.props?.auth?.user?.id  )
     {
     userStore.user.user_id = data.user_id;
     userStore.user.full_name = data.full_name;
@@ -212,7 +215,7 @@ async ensureLogin() {
         this.AID = true;
     }
 
-    window.toastBus.emit({type:"success",message:"Du wurdest erfolgreich eingeloggt"});
+    this.$toast.emit({type:"success",message:"Du wurdest erfolgreich eingeloggt"});
     }
 
     return true;
@@ -272,7 +275,7 @@ async submitComment() {
 
 
 
-            window.toastBus.emit({type:'error',message: response.data.message});
+            this.$toast.emit({type:'error',message: response.data.message});
 
         }
         if (response.data.status === 'success') {
@@ -281,7 +284,7 @@ async submitComment() {
             await this.addMcslPoints(3);
             if(this.logged)
             {
-                window.toastBus.emit({type:'points',message:"Du hast 3 MCSL-Points gesammelt"});
+                this.$toast.emit({type:'points',message:"Du hast 3 MCSL-Points gesammelt"});
             }
         }
     } catch (error) {

@@ -37,6 +37,8 @@
                     </div>
                     </div>
                 </div>
+                <!-- <pre>{{ typeof text.text }}</pre>
+                <pre>{{ typeof contacts.text }}</pre> -->
                 </div>
 
                     </div>
@@ -71,8 +73,9 @@ export default defineComponent({
         MetaHeader},
     props:{
         news:[Array,Object],
-        text: [Array,Object],
-        contacts: [Array,Object],
+        text: [Array,Object,String],
+        contacts: [Array,Object,String],
+        dmaa:[Array,Object,String,Number]
     },
     data() {
     return {
@@ -88,10 +91,11 @@ export default defineComponent({
   },
 
     methods: {
-        cleanHtml(html) {
+ cleanHtml(html) {
       const result = rumLaut(html);
+      const resu = stripTags(result);
      // console.log("rumLaut output:", result);
-      return result;
+      return resu;
 
     },
     async submitForm() {

@@ -368,7 +368,7 @@
                     <div class="w-full max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <!-- Toast -->
                         <div>
-                            <toast></toast>
+                            <Toast></Toast>
                         </div>
 
                         <!-- Slot für Content -->
@@ -399,7 +399,7 @@ import axios from "axios";
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/vue3'
 import IconMoney from "@/Application/Components/Icons/IconMoney.vue";
 import IconStar_thin from "@/Application/Components/Icons/IconStar_thin.vue";
 import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
@@ -418,7 +418,7 @@ import FooterGrid from "@/Application/Components/Content/FooterGrid.vue";
 
 
 export default {
-    name: "Admin_Shared_Layout",
+    name: "Admin_Shared_Layout_ab",
 
     components: {
         // Head,
@@ -462,11 +462,11 @@ export default {
 async mounted() {
         this.rights.edit = await CheckTRights("edit", 'private_messages');
     this.rights.delete = await CheckTRights("delete", 'private_messages');
-        let shouldReload = localStorage.getItem('reload_dashboard');
-        if (shouldReload) {
-            localStorage.removeItem('reload_dashboard');
-            window.location.reload();
-        }
+        // let shouldReload = localStorage.getItem('reload_dashboard');
+        // if (shouldReload) {
+        //     localStorage.removeItem('reload_dashboard');
+        //     window.location.reload();
+        // }
         this.loadmcslpoints(); // initial
        // setInterval(this.loadmcslpoints, 5000);
     },
@@ -478,7 +478,7 @@ async mounted() {
         CleanTable,
         logout() {
         axios.post('/logout').then(() => {
-        window.location.href = '/ri'; // garantiert vollständiger Seitenwechsel
+        location.href = '/ri'; // garantiert vollständiger Seitenwechsel
         }).catch(err => {
         console.error(err);
         alert('Logout fehlgeschlagen');
@@ -500,17 +500,24 @@ async mounted() {
                     // this.$inertia.reload();
                 }
             } catch (error) {
-                window.toastBus.emit( {
+                if(typeof window !== "undefined")
+                {
+                    window,toastBus.emit( {
                     status: 'error',
                     message: error.response?.data?.message || 'Fehler beim Laden.',
                 });
+                }
+
             }
         },
 
         changeMode(value) {
             this.mode = value;
             this.isOpen = false;
+            if(typeof window !== "undefined")
+            {
             localStorage.theme = this.mode;
+            }
         },
 
         toggleNavbar() {

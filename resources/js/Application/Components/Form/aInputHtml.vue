@@ -7,27 +7,25 @@
         <div
             class="mb-4 h-14 p-4 flex items-center bg-layout-sun-300 dark:bg-layout-night-300 rounded-lg edit0R"
 
-        ><p class='border rounded label p-1'><nobr>{{getLabel(name)}}</nobr></p>
+        ><p class='border rounded label p-1'><span class="whitespace-nowrap">{{getLabel(name)}}</span></p>
             <!-- Bold Button -->
-
+            <ClientOnly>
             <button type="button" @mousedown.prevent @click="toggleFormat('bold')" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-            v-tippy>
+            title="Fett">
                 <b>B</b>
 
             </button>
-            <tippy>
-            Fett
-            </tippy>
+
             <!-- Italic Button -->
             <button type="button"
                 @mousedown.prevent
                 @click="toggleFormat('italic')"
                  class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-                 v-tippy>
+                 title="Kursiv">
                 <b><i>I</i></b>
 
             </button>
-            <tippy>Kursiv</tippy>
+
 
             <!-- Heading Buttons H1 - H6 -->
             <template v-for="i in 6" :key="i">
@@ -36,11 +34,11 @@
             @mousedown.prevent
             @click="toggleFormat(`h${i}`)"
             class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-            v-tippy
+            :title="'Überschrift ' + i"
             >
             <b>H{{ i }}</b>
             </button>
-            <tippy>Überschrift {{ i }}</tippy>
+
             </template>
             <!-- <ImageUploadModal
                     :isOpen="isModalOpen"
@@ -63,57 +61,59 @@
             <!-- Image Button -->
             <button type="button" @mousedown.prevent
             @click="openModal_alt2" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-           v-tippy>
+           title="BIldupload">
                 <b><IconPictures stroke="white"/></b>
             </button>
-            <tippy>Bildupload</tippy>
+
             <!-- Code Button -->
             <button type="button" @mousedown.prevent
                 @click="toggleFormat('code')"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-                v-tippy>
+                title="Code">
                 <b><IconCode /></b>
             </button>
-            <tippy>Code</tippy>
+
             <!-- HR Button -->
             <button type="button" @mousedown.prevent
                 @click="AddHr"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-                v-tippy>
-                <b><nobr>---</nobr></b>
+                title="Trennlinie">
+                <b><span class="whitespace-nowrap">---</span></b>
             </button>
-            <tippy>Trennlinie</tippy>
+
             <!-- HR Button -->
             <button type="button" @mousedown.prevent
                 @click="toggleFormat('email')"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-            v-tippy>
+            title="Email Link">
                 <b>@</b>
             </button>
-            <tippy>Email Link</tippy>
+
             <button type="button" @mousedown.prevent
                 @click="toggleFormat('link')"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-            v-tippy>
+            title="Hyperlink">
                 <b><IconHyperLink/></b>
             </button>
-            <tippy>Hyperlink</tippy>
+
 
         <button type="button" @mousedown.prevent
                 @click="toggleFormat('list')"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-            v-tippy>
+            title="Ungeordnete Liste">
                 <b><IconList/></b>
             </button>
-            <tippy>Ungeordnete Liste</tippy>
+
             <button type="button" @mousedown.prevent
                 @click="toggleFormat('ordlist')"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
-            v-tippy>
+            title="Geordnete Liste">
                 <b><IconOrdList/></b>
             </button>
-            <tippy>Geordnete Liste</tippy>
+
+        </ClientOnly>
         </div>
+
 
         <!-- Textfeld -->
         <div class="mb-4 p-4 bg-layout-sun-0 dark:bg-layout-night-0 rounded-lg edit0R">
@@ -149,8 +149,8 @@
 </template>
 
 <script>
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
+// import tippy from 'tippy.js';
+// import 'tippy.js/dist/tippy.css';
 import ImageUploadModal from '@/Application/Components/ImageUploadModal.vue';
 import { GetSettings } from "@/helpers";
 import IconPictures from "@/Application/Components/Icons/IconPictures.vue";
@@ -158,17 +158,19 @@ import IconList from "@/Application/Components/Icons/IconList.vue";
 import IconOrdList from "@/Application/Components/Icons/IconOrdList.vue";
 import IconCode from "@/Application/Components/Icons/IconCode.vue";
 import IconHyperLink from "@/Application/Components/Icons/IconHyperLink.vue";
-import { Tippy } from 'tippy.vue';
+import ClientOnly from "@/Application/Components/ClientOnly.vue"
 
 export default {
   name: "Editor",
   components: {
     IconPictures,
+    // tippy,
     IconCode,
     IconHyperLink,
     ImageUploadModal,
     IconList,
     IconOrdList,
+    ClientOnly
   },
   props: {
     imageId: [String, Number],
@@ -191,12 +193,7 @@ export default {
   },
   async mounted() {
     this.settings = await GetSettings();
-    this.$nextTick(() => {
-      tippy('[data-tippy-content]', {
-        placement: 'right',
-        animation: 'scale',
-      });
-    });
+
     if (this.$refs.editor) {
       this.$refs.editor.innerHTML = decodeHtml(this.modelValue) || "";
     }
@@ -358,7 +355,7 @@ export default {
       } else if (format === "code") {
         element = document.createElement("code");
       } else if (format === "email") {
-        const email = prompt("E-Mail-Adresse eingeben:", "[EMAIL]");
+        const email = prompt("E-Mail-Adresse eingeben:", "beispiel@example.com");
         if (!email) return;
         element = document.createElement("a");
         element.href = `mailto:${email}`;

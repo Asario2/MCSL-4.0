@@ -46,6 +46,7 @@ import { Link } from "@inertiajs/vue3";
 
 import Favicon from "@/Application/Components/Logo/Favicon.vue";
 import mfxlogo from "@/Application/Shared/mfxlogo.vue";
+import { SD } from "@/helpers/dom";
 import chhlogo from "@/Application/Shared/ChhLogo.vue";
 import Daglogo from "@/Application/Shared/daglogo.vue";
 export default {
@@ -81,8 +82,9 @@ export default {
 
   },
     methods:{
+        SD,
     GetSd(){
-        return window.subdomain;
+        return this.SD();
     },
     GetLogin()
     {

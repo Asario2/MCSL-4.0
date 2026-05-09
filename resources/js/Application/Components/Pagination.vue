@@ -1,21 +1,24 @@
-S<template>
+<template>
 
   <div v-if="links?.length > 1" class="flex justify-center gap-2">
-    <button
+
+    <a
       v-for="(link, i) in links"
       :key="i"
+      :href="buildUrl(link)"
       :disabled="!link.url"
-      @click="go(link)"
+      @click.prevent="go(link)"
       class="px-3 py-1 border rounded lolink"
       :class="{
             'flex items-center font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-900': link.active,
             'opacity-50 cursor-not-allowed': !link.url
       }"
-      >
+    >
       <span v-if="link.label === 'pagination.previous'">« Zurück</span>
       <span v-else-if="link.label === 'pagination.next'">Weiter »</span>
       <span v-else v-html="link.label"></span>
-    </button>
+    </a>
+
   </div>
 </template>
 
@@ -25,37 +28,57 @@ export default {
     links: { type: Array, required: true },
     basePath: { type: String, required: true },
   },
+
   data()
   {
     return {
         searchString:'',
     }
-
   },
+
   methods: {
-go(link) {
-    if (!link.url) return;
 
-    const url = new URL(link.url, window.location.origin);
+    // 🔥 SSR + SEO URL Builder
+    buildUrl(link) {
+        if (!link.url) return '#';
 
-    const params = new URLSearchParams(url.search);
-    const page = params.get('page');
+        try {
+            const url = new URL(link.url, 'http://dummy'); // SSR-safe
+            const params = new URLSearchParams(url.search);
+            const page = params.get('page');
+            let base = this.basePath.replace(/\/$/, '');
 
-    const searchParams = new URLSearchParams(window.location.search);
-    const search = searchParams.get('search');
-    // const amp = !location.href.includes('tab') ? '&' : '?';
-    const amp = "?";
-    let finalUrl = "/" + this.basePath + amp + "page=" + page;
+            const amp = "?";
+            let finalUrl = "/" + base + amp + "page=" + page;
 
-    if (search) {
-        finalUrl += "&search=" + encodeURIComponent(search);
-    }
+            // Client-only search übernehmen
+            if (typeof window !== 'undefined') {
+                const searchParams = new URLSearchParams(window.location.search);
+                const search = searchParams.get('search');
 
-    this.$inertia.visit(finalUrl, {
-        preserveState: false,
-        replace: false,
-    });
-},
+                if (search) {
+                    finalUrl += "&search=" + encodeURIComponent(search);
+                }
+            }
+
+            return finalUrl;
+
+        } catch (e) {
+            return '#';
+        }
+    },
+
+    go(link) {
+        if (!link.url) return;
+
+        const finalUrl = this.buildUrl(link);
+
+        this.$inertia.visit(finalUrl, {
+            preserveState: false,
+            replace: false,
+        });
+    },
+
 // OLD GO
 //     go(link) {
 //   if (!link.url) return;
@@ -97,6 +120,7 @@ go(link) {
 //         replace: false,
 //       });
 //     },
+
   },
 };
 </script>

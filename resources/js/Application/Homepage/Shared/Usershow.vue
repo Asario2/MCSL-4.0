@@ -73,7 +73,7 @@
                 ></display-number>
             </div>
         </Link>
-            <socialButtons :postId="blog.id" :slug="blog.autoslug" :nostars="true" />
+            <socialButtons :postId="blog.id" :title="'Benutzer '+blog.title" :slug="blog.autoslug" :nostars="true" />
         </div>
     </div>
 </template>
@@ -115,6 +115,11 @@ export default {
         //     type: Number,
         // },
     },
+    data(){
+        return {
+            isCommentActive:false,
+        }
+    }
 };
 </script>
 

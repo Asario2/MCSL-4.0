@@ -329,7 +329,9 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <!-- Toast -->
                         <div>
-                            <toast></toast>
+                            <ClientOnly>
+                            <Toast></Toast>
+                            </ClientOnly>
                         </div>
 
                         <!-- Slot für Content -->
@@ -356,7 +358,7 @@
 
 <script>
 import { Head } from "@inertiajs/vue3";
-
+import ClientOnly from "@/Application/Components/ClientOnly.vue";
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 
 import Toast from "@/Application/Components/Content/Toast.vue";
@@ -382,6 +384,7 @@ export default {
         NavLink,
         ResponsiveNavLink,
         FooterGrid,
+        ClientOnly,
     },
 
     props: {
@@ -393,17 +396,25 @@ export default {
 
     data() {
         return {
-            mode: localStorage.theme ? localStorage.theme : "",
+            mode:'',
             isOpen: false,
             year: new Date().getFullYear(),
         };
     },
-
+    mounted() {
+        if (typeof window !== "undefined") {
+            this.mode = localStorage.theme || "";
+        }
+    },
     methods: {
         changeMode(value) {
             this.mode = value;
             this.isOpen = false;
-            localStorage.theme = this.mode;
+            if(typeof window !== "undefined")
+            {
+                localStorage.theme = this.mode;
+            }
+
         },
 
         toggleNavbar() {

@@ -1,4 +1,6 @@
-import 'bootstrap';
+if (typeof window !== 'undefined') {
+    import('bootstrap')
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -40,7 +42,7 @@ axios.interceptors.response.use(
       // Redirect zu Login + Ursprungs-URL
       window.setTimeout(() => {
        // window.location.href = route('login', { redirect: currentUrl });
-      }, 500); // kleine Verzögerung für Toast
+      }, 500); // kleine Verzï¿½gerung fï¿½r Toast
     }
 
     return Promise.reject(error);

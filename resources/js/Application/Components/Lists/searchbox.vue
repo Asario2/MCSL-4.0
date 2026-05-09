@@ -25,7 +25,7 @@
 
   <script>
     import axios from "axios";
-    import { Inertia } from '@inertiajs/inertia';
+    import { router } from '@inertiajs/vue3'
     import {route} from 'ziggy-js';
   export default {
     props: {

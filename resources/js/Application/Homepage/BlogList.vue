@@ -11,7 +11,7 @@
                     Zurzeit liegen keine Blogartikel vor!
                 </alert>
             </div>
-<pre>{{ paginatíon }}</pre>
+<!-- <pre>{{ paginatíon }}</pre> -->
             <div class="p-2 md:p-4">
                 <page-title>
                     <template #title> Asarios Blog </template>
@@ -70,8 +70,9 @@ import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 import Pagination from "@/Application/Components/Pagination.vue";
 import Alert from "@/Application/Components/Content/Alert.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-import { throttle, pickBy, mapValues } from 'lodash';
-import { Inertia } from "@inertiajs/inertia";
+import mapValues from "lodash/mapValues";
+import throttle from "lodash/throttle";
+
 //import { safeInertiaGet } from '@/utils/inertia';
 
 export default defineComponent({
@@ -118,6 +119,8 @@ export default defineComponent({
             form: {
                 search: this.filters.search,
             },
+            searchFilter:false,
+
         };
     },
    watch: {

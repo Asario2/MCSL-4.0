@@ -13,12 +13,11 @@
       />
     </div>
     <div class="ml-3 text-sm">
-      <label :for="name" class="cursor-pointer">
+      <label :for="name" class="cursor-pointer"  :title="helptext">
         <span v-if="label">{{ label }}</span>
         <span v-else><slot /></span>
         <icon-exclamation-circle v-if="helptext" class="inline-block ml-1 w-5 h-5" />
       </label>
-      <tippy v-if="helptext" v-html="helptext" placement="left"></tippy>
     </div>
   </div>
 </template>

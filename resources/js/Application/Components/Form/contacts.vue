@@ -32,7 +32,7 @@
 <script>
 import { defineComponent } from "vue";
 import Layout from "@/Application/Homepage/Shared/mfx/Layout.vue";
-import { selectionHelper, GetSettings,rumLaut } from "@/helpers";
+import { selectionHelper, stripTags,rumLaut } from "@/helpers";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import PageContent from "@/Application/Components/Content/PageContent.vue";
 import PageTitle from "@/Application/Components/Content/PageTitle.vue";
@@ -70,8 +70,9 @@ export default defineComponent({
     methods: {
         cleanHtml(html) {
       const result = rumLaut(html);
+      const resu = stripTags(result);
      // console.log("rumLaut output:", result);
-      return result;
+      return resu;
 
     },
     async submitForm() {

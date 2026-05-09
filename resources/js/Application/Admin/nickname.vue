@@ -7,7 +7,7 @@
 
 <script>
 import Layout from "@/Application/Auth/Shared/Layout.vue";
-import { page } from '@inertiajs/inertia-vue3';
+import { page } from '@/inertia-compat'
 import PersonalProfile from "@/Application/Shared/PersonalProfile.vue";
 import MetaHeader from "../Homepage/Shared/MetaHeader.vue";
 export default {

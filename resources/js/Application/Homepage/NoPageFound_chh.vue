@@ -1,45 +1,64 @@
 <template>
-    <layout
-        :header-url="$page.props.saas_url + '/no_page_found'"
-    >
+  <component
+    :is="Layout"
+    :header-url="$page.props.saas_url + '/no_page_found'"
+  >
     <MetaHeader title="Seite nicht gefunden" />
-        <page-title>
-            <template #title>Seite nicht gefunden!</template>
-        </page-title>
-    </layout>
+
+    <page-title>
+      <template #title>Seite nicht gefunden!</template>
+    </page-title>
+  </component>
 </template>
+
 <script>
-import { defineComponent, defineAsyncComponent } from 'vue';
+import { markRaw } from "vue";
+
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import PageTitle from "@/Application/Components/Content/PageTitle.vue";
 
-// Mapping für dynamische Layouts
 const layoutComponents = {
   chh: () => import('@/Application/Homepage/Shared/chh/Layout.vue'),
- // dag: () => import('@/Application/Homepage/Shared/dag/Layout.vue'),
-  default: () => import('@/Application/Homepage/Shared/Layout.vue'),
+  mfx: () => import('@/Application/Homepage/Shared/mfx/Layout.vue'),
+  dag: () => import('@/Application/Homepage/Shared/dag/Layout.vue'),
+  default: () => import('@/Application/Homepage/Shared/chh/Layout.vue'),
 };
 
-// Funktion zur Ermittlung der ersten Subdomain
-function getDomKey(urlString) {
-  try {
-    const url = new URL(urlString);
-    const hostname = url.hostname;
-    const parts = hostname.split('.');
-
-    return parts.length > 2 ? parts[0] : "default";
-  } catch (e) {
-    return "default";
-  }
+function getDomKey(hostname) {
+  if (!hostname) return "default";
+  const parts = hostname.split('.');
+  return parts.length > 2 ? parts[0] : "default";
 }
 
-export default defineComponent({
-  name: "Homepage_NoPageFound",
-  components: {
-    Layout: defineAsyncComponent(
-      layoutComponents[getDomKey(window.location.href)] || layoutComponents['default']
-    ),
-    PageTitle, MetaHeader},
-});
-</script>
+export default {
 
+  name: "Homepage_NoPageFound_chh2",
+
+  components: {
+    MetaHeader,
+    PageTitle
+  },
+
+  data() {
+    return {
+      Layout: null
+    };
+  },
+
+  async created() {
+
+    const subdomain =
+      this.$page?.props?.subdomain || "default";
+
+    const key = getDomKey(subdomain);
+
+    const loader =
+      layoutComponents[key] ||
+      layoutComponents.default;
+
+    const layout = await loader();
+
+    this.Layout = markRaw(layout.default);
+  }
+};
+</script>

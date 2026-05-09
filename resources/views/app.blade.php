@@ -16,6 +16,7 @@
     $pagen = SD("pn");
     $favicon = "/images/_{$subdomain}/web/alogo.png";
     $ahost = request()->getHost();
+    $chost = request()->getSchemeAndHttpHost();
     $glo = new GlobalController();
 
     if (!file_exists(public_path($favicon))) {
@@ -43,6 +44,7 @@
             window.subdomain_alt = "{{ $sd_alt ?? '' }}";
             window.pagename = "{{ $pagen }}";
             window.ahost = "{{ $ahost }}";
+            window.chost = "{{ $chost }}";
             window.app_name = "{{ $pagen }}";
 
         </script>
@@ -62,7 +64,12 @@
         <script src="/js/jquery-3.6.0.min.js"></script>
         <script src="/js/users.js"></script>
 
-
+        {{-- <script>
+            window.Ziggy = {
+                ...@json((new \Tighten\Ziggy\Ziggy)->toArray()),
+                url: "{{ request()->getSchemeAndHttpHost() }}"
+            };
+        </script> --}}
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -72,10 +79,7 @@
         <link rel="stylesheet" href="/Shariff/shariff.complete.css">
         <script src="/Shariff/shariff.min.js"></script>
 
-        <img width='1' height='1' src="{{ route('countpixel', [
-            'url'   => urlencode(request()->fullUrl()),
-            'route' => request()->route()?->getName() ?? 'unknown'
-        ]) }}">
+
 
         @inertiaHead
 
@@ -102,7 +106,55 @@
     </head>
     <body class="font-sans antialiased">
         <input type="hidden" id="token" value="{{ csrf_token() }}">
+        {{-- @if(isset($page['props']['im_cont']))
+            <div style="display:none;">
+                @foreach($page['props']['im_cont'] as $img)
+                    <img
+                        src="/images/{{ $img->fileName }}"
+                        alt="{{ $img->label }}"
+                    >
+                @endforeach
+            </div>
+            @endif
+            @if(isset($page['props']['entries']['data']))
+                <div style="display:none;">
+                    @foreach($page['props']['entries']['data'] as $img)
+                        <img
+                            src="/images/{{ $img->image_path }}"
+                            alt="{{ $img->name ?? $img->headline_en ?? 'image' }}"
+                        >
+                    @endforeach
+                </div>
+            @endif
+            @if(isset($page['props']['entries']['links']))
+                <div style="display:none;">
+                    @foreach($page['props']['entries']['links'] as $link)
+                        <a href="{{ str_replace("/",'',$link->url) ?? '#' }}">
+                            {!! $link->label !!}
+                        </a>
+                    @endforeach
+                </div>
+            @endif
+            @if(isset($page['props']['blogs']['data']))
+                <div style="display:none;">
+                    @foreach($page['props']['blogs']['data'] as $blog)
+                        <img
+                            src="/images/{{ $blog['url'] }}"
+                            alt="{{ $blog['name'] ?? $blog['title'] ?? 'image' }}"
+                        >
+                    @endforeach
+                </div>
+            @endif
+            @if(isset($page['props']['pagination']['links']))
+                <div style="display:none;">
+                    @foreach($page['props']['pagination']['links'] as $link)
+                        <a href="{{ str_replace("/",'',$link['url']) ?? '#' }}">
+                            {!! $link['label'] !!}
+                        </a>
 
+                    @endforeach
+                </div>
+            @endif --}}
 <script type="module">
 import { reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
 
@@ -110,8 +162,8 @@ const toastBus = reactive({ toasts: [] });
 toastBus.toasts.push({ message: 'Hallo', type: 'success', duration: 5000 });
 // console.log(toastBus);
 </script>
-    </script>
-        @php Notify(); @endphp
+
+        {{-- @php Notify(); @endphp --}}
 
 
         @inertia
@@ -196,5 +248,10 @@ document.addEventListener('DOMContentLoaded', function () {
             /* Fix für kurzes Aufblitzen des Banners */
             .cc-window { display: inline-block !important; }
         </style>
+        <img width='1' height='1' src="{{ route('countpixel', [
+            'url'   => urlencode(request()->fullUrl()),
+            'route' => request()->route()?->getName() ?? 'unknown',
+            "page" => @$_GET['page']
+        ]) }}">
     </body>
     </html>

@@ -277,8 +277,7 @@ import { toastBus } from '@/utils/toastBus';
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue"
 import IconMagni from "@/Application/Components/Icons/IconMagni.vue";
 import ErrorSVG from "@/Application/Components/Icons/ErrorSVG.vue";
-import { SD } from "@/helpers";
-import { defineAsyncComponent } from "vue";
+
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 export default {
@@ -289,8 +288,7 @@ export default {
     IconMagni,
     ErrorSVG,
     MetaHeader,
-    toastBus,
-
+    
   },
   props:{
     cor_date:String,
@@ -431,7 +429,7 @@ export default {
 
     this.syncStatus = `SyncToAll abgeschlossen!<br />
     <span class='text-blue-400 font-bold'>Local→Online:</span> ${localToOnline.length} Tabellen.<br />
-    <span class='text-purple-700 font-bold'>Online→Local:</span> ${onlineToLocal.length} Tabellen,<br />`;
+    <span class='text-purple-700 font-bold'>Online→Local:</span> ${onlineToLocal.length} Tabellen.<br />`;
 
 
     // -------------------------------

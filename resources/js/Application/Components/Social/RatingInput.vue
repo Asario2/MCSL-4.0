@@ -78,7 +78,7 @@ export default {
 
   mounted() {
     // globaler Auth-Status
-    this.AID = Boolean(window.authid);
+    this.AID = Boolean(this.$page?.props?.auth?.user?.id);
 
 //   console.log("Mounted RatingInput");
 //   console.log("Auth:", this.AID);
@@ -136,7 +136,7 @@ async setRating(star) {
         });
 
         // 🔥 Reaktive Updates
-        if(data?.user_id && data?.user_id != "7" && !window.authid)
+        if(data?.user_id && data?.user_id != "7" && !this.$page?.props?.auth?.user?.id)
         {
         userStore.user.user_id = data.user_id;
         userStore.user.full_name = data.full_name;

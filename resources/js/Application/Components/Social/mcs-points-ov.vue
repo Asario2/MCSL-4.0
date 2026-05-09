@@ -120,16 +120,16 @@ export default {
   components: { Layout, MetaHeader,Breadcrumb, },
 
   props: {
-    mcslpoints: { type: Object, required: true },
-    commentsStats: { type: Object, required: true },
-    ratingsStats: { type: Object, required: true },
-    activity: { type: Object, required: true },
-    text: [Array, Object],
+    mcslpoints: { type: Object, required: false },
+    commentsStats: { type: Object, required: false },
+    ratingsStats: { type: Object, required: false },
+    activity: { type: Object, required: false },
+    text: [Array, Object, String],
     count_mcs: Number,
     count_com: Number,
      stackedUserStats: {
     type: Object,
-    required: true,
+    required: false,
   },
   MCSL_GLOB_PTS: {
     type: Number,
@@ -142,10 +142,11 @@ export default {
 
   data() {
     return {
-
+        AID:null,
     };
   },
   mounted(){
+    this.AID = this.$page?.props?.auth?.user?.id ? Number(this.$page?.props?.auth?.user?.id) : null;
 //     console.log(this.text);
   },
   method:{

@@ -45,24 +45,24 @@ import { faL } from '@fortawesome/free-solid-svg-icons';
         },
         initShariff()
         {
-            alert(this.sse);
-            // console.log("initShariff aufgerufen");
+//             alert(this.sse);
+//             // console.log("initShariff aufgerufen");
 
-  nextTick(() => {
-    const shariffElement = this.$refs.shariff;
-    if (shariffElement) {
-    const url = `${window.location.origin}${window.location.pathname}${this.added || ''}${this.sse || ''}`;
-    //   console.log("Shariff-URL:", url);
+//   nextTick(() => {
+//     const shariffElement = this.$refs.shariff;
+//     if (shariffElement) {
+//     const url = `${window.location.origin}${window.location.pathname}${this.added || ''}${this.sse || ''}`;
+//     //   console.log("Shariff-URL:", url);
 
-      shariffElement.setAttribute('data-url', url);
+//       shariffElement.setAttribute('data-url', url);
 
-      new Shariff(shariffElement, {
-        services: ['facebook', 'twitter', 'xing', 'whatsapp'],
-        theme: 'classic',
-        orientation: 'horizontal',
-      });
-    }
-  });
+//       new Shariff(shariffElement, {
+//         services: ['facebook', 'twitter', 'xing', 'whatsapp'],
+//         theme: 'classic',
+//         orientation: 'horizontal',
+//       });
+//     }
+//   });
 },
 
 

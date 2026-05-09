@@ -344,7 +344,7 @@ export default {
   return grouped;
 }       ,
   UID(){
-      return window.authid;
+       return this.$page?.props?.auth?.user?.id ?? null;
     },
 sortedLetters() {
   if (!this.groupedContacts || typeof this.groupedContacts !== "object") {

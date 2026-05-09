@@ -9,9 +9,8 @@ class CheckRight
     public function handle($request, Closure $next, string $right)
     {
         if (!CheckZRights($right)) {
-            header("Location: /no-rights");
+                abort(403);
 
-        exit;
         }
 
         return $next($request);

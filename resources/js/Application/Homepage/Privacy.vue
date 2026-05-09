@@ -33,7 +33,7 @@
         },
 
     scrollToHashAnchor() {
-    const hash = window.location.hash;
+    const hash = window?.location.hash;
     if (hash && hash.startsWith("#")) {
       setTimeout(() => {
         const el = document.getElementById(hash.substring(1));

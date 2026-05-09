@@ -18,7 +18,7 @@
     mfx: () => import("@/Application/Homepage/Shared/mfx/Layout.vue"),
     ab: () => import("@/Application/Homepage/Shared/Layout.vue"),
     dag: () => import("@/Application/Homepage/Shared/dag/Layout.vue"),
-    default: () => import("@/Application/Homepage/Shared/default/Layout.vue"),
+    default: () => import("@/Application/Homepage/Shared/Layout.vue"),
   };
 
   // Subdomain ermitteln

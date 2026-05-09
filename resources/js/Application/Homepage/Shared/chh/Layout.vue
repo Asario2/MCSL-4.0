@@ -75,7 +75,7 @@
         <div class="w-full max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Toast -->
             <div>
-                <toast></toast>
+                <Toast></Toast>
             </div>
 
             <!-- Slot für Content -->
@@ -128,7 +128,7 @@
 </template>
 <script>
 export default {
-    name: "Admin_Shared_Layout",
+    name: "Admin_Shared_Layout_chh",
 data(){
 return {
     year: new Date().getFullYear(),
@@ -145,6 +145,7 @@ methods: {
     }
 
     // Normaler active check
+    if(typeof Window === "undefined") return;
     return window.location.pathname.startsWith(path);
   }
 }

@@ -33,6 +33,7 @@ info.php
 **/DATAFILES/**
 **/images_gallerys/**
 *.sh
+bootstrap/ssr/assets/**
 **/dataset/**
 *.yml
 **/phpmyadmin/**

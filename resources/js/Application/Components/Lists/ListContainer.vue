@@ -98,7 +98,7 @@
     </template>
 
     <script>
-    import { Link } from "@inertiajs/vue3";
+    import { Link } from '@inertiajs/vue3'
     import { toastBus } from '@/utils/toastBus';
     import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
     import Pagination from "@/Application/Components/Pagination.vue";

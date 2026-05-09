@@ -4,50 +4,51 @@
         <span v-if="!nohtml">
         <!-- Menü -->
         <div class="mb-4 h-14 p-4 flex items-center bg-layout-sun-300 dark:bg-layout-night-300 rounded-lg edit0R">
-            <p class='border rounded label p-3'><nobr>{{name ? getLabel(name) : ''}}</nobr></p>
-
+            <p class='border rounded label p-3'><span class="whitespace-nowrap">{{name ? getLabel(name) : ''}}</span></p>
+            <ClientOnly>
             <!-- Formatierungsbuttons -->
-            <button type="button" @click="toggleBold()" class="icon-btn" v-tippy aria-label="Fett">
+            <button type="button" @click="toggleBold()" class="icon-btn" title="Fett" aria-label="Fett">
                 <b>B</b>
             </button>
 
-            <button tabindex="-1" type="button" @click="toggleItalic()" class="icon-btn" v-tippy aria-label="Kursiv">
+            <button tabindex="-1" type="button" @click="toggleItalic()" class="icon-btn" title="Kursiv" aria-label="Kursiv">
                 <b><i>I</i></b>
             </button>
 
             <template v-for="i in 6" :key="i">
-                <button tabindex="-1" type="button" @click="toggleHeading(`${i}`)" class="icon-btn" v-tippy :aria-label="'Überschrift ' + i">
+                <button tabindex="-1" type="button" @click="toggleHeading(`${i}`)" class="icon-btn" :title="'Überschrift ' + i"  :aria-label="'Überschrift ' + i">
                     <b>H{{ i }}</b>
                 </button>
             </template>
 
-            <button tabindex="-1" type="button" @click="openModal_alt2" class="icon-btn" v-tippy aria-label="Bildupload">
+            <button tabindex="-1" type="button" @click="openModal_alt2" class="icon-btn" title="Bildupload"  aria-label="Bildupload">
                 <b><IconPictures stroke="currentColor"/></b>
             </button>
 
-            <button tabindex="-1" type="button" @click="toggleCode()" class="icon-btn" v-tippy aria-label="Code">
+            <button tabindex="-1" type="button" @click="toggleCode()" class="icon-btn" title="Code" aria-label="Code">
                 <b><IconCode /></b>
             </button>
 
-            <button tabindex="-1" type="button" @click="AddHr" class="icon-btn" v-tippy  aria-label="Trennlinie">
-                <b><nobr>---</nobr></b>
+            <button tabindex="-1" type="button" @click="AddHr" class="icon-btn" title="Trennlinie"  aria-label="Trennlinie">
+                <b><span class="whitespace-nowrap">---</span></b>
             </button>
 
-            <button tabindex="-1" type="button" @click="toggleFormat('email')" class="icon-btn" v-tippy  aria-label="Email">
+            <button tabindex="-1" type="button" @click="toggleFormat('email')" class="icon-btn"  title="Email Link" aria-label="Email">
                 <b>@</b>
             </button>
 
-            <button tabindex="-1" type="button" @click="toggleFormat('link')" class="icon-btn" v-tippy aria-label="Hyperlink">
+            <button tabindex="-1" type="button" @click="toggleFormat('link')" class="icon-btn" title="Hyperlink" aria-label="Hyperlink">
                 <b><IconHyperLink/></b>
             </button>
 
-            <button tabindex="-1" type="button" @click="toggleList('ul')" class="icon-btn" v-tippy  aria-label="Ungeordnete Liste">
+            <button tabindex="-1" type="button" @click="toggleList('ul')" class="icon-btn" title="Ungeordnete Liste"  aria-label="Ungeordnete Liste">
                 <b><IconList/></b>
             </button>
 
-            <button tabindex="-1" type="button" @click="toggleList('ol')" class="icon-btn" v-tippy aria-label="Geordnete Liste">
+            <button tabindex="-1" type="button" @click="toggleList('ol')" class="icon-btn" title="Geordnete Liste" aria-label="Geordnete Liste">
                 <b><IconOrdList/></b>
             </button>
+            </ClientOnly>
         </div>
 
         <div>
@@ -103,17 +104,18 @@
 </template>
 
 <script>
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
+// import tippy from 'tippy.js';
+// import 'tippy.js/dist/tippy.css';
 import ImageUploadModal from '@/Application/Components/ImageUploadModal.vue';
 import { GetSettings, rumLaut,nl2br } from "@/helpers";
 import IconPictures from "@/Application/Components/Icons/IconPictures.vue";
 import IconList from "@/Application/Components/Icons/IconList.vue";
 import IconOrdList from "@/Application/Components/Icons/IconOrdList.vue";
+import ClientOnly from "@/Application/Components/ClientOnly.vue"
 import smileys from "@/Application/Components/Social/smileys.vue";
 import IconCode from "@/Application/Components/Icons/IconCode.vue";
 import IconHyperLink from "@/Application/Components/Icons/IconHyperLink.vue";
-import { Tippy } from 'tippy.vue';
+// impofrt { Tippy } from 'tippy.vue';
 
 export default {
     name: "EditorRad",
@@ -125,7 +127,7 @@ export default {
         IconList,
         IconOrdList,
         smileys,
-        Tippy,
+        ClientOnly,
     },
     props: {
         imageId: [String, Number],
@@ -150,7 +152,7 @@ export default {
             default: '',
         },
         nohtml: {
-            type: String,
+            type: [Number,Boolean,String],
             default: '',
         }
 
@@ -175,10 +177,6 @@ export default {
 
         this.$refs.editor.innerHTML =
         this.decodeBrackets(nl2br(rumLaut(this.modelValue ?? ""))) || "";
-
-        this.$nextTick(() => {
-            tippy('[data-tippy-content]', { placement: 'right', animation: 'scale' });
-        });
 
         this.updateValue();
     },

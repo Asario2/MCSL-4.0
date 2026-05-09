@@ -189,7 +189,15 @@ export default defineComponent({
                 redirect: params.get('redirect'),
             };
             //
-            localStorage.setItem('reload_dashboard', '1');
+            if(typeof window !== "undefined")
+            {
+                localStorage.theme = this.mode;
+                localStorage.setItem('reload_dashboard', '1');
+            }
+            if(typeof window !== "undefined")
+            {
+                localStorage.theme = this.mode;
+            }
             this.loading = true;
             this.loadingText = "Die Anmeldung wird durchgeführt!";
             //s

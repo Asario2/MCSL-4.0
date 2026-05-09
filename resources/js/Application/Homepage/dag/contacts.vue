@@ -88,10 +88,11 @@ export default defineComponent({
   },
 
     methods: {
-        cleanHtml(html) {
+    cleanHtml(html) {
       const result = rumLaut(html);
+      const resu = stripTags(result);
      // console.log("rumLaut output:", result);
-      return result;
+      return resu;
 
     },
     async submitForm() {

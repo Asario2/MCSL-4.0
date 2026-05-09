@@ -1,8 +1,8 @@
         <template>
             <meta-header :title="headerTitle">
             <template #robots>
-                <meta head-key="robots" name="robots" content="noindex, nofollow" v-if="noIndexNoFollow" />
-                <meta head-key="robots" name="robots" content="index, follow" v-else />
+
+                <meta head-key="robots" name="robots" content="index, follow"/>
             </template>
 
             <template #description>
@@ -231,7 +231,7 @@
                 <div class="container mx-auto max-w-6xl min-h-screen py-32 px-2">
                 <!-- Toast -->
                 <div>
-                    <toast></toast>
+                    <Toast></Toast>
                 </div>
 
                 <!-- Slot für Content -->
@@ -374,7 +374,7 @@
         import IconUsers from "@/Application/Components/Icons/IconUsers.vue";
         import IconContactsPublic from "@/Application/Components/Icons/IconContactsPublic.vue";
         import IconPrivacy from "@/Application/Components/Icons/IconPrivacy.vue";
-        // import { Inertia } from "@inertiajs/inertia";
+        // import { Inertia } from "@inertiajs/vue3";
         import Loader from "@/Application/Components/Loader.vue";
         import NewsletterSubscribe from "@/Application/Components/Social/NewsletterSubscribe.vue";
         import JrightArrow from "@/Application/Components/Icons/JrightArrow.vue";
@@ -429,17 +429,34 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
         props: {
             sd: {
             type: String,
-            required: true,
+            required: false,
             },
+            headerUrl: {
+            type: String,
+            default: ''
+        },
+        headerTitle: {
+            type: String,
+            default: ''
+        }
+
         },
 
         setup() {
-        return { userStore };
+        return {
+
+
+            userStore };
     },
 
         data() {
             return {
-            mode: localStorage.theme ? localStorage.theme : "dark",
+            // headerTitle: this.$page?.props?.title ?? "",
+            isLoading: false,
+            headerDescription: this.$page?.props?.description ?? "",
+            // headerUrl: this.$page?.props?.url ?? null,
+            headerImage: this.$page?.props?.image ?? null,
+            mode: typeof window !== "undefined" ? localStorage.theme : "dark",
             isOpen_Menu: false,
             year: new Date().getFullYear(),
             pendingRequests: 0,
@@ -459,13 +476,13 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
 
         async mounted() {
 
-    window.addEventListener("loader:show", () => {
-    // this.isLoading = true;
-    });
+    // window.addEventListener("loader:show", () => {
+    // // this.isLoading = true;
+    // });
 
-    window.addEventListener("loader:hide", () => {
-        //this.isLoading = false;
-    });
+    // window.addEventListener("loader:hide", () => {
+    //     //this.isLoading = false;
+    // });
         // MCS POINTS
         this.loadmcslpoints(); // initial
 
@@ -474,10 +491,10 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
 
         this.rights.edit = await CheckTRights("edit", 'private_messages');
         this.rights.delete = await CheckTRights("delete", 'private_messages');
-            const shouldReload = localStorage.getItem("reload_dashboard");
-            if (shouldReload) {
-            localStorage.removeItem("reload_dashboard");
-            }
+            // const shouldReload = localStorage.getItem("reload_dashboard");
+            // if (shouldReload) {
+            // localStorage.removeItem("reload_dashboard");
+            // }
             this.waitForConsent();
             // URL-Parameter auslesen
             const urlParams = new URLSearchParams(window.location.search);
@@ -520,8 +537,12 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
             this.waitForImagesToLoad();
 
             if (this.isLoading) {
-            localStorage.setItem("loading", "true");
+            if(typeof window !== "undefined")
+            {
+
+                localStorage.setItem("loading", "true");
             }
+        }
             this.$nextTick(() => {
             if (window.LaravelCookieConsent) {
     //             console.log("CookieConsent ready");
@@ -616,7 +637,14 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
             setLoadingState(state) {
     //           console.log("🔄 setLoadingState:", state);
             this.isLoading = state;
-            localStorage.setItem("loading", state ? state.toString() : '');
+            if(typeof window !== "undefined")
+            {
+
+                localStorage.setItem("loading", state ? state.toString() : '');
+            }
+
+
+
             },
 
             waitForConsent(callback) {
@@ -719,7 +747,11 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
 
             changeMode() {
             this.mode = this.mode === "dark" ? "light" : "dark";
+            if(typeof window !== "undefined")
+            {
+
             localStorage.theme = this.mode;
+            }
             this.isOpen_Menu = false;
             },
 

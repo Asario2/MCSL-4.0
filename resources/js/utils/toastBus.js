@@ -4,7 +4,7 @@ export const toastBus = reactive({
   toasts: [],
   idCounter: 0,
 
-  emit({ message, type = 'info', duration = 4000 }) {
+  emit({ message, type = 'info', duration = 25000 }) {
     const toast = {
       id: this.idCounter++,
       message,
@@ -31,4 +31,6 @@ export const toastBus = reactive({
 });
 
 // Legacy / Debug
+if (typeof window !== 'undefined') {
 window.toastBus = toastBus
+}

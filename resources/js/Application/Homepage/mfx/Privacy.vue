@@ -21,7 +21,7 @@
     mounted() {
         this.scrollToHashAnchor();
         window.addEventListener("hashchange", this.scrollToHashAnchor);
-        getscro();
+        this.getscro();
     },
         beforeUnmount() {
         window.removeEventListener("hashchange", this.scrollToHashAnchor);
@@ -40,7 +40,7 @@
         }
     },
     scrollToHashAnchor() {
-    const hash = window.location.hash;
+    const hash = window?.location.hash;
     if (hash && hash.startsWith("#")) {
       setTimeout(() => {
         const el = document.getElementById(hash.substring(1));

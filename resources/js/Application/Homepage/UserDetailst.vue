@@ -131,7 +131,7 @@ export default defineComponent({
     },
     computed:{
         darkMode(){
-            this.darkMode = localStorage.getItem("theme");
+            // this.darkMode = localStorage.getItem("theme");
         },
         isRightsReady() {
       return this.$isRightsReady; // Zugriff auf globale Methode

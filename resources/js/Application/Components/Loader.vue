@@ -37,7 +37,7 @@
 <script>
 // console.log("🔥 LOADER FILE LOADED succ");
 import axios from "axios";
-import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/vue3";
 import { loaderState } from "@/utils/globalLoader";
 
 export default {
@@ -152,14 +152,14 @@ methods: {
     },
 
     installInertia() {
-        Inertia.on("start", (e) => {
+        router.on("start", (e) => {
             if (e.detail?.visit?.skipLoading) return;
 //             console.log("Inertia start -> setting inertiaLoading = true");
             this.state.inertiaLoading = true;
             this.update();
         });
 
-        Inertia.on("finish", (e) => {
+        router.on("finish", (e) => {
             if (e.detail?.visit?.skipLoading) return;
 //             console.log("Inertia finish -> setting inertiaLoading = false");
             this.state.inertiaLoading = false;

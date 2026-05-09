@@ -1,5 +1,6 @@
 // Erkennen, ob Dark Mode aktiviert ist
-
+if(typeof window !== "undefined")
+{
 const isDarkMode =
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -24,4 +25,5 @@ function ucf(str) {
 
     // Setzt die W�rter mit einem Leerzeichen zusammen
     return na.join(" ");
+}
 }

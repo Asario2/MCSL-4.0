@@ -85,6 +85,16 @@
 
 <body class="{{ $dm }}">
     <input type='hidden' id="csrf-token" value="{{ csrf_token() }}">
+    @if(isset($page['props']['im_cont']))
+    <div style="display:none;">
+        @foreach($page['props']['im_cont'] as $img)
+            <img
+                src="/images/{{ $img['fileName'] }}"
+                alt="{{ $img['label'] }}"
+            >
+        @endforeach
+    </div>
+    @endif
     <div id="app">
         @php
             $subdomain = SD();

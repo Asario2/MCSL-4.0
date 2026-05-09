@@ -3,12 +3,12 @@
 	// import '@fontsource/open-sans';
 	// import '@fontsource/ubuntu';
     // import { createApp, h } from "vue";
-    // import { createInertiaApp } from "@inertiajs/vue3";
+    // import { createInertiaApp } from "@inertiajs/inertia";
     // import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
     // import { ZiggyVue } from "../../vendor/tightenco/ziggy";
     // import { i18nVue } from "laravel-vue-i18n";
     // import { route as ziggyRoute } from 'ziggy-js';
-    // import { Inertia } from '@inertiajs/inertia';
+    // import { router } from '@inertiajs/inertia'
     // import { createPinia } from "pinia";
 
     // // FontAwesome
@@ -19,17 +19,19 @@
 
     // library.add(faPencilAlt, faTrashCan, faXTwitter);
 
-import "./bootstrap";
+if (typeof window !== 'undefined') {
+    import('bootstrap')
+}
 import '../css/app.css';
 import '@fontsource/open-sans';
 import '@fontsource/ubuntu';
 import { createApp, h } from "vue";
-import { createInertiaApp } from "@inertiajs/vue3";
+import { createInertiaApp } from "@inertiajs/inertia";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import { i18nVue } from "laravel-vue-i18n";
 import { route as ziggyRoute } from 'ziggy-js';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/inertia'
 import { createPinia } from "pinia";
 
 // FontAwesome

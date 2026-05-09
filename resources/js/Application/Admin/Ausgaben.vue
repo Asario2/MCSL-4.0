@@ -164,19 +164,19 @@ export default {
     };
   },
   watch: {
-  'form.search': throttle(function () {
-    this.$inertia.get(
-      this.route('home.images.gallery', {
-        slug: this.ocont.slug,
-    }),
-      { search: this.form.search },
-      {
-        preserveState: true,
-        replace: true,
-        skipLoading:true,
-      }
-    );
-  }, 300),
+//   'form.search': throttle(function () {
+//     this.$inertia.get(
+//       this.route('home.images.gallery', {
+//         slug: this.ocont?.slug,
+//     }),
+//       { search: this.form.search },
+//       {
+//         preserveState: true,
+//         replace: true,
+//         skipLoading:true,
+//       }
+//     );
+//   }, 300),
 
 
 //   'form.search': throttle(function (val) {
@@ -201,12 +201,17 @@ export default {
     deep: true,
     immediate: true,
     handler() {
+        if(typeof window !== "undefined")
+        {
       if (!window.location.hash) return;
 
       requestAnimationFrame(() => {
         this.scrollToHashAnchor();
       });
+}
     },
+
+
   },
 },
   methods: {
@@ -232,7 +237,7 @@ export default {
   },
     CleanTable,
     //     scrollToHashAnchor() {
-    //   const hash = window.location.hash;
+    //   const hash = window?.location.hash;
     //   if (!hash) return;
 
     //   const el = document.getElementById(hash.replace("#", ""));
@@ -244,7 +249,7 @@ export default {
 
 
   getHashElement() {
-    const hash = window.location.hash;
+    const hash = window?.location.hash;
 //     console.log('DEBUG: window.location.hash =', hash);
 
     if (!hash) return null;
@@ -294,7 +299,7 @@ export default {
 
      // OLDDDDDDDDDDDDD
     // scrollToHashAnchor() {
-    //   const hash = window.location.hash;
+    //   const hash = window?.location.hash;
     //   if (hash && hash.startsWith("#")) {
     //     setTimeout(() => {
     //       const el = document.getElementById(hash.substring(1));
@@ -343,7 +348,7 @@ export default {
     this.$nextTick(() => {
     this.$refs.searchField?.focus();
     });
-    // const hash = window.location.hash;
+    // const hash = window?.location.hash;
     // if (hash && hash.startsWith("#st")) {
     //   const id = hash.replace("#st", "");
     //   const index = this.entries.data.findIndex((item) => String(item?.id) === id);

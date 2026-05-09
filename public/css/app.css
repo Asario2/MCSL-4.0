@@ -5,7 +5,7 @@
 @import "navigation.css";
 @import "table.css";
 @import "v_tippy.css";
-
+@import "shariff/dist/shariff.complete.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

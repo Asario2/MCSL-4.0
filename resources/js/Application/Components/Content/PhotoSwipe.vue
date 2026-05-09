@@ -68,12 +68,12 @@
 </template>
 
 <script>
-    import 'photoswipe/style.css';
-    import 'photoswipe/dist/photoswipe.css'
-    import 'photoswipe/dist/default-skin/default-skin.css'
 
-    import PhotoSwipe from 'photoswipe/dist/photoswipe'
-    import PhotoSwipeDefaultUI from 'photoswipe/dist/photoswipe-ui-default'
+    import 'photoswipe/dist/photoswipe.css'
+
+
+    // import PhotoSwipe from 'photoswipe/dist/photoswipe'
+    // import PhotoSwipeDefaultUI from 'photoswipe/dist/photoswipe-ui-default'
 
     export default {
         methods: {

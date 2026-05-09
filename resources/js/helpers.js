@@ -1,5 +1,5 @@
-import axios from 'axios';
-
+import axios from "@/lib/api";
+import { cachen } from './cache';
 export async function GetColumns(table) {
     try {
         const response = await axios.get(`/api/table-columns/${table}`);
@@ -16,18 +16,30 @@ export async function GetColumns(table) {
         return {};
     }
 }
-export async function getapp() {
-return window.app_name;
+export function getapp() {
+  return typeof window !== 'undefined' ? window.app_name : '';
 }
-export function GetProfileImagePath(path){
-    if(!path){
+export function GetProfileImagePath(path, sd = null) {
+    if (!path) {
         path = "008.jpg";
     }
-if(path.includes("https://ui-avatars.com/api/"))
-{
-return path;
-}
-return '/images/_' + SD() + '/users/profile_photo_path/' + path;
+
+    if (path.includes("https://ui-avatars.com/api/")) {
+        return path;
+    }
+
+    // 👉 Fallback für SSR
+    if (!sd) {
+        if (typeof window !== 'undefined') {
+            sd = SD();
+        } else {
+            sd = 'ab'; // default für SSR
+        }
+    }
+
+    path = path.replace(/^\/+/, '');
+
+    return `/images/_${sd}/users/profile_photo_path/${path}`;
 }
 export async function loadRightsOnce() {
   if (!cache.tables) {
@@ -200,30 +212,65 @@ export async function GetBatchRights(tables, rightType = 'view') {
 }
 
 // OPTIMIERT: Existierende GetRights Funktion mit Cache
-export async function GetRights(right, table) {
-  // Cache prüfen
-  const cacheKey = `${right}_${table}`;
-  if (cache.batchRights && cache.batchRights[cacheKey] !== undefined) {
-    return cache.batchRights[cacheKey];
-  }
 
-  try {
-    const response = await axios.get(`/api/user/rights/des/${table}/${right}`);
-    const result = response.data;
-//     console.log("result:" + result);
-    // In Cache speichern
-    if (!cache.batchRights) {
-      cache.batchRights = {};
+
+
+function getBaseUrl() {
+
+    // Browser
+    if (typeof window !== "undefined") {
+        return window.location.origin;
     }
-    cache.batchRights[cacheKey] = result;
 
-    return result;
-  } catch (error) {
-    console.error(`Fehler beim Abrufen der Rechte für ${table}:`, error);
-    return 0;
-  }
+    // SSR
+    if (globalThis?.page?.props?.app_url) {
+        return globalThis.page.props.app_url;
+    }
+
+    return "http://localhost";
 }
-import { cachen } from './cache';
+
+export async function GetRights(right, table) {
+
+    const cacheKey = `${right}_${table}`;
+
+    // Cache absichern
+    if (!cache.batchRights) {
+        cache.batchRights = {};
+    }
+
+    // Bereits vorhanden
+    if (cache.batchRights[cacheKey] !== undefined) {
+        return cache.batchRights[cacheKey];
+    }
+
+    try {
+
+        const baseURL = getBaseUrl();
+
+        const response = await axios.get(
+            `${baseURL}/api/user/rights/des/${table}/${right}`
+        );
+
+        const result = response.data ?? 0;
+
+        cache.batchRights[cacheKey] = result;
+
+        return result;
+
+    } catch (error) {
+
+        console.error(
+            `Fehler beim Abrufen der Rechte für ${table}:`,
+            error
+        );
+
+        // Fallback speichern
+        cache.batchRights[cacheKey] = 0;
+
+        return 0;
+    }
+}
 
 // Zwischenspeicher für laufende Requests
 if (!cachen.pending) cachen.pending = {};
@@ -465,6 +512,7 @@ export async function GetRightsParallel(tables, rightType = 'view') {
 //     }
 //   }
 export function CleanId() {
+    if (typeof window === 'undefined') return '';
     const path = window.location.pathname; // Beispiel: "/admin/tables/show/123"
     let segments = path.split('/');
 
@@ -480,12 +528,14 @@ export function CleanId() {
 
 export function cc(img)
     {
-        if(!img)
+         if (typeof img !== 'string') {
             return '';
+        }
         return img.replace(/^p(\d+)/, (match, p1) => 'P' + p1);
     }
 
 export function CleanTable() {
+    if (typeof window === 'undefined') return '';
     const path = window.location.pathname; // Gibt "/admin/tables/show/Example" zur�ck
     let segments = path.split('/');
     const fo_vals = ["admin", "tables", "edit", "delete", "create", "show","search","home","pictures"];
@@ -508,11 +558,13 @@ segments = segments.join('').replace(/[[\]']/g, '');
 
 }
 export function CleanTab(rem) {
+    if (typeof window === 'undefined') return '';
     const path = window.location.pathname; // Gibt "/admin/tables/show/Example" zur�ck
     return path.replace(rem,'').replace("/",'');
 }
 export function SD(pn = '') {
     // Hostname ohne www.
+    if (typeof window === 'undefined') return '';
     let subb = window.location.hostname.replace(/^www\./, '').split('.')[0];
 
     // Mapping
@@ -585,6 +637,7 @@ export function ucf(str) {
 }
 
 export function CleanTable_alt() {
+    if (typeof window === 'undefined') return '';
     const path = window.location.pathname; // Gibt "/admin/tables/show/Example" zur�ck
     let segments = path.split('/');
     const fo_vals = ["admin", "tables", "edit", "delete", "create", "show","search","home"];
@@ -728,9 +781,9 @@ export function rumLaut(input, table = '') {
     str = str.replace(/â€“/g, '-');
 
     // 5. HTML Entities dekodieren (basic)
-    const txt = document.createElement("textarea");
-    txt.innerHTML = str;
-    str = txt.value;
+    // const txt = document?.createElement("textarea");
+    // txt.innerHTML = str;
+    // str = txt.value;
 
     // 6. Weitere manuelle Zeichenersetzungen
     const find = [
@@ -757,6 +810,7 @@ export const selectionHelper = {
 //   savedRange: null,
 
   save() {
+     if (typeof window === 'undefined') return;
     const sel = window.getSelection();
     if (sel && sel.rangeCount > 0) {
       this.savedRange = sel.getRangeAt(0).cloneRange();

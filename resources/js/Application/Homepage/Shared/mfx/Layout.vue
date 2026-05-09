@@ -1,8 +1,8 @@
 <template>
     <meta-header :title="headerTitle">
       <template #robots>
-        <meta head-key="robots" name="robots" content="noindex, nofollow" v-if="noIndexNoFollow" />
-        <meta head-key="robots" name="robots" content="index, follow" v-else />
+
+        <meta head-key="robots" name="robots" content="index, follow"/>
       </template>
 
       <template #description>
@@ -27,7 +27,14 @@
           <div class="container mx-auto max-w-6xl p-6 lg:flex lg:items-center lg:justify-between trans" style='z-index:50;'>
             <div class="flex items-center justify-between ">
               <!-- <brand-header :route-name="route('home.index')" :brand_1="$page.props.applications.brand_name_1" :brand_2="$page.props.applications.brand_name_2" :app-name="$page.props.applications.app_name"></brand-header> -->
-                <a href="/"><mfxlogo></mfxlogo></a>
+                <a href="/">
+                    <ClientOnly>
+                        <mfxlogo />
+                    </ClientOnly>
+                    <noscript>
+                         <img :src="'/images/logos/mfx.jpg'" alt="Logo" />
+                    </noscript>
+                </a>
               <!-- Mobile menu button -->
               <div class="flex lg:hidden">
                 <button v-on:click="toggleNavbar()" type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 focus:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800 dark:focus:text-primary-night-800" aria-label="toggle menu">
@@ -193,7 +200,7 @@
         </nav>
 
         <!-- Loading -->
-        <div v-if="isLoading || loadingStore.isLoading" id="loader" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-all" style='z-index:999999999'>
+        <!-- <div v-if="isLoading || loadingStore.isLoading" id="loader" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-all" style='z-index:999999999'>
         <div class="text-center">
             <svg class="animate-spin h-10 w-10 text-primary-sun-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -201,13 +208,13 @@
             </svg>
             <p class="mt-4 text-primary-sun-100 text-sm">Bitte warten...</p>
         </div>
-        </div>
-
+        </div> -->
+        <Loader />
         <!-- Content -->
         <div class="container mx-auto max-w-6xl min-h-screen py-32 px-2">
           <!-- Toast -->
           <div>
-            <toast></toast>
+            <Toast></Toast>
           </div>
 
           <!-- Slot für Content -->
@@ -236,7 +243,7 @@
                       <link-footer name="Datenschutzerklärung" :route-name="route('home.privacy')"></link-footer>
                     </li>
                     <li>
-                     <a class="ToggleCookieLink text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900" onclick="showHideToggleCookiePreferencesModal()"><span>Cookie Einstellungen</span></a>
+                     <a class="ToggleCookieLink text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900" @click="showHideToggleCookiePreferencesModal()"><span>Cookie Einstellungen</span></a>
                     </li>
                   </ul>
                 </div>
@@ -263,7 +270,7 @@
                     <brand-footer></brand-footer>
                   </div>
                   <div>
-                    <link-footer>
+                    <!-- <link-footer>
                       <a href="https://www.facebook.de" target="_blank" class="bg-layout-sun-0 dark:bg-layout-night-0">
                         <icon-facebook class="flex-shrink-0 w-6 h-6"></icon-facebook>
                       </a>
@@ -277,7 +284,7 @@
                       <a href="https://whatsapp.com " target="_blank" class="bg-layout-sun-0 dark:bg-layout-night-0">
                         <icon-whatsapp class="flex-shrink-0 w-6 h-6"></icon-whatsapp>
                       </a>
-                    </link-footer>
+                    </link-footer> -->
                   </div>
                 </div>
 
@@ -303,7 +310,7 @@ import axios from "axios";
 import { router } from "@inertiajs/vue3";
 import { useLoadingStore } from "@/loading";
 import mfxlogo from "@/Application/Shared/mfxlogo.vue";
-
+import ClientOnly from "@/Application/Components/ClientOnly.vue"
 import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
@@ -316,16 +323,18 @@ import IconMenu from "@/Application/Components/Icons/Menu.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { SD } from "@/helpers";
+import Loader from "@/Application/Components/Loader.vue";
 import { ref } from "vue";
 
 export default {
-  name: "Homepage_Shared_Layout",
+  name: "Homepage_Shared_Layout_mfx",
 
   components: {
     MetaHeader,
     BrandHeader,
     LinkHeader_mfx,
     BrandFooter,
+    Loader,
     LinkFooter,
     Toast,
     IconMenu,
@@ -333,86 +342,79 @@ export default {
     mfxlogo,
     Dropdown,
     DropdownLink,
+    ClientOnly,
     ButtonChangeMode,
   },
 
   props: {
     sd: {
       type: String,
-      required: true,
+      required: false,
     },
   },
 
-  setup() {
-    const loadingStore = useLoadingStore();
-    return { loadingStore };
-  },
+//   setup() {
+//     const loadingStore = useLoadingStore();
+//     return { loadingStore };
+//   },
 
   data() {
     return {
-      mode: localStorage.theme ? localStorage.theme : "dark",
-      isOpen_Menu: false,
+
+        headerDescription: this.$page?.props?.description ?? "",
+        headerUrl: this.$page?.props?.url ?? null,
+        headerImage: this.$page?.props?.image ?? null,
+      mode: 'dark',
+        isOpen_Menu: false,
       year: new Date().getFullYear(),
-      pendingRequests: 0,
-      isLoading: localStorage.getItem("loading") === "true",
+
+    //   isLoading: localStorage.getItem("loading") === "true",
       search: "",
+      isLoading: true,
       searchval: false,
       imagesLoaded: false,
       searchTimeout: null,
+         headerTitle: this.$page?.props?.title ?? "",
     };
   },
 
-  mounted() {
+mounted() {
+//   this.headerTitle = this.$page?.props?.title ?? "";
 
-    const shouldReload = localStorage.getItem("reload_dashboard");
-    if (shouldReload) {
-      localStorage.removeItem("reload_dashboard");
-    }
+    if (typeof window !== "undefined") {
+  this.mode = localStorage.theme || 'dark';
+}
+    // SSR-Schutz (wichtig!)
+    if (typeof window === "undefined") return;
 
-    // URL-Parameter auslesen
+    // =============================================
+    // URL Parameter
+    // =============================================
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get("search");
     this.search = searchParam ?? "";
 
     if (searchParam === "" || searchParam === null) {
-      this.setLoadingState(true);
-      this.searchval = true;
-      this.startSearchTimeout();
+        this.setLoadingState(true);
+        this.searchval = true;
+        this.startSearchTimeout();
     } else {
-      this.setLoadingState(false);
-      this.searchval = false;
+        this.setLoadingState(false);
+        this.searchval = false;
     }
 
-    // Axios Interceptor
-    axios.interceptors.request.use((config) => {
-      this.pendingRequests += 1;
-//       console.log("⬆️ Request gestartet", this.pendingRequests);
-      this.setLoadingState(this.searchval);
-      return config;
-    });
-
-    axios.interceptors.response.use(
-      (response) => {
-        this.pendingRequests -= 1;
-//         console.log("⬇️ Response erhalten", this.pendingRequests);
-        this.checkLoadingState();
-        return response;
-      },
-      (error) => {
-        this.pendingRequests -= 1;
-//         console.log("⚠️ Response Fehler", this.pendingRequests);
-        this.checkLoadingState();
-        return Promise.reject(error);
-      }
-    );
-
-    // Bilder beobachten
+    // =============================================
+    // Bilder beobachten (SSR-safe)
+    // =============================================
     this.waitForImagesToLoad();
 
+    // =============================================
+    // LocalStorage
+    // =============================================
     if (this.isLoading) {
-      localStorage.setItem("loading", "true");
+        localStorage.setItem("loading", "true");
     }
-  },
+},
 
   methods: {
     SD,
@@ -420,11 +422,15 @@ export default {
     setLoadingState(state) {
 //       console.log("🔄 setLoadingState:", state);
       this.isLoading = state;
+    if(typeof window !== "undefined")
+    {
       localStorage.setItem("loading",  state ? state.toString():'');
-    },
+    }
+},
 
     reopenCookieBanner() {
-      if (window.LaravelCookieConsent) {
+
+      if (typeof window !== "undefined" && window.LaravelCookieConsent){
         window.LaravelCookieConsent.reset();
       }
     },
@@ -436,43 +442,45 @@ export default {
 //         isLoading: this.isLoading,
 //       });
 
-      if (this.pendingRequests === 0 && this.imagesLoaded) {
-//         console.log("✅ Ladezustand beendet");
-        this.setLoadingState(false);
-      }
+     if (this.imagesLoaded) {
+    this.setLoadingState(false);
+  }
     },
 
     waitForImagesToLoad() {
-      const images = document.querySelectorAll("img");
-      const totalImages = images.length;
-      let imagesLoadedCount = 0;
+  if (typeof document === "undefined") {
+    this.imagesLoaded = true;
+    return;
+  }
 
-//       console.log("📸 Images gefunden:", totalImages);
+  const images = document.querySelectorAll("img");
+  const totalImages = images.length;
 
-      if (totalImages === 0) {
-        this.imagesLoaded = true;
-        this.checkLoadingState();
-        return;
-      }
+  if (totalImages === 0) {
+    this.imagesLoaded = true;
+    this.checkLoadingState();
+    return;
+  }
 
-      const markImageDone = (src, type) => {
-        imagesLoadedCount++;
-//         console.log(`📸 Bild ${type}:`, src, `${imagesLoadedCount}/${totalImages}`);
-        if (imagesLoadedCount === totalImages) {
-          this.imagesLoaded = true;
-          this.checkLoadingState();
-        }
-      };
+  let loaded = 0;
 
-      images.forEach((img) => {
-        if (img.complete) {
-          markImageDone(img.src, "complete");
-        } else {
-          img.addEventListener("load", () => markImageDone(img.src, "load"));
-          img.addEventListener("error", () => markImageDone(img.src, "error"));
-        }
-      });
-    },
+  const done = () => {
+    loaded++;
+    if (loaded === totalImages) {
+      this.imagesLoaded = true;
+      this.checkLoadingState();
+    }
+  };
+
+  images.forEach(img => {
+    if (img.complete) {
+      done();
+    } else {
+      img.addEventListener("load", done);
+      img.addEventListener("error", done);
+    }
+  });
+},
 
     toggleNavbar() {
       this.isOpen_Menu = !this.isOpen_Menu;
@@ -480,7 +488,10 @@ export default {
 
     changeMode() {
       this.mode = this.mode === "dark" ? "light" : "dark";
+      if(typeof window !== "undefined")
+            {
       localStorage.theme = this.mode;
+        }
     },
 
     logoutUser() {

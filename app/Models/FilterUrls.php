@@ -21,7 +21,27 @@
         '/home/didyouknow2026-01-29%2016%3A51%3A54',
         '/1',
         '/2',
-        '/ggi'
+        '/ggi',
+        '/blogs10',
+        '/blogs1',
+        '/blogs11',
+        '/blogs2',
+        '/blogs3',
+        '/blogs4',
+        '/blogs5',
+        '/blogs6',
+        '/blogs7',
+        '/blogs8',
+        '/home/didyouknow1',
+        '/home/didyouknow2',
+        '/home/didyouknow3',
+        '/home/didyouknow4',
+        '/home/didyouknow5',
+        '/home/didyouknow6',
+        '/home/shortpoems1',
+        '/home/shortpoems2',
+        '/home/shortpoems3',
+        '/5'
     ];
 
     }

@@ -3,8 +3,8 @@
       <!-- Meta Header (Slots sauber innerhalb der Komponente) -->
       <meta-header :title="headerTitle">
         <template #robots>
-          <meta head-key="robots" name="robots" content="noindex, nofollow" v-if="noIndexNoFollow" />
-          <meta head-key="robots" name="robots" content="index, follow" v-else />
+
+          <meta head-key="robots" name="robots" content="index, follow"/>
         </template>
 
         <template #description>
@@ -79,7 +79,7 @@
             <!-- --- DESKTOP TOPLOG (nur >= lg) --- -->
             <div class="toplog  hidden lg:flex justify-center relative left-[34px]">
                 <a href="/admin/dashboard" class="admin-hotspot"></a>
-                <nav2>
+                <nav>
                 <div class="navi">
                   <ul class="navv flex space-x-6">
                     <li><a href="/" class="clo cl1"><div class="hd">Startseite</div></a></li>
@@ -89,7 +89,7 @@
                     <li><a href="/links" class="clo cl5"><div class="hd">Links</div></a></li>
                   </ul>
                 </div>
-              </nav2>
+              </nav>
             </div>
           </nav>
 
@@ -150,9 +150,9 @@
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
                   <brand-footer />
                   <div class="flex gap-2">
-                    <a href="https://www.facebook.de" target="_blank"><icon-facebook class="w-6 h-6" /></a>
+                    <!-- <a href="https://www.facebook.de" target="_blank"><icon-facebook class="w-6 h-6" /></a>
                     <a href="https://www.xing.de" target="_blank"><icon-xing class="w-6 h-6" /></a>
-                    <a href="https://whatsapp.com" target="_blank"><icon-whatsapp class="w-6 h-6" /></a>
+                    <a href="https://whatsapp.com" target="_blank"><icon-whatsapp class="w-6 h-6" /></a> -->
                   </div>
                 </div>
 
@@ -184,9 +184,9 @@
   import IconClose from "@/Application/Components/Icons/Close.vue";
   import Toast from "@/Application/Components/Content/Toast.vue";
   import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
-
+  import {SD} from "@/helpers/dom.js"
   export default {
-    name: "Homepage_Shared_Layout",
+    name: "Homepage_Shared_Layout_dag",
 
     components: {
       MetaHeader,
@@ -204,88 +204,88 @@
       ButtonChangeMode
     },
 
-    setup() {
-      const loadingStore = useLoadingStore();
-      return { loadingStore };
-    },
+    // setup() {
+    //   const loadingStore = useLoadingStore();
+    //   return { loadingStore };
+    // },
 
     data() {
       return {
-        headerTitle: this.$page?.props?.title ?? "",
-        headerDescription: this.$page?.props?.description ?? "",
-        headerUrl: this.$page?.props?.url ?? null,
-        headerImage: this.$page?.props?.image ?? null,
-        noIndexNoFollow: false,
+            headerTitle: this.$page?.props?.title ?? "",
+            headerDescription: this.$page?.props?.description ?? "",
+            headerUrl: this.$page?.props?.url ?? null,
+            headerImage: this.$page?.props?.image ?? null,
 
-        mode: localStorage.theme ? localStorage.theme : "light",
-        isOpen_Menu: false,
-        year: new Date().getFullYear(),
-        isLoading: true,
-        pendingRequests: 0,
-        imagesLoaded: false,
-        search: '',
-        searchval: false,
-        searchTimeout: null
+            mode: "light", // ❗ KEIN window hier
+            isOpen_Menu: false,
+            year: new Date().getFullYear(),
+            isLoading: true,
+            pendingRequests: 0,
+            imagesLoaded: false,
+            search: '',
+            searchval: false,
+            searchTimeout: null,
+            isClient: false // 👈 wichtig
       };
     },
 
     mounted() {
-//       console.log("mounted läuft");
+  this.isClient = true;
 
-      // Den 'search' Parameter prüfen
-      const urlParams = new URLSearchParams(window.location.search);
-      const searchParam = urlParams.get('search');
-      this.search = searchParam ?? '';
+  // ✅ localStorage safe
+  if (typeof window !== "undefined") {
+    this.mode = localStorage.theme ?? "light";
+  }
 
-      if (searchParam === '' || searchParam === null) {
-        this.setLoadingState(true);
-        this.searchval = true;
-        this.startSearchTimeout();
-      } else {
-        this.setLoadingState(false);
-        this.searchval = false;
+  // ❗ FIX: winow → window
+  if (typeof window !== "undefined") {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    this.search = searchParam ?? '';
+
+    if (!searchParam) {
+      this.setLoadingState(true);
+      this.searchval = true;
+      this.startSearchTimeout();
+    } else {
+      this.setLoadingState(false);
+      this.searchval = false;
+    }
+
+    axios.interceptors.request.use((config) => {
+      this.pendingRequests++;
+      this.setLoadingState(this.searchval);
+      return config;
+    });
+
+    axios.interceptors.response.use(
+      (response) => {
+        this.pendingRequests--;
+        this.checkLoadingState();
+        return response;
+      },
+      (error) => {
+        this.pendingRequests--;
+        this.checkLoadingState();
+        return Promise.reject(error);
       }
+    );
+  }
 
-      // Axios Interceptoren (Pending-Requests zählen)
-      axios.interceptors.request.use((config) => {
-        this.pendingRequests += 1;
-        this.setLoadingState(this.searchval);
-        return config;
-      });
+  this.waitForImagesToLoad();
 
-      axios.interceptors.response.use(
-        (response) => {
-          this.pendingRequests -= 1;
-          this.checkLoadingState();
-          return response;
-        },
-        (error) => {
-          this.pendingRequests -= 1;
-          this.checkLoadingState();
-          return Promise.reject(error);
-        }
-      );
-
-      // Bilder laden überwachen
-      this.waitForImagesToLoad();
-
-      if (this.isLoading) {
-        localStorage.setItem('loading', 'true');
-      }
-
-      if (this.$page.props.flash?.needsReload && !sessionStorage.getItem('needsReload')) {
-        sessionStorage.setItem('needsReload', '1');
-        //alert("RELAODED");
-        //window.location.reload();
-      } else {
-        sessionStorage.removeItem('needsReload');
-      }
-    },
+  if (this.$page.props.flash?.needsReload && this.isClient) {
+    if (!sessionStorage.getItem('needsReload')) {
+      sessionStorage.setItem('needsReload', '1');
+    } else {
+      sessionStorage.removeItem('needsReload');
+    }
+  }
+},
 
     methods: {
-      SD() {
-        return window.subdomain;
-      },
+      SD,
 
       reopenCookieBanner() {
         if (window.LaravelCookieConsent && typeof window.LaravelCookieConsent.reset === 'function') {
@@ -295,44 +295,52 @@
 
       setLoadingState(state) {
         this.isLoading = state;
+        if(typeof window !== "undefined")
+        {
         localStorage.setItem('loading',  state ? state.toString():'');
+        }
       },
 
       checkLoadingState() {
         if (this.pendingRequests === 0 && this.imagesLoaded) {
           this.setLoadingState(false);
+          if(typeof window !== "undefined")
+            {
           localStorage.removeItem('loading');
+            }
         }
       },
 
       waitForImagesToLoad() {
+        if (typeof document === "undefined") return;
+
         const images = document.querySelectorAll('img');
         const totalImages = images.length;
         let imagesProcessedCount = 0;
 
         if (totalImages === 0) {
-          this.imagesLoaded = true;
-          this.checkLoadingState();
-          return;
+            this.imagesLoaded = true;
+            this.checkLoadingState();
+            return;
         }
 
         const imageProcessed = () => {
-          imagesProcessedCount++;
-          if (imagesProcessedCount === totalImages) {
+            imagesProcessedCount++;
+            if (imagesProcessedCount === totalImages) {
             this.imagesLoaded = true;
             this.checkLoadingState();
-          }
+            }
         };
 
         images.forEach((img) => {
-          if (img.complete) {
+            if (img.complete) {
             imageProcessed();
-          } else {
+            } else {
             img.addEventListener('load', imageProcessed, { once: true });
             img.addEventListener('error', imageProcessed, { once: true });
-          }
+            }
         });
-      },
+        },
 
       toggleNavbar() {
         this.isOpen_Menu = !this.isOpen_Menu;
@@ -340,7 +348,10 @@
 
       changeMode() {
         this.mode = this.mode === "dark" ? "light" : "dark";
+       if(typeof window !== "undefined")
+            {
         localStorage.theme = this.mode;
+            }
       },
 
       async logoutUser() {

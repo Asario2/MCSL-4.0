@@ -70,7 +70,7 @@ import Pagination from "@/Application/Components/Pagination.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import {nl2br,rumLaut,GetRights} from "@/helpers";
 import pickBy from "lodash/pickBy";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 export default {
     name: 'NewHome',
     components: { Layout, MetaHeader,editbtns, SearchFilter, Pagination},
@@ -86,7 +86,7 @@ export default {
         return {
 
             form: {
-                search: new URLSearchParams(window.location.search).get('search') || ''
+                 search: this.filters?.search || ''
             },
             open:false,
         }
@@ -171,7 +171,7 @@ a.quelle:link,a.quelle:visited,button.lolink
     text-decoration:none  !important;
     font-weight:bold  !important;
 }
-a.quelle:link:hover,a.quelle:visited:hover,button.lolink:hover,
+a.quelle:link:hover,a.quelle:visited:hover,button.lolink:hover
 {
     color:#005bc7  !important;
     text-shadow:none !important;

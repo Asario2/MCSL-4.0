@@ -12,6 +12,7 @@
 import { defineComponent, defineAsyncComponent } from 'vue';
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import PageTitle from "@/Application/Components/Content/PageTitle.vue";
+import { SD } from '@/helpers';
 
 // Mapping für dynamische Layouts
 const layoutComponents = {
@@ -27,7 +28,7 @@ function getDomKey(urlString) {
     const hostname = url.hostname;
     const parts = hostname.split('.');
 
-    return parts.length > 2 ? parts[0] : "default";
+    return urlString ? urlString : "default";
   } catch (e) {
     return "default";
   }
@@ -37,9 +38,12 @@ export default defineComponent({
   name: "Homepage_NoPageFound",
   components: {
     Layout: defineAsyncComponent(
-      layoutComponents[getDomKey(window.location.href)] || layoutComponents['default']
+      layoutComponents[getDomKey(SD())] || layoutComponents['default']
     ),
     PageTitle, MetaHeader},
+    methods:{
+        SD,
+    }
 });
 </script>
 
