@@ -24,6 +24,7 @@ vendor/
 **/tmp/**
 *.bat
 *.cmd
+repo-backup*
 First_Commmit_dag_No_User.sql
 First_Commmit_mfx_No_User.sql
 Newer_Data_dag.sql
