@@ -48,7 +48,17 @@
             window.app_name = "{{ $pagen }}";
 
         </script>
+        <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
 
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+        </script>
             {{-- <script>
     document.addEventListener('DOMContentLoaded', () => {
         window.toastBusEmit('toast', {
