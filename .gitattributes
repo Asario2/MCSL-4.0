@@ -17,3 +17,9 @@ vendor/*.js linguist-vendored
 # Nur Tailwind CSS im public ausschließen
 public/css/tailw/*.css linguist-vendored
 *.zip filter=lfs diff=lfs merge=lfs -text
+node_modules/** linguist-vendored
+vendor/** linguist-vendored
+public/build/** linguist-generated=true
+dist/** linguist-generated=true
+bootstrap/** linguist-generated=true
+storage/** linguist-generated=true
