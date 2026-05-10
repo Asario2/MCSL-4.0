@@ -265,3 +265,6 @@
 ![Version](https://img.shields.io/badge/version-5.19.5-orange) Hotfix - Newsletter to MSCL-Points not working (#456)  
 ![Version](https://img.shields.io/badge/version-5.20.1-orange) Bugs - Fixed several bugs in private messages (#455)  
 ![Version](https://img.shields.io/badge/version-5.21.9-orange) Feature - Add SSR to my pages (#457)  
+![Version](https://img.shields.io/badge/version-5.22.0-orange) Hotfix: Fixed a bug in the dark mode handling. (#462)  
+![Version](https://img.shields.io/badge/version-5.23.5-orange) Hotfix: removal of unnecessary <br/> tags. (#461)  
+![Version](https://img.shields.io/badge/version-5.24.5-orange) Hotfix - fixed bug in dag/layout.vue (#460)  
