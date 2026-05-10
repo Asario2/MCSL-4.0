@@ -1344,7 +1344,7 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
         $dm = $_SESSION['dm'] ?? "dark";
         return "<div class='datetime-wrapper' id='dtw'>
     <!-- Erster Datetimepicker -->
-        <span class="whitespace-nowrap"><span style='border-radius:4px;'>Von: <input type='datetime-local' id='datetimepicker1_".$id."' value='".$v1."' name='date_begin' class=' xtop datetimepicker3 datetime-input'>
+        <span class='whitespace-nowrap'><span style='border-radius:4px;'>Von: <input type='datetime-local' id='datetimepicker1_".$id."' value='".$v1."' name='date_begin' class=' xtop datetimepicker3 datetime-input'>
         <i class='fa-regular fa-calendar datetime-icon' style='position:relative;right:25px;top:-0px;'></i></span></span>
         <br />
     <!-- Wrapper für zweiten Datetimepicker -->
@@ -1597,7 +1597,7 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
         $btn =  "<span class='btn btn-default' id='openPicker_".$id."'><i class='fas fa-dateweek'></i></span>";
 
     }
-        return "<div align='left'><span class="whitespace-nowrap"><span id='desc_".$id."'>$date2</span>&nbsp;&nbsp;&nbsp;<input type='text' id='datetimepicker_".$id."' value='".$date2."' class='hidden' >".@$btn."</span></div>$scr";
+        return "<div align='left'><span class='whitespace-nowrap'><span id='desc_".$id."'>$date2</span>&nbsp;&nbsp;&nbsp;<input type='text' id='datetimepicker_".$id."' value='".$date2."' class='hidden' >".@$btn."</span></div>$scr";
     }
     public static function image($n,$v,$t)
     {

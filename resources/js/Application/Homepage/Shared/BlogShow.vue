@@ -230,11 +230,14 @@ export default {
     },
     computed: {
         decodedContent() {
-            return this.decodeHtml(replaceSmilies(this.blog.content));
+            return this.decodeHtml(replaceSmilies(this.kilp(this.blog.content)));
         }
     },
     methods: {
         rumLaut,
+        kilp(str){
+            return str.replace(/<p><br\s*\/?><\/p>/g, '');
+        },
         decodeHtml(html) {
             return html.replace(/%5B/g, '[').replace(/%5D/g, ']').replace("\n","<br />");
         },

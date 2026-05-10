@@ -923,20 +923,25 @@ public function imprint_dag()
     //
     public function home_privacy()
     {
-        // if(SD() != "ab")
-        // {
-            $set = "_".SD();
-            $dol = SD()."/";
-        // }
-        $pf = "privacy".@$set.".md";
-            $privacyFile = Jetstream::localizedMarkdownPath($pf);
-// dd(request()->headers->all());
+        $set = SD() ? "_".SD() : "";
+        $dol = SD() ? SD()."/" : "";
+
+        $pf = "privacy".$set.".md";
+
+        $privacyFile = Jetstream::localizedMarkdownPath($pf);
+
+        if (!$privacyFile || !file_exists($privacyFile)) {
+            abort(404);
+        }
+
         include_once "inc/functions/rinfo_code.php";
-        // dd($privacyFile);
-        $privacy = @Str::markdown(file_get_contents(@$privacyFile)); // HTML erzeugt
+
+        $privacy = Str::markdown(
+            file_get_contents($privacyFile)
+        );
+
         $privacy = rinfo_code($privacy);
 
-        // $privacy = nl2br($privacy);
         return Inertia::render('Homepage/'.$dol.'Privacy', [
             'privacy' => $privacy,
         ]);

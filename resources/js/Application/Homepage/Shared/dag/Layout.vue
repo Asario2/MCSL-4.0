@@ -283,7 +283,10 @@
     }
   }
 },
-
+setup() {
+    const loadingStore = useLoadingStore();
+    return { loadingStore };
+},
     methods: {
       SD,
 

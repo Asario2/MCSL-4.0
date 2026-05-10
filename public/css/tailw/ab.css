@@ -135,7 +135,11 @@ border-color:#ffc800 !important;
 
 a.as:link:hover,a.as:visited:hover,a.as:active:hover{
     text-decoration: underline;
-    color:#0ea5e9 !important;
+    color:#207ba5 !important;
+}
+.dark a.as:link:hover,.dark a.as:visited:hover,.dark a.as:active:hover{
+    text-decoration: underline;
+    color:#79cbf1 !important;
 }
 a:link:hover,a:visited:hover
 {
@@ -143,7 +147,7 @@ a:link:hover,a:visited:hover
 }
 a.as:link,a.as:visited,a.as:active{
 
-    color:rgb(125 211 252 / var(--tw-text-opacity, 1)) !important;
+    color:#0ea5e9 !important;
 }
 
 a.tb,.tb{color:#000 !important;}

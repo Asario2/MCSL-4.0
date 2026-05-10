@@ -426,13 +426,16 @@
         headerDescription: this.$page?.props?.description ?? "",
         headerUrl: this.$page?.props?.url ?? null,
         headerImage: this.$page?.props?.image ?? null,
-        mode:typeof window !== "undefined" ? localStorage.theme : "dark",
+        mode: typeof window !== "undefined"
+            ? localStorage.getItem('theme') || 'dark'
+            : 'dark',
         isOpen_Menu: false,
         year: new Date().getFullYear(),
         pendingRequests: 0,
         rights: {
             edit: null,
                     },
+
         // isLoading: localStorage.getItem('loading') === 'true',
         search: '',
         searchval: false,
@@ -443,6 +446,9 @@
 
 
     async mounted() {
+           this.applyTheme();
+
+
         if(typeof window !== "undefined"){
     const params = new URLSearchParams(window.location.search);
     const search = params.get("search");
@@ -536,6 +542,23 @@
         GetProfileImagePath,
         SD,
         CheckTRights,
+        applyTheme() {
+        const html = document.documentElement;
+
+        if (this.mode === 'dark') {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+    },
+
+    changeMode() {
+        this.mode = this.mode === "dark" ? "light" : "dark";
+
+        localStorage.setItem('theme', this.mode);
+
+        this.applyTheme();
+    },
         setLoadingState(state) {
         this.isLoading = state;
         if(typeof window !== "undefined")
@@ -621,13 +644,13 @@
         this.isOpen_Menu = !this.isOpen_Menu;
         },
 
-        changeMode() {
-        this.mode = this.mode === "dark" ? "light" : "dark";
-        if(typeof window !== "undefined")
-        {
-        localStorage.theme = this.mode;
-        }
-        },
+        // changeMode() {
+        // this.mode = this.mode === "dark" ? "light" : "dark";
+        // if(typeof window !== "undefined")
+        // {
+        // localStorage.theme = this.mode;
+        // }
+        // },
 
         logoutUser() {
         this.$inertia.post(this.route("logout"));

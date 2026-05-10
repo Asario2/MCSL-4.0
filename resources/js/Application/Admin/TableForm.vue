@@ -110,7 +110,7 @@
                             v-model="field.value"
                             :rows="field.rows"
                             cols="25"
-
+                            :nohtml="false"
 
                             :vcol="field.value"
                             :placeholder="field.placeholder || ''"
@@ -995,7 +995,7 @@
                             subdomain = window.subdomain
                         }
 
-                        
+
 
                         const src = `/images/_${String(subdomain)}/images/${String(field.name)}/${String(field.value)}/${String(this.thumb)}/${String(this.cc(fileName))}`
                         conta += `<img width="100" class='mt-3' alt="Vorschau33" title="Vorschau33" id="comm_${field.name}"
