@@ -2846,6 +2846,7 @@ return Inertia::render('Admin/Kontakte', [
                 ? encval($formData['email'])
                 : null;
         }
+
         if($table == "contacts" && !$formData['xis_public_con'])
         {
             $userId = Auth::id();
@@ -3158,8 +3159,9 @@ return Inertia::render('Admin/Kontakte', [
             {
                 $formData['cur_amount'] = str_replace(",",".",$formData['cur_amount']);
             }
+
             if($table == "contacts" && !$formData['xis_public_con'])
-        {
+            {
             $userId = Auth::id();
 
             $formData['Name']      = !empty($formData['Name'])
@@ -3207,7 +3209,6 @@ return Inertia::render('Admin/Kontakte', [
 
 
         }
-
         if(!FormController::CheckCreate()){
             unset($formData['password']);
         }

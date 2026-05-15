@@ -18,12 +18,27 @@ class CheckBirthdays extends Command
         $heute = date('d.m');        // Tag.Monat für Vergleich
         $currentYear = date('Y');    // aktuelles Jahr
         $this->info("Starte Geburtstags-/Todestagsprüfung für {$heute}");
+        $uid = 1;
+        $uIDs = DB::table("asarios_BLog.contacts")
+            ->whereNotNull("us_poster")
+            ->select("us_poster")
+            ->groupBy("us_poster")
+            ->get();
+        foreach($uIDs as $u)
+        {
+        $uid = $u->us_poster;
+        $am = DB::table("asarios_BLog.users")
+            ->where("id",$uid)
+            ->select("email")
+            ->first();
+            $actMail = $am->email;
 
         $users = DB::table('asarios_BLog.contacts')
-            ->where("us_poster","1")
+            ->where("us_poster",$uid)
             ->select('id', 'Vorname', 'Nachname', 'Email', 'Telefon', 'Handy', 'Geburtsdatum', 'ripdate', 'hasyear', 'hasryear')
             ->get();
-        $uid = 1;
+
+
         foreach ($users as $user) {
             try {
                 // 🔹 Entschlüsseln
@@ -73,15 +88,15 @@ Email: {$email}<br />
 </html>
 EOT;
 
-                        Mail::html($text, function ($message) use ($vorname, $nachname) {
-                            $message->to('parie@gmx.de')
+                        Mail::html($text, function ($message) use ($vorname, $nachname,$actMail) {
+                            $message->to($actMail)
                                     ->from('no-reply@marblefx.net', 'MCSL Geburtstage')
                                     ->subject("🎉 Geburtstag: {$vorname} {$nachname}");
                         });
-
+                    }
                         // Jahr aktualisieren, um Doppel-Mails zu vermeiden
                         // DB::table('asarios_BLog.contacts')->where('id', $id)->update(['hasyear' => encval($currentYear)]);
-                    }
+
                 }
 
                 // ====================
@@ -120,8 +135,8 @@ Email: {$email}<br />
 </html>
 EOT;
 
-                        Mail::html($text, function ($message) use ($vorname, $nachname) {
-                            $message->to('parie@gmx.de')
+                        Mail::html($text, function ($message) use ($vorname, $nachname,$actMail) {
+                            $message->to($actMail)
                                 ->from('no-reply@marblefx.net', 'MCSL Geburtstage')
                                 ->subject("Todestag: {$vorname} {$nachname}");
                         });
@@ -135,7 +150,7 @@ EOT;
                 $this->error("Fehler bei Benutzer {$user->id}: " . $e->getMessage());
             }
         }
-
+}
         $this->info('Geburtstags-/Todestagsprüfung abgeschlossen.');
     }
 }
