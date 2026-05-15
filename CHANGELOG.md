@@ -275,3 +275,5 @@
 ![Version](https://img.shields.io/badge/version-5.29.3-orange) Canonical URLs Added (#467)  
 ![Version](https://img.shields.io/badge/version-5.30.5-orange) Hotfix - Fixed Dark Mode Handling (#468)  
 ![Version](https://img.shields.io/badge/version-5.31.2-orange) Update Sitemaps (#469)  
+![Version](https://img.shields.io/badge/version-5.32.4-orange) Hotfix - smaller bug in Poster handling (#470)  
+![Version](https://img.shields.io/badge/version-5.33.6-orange) Feature - Multi-User-Birthday-Mail... (#471)  
