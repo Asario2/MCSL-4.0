@@ -205,9 +205,9 @@ public static function getOptions($name)
         $query = DB::table('users')
             ->where('xis_disabled', 0);
 
-        if (Schema::hasColumn('users', 'pub')) {
-            $query->where('pub', 1);
-        }
+        // if (Schema::hasColumn('users', 'pub')) {
+        //     $query->where('pub', 1);
+        // }
 
         $orderColumn = Schema::hasColumn('users', 'position')
             ? 'position'
@@ -231,9 +231,9 @@ public static function getOptions($name)
     */
     $query = DB::table($table);
 
-    if (Schema::hasColumn($table, 'pub')) {
-        $query->where('pub', 1);
-    }
+    // if (Schema::hasColumn($table, 'pub')) {
+    //     $query->where('pub', 1);
+    // }
 
     if (Schema::hasColumn($table, 'xis_disabled')) {
         $query->where('xis_disabled', 0);

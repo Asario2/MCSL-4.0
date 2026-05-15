@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
@@ -389,11 +390,20 @@ public function diffTable(string $table, string $domain)
             array_keys($localRow),
             array_keys($onlineRow)
         ));
-
         foreach ($columns as $col) {
             $localVal  = $localRow[$col]  ?? null;
             $onlineVal = $onlineRow[$col] ?? null;
 
+            if($table == "contacts")
+            {
+                // $localVal =
+                if (Auth::check()) {
+                    $localVal = decval_user($localVal, Auth::id());
+                    $onlineVal = decval_user($onlineVal, Auth::id());
+
+                }
+                // \Log::info($localVal);
+            }
             if ($localVal !== $onlineVal && !in_array($domain."_".$table."_".$col,Settings::$Ignored_Field)) {
                 $rowDiff[$col] = [
                     'local'  => $localVal,

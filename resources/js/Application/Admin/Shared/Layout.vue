@@ -360,7 +360,6 @@
 import { Head } from "@inertiajs/vue3";
 import ClientOnly from "@/Application/Components/ClientOnly.vue";
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
-
 import Toast from "@/Application/Components/Content/Toast.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 

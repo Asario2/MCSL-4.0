@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
+use App\Models\Settings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Blog;
@@ -1106,6 +1108,17 @@ public function imprint_dag()
     });
 
         return Inertia::render('Homepage/mfx/projects',compact('data',"sheets"));
+    }
+    public function sitemaps()
+    {
+        foreach(Settings::$mariaDBs as $dom=>$db)
+        {
+            Artisan::call('sitemap:generate', [
+                'SD' => $dom
+            ]);
+        }
+        file_put_contents(public_path("timespy/sitemaps.dat"),date("Y-m-d H:i:s"));
+        return Inertia::render('Components/sitemap_gen');
     }
     public function getStyles($sd)
     {

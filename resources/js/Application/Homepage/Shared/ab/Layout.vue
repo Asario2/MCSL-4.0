@@ -37,7 +37,7 @@
 
 
 
-        <main :class="mode" id="app-layout-start">
+        <main id="app-layout-start">
 
         <section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000"  style='z-index:50;'>
             <!-- Header -->
@@ -343,7 +343,7 @@
 
                     <div class="w-full flex flex-col md:flex-row flex-1 items-center justify-between gap-4">
                     <div class="text-xs leading-6">
-                       &copy; {{ year }} Starter Eleven/MCSL. Ein Template von Oliver Reinking / Asario.
+                       &copy; {{ year }}         Eleven/MCSL. Ein Template von Oliver Reinking / Asario.
                     </div>
 
                     <div class="text-xs leading-6">
@@ -426,9 +426,19 @@
         headerDescription: this.$page?.props?.description ?? "",
         headerUrl: this.$page?.props?.url ?? null,
         headerImage: this.$page?.props?.image ?? null,
-        mode: typeof window !== "undefined"
-            ? localStorage.getItem('theme') || 'dark'
-            : 'dark',
+        mode: (() => {
+            if (typeof window === "undefined") {
+                return 'dark';
+            }
+
+            const savedTheme = localStorage.getItem('theme');
+
+            return (
+                savedTheme === 'dark' || savedTheme === 'light'
+            )
+                ? savedTheme
+                : 'dark';
+        })(),
         isOpen_Menu: false,
         year: new Date().getFullYear(),
         pendingRequests: 0,
@@ -536,6 +546,10 @@
     }, 500),
     deep: true,
   },
+ '$page.url'() {
+        this.applyTheme();
+    },
+
 },
 
     methods: {
@@ -543,14 +557,20 @@
         SD,
         CheckTRights,
         applyTheme() {
-        const html = document.documentElement;
+            const html = document.documentElement;
 
-        if (this.mode === 'dark') {
-            html.classList.add('dark');
-        } else {
-            html.classList.remove('dark');
-        }
-    },
+                const forceLight =
+                    window.location.pathname === '/login' ||
+                    window.location.pathname === '/register' ||
+                    "{{ SD() }}" === "chh";
+
+                if (forceLight) {
+                    html.classList.remove('dark');
+                    return;
+                }
+
+                html.classList.toggle('dark', this.mode === 'dark');
+            },
 
     changeMode() {
         this.mode = this.mode === "dark" ? "light" : "dark";

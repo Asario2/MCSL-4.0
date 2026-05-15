@@ -21,7 +21,7 @@ Route::prefix('mysqlops')->group(function () {
     Route::get('/tables/{domain}', [SQLUpdateController::class, 'tables']);
 
     // Get Diff from DB
-    Route::get('/diff/{table}/{domain}', [SQLUpdateController::class, 'diffTable']);
+
 
     // Set Ignore_Fields
     Route::get('/ignore/{domain}/{table}/{col}', [SQLUpdateController::class, 'Ignore_Field']);

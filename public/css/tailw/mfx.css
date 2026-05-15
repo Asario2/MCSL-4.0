@@ -22,6 +22,7 @@
     border-bottom-width: 2px !important;
 
 }
+
 .dark\:focus\:ring-primary-night-500:focus:is(.dark *) {
     --tw-ring-opacity: 1;
     /* --tw-ring-color: rgb(255 162 0 / var(--tw-ring-opacity, 1)) !important; */
@@ -721,3 +722,10 @@ DIV.bg-text-blue-500{
         color:#fff!important;
         background-color:#166334 !important;
     }
+.dark\:text-layout-orange{
+      color: #ffaf03 !important;
+
+}
+.dark\:text-layout-sun-1060{
+    color:darkorange !important;
+}

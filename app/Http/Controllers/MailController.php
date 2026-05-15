@@ -263,6 +263,12 @@ $mailPassword = env('MAIL_PASSWORD');
     // $html2 = str_replace("%uhash%",$uhash,$html2);
 
     session(['signatur' => $signatur,"reci"=>$request->recipients,"co"=>$content2, "content"=>$this->subquote(html_entity_decode($html2)), "title"=>$title,"email"=>$email,"nick"=>$nick,"template"=>$template]);
+//     dd(
+//     resource_path('views/vendor/mail/html/preview.blade.php')
+// );
+// dd(file_exists(
+//     resource_path('views/vendor/mail/html/preview.blade.php')
+// ));
     return $html;
 
 
@@ -275,9 +281,22 @@ $mailPassword = env('MAIL_PASSWORD');
     }
     function subm_btn()
     {
-        return "<br /><br /><a class='button-primary' href='/email/send/'>E-mail Senden</a>";
+    return '
+    <br><br>
+
+    <button
+        onclick="window.parent.postMessage({
+            action: \'sendMail\'
+        }, \'*\')"
+        class="button-primary"
+    >
+        E-Mail senden
+    </button>
+    ';
     }
-    function send_newsletter(Request $request){
+    function send_newsletter(Request $request)
+    {
+
         $i = 0;
         $pma = 0;
         $sendm = [];
@@ -435,11 +454,14 @@ $mailPassword = env('MAIL_PASSWORD');
             }
         }
 
+        // \Log::info($i. "-" .$pma);
 
+        return redirect()
+    ->route('admin.mail.sended')
+    ->with('i', $i)
+    ->with('pm', $pma);
 
-
-
-       return Inertia::render("Components/Social/Emails_Sended",["i"=>$i,"pm"=>$pma]);
+    //    return Inertia::render("Components/Social/Emails_Sended",["i"=>$i,"pm"=>$pma]);
 
     }
     function clean($txt,$uhash,$title)

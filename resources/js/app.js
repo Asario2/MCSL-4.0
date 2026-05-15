@@ -134,11 +134,12 @@ router.on("finish", (event) => {
     window.dispatchEvent(new CustomEvent("loader:hide"));
 });
 
+import { SD } from "@/helpers";
 // ======================
 // APP
 // ======================
 createInertiaApp({
-    title: title => `${title} - Starter Eleven`,
+    title: title => `${title} - ${SD(1)}`,
 
     resolve: name =>
         resolvePageComponent(

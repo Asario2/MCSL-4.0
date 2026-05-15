@@ -9,6 +9,7 @@
     use Illuminate\Support\Facades\App;
     use Illuminate\Support\Facades\Route;
     use Illuminate\Support\Str;
+    use App\Models\Settings;
 
     App::setLocale('de');
     $subdomain = SD(); // z.B. "foo", "bar"
@@ -18,7 +19,6 @@
     $ahost = request()->getHost();
     $chost = request()->getSchemeAndHttpHost();
     $glo = new GlobalController();
-
     if (!file_exists(public_path($favicon))) {
         $favicon = "/images/favicon_default.png";
     }
@@ -35,8 +35,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title inertia>{{ CleanTable(1) }}</title>
-
-        <script>
+        <link rel="canonical" href="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">        <script>
             if (typeof global === 'undefined') window.global = window;
             window.Laravel = { userId: {{ auth()->id() ?? 'null' }} };
             window.authid = "{{ Auth::id() }}";
@@ -48,17 +47,49 @@
             window.app_name = "{{ $pagen }}";
 
         </script>
+        {{-- <script>
+        window.forceLightMode = @json(
+            SD() == "chh" || in_array(request()->path(), Settings::$loginpages)
+        );
+        </script> --}}
+        {{-- <script>
+        // (function () {
+
+        //     const forceLight =
+        //         @json(SD() == "chh" || in_array(request()->path(), Settings::$loginpages));
+
+        //     if (forceLight) {
+        //         document.documentElement.classList.remove('dark');
+        //         return;
+        //     }
+
+        //     const theme = localStorage.getItem('theme');
+
+        //     document.documentElement.classList.toggle(
+        //         'dark',
+        //         theme === 'dark' || theme === null
+        //     );
+
+        // })();
+        // </script>
+        {{-- @if(SD() == "chh" || in_array(request()->path(), Settings::$loginpages))
         <script>
         (function () {
-            const theme = localStorage.getItem('theme') || 'dark';
-
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            document.documentElement.classList.remove('dark');
         })();
         </script>
+        @else
+        <script>
+        (function () {
+            const theme = localStorage.getItem('theme');
+
+            document.documentElement.classList.toggle(
+                'dark',
+                theme === 'dark' || theme === null
+            );
+        })();
+        </script>
+        @endif --}}
             {{-- <script>
     document.addEventListener('DOMContentLoaded', () => {
         window.toastBusEmit('toast', {
@@ -80,6 +111,26 @@
                 url: "{{ request()->getSchemeAndHttpHost() }}"
             };
         </script> --}}
+        <script>
+(function () {
+
+    const forceLight =
+        @json(SD() == "chh" || in_array(request()->path(), Settings::$loginpages));
+
+    if (forceLight) {
+        document.documentElement.classList.remove('dark');
+        return;
+    }
+
+    const theme = localStorage.getItem('theme');
+
+    document.documentElement.classList.toggle(
+        'dark',
+        theme === 'dark' || theme === null
+    );
+
+})();
+</script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">

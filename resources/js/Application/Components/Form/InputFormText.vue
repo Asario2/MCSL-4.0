@@ -41,6 +41,10 @@ x<template>
       placeholder: { type: String, default: '' },
       required: { type: [String, Boolean], default: '' },
       disabled: Boolean,
+          type: {
+        type: String,
+        default: 'text'
+    }
     },
   };
   </script>

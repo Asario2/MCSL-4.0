@@ -39,7 +39,7 @@
             },
             name: {
                 type: String,
-                default: "Starter Eleven",
+                default: "MSCL",
             },
             imgsrc:{
                 type:String,

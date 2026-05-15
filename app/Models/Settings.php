@@ -179,7 +179,7 @@
     public static array $regdom =   ['ab'=>true];
     public static array $domss =   ['ab',"mfx","dag","chh"];
     public static array $connect_dbname = ["ab"=>"mariadb","dag"=>"mariadb_dag","mfx"=>"mariadb_mfx","chh"=>"mariadb_chh"];
-
+    public static array $loginpages = ["login","register"];
     /*
 
     SQLUPDATE EXCUDED

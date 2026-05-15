@@ -394,7 +394,7 @@
 </template>
 
 <script>
-// import { Head } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 import axios from "axios";
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
@@ -414,6 +414,7 @@ import { SD,GetProfileImagePath,CheckTRights,GetRights,CleanTable } from "@/help
 import NavLink from "@/Application/Components/Content/NavLink.vue";
 import ResponsiveNavLink from "@/Application/Components/Content/ResponsiveNavLink.vue";
 // import { throttle } from 'lodash';
+
 import FooterGrid from "@/Application/Components/Content/FooterGrid.vue";
 
 
@@ -421,7 +422,7 @@ export default {
     name: "Admin_Shared_Layout_ab",
 
     components: {
-        // Head,
+        Head,
         BrandHeader,
         Toast,
         ButtonChangeMode,

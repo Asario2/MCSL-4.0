@@ -204,15 +204,11 @@
             </td>
             <!-- local change-->
             <td class="px-3 py-2  break-words whitespace-normal">
-                <pre class="whitespace-pre-wrap">
-                "{{ br2nl(change.local) }}"
-                </pre>
+                <pre class="whitespace-pre-wrap">"{{ br2nl(change.local) }}"</pre>
             </td>
             <!-- online change -->
             <td class="px-3 py-2  break-words whitespace-normal">
-              <pre class="whitespace-pre-wrap">
-                "{{ br2nl(change.online) }}"
-                </pre>
+              <pre class="whitespace-pre-wrap">"{{ br2nl(change.online) }}"</pre>
             </td>
             <td class="px-3 py-2  break-words whitespace-normal">
                 {{ row.name }}
@@ -288,7 +284,7 @@ export default {
     IconMagni,
     ErrorSVG,
     MetaHeader,
-    
+
   },
   props:{
     cor_date:String,
@@ -363,7 +359,7 @@ export default {
     this.selectedTable = table.name;
 
     try {
-        const res = await axios.get(`/api/mysqlops/diff/${table.name}/${this.domain}`);
+        const res = await axios.get(`/api/table-diff/${table.name}/${this.domain}`);
         this.diffData = res.data.diff || [];
 
         if (this.diffData.length) {

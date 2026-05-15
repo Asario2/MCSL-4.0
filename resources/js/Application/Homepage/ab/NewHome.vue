@@ -61,8 +61,7 @@
                         <li>Wörter für Shortpoems vorschlagen <b>(5 Punkte)</b></li>
                     <li>Newsletter lesen <b>(8 Punkte)</b></li>
                 </ul>
-                Wer mehr wissen will, findet weitere Informationen hier:<br />
-                <a class="as font-semibold" href="/about/mcs-points">MCSL-Points</a>.
+                Wer mehr wissen will, findet weitere Informationen über diesen <a class="as font-semibold" href="/about/mcs-points">link</a>.
             </div>
 
 

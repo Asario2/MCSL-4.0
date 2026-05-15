@@ -951,7 +951,7 @@ public function ShowTable(Request $request, $table_alt = null)
         $content = $request->mailbodyText;
         $signatur = $request->signatureText;
         $title = @$request->subject;
-        \Log::info($request);
+        // \Log::info($request);
         $ma = NEW MailController();
 
 
@@ -1476,8 +1476,15 @@ public function ShowTable(Request $request, $table_alt = null)
         elseif(Schema::hasColumn($table,"title")){
             $hd = "title";
         }
+        $unordered = DB::table($table)->select("id","position")->orderBy("position","ASC")->get();
+        $i = 1;
+        foreach($unordered as $ent)
+        {
+            DB::table($table)->where("id",$ent->id)->update(["position"=>$i]);
+            $i++;
+        }
         $query = DB::table($table)->select('id',"$hd as title","position")->orderBy('position')->get();
-//         \Log::info($query);
+        \Log::info($query);
 
         return $query;
     }

@@ -12,9 +12,6 @@
     stroke-dasharray="503" stroke-dashoffset="503" >
     <!-- draw the circle -->
     <animate attributeName="stroke-dashoffset" from="503" to="0" dur="0.6s" begin="0s" fill="freeze" />
-    <!-- subtle pulse glow after draw -->
-    <animate attributeName="stroke-width" values="14;18;14" dur="1.6s" begin="0.7s" repeatCount="indefinite" />
-    <animate attributeName="stroke-opacity" values="1;0.85;1" dur="1.6s" begin="0.7s" repeatCount="indefinite" />
   </circle>
 
   <!-- Cross (X) using two lines -->

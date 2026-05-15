@@ -722,7 +722,7 @@
             },
             id: {
                 type: [String, Number],
-                required: true,
+                required: false,
             },
             entry: Object,
             modelValue: {

@@ -104,6 +104,21 @@ class GenerateSitemap extends Command
             ];
         });
         }
+        if($currentSD == "ab")
+        {
+        // === 2️⃣ Dynamische Picture-Seiten ergänzen ===
+        $blogs = DB::connection($conn)->table('blogs')
+            ->where("pub","1")
+            ->select('autoslug as slug', 'updated_at')
+            ->get(); // Erst get() liefert Collection
+
+        $blogsLinks = $blogs->map(function ($p) use ($currentSD) {
+            return [
+                'loc' => $this->EXTR_LNK(url('/blogs/show/' . $p->slug), $currentSD),
+                'lastmod' => $p->updated_at ?? now(),
+            ];
+        });
+        }
         // === 3️⃣ XML zusammenbauen ===
         $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset/>');
         $xml->addAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
@@ -124,6 +139,16 @@ class GenerateSitemap extends Command
             $url->addChild('lastmod', Carbon::parse($entry['lastmod'])->toAtomString());
             $url->addChild('changefreq', 'weekly');
             $url->addChild('priority', '0.7');
+        }
+        }
+        if(Schema::connection($conn)->hasTable("blogs")){
+        // Dynamische Picture-Seiten hinzufügen
+        foreach ($blogsLinks as $entry) {
+            $url = $xml->addChild('url');
+            $url->addChild('loc', htmlspecialchars($entry['loc'], ENT_XML1));
+            $url->addChild('lastmod', Carbon::parse($entry['lastmod'])->toAtomString());
+            $url->addChild('changefreq', 'weekly');
+            $url->addChild('priority', '0.6');
         }
         }
          if($currentSD == "mfx"){

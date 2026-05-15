@@ -630,7 +630,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/api/activity-log/pub', [ActivityPubController::class, 'getPub']);
         Route::post('/api/activity-log/pub', [ActivityPubController::class, 'updatePub']);
         Route::post('/api/delete-stat', [CountPixelController::class, 'delete_stats']);
-
+        Route::get('/sitemap-generator',[HomeController::class, "sitemaps"])->name("gen.sitemap");
         Route::get('/home/QRCodaH', [HomeController::class, 'QRCodaH'])->name('home.qrcodah');
         Route::get("/admin/Kontakte", [TablesController::class, "show_contacts"])->name('admin.kontakte');
         Route::get('/api/fonts', [FontController::class, 'index']);
@@ -667,7 +667,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
         # TABLEDIFF
         Route::get('/debug-table-diff/{domain}/{table}', [SQLUpdateController::class, 'debugTableDiff']);
-
+        Route::get('/api/table-diff/{table}/{domain}', [SQLUpdateController::class, 'diffTable']);
 
 
 
@@ -825,7 +825,21 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/email/save', [MailController::class, 'saveMail'])->name('admin.mail.save');
         Route::post('/email/signatur/save', [MailController::class, 'saveSignature'])->name('admin.email.signatur.save');
 
-        Route::get('/email/send/', [MailController::class, 'send_newsletter'])->name('admin.mail.send');
+        Route::post('/email/send/', [MailController::class, 'send_newsletter'])->name('admin.mail.send');
+
+
+Route::get('/email/sended', function () {
+
+    return Inertia::render(
+        'Components/Social/Emails_Sended',
+        [
+            'i'  => session('i'),
+            'pm' => session('pm'),
+        ]
+    );
+
+})->name('admin.mail.sended');
+
         // Blogartikel Delete
         Route::delete('/admin/blogs/{blog}', [BlogController::class, 'admin_blog_delete'])
             ->name('admin.blog.delete');
