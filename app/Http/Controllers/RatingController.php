@@ -38,7 +38,8 @@ class RatingController extends Controller
                 'postId' => 'required|integer',
                 'table' => 'required|string',
                 "email" => 'nullable|string',
-                'password'=> 'nullable|string|min:6'
+                'password'=> 'nullable|string|min:6',
+                "name"=>'nullable|string',
 
             ]);
 
@@ -71,6 +72,7 @@ class RatingController extends Controller
             $id = is_object($existingRate) ? $existingRate->id : $existingRate;
 //             \Log::info("ID: ".$id);
             $duration = 30000;
+            $dumpp = "Rating: ".$rating." - ".$validated['table']." - ".$validated['name'];
             if(!$id && $userId)
             {
                 DB::table("ratings")->insert(
@@ -93,7 +95,7 @@ class RatingController extends Controller
                         $status = "success";
                         $message = "Deine Bewertung wurde gespeichert";
                     }
-
+                ActLog($request,"AddRating",$dumpp,$postId,$table);
             }
             else{
                 DB::table("ratings")->where("id",$id)->update(
@@ -104,6 +106,7 @@ class RatingController extends Controller
                     );
                     $status = "info";
                     $message = "Wir haben deine Punkte aktualisiert";
+                    ActLog($request,"UpdateRating",$dumpp,$postId,$table);
                 }
 
 

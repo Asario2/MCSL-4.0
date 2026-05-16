@@ -84,7 +84,7 @@
             </div>
         </Link>
         <div class="mt-4">
-            <socialButtons :postId="blog.id" :slug="blog.autoslug" :title="'Blog: '+blog.title" :nostars="true" :big="true"/>
+            <socialButtons  :name="blog?.title" :postId="blog.id" :slug="blog.autoslug" :title="'Blog: '+blog.title" :nostars="true" :big="true"/>
         </div>
         </div>
     </div>

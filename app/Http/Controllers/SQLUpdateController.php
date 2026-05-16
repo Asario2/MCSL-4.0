@@ -467,10 +467,10 @@ public function diffTable(string $table, string $domain)
 
         foreach ($tables as $table) {
             if ($direction === 'local_to_online') {
-                $this->syncLocalToOnline($table);
+                $this->syncLocalToOnline($request,$table);
                 $con = 'lh';
             } else {
-                $this->syncOnlineToLocal($table);
+                $this->syncOnlineToLocal($request,$table);
                 $con = 'rh';
             }
 
@@ -495,7 +495,7 @@ public function diffTable(string $table, string $domain)
         return response()->json(['success' => true]);
     }
 
-    private function syncLocalToOnline(string $table)
+    private function syncLocalToOnline($request,string $table)
     {
         $data = DB::connection($this->domset_of)->table($table)->get();
         DB::connection($this->domset)->statement('SET FOREIGN_KEY_CHECKS=0;');
@@ -504,9 +504,11 @@ public function diffTable(string $table, string $domain)
         foreach ($data as $row) {
             DB::connection($this->domset)->table($table)->insert((array)$row);
         }
+        ActLog($request,"SyncLocalToOnline","LocalToOnline",count($data),$table,"_ol");
+        ActLog($request,"SyncLocalToOnline","LocalToOnline",count($data),$table);
     }
 
-    private function syncOnlineToLocal(string $table)
+    private function syncOnlineToLocal($request,string $table)
     {
         $data = DB::connection($this->domset)->table($table)->get();
         DB::connection($this->domset_of)->statement('SET FOREIGN_KEY_CHECKS=0;');
@@ -515,6 +517,8 @@ public function diffTable(string $table, string $domain)
         foreach ($data as $row) {
             DB::connection($this->domset_of)->table($table)->insert((array)$row);
         }
+        ActLog($request,"SyncOnlineToLocal","OnlineToLocal",count($data),$table,"_ol");
+        ActLog($request,"SyncOnlineToLocal","OnlineToLocal",count($data),$table);
     }
 
     private function UpdateHash($table, $hash, $con='lh')

@@ -1,4 +1,4 @@
-f<template>
+<template>
     <div :class="['w-full h-full mt-2',big ? 'zi2' : '']" style="z-index:1000 !important;">
         <table :class="['w-full border-collapse mx-auto justify-center rounded-lg shadow-sm table-class', nostars ? 'NSMaTable' : 'MaTable']" style="max-width:300px;margin-bottom:0px;z-index:1000;" @click.stop>
             <tbody>
@@ -19,7 +19,6 @@ f<template>
                                 :data-post-id="postId">
                             <icon-share /> Teilen
                         </button>
-{{ blog }}
                     </td>
 
                     <td class="text-center" v-if="!nostars">
@@ -64,7 +63,7 @@ f<template>
                 <!-- Bewertung -->
                 <tr v-if="showStarBox[postId]">
                     <td colspan="3" class="p-4">
-                        <RatingInput :postId="postId" :table="tablex"  @update-email="email = $event"/>
+                        <RatingInput :postId="postId" :table="tablex" :name="name" @update-email="email = $event"/>
                     </td>
                 </tr>
             </tbody>
@@ -115,6 +114,9 @@ export default {
         ublock: String,
         sse:String,
         big:{Boolean,default:false},
+         name:{
+        type:String,
+    },
     },
     data() {
         return {

@@ -26,10 +26,10 @@
         <table class="w-full border-collapse text-sm md:text-base rounded overflow-hidden">
           <thead class="bg-layout-sun-300 dark:bg-layout-night-300 text-layout-sun-800 dark:text-layout-night-800">
             <tr>
-              <th class="px-4 py-3 text-left"><span class="whitespace-nowrap">An/Aus</span></th>
+              <th class="px-4 py-3 text-left"><nobr>An/Aus</nobr></th>
               <th class="px-4 py-3 text-left">Tabelle</th>
               <th v-for="field in Object.keys(rights)" :key="field" class="px-4 py-3 text-left">
-                <span class="whitespace-nowrap">{{ ucf2(field) }}</span>
+                <nobr>{{ ucf2(field) }}</nobr>
               </th>
             </tr>
           </thead>
@@ -39,31 +39,36 @@
               :key="table.name || index"
               class="hover:bg-layout-sun-200 dark:hover:bg-layout-night-200 transition duration-200 border-b border-gray-200 dark:border-gray-700"
             >
-              <td class="px-4 py-3 cursor-pointer text-left">
-                <button @click="togglerow(index)" class="flex items-center text-blue-500">
-                <ClientOnly>
-                  <IconDarr class="w-5 h-5" fill="currentColor" v-tippy />
-                  <tippy>{{ ucf(table.name) }} An/Aus</tippy>
-                  </ClientOnly>
-                </button>
-              </td>
-              <td class="px-4 py-3" v-tippy>
-                <ClientOnly>
-                {{ ucf(table.name) }}<tippy>{{ ucf(table.name) }}</tippy>
-                </ClientOnly>
-              </td>
-              <td
-                v-for="(field, fidx) in Object.keys(rights)"
-                :key="field + '_' + index + '_' + fidx"
-                class="px-4 py-3 text-left"
-              ><ClientOnly>
-                <input-checkbox v-model="rights[field][index]" v-tippy />
-                <tippy>{{ ucf2(field) }} von {{ ucf(table.name) }}</tippy>
-                </ClientOnly>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            <td class="px-4 py-3 cursor-pointer text-left">
+  <button
+    @click="togglerow(index)"
+    class="flex items-center text-blue-500"
+    v-tippy="`${ucf(table.name)} An/Aus`"
+  >
+    <IconDarr class="w-5 h-5" fill="currentColor" />
+  </button>
+        </td>
+
+        <td
+        class="px-4 py-3"
+        v-tippy="ucf(table.name)"
+        >
+        {{ ucf(table.name) }}
+        </td>
+
+        <td
+        v-for="(field, fidx) in Object.keys(rights)"
+        :key="field + '_' + index + '_' + fidx"
+        class="px-4 py-3 text-left"
+        >
+        <input-checkbox
+            v-model="rights[field][index]"
+            v-tippy="`${ucf2(field)} von ${ucf(table.name)}`"
+        />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
         <button
           @click="saveRights"
@@ -91,7 +96,7 @@
                 :key="key"
                 class="hover:bg-layout-sun-200 dark:hover:bg-layout-night-200 transition duration-200 border-b border-gray-200 dark:border-gray-700"
               >
-                <td class="px-4 py-3 text-left">{{ ucf(stripXkis(key)) }}</td>
+                <td class="px-4 py-3 text-left">{{ stripXkis(key) }}</td>
                 <td class="px-4 py-3 text-left">{{ getLabel(key) }}</td>
                 <td class="px-4 py-3 text-left">
                     <div class="flex items-center gap-2">
@@ -216,7 +221,7 @@
         <td class="px-4 py-3">
           <img
             v-if="u.profile_photo_path"
-            :src="`/images/_${SD()}/users/profile_photo_path/${u.profile_photo_path}`"
+            :src="`/images/_ab/users/profile_photo_path/${u.profile_photo_path}`"
             class="w-8 h-8 rounded-full object-cover"
             alt="Profilbild"
           />
@@ -276,7 +281,6 @@
         </td>
         <!-- Checkbox -->
         <td class="px-4 py-3 text-left">
-            <input type="hidden" :name="'xis_disabled_' + u.id" :id="'xis_disabled_' + u.id" :value="u.xis_disabled">
           <input-checkbox v-model="selectedUsers[u.id]"  @change="toggleDisabled(u)"/>
 
         </td>
@@ -302,7 +306,7 @@
 
 <script>
 // import { toastBus } from '@/utils/toastBus';
-import { GetSettings,SD } from "@/helpers";
+import { GetSettings } from "@/helpers";
 import axios from "axios";
 import InputFormText from "@/Application/Components/Form/InputFormText.vue";
 import InputSelect from "@/Application/Components/Form/InputSelect.vue";
@@ -311,13 +315,12 @@ import IconDarr from "@/Application/Components/Icons/IconDarr.vue";
 import ErrorSVG from "@/Application/Components/Icons/ErrorSVG.vue";
 import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 import { route } from 'ziggy-js';
-import ClientOnly from "@/Application/Components/ClientOnly.vue"
 import Trash from "@/Application/Components/Icons/Trash.vue";
 
 
 export default {
   name: "UserRights",
-  components: { ErrorSVG, SearchFilter, InputSelect, InputCheckbox, IconDarr, InputFormText,Trash,ClientOnly },
+  components: { ErrorSVG, SearchFilter, InputSelect, InputCheckbox, IconDarr, InputFormText,Trash },
   props: {
     adminTables: { type: Array, default: () => [] },
     urid: [String, Number],
@@ -363,26 +366,17 @@ export default {
       return [...this.roles].sort((a, b) => Number(b.position) - Number(a.position));
     },
     filteredUsers() {
-    const uniqueUsersMap = {};
-
-    this.users.forEach(u => {
-      if (!uniqueUsersMap[u.id]) {
-        uniqueUsersMap[u.id] = u; // nur den ersten Eintrag pro ID behalten
-      }
-    });
-
-    return Object.values(uniqueUsersMap)
-      .filter(u => this.showDisabled ? Number(u.xis_disabled) === 1 : Number(u.xis_disabled) === 0)
-      .filter(u => u.name.toLowerCase().includes(this.userSearch.toLowerCase()))
-      .sort((a, b) => a.name.localeCompare(b.name)); // optional sortieren
-  },
+      return this.users
+        .filter(u => this.showDisabled ? Number(u.xis_disabled) === 1 : Number(u.xis_disabled) === 0)
+        .filter(u => u.name.toLowerCase().includes(this.userSearch.toLowerCase()));
+    },
   },
   methods: {
     // --- Funktionen / UI ---
     addFunc() {
       this.addF = !this.addF;
     },
-    SD,
+
     async addfsubm(event) {
   if (event) event.preventDefault(); // optional, @click.prevent reicht eigentlich
 
@@ -551,7 +545,7 @@ export default {
     saveAllUserRoles() {
       const payload = this.users
         .filter(u => u.selectedRoleId)
-        .map(u => ({ id: u.id, users_rights_id: u.selectedRoleId,xis_disabled: u.xis_disabled }));
+        .map(u => ({ id: u.id, users_rights_id: u.selectedRoleId }));
 
       if (payload.length === 0) {
         window.toastBus.emit( { message: 'Keine Rollen zum Speichern ausgewählt!', type: 'error' });

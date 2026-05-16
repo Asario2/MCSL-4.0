@@ -99,7 +99,7 @@
 
 
             <!-- Lesezeit anzeigen -->
-            <socialButtons :postId="users?.id" :title="'Benutzer: '+users.name" :empty="true" :nostars="true" />
+            <socialButtons :name="users?.name" :postId="users?.id" :title="'Benutzer: '+users.name" :empty="true" :nostars="true" />
         </div>
 
     </div>

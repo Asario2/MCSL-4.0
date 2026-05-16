@@ -26,6 +26,7 @@
 
 
   </div>
+
 </template>
 
 <script>
@@ -33,7 +34,7 @@ import axios from "axios";
 import IconStar from "@/Application/Components/Icons/IconStar.vue";
 import NoLogin from "@/Application/Components/Social/NoLogin.vue";
 import { CleanTable } from "@/helpers";
-import { toastBus } from "@/utils/toastBus";
+// import { toastBus } from "@/utils/toastBus";
 import { userStore } from "@/utils/userStore";
 import { ratingBus } from "@/utils/ratingBus";
 
@@ -53,6 +54,9 @@ export default {
     table: {
       type: String,
       required: true,
+    },
+    name:{
+        type:String,
     },
   },
 
@@ -179,12 +183,14 @@ async loadmcslpoints() {
             table: CleanTable(),
             password: this.form?.password,
             email: this.form.email,
+            name: this.name,
         });
 
         // 🔁 andere Komponenten informieren
         ratingBus.emit("rating-updated", {
           postId: this.postId,
           email: this.form.email,
+          name: this.name,
         });
 
         // 🔥 Parent-Event

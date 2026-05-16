@@ -27,7 +27,7 @@ Route::prefix('mysqlops')->group(function () {
     Route::get('/ignore/{domain}/{table}/{col}', [SQLUpdateController::class, 'Ignore_Field']);
 
     // Sync Localhost → Online
-    Route::post('/sync', [SQLUpdateController::class, 'sync']);
+
     // Sync ALL
     Route::post('/sync-to-all', [SQLUpdateController::class, 'syncToAll']);
 

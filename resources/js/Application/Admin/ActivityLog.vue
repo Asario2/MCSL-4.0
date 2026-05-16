@@ -17,7 +17,7 @@
               <th class="px-4 py-3">Datum</th>
               <th class="px-4 py-3">Action</th>
               <th class="px-4 py-3">Tabelle</th>
-              <th class="px-4 py-3">ID</th>
+              <th class="px-0 py-0" width="10">ID</th>
               <th class="px-4 py-3">URL</th>
               <th class="px-4 py-3">User</th>
               <th class="px-4 py-3">Info</th>
@@ -45,7 +45,7 @@
               </td>
               <td class="px-4 py-3">{{ row.action }}</td>
               <td class="px-4 py-3">{{ row.tablename }}</td>
-              <td class="px-4 py-3">{{ row.excl_id }}</td>
+              <td class="px-0 py-0">{{ row.excl_id }}</td>
 
               <td class="px-4 py-3">
                 <button
@@ -53,13 +53,36 @@
                   @click="openModal('URL', row.URL)"
                   class="text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
-                  {{ row.URL.substr(0,40) }}
+                <span v-if="CheckOL()">
+                  {{ row.URL.substr(22,28) }}
+                </span>
+                <span v-else>
+                    {{ row.URL.substr(18,35) }}
+                </span>
                 </button>
                 <span v-else class="text-gray-400">–</span>
               </td>
 
 
-              <td class="px-4 py-3"><img :src="GetProfileImagePath(users[row?.users_id].img)" class="h-8 w-8 rounded-full object-cover"/></td>
+              <td class="px-4 py-3">
+                <div v-if="users?.[row?.users_id]">
+                    <img
+                    :src="GetProfileImagePath(users[row.users_id].img || '008.jpg')"
+                    class="h-8 w-8 rounded-full object-cover"
+                    :title="users[row.users_id].name"
+                    :alt="users[row.users_id].name"
+                    />
+                </div>
+
+                <div v-else>
+                    <img
+                    :src="'/images/_ab/users/profile_photo_path/008.jpg'"
+                    class="h-8 w-8 rounded-full object-cover"
+                    alt="Unbekannt"
+                    />
+                </div>
+                </td>
+                <!-- <img :src="GetProfileImagePath(users[row?.users_id]?.img)" class="h-8 w-8 rounded-full object-cover" :title="users[row?.users_id].name" :alt="users[row?.users_id].name"/></td> -->
 
               <td class="px-4 py-3">
                 <button
@@ -107,7 +130,7 @@
 import axios from 'axios';
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
-import { CleanTable, ucf, SD, rumLaut, GetProfileImagePath } from "@/helpers";
+import { CleanTable, ucf, SD, rumLaut, GetProfileImagePath,CheckOL } from "@/helpers";
 import MetaHeader from '@/Application/Homepage/Shared/MetaHeader.vue';
 
 export default {
@@ -121,7 +144,10 @@ export default {
     table_q: String,
     table: { type: String, required: false },
     startPage: { type: Boolean, default: true },
-    breadcrumbs:String,
+    breadcrumbs: {
+    type: [String, Object, Array],
+    default: () => ({})
+    }
   },
 
   data() {
@@ -156,7 +182,7 @@ export default {
 
   methods: {
 
-    CleanTable, ucf, SD, rumLaut, GetProfileImagePath,
+    CleanTable, ucf, SD, rumLaut, GetProfileImagePath,CheckOL,
     bgcol(SID) {
         // einfache Hash-Funktion: wandelt String in Zahl, dann in hex
         let hash = 0;

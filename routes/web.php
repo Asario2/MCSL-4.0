@@ -736,6 +736,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get("/api/images/{table}/{id}",[TablesController::class,"GetImageUrl"])
             ->name("/api-get-image-url");
         Route::get('/api/headlines/{table}', [TablesController::class, 'getHeadlines']);
+        Route::post('api/mysqlops/sync', [SQLUpdateController::class, 'sync']);
         Route::post('/api/entries/update-position/{table}', [TablesController::class, 'updatePosition']);
         Route::delete('/comments/delete/{comment_id}', [CommentController::class,'destroy_comments'])->name("destroy.comments");
         Route::post('/api/save-json', [ImageUploadController::class, 'store_json'])->name("save-json-gallery");

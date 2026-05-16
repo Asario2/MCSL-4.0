@@ -146,7 +146,7 @@
 
                     <div v-else v-html="decodedContent"></div>
                     <div>
-                        <socialButtons :postId="blog.id" :title="'Blog: '+blog.title" :empty="true" :nostars="true" />
+                        <socialButtons  :name="blog?.title" :postId="blog.id" :title="'Blog: '+blog.title" :empty="true" :nostars="true" />
                     </div>
                     <div class="flex items-start gap-4">
                         <!-- Profilbild -->

@@ -7,7 +7,7 @@
 
 <script>
 import axios from "axios";
-import { route } from "ziggy-js";
+// import { route } from "ziggy-js";
 import AverageRating from "@/Application/Components/Social/averageratings.vue";
 import { ratingBus } from "@/utils/ratingBus";
 import { CleanTable } from "@/helpers";
@@ -33,16 +33,27 @@ export default {
   methods: {
     CleanTable,
     async loadRating() {
-      try {
-        const { data } = await axios.get(
-          route("api.getRating",{table:CleanTable(),postId:this.postId})
-        );
-//         console.log(data);
+        if(typeof window === "undefined")
+        {
+            return '';
+        }
+    try {
+
+        const url =
+        window.location.origin +
+        '/api/GetRating/' +
+        CleanTable() +
+        '/' +
+        this.postId;
+
+        const { data } = await axios.get(url);
+
         this.average = Number(data.average) || 0;
         this.total = Number(data.total) || 0;
-      } catch (e) {
+
+    } catch (e) {
         console.error("Rating konnte nicht geladen werden", e);
-      }
+    }
     },
   },
 

@@ -45,7 +45,7 @@
         </Link>
 
         <!-- **Tabelle direkt unterhalb des Blog-Containers (fixiert)** -->
-        <SocialButtons :postId="user.id" :title="'Benutzer '+user.name" sm="Sm" :nostars="true" :ublock="user.name"      />
+        <SocialButtons  :name="user?.name" :postId="user.id" :title="'Benutzer '+user.name" sm="Sm" :nostars="true" :ublock="user.name"      />
 
     </div>
 </template>

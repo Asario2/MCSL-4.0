@@ -28,10 +28,10 @@
             @change="domres"
             class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-layout-night-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="ab">ab</option>
-            <option value="mfx">mfx</option>
-            <option value="dag">dag</option>
-            <option value="chh">chh</option>
+            <option value="ab">Asario.de</option>
+            <option value="mfx">MarbleFX</option>
+            <option value="dag">Monikadargies.de</option>
+            <option value="chh">ra-c-henning.de</option>
           </select>
         </div>
 
@@ -71,9 +71,12 @@ export default {
   },
 
   data() {
-    return {
-      dom: SD(), // initial Wert
-    };
+      const parts = window.location.pathname.split('/');
+  const last = parts[parts.length - 1];
+
+  return {
+    dom: last || SD(),
+  };
   },
 
   methods: {

@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import IconActLog from "@/Application/Components/Icons/IconActLog.vue";
 import IconArrowLongRight from "@/Application/Components/Icons/ArrowLongRight.vue";
 import IconBook from "@/Application/Components/Icons/Book.vue";
 import IconGit from "@/Application/Components/Icons/IconGit.vue";
@@ -97,6 +98,7 @@ export default {
         IconMail,
         IconUnImg,
         IconLost,
+        IconActLog,
         IconLock,
         IconPictures,
         IconLogs,
@@ -158,6 +160,7 @@ export default {
         dynamicIcon() {
             const icons = {
                 IconBook,
+                IconActLog,
                 IconDB,
                 IconUnImg,
                 IconLock,

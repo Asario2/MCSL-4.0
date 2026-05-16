@@ -58,7 +58,7 @@
         >
           <p>{{ item.answer || 'Kein Text vorhanden.' }}</p>
           <editbtns :id="item.id" table="didyouknow" /><br />
-          <SocialButtons :postId="item.id"  :title="'Wussten Sie schon, '+item.headline" :xslug="true" :nostars="true" :sse="item.headline"/>
+          <SocialButtons :name="item?.headline" :postId="item.id"  :title="'Wussten Sie schon, '+item.headline" :xslug="true" :nostars="true" :sse="item.headline"/>
         </div>
       </div>
     </section>

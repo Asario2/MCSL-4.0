@@ -72,7 +72,9 @@ class CommentController extends Controller
             'image_id' => $request->id,
             'table' => $request->table,
             'rating' => $request->rating,
-        ]);
+
+            ]);
+            
         }
         $upd = ["created_at"=>now()];
         $updu = ["updated_at"=>now()];

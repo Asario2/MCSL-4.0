@@ -37,6 +37,9 @@
       postId: Number, // Post ID wird als Prop übergeben
       table: String,  // Table-Name wird als Prop übergeben
       email:String,
+       name:{
+        type:String,
+    },
     },
     data() {
       return {

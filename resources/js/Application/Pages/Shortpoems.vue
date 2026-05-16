@@ -85,7 +85,7 @@
             table="shortpoems"
             />
 
-          <SocialButtons :postId="item.id" :title="'Shortpoem ' + item.headline" :xslug="true" :sse="item.headline"/>
+          <SocialButtons  :name="item?.headline" :postId="item.id" :title="'Shortpoem ' + item.headline" :xslug="true" :sse="item.headline"/>
         </div>
 
         <!-- Accordion Button -->

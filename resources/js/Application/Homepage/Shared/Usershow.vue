@@ -73,7 +73,7 @@
                 ></display-number>
             </div>
         </Link>
-            <socialButtons :postId="blog.id" :title="'Benutzer '+blog.title" :slug="blog.autoslug" :nostars="true" />
+            <socialButtons  :name="blog?.title" :postId="blog.id" :title="'Benutzer '+blog.title" :slug="blog.autoslug" :nostars="true" />
         </div>
     </div>
 </template>

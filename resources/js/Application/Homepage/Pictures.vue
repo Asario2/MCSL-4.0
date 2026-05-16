@@ -92,7 +92,7 @@
                 <p v-html="stripTagsCom(remBrackets(item?.message))"></p>
             </div>
 
-                <SocialButtons :postId="item?.id" :slug="item.slug" :title="'Bild '+item?.name" :sslug="true"/>
+                <SocialButtons :name="item?.name" :postId="item?.id" :slug="item.slug" :title="'Bild '+item?.name" :sslug="true"/>
     </div>
 
 

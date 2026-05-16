@@ -1,6 +1,14 @@
 <?php
+
+use App\Models\Settings;
 use Carbon\Carbon;
+use Illuminate\Encryption\Encrypter;
+use Illuminate\Http\Request; // oben in der Datei
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\MarkDownController;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
@@ -10,6 +18,17 @@ use Illuminate\Support\Facades\File;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+    if(!function_exists("CheckOL"))
+    {
+        function CheckOL()
+        {
+            if(substr_count($_SERVER['HTTP_HOST'],"test.mcs"))
+            {
+                return false;
+            }
+            return true;
+        }
+    }
     if(!function_exists("ucf"))
     {
         function ucf($str)
@@ -285,25 +304,31 @@ if(!function_exists("CleanId"))
 }
 }
 
-use Illuminate\Encryption\Encrypter;
-use Illuminate\Http\Request; // oben in der Datei
+
+
 
 if(!function_exists("ActLog"))
 {
-    function ActLog(Request $request,$action,$info,$id,$table='')
+    function ActLog(Request $request,$action,$info,$id,$table='',$ol='')
     {
         $action = $action;
         $info = $info;
         $excl_id = (int)$id;
-        $URL = $request->url();
-        $users_id = Auth::id();
+        if(!$ol)
+        {
+            $URL = $request->url();
+        }
+        else{
+            $URL = str_replace("http://".SD().".test.mcs","https://".Settings::$dom[SD()],$request->url());
+        }
+        $users_id = Auth::id() ?? 1;
         $session_id = session_id();
         $created_at = now();
         $table =  $table ?? CleanTable();
         // $ip = $request->ip();
         $IP = AnoIP($request);
 
-        DB::connection("mariadb")->table("xgen_activitylog")->insert(['xkis_checked'=>0,"tablename"=>$table,"created_at"=>$created_at,"action"=>$action,"excl_id"=>$excl_id,"URL"=>$URL,"info"=>$info,"users_id"=>$users_id,"IP"=>$IP,"session_id"=>$session_id]);
+        DB::connection("mariadb".$ol)->table("xgen_activitylog")->insert(['xkis_checked'=>0,"tablename"=>$table,"created_at"=>$created_at,"action"=>$action,"excl_id"=>$excl_id,"URL"=>$URL,"info"=>$info,"users_id"=>$users_id,"IP"=>$IP,"session_id"=>$session_id]);
     }
 }
 if(!function_exists("AnoIP"))
@@ -490,9 +515,7 @@ if(!function_exists("renderText"))
 //     });
 // }
 
-        use Illuminate\Database\Query\Builder;
-        use App\Models\Settings;
-        use Illuminate\Support\Facades\Session;
+
 
       if (!Builder::hasMacro('filterdefault')) {
     Builder::macro('filterdefault', function ($filters) {
@@ -645,8 +668,7 @@ if(!function_exists("smi"))
         return $string;
     }
 }
-use App\Http\Controllers\GlobalController;
-use App\Http\Controllers\MarkDownController;
+
 if(!session_id())
 {
     @session_start();

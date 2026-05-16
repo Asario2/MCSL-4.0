@@ -174,7 +174,6 @@
         'ActivityLog' => 'All actions in one List',
         'test func' => 'TEst zum checken',
         'FontographerToolz' => 'Schriftartentool',
-
     ];
     public static array $regdom =   ['ab'=>true];
     public static array $domss =   ['ab',"mfx","dag","chh"];
