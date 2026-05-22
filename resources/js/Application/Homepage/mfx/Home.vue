@@ -31,7 +31,7 @@
 
                 <div class="col-span-6 p-1 md:p-4 lg:rounded-lg ">
 
-                <div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6  border border-layout-sun-1000 dark:border-layout-night-1050">
+                <div class="bg-layout-sun-5000 dark:bg-layout-night-5000 lg:rounded-lg p-2 mb-6  border border-layout-sun-1000 dark:border-layout-night-1050">
                     <div v-if="text" class="dark:text-layout-night-1000 dark:text-layout-orange">
                         <span class="text-2xl  font-bold dark:text-layout-sun-1060">{{ text.headline }}</span> <editbtns id="14" table="texts"></editbtns>
                         <div class="dark:text-layout-orange" v-html="text.text"></div>

@@ -277,3 +277,7 @@
 ![Version](https://img.shields.io/badge/version-5.31.2-orange) Update Sitemaps (#469)  
 ![Version](https://img.shields.io/badge/version-5.32.4-orange) Hotfix - smaller bug in Poster handling (#470)  
 ![Version](https://img.shields.io/badge/version-5.33.6-orange) Feature - Multi-User-Birthday-Mail... (#471)  
+![Version](https://img.shields.io/badge/version-5.34.6-orange) Hotfix - Fixed Tippy on UserRights (#474)  
+![Version](https://img.shields.io/badge/version-5.35.2-orange) Feature - Dom Selector on unused images script (#473)  
+![Version](https://img.shields.io/badge/version-5.36.9-orange) Feature -  ActivityLog Updated (#472)  
+![Version](https://img.shields.io/badge/version-5.37.8-orange) Bug - saving of IDS is not working (#475)  

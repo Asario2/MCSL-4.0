@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Services\hackinglogService;
@@ -30,19 +31,22 @@ class BlockBannedIPs
             ->where('dom', SD())
             ->whereNotNull('banned_until')
             ->where('banned_until', '>', now())
+            ->select('banned_until')
             ->orderByDesc('banned_until')
             ->first();
 
         if ($record) {
-            $until = $record->banned_until;
+            $until = Carbon::parse($record->banned_until)
+                ->format('d.m.Y H:i:s');
+
 
             // Optional: neuen Log-Eintrag erstellen, dass geblockt wurde
-            $this->hackinglog->logHit(
-                $ip,
-                $request,
-                $this->relog->getScore($ip,$request), // Score 0, da nur Ban-Check
-                [['source'=>'banned_check','pattern'=>'active ban','value'=>'IP blocked']]
-            );
+            // $this->hackinglog->logHit(
+            //     $ip,
+            //     $request,
+            //     $this->relog->getScore($ip,$request), // Score 0, da nur Ban-Check
+            //     [['source'=>'banned_check','pattern'=>'active ban','value'=>'IP blocked']]
+            // );
 
             abort(403, "Request blocked. IP banned until {$until}");
         }

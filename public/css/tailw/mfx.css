@@ -723,9 +723,15 @@ DIV.bg-text-blue-500{
         background-color:#166334 !important;
     }
 .dark\:text-layout-orange{
-      color: #ffaf03 !important;
-
+      color: #ffae00 !important;
+      font-weight: bold;
 }
 .dark\:text-layout-sun-1060{
     color:darkorange !important;
+}
+.dark´\:bg-layout-night-5000{
+    background-color:#121212 !important;
+}
+.bg-layout-sun-5000{
+    background-color:#121212 !important;
 }

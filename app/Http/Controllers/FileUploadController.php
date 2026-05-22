@@ -556,7 +556,7 @@ class FileUploadController extends Controller
                     File::delete($oldPath);
                 }
             }
-            if(!$orifileName)
+            if(!@$orifileName)
             {
                 $fileName = md5($file->getClientOriginalName() . "_" . Auth::id()) . "." . $file->getClientOriginalExtension();
             }

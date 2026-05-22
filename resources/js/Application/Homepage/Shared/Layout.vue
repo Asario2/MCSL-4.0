@@ -386,7 +386,7 @@
         import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
         import { userStore } from "@/utils/userStore";
         import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
-        import IconClose from "@/Application/Components/Icons/Close.vue"
+        import IconClose from "@/Application/Components/Icons/Close.vue";
 import IconRegister from "@/Application/Components/Icons/IconRegister.vue";
 import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
 

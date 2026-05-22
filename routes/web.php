@@ -658,7 +658,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get("admin/githubdb", [DumpgitdatabaseController::class, "show"])->name("api.showgit");
         Route::delete("/api/remlog/{id}",[RightsController::class,"remLog"])->name("remlogg");
         Route::get("/admin/get_unused_imgz/{dom?}", [TablesController::class,"getunused"])->name("admin.getunused");
-        Route::get("/admin/hackinglog", [hackinglog::class,"show"])->name("admin.hackinglog");
+        Route::get("/admin/HackingLog", [hackinglog::class,"show"])->name("admin.hackinglog");
         Route::post("/api/contacts/import", [CSVController::class,"saveImportedContacts"])
             ->name("admin.CSVImport");
         Route::get("api/getgentables/{table}",[TablesController::class,"GetDB"])->name("GetGenTables");

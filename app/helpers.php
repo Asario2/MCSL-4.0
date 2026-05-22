@@ -328,7 +328,7 @@ if(!function_exists("ActLog"))
         // $ip = $request->ip();
         $IP = AnoIP($request);
 
-        DB::connection("mariadb".$ol)->table("xgen_activitylog")->insert(['xkis_checked'=>0,"tablename"=>$table,"created_at"=>$created_at,"action"=>$action,"excl_id"=>$excl_id,"URL"=>$URL,"info"=>$info,"users_id"=>$users_id,"IP"=>$IP,"session_id"=>$session_id]);
+        DB::connection("mariadb".$ol)->table("xgen_activitylog")->insert(['dom'=>SD(),'xkis_checked'=>0,"tablename"=>$table,"created_at"=>$created_at,"action"=>$action,"excl_id"=>$excl_id,"URL"=>$URL,"info"=>$info,"users_id"=>$users_id,"IP"=>$IP,"session_id"=>$session_id]);
     }
 }
 if(!function_exists("AnoIP"))

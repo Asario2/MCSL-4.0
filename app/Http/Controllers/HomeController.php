@@ -262,9 +262,10 @@ class HomeController extends Controller
             return redirect("no-rights");
         }
     return Inertia::render('Admin/ActivityLog',["users"=>$this->GetUserImages(),'breadcrumbs' => [
-            'ActivityLog'=>''
-        ]
-        ]);
+            'ActivityLog'=>'/admin/ActLog',
+
+        ],
+        "dom"=>SD()]);
 
     }
     public function GetUserImages()

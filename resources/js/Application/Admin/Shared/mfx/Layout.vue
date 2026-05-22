@@ -343,6 +343,7 @@ import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { toastBus } from '@/utils/toastBus';
 import Loader from "@/Application/Components/Loader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
+import IconClose from "@/Application/Components/Icons/Close.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
 import { SD,GetProfileImagePath } from "@/helpers";
 import NavLink from "@/Application/Components/Content/NavLink.vue";
@@ -359,6 +360,7 @@ export default {
         Toast,
         ButtonChangeMode,
         Dropdown,
+        IconClose,
         DropdownLink,
         NavLink,
         ResponsiveNavLink,

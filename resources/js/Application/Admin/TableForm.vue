@@ -805,7 +805,7 @@
                 nf2:'',
                 previewImages: {},
                 newPosition: null,
-                subdomain: window.subdomain || '',
+                subdomain: SD() || '',
                 fieldtype: "",
                 readingTime: "",
                 fileName: '',

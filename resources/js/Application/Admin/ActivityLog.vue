@@ -7,13 +7,13 @@
     <div class="bg-layout-1 text-layout-1 p-6 rounded-lg shadow">
 
       <h2 class="text-lg font-semibold mb-4">Activity Log</h2>
-
       <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
         <table class="min-w-full text-sm text-left">
           <thead class="bg-layout-2 text-layout-1 text-xs uppercase">
             <tr>
               <th class="px-4 py-3">ID</th>
               <th class="px-4 py-3">Pub</th>
+              <th class="px-4 py-3">Domain</th>
               <th class="px-4 py-3">Datum</th>
               <th class="px-4 py-3">Action</th>
               <th class="px-4 py-3">Tabelle</th>
@@ -36,11 +36,12 @@
                 {{ row.id }}
               </td>
 
-              <td class="px-4 py-3">
+              <td class="p-0 pl-3">
                 <span v-if="Number(checkedStatus?.[row.id]) === 1" style="font-size:24px;">✅</span>
                 <span v-else>[]</span>
               </td>
-              <td class="px-4 py-3">
+              <td class="pl-3"><img :src="'/images/_' + row.dom + '/web/alogo.png'" class='w-5 h-5'/></td>
+              <td class="p-0 pr-3">
                 {{ getDate(row.created_at) }}
               </td>
               <td class="px-4 py-3">{{ row.action }}</td>
@@ -54,7 +55,7 @@
                   class="text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
                 <span v-if="CheckOL()">
-                  {{ row.URL.substr(22,28) }}
+                  {{ row.URL.substr(22,35) }}
                 </span>
                 <span v-else>
                     {{ row.URL.substr(18,35) }}
@@ -146,8 +147,10 @@ export default {
     startPage: { type: Boolean, default: true },
     breadcrumbs: {
     type: [String, Object, Array],
-    default: () => ({})
-    }
+    required:false,
+    default: () => ({}),
+
+    },
   },
 
   data() {
@@ -171,13 +174,19 @@ export default {
   async mounted() {
 //     console.log("ActivityLogTable mounted");
     this.loadLogs();
-
+    if(typeof window !== 'undefined')
+    {
+        window.addEventListener("beforeunload", this.markChecked);
+    }
     // Beim verlassen der Seite
-    window.addEventListener("beforeunload", this.markChecked);
+
   },
 
   beforeUnmount() {
-    window.removeEventListener("beforeunload", this.markChecked);
+    if(typeof window !== 'undefined')
+    {
+        window.removeEventListener("beforeunload", this.markChecked);
+    }
   },
 
   methods: {

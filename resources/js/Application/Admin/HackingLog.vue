@@ -15,6 +15,7 @@
               <th class="px-3 py-2 text-left">Datum</th>
               <th class="px-3 py-2 text-left">DOM</th>
               <th class="px-3 py-2 text-left">IP</th>
+              <th class="px-3 py-2 text-left">Number</th>
               <th class="px-3 py-2 text-left">URL</th>
               <th class="px-3 py-2 text-left">Gesperrt bis</th>
               <th class="px-3 py-2 text-left">Method</th>
@@ -32,15 +33,16 @@
               class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
               <td class="px-3 py-2 whitespace-nowrap">{{ row.created_at }}</td>
-              <td class="px-3 py-2 font-mono">{{ row.dom }}</td>
+              <td class="px-3 py-2 font-mono"><img :src="'/images/_' + row.dom + '/web/alogo.png'" class='w-4 h-4'/></td>
               <td class="px-3 py-2 font-mono">{{ row.ip }}</td>
+              <td class="px-3 py-2 font-mono">{{ row.violations }}</td>
               <td class="px-3 py-2 truncate max-w-xs">
                 <button
                     v-if="row.url"
                     @click="openModal('URL', row.url)"
                     class="text-indigo-600 dark:text-indigo-400 hover:underline text-left"
                 >
-                    {{ row.url }}
+                    {{ row.url.substr(0,29) }}
                 </button>
                 <span v-else class="text-gray-400">–</span>
               </td>
@@ -122,7 +124,11 @@ export default {
       type: Array,
       required: true,
     },
-    breadcrumbs:String,
+    breadcrumbs:{
+        type: Object,
+        required: false,
+        default: () => [],
+    },
   },
   data() {
     return {

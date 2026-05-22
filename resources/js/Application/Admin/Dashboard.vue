@@ -163,7 +163,7 @@
                 <template #description> Ungenutzte Bilder </template>
             </navigation-card>
             <!-- Hacklog -->
-            <navigation-card v-if="modulRights?.hackinglog"
+            <navigation-card v-if="modulRights?.HackingLog"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
                 title="MCSL IDS"
                 :routeName="route('admin.hackinglog')"
@@ -178,7 +178,7 @@
             <navigation-card v-if="modulRights?.ActivityLog"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
                 title="Activity Log"
-                :routeName="route('admin.kontakte')"
+                :routeName="route('admin.actlog')"
                 linkName="zum ActivityLog"
                 target="_self"
                 :withIcon="true"

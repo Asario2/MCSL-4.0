@@ -37,11 +37,12 @@ class hackinglog extends Controller
             header("Location: /no-rights");
             exit;
         }
-        $data = DB::connection('mariadb')->table("xgen_hackinglog")->get();
-        $data->transform(function ($item) {
-            $item->created_at = date("d.m.Y H:i:s", strtotime($item->created_at));
-            return $item;
-        });
+        $data = DB::connection('mariadb')->table("xgen_hackinglog")->orderBy("created_at","DESC")->get();
+            $data->transform(function ($item) {
+                $item->created_at = date("d.m.Y H:i:s", strtotime($item->created_at));
+                $item->url = rawurldecode($item->url);
+                return $item;
+            });
         return Inertia::render('Admin/HackingLog', [
             "data"=>$data,
              'breadcrumbs' => [

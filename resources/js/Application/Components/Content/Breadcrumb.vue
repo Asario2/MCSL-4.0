@@ -42,7 +42,7 @@
                     <icon-chevron-right
                         class="hidden lg:block -mt-0.5 w-3 h-3"
                     ></icon-chevron-right>
-                    <Link
+                    <Link v-if="value"
                         :href="value"
                         class="ml-1 lg:ml-2 px-2 py-1.5 rounded-lg font-medium hover:bg-layout-sun-200 dark:hover:bg-layout-night-200"
                         ><span class="!text-white text-layout-sun-600 dark:text-layout-night-900">{{ ucf(key) }}</span></Link
@@ -92,9 +92,9 @@ export default {
             default: null,
         },
         breadcrumbs: {
-            type: Object,
-            default: () => ({}),
-        },
+            type: [String, Object, Array],
+            default: () => ({})
+            },
         startPage: {
             type: Boolean,
             default: false,

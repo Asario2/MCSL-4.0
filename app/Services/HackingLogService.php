@@ -11,12 +11,12 @@ class hackinglogService
     /**
      * Score ab dem gebannt wird
      */
-    protected int $maxScore = 25;
+    protected int $maxScore = 15;
 
     /**
      * Score ab dem gebannt wird (zusätzlich)
      */
-    protected int $blockThreshold = 25;
+    protected int $blockThreshold = 15;
 
     /**
      * Ban-Dauer in Stunden je Verstoß-Stufe
@@ -31,7 +31,32 @@ class hackinglogService
         7 => 2000,
         8 => 5000,
     ];
+    public function banIp(Request $request,string $ip,int $score,$matches)
+    {
+        // \Log::info($request->all());
+        $viol = DB::connection("mariadb")->table("xgen_hackinglog")->where("ip",$ip)->where("dom",SD())->orderBy("id","DESC")->value("violations");
+        $viol = $viol ?? 0;
+        $viol++;
+        $banUntil = now()->addHours($this->banDurations[$viol]);
 
+        DB::connection("mariadb")->table('xgen_hackinglog')->insert(
+
+            [
+                "dom" => SD(),
+                'method'       => $request->method(),
+                "url" =>$request->fullUrl(),
+                'banned_until' => $banUntil,
+                "violations" => $viol,
+                'score'        => $score,
+                "ip"=>$ip,
+                'created_at'   => now(),
+                'matches'      => json_encode($matches, JSON_PRETTY_PRINT),
+                'agent'        => $request->userAgent(),
+            ]
+        );
+
+        return $banUntil;
+    }
     /**
      * Hauptfunktion: speichert jeden Hit, berechnet violations & banned_until
      */
@@ -45,9 +70,10 @@ class hackinglogService
         ->where('dom', SD())
         ->where('score', '>', 0)
         ->count() + 1;
+    $viol = $violations;
     $violations = $this->violations($request->ip());
     $violations = min($violations, 8);
-
+    // \Log::info("SC:".$score."MS:".$this->maxScore);
     // Ban-Dauer berechnen, auch wenn bereits Ban aktiv
     $hours = $this->banDurations[$violations] ?? 10;
 
@@ -60,7 +86,7 @@ class hackinglogService
     }
     if($score > $this->maxScore)
     {
-//         \Log::info("SC:".$score."MS:".$this->maxScore);
+
     DB::connection("mariadb")->table('xgen_hackinglog')->insert([
             'ip'           => $ip,
             'dom'          => SD(),
@@ -79,7 +105,13 @@ class hackinglogService
 
     return $banUntil;
 }
-
+public function getCurrentScore(string $ip): int
+{
+    return (int) DB::connection("mariadb")->table('xgen_hackinglog')
+        ->where('ip', $ip)
+        ->where('created_at', '>=', now()->subHours(24))
+        ->sum('score');
+}
 
     /**
      * Prüft, ob eine IP aktuell gebannt ist

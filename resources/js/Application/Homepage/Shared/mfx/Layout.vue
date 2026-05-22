@@ -39,7 +39,7 @@
               <div class="flex lg:hidden">
                 <button v-on:click="toggleNavbar()" type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 focus:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800 dark:focus:text-primary-night-800" aria-label="toggle menu">
                   <icon-menu class="w-6 h-6" v-if="!isOpen_Menu"></icon-menu>
-                  <icon-close class="w-6 h-6" v-if="isOpen_Menu"></icon-close>
+                  <IconClose class="w-6 h-6" v-if="isOpen_Menu" />  
                 </button>
               </div>
             </div>
@@ -310,6 +310,7 @@ import axios from "axios";
 import { router } from "@inertiajs/vue3";
 import { useLoadingStore } from "@/loading";
 import mfxlogo from "@/Application/Shared/mfxlogo.vue";
+import IconClose from "@/Application/Components/Icons/Close.vue";
 import ClientOnly from "@/Application/Components/ClientOnly.vue"
 import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
@@ -339,6 +340,7 @@ export default {
     Toast,
     IconMenu,
     IconMCSL,
+    IconClose,
     mfxlogo,
     Dropdown,
     DropdownLink,

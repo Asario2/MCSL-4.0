@@ -72,7 +72,7 @@ class ImageUploadController extends Controller
     $column = $request->column;
 
     // WICHTIG: MD5 Name VOR table-Zuweisung generieren
-    if(!$orifileName)
+    if(!@$orifileName)
     {
         $imageName = md5($image->getClientOriginalName() . "_" . Auth::id()) . "." . $image->getClientOriginalExtension();
     }
@@ -375,7 +375,7 @@ class ImageUploadController extends Controller
                     File::delete($oldPath);
                 }
             }
-            if(!$orifileName)
+            if(!@$orifileName)
             {
                 $fileName = md5($file->getClientOriginalName() . "_" . Auth::id()) . "." . $file->getClientOriginalExtension();
             }

@@ -362,6 +362,7 @@
     import axios from "axios";
     import { useLoadingStore } from '@/loading';
     import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
+    import IconClose from "@/Application/Components/Icons/Close.vue";
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import BrandHeader from "@/Application/Shared/BrandHeader.vue";
     import Dropdown from "@/Application/Components/Content/Dropdown.vue";
@@ -405,7 +406,8 @@
         IconMCSL,
         Dropdown,
         DropdownLink,
-        ButtonChangeMode
+        ButtonChangeMode,
+        IconClose,
     },
 
     props: {
