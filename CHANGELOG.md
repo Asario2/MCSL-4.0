@@ -284,3 +284,4 @@
 ![Version](https://img.shields.io/badge/version-5.38.0-orange) Hotfix - Image / FileUpload smaller bug (#478)  
 ![Version](https://img.shields.io/badge/version-5.39.8-orange) Feature - Added new Sitemaps (#479)  
 ![Version](https://img.shields.io/badge/version-5.40.4-orange) Feature - Added Pagination & Search for Activitlog (#480)  
+![Version](https://img.shields.io/badge/version-5.41.1-orange) Feature - Adding Pagination & Search for Hackinglog (#481)  
