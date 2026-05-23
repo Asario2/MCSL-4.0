@@ -6,6 +6,14 @@
       <Breadcrumb :breadcrumbs="breadcrumbs" />
     </template>
     <div class="p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+        <div class="flex justify-between items-center mb-4">
+
+    <search-filter
+        v-model="form.search"
+        class="w-full"
+    />
+
+</div>
       <h2 class="text-xl font-semibold mb-4">HackLog</h2>
 
       <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
@@ -28,7 +36,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="(row, index) in data"
+              v-for="(row, index) in paginatedLogs"
               :key="index"
               class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
@@ -102,6 +110,42 @@
         </div>
       </div>
     </div>
+    <div class="flex flex-wrap gap-2 mt-4">
+
+    <button
+        class="px-3 py-1 border rounded"
+        :disabled="currentPage === 1"
+        @click="currentPage--"
+    >
+        ← Zurück
+    </button>
+
+    <button
+        v-for="page in pageNumbers"
+        :key="page"
+
+        :disabled="page === '...'"
+        @click="page !== '...' && (currentPage = page)"
+
+        class="px-3 py-1 border rounded"
+
+        :class="{
+            'bg-blue-500 text-white': currentPage === page,
+            'opacity-50 cursor-default': page === '...'
+        }"
+    >
+        {{ page }}
+    </button>
+
+    <button
+        class="px-3 py-1 border rounded"
+        :disabled="currentPage >= totalPages"
+        @click="currentPage++"
+    >
+        Weiter →
+    </button>
+
+</div>
   </Layout>
 </template>
 
@@ -109,7 +153,8 @@
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import delhackinglog from "@/Application/Admin/Shared/delHackingLog.vue"
-import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue"
+import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
+import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 export default {
   name: 'RequestLogTable',
   components: {
@@ -117,10 +162,11 @@ export default {
     delhackinglog,
     MetaHeader,
     Breadcrumb,
+    SearchFilter,
 
   },
   props: {
-    data: {
+    tables: {
       type: Array,
       required: true,
     },
@@ -135,8 +181,116 @@ export default {
       showModal: false,
       modalTitle: '',
       modalContent: '',
+        currentPage: 1,
+        perPage: 20,
+
+        form: {
+            search: ''
+        }
     }
   },
+    watch: {
+        'form.search'() {
+            this.currentPage = 1;
+        }
+    },
+  computed: {
+
+    filteredLogs() {
+
+        if (!this.form.search) {
+            return this.tables;
+        }
+
+        const s = this.form.search.toLowerCase();
+
+        return this.tables.filter(row => {
+
+            return (
+                String(row.id || '').toLowerCase().includes(s) ||
+                String(row.ip || '').toLowerCase().includes(s) ||
+                String(row.url || '').toLowerCase().includes(s) ||
+                String(row.dom || '').toLowerCase().includes(s) ||
+                String(row.method || '').toLowerCase().includes(s) ||
+                String(row.agent || '').toLowerCase().includes(s) ||
+                String(row.score || '').toLowerCase().includes(s) ||
+                String(row.violations || '').toLowerCase().includes(s) ||
+                String(row.created_at || '').toLowerCase().includes(s)
+            );
+
+        });
+
+    },
+
+    paginatedLogs() {
+
+        const start = (this.currentPage - 1) * this.perPage;
+        const end = start + this.perPage;
+
+        return this.filteredLogs.slice(start, end);
+
+    },
+
+    totalPages() {
+        return Math.ceil(this.filteredLogs.length / this.perPage);
+    },
+
+    pageNumbers() {
+
+        const total = this.totalPages;
+        const current = this.currentPage;
+
+        let pages = [];
+
+        if (total <= 12) {
+
+            for (let i = 1; i <= total; i++) {
+                pages.push(i);
+            }
+
+            return pages;
+        }
+
+        if (current <= 9) {
+
+            for (let i = 1; i <= 10; i++) {
+                pages.push(i);
+            }
+
+            pages.push('...');
+            pages.push(total);
+
+            return pages;
+        }
+
+        if (current >= total - 8) {
+
+            pages.push(1);
+            pages.push('...');
+
+            for (let i = total - 9; i <= total; i++) {
+                pages.push(i);
+            }
+
+            return pages;
+        }
+
+        pages.push(1);
+        pages.push('...');
+
+        let start = current - 3;
+        let end = current + 3;
+
+        for (let i = start; i <= end; i++) {
+            pages.push(i);
+        }
+
+        pages.push('...');
+        pages.push(total);
+
+        return pages;
+    }
+},
   methods: {
   formatDateTime(datetime) {
     if (!datetime) return "";

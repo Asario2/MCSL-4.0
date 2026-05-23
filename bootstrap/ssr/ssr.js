@@ -1,9 +1,9 @@
+import { mergeProps, useSSRContext, resolveComponent, ref, shallowRef, defineComponent, markRaw, h as h$1, computed, onMounted, watch, onBeforeUnmount, provide, onUnmounted, Fragment, reactive, createSSRApp, withCtx, createVNode, toDisplayString, openBlock, createBlock, createCommentVNode, resolveDynamicComponent, renderSlot, createTextVNode, renderList, withModifiers, defineAsyncComponent, withDirectives, vModelText, vModelCheckbox, withKeys, createSlots, vShow, vModelSelect, nextTick, resolveDirective } from "vue";
+import { ssrRenderAttrs, ssrRenderComponent, ssrRenderAttr, ssrInterpolate, ssrRenderList, ssrRenderStyle, ssrRenderClass, ssrRenderSlot, ssrRenderVNode, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderTeleport, ssrGetDynamicModelProps, ssrGetDirectiveProps } from "vue/server-renderer";
 import axios$1 from "axios";
 import { createHeadManager, router, config as config$1, isUrlMethodPair, formDataToObject, mergeDataIntoQueryString, getScrollableParent, useInfiniteScroll, UseFormUtils, FormComponentResetSymbol, resetFormFields, shouldIntercept, shouldNavigate, getInitialPageFromDOM, setupProgress } from "@inertiajs/core";
-import { ref, shallowRef, defineComponent, markRaw, h as h$1, computed, onMounted, watch, onBeforeUnmount, provide, onUnmounted, Fragment, reactive, createSSRApp, mergeProps, useSSRContext, resolveComponent, withCtx, createVNode, toDisplayString, openBlock, createBlock, createCommentVNode, resolveDynamicComponent, renderSlot, createTextVNode, renderList, withModifiers, defineAsyncComponent, withDirectives, vModelText, vModelCheckbox, withKeys, createSlots, vShow, vModelSelect, nextTick, resolveDirective } from "vue";
 import { escape, cloneDeep, has, set, get, isEqual } from "lodash-es";
 import { createValidator, toSimpleValidationErrors, resolveName } from "laravel-precognition";
-import { ssrRenderAttrs, ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderStyle, ssrRenderAttr, ssrRenderClass, ssrRenderSlot, ssrRenderVNode, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderTeleport, ssrGetDynamicModelProps, ssrGetDirectiveProps } from "vue/server-renderer";
 import { route as route$1, ZiggyVue } from "ziggy-js";
 import mapValues from "lodash/mapValues.js";
 import throttle from "lodash/throttle.js";
@@ -27,6 +27,83 @@ import "vue3-markdown-it";
 import { marked } from "marked";
 import { renderToString as renderToString$1 } from "@vue/server-renderer";
 import createServer from "@inertiajs/core/server";
+const _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key2, val] of props) {
+    target[key2] = val;
+  }
+  return target;
+};
+const _sfc_main$5G = {
+  name: "Search.svg"
+};
+function _sfc_ssrRender$5E(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<svg${ssrRenderAttrs(mergeProps({
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor",
+    fill: "none"
+  }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>`);
+}
+const _sfc_setup$5G = _sfc_main$5G.setup;
+_sfc_main$5G.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Search.vue");
+  return _sfc_setup$5G ? _sfc_setup$5G(props, ctx) : void 0;
+};
+const IconSearch = /* @__PURE__ */ _export_sfc(_sfc_main$5G, [["ssrRender", _sfc_ssrRender$5E]]);
+const __vite_glob_0_199 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: IconSearch
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$5F = {
+  name: "Components_Lists_SearchFilter",
+  emits: ["update:modelValue", "reset"],
+  components: {
+    IconSearch
+  },
+  props: {
+    modelValue: {
+      type: String,
+      default: null
+    },
+    placeholder: {
+      type: String,
+      default: "Suchen"
+    },
+    searchText: {
+      type: String
+    }
+  },
+  methods: {
+    focus() {
+      this.$refs.input?.focus();
+    }
+  }
+};
+function _sfc_ssrRender$5D(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_icon_search = resolveComponent("icon-search");
+  _push(`<div${ssrRenderAttrs(_attrs)}><div class="relative z-3"><div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">`);
+  _push(ssrRenderComponent(_component_icon_search, { class: "block mr-3 h-5 w-5" }, null, _parent));
+  _push(`</div><input type="text" id="default-search" class="block p-4 pl-10 w-full rounded-lg border text-sm text-layout-sun-900 bg-layout-sun-50 border-layout-sun-300 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:text-layout-night-900 dark:bg-layout-night-50 dark:border-layout-night-300 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" autocomplete="off" name="search"${ssrRenderAttr("placeholder", $props.placeholder)}${ssrRenderAttr("value", $props.modelValue)}><button type="submit" class="absolute right-2 bottom-2 font-medium rounded-lg text-sm px-4 py-2 cursor-pointer border-2 focus:ring focus:outline-none bg-primary-sun-500 text-primary-sun-100 hover:text-primary-sun-900 hover:bg-layout-sun-100 hover:border-primary-sun-600 focus:border-primary-sun-600 dark:bg-primary-night-500 dark:text-primary-night-100 dark:hover:text-primary-night-900 dark:hover:bg-layout-night-100 dark:hover:border-primary-night-600 dark:focus:border-primary-night-600"> Suche zurücksetzen </button></div><div class="w-full mt-4">`);
+  if ($props.searchText) {
+    _push(`<div class="p-1 text-sm my-2 text-left font-medium tracking-wide text-layout-sun-600 dark:text-layout-night-600"><span>${$props.searchText ?? ""}</span></div>`);
+  } else {
+    _push(`<!---->`);
+  }
+  _push(`</div></div>`);
+}
+const _sfc_setup$5F = _sfc_main$5F.setup;
+_sfc_main$5F.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Lists/SearchFilter.vue");
+  return _sfc_setup$5F ? _sfc_setup$5F(props, ctx) : void 0;
+};
+const SearchFilter = /* @__PURE__ */ _export_sfc(_sfc_main$5F, [["ssrRender", _sfc_ssrRender$5D]]);
+const __vite_glob_0_219 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: SearchFilter
+}, Symbol.toStringTag, { value: "Module" }));
 var remember = {
   created() {
     if (!this.$options.remember) {
@@ -1628,17 +1705,10 @@ defineComponent({
   }
 });
 var config = config$1.extend({});
-const _export_sfc = (sfc, props) => {
-  const target = sfc.__vccOpts || sfc;
-  for (const [key2, val] of props) {
-    target[key2] = val;
-  }
-  return target;
-};
-const _sfc_main$5G = {
+const _sfc_main$5E = {
   name: "Home"
 };
-function _sfc_ssrRender$5E(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5C(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -1647,21 +1717,21 @@ function _sfc_ssrRender$5E(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     fill: "none"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"></path></svg>`);
 }
-const _sfc_setup$5G = _sfc_main$5G.setup;
-_sfc_main$5G.setup = (props, ctx) => {
+const _sfc_setup$5E = _sfc_main$5E.setup;
+_sfc_main$5E.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Home.vue");
-  return _sfc_setup$5G ? _sfc_setup$5G(props, ctx) : void 0;
+  return _sfc_setup$5E ? _sfc_setup$5E(props, ctx) : void 0;
 };
-const IconHome = /* @__PURE__ */ _export_sfc(_sfc_main$5G, [["ssrRender", _sfc_ssrRender$5E]]);
+const IconHome = /* @__PURE__ */ _export_sfc(_sfc_main$5E, [["ssrRender", _sfc_ssrRender$5C]]);
 const __vite_glob_0_129 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconHome
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5F = {
+const _sfc_main$5D = {
   name: "ChevronRight"
 };
-function _sfc_ssrRender$5D(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5B(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -1670,18 +1740,18 @@ function _sfc_ssrRender$5D(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     fill: "none"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path></svg>`);
 }
-const _sfc_setup$5F = _sfc_main$5F.setup;
-_sfc_main$5F.setup = (props, ctx) => {
+const _sfc_setup$5D = _sfc_main$5D.setup;
+_sfc_main$5D.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/ChevronRight.vue");
-  return _sfc_setup$5F ? _sfc_setup$5F(props, ctx) : void 0;
+  return _sfc_setup$5D ? _sfc_setup$5D(props, ctx) : void 0;
 };
-const IconChevronRight = /* @__PURE__ */ _export_sfc(_sfc_main$5F, [["ssrRender", _sfc_ssrRender$5D]]);
+const IconChevronRight = /* @__PURE__ */ _export_sfc(_sfc_main$5D, [["ssrRender", _sfc_ssrRender$5B]]);
 const __vite_glob_0_120 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconChevronRight
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5E = {
+const _sfc_main$5C = {
   name: "Components_Content_Breadcrumb",
   components: {
     Link: link_default,
@@ -1740,7 +1810,7 @@ const _sfc_main$5E = {
     }
   }
 };
-function _sfc_ssrRender$5C(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5A(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_Link = resolveComponent("Link");
   const _component_icon_home = resolveComponent("icon-home");
   const _component_icon_chevron_right = resolveComponent("icon-chevron-right");
@@ -1818,13 +1888,13 @@ function _sfc_ssrRender$5C(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</ol></nav>`);
 }
-const _sfc_setup$5E = _sfc_main$5E.setup;
-_sfc_main$5E.setup = (props, ctx) => {
+const _sfc_setup$5C = _sfc_main$5C.setup;
+_sfc_main$5C.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/Breadcrumb.vue");
-  return _sfc_setup$5E ? _sfc_setup$5E(props, ctx) : void 0;
+  return _sfc_setup$5C ? _sfc_setup$5C(props, ctx) : void 0;
 };
-const Breadcrumb = /* @__PURE__ */ _export_sfc(_sfc_main$5E, [["ssrRender", _sfc_ssrRender$5C]]);
+const Breadcrumb = /* @__PURE__ */ _export_sfc(_sfc_main$5C, [["ssrRender", _sfc_ssrRender$5A]]);
 const __vite_glob_0_40 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Breadcrumb
@@ -1866,30 +1936,30 @@ function SD$1(pn = "") {
   if (!pn) return subb;
   return pm[subb] || subb;
 }
-const _sfc_main$5D = {
+const _sfc_main$5B = {
   name: "Homepage_Shared_BlogPreviewBig",
   methods: {
     SD: SD$1
   }
 };
-function _sfc_ssrRender$5B(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5z(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<img${ssrRenderAttrs(mergeProps({
     src: "/images/_" + $options.SD() + "/web/alogo.png",
     style: { "height": "40px", "min-width": "40px !important", "max-width": "40px" }
   }, _attrs))}>`);
 }
-const _sfc_setup$5D = _sfc_main$5D.setup;
-_sfc_main$5D.setup = (props, ctx) => {
+const _sfc_setup$5B = _sfc_main$5B.setup;
+_sfc_main$5B.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Logo/Favicon.vue");
-  return _sfc_setup$5D ? _sfc_setup$5D(props, ctx) : void 0;
+  return _sfc_setup$5B ? _sfc_setup$5B(props, ctx) : void 0;
 };
-const Favicon = /* @__PURE__ */ _export_sfc(_sfc_main$5D, [["ssrRender", _sfc_ssrRender$5B]]);
+const Favicon = /* @__PURE__ */ _export_sfc(_sfc_main$5B, [["ssrRender", _sfc_ssrRender$5z]]);
 const __vite_glob_0_223 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Favicon
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5C = {
+const _sfc_main$5A = {
   name: "mfxlogo",
   props: {
     ab: {
@@ -1917,55 +1987,55 @@ const _sfc_main$5C = {
     });
   }
 };
-function _sfc_ssrRender$5A(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "relative w-full h-[70px] overflow-hidden" }, _attrs))}><div class="absolute top-0 left-0 w-[200%] h-full bg-repeat-x bg-contain" style="${ssrRenderStyle({ backgroundImage: "url(/images/logos/mfx_logo_bg.png)" })}"></div><img class="relative z-10 h-full mx-auto"${ssrRenderAttr("src", "/images/logos/mfx_logo_bh" + $props.ab + ".png")} alt="Logo"></div>`);
-}
-const _sfc_setup$5C = _sfc_main$5C.setup;
-_sfc_main$5C.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Shared/mfxlogo.vue");
-  return _sfc_setup$5C ? _sfc_setup$5C(props, ctx) : void 0;
-};
-const mfxlogo = /* @__PURE__ */ _export_sfc(_sfc_main$5C, [["ssrRender", _sfc_ssrRender$5A]]);
-const __vite_glob_0_361 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: mfxlogo
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5B = {
-  name: "ChhLogo"
-};
-function _sfc_ssrRender$5z(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "relative inline-block" }, _attrs))}><a href="/admin/dashboard" class="absolute top-0 left-0 w-[50px] h-[50px] z-20 cursor-pointer"></a><img class="relative z-10 h-16 mx-auto"${ssrRenderAttr("src", "/images/logos/chh.jpg")} alt="Logo"></div>`);
-}
-const _sfc_setup$5B = _sfc_main$5B.setup;
-_sfc_main$5B.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Shared/ChhLogo.vue");
-  return _sfc_setup$5B ? _sfc_setup$5B(props, ctx) : void 0;
-};
-const ChhLogo = /* @__PURE__ */ _export_sfc(_sfc_main$5B, [["ssrRender", _sfc_ssrRender$5z]]);
-const __vite_glob_0_345 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: ChhLogo
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5A = {
-  name: "DagLogo"
-};
 function _sfc_ssrRender$5y(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "relative inline-block" }, _attrs))}><a href="/admin/dashboard" class="absolute top-0 left-0 w-[50px] h-[50px] z-20 bg-red-500/30 cursor-pointer"></a><img class="relative z-10 h-full mx-auto"${ssrRenderAttr("src", "/images/logos/dag.jpg")} alt="Logo"></div>`);
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "relative w-full h-[70px] overflow-hidden" }, _attrs))}><div class="absolute top-0 left-0 w-[200%] h-full bg-repeat-x bg-contain" style="${ssrRenderStyle({ backgroundImage: "url(/images/logos/mfx_logo_bg.png)" })}"></div><img class="relative z-10 h-full mx-auto"${ssrRenderAttr("src", "/images/logos/mfx_logo_bh" + $props.ab + ".png")} alt="Logo"></div>`);
 }
 const _sfc_setup$5A = _sfc_main$5A.setup;
 _sfc_main$5A.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Shared/daglogo.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Shared/mfxlogo.vue");
   return _sfc_setup$5A ? _sfc_setup$5A(props, ctx) : void 0;
 };
-const daglogo = /* @__PURE__ */ _export_sfc(_sfc_main$5A, [["ssrRender", _sfc_ssrRender$5y]]);
+const mfxlogo = /* @__PURE__ */ _export_sfc(_sfc_main$5A, [["ssrRender", _sfc_ssrRender$5y]]);
+const __vite_glob_0_361 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: mfxlogo
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$5z = {
+  name: "ChhLogo"
+};
+function _sfc_ssrRender$5x(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "relative inline-block" }, _attrs))}><a href="/admin/dashboard" class="absolute top-0 left-0 w-[50px] h-[50px] z-20 cursor-pointer"></a><img class="relative z-10 h-16 mx-auto"${ssrRenderAttr("src", "/images/logos/chh.jpg")} alt="Logo"></div>`);
+}
+const _sfc_setup$5z = _sfc_main$5z.setup;
+_sfc_main$5z.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Shared/ChhLogo.vue");
+  return _sfc_setup$5z ? _sfc_setup$5z(props, ctx) : void 0;
+};
+const ChhLogo = /* @__PURE__ */ _export_sfc(_sfc_main$5z, [["ssrRender", _sfc_ssrRender$5x]]);
+const __vite_glob_0_345 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: ChhLogo
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$5y = {
+  name: "DagLogo"
+};
+function _sfc_ssrRender$5w(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "relative inline-block" }, _attrs))}><a href="/admin/dashboard" class="absolute top-0 left-0 w-[50px] h-[50px] z-20 bg-red-500/30 cursor-pointer"></a><img class="relative z-10 h-full mx-auto"${ssrRenderAttr("src", "/images/logos/dag.jpg")} alt="Logo"></div>`);
+}
+const _sfc_setup$5y = _sfc_main$5y.setup;
+_sfc_main$5y.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Shared/daglogo.vue");
+  return _sfc_setup$5y ? _sfc_setup$5y(props, ctx) : void 0;
+};
+const daglogo = /* @__PURE__ */ _export_sfc(_sfc_main$5y, [["ssrRender", _sfc_ssrRender$5w]]);
 const __vite_glob_0_360 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: daglogo
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5z = {
+const _sfc_main$5x = {
   name: "Shared_BrandHeader",
   //
   components: {
@@ -2010,7 +2080,7 @@ const _sfc_main$5z = {
     }
   }
 };
-function _sfc_ssrRender$5x(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5v(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_Link = resolveComponent("Link");
   const _component_favicon = resolveComponent("favicon");
   const _component_mfxlogo = resolveComponent("mfxlogo");
@@ -2095,13 +2165,13 @@ function _sfc_ssrRender$5x(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$5z = _sfc_main$5z.setup;
-_sfc_main$5z.setup = (props, ctx) => {
+const _sfc_setup$5x = _sfc_main$5x.setup;
+_sfc_main$5x.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Shared/BrandHeader.vue");
-  return _sfc_setup$5z ? _sfc_setup$5z(props, ctx) : void 0;
+  return _sfc_setup$5x ? _sfc_setup$5x(props, ctx) : void 0;
 };
-const BrandHeader = /* @__PURE__ */ _export_sfc(_sfc_main$5z, [["ssrRender", _sfc_ssrRender$5x]]);
+const BrandHeader = /* @__PURE__ */ _export_sfc(_sfc_main$5x, [["ssrRender", _sfc_ssrRender$5v]]);
 const __vite_glob_0_344 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: BrandHeader
@@ -2133,10 +2203,10 @@ const toastBus$1 = reactive({
 if (typeof window !== "undefined") {
   window.toastBus = toastBus$1;
 }
-const _sfc_main$5y = {
+const _sfc_main$5w = {
   name: "Icon_Done"
 };
-function _sfc_ssrRender$5w(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -2145,21 +2215,21 @@ function _sfc_ssrRender$5w(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     "stroke-width": "2"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>`);
 }
-const _sfc_setup$5y = _sfc_main$5y.setup;
-_sfc_main$5y.setup = (props, ctx) => {
+const _sfc_setup$5w = _sfc_main$5w.setup;
+_sfc_main$5w.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Done.vue");
-  return _sfc_setup$5y ? _sfc_setup$5y(props, ctx) : void 0;
+  return _sfc_setup$5w ? _sfc_setup$5w(props, ctx) : void 0;
 };
-const IconDone = /* @__PURE__ */ _export_sfc(_sfc_main$5y, [["ssrRender", _sfc_ssrRender$5w]]);
+const IconDone = /* @__PURE__ */ _export_sfc(_sfc_main$5w, [["ssrRender", _sfc_ssrRender$5u]]);
 const __vite_glob_0_123 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconDone
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5x = {
+const _sfc_main$5v = {
   name: "Icon_Exclamation"
 };
-function _sfc_ssrRender$5v(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5t(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -2168,21 +2238,21 @@ function _sfc_ssrRender$5v(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     "stroke-width": "2"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`);
 }
-const _sfc_setup$5x = _sfc_main$5x.setup;
-_sfc_main$5x.setup = (props, ctx) => {
+const _sfc_setup$5v = _sfc_main$5v.setup;
+_sfc_main$5v.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Exclamation.vue");
-  return _sfc_setup$5x ? _sfc_setup$5x(props, ctx) : void 0;
+  return _sfc_setup$5v ? _sfc_setup$5v(props, ctx) : void 0;
 };
-const IconExclamation = /* @__PURE__ */ _export_sfc(_sfc_main$5x, [["ssrRender", _sfc_ssrRender$5v]]);
+const IconExclamation = /* @__PURE__ */ _export_sfc(_sfc_main$5v, [["ssrRender", _sfc_ssrRender$5t]]);
 const __vite_glob_0_125 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconExclamation
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5w = {
+const _sfc_main$5u = {
   name: "Icon_Close"
 };
-function _sfc_ssrRender$5u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5s(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -2191,18 +2261,18 @@ function _sfc_ssrRender$5u(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     "stroke-width": "2"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>`);
 }
-const _sfc_setup$5w = _sfc_main$5w.setup;
-_sfc_main$5w.setup = (props, ctx) => {
+const _sfc_setup$5u = _sfc_main$5u.setup;
+_sfc_main$5u.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Close.vue");
-  return _sfc_setup$5w ? _sfc_setup$5w(props, ctx) : void 0;
+  return _sfc_setup$5u ? _sfc_setup$5u(props, ctx) : void 0;
 };
-const IconClose$1 = /* @__PURE__ */ _export_sfc(_sfc_main$5w, [["ssrRender", _sfc_ssrRender$5u]]);
+const IconClose$1 = /* @__PURE__ */ _export_sfc(_sfc_main$5u, [["ssrRender", _sfc_ssrRender$5s]]);
 const __vite_glob_0_121 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconClose$1
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5v = {
+const _sfc_main$5t = {
   name: "Toast",
   components: { IconDone, IconExclamation, IconClose: IconClose$1 },
   data() {
@@ -2232,7 +2302,7 @@ const _sfc_main$5v = {
     }
   }
 };
-function _sfc_ssrRender$5t(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5r(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_icon_done = resolveComponent("icon-done");
   const _component_icon_exclamation = resolveComponent("icon-exclamation");
   const _component_icon_close = resolveComponent("icon-close");
@@ -2280,21 +2350,21 @@ function _sfc_ssrRender$5t(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   });
   _push(`</div></div>`);
 }
-const _sfc_setup$5v = _sfc_main$5v.setup;
-_sfc_main$5v.setup = (props, ctx) => {
+const _sfc_setup$5t = _sfc_main$5t.setup;
+_sfc_main$5t.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/Toast.vue");
-  return _sfc_setup$5v ? _sfc_setup$5v(props, ctx) : void 0;
+  return _sfc_setup$5t ? _sfc_setup$5t(props, ctx) : void 0;
 };
-const Toast = /* @__PURE__ */ _export_sfc(_sfc_main$5v, [["ssrRender", _sfc_ssrRender$5t], ["__scopeId", "data-v-ef34c367"]]);
+const Toast = /* @__PURE__ */ _export_sfc(_sfc_main$5t, [["ssrRender", _sfc_ssrRender$5r], ["__scopeId", "data-v-ef34c367"]]);
 const __vite_glob_0_61 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Toast
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5u = {
+const _sfc_main$5s = {
   name: "Icon_Night"
 };
-function _sfc_ssrRender$5s(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5q(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -2303,21 +2373,21 @@ function _sfc_ssrRender$5s(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     "stroke-width": "2"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>`);
 }
-const _sfc_setup$5u = _sfc_main$5u.setup;
-_sfc_main$5u.setup = (props, ctx) => {
+const _sfc_setup$5s = _sfc_main$5s.setup;
+_sfc_main$5s.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Night.vue");
-  return _sfc_setup$5u ? _sfc_setup$5u(props, ctx) : void 0;
+  return _sfc_setup$5s ? _sfc_setup$5s(props, ctx) : void 0;
 };
-const IconNight = /* @__PURE__ */ _export_sfc(_sfc_main$5u, [["ssrRender", _sfc_ssrRender$5s]]);
+const IconNight = /* @__PURE__ */ _export_sfc(_sfc_main$5s, [["ssrRender", _sfc_ssrRender$5q]]);
 const __vite_glob_0_194 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconNight
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5t = {
+const _sfc_main$5r = {
   name: "Icon_Sun"
 };
-function _sfc_ssrRender$5r(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5p(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -2326,18 +2396,18 @@ function _sfc_ssrRender$5r(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     "stroke-width": "2"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>`);
 }
-const _sfc_setup$5t = _sfc_main$5t.setup;
-_sfc_main$5t.setup = (props, ctx) => {
+const _sfc_setup$5r = _sfc_main$5r.setup;
+_sfc_main$5r.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Sun.vue");
-  return _sfc_setup$5t ? _sfc_setup$5t(props, ctx) : void 0;
+  return _sfc_setup$5r ? _sfc_setup$5r(props, ctx) : void 0;
 };
-const IconSun = /* @__PURE__ */ _export_sfc(_sfc_main$5t, [["ssrRender", _sfc_ssrRender$5r]]);
+const IconSun = /* @__PURE__ */ _export_sfc(_sfc_main$5r, [["ssrRender", _sfc_ssrRender$5p]]);
 const __vite_glob_0_206 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconSun
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5s = defineComponent({
+const _sfc_main$5q = defineComponent({
   name: "ButtonChangeMode",
   components: { IconNight, IconSun },
   props: {
@@ -2386,7 +2456,7 @@ const _sfc_main$5s = defineComponent({
     return { changeMode };
   }
 });
-function _sfc_ssrRender$5q(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5o(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_IconNight = resolveComponent("IconNight");
   const _component_IconSun = resolveComponent("IconSun");
   _push(`<button${ssrRenderAttrs(mergeProps({
@@ -2404,21 +2474,21 @@ function _sfc_ssrRender$5q(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</button>`);
 }
-const _sfc_setup$5s = _sfc_main$5s.setup;
-_sfc_main$5s.setup = (props, ctx) => {
+const _sfc_setup$5q = _sfc_main$5q.setup;
+_sfc_main$5q.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/ButtonChangeMode.vue");
-  return _sfc_setup$5s ? _sfc_setup$5s(props, ctx) : void 0;
+  return _sfc_setup$5q ? _sfc_setup$5q(props, ctx) : void 0;
 };
-const ButtonChangeMode = /* @__PURE__ */ _export_sfc(_sfc_main$5s, [["ssrRender", _sfc_ssrRender$5q]]);
+const ButtonChangeMode = /* @__PURE__ */ _export_sfc(_sfc_main$5q, [["ssrRender", _sfc_ssrRender$5o]]);
 const __vite_glob_0_36 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ButtonChangeMode
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5r = {
+const _sfc_main$5p = {
   name: "IconMoney"
 };
-function _sfc_ssrRender$5p(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5n(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 576 512",
@@ -2426,40 +2496,40 @@ function _sfc_ssrRender$5p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     stroke: "white"
   }, _attrs))}><path d="M64 64C28.7 64 0 92.7 0 128L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64L64 64zM296 288l128 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-128 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm-24-88c0-13.3 10.7-24 24-24l128 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-128 0c-13.3 0-24-10.7-24-24zM148 144c11 0 20 9 20 20l0 4 8 0c11 0 20 9 20 20s-9 20-20 20l-47.5 0c-6.9 0-12.5 5.6-12.5 12.5 0 6.1 4.4 11.3 10.4 12.3l41.7 7c25.3 4.2 43.9 26.1 43.9 51.8 0 26.1-19 47.7-44 51.8l0 4.7c0 11-9 20-20 20s-20-9-20-20l0-4-24 0c-11 0-20-9-20-20s9-20 20-20l55.5 0c6.9 0 12.5-5.6 12.5-12.5 0-6.1-4.4-11.3-10.4-12.3l-41.7-7C94.5 268 76 246.1 76 220.5 76 191.7 99.2 168.3 128 168l0-4c0-11 9-20 20-20z"></path></svg>`);
 }
-const _sfc_setup$5r = _sfc_main$5r.setup;
-_sfc_main$5r.setup = (props, ctx) => {
+const _sfc_setup$5p = _sfc_main$5p.setup;
+_sfc_main$5p.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconMoney.vue");
-  return _sfc_setup$5r ? _sfc_setup$5r(props, ctx) : void 0;
+  return _sfc_setup$5p ? _sfc_setup$5p(props, ctx) : void 0;
 };
-const IconMoney = /* @__PURE__ */ _export_sfc(_sfc_main$5r, [["ssrRender", _sfc_ssrRender$5p]]);
+const IconMoney = /* @__PURE__ */ _export_sfc(_sfc_main$5p, [["ssrRender", _sfc_ssrRender$5n]]);
 const __vite_glob_0_165 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconMoney
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5q = {
+const _sfc_main$5o = {
   name: "IconStar_thin"
 };
-function _sfc_ssrRender$5o(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5m(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 640 640",
     fill: "currentColor"
   }, _attrs))}><path d="M320.1 32C329.1 32 337.4 37.1 341.5 45.1L415 189.3L574.9 214.7C583.8 216.1 591.2 222.4 594 231C596.8 239.6 594.5 249 588.2 255.4L473.7 369.9L499 529.8C500.4 538.7 496.7 547.7 489.4 553C482.1 558.3 472.4 559.1 464.4 555L320.1 481.6L175.8 555C167.8 559.1 158.1 558.3 150.8 553C143.5 547.7 139.8 538.8 141.2 529.8L166.4 369.9L52 255.4C45.6 249 43.4 239.6 46.2 231C49 222.4 56.3 216.1 65.3 214.7L225.2 189.3L298.8 45.1C302.9 37.1 311.2 32 320.2 32zM320.1 108.8L262.3 222C258.8 228.8 252.3 233.6 244.7 234.8L119.2 254.8L209 344.7C214.4 350.1 216.9 357.8 215.7 365.4L195.9 490.9L309.2 433.3C316 429.8 324.1 429.8 331 433.3L444.3 490.9L424.5 365.4C423.3 357.8 425.8 350.1 431.2 344.7L521 254.8L395.5 234.8C387.9 233.6 381.4 228.8 377.9 222L320.1 108.8z"></path></svg>`);
 }
-const _sfc_setup$5q = _sfc_main$5q.setup;
-_sfc_main$5q.setup = (props, ctx) => {
+const _sfc_setup$5o = _sfc_main$5o.setup;
+_sfc_main$5o.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconStar_thin.vue");
-  return _sfc_setup$5q ? _sfc_setup$5q(props, ctx) : void 0;
+  return _sfc_setup$5o ? _sfc_setup$5o(props, ctx) : void 0;
 };
-const IconStar_thin = /* @__PURE__ */ _export_sfc(_sfc_main$5q, [["ssrRender", _sfc_ssrRender$5o]]);
+const IconStar_thin = /* @__PURE__ */ _export_sfc(_sfc_main$5o, [["ssrRender", _sfc_ssrRender$5m]]);
 const __vite_glob_0_184 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconStar_thin
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5p = {};
-function _sfc_ssrRender$5n(_ctx, _push, _parent, _attrs) {
+const _sfc_main$5n = {};
+function _sfc_ssrRender$5l(_ctx, _push, _parent, _attrs) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -2484,21 +2554,21 @@ function _sfc_ssrRender$5n(_ctx, _push, _parent, _attrs) {
              c.75.25 1.54.45 2.35.57
              a2 2 0 0 1 1.72 2z"></path></svg>`);
 }
-const _sfc_setup$5p = _sfc_main$5p.setup;
-_sfc_main$5p.setup = (props, ctx) => {
+const _sfc_setup$5n = _sfc_main$5n.setup;
+_sfc_main$5n.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconContacts_alt.vue");
-  return _sfc_setup$5p ? _sfc_setup$5p(props, ctx) : void 0;
+  return _sfc_setup$5n ? _sfc_setup$5n(props, ctx) : void 0;
 };
-const IconContacts_alt = /* @__PURE__ */ _export_sfc(_sfc_main$5p, [["ssrRender", _sfc_ssrRender$5n]]);
+const IconContacts_alt = /* @__PURE__ */ _export_sfc(_sfc_main$5n, [["ssrRender", _sfc_ssrRender$5l]]);
 const __vite_glob_0_141 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconContacts_alt
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5o = {
+const _sfc_main$5m = {
   name: "IconLogout"
 };
-function _sfc_ssrRender$5m(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5k(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 512 512",
@@ -2509,63 +2579,63 @@ function _sfc_ssrRender$5m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     "stroke-linejoin": "round"
   }, _attrs))}><path d="M96 64H224M96 64V448M96 448H224"></path><path d="M224 276H416"></path><path d="M352 212L416 276L352 340"></path></svg>`);
 }
-const _sfc_setup$5o = _sfc_main$5o.setup;
-_sfc_main$5o.setup = (props, ctx) => {
+const _sfc_setup$5m = _sfc_main$5m.setup;
+_sfc_main$5m.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconLogout.vue");
-  return _sfc_setup$5o ? _sfc_setup$5o(props, ctx) : void 0;
+  return _sfc_setup$5m ? _sfc_setup$5m(props, ctx) : void 0;
 };
-const IconLogout = /* @__PURE__ */ _export_sfc(_sfc_main$5o, [["ssrRender", _sfc_ssrRender$5m]]);
+const IconLogout = /* @__PURE__ */ _export_sfc(_sfc_main$5m, [["ssrRender", _sfc_ssrRender$5k]]);
 const __vite_glob_0_158 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconLogout
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5n = {
+const _sfc_main$5l = {
   name: "IconProfile"
 };
-function _sfc_ssrRender$5l(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5j(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 640 640",
     fill: "currentColor"
   }, _attrs))}><path d="M240 192C240 147.8 275.8 112 320 112C364.2 112 400 147.8 400 192C400 236.2 364.2 272 320 272C275.8 272 240 236.2 240 192zM448 192C448 121.3 390.7 64 320 64C249.3 64 192 121.3 192 192C192 262.7 249.3 320 320 320C390.7 320 448 262.7 448 192zM144 544C144 473.3 201.3 416 272 416L368 416C438.7 416 496 473.3 496 544L496 552C496 565.3 506.7 576 520 576C533.3 576 544 565.3 544 552L544 544C544 446.8 465.2 368 368 368L272 368C174.8 368 96 446.8 96 544L96 552C96 565.3 106.7 576 120 576C133.3 576 144 565.3 144 552L144 544z"></path></svg>`);
 }
-const _sfc_setup$5n = _sfc_main$5n.setup;
-_sfc_main$5n.setup = (props, ctx) => {
+const _sfc_setup$5l = _sfc_main$5l.setup;
+_sfc_main$5l.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconProfile.vue");
-  return _sfc_setup$5n ? _sfc_setup$5n(props, ctx) : void 0;
+  return _sfc_setup$5l ? _sfc_setup$5l(props, ctx) : void 0;
 };
-const IconProfile = /* @__PURE__ */ _export_sfc(_sfc_main$5n, [["ssrRender", _sfc_ssrRender$5l]]);
+const IconProfile = /* @__PURE__ */ _export_sfc(_sfc_main$5l, [["ssrRender", _sfc_ssrRender$5j]]);
 const __vite_glob_0_171 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconProfile
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5m = {
+const _sfc_main$5k = {
   name: "IconPM"
 };
-function _sfc_ssrRender$5k(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5i(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 640 640",
     fill: "currentColor"
   }, _attrs))}><path d="M267.7 576.9C267.7 576.9 267.7 576.9 267.7 576.9L229.9 603.6C222.6 608.8 213 609.4 205 605.3C197 601.2 192 593 192 584L192 512L160 512C107 512 64 469 64 416L64 192C64 139 107 96 160 96L480 96C533 96 576 139 576 192L576 416C576 469 533 512 480 512L359.6 512L267.7 576.9zM332 472.8C340.1 467.1 349.8 464 359.7 464L480 464C506.5 464 528 442.5 528 416L528 192C528 165.5 506.5 144 480 144L160 144C133.5 144 112 165.5 112 192L112 416C112 442.5 133.5 464 160 464L216 464C226.4 464 235.3 470.6 238.6 479.9C239.5 482.4 240 485.1 240 488L240 537.7C272.7 514.6 303.3 493 331.9 472.8z"></path></svg>`);
 }
-const _sfc_setup$5m = _sfc_main$5m.setup;
-_sfc_main$5m.setup = (props, ctx) => {
+const _sfc_setup$5k = _sfc_main$5k.setup;
+_sfc_main$5k.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconPM.vue");
-  return _sfc_setup$5m ? _sfc_setup$5m(props, ctx) : void 0;
+  return _sfc_setup$5k ? _sfc_setup$5k(props, ctx) : void 0;
 };
-const IconPM = /* @__PURE__ */ _export_sfc(_sfc_main$5m, [["ssrRender", _sfc_ssrRender$5k]]);
+const IconPM = /* @__PURE__ */ _export_sfc(_sfc_main$5k, [["ssrRender", _sfc_ssrRender$5i]]);
 const __vite_glob_0_168 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconPM
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5l = {
+const _sfc_main$5j = {
   name: "IconDashboard"
 };
-function _sfc_ssrRender$5j(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5h(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 512 512",
@@ -2576,13 +2646,13 @@ function _sfc_ssrRender$5j(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     "stroke-linejoin": "round"
   }, _attrs))}><rect x="48" y="48" width="160" height="160"></rect><rect x="304" y="48" width="160" height="160"></rect><rect x="48" y="304" width="160" height="160"></rect><rect x="304" y="304" width="160" height="160"></rect></svg>`);
 }
-const _sfc_setup$5l = _sfc_main$5l.setup;
-_sfc_main$5l.setup = (props, ctx) => {
+const _sfc_setup$5j = _sfc_main$5j.setup;
+_sfc_main$5j.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconDashboard.vue");
-  return _sfc_setup$5l ? _sfc_setup$5l(props, ctx) : void 0;
+  return _sfc_setup$5j ? _sfc_setup$5j(props, ctx) : void 0;
 };
-const IconDashboard = /* @__PURE__ */ _export_sfc(_sfc_main$5l, [["ssrRender", _sfc_ssrRender$5j]]);
+const IconDashboard = /* @__PURE__ */ _export_sfc(_sfc_main$5j, [["ssrRender", _sfc_ssrRender$5h]]);
 const __vite_glob_0_145 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconDashboard
@@ -2594,7 +2664,7 @@ const loaderState = {
   showTimer: null,
   hideTimer: null
 };
-const _sfc_main$5k = {
+const _sfc_main$5i = {
   name: "Loader",
   data() {
     return {
@@ -2687,7 +2757,7 @@ const _sfc_main$5k = {
     }
   }
 };
-function _sfc_ssrRender$5i(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5g(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   if ($data.state.isLoading) {
     _push(`<div${ssrRenderAttrs(mergeProps({
       id: "loader",
@@ -2698,18 +2768,18 @@ function _sfc_ssrRender$5i(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$5k = _sfc_main$5k.setup;
-_sfc_main$5k.setup = (props, ctx) => {
+const _sfc_setup$5i = _sfc_main$5i.setup;
+_sfc_main$5i.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Loader.vue");
-  return _sfc_setup$5k ? _sfc_setup$5k(props, ctx) : void 0;
+  return _sfc_setup$5i ? _sfc_setup$5i(props, ctx) : void 0;
 };
-const Loader = /* @__PURE__ */ _export_sfc(_sfc_main$5k, [["ssrRender", _sfc_ssrRender$5i]]);
+const Loader = /* @__PURE__ */ _export_sfc(_sfc_main$5i, [["ssrRender", _sfc_ssrRender$5g]]);
 const __vite_glob_0_222 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Loader
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5j = {
+const _sfc_main$5h = {
   name: "Components_Content_Dropdown",
   props: {
     align: {
@@ -2792,7 +2862,7 @@ const _sfc_main$5j = {
     }
   }
 };
-function _sfc_ssrRender$5h(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   if ($data.isClient) {
     _push(`<div${ssrRenderAttrs(mergeProps({ class: "relative w-full h-full" }, _attrs))}><div>`);
     ssrRenderSlot(_ctx.$slots, "trigger", {}, null, _push, _parent);
@@ -2806,21 +2876,21 @@ function _sfc_ssrRender$5h(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$5j = _sfc_main$5j.setup;
-_sfc_main$5j.setup = (props, ctx) => {
+const _sfc_setup$5h = _sfc_main$5h.setup;
+_sfc_main$5h.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/Dropdown.vue");
-  return _sfc_setup$5j ? _sfc_setup$5j(props, ctx) : void 0;
+  return _sfc_setup$5h ? _sfc_setup$5h(props, ctx) : void 0;
 };
-const Dropdown = /* @__PURE__ */ _export_sfc(_sfc_main$5j, [["ssrRender", _sfc_ssrRender$5h]]);
+const Dropdown = /* @__PURE__ */ _export_sfc(_sfc_main$5h, [["ssrRender", _sfc_ssrRender$5f]]);
 const __vite_glob_0_48 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Dropdown
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5i = {
+const _sfc_main$5g = {
   name: "ChevronDown"
 };
-function _sfc_ssrRender$5g(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5e(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -2829,18 +2899,18 @@ function _sfc_ssrRender$5g(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     fill: "none"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg>`);
 }
-const _sfc_setup$5i = _sfc_main$5i.setup;
-_sfc_main$5i.setup = (props, ctx) => {
+const _sfc_setup$5g = _sfc_main$5g.setup;
+_sfc_main$5g.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/ChevronDown.vue");
-  return _sfc_setup$5i ? _sfc_setup$5i(props, ctx) : void 0;
+  return _sfc_setup$5g ? _sfc_setup$5g(props, ctx) : void 0;
 };
-const IconChevronDown = /* @__PURE__ */ _export_sfc(_sfc_main$5i, [["ssrRender", _sfc_ssrRender$5g]]);
+const IconChevronDown = /* @__PURE__ */ _export_sfc(_sfc_main$5g, [["ssrRender", _sfc_ssrRender$5e]]);
 const __vite_glob_0_119 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconChevronDown
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5h = {
+const _sfc_main$5f = {
   name: "Components_Content_DropdownLink",
   components: {
     Link: link_default,
@@ -2877,7 +2947,7 @@ const _sfc_main$5h = {
     }
   }
 };
-function _sfc_ssrRender$5f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5d(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_icon_chevron_down = resolveComponent("icon-chevron-down");
   if ($data.isClient) {
     _push(`<span${ssrRenderAttrs(mergeProps({ class: "z-50 flex items-right font-bold ckoo flex-nowrap cursor-pointer w-full px-4 py-2 text-sm leading-4 font-medium transition focus:outline-none hover:underline dark:bg-layout-night-50 text-layout-sun-700 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:text-layout-night-900" }, _attrs))}>`);
@@ -2911,13 +2981,13 @@ function _sfc_ssrRender$5f(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$5h = _sfc_main$5h.setup;
-_sfc_main$5h.setup = (props, ctx) => {
+const _sfc_setup$5f = _sfc_main$5f.setup;
+_sfc_main$5f.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/DropdownLink.vue");
-  return _sfc_setup$5h ? _sfc_setup$5h(props, ctx) : void 0;
+  return _sfc_setup$5f ? _sfc_setup$5f(props, ctx) : void 0;
 };
-const DropdownLink = /* @__PURE__ */ _export_sfc(_sfc_main$5h, [["ssrRender", _sfc_ssrRender$5f]]);
+const DropdownLink = /* @__PURE__ */ _export_sfc(_sfc_main$5f, [["ssrRender", _sfc_ssrRender$5d]]);
 const __vite_glob_0_49 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: DropdownLink
@@ -3333,7 +3403,7 @@ function stripTags$1(text, allowed = []) {
     (match, tag) => allow.includes(tag.toLowerCase()) ? match : ""
   );
 }
-const _sfc_main$5g = {
+const _sfc_main$5e = {
   name: "IconStar",
   props: {
     he: {
@@ -3358,7 +3428,7 @@ const _sfc_main$5g = {
     }
   }
 };
-function _sfc_ssrRender$5e(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5c(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 576 512",
@@ -3369,18 +3439,18 @@ function _sfc_ssrRender$5e(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     class: "inline-block align-middle"
   }, _attrs))}><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg>`);
 }
-const _sfc_setup$5g = _sfc_main$5g.setup;
-_sfc_main$5g.setup = (props, ctx) => {
+const _sfc_setup$5e = _sfc_main$5e.setup;
+_sfc_main$5e.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconStar.vue");
-  return _sfc_setup$5g ? _sfc_setup$5g(props, ctx) : void 0;
+  return _sfc_setup$5e ? _sfc_setup$5e(props, ctx) : void 0;
 };
-const IconStar = /* @__PURE__ */ _export_sfc(_sfc_main$5g, [["ssrRender", _sfc_ssrRender$5e]]);
+const IconStar = /* @__PURE__ */ _export_sfc(_sfc_main$5e, [["ssrRender", _sfc_ssrRender$5c]]);
 const __vite_glob_0_181 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconStar
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5f = {
+const _sfc_main$5d = {
   name: "Components_Content_NavLink",
   //
   props: {
@@ -3418,7 +3488,7 @@ const _sfc_main$5f = {
     }
   }
 };
-function _sfc_ssrRender$5d(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5b(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   if ($props.routeName) {
     _push(`<div${ssrRenderAttrs(mergeProps({ class: "flex items-center" }, _attrs))}><a${ssrRenderAttr("href", $props.routeName)} class="${ssrRenderClass([$options.classes, "inline-block px-2 pt-1 text-sm cursor-pointer text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-900"])}"${ssrRenderAttr("target", $props.target)}><span class="inline-flex items-center gap-1 text-layout-sun-600 dark:text-layout-night-900">`);
     if ($props.icon) {
@@ -3433,18 +3503,18 @@ function _sfc_ssrRender$5d(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`</div></div>`);
   }
 }
-const _sfc_setup$5f = _sfc_main$5f.setup;
-_sfc_main$5f.setup = (props, ctx) => {
+const _sfc_setup$5d = _sfc_main$5d.setup;
+_sfc_main$5d.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/NavLink.vue");
-  return _sfc_setup$5f ? _sfc_setup$5f(props, ctx) : void 0;
+  return _sfc_setup$5d ? _sfc_setup$5d(props, ctx) : void 0;
 };
-const NavLink = /* @__PURE__ */ _export_sfc(_sfc_main$5f, [["ssrRender", _sfc_ssrRender$5d]]);
+const NavLink = /* @__PURE__ */ _export_sfc(_sfc_main$5d, [["ssrRender", _sfc_ssrRender$5b]]);
 const __vite_glob_0_52 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: NavLink
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5e = {
+const _sfc_main$5c = {
   name: "Components_Content_ResponsiveNavLink",
   props: {
     active: {
@@ -3473,7 +3543,7 @@ const _sfc_main$5e = {
     }
   }
 };
-function _sfc_ssrRender$5c(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$5a(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_Link = resolveComponent("Link");
   _push(`<div${ssrRenderAttrs(_attrs)}>`);
   if ($props.as == "button") {
@@ -3500,21 +3570,21 @@ function _sfc_ssrRender$5c(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</div>`);
 }
-const _sfc_setup$5e = _sfc_main$5e.setup;
-_sfc_main$5e.setup = (props, ctx) => {
+const _sfc_setup$5c = _sfc_main$5c.setup;
+_sfc_main$5c.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/ResponsiveNavLink.vue");
-  return _sfc_setup$5e ? _sfc_setup$5e(props, ctx) : void 0;
+  return _sfc_setup$5c ? _sfc_setup$5c(props, ctx) : void 0;
 };
-const ResponsiveNavLink = /* @__PURE__ */ _export_sfc(_sfc_main$5e, [["ssrRender", _sfc_ssrRender$5c]]);
+const ResponsiveNavLink = /* @__PURE__ */ _export_sfc(_sfc_main$5c, [["ssrRender", _sfc_ssrRender$5a]]);
 const __vite_glob_0_57 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ResponsiveNavLink
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5d = {
+const _sfc_main$5b = {
   name: "Components_Content_FooterGrid"
 };
-function _sfc_ssrRender$5b(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$59(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-10" }, _attrs))}><div class="px-2 col-span-full lg:col-span-2"><a class="flex-none text-xl font-semibold" href="#" aria-label="Brand">${ssrInterpolate(_ctx.$page.props.version.brandname)}</a><p class="mt-3 text-xs sm:text-sm text-layout-sun-600 dark:text-layout-night-600">${ssrInterpolate(_ctx.$page.props.version.copyrightname)} <br> Version ${ssrInterpolate(_ctx.$page.props.version.versionnr)} vom ${ssrInterpolate(_ctx.$page.props.version.versionsdatum)}</p></div><div><h4 class="px-2 text-sm font-semibold text-layout-sun-800 dark:text-layout-night-800"> Asarios Blog </h4><div class="mt-3 grid space-y-3 text-sm"><p><a class="footer_link"${ssrRenderAttr("href", _ctx.route("home.index"))}>Home</a></p><p><a class="footer_link"${ssrRenderAttr("href", _ctx.route("home.imprint"))}>Impressum</a></p><p><a class="footer_link"${ssrRenderAttr("href", _ctx.route("home.privacy"))}>Datenschutzerklärung</a></p><p></p></div></div><div><h4 class="px-2 text-sm font-semibold text-layout-sun-800 dark:text-layout-night-800"> Anwendungen </h4><div class="mt-3 grid space-y-3 text-sm">`);
   if (_ctx.$page.props.userdata.is_admin) {
     _push(`<p><a class="footer_link"${ssrRenderAttr("href", _ctx.route("admin.dashboard"))}>Administrator</a></p>`);
@@ -3533,18 +3603,18 @@ function _sfc_ssrRender$5b(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</div></div></div>`);
 }
-const _sfc_setup$5d = _sfc_main$5d.setup;
-_sfc_main$5d.setup = (props, ctx) => {
+const _sfc_setup$5b = _sfc_main$5b.setup;
+_sfc_main$5b.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/FooterGrid.vue");
-  return _sfc_setup$5d ? _sfc_setup$5d(props, ctx) : void 0;
+  return _sfc_setup$5b ? _sfc_setup$5b(props, ctx) : void 0;
 };
-const FooterGrid = /* @__PURE__ */ _export_sfc(_sfc_main$5d, [["ssrRender", _sfc_ssrRender$5b]]);
+const FooterGrid = /* @__PURE__ */ _export_sfc(_sfc_main$5b, [["ssrRender", _sfc_ssrRender$59]]);
 const __vite_glob_0_50 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: FooterGrid
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5c = {
+const _sfc_main$5a = {
   name: "Admin_Shared_Layout_ab",
   components: {
     Head: head_default,
@@ -3641,7 +3711,7 @@ const _sfc_main$5c = {
     }
   }
 };
-function _sfc_ssrRender$5a(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_Head = resolveComponent("Head");
   const _component_brand_header = resolveComponent("brand-header");
   const _component_NavLink = resolveComponent("NavLink");
@@ -4209,18 +4279,18 @@ function _sfc_ssrRender$5a(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   _push(ssrRenderComponent(_component_FooterGrid, null, null, _parent));
   _push(`</div></footer></div></div>`);
 }
-const _sfc_setup$5c = _sfc_main$5c.setup;
-_sfc_main$5c.setup = (props, ctx) => {
+const _sfc_setup$5a = _sfc_main$5a.setup;
+_sfc_main$5a.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Shared/ab/Layout.vue");
-  return _sfc_setup$5c ? _sfc_setup$5c(props, ctx) : void 0;
+  return _sfc_setup$5a ? _sfc_setup$5a(props, ctx) : void 0;
 };
-const Layout$a = /* @__PURE__ */ _export_sfc(_sfc_main$5c, [["ssrRender", _sfc_ssrRender$5a]]);
+const Layout$a = /* @__PURE__ */ _export_sfc(_sfc_main$5a, [["ssrRender", _sfc_ssrRender$58]]);
 const __vite_glob_0_15 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Layout$a
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5b = {
+const _sfc_main$59 = {
   name: "Homepage_Shared_MetaHeader",
   //
   components: {
@@ -4234,7 +4304,7 @@ const _sfc_main$5b = {
     }
   }
 };
-function _sfc_ssrRender$59(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$57(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_Head = resolveComponent("Head");
   _push(ssrRenderComponent(_component_Head, mergeProps({ title: $props.title }, _attrs), {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
@@ -4255,20 +4325,130 @@ function _sfc_ssrRender$59(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _: 3
   }, _parent));
 }
-const _sfc_setup$5b = _sfc_main$5b.setup;
-_sfc_main$5b.setup = (props, ctx) => {
+const _sfc_setup$59 = _sfc_main$59.setup;
+_sfc_main$59.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/MetaHeader.vue");
-  return _sfc_setup$5b ? _sfc_setup$5b(props, ctx) : void 0;
+  return _sfc_setup$59 ? _sfc_setup$59(props, ctx) : void 0;
 };
-const MetaHeader = /* @__PURE__ */ _export_sfc(_sfc_main$5b, [["ssrRender", _sfc_ssrRender$59]]);
+const MetaHeader = /* @__PURE__ */ _export_sfc(_sfc_main$59, [["ssrRender", _sfc_ssrRender$57]]);
 const __vite_glob_0_296 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: MetaHeader
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$5a = {
+const _sfc_main$58 = {
+  props: {
+    links: { type: Array, required: true },
+    basePath: { type: String, required: true }
+  },
+  data() {
+    return {
+      searchString: ""
+    };
+  },
+  methods: {
+    // 🔥 SSR + SEO URL Builder
+    buildUrl(link) {
+      if (!link.url) return "#";
+      try {
+        const url = new URL(link.url, "http://dummy");
+        const params = new URLSearchParams(url.search);
+        const page2 = params.get("page");
+        let base = this.basePath.replace(/\/$/, "");
+        const amp = "?";
+        let finalUrl = "/" + base + amp + "page=" + page2;
+        if (typeof window !== "undefined") {
+          const searchParams = new URLSearchParams(window.location.search);
+          const search = searchParams.get("search");
+          if (search) {
+            finalUrl += "&search=" + encodeURIComponent(search);
+          }
+        }
+        return finalUrl;
+      } catch (e) {
+        return "#";
+      }
+    },
+    go(link) {
+      if (!link.url) return;
+      const finalUrl = this.buildUrl(link);
+      this.$inertia.visit(finalUrl, {
+        preserveState: false,
+        replace: false
+      });
+    }
+    // OLD GO
+    //     go(link) {
+    //   if (!link.url) return;
+    //   const url = new URL(link.url, window.location.origin);
+    //   const params = new URLSearchParams(window.location.search);
+    //   if (params.has('search')) {
+    //     url.searchParams.set('search', params.get('search'));
+    //   }
+    // //   alert(this.basePath);
+    // //   return "";
+    //   this.$inertia.visit(this.basePath + url.pathname + url.search, {
+    //     preserveState: false,
+    //   });
+    // }
+    // old go end
+    //     go(link) {
+    //       if (!link.url) return;
+    //       // basePath z.B. "/home/show/pictures/acryl"
+    //       // link.url z.B. "/?page=2"
+    //         const params = new URLSearchParams(window.location.search);
+    //         const search = params.get('search');
+    // if(search)
+    // {
+    //     this.searchString = '&search=' + search;
+    // }
+    // else{
+    //     this.searchString = '';
+    // }
+    //         const url = this.basePath + link.url + this.searchString;
+    //       this.$inertia.visit(url, {
+    //         preserveState: false,
+    //         replace: false,
+    //       });
+    //     },
+  }
+};
+function _sfc_ssrRender$56(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  if ($props.links?.length > 1) {
+    _push(`<div${ssrRenderAttrs(mergeProps({ class: "flex justify-center gap-2" }, _attrs))}><!--[-->`);
+    ssrRenderList($props.links, (link, i) => {
+      _push(`<a${ssrRenderAttr("href", $options.buildUrl(link))}${ssrIncludeBooleanAttr(!link.url) ? " disabled" : ""} class="${ssrRenderClass([{
+        "flex items-center font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-900": link.active,
+        "opacity-50 cursor-not-allowed": !link.url
+      }, "px-3 py-1 border rounded lolink"])}">`);
+      if (link.label === "pagination.previous") {
+        _push(`<span>« Zurück</span>`);
+      } else if (link.label === "pagination.next") {
+        _push(`<span>Weiter »</span>`);
+      } else {
+        _push(`<span>${link.label ?? ""}</span>`);
+      }
+      _push(`</a>`);
+    });
+    _push(`<!--]--></div>`);
+  } else {
+    _push(`<!---->`);
+  }
+}
+const _sfc_setup$58 = _sfc_main$58.setup;
+_sfc_main$58.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Pagination.vue");
+  return _sfc_setup$58 ? _sfc_setup$58(props, ctx) : void 0;
+};
+const Pagination$1 = /* @__PURE__ */ _export_sfc(_sfc_main$58, [["ssrRender", _sfc_ssrRender$56]]);
+const __vite_glob_0_227 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Pagination$1
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$57 = {
   name: "ActivityLogTable",
-  components: { Layout: Layout$a, Breadcrumb, MetaHeader },
+  components: { Layout: Layout$a, Breadcrumb, MetaHeader, Pagination: Pagination$1, SearchFilter },
   props: {
     users: [Object, Array],
     pag: [Object, Array],
@@ -4281,21 +4461,82 @@ const _sfc_main$5a = {
       required: false,
       default: () => ({})
     }
+    // tables:[String,Object,Array],
   },
   data() {
     return {
       logs: [],
+      pagination: [],
+      currentPage: 1,
+      perPage: 20,
       showModal: false,
       modalTitle: "",
       modalContent: "",
       checkedStatus: {},
       sortable: null,
-      settings: {}
+      settings: {},
+      form: {
+        search: ""
+      }
     };
   },
   computed: {
+    pageNumbers() {
+      const total = this.totalPages;
+      const current = this.currentPage;
+      let pages2 = [];
+      if (total <= 12) {
+        for (let i = 1; i <= total; i++) {
+          pages2.push(i);
+        }
+        return pages2;
+      }
+      if (current <= 9) {
+        for (let i = 1; i <= 10; i++) {
+          pages2.push(i);
+        }
+        pages2.push("...");
+        pages2.push(total);
+        return pages2;
+      }
+      if (current >= total - 8) {
+        pages2.push(1);
+        pages2.push("...");
+        for (let i = total - 9; i <= total; i++) {
+          pages2.push(i);
+        }
+        return pages2;
+      }
+      pages2.push(1);
+      pages2.push("...");
+      let start = current - 3;
+      let end = current + 3;
+      for (let i = start; i <= end; i++) {
+        pages2.push(i);
+      }
+      pages2.push("...");
+      pages2.push(total);
+      return pages2;
+    },
     tableHead() {
       return this.logs[0]?.admin_table_id ? "Tabelle" : "";
+    },
+    filteredLogs() {
+      if (!this.form.search) {
+        return this.logs;
+      }
+      const s = this.form.search.toLowerCase();
+      return this.logs.filter((row) => {
+        return String(row.id || "").toLowerCase().includes(s) || String(row.action || "").toLowerCase().includes(s) || String(row.tablename || "").toLowerCase().includes(s) || String(row.URL || "").toLowerCase().includes(s) || String(row.info || "").toLowerCase().includes(s) || String(row.IP || "").toLowerCase().includes(s) || String(row.session_id || "").toLowerCase().includes(s) || String(row.dom || "").toLowerCase().includes(s) || String(row.user_name || "").toLowerCase().includes(s);
+      });
+    },
+    paginatedLogs() {
+      const start = (this.currentPage - 1) * this.perPage;
+      const end = start + this.perPage;
+      return this.filteredLogs.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredLogs.length / this.perPage);
     }
   },
   async mounted() {
@@ -4307,6 +4548,19 @@ const _sfc_main$5a = {
   beforeUnmount() {
     if (typeof window !== "undefined") {
       window.removeEventListener("beforeunload", this.markChecked);
+    }
+  },
+  watch: {
+    // 'form.search': {
+    //     handler(value) {
+    //         this.loadLogs(
+    //             '/api/activity-log?search=' + encodeURIComponent(value)
+    //         );
+    //     },
+    //     deep: true
+    // }
+    "form.search"() {
+      this.currentPage = 1;
     }
   },
   methods: {
@@ -4330,9 +4584,11 @@ const _sfc_main$5a = {
       const [year, month, day] = date.split("-");
       return `${day}.${month}.${year} ${time}`;
     },
-    loadLogs() {
-      axios$1.get("/api/activity-log").then((res) => {
-        this.logs = res.data;
+    loadLogs(url = null) {
+      url = url || "/api/activity-log" + window.location.search;
+      axios$1.get(url).then((res) => {
+        this.logs = res.data.tables;
+        this.pagination = res.data.pagination;
         this.fetchStatus();
       }).catch((err) => console.error("Fehler beim Laden:", err));
     },
@@ -4370,10 +4626,11 @@ const _sfc_main$5a = {
     }
   }
 };
-function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$55(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_Layout = resolveComponent("Layout");
   const _component_MetaHeader = resolveComponent("MetaHeader");
   const _component_breadcrumb = resolveComponent("breadcrumb");
+  const _component_search_filter = resolveComponent("search-filter");
   _push(ssrRenderComponent(_component_Layout, _attrs, {
     header: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
@@ -4387,8 +4644,15 @@ function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
         _push2(ssrRenderComponent(_component_MetaHeader, { title: "Activity Log" }, null, _parent2, _scopeId));
-        _push2(`<div class="bg-layout-1 text-layout-1 p-6 rounded-lg shadow"${_scopeId}><h2 class="text-lg font-semibold mb-4"${_scopeId}>Activity Log</h2><div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700"${_scopeId}><table class="min-w-full text-sm text-left"${_scopeId}><thead class="bg-layout-2 text-layout-1 text-xs uppercase"${_scopeId}><tr${_scopeId}><th class="px-4 py-3"${_scopeId}>ID</th><th class="px-4 py-3"${_scopeId}>Pub</th><th class="px-4 py-3"${_scopeId}>Domain</th><th class="px-4 py-3"${_scopeId}>Datum</th><th class="px-4 py-3"${_scopeId}>Action</th><th class="px-4 py-3"${_scopeId}>Tabelle</th><th class="px-0 py-0" width="10"${_scopeId}>ID</th><th class="px-4 py-3"${_scopeId}>URL</th><th class="px-4 py-3"${_scopeId}>User</th><th class="px-4 py-3"${_scopeId}>Info</th><th class="px-4 py-3"${_scopeId}>IP</th><th class="px-4 py-3"${_scopeId}>Session</th></tr></thead><tbody class="divide-y divide-gray-200 dark:divide-gray-700"${_scopeId}><!--[-->`);
-        ssrRenderList($data.logs, (row) => {
+        _push2(`<div class="flex justify-between items-center"${_scopeId}>`);
+        _push2(ssrRenderComponent(_component_search_filter, {
+          modelValue: $data.form.search,
+          "onUpdate:modelValue": ($event) => $data.form.search = $event,
+          class: "w-full",
+          onReset: _ctx.reset
+        }, null, _parent2, _scopeId));
+        _push2(`</div><div class="bg-layout-1 text-layout-1 p-6 rounded-lg shadow"${_scopeId}><h2 class="text-lg font-semibold mb-4"${_scopeId}>Activity Log</h2><div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700"${_scopeId}><table class="min-w-full text-sm text-left"${_scopeId}><thead class="bg-layout-2 text-layout-1 text-xs uppercase"${_scopeId}><tr${_scopeId}><th class="px-4 py-3"${_scopeId}>ID</th><th class="px-4 py-3"${_scopeId}>Pub</th><th class="px-4 py-3"${_scopeId}>Domain</th><th class="px-4 py-3"${_scopeId}>Datum</th><th class="px-4 py-3"${_scopeId}>Action</th><th class="px-4 py-3"${_scopeId}>Tabelle</th><th class="px-0 py-0" width="10"${_scopeId}>ID</th><th class="px-4 py-3"${_scopeId}>URL</th><th class="px-4 py-3"${_scopeId}>User</th><th class="px-4 py-3"${_scopeId}>Info</th><th class="px-4 py-3"${_scopeId}>IP</th><th class="px-4 py-3"${_scopeId}>Session</th></tr></thead><tbody class="divide-y divide-gray-200 dark:divide-gray-700"${_scopeId}><!--[-->`);
+        ssrRenderList($options.paginatedLogs, (row) => {
           _push2(`<tr class="transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800/60"${_scopeId}><td class="px-4 py-3 font-bold" style="${ssrRenderStyle(`background-color: ${$options.bgcol(row.session_id)}; color: #000`)}"${_scopeId}>${ssrInterpolate(row.id)}</td><td class="p-0 pl-3"${_scopeId}>`);
           if (Number($data.checkedStatus?.[row.id]) === 1) {
             _push2(`<span style="${ssrRenderStyle({ "font-size": "24px" })}"${_scopeId}>✅</span>`);
@@ -4399,9 +4663,9 @@ function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           if (row.URL) {
             _push2(`<button class="text-indigo-600 dark:text-indigo-400 hover:underline"${_scopeId}>`);
             if ($options.CheckOL()) {
-              _push2(`<span${_scopeId}>${ssrInterpolate(row.URL.substr(22, 35))}</span>`);
+              _push2(`<span${_scopeId}>${ssrInterpolate(row.URL.substr(22, 35).replace("/admin/tables", ""))}</span>`);
             } else {
-              _push2(`<span${_scopeId}>${ssrInterpolate(row.URL.substr(18, 35))}</span>`);
+              _push2(`<span${_scopeId}>${ssrInterpolate(row.URL.substr(18, 34).replace("/admin/tables", ""))}</span>`);
             }
             _push2(`</button>`);
           } else {
@@ -4427,10 +4691,25 @@ function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
         } else {
           _push2(`<!---->`);
         }
-        _push2(`</div>`);
+        _push2(`<div class="flex flex-wrap gap-2 mt-4"${_scopeId}><button class="px-3 py-1 border rounded"${ssrIncludeBooleanAttr($data.currentPage === 1) ? " disabled" : ""}${_scopeId}> ← Zurück </button><!--[-->`);
+        ssrRenderList($options.pageNumbers, (page2) => {
+          _push2(`<button${ssrIncludeBooleanAttr(page2 === "...") ? " disabled" : ""} class="${ssrRenderClass([{
+            "bg-blue-500 text-white": $data.currentPage === page2,
+            "opacity-50 cursor-default": page2 === "..."
+          }, "px-3 py-1 border rounded"])}"${_scopeId}>${ssrInterpolate(page2)}</button>`);
+        });
+        _push2(`<!--]--><button class="px-3 py-1 border rounded"${ssrIncludeBooleanAttr($data.currentPage >= $options.totalPages) ? " disabled" : ""}${_scopeId}> Weiter → </button></div></div>`);
       } else {
         return [
           createVNode(_component_MetaHeader, { title: "Activity Log" }),
+          createVNode("div", { class: "flex justify-between items-center" }, [
+            createVNode(_component_search_filter, {
+              modelValue: $data.form.search,
+              "onUpdate:modelValue": ($event) => $data.form.search = $event,
+              class: "w-full",
+              onReset: _ctx.reset
+            }, null, 8, ["modelValue", "onUpdate:modelValue", "onReset"])
+          ]),
           createVNode("div", { class: "bg-layout-1 text-layout-1 p-6 rounded-lg shadow" }, [
             createVNode("h2", { class: "text-lg font-semibold mb-4" }, "Activity Log"),
             createVNode("div", { class: "overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700" }, [
@@ -4455,7 +4734,7 @@ function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   ])
                 ]),
                 createVNode("tbody", { class: "divide-y divide-gray-200 dark:divide-gray-700" }, [
-                  (openBlock(true), createBlock(Fragment, null, renderList($data.logs, (row) => {
+                  (openBlock(true), createBlock(Fragment, null, renderList($options.paginatedLogs, (row) => {
                     return openBlock(), createBlock("tr", {
                       key: row.id,
                       class: "transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800/60"
@@ -4486,7 +4765,7 @@ function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                           onClick: ($event) => $options.openModal("URL", row.URL),
                           class: "text-indigo-600 dark:text-indigo-400 hover:underline"
                         }, [
-                          $options.CheckOL() ? (openBlock(), createBlock("span", { key: 0 }, toDisplayString(row.URL.substr(22, 35)), 1)) : (openBlock(), createBlock("span", { key: 1 }, toDisplayString(row.URL.substr(18, 35)), 1))
+                          $options.CheckOL() ? (openBlock(), createBlock("span", { key: 0 }, toDisplayString(row.URL.substr(22, 35).replace("/admin/tables", "")), 1)) : (openBlock(), createBlock("span", { key: 1 }, toDisplayString(row.URL.substr(18, 34).replace("/admin/tables", "")), 1))
                         ], 8, ["onClick"])) : (openBlock(), createBlock("span", {
                           key: 1,
                           class: "text-gray-400"
@@ -4549,7 +4828,30 @@ function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   innerHTML: $data.modalContent
                 }, null, 8, ["innerHTML"])
               ])
-            ])) : createCommentVNode("", true)
+            ])) : createCommentVNode("", true),
+            createVNode("div", { class: "flex flex-wrap gap-2 mt-4" }, [
+              createVNode("button", {
+                class: "px-3 py-1 border rounded",
+                disabled: $data.currentPage === 1,
+                onClick: ($event) => $data.currentPage--
+              }, " ← Zurück ", 8, ["disabled", "onClick"]),
+              (openBlock(true), createBlock(Fragment, null, renderList($options.pageNumbers, (page2) => {
+                return openBlock(), createBlock("button", {
+                  key: page2,
+                  disabled: page2 === "...",
+                  onClick: ($event) => page2 !== "..." && ($data.currentPage = page2),
+                  class: ["px-3 py-1 border rounded", {
+                    "bg-blue-500 text-white": $data.currentPage === page2,
+                    "opacity-50 cursor-default": page2 === "..."
+                  }]
+                }, toDisplayString(page2), 11, ["disabled", "onClick"]);
+              }), 128)),
+              createVNode("button", {
+                class: "px-3 py-1 border rounded",
+                disabled: $data.currentPage >= $options.totalPages,
+                onClick: ($event) => $data.currentPage++
+              }, " Weiter → ", 8, ["disabled", "onClick"])
+            ])
           ])
         ];
       }
@@ -4557,13 +4859,13 @@ function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _: 1
   }, _parent));
 }
-const _sfc_setup$5a = _sfc_main$5a.setup;
-_sfc_main$5a.setup = (props, ctx) => {
+const _sfc_setup$57 = _sfc_main$57.setup;
+_sfc_main$57.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/ActivityLog.vue");
-  return _sfc_setup$5a ? _sfc_setup$5a(props, ctx) : void 0;
+  return _sfc_setup$57 ? _sfc_setup$57(props, ctx) : void 0;
 };
-const ActivityLog = /* @__PURE__ */ _export_sfc(_sfc_main$5a, [["ssrRender", _sfc_ssrRender$58]]);
+const ActivityLog = /* @__PURE__ */ _export_sfc(_sfc_main$57, [["ssrRender", _sfc_ssrRender$55]]);
 const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ActivityLog
@@ -5711,10 +6013,10 @@ let PhotoSwipeLightbox$1 = class PhotoSwipeLightbox2 extends PhotoSwipeBase$1 {
     });
   }
 };
-const _sfc_main$59 = {
+const _sfc_main$56 = {
   name: "Pencil"
 };
-function _sfc_ssrRender$57(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$54(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -5723,21 +6025,21 @@ function _sfc_ssrRender$57(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     fill: "none"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"></path></svg>`);
 }
-const _sfc_setup$59 = _sfc_main$59.setup;
-_sfc_main$59.setup = (props, ctx) => {
+const _sfc_setup$56 = _sfc_main$56.setup;
+_sfc_main$56.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Pencil.vue");
-  return _sfc_setup$59 ? _sfc_setup$59(props, ctx) : void 0;
+  return _sfc_setup$56 ? _sfc_setup$56(props, ctx) : void 0;
 };
-const IconPencil = /* @__PURE__ */ _export_sfc(_sfc_main$59, [["ssrRender", _sfc_ssrRender$57]]);
+const IconPencil = /* @__PURE__ */ _export_sfc(_sfc_main$56, [["ssrRender", _sfc_ssrRender$54]]);
 const __vite_glob_0_196 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconPencil
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$58 = {
+const _sfc_main$55 = {
   name: "Trash"
 };
-function _sfc_ssrRender$56(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$53(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 448 512",
@@ -5745,18 +6047,18 @@ function _sfc_ssrRender$56(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     width: "25"
   }, _attrs))}><path fill="red" d="M170.5 51.6L151.5 80l145 0-19-28.4c-1.5-2.2-4-3.6-6.7-3.6l-93.7 0c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80 368 80l48 0 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-8 0 0 304c0 44.2-35.8 80-80 80l-224 0c-44.2 0-80-35.8-80-80l0-304-8 0c-13.3 0-24-10.7-24-24S10.7 80 24 80l8 0 48 0 13.8 0 36.7-55.1C140.9 9.4 158.4 0 177.1 0l93.7 0c18.7 0 36.2 9.4 46.6 24.9zM80 128l0 304c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-304L80 128zm80 64l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16z"></path></svg>`);
 }
-const _sfc_setup$58 = _sfc_main$58.setup;
-_sfc_main$58.setup = (props, ctx) => {
+const _sfc_setup$55 = _sfc_main$55.setup;
+_sfc_main$55.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Trash.vue");
-  return _sfc_setup$58 ? _sfc_setup$58(props, ctx) : void 0;
+  return _sfc_setup$55 ? _sfc_setup$55(props, ctx) : void 0;
 };
-const IconTrash = /* @__PURE__ */ _export_sfc(_sfc_main$58, [["ssrRender", _sfc_ssrRender$56]]);
+const IconTrash = /* @__PURE__ */ _export_sfc(_sfc_main$55, [["ssrRender", _sfc_ssrRender$53]]);
 const __vite_glob_0_207 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconTrash
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$57 = {
+const _sfc_main$54 = {
   name: "EditBtns",
   components: { IconTrash, IconPencil, toastBus: toastBus$1 },
   props: {
@@ -5810,7 +6112,7 @@ const _sfc_main$57 = {
     }
   }
 };
-function _sfc_ssrRender$55(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$52(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_IconPencil = resolveComponent("IconPencil");
   const _component_IconTrash = resolveComponent("IconTrash");
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "whitespace-nowrap editbtn-container" }, _attrs))} data-v-04517cc4>`);
@@ -5830,18 +6132,18 @@ function _sfc_ssrRender$55(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</div>`);
 }
-const _sfc_setup$57 = _sfc_main$57.setup;
-_sfc_main$57.setup = (props, ctx) => {
+const _sfc_setup$54 = _sfc_main$54.setup;
+_sfc_main$54.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/editbtns.vue");
-  return _sfc_setup$57 ? _sfc_setup$57(props, ctx) : void 0;
+  return _sfc_setup$54 ? _sfc_setup$54(props, ctx) : void 0;
 };
-const editbtns = /* @__PURE__ */ _export_sfc(_sfc_main$57, [["ssrRender", _sfc_ssrRender$55], ["__scopeId", "data-v-04517cc4"]]);
+const editbtns = /* @__PURE__ */ _export_sfc(_sfc_main$54, [["ssrRender", _sfc_ssrRender$52], ["__scopeId", "data-v-04517cc4"]]);
 const __vite_glob_0_110 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: editbtns
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$56 = {
+const _sfc_main$53 = {
   name: "Contents_Form_InputIconHyperlink",
   props: {
     href: {
@@ -5858,7 +6160,7 @@ const _sfc_main$56 = {
     }
   }
 };
-function _sfc_ssrRender$54(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$51(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(_attrs)}>`);
   if ($props.displayType == "button") {
     _push(`<div><a${ssrRenderAttr("href", $props.href)}${ssrRenderAttr("target", $props.target)} class="inline-flex tb items-center px-1 py-1.5 md:px-2 md:py-2 h-6 md:h-8 rounded-md font-medium text-xs tracking-widest disabled:opacity-25 transition cursor-pointer focus:ring focus:outline-none button_bg button_text_case_bg"><div class="flex items-center whitespace-nowrap">`);
@@ -5894,21 +6196,21 @@ function _sfc_ssrRender$54(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</div>`);
 }
-const _sfc_setup$56 = _sfc_main$56.setup;
-_sfc_main$56.setup = (props, ctx) => {
+const _sfc_setup$53 = _sfc_main$53.setup;
+_sfc_main$53.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputIconHyperlink.vue");
-  return _sfc_setup$56 ? _sfc_setup$56(props, ctx) : void 0;
+  return _sfc_setup$53 ? _sfc_setup$53(props, ctx) : void 0;
 };
-const InputIconHyperlink = /* @__PURE__ */ _export_sfc(_sfc_main$56, [["ssrRender", _sfc_ssrRender$54]]);
+const InputIconHyperlink = /* @__PURE__ */ _export_sfc(_sfc_main$53, [["ssrRender", _sfc_ssrRender$51]]);
 const __vite_glob_0_93 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputIconHyperlink
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$55 = {
+const _sfc_main$52 = {
   name: "PlusCircle"
 };
-function _sfc_ssrRender$53(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$50(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -5919,19 +6221,19 @@ function _sfc_ssrRender$53(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     height: "25"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path></svg>`);
 }
-const _sfc_setup$55 = _sfc_main$55.setup;
-_sfc_main$55.setup = (props, ctx) => {
+const _sfc_setup$52 = _sfc_main$52.setup;
+_sfc_main$52.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/PlusCircle.vue");
-  return _sfc_setup$55 ? _sfc_setup$55(props, ctx) : void 0;
+  return _sfc_setup$52 ? _sfc_setup$52(props, ctx) : void 0;
 };
-const IconPlusCircle = /* @__PURE__ */ _export_sfc(_sfc_main$55, [["ssrRender", _sfc_ssrRender$53]]);
+const IconPlusCircle = /* @__PURE__ */ _export_sfc(_sfc_main$52, [["ssrRender", _sfc_ssrRender$50]]);
 const __vite_glob_0_198 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconPlusCircle
 }, Symbol.toStringTag, { value: "Module" }));
 CleanTable();
-const _sfc_main$54 = {
+const _sfc_main$51 = {
   name: "Contents_Form_ButtonGroup",
   props: {
     align: {
@@ -5949,18 +6251,18 @@ const _sfc_main$54 = {
     }
   }
 };
-function _sfc_ssrRender$52(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4$(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full flex flex-wrap items-left gap-2" }, _attrs))}>`);
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</div>`);
 }
-const _sfc_setup$54 = _sfc_main$54.setup;
-_sfc_main$54.setup = (props, ctx) => {
+const _sfc_setup$51 = _sfc_main$51.setup;
+_sfc_main$51.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/ButtonGroup.vue");
-  return _sfc_setup$54 ? _sfc_setup$54(props, ctx) : void 0;
+  return _sfc_setup$51 ? _sfc_setup$51(props, ctx) : void 0;
 };
-const ButtonGroup = /* @__PURE__ */ _export_sfc(_sfc_main$54, [["ssrRender", _sfc_ssrRender$52]]);
+const ButtonGroup = /* @__PURE__ */ _export_sfc(_sfc_main$51, [["ssrRender", _sfc_ssrRender$4$]]);
 const __vite_glob_0_68 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ButtonGroup
@@ -5982,7 +6284,7 @@ function hasRight(right, table2) {
     return false;
   }
 }
-const _sfc_main$53 = {
+const _sfc_main$50 = {
   name: "newbtn",
   components: {
     IconTrash,
@@ -6052,7 +6354,7 @@ const _sfc_main$53 = {
     }
   }
 };
-function _sfc_ssrRender$51(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4_(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_button_group = resolveComponent("button-group");
   const _component_input_icon_hyperlink = resolveComponent("input-icon-hyperlink");
   const _component_plus_circle = resolveComponent("plus-circle");
@@ -6113,18 +6415,18 @@ function _sfc_ssrRender$51(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$53 = _sfc_main$53.setup;
-_sfc_main$53.setup = (props, ctx) => {
+const _sfc_setup$50 = _sfc_main$50.setup;
+_sfc_main$50.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/newbtn.vue");
-  return _sfc_setup$53 ? _sfc_setup$53(props, ctx) : void 0;
+  return _sfc_setup$50 ? _sfc_setup$50(props, ctx) : void 0;
 };
-const newbtn = /* @__PURE__ */ _export_sfc(_sfc_main$53, [["ssrRender", _sfc_ssrRender$51], ["__scopeId", "data-v-3e0cbe6b"]]);
+const newbtn = /* @__PURE__ */ _export_sfc(_sfc_main$50, [["ssrRender", _sfc_ssrRender$4_], ["__scopeId", "data-v-3e0cbe6b"]]);
 const __vite_glob_0_112 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: newbtn
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$52 = {
+const _sfc_main$4$ = {
   name: "BackBtn",
   props: {
     url: {
@@ -6142,7 +6444,7 @@ const _sfc_main$52 = {
     }
   }
 };
-function _sfc_ssrRender$50(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4Z(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<button${ssrRenderAttrs(mergeProps({
     class: "backbtn inline-flex button-icon items-center px-1 py-1.5 md:px-2 md:py-2 h-6 md:h-8 rounded-md font-medium text-xs tracking-widest disabled:opacity-25 transition cursor-pointer focus:ring focus:outline-none button_bg button_text_case_bg mb-4",
     title: "Zurück",
@@ -6152,18 +6454,18 @@ function _sfc_ssrRender$50(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</button>`);
 }
-const _sfc_setup$52 = _sfc_main$52.setup;
-_sfc_main$52.setup = (props, ctx) => {
+const _sfc_setup$4$ = _sfc_main$4$.setup;
+_sfc_main$4$.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/BackBtn.vue");
-  return _sfc_setup$52 ? _sfc_setup$52(props, ctx) : void 0;
+  return _sfc_setup$4$ ? _sfc_setup$4$(props, ctx) : void 0;
 };
-const BackBtn = /* @__PURE__ */ _export_sfc(_sfc_main$52, [["ssrRender", _sfc_ssrRender$50], ["__scopeId", "data-v-40d11aa4"]]);
+const BackBtn = /* @__PURE__ */ _export_sfc(_sfc_main$4$, [["ssrRender", _sfc_ssrRender$4Z], ["__scopeId", "data-v-40d11aa4"]]);
 const __vite_glob_0_67 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: BackBtn
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$51 = {
+const _sfc_main$4_ = {
   name: "Components_Content_Alert",
   props: {
     title: {
@@ -6201,7 +6503,7 @@ const _sfc_main$51 = {
     }
   }
 };
-function _sfc_ssrRender$4$(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4Y(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(mergeProps({
     class: ["p-2 mb-4 text-sm rounded-lg ease-in-out duration-1000", $options.classTypeBackground],
     role: "alert"
@@ -6227,18 +6529,18 @@ function _sfc_ssrRender$4$(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</div>`);
 }
-const _sfc_setup$51 = _sfc_main$51.setup;
-_sfc_main$51.setup = (props, ctx) => {
+const _sfc_setup$4_ = _sfc_main$4_.setup;
+_sfc_main$4_.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/Alert.vue");
-  return _sfc_setup$51 ? _sfc_setup$51(props, ctx) : void 0;
+  return _sfc_setup$4_ ? _sfc_setup$4_(props, ctx) : void 0;
 };
-const Alert = /* @__PURE__ */ _export_sfc(_sfc_main$51, [["ssrRender", _sfc_ssrRender$4$]]);
+const Alert = /* @__PURE__ */ _export_sfc(_sfc_main$4_, [["ssrRender", _sfc_ssrRender$4Y]]);
 const __vite_glob_0_39 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Alert
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$50 = {
+const _sfc_main$4Z = {
   name: "Ein_Ausgaben",
   components: {
     Layout: Layout$a,
@@ -6457,7 +6759,7 @@ const _sfc_main$50 = {
     this.lightbox.init();
   }
 };
-function _sfc_ssrRender$4_(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4X(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_Layout = resolveComponent("Layout");
   const _component_MetaHeader = resolveComponent("MetaHeader");
   const _component_breadcrumb = resolveComponent("breadcrumb");
@@ -6541,18 +6843,18 @@ function _sfc_ssrRender$4_(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _: 1
   }, _parent));
 }
-const _sfc_setup$50 = _sfc_main$50.setup;
-_sfc_main$50.setup = (props, ctx) => {
+const _sfc_setup$4Z = _sfc_main$4Z.setup;
+_sfc_main$4Z.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Ausgaben.vue");
-  return _sfc_setup$50 ? _sfc_setup$50(props, ctx) : void 0;
+  return _sfc_setup$4Z ? _sfc_setup$4Z(props, ctx) : void 0;
 };
-const Ausgaben = /* @__PURE__ */ _export_sfc(_sfc_main$50, [["ssrRender", _sfc_ssrRender$4_], ["__scopeId", "data-v-b97ee0f9"]]);
+const Ausgaben = /* @__PURE__ */ _export_sfc(_sfc_main$4Z, [["ssrRender", _sfc_ssrRender$4X], ["__scopeId", "data-v-b97ee0f9"]]);
 const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Ausgaben
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4$ = {
+const _sfc_main$4Y = {
   name: "Content_SmoothScroll",
   props: {
     href: {
@@ -6570,44 +6872,44 @@ const _sfc_main$4$ = {
     }
   }
 };
-function _sfc_ssrRender$4Z(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4W(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<a${ssrRenderAttrs(mergeProps({ href: $props.href }, _attrs))}>`);
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</a>`);
 }
-const _sfc_setup$4$ = _sfc_main$4$.setup;
-_sfc_main$4$.setup = (props, ctx) => {
+const _sfc_setup$4Y = _sfc_main$4Y.setup;
+_sfc_main$4Y.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/SmoothScroll.vue");
-  return _sfc_setup$4$ ? _sfc_setup$4$(props, ctx) : void 0;
+  return _sfc_setup$4Y ? _sfc_setup$4Y(props, ctx) : void 0;
 };
-const SmoothScroll = /* @__PURE__ */ _export_sfc(_sfc_main$4$, [["ssrRender", _sfc_ssrRender$4Z]]);
+const SmoothScroll = /* @__PURE__ */ _export_sfc(_sfc_main$4Y, [["ssrRender", _sfc_ssrRender$4W]]);
 const __vite_glob_0_229 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: SmoothScroll
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4_ = {
+const _sfc_main$4X = {
   name: "Components_Content_SectionTitle"
 };
-function _sfc_ssrRender$4Y(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4V(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "md:col-span-1 flex justify-between" }, _attrs))}><div class="px-4 sm:px-0"><h3 class="text-lg font-medium text-layout-sun-900 dark:text-layout-night-900">`);
   ssrRenderSlot(_ctx.$slots, "title", {}, null, _push, _parent);
   _push(`</h3><p class="mt-1 text-sm text-layout-sun-600 dark:text-layout-night-600">`);
   ssrRenderSlot(_ctx.$slots, "description", {}, null, _push, _parent);
   _push(`</p></div></div>`);
 }
-const _sfc_setup$4_ = _sfc_main$4_.setup;
-_sfc_main$4_.setup = (props, ctx) => {
+const _sfc_setup$4X = _sfc_main$4X.setup;
+_sfc_main$4X.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/SectionTitle.vue");
-  return _sfc_setup$4_ ? _sfc_setup$4_(props, ctx) : void 0;
+  return _sfc_setup$4X ? _sfc_setup$4X(props, ctx) : void 0;
 };
-const SectionTitle = /* @__PURE__ */ _export_sfc(_sfc_main$4_, [["ssrRender", _sfc_ssrRender$4Y]]);
+const SectionTitle = /* @__PURE__ */ _export_sfc(_sfc_main$4X, [["ssrRender", _sfc_ssrRender$4V]]);
 const __vite_glob_0_60 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: SectionTitle
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4Z = {
+const _sfc_main$4W = {
   name: "Components_Content_SectionForm",
   components: {
     SectionTitle
@@ -6628,7 +6930,7 @@ const _sfc_main$4Z = {
     }
   }
 };
-function _sfc_ssrRender$4X(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4U(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_SectionTitle = resolveComponent("SectionTitle");
   _push(`<div${ssrRenderAttrs(mergeProps({
     class: $props.withTitle ? "md:grid md:grid-cols-3 md:gap-6" : ""
@@ -6678,18 +6980,18 @@ function _sfc_ssrRender$4X(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</div></form></div></div>`);
 }
-const _sfc_setup$4Z = _sfc_main$4Z.setup;
-_sfc_main$4Z.setup = (props, ctx) => {
+const _sfc_setup$4W = _sfc_main$4W.setup;
+_sfc_main$4W.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/SectionForm.vue");
-  return _sfc_setup$4Z ? _sfc_setup$4Z(props, ctx) : void 0;
+  return _sfc_setup$4W ? _sfc_setup$4W(props, ctx) : void 0;
 };
-const SectionForm = /* @__PURE__ */ _export_sfc(_sfc_main$4Z, [["ssrRender", _sfc_ssrRender$4X], ["__scopeId", "data-v-e7e2a160"]]);
+const SectionForm = /* @__PURE__ */ _export_sfc(_sfc_main$4W, [["ssrRender", _sfc_ssrRender$4U], ["__scopeId", "data-v-e7e2a160"]]);
 const __vite_glob_0_59 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: SectionForm
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4Y = {
+const _sfc_main$4V = {
   name: "Contents_Form_InputButton",
   props: {
     type: {
@@ -6698,7 +7000,7 @@ const _sfc_main$4Y = {
     }
   }
 };
-function _sfc_ssrRender$4W(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4T(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<button${ssrRenderAttrs(mergeProps({
     type: $props.type,
     class: "inline-flex items-center px-2 py-1.5 md:px-4 md:py-2 h-6 md:h-8 rounded-md font-medium text-xs tracking-widest disabled:opacity-25 transition cursor-pointer focus:ring focus:outline-none button_bg button_text_case_bg"
@@ -6706,18 +7008,18 @@ function _sfc_ssrRender$4W(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</button>`);
 }
-const _sfc_setup$4Y = _sfc_main$4Y.setup;
-_sfc_main$4Y.setup = (props, ctx) => {
+const _sfc_setup$4V = _sfc_main$4V.setup;
+_sfc_main$4V.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputButton.vue");
-  return _sfc_setup$4Y ? _sfc_setup$4Y(props, ctx) : void 0;
+  return _sfc_setup$4V ? _sfc_setup$4V(props, ctx) : void 0;
 };
-const InputButton = /* @__PURE__ */ _export_sfc(_sfc_main$4Y, [["ssrRender", _sfc_ssrRender$4W]]);
+const InputButton = /* @__PURE__ */ _export_sfc(_sfc_main$4V, [["ssrRender", _sfc_ssrRender$4T]]);
 const __vite_glob_0_72 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputButton
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4X = {
+const _sfc_main$4U = {
   name: "Contents_Form_InputDangerButton",
   props: {
     type: {
@@ -6726,7 +7028,7 @@ const _sfc_main$4X = {
     }
   }
 };
-function _sfc_ssrRender$4V(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4S(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<button${ssrRenderAttrs(mergeProps({
     type: $props.type,
     class: "inline-flex items-center px-2 py-1.5 md:px-4 md:py-2 h-6 md:h-8 rounded-md font-medium text-xs tracking-widest disabled:opacity-25 transition cursor-pointer focus:ring focus:outline-none button_danger_bg button_danger_text_case_bg"
@@ -6734,18 +7036,18 @@ function _sfc_ssrRender$4V(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</button>`);
 }
-const _sfc_setup$4X = _sfc_main$4X.setup;
-_sfc_main$4X.setup = (props, ctx) => {
+const _sfc_setup$4U = _sfc_main$4U.setup;
+_sfc_main$4U.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputDangerButton.vue");
-  return _sfc_setup$4X ? _sfc_setup$4X(props, ctx) : void 0;
+  return _sfc_setup$4U ? _sfc_setup$4U(props, ctx) : void 0;
 };
-const InputDangerButton = /* @__PURE__ */ _export_sfc(_sfc_main$4X, [["ssrRender", _sfc_ssrRender$4V]]);
+const InputDangerButton = /* @__PURE__ */ _export_sfc(_sfc_main$4U, [["ssrRender", _sfc_ssrRender$4S]]);
 const __vite_glob_0_76 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputDangerButton
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4W = {
+const _sfc_main$4T = {
   name: "Contents_Form_InputLoading",
   props: {
     loading: {
@@ -6758,7 +7060,7 @@ const _sfc_main$4W = {
     }
   }
 };
-function _sfc_ssrRender$4U(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4R(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   if ($props.loading) {
     _push(`<div${ssrRenderAttrs(mergeProps({
       class: "text-sm text-layout-sun-800 dark:text-layout-night-800 rounded-lg ease-in-out duration-1000",
@@ -6768,21 +7070,21 @@ function _sfc_ssrRender$4U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$4W = _sfc_main$4W.setup;
-_sfc_main$4W.setup = (props, ctx) => {
+const _sfc_setup$4T = _sfc_main$4T.setup;
+_sfc_main$4T.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputLoading.vue");
-  return _sfc_setup$4W ? _sfc_setup$4W(props, ctx) : void 0;
+  return _sfc_setup$4T ? _sfc_setup$4T(props, ctx) : void 0;
 };
-const InputLoading = /* @__PURE__ */ _export_sfc(_sfc_main$4W, [["ssrRender", _sfc_ssrRender$4U]]);
+const InputLoading = /* @__PURE__ */ _export_sfc(_sfc_main$4T, [["ssrRender", _sfc_ssrRender$4R]]);
 const __vite_glob_0_96 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputLoading
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4V = {
+const _sfc_main$4S = {
   name: "ExclamationCircle"
 };
-function _sfc_ssrRender$4T(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4Q(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
@@ -6791,18 +7093,18 @@ function _sfc_ssrRender$4T(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     fill: "none"
   }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"></path></svg>`);
 }
-const _sfc_setup$4V = _sfc_main$4V.setup;
-_sfc_main$4V.setup = (props, ctx) => {
+const _sfc_setup$4S = _sfc_main$4S.setup;
+_sfc_main$4S.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/ExclamationCircle.vue");
-  return _sfc_setup$4V ? _sfc_setup$4V(props, ctx) : void 0;
+  return _sfc_setup$4S ? _sfc_setup$4S(props, ctx) : void 0;
 };
-const IconExclamationCircle = /* @__PURE__ */ _export_sfc(_sfc_main$4V, [["ssrRender", _sfc_ssrRender$4T]]);
+const IconExclamationCircle = /* @__PURE__ */ _export_sfc(_sfc_main$4S, [["ssrRender", _sfc_ssrRender$4Q]]);
 const __vite_glob_0_126 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconExclamationCircle
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4U = {
+const _sfc_main$4R = {
   name: "Contents_Form_ErrorList",
   components: {
     IconExclamationCircle
@@ -6814,7 +7116,7 @@ const _sfc_main$4U = {
     }
   }
 };
-function _sfc_ssrRender$4S(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4P(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_icon_exclamation_circle = resolveComponent("icon-exclamation-circle");
   if (Object.keys($props.errors).length > 0) {
     _push(`<div${ssrRenderAttrs(mergeProps({
@@ -6831,18 +7133,18 @@ function _sfc_ssrRender$4S(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$4U = _sfc_main$4U.setup;
-_sfc_main$4U.setup = (props, ctx) => {
+const _sfc_setup$4R = _sfc_main$4R.setup;
+_sfc_main$4R.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/ErrorList.vue");
-  return _sfc_setup$4U ? _sfc_setup$4U(props, ctx) : void 0;
+  return _sfc_setup$4R ? _sfc_setup$4R(props, ctx) : void 0;
 };
-const ErrorList = /* @__PURE__ */ _export_sfc(_sfc_main$4U, [["ssrRender", _sfc_ssrRender$4S]]);
+const ErrorList = /* @__PURE__ */ _export_sfc(_sfc_main$4R, [["ssrRender", _sfc_ssrRender$4P]]);
 const __vite_glob_0_70 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ErrorList
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4T = {
+const _sfc_main$4Q = {
   name: "Contents_Form_InputSubtitle",
   props: {
     title: {
@@ -6851,7 +7153,7 @@ const _sfc_main$4T = {
     }
   }
 };
-function _sfc_ssrRender$4R(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4O(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<h3${ssrRenderAttrs(mergeProps({ class: "mb-2 text-lg font-semibold" }, _attrs))}>`);
   if ($props.title) {
     _push(`<span>${ssrInterpolate($props.title)}</span>`);
@@ -6862,37 +7164,37 @@ function _sfc_ssrRender$4R(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</h3>`);
 }
-const _sfc_setup$4T = _sfc_main$4T.setup;
-_sfc_main$4T.setup = (props, ctx) => {
+const _sfc_setup$4Q = _sfc_main$4Q.setup;
+_sfc_main$4Q.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputSubtitle.vue");
-  return _sfc_setup$4T ? _sfc_setup$4T(props, ctx) : void 0;
+  return _sfc_setup$4Q ? _sfc_setup$4Q(props, ctx) : void 0;
 };
-const InputSubtitle = /* @__PURE__ */ _export_sfc(_sfc_main$4T, [["ssrRender", _sfc_ssrRender$4R]]);
+const InputSubtitle = /* @__PURE__ */ _export_sfc(_sfc_main$4Q, [["ssrRender", _sfc_ssrRender$4O]]);
 const __vite_glob_0_101 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputSubtitle
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4S = {
+const _sfc_main$4P = {
   name: "Contents_Form_InputGroup"
 };
-function _sfc_ssrRender$4Q(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4N(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full15 grid grid-cols-1 lg:grid-cols-2 mb-2 gap-2 lg:gap-x-6 mt-2 bluecontainer" }, _attrs))}>`);
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</div>`);
 }
-const _sfc_setup$4S = _sfc_main$4S.setup;
-_sfc_main$4S.setup = (props, ctx) => {
+const _sfc_setup$4P = _sfc_main$4P.setup;
+_sfc_main$4P.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputGroup.vue");
-  return _sfc_setup$4S ? _sfc_setup$4S(props, ctx) : void 0;
+  return _sfc_setup$4P ? _sfc_setup$4P(props, ctx) : void 0;
 };
-const InputGroup = /* @__PURE__ */ _export_sfc(_sfc_main$4S, [["ssrRender", _sfc_ssrRender$4Q]]);
+const InputGroup = /* @__PURE__ */ _export_sfc(_sfc_main$4P, [["ssrRender", _sfc_ssrRender$4N]]);
 const __vite_glob_0_91 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputGroup
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4R = {
+const _sfc_main$4O = {
   name: "Contents_Form_InputContainer",
   props: {
     fullWidth: {
@@ -6901,25 +7203,25 @@ const _sfc_main$4R = {
     }
   }
 };
-function _sfc_ssrRender$4P(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4M(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(mergeProps({
     class: ["mb-1", [$props.fullWidth ? "lg:col-span-2 " : ""]]
   }, _attrs))}>`);
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</div>`);
 }
-const _sfc_setup$4R = _sfc_main$4R.setup;
-_sfc_main$4R.setup = (props, ctx) => {
+const _sfc_setup$4O = _sfc_main$4O.setup;
+_sfc_main$4O.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputContainer.vue");
-  return _sfc_setup$4R ? _sfc_setup$4R(props, ctx) : void 0;
+  return _sfc_setup$4O ? _sfc_setup$4O(props, ctx) : void 0;
 };
-const InputContainer = /* @__PURE__ */ _export_sfc(_sfc_main$4R, [["ssrRender", _sfc_ssrRender$4P]]);
+const InputContainer = /* @__PURE__ */ _export_sfc(_sfc_main$4O, [["ssrRender", _sfc_ssrRender$4M]]);
 const __vite_glob_0_75 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputContainer
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4Q = {
+const _sfc_main$4N = {
   name: "ClientOnly",
   data() {
     return {
@@ -6930,7 +7232,7 @@ const _sfc_main$4Q = {
     this.mounted = true;
   }
 };
-function _sfc_ssrRender$4O(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4L(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   if ($data.mounted) {
     _push(`<div${ssrRenderAttrs(_attrs)}>`);
     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
@@ -6939,18 +7241,18 @@ function _sfc_ssrRender$4O(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$4Q = _sfc_main$4Q.setup;
-_sfc_main$4Q.setup = (props, ctx) => {
+const _sfc_setup$4N = _sfc_main$4N.setup;
+_sfc_main$4N.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/ClientOnly.vue");
-  return _sfc_setup$4Q ? _sfc_setup$4Q(props, ctx) : void 0;
+  return _sfc_setup$4N ? _sfc_setup$4N(props, ctx) : void 0;
 };
-const ClientOnly = /* @__PURE__ */ _export_sfc(_sfc_main$4Q, [["ssrRender", _sfc_ssrRender$4O]]);
+const ClientOnly = /* @__PURE__ */ _export_sfc(_sfc_main$4N, [["ssrRender", _sfc_ssrRender$4L]]);
 const __vite_glob_0_37 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ClientOnly
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4P = {
+const _sfc_main$4M = {
   name: "InputLabel",
   components: {
     IconExclamationCircle,
@@ -6971,7 +7273,7 @@ const _sfc_main$4P = {
     }
   }
 };
-function _sfc_ssrRender$4N(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4K(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_ClientOnly = resolveComponent("ClientOnly");
   const _component_icon_exclamation_circle = resolveComponent("icon-exclamation-circle");
   _push(ssrRenderComponent(_component_ClientOnly, _attrs, {
@@ -7014,18 +7316,18 @@ function _sfc_ssrRender$4N(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _: 3
   }, _parent));
 }
-const _sfc_setup$4P = _sfc_main$4P.setup;
-_sfc_main$4P.setup = (props, ctx) => {
+const _sfc_setup$4M = _sfc_main$4M.setup;
+_sfc_main$4M.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputLabel.vue");
-  return _sfc_setup$4P ? _sfc_setup$4P(props, ctx) : void 0;
+  return _sfc_setup$4M ? _sfc_setup$4M(props, ctx) : void 0;
 };
-const InputLabel = /* @__PURE__ */ _export_sfc(_sfc_main$4P, [["ssrRender", _sfc_ssrRender$4N]]);
+const InputLabel = /* @__PURE__ */ _export_sfc(_sfc_main$4M, [["ssrRender", _sfc_ssrRender$4K]]);
 const __vite_glob_0_95 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputLabel
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4O = {
+const _sfc_main$4L = {
   name: "Contents_Form_InputElement",
   props: {
     name: {
@@ -7055,7 +7357,7 @@ const _sfc_main$4O = {
     }
   }
 };
-function _sfc_ssrRender$4M(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4J(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "relative inline-block w-full" }, _attrs))} data-v-3d1397b1><input${ssrRenderAttr("value", $props.modelValue)}${ssrRenderAttr("id", $props.name)}${ssrRenderAttr("name", $props.name)}${ssrRenderAttr("type", $props.type)} class="w-full p-2.5 text-sm rounded-lg block border focus:ring-3 focus:ring-opacity-75 bg-layout-sun-0 text-layout-sun-900 border-primary-sun-500 focus:border-primary-sun-500 focus:ring-primary-sun-500 placeholder:text-layout-sun-400 selection:bg-layout-sun-200 selection:text-layout-sun-1000 dark:bg-layout-night-0 dark:text-layout-night-900 dark:border-primary-night-500 dark:focus:border-primary-night-500 dark:focus:ring-primary-night-500 placeholder:dark:text-layout-night-400 dark:selection:bg-layout-night-200 dark:selection:text-layout-night-1000"${ssrRenderAttr("placeholder", $props.placeholder)}${ssrIncludeBooleanAttr($props.required) ? " required" : ""} data-v-3d1397b1>`);
   if ($props.required) {
     _push(`<span class="absolute right-2 top-1/2 -translate-y-1/2 text-red-600 pointer-events-none" data-v-3d1397b1> * </span>`);
@@ -7064,18 +7366,18 @@ function _sfc_ssrRender$4M(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</div>`);
 }
-const _sfc_setup$4O = _sfc_main$4O.setup;
-_sfc_main$4O.setup = (props, ctx) => {
+const _sfc_setup$4L = _sfc_main$4L.setup;
+_sfc_main$4L.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputElement.vue");
-  return _sfc_setup$4O ? _sfc_setup$4O(props, ctx) : void 0;
+  return _sfc_setup$4L ? _sfc_setup$4L(props, ctx) : void 0;
 };
-const InputElement = /* @__PURE__ */ _export_sfc(_sfc_main$4O, [["ssrRender", _sfc_ssrRender$4M], ["__scopeId", "data-v-3d1397b1"]]);
+const InputElement = /* @__PURE__ */ _export_sfc(_sfc_main$4L, [["ssrRender", _sfc_ssrRender$4J], ["__scopeId", "data-v-3d1397b1"]]);
 const __vite_glob_0_77 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputElement
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4N = {
+const _sfc_main$4K = {
   name: "Contents_Form_InputCheckbox",
   components: { IconExclamationCircle },
   props: {
@@ -7114,7 +7416,7 @@ const _sfc_main$4N = {
     }
   }
 };
-function _sfc_ssrRender$4L(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4I(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_icon_exclamation_circle = resolveComponent("icon-exclamation-circle");
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "flex items-center h-6" }, _attrs))}><div class="flex items-center h-6"><input type="hidden"${ssrRenderAttr("name", $props.name)}${ssrRenderAttr("id", $props.name + "_alt")}${ssrRenderAttr("value", $props.modelValue)}><input${ssrRenderAttr("id", $props.name)}${ssrRenderAttr("name", $props.name)} type="checkbox" class="w-5 h-5 rounded border focus:ring-3 bg-primary-sun-50 text-primary-sun-500 border-primary-sun-300 focus:ring-primary-sun-300 ring-offset-primary-sun-800 checked:bg-primary-sun-500 dark:bg-primary-night-50 dark:text-primary-night-500 dark:border-primary-night-300 dark:focus:ring-primary-night-300 dark:ring-offset-primary-night-800 dark:checked:bg-primary-night-500 cursor-pointer"${ssrRenderAttr("exValue", $props.exValue)}${ssrIncludeBooleanAttr($props.modelValue == 1) ? " checked" : ""}></div><div class="ml-3 text-sm"><label${ssrRenderAttr("for", $props.name)} class="cursor-pointer"${ssrRenderAttr("title", $props.helptext)}>`);
   if ($props.label) {
@@ -7131,18 +7433,18 @@ function _sfc_ssrRender$4L(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }
   _push(`</label></div></div>`);
 }
-const _sfc_setup$4N = _sfc_main$4N.setup;
-_sfc_main$4N.setup = (props, ctx) => {
+const _sfc_setup$4K = _sfc_main$4K.setup;
+_sfc_main$4K.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputCheckbox.vue");
-  return _sfc_setup$4N ? _sfc_setup$4N(props, ctx) : void 0;
+  return _sfc_setup$4K ? _sfc_setup$4K(props, ctx) : void 0;
 };
-const InputCheckbox = /* @__PURE__ */ _export_sfc(_sfc_main$4N, [["ssrRender", _sfc_ssrRender$4L]]);
+const InputCheckbox = /* @__PURE__ */ _export_sfc(_sfc_main$4K, [["ssrRender", _sfc_ssrRender$4I]]);
 const __vite_glob_0_73 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputCheckbox
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4M = {
+const _sfc_main$4J = {
   name: "Contents_Form_InputSelect",
   inheritAttrs: false,
   emits: ["update:modelValue", "input-change"],
@@ -7231,7 +7533,7 @@ const _sfc_main$4M = {
     }
   }
 };
-function _sfc_ssrRender$4K(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4H(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<!--[--><div data-v-34cdee38><select${ssrRenderAttrs(mergeProps(_ctx.$attrs, {
     disabled: $props.disabled,
     class: "w-fully wf_2 wff p-2.5 text-sm rounded-lg block border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 placeholder-layout-sun-400 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500",
@@ -7244,18 +7546,18 @@ function _sfc_ssrRender$4K(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   });
   _push(`<!--]--></select></div><input type="hidden"${ssrRenderAttr("name", $props.name)}${ssrRenderAttr("id", $props.name + "_alt")}${ssrRenderAttr("value", $data.internalValue)} data-v-34cdee38><!--]-->`);
 }
-const _sfc_setup$4M = _sfc_main$4M.setup;
-_sfc_main$4M.setup = (props, ctx) => {
+const _sfc_setup$4J = _sfc_main$4J.setup;
+_sfc_main$4J.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputSelect.vue");
-  return _sfc_setup$4M ? _sfc_setup$4M(props, ctx) : void 0;
+  return _sfc_setup$4J ? _sfc_setup$4J(props, ctx) : void 0;
 };
-const InputSelect = /* @__PURE__ */ _export_sfc(_sfc_main$4M, [["ssrRender", _sfc_ssrRender$4K], ["__scopeId", "data-v-34cdee38"]]);
+const InputSelect = /* @__PURE__ */ _export_sfc(_sfc_main$4J, [["ssrRender", _sfc_ssrRender$4H], ["__scopeId", "data-v-34cdee38"]]);
 const __vite_glob_0_98 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputSelect
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4L = {
+const _sfc_main$4I = {
   name: "InputTextarea",
   //
   props: {
@@ -7278,7 +7580,7 @@ const _sfc_main$4L = {
   },
   emits: ["update:modelValue"]
 };
-function _sfc_ssrRender$4J(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4G(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   let _temp0;
   _push(`<textarea${ssrRenderAttrs(_temp0 = mergeProps({
     id: $props.name,
@@ -7289,18 +7591,18 @@ function _sfc_ssrRender$4J(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     placeholder: $props.placeholder
   }, _attrs), "textarea")}>${ssrInterpolate("value" in _temp0 ? _temp0.value : "")}</textarea>`);
 }
-const _sfc_setup$4L = _sfc_main$4L.setup;
-_sfc_main$4L.setup = (props, ctx) => {
+const _sfc_setup$4I = _sfc_main$4I.setup;
+_sfc_main$4I.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputTextarea.vue");
-  return _sfc_setup$4L ? _sfc_setup$4L(props, ctx) : void 0;
+  return _sfc_setup$4I ? _sfc_setup$4I(props, ctx) : void 0;
 };
-const InputTextarea = /* @__PURE__ */ _export_sfc(_sfc_main$4L, [["ssrRender", _sfc_ssrRender$4J]]);
+const InputTextarea = /* @__PURE__ */ _export_sfc(_sfc_main$4I, [["ssrRender", _sfc_ssrRender$4G]]);
 const __vite_glob_0_102 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputTextarea
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4K = {
+const _sfc_main$4H = {
   name: "CopyleftSelect",
   props: {
     modelValue: String,
@@ -7328,25 +7630,25 @@ const _sfc_main$4K = {
     }
   }
 };
-function _sfc_ssrRender$4I(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4F(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<!--[--><label${ssrRenderAttr("for", $props.name)}>${ssrInterpolate($props.label)}</label><select${ssrRenderAttr("id", $props.name)}${ssrRenderAttr("name", $props.name)}${ssrRenderAttr("value", $props.modelValue)} class="p-2.5 text-sm rounded-lg block border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 placeholder-layout-sun-400 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500"><option disabled value="0">Bitte wählen</option><!--[-->`);
   ssrRenderList($data.options, (option, index) => {
     _push(`<option${ssrRenderAttr("value", option.tag)}>${ssrInterpolate(option.name)}</option>`);
   });
   _push(`<!--]--></select><!--]-->`);
 }
-const _sfc_setup$4K = _sfc_main$4K.setup;
-_sfc_main$4K.setup = (props, ctx) => {
+const _sfc_setup$4H = _sfc_main$4H.setup;
+_sfc_main$4H.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Content/CopyLeftSelect.vue");
-  return _sfc_setup$4K ? _sfc_setup$4K(props, ctx) : void 0;
+  return _sfc_setup$4H ? _sfc_setup$4H(props, ctx) : void 0;
 };
-const CopyLeftSelect = /* @__PURE__ */ _export_sfc(_sfc_main$4K, [["ssrRender", _sfc_ssrRender$4I]]);
+const CopyLeftSelect = /* @__PURE__ */ _export_sfc(_sfc_main$4H, [["ssrRender", _sfc_ssrRender$4F]]);
 const __vite_glob_0_41 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: CopyLeftSelect
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4J = {
+const _sfc_main$4G = {
   name: "ImageJsonEditor",
   components: { IconTrash },
   props: {
@@ -7473,7 +7775,7 @@ const _sfc_main$4J = {
     window.removeEventListener("resize", this.updateWindowHeight);
   }
 };
-function _sfc_ssrRender$4H(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4E(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_IconTrash = resolveComponent("IconTrash");
   if ($data.GalOpen) {
     _push(`<div${ssrRenderAttrs(mergeProps({ class: "fixed inset-0 z-100 flex items-start justify-center bg-black bg-opacity-50 pt-[160px] overflow-y-auto mb-[50px]" }, _attrs))}><div class="bg-layout-sun-100 dark:bg-layout-night-100 rounded-lg shadow-lg w-full max-w-lg p-6 max-h-[calc(100vh-200px)]"><div class="bg-white dark:bg-gray-900 p-4 rounded mx-auto shadow-md w-full max-w-4xl overflow-y-auto" style="${ssrRenderStyle(`max-height: ${$data.windowHeight - 160}px`)}">`);
@@ -7493,18 +7795,18 @@ function _sfc_ssrRender$4H(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$4J = _sfc_main$4J.setup;
-_sfc_main$4J.setup = (props, ctx) => {
+const _sfc_setup$4G = _sfc_main$4G.setup;
+_sfc_main$4G.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/ImageJsonEditor.vue");
-  return _sfc_setup$4J ? _sfc_setup$4J(props, ctx) : void 0;
+  return _sfc_setup$4G ? _sfc_setup$4G(props, ctx) : void 0;
 };
-const ImageJsonEditor = /* @__PURE__ */ _export_sfc(_sfc_main$4J, [["ssrRender", _sfc_ssrRender$4H]]);
+const ImageJsonEditor = /* @__PURE__ */ _export_sfc(_sfc_main$4G, [["ssrRender", _sfc_ssrRender$4E]]);
 const __vite_glob_0_9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ImageJsonEditor
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4I = {
+const _sfc_main$4F = {
   name: "ImageUploadModal",
   components: { CopyLeftSelect, ImageJsonEditor },
   props: {
@@ -7669,7 +7971,7 @@ const _sfc_main$4I = {
     }
   }
 };
-function _sfc_ssrRender$4G(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4D(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_CopyLeftSelect = resolveComponent("CopyLeftSelect");
   const _component_ImageJsonEditor = resolveComponent("ImageJsonEditor");
   if ($props.isModalOpen) {
@@ -7722,18 +8024,18 @@ function _sfc_ssrRender$4G(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
 }
-const _sfc_setup$4I = _sfc_main$4I.setup;
-_sfc_main$4I.setup = (props, ctx) => {
+const _sfc_setup$4F = _sfc_main$4F.setup;
+_sfc_main$4F.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/ImageUploadModal.vue");
-  return _sfc_setup$4I ? _sfc_setup$4I(props, ctx) : void 0;
+  return _sfc_setup$4F ? _sfc_setup$4F(props, ctx) : void 0;
 };
-const ImageUploadModal = /* @__PURE__ */ _export_sfc(_sfc_main$4I, [["ssrRender", _sfc_ssrRender$4G], ["__scopeId", "data-v-b7313b4c"]]);
+const ImageUploadModal = /* @__PURE__ */ _export_sfc(_sfc_main$4F, [["ssrRender", _sfc_ssrRender$4D], ["__scopeId", "data-v-b7313b4c"]]);
 const __vite_glob_0_215 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ImageUploadModal
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4H = {
+const _sfc_main$4E = {
   name: "IconPictures",
   props: {
     stroke: {
@@ -7742,7 +8044,7 @@ const _sfc_main$4H = {
     }
   }
 };
-function _sfc_ssrRender$4F(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4C(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 512 512",
@@ -7752,21 +8054,21 @@ function _sfc_ssrRender$4F(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     fill: $props.stroke ? $props.stroke : "black"
   }, _attrs))}><path d="M448 80c8.8 0 16 7.2 16 16l0 319.8-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3L48 96c0-8.8 7.2-16 16-16l384 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"></path></svg>`);
 }
-const _sfc_setup$4H = _sfc_main$4H.setup;
-_sfc_main$4H.setup = (props, ctx) => {
+const _sfc_setup$4E = _sfc_main$4E.setup;
+_sfc_main$4E.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconPictures.vue");
-  return _sfc_setup$4H ? _sfc_setup$4H(props, ctx) : void 0;
+  return _sfc_setup$4E ? _sfc_setup$4E(props, ctx) : void 0;
 };
-const IconPictures = /* @__PURE__ */ _export_sfc(_sfc_main$4H, [["ssrRender", _sfc_ssrRender$4F]]);
+const IconPictures = /* @__PURE__ */ _export_sfc(_sfc_main$4E, [["ssrRender", _sfc_ssrRender$4C]]);
 const __vite_glob_0_169 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconPictures
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4G = {
+const _sfc_main$4D = {
   name: "IconList"
 };
-function _sfc_ssrRender$4E(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4B(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 512 512",
@@ -7776,21 +8078,21 @@ function _sfc_ssrRender$4E(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     height: "24"
   }, _attrs))}><path d="M40 48C26.7 48 16 58.7 16 72l0 48c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24l0-48c0-13.3-10.7-24-24-24L40 48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L192 64zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zM16 232l0 48c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24l0-48c0-13.3-10.7-24-24-24l-48 0c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24l0 48c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24l0-48c0-13.3-10.7-24-24-24l-48 0z"></path></svg>`);
 }
-const _sfc_setup$4G = _sfc_main$4G.setup;
-_sfc_main$4G.setup = (props, ctx) => {
+const _sfc_setup$4D = _sfc_main$4D.setup;
+_sfc_main$4D.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconList.vue");
-  return _sfc_setup$4G ? _sfc_setup$4G(props, ctx) : void 0;
+  return _sfc_setup$4D ? _sfc_setup$4D(props, ctx) : void 0;
 };
-const IconList = /* @__PURE__ */ _export_sfc(_sfc_main$4G, [["ssrRender", _sfc_ssrRender$4E]]);
+const IconList = /* @__PURE__ */ _export_sfc(_sfc_main$4D, [["ssrRender", _sfc_ssrRender$4B]]);
 const __vite_glob_0_155 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconList
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4F = {
+const _sfc_main$4C = {
   name: "IconOrdList"
 };
-function _sfc_ssrRender$4D(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4A(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 512 512",
@@ -7800,18 +8102,18 @@ function _sfc_ssrRender$4D(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     height: "24"
   }, _attrs))}> P<path d="M24 56c0-13.3 10.7-24 24-24l32 0c13.3 0 24 10.7 24 24l0 120 16 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l16 0 0-96-8 0C34.7 80 24 69.3 24 56zM86.7 341.2c-6.5-7.4-18.3-6.9-24 1.2L51.5 357.9c-7.7 10.8-22.7 13.3-33.5 5.6s-13.3-22.7-5.6-33.5l11.1-15.6c23.7-33.2 72.3-35.6 99.2-4.9c21.3 24.4 20.8 60.9-1.1 84.7L86.8 432l33.2 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-88 0c-9.5 0-18.2-5.6-22-14.4s-2.1-18.9 4.3-25.9l72-78c5.3-5.8 5.4-14.6 .3-20.5zM224 64l256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 160l256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 160l256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"></path></svg>`);
 }
-const _sfc_setup$4F = _sfc_main$4F.setup;
-_sfc_main$4F.setup = (props, ctx) => {
+const _sfc_setup$4C = _sfc_main$4C.setup;
+_sfc_main$4C.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconOrdList.vue");
-  return _sfc_setup$4F ? _sfc_setup$4F(props, ctx) : void 0;
+  return _sfc_setup$4C ? _sfc_setup$4C(props, ctx) : void 0;
 };
-const IconOrdList = /* @__PURE__ */ _export_sfc(_sfc_main$4F, [["ssrRender", _sfc_ssrRender$4D]]);
+const IconOrdList = /* @__PURE__ */ _export_sfc(_sfc_main$4C, [["ssrRender", _sfc_ssrRender$4A]]);
 const __vite_glob_0_166 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconOrdList
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4E = {
+const _sfc_main$4B = {
   name: "SmileysAdd",
   props: {
     name: {
@@ -7982,28 +8284,28 @@ const _sfc_main$4E = {
     }
   }
 };
-function _sfc_ssrRender$4C(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4z(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<span${ssrRenderAttrs(mergeProps({ class: "smbg" }, _attrs))} data-v-4f6ba849><!--[-->`);
   ssrRenderList($data.smilies, (val, key2) => {
     _push(`<span data-v-4f6ba849><img${ssrRenderAttr("src", "/images/smilies/icon_" + val + ".gif")}${ssrRenderAttr("alt", key2)}${ssrRenderAttr("title", key2)} class="inline_alt cursor-pointer" data-v-4f6ba849>   </span>`);
   });
   _push(`<!--]--></span>`);
 }
-const _sfc_setup$4E = _sfc_main$4E.setup;
-_sfc_main$4E.setup = (props, ctx) => {
+const _sfc_setup$4B = _sfc_main$4B.setup;
+_sfc_main$4B.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Social/smileys.vue");
-  return _sfc_setup$4E ? _sfc_setup$4E(props, ctx) : void 0;
+  return _sfc_setup$4B ? _sfc_setup$4B(props, ctx) : void 0;
 };
-const smileys = /* @__PURE__ */ _export_sfc(_sfc_main$4E, [["ssrRender", _sfc_ssrRender$4C], ["__scopeId", "data-v-4f6ba849"]]);
+const smileys = /* @__PURE__ */ _export_sfc(_sfc_main$4B, [["ssrRender", _sfc_ssrRender$4z], ["__scopeId", "data-v-4f6ba849"]]);
 const __vite_glob_0_259 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: smileys
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4D = {
+const _sfc_main$4A = {
   name: "IconCode"
 };
-function _sfc_ssrRender$4B(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4y(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 512 512",
@@ -8013,21 +8315,21 @@ function _sfc_ssrRender$4B(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     width: "35"
   }, _attrs))}><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"></path></svg>`);
 }
-const _sfc_setup$4D = _sfc_main$4D.setup;
-_sfc_main$4D.setup = (props, ctx) => {
+const _sfc_setup$4A = _sfc_main$4A.setup;
+_sfc_main$4A.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconCode.vue");
-  return _sfc_setup$4D ? _sfc_setup$4D(props, ctx) : void 0;
+  return _sfc_setup$4A ? _sfc_setup$4A(props, ctx) : void 0;
 };
-const IconCode = /* @__PURE__ */ _export_sfc(_sfc_main$4D, [["ssrRender", _sfc_ssrRender$4B]]);
+const IconCode = /* @__PURE__ */ _export_sfc(_sfc_main$4A, [["ssrRender", _sfc_ssrRender$4y]]);
 const __vite_glob_0_136 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconCode
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4C = {
+const _sfc_main$4z = {
   name: "IconHyperLink"
 };
-function _sfc_ssrRender$4A(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4x(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<svg${ssrRenderAttrs(mergeProps({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 640 512",
@@ -8037,18 +8339,18 @@ function _sfc_ssrRender$4A(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     fill: "currentColor"
   }, _attrs))}><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"></path></svg>`);
 }
-const _sfc_setup$4C = _sfc_main$4C.setup;
-_sfc_main$4C.setup = (props, ctx) => {
+const _sfc_setup$4z = _sfc_main$4z.setup;
+_sfc_main$4z.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/IconHyperLink.vue");
-  return _sfc_setup$4C ? _sfc_setup$4C(props, ctx) : void 0;
+  return _sfc_setup$4z ? _sfc_setup$4z(props, ctx) : void 0;
 };
-const IconHyperLink = /* @__PURE__ */ _export_sfc(_sfc_main$4C, [["ssrRender", _sfc_ssrRender$4A]]);
+const IconHyperLink = /* @__PURE__ */ _export_sfc(_sfc_main$4z, [["ssrRender", _sfc_ssrRender$4x]]);
 const __vite_glob_0_152 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: IconHyperLink
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4B = {
+const _sfc_main$4y = {
   name: "EditorRad",
   components: {
     IconPictures,
@@ -8490,7 +8792,7 @@ const _sfc_main$4B = {
     }
   }
 };
-function _sfc_ssrRender$4z(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4w(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_ClientOnly = resolveComponent("ClientOnly");
   const _component_IconPictures = resolveComponent("IconPictures");
   const _component_IconCode = resolveComponent("IconCode");
@@ -8681,18 +8983,18 @@ function _sfc_ssrRender$4z(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }, null, _parent));
   _push(`</div>`);
 }
-const _sfc_setup$4B = _sfc_main$4B.setup;
-_sfc_main$4B.setup = (props, ctx) => {
+const _sfc_setup$4y = _sfc_main$4y.setup;
+_sfc_main$4y.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputHtml.vue");
-  return _sfc_setup$4B ? _sfc_setup$4B(props, ctx) : void 0;
+  return _sfc_setup$4y ? _sfc_setup$4y(props, ctx) : void 0;
 };
-const InputHtml = /* @__PURE__ */ _export_sfc(_sfc_main$4B, [["ssrRender", _sfc_ssrRender$4z], ["__scopeId", "data-v-f0c3f9a0"]]);
+const InputHtml = /* @__PURE__ */ _export_sfc(_sfc_main$4y, [["ssrRender", _sfc_ssrRender$4w], ["__scopeId", "data-v-f0c3f9a0"]]);
 const __vite_glob_0_92 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputHtml
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4A = {
+const _sfc_main$4x = {
   name: "Contents_Form_InputError",
   props: {
     message: {
@@ -8701,23 +9003,23 @@ const _sfc_main$4A = {
     }
   }
 };
-function _sfc_ssrRender$4y(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4v(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "px-4 py-1 my-2 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" }, _attrs, {
     style: $props.message ? null : { display: "none" }
   }))}><span>${ssrInterpolate($props.message)}</span></div>`);
 }
-const _sfc_setup$4A = _sfc_main$4A.setup;
-_sfc_main$4A.setup = (props, ctx) => {
+const _sfc_setup$4x = _sfc_main$4x.setup;
+_sfc_main$4x.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputError.vue");
-  return _sfc_setup$4A ? _sfc_setup$4A(props, ctx) : void 0;
+  return _sfc_setup$4x ? _sfc_setup$4x(props, ctx) : void 0;
 };
-const InputError = /* @__PURE__ */ _export_sfc(_sfc_main$4A, [["ssrRender", _sfc_ssrRender$4y]]);
+const InputError = /* @__PURE__ */ _export_sfc(_sfc_main$4x, [["ssrRender", _sfc_ssrRender$4v]]);
 const __vite_glob_0_78 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputError
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4z = {
+const _sfc_main$4w = {
   __name: "Modal",
   __ssrInlineRender: true,
   props: {
@@ -8785,21 +9087,21 @@ const _sfc_main$4z = {
     };
   }
 };
-const _sfc_setup$4z = _sfc_main$4z.setup;
-_sfc_main$4z.setup = (props, ctx) => {
+const _sfc_setup$4w = _sfc_main$4w.setup;
+_sfc_main$4w.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Modal.vue");
-  return _sfc_setup$4z ? _sfc_setup$4z(props, ctx) : void 0;
+  return _sfc_setup$4w ? _sfc_setup$4w(props, ctx) : void 0;
 };
 const __vite_glob_0_225 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: _sfc_main$4z
+  default: _sfc_main$4w
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4y = {
+const _sfc_main$4v = {
   name: "Components_DialogModal",
   emits: ["close"],
   components: {
-    Modal: _sfc_main$4z
+    Modal: _sfc_main$4w
   },
   props: {
     show: {
@@ -8818,7 +9120,7 @@ const _sfc_main$4y = {
     }
   }
 };
-function _sfc_ssrRender$4x(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_modal = resolveComponent("modal");
   _push(ssrRenderComponent(_component_modal, mergeProps({
     show: $props.show,
@@ -8862,18 +9164,18 @@ function _sfc_ssrRender$4x(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _: 3
   }, _parent));
 }
-const _sfc_setup$4y = _sfc_main$4y.setup;
-_sfc_main$4y.setup = (props, ctx) => {
+const _sfc_setup$4v = _sfc_main$4v.setup;
+_sfc_main$4v.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/DialogModal.vue");
-  return _sfc_setup$4y ? _sfc_setup$4y(props, ctx) : void 0;
+  return _sfc_setup$4v ? _sfc_setup$4v(props, ctx) : void 0;
 };
-const DialogModal = /* @__PURE__ */ _export_sfc(_sfc_main$4y, [["ssrRender", _sfc_ssrRender$4x]]);
+const DialogModal = /* @__PURE__ */ _export_sfc(_sfc_main$4v, [["ssrRender", _sfc_ssrRender$4u]]);
 const __vite_glob_0_64 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: DialogModal
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4x = defineComponent({
+const _sfc_main$4u = defineComponent({
   name: "Admin_BlogForm",
   components: {
     Layout: Layout$a,
@@ -8996,7 +9298,7 @@ const _sfc_main$4x = defineComponent({
     }
   }
 });
-function _sfc_ssrRender$4w(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$4t(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_layout = resolveComponent("layout");
   const _component_breadcrumb = resolveComponent("breadcrumb");
   const _component_section_form = resolveComponent("section-form");
@@ -10896,196 +11198,16 @@ function _sfc_ssrRender$4w(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _: 1
   }, _parent));
 }
-const _sfc_setup$4x = _sfc_main$4x.setup;
-_sfc_main$4x.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/BlogForm.vue");
-  return _sfc_setup$4x ? _sfc_setup$4x(props, ctx) : void 0;
-};
-const BlogForm = /* @__PURE__ */ _export_sfc(_sfc_main$4x, [["ssrRender", _sfc_ssrRender$4w]]);
-const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: BlogForm
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4w = {
-  name: "Search.svg"
-};
-function _sfc_ssrRender$4v(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  _push(`<svg${ssrRenderAttrs(mergeProps({
-    xmlns: "http://www.w3.org/2000/svg",
-    viewBox: "0 0 24 24",
-    stroke: "currentColor",
-    fill: "none"
-  }, _attrs))}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>`);
-}
-const _sfc_setup$4w = _sfc_main$4w.setup;
-_sfc_main$4w.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Icons/Search.vue");
-  return _sfc_setup$4w ? _sfc_setup$4w(props, ctx) : void 0;
-};
-const IconSearch = /* @__PURE__ */ _export_sfc(_sfc_main$4w, [["ssrRender", _sfc_ssrRender$4v]]);
-const __vite_glob_0_199 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: IconSearch
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4v = {
-  name: "Components_Lists_SearchFilter",
-  emits: ["update:modelValue", "reset"],
-  components: {
-    IconSearch
-  },
-  props: {
-    modelValue: {
-      type: String,
-      default: null
-    },
-    placeholder: {
-      type: String,
-      default: "Suchen"
-    },
-    searchText: {
-      type: String
-    }
-  },
-  methods: {
-    focus() {
-      this.$refs.input?.focus();
-    }
-  }
-};
-function _sfc_ssrRender$4u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_icon_search = resolveComponent("icon-search");
-  _push(`<div${ssrRenderAttrs(_attrs)}><div class="relative z-3"><div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">`);
-  _push(ssrRenderComponent(_component_icon_search, { class: "block mr-3 h-5 w-5" }, null, _parent));
-  _push(`</div><input type="text" id="default-search" class="block p-4 pl-10 w-full rounded-lg border text-sm text-layout-sun-900 bg-layout-sun-50 border-layout-sun-300 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:text-layout-night-900 dark:bg-layout-night-50 dark:border-layout-night-300 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" autocomplete="off" name="search"${ssrRenderAttr("placeholder", $props.placeholder)}${ssrRenderAttr("value", $props.modelValue)}><button type="submit" class="absolute right-2 bottom-2 font-medium rounded-lg text-sm px-4 py-2 cursor-pointer border-2 focus:ring focus:outline-none bg-primary-sun-500 text-primary-sun-100 hover:text-primary-sun-900 hover:bg-layout-sun-100 hover:border-primary-sun-600 focus:border-primary-sun-600 dark:bg-primary-night-500 dark:text-primary-night-100 dark:hover:text-primary-night-900 dark:hover:bg-layout-night-100 dark:hover:border-primary-night-600 dark:focus:border-primary-night-600"> Suche zurücksetzen </button></div><div class="w-full mt-4">`);
-  if ($props.searchText) {
-    _push(`<div class="p-1 text-sm my-2 text-left font-medium tracking-wide text-layout-sun-600 dark:text-layout-night-600"><span>${$props.searchText ?? ""}</span></div>`);
-  } else {
-    _push(`<!---->`);
-  }
-  _push(`</div></div>`);
-}
-const _sfc_setup$4v = _sfc_main$4v.setup;
-_sfc_main$4v.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Lists/SearchFilter.vue");
-  return _sfc_setup$4v ? _sfc_setup$4v(props, ctx) : void 0;
-};
-const SearchFilter = /* @__PURE__ */ _export_sfc(_sfc_main$4v, [["ssrRender", _sfc_ssrRender$4u]]);
-const __vite_glob_0_219 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: SearchFilter
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$4u = {
-  props: {
-    links: { type: Array, required: true },
-    basePath: { type: String, required: true }
-  },
-  data() {
-    return {
-      searchString: ""
-    };
-  },
-  methods: {
-    // 🔥 SSR + SEO URL Builder
-    buildUrl(link) {
-      if (!link.url) return "#";
-      try {
-        const url = new URL(link.url, "http://dummy");
-        const params = new URLSearchParams(url.search);
-        const page2 = params.get("page");
-        let base = this.basePath.replace(/\/$/, "");
-        const amp = "?";
-        let finalUrl = "/" + base + amp + "page=" + page2;
-        if (typeof window !== "undefined") {
-          const searchParams = new URLSearchParams(window.location.search);
-          const search = searchParams.get("search");
-          if (search) {
-            finalUrl += "&search=" + encodeURIComponent(search);
-          }
-        }
-        return finalUrl;
-      } catch (e) {
-        return "#";
-      }
-    },
-    go(link) {
-      if (!link.url) return;
-      const finalUrl = this.buildUrl(link);
-      this.$inertia.visit(finalUrl, {
-        preserveState: false,
-        replace: false
-      });
-    }
-    // OLD GO
-    //     go(link) {
-    //   if (!link.url) return;
-    //   const url = new URL(link.url, window.location.origin);
-    //   const params = new URLSearchParams(window.location.search);
-    //   if (params.has('search')) {
-    //     url.searchParams.set('search', params.get('search'));
-    //   }
-    // //   alert(this.basePath);
-    // //   return "";
-    //   this.$inertia.visit(this.basePath + url.pathname + url.search, {
-    //     preserveState: false,
-    //   });
-    // }
-    // old go end
-    //     go(link) {
-    //       if (!link.url) return;
-    //       // basePath z.B. "/home/show/pictures/acryl"
-    //       // link.url z.B. "/?page=2"
-    //         const params = new URLSearchParams(window.location.search);
-    //         const search = params.get('search');
-    // if(search)
-    // {
-    //     this.searchString = '&search=' + search;
-    // }
-    // else{
-    //     this.searchString = '';
-    // }
-    //         const url = this.basePath + link.url + this.searchString;
-    //       this.$inertia.visit(url, {
-    //         preserveState: false,
-    //         replace: false,
-    //       });
-    //     },
-  }
-};
-function _sfc_ssrRender$4t(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  if ($props.links?.length > 1) {
-    _push(`<div${ssrRenderAttrs(mergeProps({ class: "flex justify-center gap-2" }, _attrs))}><!--[-->`);
-    ssrRenderList($props.links, (link, i) => {
-      _push(`<a${ssrRenderAttr("href", $options.buildUrl(link))}${ssrIncludeBooleanAttr(!link.url) ? " disabled" : ""} class="${ssrRenderClass([{
-        "flex items-center font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-900": link.active,
-        "opacity-50 cursor-not-allowed": !link.url
-      }, "px-3 py-1 border rounded lolink"])}">`);
-      if (link.label === "pagination.previous") {
-        _push(`<span>« Zurück</span>`);
-      } else if (link.label === "pagination.next") {
-        _push(`<span>Weiter »</span>`);
-      } else {
-        _push(`<span>${link.label ?? ""}</span>`);
-      }
-      _push(`</a>`);
-    });
-    _push(`<!--]--></div>`);
-  } else {
-    _push(`<!---->`);
-  }
-}
 const _sfc_setup$4u = _sfc_main$4u.setup;
 _sfc_main$4u.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Pagination.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/BlogForm.vue");
   return _sfc_setup$4u ? _sfc_setup$4u(props, ctx) : void 0;
 };
-const Pagination$1 = /* @__PURE__ */ _export_sfc(_sfc_main$4u, [["ssrRender", _sfc_ssrRender$4t]]);
-const __vite_glob_0_227 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const BlogForm = /* @__PURE__ */ _export_sfc(_sfc_main$4u, [["ssrRender", _sfc_ssrRender$4t]]);
+const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Pagination$1
+  default: BlogForm
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$4t = {
   name: "Contents_Lists_ListContainer",
@@ -13648,10 +13770,11 @@ const _sfc_main$3V = {
     Layout: Layout$a,
     delhackinglog,
     MetaHeader,
-    Breadcrumb
+    Breadcrumb,
+    SearchFilter
   },
   props: {
-    data: {
+    tables: {
       type: Array,
       required: true
     },
@@ -13665,8 +13788,74 @@ const _sfc_main$3V = {
     return {
       showModal: false,
       modalTitle: "",
-      modalContent: ""
+      modalContent: "",
+      currentPage: 1,
+      perPage: 20,
+      form: {
+        search: ""
+      }
     };
+  },
+  watch: {
+    "form.search"() {
+      this.currentPage = 1;
+    }
+  },
+  computed: {
+    filteredLogs() {
+      if (!this.form.search) {
+        return this.tables;
+      }
+      const s = this.form.search.toLowerCase();
+      return this.tables.filter((row) => {
+        return String(row.id || "").toLowerCase().includes(s) || String(row.ip || "").toLowerCase().includes(s) || String(row.url || "").toLowerCase().includes(s) || String(row.dom || "").toLowerCase().includes(s) || String(row.method || "").toLowerCase().includes(s) || String(row.agent || "").toLowerCase().includes(s) || String(row.score || "").toLowerCase().includes(s) || String(row.violations || "").toLowerCase().includes(s) || String(row.created_at || "").toLowerCase().includes(s);
+      });
+    },
+    paginatedLogs() {
+      const start = (this.currentPage - 1) * this.perPage;
+      const end = start + this.perPage;
+      return this.filteredLogs.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredLogs.length / this.perPage);
+    },
+    pageNumbers() {
+      const total = this.totalPages;
+      const current = this.currentPage;
+      let pages2 = [];
+      if (total <= 12) {
+        for (let i = 1; i <= total; i++) {
+          pages2.push(i);
+        }
+        return pages2;
+      }
+      if (current <= 9) {
+        for (let i = 1; i <= 10; i++) {
+          pages2.push(i);
+        }
+        pages2.push("...");
+        pages2.push(total);
+        return pages2;
+      }
+      if (current >= total - 8) {
+        pages2.push(1);
+        pages2.push("...");
+        for (let i = total - 9; i <= total; i++) {
+          pages2.push(i);
+        }
+        return pages2;
+      }
+      pages2.push(1);
+      pages2.push("...");
+      let start = current - 3;
+      let end = current + 3;
+      for (let i = start; i <= end; i++) {
+        pages2.push(i);
+      }
+      pages2.push("...");
+      pages2.push(total);
+      return pages2;
+    }
   },
   methods: {
     formatDateTime(datetime) {
@@ -13695,6 +13884,7 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_MetaHeader = resolveComponent("MetaHeader");
   const _component_Layout = resolveComponent("Layout");
   const _component_Breadcrumb = resolveComponent("Breadcrumb");
+  const _component_search_filter = resolveComponent("search-filter");
   const _component_delhackinglog = resolveComponent("delhackinglog");
   _push(`<!--[-->`);
   _push(ssrRenderComponent(_component_MetaHeader, { title: "HackLog" }, null, _parent));
@@ -13710,11 +13900,17 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     }),
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
-        _push2(`<div class="p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"${_scopeId}><h2 class="text-xl font-semibold mb-4"${_scopeId}>HackLog</h2><div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700"${_scopeId}><table class="min-w-full text-sm"${_scopeId}><thead class="bg-gray-100 dark:bg-gray-800"${_scopeId}><tr${_scopeId}><th class="px-3 py-2 text-left"${_scopeId}>Datum</th><th class="px-3 py-2 text-left"${_scopeId}>DOM</th><th class="px-3 py-2 text-left"${_scopeId}>IP</th><th class="px-3 py-2 text-left"${_scopeId}>URL</th><th class="px-3 py-2 text-left"${_scopeId}>Gesperrt bis</th><th class="px-3 py-2 text-left"${_scopeId}>Method</th><th class="px-3 py-2 text-left"${_scopeId}>Score</th><th class="px-3 py-2 text-left"${_scopeId}>Matches</th><th class="px-3 py-2 text-left"${_scopeId}>Agent</th><th class="px-3 py-2 text-left"${_scopeId}></th></tr></thead><tbody${_scopeId}><!--[-->`);
-        ssrRenderList($props.data, (row, index) => {
-          _push2(`<tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"${_scopeId}><td class="px-3 py-2 whitespace-nowrap"${_scopeId}>${ssrInterpolate(row.created_at)}</td><td class="px-3 py-2 font-mono"${_scopeId}><img${ssrRenderAttr("src", "/images/_" + row.dom + "/web/alogo.png")} class="w-4 h-4"${_scopeId}></td><td class="px-3 py-2 font-mono"${_scopeId}>${ssrInterpolate(row.ip)}</td><td class="px-3 py-2 truncate max-w-xs"${_scopeId}>`);
+        _push2(`<div class="p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"${_scopeId}><div class="flex justify-between items-center mb-4"${_scopeId}>`);
+        _push2(ssrRenderComponent(_component_search_filter, {
+          modelValue: $data.form.search,
+          "onUpdate:modelValue": ($event) => $data.form.search = $event,
+          class: "w-full"
+        }, null, _parent2, _scopeId));
+        _push2(`</div><h2 class="text-xl font-semibold mb-4"${_scopeId}>HackLog</h2><div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700"${_scopeId}><table class="min-w-full text-sm"${_scopeId}><thead class="bg-gray-100 dark:bg-gray-800"${_scopeId}><tr${_scopeId}><th class="px-3 py-2 text-left"${_scopeId}>Datum</th><th class="px-3 py-2 text-left"${_scopeId}>DOM</th><th class="px-3 py-2 text-left"${_scopeId}>IP</th><th class="px-3 py-2 text-left"${_scopeId}>Number</th><th class="px-3 py-2 text-left"${_scopeId}>URL</th><th class="px-3 py-2 text-left"${_scopeId}>Gesperrt bis</th><th class="px-3 py-2 text-left"${_scopeId}>Method</th><th class="px-3 py-2 text-left"${_scopeId}>Score</th><th class="px-3 py-2 text-left"${_scopeId}>Matches</th><th class="px-3 py-2 text-left"${_scopeId}>Agent</th><th class="px-3 py-2 text-left"${_scopeId}></th></tr></thead><tbody${_scopeId}><!--[-->`);
+        ssrRenderList($options.paginatedLogs, (row, index) => {
+          _push2(`<tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"${_scopeId}><td class="px-3 py-2 whitespace-nowrap"${_scopeId}>${ssrInterpolate(row.created_at)}</td><td class="px-3 py-2 font-mono"${_scopeId}><img${ssrRenderAttr("src", "/images/_" + row.dom + "/web/alogo.png")} class="w-4 h-4"${_scopeId}></td><td class="px-3 py-2 font-mono"${_scopeId}>${ssrInterpolate(row.ip)}</td><td class="px-3 py-2 font-mono"${_scopeId}>${ssrInterpolate(row.violations)}</td><td class="px-3 py-2 truncate max-w-xs"${_scopeId}>`);
           if (row.url) {
-            _push2(`<button class="text-indigo-600 dark:text-indigo-400 hover:underline text-left"${_scopeId}>${ssrInterpolate(row.url)}</button>`);
+            _push2(`<button class="text-indigo-600 dark:text-indigo-400 hover:underline text-left"${_scopeId}>${ssrInterpolate(row.url.substr(0, 29))}</button>`);
           } else {
             _push2(`<span class="text-gray-400"${_scopeId}>–</span>`);
           }
@@ -13743,10 +13939,24 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
         } else {
           _push2(`<!---->`);
         }
-        _push2(`</div>`);
+        _push2(`</div><div class="flex flex-wrap gap-2 mt-4"${_scopeId}><button class="px-3 py-1 border rounded"${ssrIncludeBooleanAttr($data.currentPage === 1) ? " disabled" : ""}${_scopeId}> ← Zurück </button><!--[-->`);
+        ssrRenderList($options.pageNumbers, (page2) => {
+          _push2(`<button${ssrIncludeBooleanAttr(page2 === "...") ? " disabled" : ""} class="${ssrRenderClass([{
+            "bg-blue-500 text-white": $data.currentPage === page2,
+            "opacity-50 cursor-default": page2 === "..."
+          }, "px-3 py-1 border rounded"])}"${_scopeId}>${ssrInterpolate(page2)}</button>`);
+        });
+        _push2(`<!--]--><button class="px-3 py-1 border rounded"${ssrIncludeBooleanAttr($data.currentPage >= $options.totalPages) ? " disabled" : ""}${_scopeId}> Weiter → </button></div>`);
       } else {
         return [
           createVNode("div", { class: "p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100" }, [
+            createVNode("div", { class: "flex justify-between items-center mb-4" }, [
+              createVNode(_component_search_filter, {
+                modelValue: $data.form.search,
+                "onUpdate:modelValue": ($event) => $data.form.search = $event,
+                class: "w-full"
+              }, null, 8, ["modelValue", "onUpdate:modelValue"])
+            ]),
             createVNode("h2", { class: "text-xl font-semibold mb-4" }, "HackLog"),
             createVNode("div", { class: "overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700" }, [
               createVNode("table", { class: "min-w-full text-sm" }, [
@@ -13755,6 +13965,7 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                     createVNode("th", { class: "px-3 py-2 text-left" }, "Datum"),
                     createVNode("th", { class: "px-3 py-2 text-left" }, "DOM"),
                     createVNode("th", { class: "px-3 py-2 text-left" }, "IP"),
+                    createVNode("th", { class: "px-3 py-2 text-left" }, "Number"),
                     createVNode("th", { class: "px-3 py-2 text-left" }, "URL"),
                     createVNode("th", { class: "px-3 py-2 text-left" }, "Gesperrt bis"),
                     createVNode("th", { class: "px-3 py-2 text-left" }, "Method"),
@@ -13765,7 +13976,7 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   ])
                 ]),
                 createVNode("tbody", null, [
-                  (openBlock(true), createBlock(Fragment, null, renderList($props.data, (row, index) => {
+                  (openBlock(true), createBlock(Fragment, null, renderList($options.paginatedLogs, (row, index) => {
                     return openBlock(), createBlock("tr", {
                       key: index,
                       class: "border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -13778,12 +13989,13 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                         }, null, 8, ["src"])
                       ]),
                       createVNode("td", { class: "px-3 py-2 font-mono" }, toDisplayString(row.ip), 1),
+                      createVNode("td", { class: "px-3 py-2 font-mono" }, toDisplayString(row.violations), 1),
                       createVNode("td", { class: "px-3 py-2 truncate max-w-xs" }, [
                         row.url ? (openBlock(), createBlock("button", {
                           key: 0,
                           onClick: ($event) => $options.openModal("URL", row.url),
                           class: "text-indigo-600 dark:text-indigo-400 hover:underline text-left"
-                        }, toDisplayString(row.url), 9, ["onClick"])) : (openBlock(), createBlock("span", {
+                        }, toDisplayString(row.url.substr(0, 29)), 9, ["onClick"])) : (openBlock(), createBlock("span", {
                           key: 1,
                           class: "text-gray-400"
                         }, "–"))
@@ -13838,6 +14050,29 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 createVNode("pre", { class: "p-4 text-xs overflow-auto max-h-[70vh] bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100" }, "" + toDisplayString($data.modalContent) + "\n          ", 1)
               ])
             ])) : createCommentVNode("", true)
+          ]),
+          createVNode("div", { class: "flex flex-wrap gap-2 mt-4" }, [
+            createVNode("button", {
+              class: "px-3 py-1 border rounded",
+              disabled: $data.currentPage === 1,
+              onClick: ($event) => $data.currentPage--
+            }, " ← Zurück ", 8, ["disabled", "onClick"]),
+            (openBlock(true), createBlock(Fragment, null, renderList($options.pageNumbers, (page2) => {
+              return openBlock(), createBlock("button", {
+                key: page2,
+                disabled: page2 === "...",
+                onClick: ($event) => page2 !== "..." && ($data.currentPage = page2),
+                class: ["px-3 py-1 border rounded", {
+                  "bg-blue-500 text-white": $data.currentPage === page2,
+                  "opacity-50 cursor-default": page2 === "..."
+                }]
+              }, toDisplayString(page2), 11, ["disabled", "onClick"]);
+            }), 128)),
+            createVNode("button", {
+              class: "px-3 py-1 border rounded",
+              disabled: $data.currentPage >= $options.totalPages,
+              onClick: ($event) => $data.currentPage++
+            }, " Weiter → ", 8, ["disabled", "onClick"])
           ])
         ];
       }
@@ -41493,7 +41728,7 @@ function _sfc_ssrRender$2p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_ClientOnly = resolveComponent("ClientOnly");
   const _component_mfxlogo = resolveComponent("mfxlogo");
   const _component_icon_menu = resolveComponent("icon-menu");
-  const _component_icon_close = resolveComponent("icon-close");
+  const _component_IconClose = resolveComponent("IconClose");
   const _component_link_header_mfx = resolveComponent("link-header_mfx");
   const _component_Dropdown = resolveComponent("Dropdown");
   const _component_dropdown_link = resolveComponent("dropdown-link");
@@ -41608,7 +41843,7 @@ function _sfc_ssrRender$2p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     _push(`<!---->`);
   }
   if ($data.isOpen_Menu) {
-    _push(ssrRenderComponent(_component_icon_close, { class: "w-6 h-6" }, null, _parent));
+    _push(ssrRenderComponent(_component_IconClose, { class: "w-6 h-6" }, null, _parent));
   } else {
     _push(`<!---->`);
   }
@@ -61390,7 +61625,7 @@ const __vite_glob_0_356 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
   __proto__: null,
   default: ProfileTextfield
 }, Symbol.toStringTag, { value: "Module" }));
-const Ziggy = { "url": "http://ab.test.mcs", "port": null, "defaults": {}, "routes": { "debugbar.openhandler": { "uri": "_debugbar/open", "methods": ["GET", "HEAD"] }, "debugbar.clockwork": { "uri": "_debugbar/clockwork/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "debugbar.assets.css": { "uri": "_debugbar/assets/stylesheets", "methods": ["GET", "HEAD"] }, "debugbar.assets.js": { "uri": "_debugbar/assets/javascript", "methods": ["GET", "HEAD"] }, "debugbar.cache.delete": { "uri": "_debugbar/cache/{key}/{tags?}", "methods": ["DELETE"], "parameters": ["key", "tags"] }, "debugbar.queries.explain": { "uri": "_debugbar/queries/explain", "methods": ["POST"] }, "laravel-cookie-consent.script-utils": { "uri": "laravel-cookie-consent/script-utils", "methods": ["GET", "HEAD"] }, "login": { "uri": "login", "methods": ["GET", "HEAD"] }, "logout": { "uri": "logout", "methods": ["POST"] }, "password.request": { "uri": "forgot-password", "methods": ["GET", "HEAD"] }, "password.reset": { "uri": "reset-password/{token}", "methods": ["GET", "HEAD"], "parameters": ["token"] }, "password.email": { "uri": "forgot-password", "methods": ["POST"] }, "password.update": { "uri": "reset-password", "methods": ["POST"] }, "register": { "uri": "register", "methods": ["GET", "HEAD"] }, "register.store": { "uri": "register", "methods": ["POST"] }, "verification.notice": { "uri": "email/verify", "methods": ["GET", "HEAD"] }, "verification.verify": { "uri": "email/verify/{id}/{hash}", "methods": ["GET", "HEAD"], "parameters": ["id", "hash"] }, "verification.send": { "uri": "email/verification-notification", "methods": ["POST"] }, "user-profile-information.update": { "uri": "user/profile-information", "methods": ["PUT"] }, "user-password.update": { "uri": "user/password", "methods": ["PUT"] }, "password.confirm": { "uri": "user/confirm-password", "methods": ["GET", "HEAD"] }, "password.confirmation": { "uri": "user/confirmed-password-status", "methods": ["GET", "HEAD"] }, "password.confirm.store": { "uri": "user/confirm-password", "methods": ["POST"] }, "two-factor.login": { "uri": "two-factor-challenge", "methods": ["GET", "HEAD"] }, "two-factor.login.post": { "uri": "two-factor-challenge", "methods": ["POST"] }, "two-factor.enable": { "uri": "user/two-factor-authentication", "methods": ["POST"] }, "two-factor.confirm": { "uri": "user/confirmed-two-factor-authentication", "methods": ["POST"] }, "two-factor.disable": { "uri": "user/two-factor-authentication", "methods": ["DELETE"] }, "two-factor.qr-code": { "uri": "user/two-factor-qr-code", "methods": ["GET", "HEAD"] }, "two-factor.secret-key": { "uri": "user/two-factor-secret-key", "methods": ["GET", "HEAD"] }, "two-factor.recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["GET", "HEAD"] }, "two-factor.regenerate-recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["POST"] }, "terms.show": { "uri": "terms-of-service", "methods": ["GET", "HEAD"] }, "policy.show": { "uri": "privacy-policy", "methods": ["GET", "HEAD"] }, "profile.show": { "uri": "user/profile", "methods": ["GET", "HEAD"] }, "other-browser-sessions.destroy": { "uri": "user/other-browser-sessions", "methods": ["DELETE"] }, "current-user-photo.destroy": { "uri": "user/profile-photo", "methods": ["DELETE"] }, "current-user.destroy": { "uri": "user", "methods": ["DELETE"] }, "api-tokens.index": { "uri": "user/api-tokens", "methods": ["GET", "HEAD"] }, "api-tokens.store": { "uri": "user/api-tokens", "methods": ["POST"] }, "api-tokens.update": { "uri": "user/api-tokens/{token}", "methods": ["PUT"], "parameters": ["token"] }, "api-tokens.destroy": { "uri": "user/api-tokens/{token}", "methods": ["DELETE"], "parameters": ["token"] }, "sanctum.csrf-cookie": { "uri": "sanctum/csrf-cookie", "methods": ["GET", "HEAD"] }, "ignition.healthCheck": { "uri": "_ignition/health-check", "methods": ["GET", "HEAD"] }, "ignition.executeSolution": { "uri": "_ignition/execute-solution", "methods": ["POST"] }, "ignition.updateConfig": { "uri": "_ignition/update-config", "methods": ["POST"] }, "cookieconsent.script": { "uri": "cookie-consent/script", "methods": ["GET", "HEAD"] }, "cookieconsent.accept.all": { "uri": "cookie-consent/accept-all", "methods": ["POST"] }, "cookieconsent.accept.essentials": { "uri": "cookie-consent/accept-essentials", "methods": ["POST"] }, "cookieconsent.accept.configuration": { "uri": "cookie-consent/configure", "methods": ["POST"] }, "cookieconsent.reset": { "uri": "cookie-consent/reset", "methods": ["POST"] }, "admin.add.func": { "uri": "api/AddFunc", "methods": ["POST"] }, "countpixel": { "uri": "countpixel", "methods": ["GET", "HEAD"] }, "api.mcslpoints": { "uri": "api/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "remove.temp": { "uri": "api/delTempz/{path}", "methods": ["GET", "HEAD"], "parameters": ["path"] }, "ggle.login": { "uri": "auth/google", "methods": ["GET", "HEAD"] }, "ri": { "uri": "ri", "methods": ["GET", "HEAD"] }, "get.help": { "uri": "api/gethelp/{slug}/{table}", "methods": ["GET", "HEAD"], "parameters": ["slug", "table"] }, "auth.nickname": { "uri": "auth/nickname", "methods": ["GET", "HEAD"] }, "admin.mcslpoints": { "uri": "admin/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "GetRights_all": { "uri": "api/user/rights", "methods": ["GET", "HEAD"] }, "home.imprint.gen": { "uri": "home/impressum", "methods": ["GET", "HEAD"] }, "home.index": { "uri": "/", "methods": ["GET", "HEAD"] }, "home.spruch": { "uri": "api/spruch-des-monats", "methods": ["GET", "HEAD"] }, "home.lostnfound": { "uri": "lostnfound", "methods": ["GET", "HEAD"] }, "home.privacy.dag": { "uri": "privacy", "methods": ["GET", "HEAD"] }, "home.ai.dag": { "uri": "ai", "methods": ["GET", "HEAD"] }, "home.contacts.dag": { "uri": "contacts", "methods": ["GET", "HEAD"] }, "home.links": { "uri": "links", "methods": ["GET", "HEAD"] }, "home.visit": { "uri": "visitcard", "methods": ["GET", "HEAD"] }, "home.publication": { "uri": "publikationen", "methods": ["GET", "HEAD"] }, "home.imprint.chh": { "uri": "imprint", "methods": ["GET", "HEAD"] }, "user-profile-information.update_alt": { "uri": "user/profile", "methods": ["PUT"] }, "save.shp": { "uri": "save/shortpoems", "methods": ["POST"] }, "profile.photo.get": { "uri": "profile/photo", "methods": ["GET", "HEAD"] }, "mail.subscribe_newsl": { "uri": "newsl_subscribe", "methods": ["POST"] }, "mail.unsubscribe_newsl": { "uri": "unsubscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "mail.savenewsletter": { "uri": "mail/subscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "home.ai": { "uri": "home/ai", "methods": ["GET", "HEAD"] }, "mcs.points": { "uri": "about/mcs-points", "methods": ["GET", "HEAD"] }, "dashboard": { "uri": "dashboard", "methods": ["GET", "HEAD"] }, "newsl.to.mcsp": { "uri": "newslToMCSLPoints/{uhash?}/{comphash?}/{email?}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "comphash", "email"] }, "personal.update": { "uri": "personal_update", "methods": ["POST"] }, "home.qrcodah": { "uri": "home/QRCodaH", "methods": ["GET", "HEAD"] }, "home.about": { "uri": "home/aboutme", "methods": ["GET", "HEAD"] }, "home.imprint": { "uri": "home/imprint", "methods": ["GET", "HEAD"] }, "home.terms": { "uri": "home/terms", "methods": ["GET", "HEAD"] }, "home.images.gallery": { "uri": "home/show/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.gallery.search": { "uri": "home/search/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.index": { "uri": "home/pictures", "methods": ["GET", "HEAD"] }, "home.shortpoems": { "uri": "home/shortpoems", "methods": ["GET", "HEAD"] }, "home.didyouknow": { "uri": "home/didyouknow", "methods": ["GET", "HEAD"] }, "home.blog.index": { "uri": "blogs", "methods": ["GET", "HEAD"] }, "home.blog.show": { "uri": "blogs/show/{autoslug}", "methods": ["GET", "HEAD"], "parameters": ["autoslug"] }, "home.no_application_found": { "uri": "home/no_application_found", "methods": ["GET", "HEAD"] }, "home.user_is_no_admin": { "uri": "home/user_is_no_admin", "methods": ["GET", "HEAD"] }, "home.user_is_no_employee": { "uri": "home/user_is_no_employee", "methods": ["GET", "HEAD"] }, "home.user_is_no_customer": { "uri": "home/user_is_no_customer", "methods": ["GET", "HEAD"] }, "home.invalid_signature": { "uri": "home/invalid_signature", "methods": ["GET", "HEAD"] }, "home.userlist": { "uri": "home/users", "methods": ["GET", "HEAD"] }, "home.user.show": { "uri": "home/users/show/{name}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["name", "id"] }, "home.privacy": { "uri": "home/privacy", "methods": ["GET", "HEAD"] }, "mfx.changelog": { "uri": "changelog", "methods": ["GET", "HEAD"] }, "mfx.changelog.old": { "uri": "changelog_old", "methods": ["GET", "HEAD"] }, "home.projects.mfx": { "uri": "home/projects", "methods": ["GET", "HEAD"] }, "home.images.cat.mfx": { "uri": "home/images", "methods": ["GET", "HEAD"] }, "home.images.mfx": { "uri": "home/images/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.people.mfx": { "uri": "home/people", "methods": ["GET", "HEAD"] }, "home.privacy.mfx": { "uri": "home/privacy_info", "methods": ["GET", "HEAD"] }, "home.infos.mfx": { "uri": "home/infos", "methods": ["GET", "HEAD"] }, "home.infos.show.mfx": { "uri": "home/infos/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.powered.show.mfx": { "uri": "powered-by-mcsl", "methods": ["GET", "HEAD"] }, "home.contacts.mfx": { "uri": "contacts_mfx", "methods": ["GET", "HEAD"] }, "api.table-columns": { "uri": "api/table-columns/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "home.contacts": { "uri": "home/contacts", "methods": ["GET", "HEAD"] }, "user.twofactor.enable": { "uri": "user/twofactor/enable", "methods": ["POST"] }, "user.twofactor.disable": { "uri": "user/twofactor/disable", "methods": ["POST"] }, "images.copyleft": { "uri": "copyleft/images", "methods": ["GET", "HEAD"] }, "mfx.getvotez": { "uri": "api/getVotez", "methods": ["GET", "HEAD"] }, "GetRights": { "uri": "api/user/rights/des/{table}/{right}", "methods": ["GET", "HEAD"], "parameters": ["table", "right"] }, "allRights": { "uri": "api/user/rights/des-all/{right}", "methods": ["GET", "HEAD"], "parameters": ["right"] }, "tables.noview": { "uri": "no-rights", "methods": ["GET", "HEAD"] }, "GetAuth": { "uri": "GetAuth", "methods": ["GET", "HEAD"] }, "api.getRating": { "uri": "api/GetRating/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "admin.users_rights.get": { "uri": "admin/user-rights/get", "methods": ["GET", "HEAD"] }, "two-factor.setup": { "uri": "two-factor/setup", "methods": ["POST"] }, "two-factor.confirm_alt": { "uri": "two-factor/confirm", "methods": ["POST"] }, "admin.users_rights": { "uri": "admin/User_Rights", "methods": ["GET", "HEAD"] }, "admin.GetSRights": { "uri": "api/GetSRights", "methods": ["GET", "HEAD"] }, "admin.users_rights.save": { "uri": "api/admin/user-rights/save", "methods": ["POST"] }, "getSlug": { "uri": "api/getSlug/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "ColumnFetcher": { "uri": "namebindings", "methods": ["GET", "HEAD"] }, "upload.image": { "uri": "upload-image/{table}/{isw?}", "methods": ["POST"], "parameters": ["table", "isw"] }, "upload.file": { "uri": "upload-file/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.ofile": { "uri": "upload-ofile/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.gen": { "uri": "upload-image_alt/{table}/{isw?}/{oripath?}", "methods": ["POST"], "parameters": ["table", "isw", "oripath"] }, "GetUserNull": { "uri": "GetUserNull", "methods": ["GET", "HEAD"] }, "save.image": { "uri": "save-image/{table}", "methods": ["POST"], "parameters": ["table"] }, "comments.fetch": { "uri": "comments/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "GetTableForm": { "uri": "tables/form-data/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "pb": { "uri": "pb", "methods": ["GET", "HEAD"] }, "devmod": { "uri": "devmod", "methods": ["GET", "HEAD"] }, "getnickfromcomments": { "uri": "get-nick-from-comments", "methods": ["GET", "HEAD"] }, "toggle.pub": { "uri": "toggle-pub", "methods": ["POST"] }, "tables.create-table": { "uri": "tables/{table}/create", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "comments.store": { "uri": "comments/store/{table}/{id}", "methods": ["POST"], "parameters": ["table", "id"] }, "GetTablesPosi": { "uri": "api/admin_table_positions", "methods": ["GET", "HEAD"] }, "applicationswitch": { "uri": "applicationswitch", "methods": ["GET", "HEAD"] }, "AddUserAI": { "uri": "api/AddUserAI/{val}", "methods": ["POST"], "parameters": ["val"] }, "admin.dashboard": { "uri": "admin/dashboard", "methods": ["GET", "HEAD"] }, "gen.sitemap": { "uri": "sitemap-generator", "methods": ["GET", "HEAD"] }, "admin.kontakte": { "uri": "admin/Kontakte", "methods": ["GET", "HEAD"] }, "admin.fonts": { "uri": "fonts", "methods": ["GET", "HEAD"] }, "del.uright.function": { "uri": "api/del/function/userrights/{xkis}", "methods": ["DELETE"], "parameters": ["xkis"] }, "act.log.save": { "uri": "api/activity-log", "methods": ["POST"] }, "logs.check": { "uri": "api/chkcom_log/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.actlog": { "uri": "admin/ActLog", "methods": ["GET", "HEAD"] }, "api.get.firstdump": { "uri": "api/getGitDump/{dom?}/{usdis?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "usdis"] }, "api.get.after": { "uri": "api/saveAlt/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "api.showgit": { "uri": "admin/githubdb", "methods": ["GET", "HEAD"] }, "remlogg": { "uri": "api/remlog/{id}", "methods": ["DELETE"], "parameters": ["id"] }, "admin.getunused": { "uri": "admin/get_unused_imgz/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "admin.hackinglog": { "uri": "admin/HackingLog", "methods": ["GET", "HEAD"] }, "admin.CSVImport": { "uri": "api/contacts/import", "methods": ["POST"] }, "GetGenTables": { "uri": "api/getgentables/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "contacts.import.preview": { "uri": "contacts/import-preview", "methods": ["POST"] }, "admin.contacts.updateGroup": { "uri": "admin/contacts/{contact}/group", "methods": ["PUT"], "parameters": ["contact"], "bindings": { "contact": "id" } }, "GetTableOpt": { "uri": "tables/sort-data/{name}", "methods": ["GET", "HEAD"], "parameters": ["name"] }, "zip.images": { "uri": "admin/zip-images/{dom?}", "methods": ["POST"], "parameters": ["dom"] }, "rem.images": { "uri": "admin/removeFiles", "methods": ["POST"] }, "SQL.index": { "uri": "admin/SQLUpdate", "methods": ["GET", "HEAD"] }, "get.db.tables": { "uri": "api/admin-tables", "methods": ["GET", "HEAD"] }, "admin.ausgaben": { "uri": "admin/Ausgaben", "methods": ["GET", "HEAD"] }, "usconfi": { "uri": "userx/update-config/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "dboard.data": { "uri": "dboard/data/{dom?}/{month?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "month"] }, "stats": { "uri": "admin/Statistics", "methods": ["GET", "HEAD"] }, "store.mcslpoints": { "uri": "get_MCSL_Points_Preniums", "methods": ["GET", "HEAD"] }, "send.mcslpoints": { "uri": "SubmitPremiums/{users_id}/{img_id}", "methods": ["GET", "HEAD"], "parameters": ["users_id", "img_id"] }, "get.bash.rights": { "uri": "api/user/batch-rights", "methods": ["POST"] }, "comments.check": { "uri": "api/chkcom/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.contacts": { "uri": "api/contacts", "methods": ["GET", "HEAD"] }, "created.at": { "uri": "api/created-at", "methods": ["GET", "HEAD"] }, "GetCats": { "uri": "api/GetCat/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "save-order": { "uri": "api/save-order/{table}", "methods": ["POST"], "parameters": ["table"] }, "pm.index": { "uri": "pm/index/{tab}", "methods": ["GET", "HEAD"], "parameters": ["tab"] }, "pm.save": { "uri": "pm/save", "methods": ["POST"] }, "admin.pm.check": { "uri": "admin/pm/check/{id}", "methods": ["POST"], "parameters": ["id"] }, "admin.pm.mark": { "uri": "admin/pm/mark", "methods": ["POST"] }, "admin.pm.delete": { "uri": "admin/pm/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.pm.delmore": { "uri": "admin/pm/delmore", "methods": ["POST"] }, "admin.usconf.save": { "uri": "admin/UsConf/save", "methods": ["PUT"] }, "/api-get-image-url": { "uri": "api/images/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "destroy.comments": { "uri": "comments/delete/{comment_id}", "methods": ["DELETE"], "parameters": ["comment_id"] }, "save-json-gallery": { "uri": "api/save-json", "methods": ["POST"] }, "save-dirsave": { "uri": "api/saveFolder", "methods": ["POST"] }, "remove.img": { "uri": "api/del_image/{column}/{folder}/{posi}", "methods": ["POST"], "parameters": ["column", "folder", "posi"] }, "mfx.getstyles": { "uri": "api/tailwind-colors/{subdomain}", "methods": ["GET", "HEAD"], "parameters": ["subdomain"] }, "comments.check.done": { "uri": "api/getCheckedBatch", "methods": ["POST"] }, "admin.laravel_log": { "uri": "admin/laravel_log", "methods": ["GET", "HEAD"] }, "admin.handbook": { "uri": "admin/handbook", "methods": ["GET", "HEAD"] }, "admin.blog.index": { "uri": "admin/blogs/index", "methods": ["GET", "HEAD"] }, "admin.blog.create": { "uri": "admin/blogs/create", "methods": ["GET", "HEAD"] }, "admin.blog.store": { "uri": "admin/blogs/store", "methods": ["POST"] }, "admin.blog.edit": { "uri": "admin/blogs/{blog}/edit", "methods": ["GET", "HEAD"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.blog.update": { "uri": "admin/blogs/{blog}", "methods": ["PUT"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.tables.store": { "uri": "admin/tables/store/{table}", "methods": ["POST"], "parameters": ["table"] }, "admin.tables.copy": { "uri": "admin/tables/copy/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "admin.tables.create": { "uri": "admin/tables/create/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.tables.index": { "uri": "admin/tables", "methods": ["GET", "HEAD"] }, "admin.tables.show": { "uri": "admin/tables/{table}/show", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "pw.form": { "uri": "tables/pwform", "methods": ["GET", "HEAD"] }, "pw.print": { "uri": "tables/pwprint", "methods": ["POST"] }, "admin.tables.edit": { "uri": "admin/tables/edit/{id}/{table}", "methods": ["GET", "HEAD"], "parameters": ["id", "table"] }, "admin.tables.delete": { "uri": "admin/tables/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.table.update": { "uri": "admin/tables/update/{table}/{id?}", "methods": ["POST"], "parameters": ["table", "id"] }, "admin.mailcenter": { "uri": "admin/email", "methods": ["GET", "HEAD"] }, "admin.mailprev": { "uri": "email/preview", "methods": ["POST"] }, "admin.mail.save": { "uri": "email/save", "methods": ["POST"] }, "admin.email.signatur.save": { "uri": "email/signatur/save", "methods": ["POST"] }, "admin.mail.send": { "uri": "email/send", "methods": ["POST"] }, "admin.mail.sended": { "uri": "email/sended", "methods": ["GET", "HEAD"] }, "admin.blog.delete": { "uri": "admin/blogs/{blog}", "methods": ["DELETE"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.redirect.route": { "uri": "admin", "methods": ["GET", "HEAD"] }, "hasCreated": { "uri": "hasCreated/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.profile": { "uri": "admin/profile", "methods": ["GET", "HEAD"] }, "admin.api_tokens.index": { "uri": "admin/api_tokens", "methods": ["GET", "HEAD"] }, "employee.dashboard": { "uri": "employee/dashboard", "methods": ["GET", "HEAD"] }, "customer.dashboard": { "uri": "home/dashboard", "methods": ["GET", "HEAD"] }, "GetTableEnum": { "uri": "tables/sort-enum/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "ArtAct": { "uri": "act-category/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "toggle.darkmode": { "uri": "toggle-dark-mode", "methods": ["POST"] }, "GetTableItemScope": { "uri": "tables/sort-enumis/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "home": { "uri": "home", "methods": ["GET", "HEAD"] } } };
+const Ziggy = { "url": "http://ab.test.mcs", "port": null, "defaults": {}, "routes": { "debugbar.openhandler": { "uri": "_debugbar/open", "methods": ["GET", "HEAD"] }, "debugbar.clockwork": { "uri": "_debugbar/clockwork/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "debugbar.assets.css": { "uri": "_debugbar/assets/stylesheets", "methods": ["GET", "HEAD"] }, "debugbar.assets.js": { "uri": "_debugbar/assets/javascript", "methods": ["GET", "HEAD"] }, "debugbar.cache.delete": { "uri": "_debugbar/cache/{key}/{tags?}", "methods": ["DELETE"], "parameters": ["key", "tags"] }, "debugbar.queries.explain": { "uri": "_debugbar/queries/explain", "methods": ["POST"] }, "laravel-cookie-consent.script-utils": { "uri": "laravel-cookie-consent/script-utils", "methods": ["GET", "HEAD"] }, "login": { "uri": "login", "methods": ["GET", "HEAD"] }, "logout": { "uri": "logout", "methods": ["POST"] }, "password.request": { "uri": "forgot-password", "methods": ["GET", "HEAD"] }, "password.reset": { "uri": "reset-password/{token}", "methods": ["GET", "HEAD"], "parameters": ["token"] }, "password.email": { "uri": "forgot-password", "methods": ["POST"] }, "password.update": { "uri": "reset-password", "methods": ["POST"] }, "register": { "uri": "register", "methods": ["GET", "HEAD"] }, "register.store": { "uri": "register", "methods": ["POST"] }, "verification.notice": { "uri": "email/verify", "methods": ["GET", "HEAD"] }, "verification.verify": { "uri": "email/verify/{id}/{hash}", "methods": ["GET", "HEAD"], "parameters": ["id", "hash"] }, "verification.send": { "uri": "email/verification-notification", "methods": ["POST"] }, "user-profile-information.update": { "uri": "user/profile-information", "methods": ["PUT"] }, "user-password.update": { "uri": "user/password", "methods": ["PUT"] }, "password.confirm": { "uri": "user/confirm-password", "methods": ["GET", "HEAD"] }, "password.confirmation": { "uri": "user/confirmed-password-status", "methods": ["GET", "HEAD"] }, "password.confirm.store": { "uri": "user/confirm-password", "methods": ["POST"] }, "two-factor.login": { "uri": "two-factor-challenge", "methods": ["GET", "HEAD"] }, "two-factor.login.post": { "uri": "two-factor-challenge", "methods": ["POST"] }, "two-factor.enable": { "uri": "user/two-factor-authentication", "methods": ["POST"] }, "two-factor.confirm": { "uri": "user/confirmed-two-factor-authentication", "methods": ["POST"] }, "two-factor.disable": { "uri": "user/two-factor-authentication", "methods": ["DELETE"] }, "two-factor.qr-code": { "uri": "user/two-factor-qr-code", "methods": ["GET", "HEAD"] }, "two-factor.secret-key": { "uri": "user/two-factor-secret-key", "methods": ["GET", "HEAD"] }, "two-factor.recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["GET", "HEAD"] }, "two-factor.regenerate-recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["POST"] }, "terms.show": { "uri": "terms-of-service", "methods": ["GET", "HEAD"] }, "policy.show": { "uri": "privacy-policy", "methods": ["GET", "HEAD"] }, "profile.show": { "uri": "user/profile", "methods": ["GET", "HEAD"] }, "other-browser-sessions.destroy": { "uri": "user/other-browser-sessions", "methods": ["DELETE"] }, "current-user-photo.destroy": { "uri": "user/profile-photo", "methods": ["DELETE"] }, "current-user.destroy": { "uri": "user", "methods": ["DELETE"] }, "api-tokens.index": { "uri": "user/api-tokens", "methods": ["GET", "HEAD"] }, "api-tokens.store": { "uri": "user/api-tokens", "methods": ["POST"] }, "api-tokens.update": { "uri": "user/api-tokens/{token}", "methods": ["PUT"], "parameters": ["token"] }, "api-tokens.destroy": { "uri": "user/api-tokens/{token}", "methods": ["DELETE"], "parameters": ["token"] }, "sanctum.csrf-cookie": { "uri": "sanctum/csrf-cookie", "methods": ["GET", "HEAD"] }, "ignition.healthCheck": { "uri": "_ignition/health-check", "methods": ["GET", "HEAD"] }, "ignition.executeSolution": { "uri": "_ignition/execute-solution", "methods": ["POST"] }, "ignition.updateConfig": { "uri": "_ignition/update-config", "methods": ["POST"] }, "cookieconsent.script": { "uri": "cookie-consent/script", "methods": ["GET", "HEAD"] }, "cookieconsent.accept.all": { "uri": "cookie-consent/accept-all", "methods": ["POST"] }, "cookieconsent.accept.essentials": { "uri": "cookie-consent/accept-essentials", "methods": ["POST"] }, "cookieconsent.accept.configuration": { "uri": "cookie-consent/configure", "methods": ["POST"] }, "cookieconsent.reset": { "uri": "cookie-consent/reset", "methods": ["POST"] }, "admin.add.func": { "uri": "api/AddFunc", "methods": ["POST"] }, "countpixel": { "uri": "countpixel", "methods": ["GET", "HEAD"] }, "api.mcslpoints": { "uri": "api/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "remove.temp": { "uri": "api/delTempz/{path}", "methods": ["GET", "HEAD"], "parameters": ["path"] }, "ggle.login": { "uri": "auth/google", "methods": ["GET", "HEAD"] }, "ri": { "uri": "ri", "methods": ["GET", "HEAD"] }, "get.help": { "uri": "api/gethelp/{slug}/{table}", "methods": ["GET", "HEAD"], "parameters": ["slug", "table"] }, "auth.nickname": { "uri": "auth/nickname", "methods": ["GET", "HEAD"] }, "admin.mcslpoints": { "uri": "admin/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "GetRights_all": { "uri": "api/user/rights", "methods": ["GET", "HEAD"] }, "home.imprint.gen": { "uri": "home/impressum", "methods": ["GET", "HEAD"] }, "home.index": { "uri": "/", "methods": ["GET", "HEAD"] }, "home.spruch": { "uri": "api/spruch-des-monats", "methods": ["GET", "HEAD"] }, "home.lostnfound": { "uri": "lostnfound", "methods": ["GET", "HEAD"] }, "home.privacy.dag": { "uri": "privacy", "methods": ["GET", "HEAD"] }, "home.ai.dag": { "uri": "ai", "methods": ["GET", "HEAD"] }, "home.contacts.dag": { "uri": "contacts", "methods": ["GET", "HEAD"] }, "home.links": { "uri": "links", "methods": ["GET", "HEAD"] }, "home.visit": { "uri": "visitcard", "methods": ["GET", "HEAD"] }, "home.publication": { "uri": "publikationen", "methods": ["GET", "HEAD"] }, "home.imprint.chh": { "uri": "imprint", "methods": ["GET", "HEAD"] }, "user-profile-information.update_alt": { "uri": "user/profile", "methods": ["PUT"] }, "save.shp": { "uri": "save/shortpoems", "methods": ["POST"] }, "profile.photo.get": { "uri": "profile/photo", "methods": ["GET", "HEAD"] }, "mail.subscribe_newsl": { "uri": "newsl_subscribe", "methods": ["POST"] }, "mail.unsubscribe_newsl": { "uri": "unsubscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "mail.savenewsletter": { "uri": "mail/subscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "home.ai": { "uri": "home/ai", "methods": ["GET", "HEAD"] }, "mcs.points": { "uri": "about/mcs-points", "methods": ["GET", "HEAD"] }, "dashboard": { "uri": "dashboard", "methods": ["GET", "HEAD"] }, "newsl.to.mcsp": { "uri": "newslToMCSLPoints/{uhash?}/{comphash?}/{email?}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "comphash", "email"] }, "personal.update": { "uri": "personal_update", "methods": ["POST"] }, "home.qrcodah": { "uri": "home/QRCodaH", "methods": ["GET", "HEAD"] }, "home.about": { "uri": "home/aboutme", "methods": ["GET", "HEAD"] }, "home.imprint": { "uri": "home/imprint", "methods": ["GET", "HEAD"] }, "home.terms": { "uri": "home/terms", "methods": ["GET", "HEAD"] }, "home.images.gallery": { "uri": "home/show/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.gallery.search": { "uri": "home/search/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.index": { "uri": "home/pictures", "methods": ["GET", "HEAD"] }, "home.shortpoems": { "uri": "home/shortpoems", "methods": ["GET", "HEAD"] }, "home.didyouknow": { "uri": "home/didyouknow", "methods": ["GET", "HEAD"] }, "home.blog.index": { "uri": "blogs", "methods": ["GET", "HEAD"] }, "home.blog.show": { "uri": "blogs/show/{autoslug}", "methods": ["GET", "HEAD"], "parameters": ["autoslug"] }, "home.no_application_found": { "uri": "home/no_application_found", "methods": ["GET", "HEAD"] }, "home.user_is_no_admin": { "uri": "home/user_is_no_admin", "methods": ["GET", "HEAD"] }, "home.user_is_no_employee": { "uri": "home/user_is_no_employee", "methods": ["GET", "HEAD"] }, "home.user_is_no_customer": { "uri": "home/user_is_no_customer", "methods": ["GET", "HEAD"] }, "home.invalid_signature": { "uri": "home/invalid_signature", "methods": ["GET", "HEAD"] }, "home.userlist": { "uri": "home/users", "methods": ["GET", "HEAD"] }, "home.user.show": { "uri": "home/users/show/{name}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["name", "id"] }, "home.privacy": { "uri": "home/privacy", "methods": ["GET", "HEAD"] }, "mfx.changelog": { "uri": "changelog", "methods": ["GET", "HEAD"] }, "mfx.changelog.old": { "uri": "changelog_old", "methods": ["GET", "HEAD"] }, "home.projects.mfx": { "uri": "home/projects", "methods": ["GET", "HEAD"] }, "home.images.cat.mfx": { "uri": "home/images", "methods": ["GET", "HEAD"] }, "home.images.mfx": { "uri": "home/images/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.people.mfx": { "uri": "home/people", "methods": ["GET", "HEAD"] }, "home.privacy.mfx": { "uri": "home/privacy_info", "methods": ["GET", "HEAD"] }, "home.infos.mfx": { "uri": "home/infos", "methods": ["GET", "HEAD"] }, "home.infos.show.mfx": { "uri": "home/infos/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.powered.show.mfx": { "uri": "powered-by-mcsl", "methods": ["GET", "HEAD"] }, "home.contacts.mfx": { "uri": "contacts_mfx", "methods": ["GET", "HEAD"] }, "api.table-columns": { "uri": "api/table-columns/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "home.contacts": { "uri": "home/contacts", "methods": ["GET", "HEAD"] }, "user.twofactor.enable": { "uri": "user/twofactor/enable", "methods": ["POST"] }, "user.twofactor.disable": { "uri": "user/twofactor/disable", "methods": ["POST"] }, "images.copyleft": { "uri": "copyleft/images", "methods": ["GET", "HEAD"] }, "mfx.getvotez": { "uri": "api/getVotez", "methods": ["GET", "HEAD"] }, "GetRights": { "uri": "api/user/rights/des/{table}/{right}", "methods": ["GET", "HEAD"], "parameters": ["table", "right"] }, "allRights": { "uri": "api/user/rights/des-all/{right}", "methods": ["GET", "HEAD"], "parameters": ["right"] }, "tables.noview": { "uri": "no-rights", "methods": ["GET", "HEAD"] }, "GetAuth": { "uri": "GetAuth", "methods": ["GET", "HEAD"] }, "api.getRating": { "uri": "api/GetRating/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "admin.users_rights.get": { "uri": "admin/user-rights/get", "methods": ["GET", "HEAD"] }, "two-factor.setup": { "uri": "two-factor/setup", "methods": ["POST"] }, "two-factor.confirm_alt": { "uri": "two-factor/confirm", "methods": ["POST"] }, "admin.users_rights": { "uri": "admin/User_Rights", "methods": ["GET", "HEAD"] }, "admin.GetSRights": { "uri": "api/GetSRights", "methods": ["GET", "HEAD"] }, "admin.users_rights.save": { "uri": "api/admin/user-rights/save", "methods": ["POST"] }, "getSlug": { "uri": "api/getSlug/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "ColumnFetcher": { "uri": "namebindings", "methods": ["GET", "HEAD"] }, "upload.image": { "uri": "upload-image/{table}/{isw?}", "methods": ["POST"], "parameters": ["table", "isw"] }, "upload.file": { "uri": "upload-file/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.ofile": { "uri": "upload-ofile/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.gen": { "uri": "upload-image_alt/{table}/{isw?}/{oripath?}", "methods": ["POST"], "parameters": ["table", "isw", "oripath"] }, "GetUserNull": { "uri": "GetUserNull", "methods": ["GET", "HEAD"] }, "save.image": { "uri": "save-image/{table}", "methods": ["POST"], "parameters": ["table"] }, "comments.fetch": { "uri": "comments/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "GetTableForm": { "uri": "tables/form-data/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "pb": { "uri": "pb", "methods": ["GET", "HEAD"] }, "devmod": { "uri": "devmod", "methods": ["GET", "HEAD"] }, "getnickfromcomments": { "uri": "get-nick-from-comments", "methods": ["GET", "HEAD"] }, "toggle.pub": { "uri": "toggle-pub", "methods": ["POST"] }, "tables.create-table": { "uri": "tables/{table}/create", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "comments.store": { "uri": "comments/store/{table}/{id}", "methods": ["POST"], "parameters": ["table", "id"] }, "GetTablesPosi": { "uri": "api/admin_table_positions", "methods": ["GET", "HEAD"] }, "applicationswitch": { "uri": "applicationswitch", "methods": ["GET", "HEAD"] }, "AddUserAI": { "uri": "api/AddUserAI/{val}", "methods": ["POST"], "parameters": ["val"] }, "admin.dashboard": { "uri": "admin/dashboard", "methods": ["GET", "HEAD"] }, "gen.sitemap": { "uri": "sitemap-generator", "methods": ["GET", "HEAD"] }, "admin.kontakte": { "uri": "admin/Kontakte", "methods": ["GET", "HEAD"] }, "admin.fonts": { "uri": "fonts", "methods": ["GET", "HEAD"] }, "del.uright.function": { "uri": "api/del/function/userrights/{xkis}", "methods": ["DELETE"], "parameters": ["xkis"] }, "gen.actlog": { "uri": "api/activity-log", "methods": ["GET", "HEAD"] }, "act.log.save": { "uri": "api/activity-log", "methods": ["POST"] }, "logs.check": { "uri": "api/chkcom_log/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.actlog": { "uri": "admin/ActLog", "methods": ["GET", "HEAD"] }, "api.get.firstdump": { "uri": "api/getGitDump/{dom?}/{usdis?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "usdis"] }, "api.get.after": { "uri": "api/saveAlt/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "api.showgit": { "uri": "admin/githubdb", "methods": ["GET", "HEAD"] }, "remlogg": { "uri": "api/remlog/{id}", "methods": ["DELETE"], "parameters": ["id"] }, "admin.getunused": { "uri": "admin/get_unused_imgz/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "admin.hackinglog": { "uri": "admin/HackingLog", "methods": ["GET", "HEAD"] }, "admin.CSVImport": { "uri": "api/contacts/import", "methods": ["POST"] }, "GetGenTables": { "uri": "api/getgentables/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "contacts.import.preview": { "uri": "contacts/import-preview", "methods": ["POST"] }, "admin.contacts.updateGroup": { "uri": "admin/contacts/{contact}/group", "methods": ["PUT"], "parameters": ["contact"], "bindings": { "contact": "id" } }, "GetTableOpt": { "uri": "tables/sort-data/{name}", "methods": ["GET", "HEAD"], "parameters": ["name"] }, "zip.images": { "uri": "admin/zip-images/{dom?}", "methods": ["POST"], "parameters": ["dom"] }, "rem.images": { "uri": "admin/removeFiles", "methods": ["POST"] }, "SQL.index": { "uri": "admin/SQLUpdate", "methods": ["GET", "HEAD"] }, "get.db.tables": { "uri": "api/admin-tables", "methods": ["GET", "HEAD"] }, "admin.ausgaben": { "uri": "admin/Ausgaben", "methods": ["GET", "HEAD"] }, "usconfi": { "uri": "userx/update-config/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "dboard.data": { "uri": "dboard/data/{dom?}/{month?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "month"] }, "stats": { "uri": "admin/Statistics", "methods": ["GET", "HEAD"] }, "store.mcslpoints": { "uri": "get_MCSL_Points_Preniums", "methods": ["GET", "HEAD"] }, "send.mcslpoints": { "uri": "SubmitPremiums/{users_id}/{img_id}", "methods": ["GET", "HEAD"], "parameters": ["users_id", "img_id"] }, "get.bash.rights": { "uri": "api/user/batch-rights", "methods": ["POST"] }, "comments.check": { "uri": "api/chkcom/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.contacts": { "uri": "api/contacts", "methods": ["GET", "HEAD"] }, "created.at": { "uri": "api/created-at", "methods": ["GET", "HEAD"] }, "GetCats": { "uri": "api/GetCat/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "save-order": { "uri": "api/save-order/{table}", "methods": ["POST"], "parameters": ["table"] }, "pm.index": { "uri": "pm/index/{tab}", "methods": ["GET", "HEAD"], "parameters": ["tab"] }, "pm.save": { "uri": "pm/save", "methods": ["POST"] }, "admin.pm.check": { "uri": "admin/pm/check/{id}", "methods": ["POST"], "parameters": ["id"] }, "admin.pm.mark": { "uri": "admin/pm/mark", "methods": ["POST"] }, "admin.pm.delete": { "uri": "admin/pm/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.pm.delmore": { "uri": "admin/pm/delmore", "methods": ["POST"] }, "admin.usconf.save": { "uri": "admin/UsConf/save", "methods": ["PUT"] }, "/api-get-image-url": { "uri": "api/images/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "destroy.comments": { "uri": "comments/delete/{comment_id}", "methods": ["DELETE"], "parameters": ["comment_id"] }, "save-json-gallery": { "uri": "api/save-json", "methods": ["POST"] }, "save-dirsave": { "uri": "api/saveFolder", "methods": ["POST"] }, "remove.img": { "uri": "api/del_image/{column}/{folder}/{posi}", "methods": ["POST"], "parameters": ["column", "folder", "posi"] }, "mfx.getstyles": { "uri": "api/tailwind-colors/{subdomain}", "methods": ["GET", "HEAD"], "parameters": ["subdomain"] }, "comments.check.done": { "uri": "api/getCheckedBatch", "methods": ["POST"] }, "admin.laravel_log": { "uri": "admin/laravel_log", "methods": ["GET", "HEAD"] }, "admin.handbook": { "uri": "admin/handbook", "methods": ["GET", "HEAD"] }, "admin.blog.index": { "uri": "admin/blogs/index", "methods": ["GET", "HEAD"] }, "admin.blog.create": { "uri": "admin/blogs/create", "methods": ["GET", "HEAD"] }, "admin.blog.store": { "uri": "admin/blogs/store", "methods": ["POST"] }, "admin.blog.edit": { "uri": "admin/blogs/{blog}/edit", "methods": ["GET", "HEAD"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.blog.update": { "uri": "admin/blogs/{blog}", "methods": ["PUT"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.tables.store": { "uri": "admin/tables/store/{table}", "methods": ["POST"], "parameters": ["table"] }, "admin.tables.copy": { "uri": "admin/tables/copy/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "admin.tables.create": { "uri": "admin/tables/create/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.tables.index": { "uri": "admin/tables", "methods": ["GET", "HEAD"] }, "admin.tables.show": { "uri": "admin/tables/{table}/show", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "pw.form": { "uri": "tables/pwform", "methods": ["GET", "HEAD"] }, "pw.print": { "uri": "tables/pwprint", "methods": ["POST"] }, "admin.tables.edit": { "uri": "admin/tables/edit/{id}/{table}", "methods": ["GET", "HEAD"], "parameters": ["id", "table"] }, "admin.tables.delete": { "uri": "admin/tables/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.table.update": { "uri": "admin/tables/update/{table}/{id?}", "methods": ["POST"], "parameters": ["table", "id"] }, "admin.mailcenter": { "uri": "admin/email", "methods": ["GET", "HEAD"] }, "admin.mailprev": { "uri": "email/preview", "methods": ["POST"] }, "admin.mail.save": { "uri": "email/save", "methods": ["POST"] }, "admin.email.signatur.save": { "uri": "email/signatur/save", "methods": ["POST"] }, "admin.mail.send": { "uri": "email/send", "methods": ["POST"] }, "admin.mail.sended": { "uri": "email/sended", "methods": ["GET", "HEAD"] }, "admin.blog.delete": { "uri": "admin/blogs/{blog}", "methods": ["DELETE"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.redirect.route": { "uri": "admin", "methods": ["GET", "HEAD"] }, "hasCreated": { "uri": "hasCreated/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.profile": { "uri": "admin/profile", "methods": ["GET", "HEAD"] }, "admin.api_tokens.index": { "uri": "admin/api_tokens", "methods": ["GET", "HEAD"] }, "employee.dashboard": { "uri": "employee/dashboard", "methods": ["GET", "HEAD"] }, "customer.dashboard": { "uri": "home/dashboard", "methods": ["GET", "HEAD"] }, "GetTableEnum": { "uri": "tables/sort-enum/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "ArtAct": { "uri": "act-category/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "toggle.darkmode": { "uri": "toggle-dark-mode", "methods": ["POST"] }, "GetTableItemScope": { "uri": "tables/sort-enumis/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "home": { "uri": "home", "methods": ["GET", "HEAD"] } } };
 if (typeof window !== "undefined" && typeof window.Ziggy !== "undefined") {
   Object.assign(Ziggy.routes, window.Ziggy.routes);
 }

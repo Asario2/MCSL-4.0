@@ -281,3 +281,6 @@
 ![Version](https://img.shields.io/badge/version-5.35.2-orange) Feature - Dom Selector on unused images script (#473)  
 ![Version](https://img.shields.io/badge/version-5.36.9-orange) Feature -  ActivityLog Updated (#472)  
 ![Version](https://img.shields.io/badge/version-5.37.8-orange) Bug - saving of IDS is not working (#475)  
+![Version](https://img.shields.io/badge/version-5.38.0-orange) Hotfix - Image / FileUpload smaller bug (#478)  
+![Version](https://img.shields.io/badge/version-5.39.8-orange) Feature - Added new Sitemaps (#479)  
+![Version](https://img.shields.io/badge/version-5.40.4-orange) Feature - Added Pagination & Search for Activitlog (#480)  

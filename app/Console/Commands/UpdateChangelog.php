@@ -28,7 +28,11 @@ class UpdateChangelog extends Command
         do {
             $this->info("📥 Lade Seite {$page} mit {$perPage} Issues...");
             $response = Http::withOptions(['verify' => false])
-                ->withHeaders(['Accept' => 'application/vnd.github+json'])
+    ->withHeaders([
+        'Accept' => 'application/vnd.github+json',
+        'Authorization' => 'Bearer '.env('GITHUB_TOKEN'),
+        'X-GitHub-Api-Version' => '2022-11-28',
+    ])
                 ->get("https://api.github.com/repos/{$owner}/{$repo}/issues", [
                     'state' => 'closed',
                     'per_page' => $perPage,

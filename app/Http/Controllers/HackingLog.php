@@ -34,17 +34,20 @@ class hackinglog extends Controller
     {
         if(!CheckZrights("hackinglog"))
         {
-            header("Location: /no-rights");
-            exit;
+            return redirect('/no-rights');
         }
-        $data = DB::connection('mariadb')->table("xgen_hackinglog")->orderBy("created_at","DESC")->get();
+            $data = DB::connection('mariadb')->table("xgen_hackinglog")
+                ->select(
+                'xgen_hackinglog.*'
+
+            )->orderBy("created_at","DESC")->get();
             $data->transform(function ($item) {
                 $item->created_at = date("d.m.Y H:i:s", strtotime($item->created_at));
                 $item->url = rawurldecode($item->url);
                 return $item;
             });
         return Inertia::render('Admin/HackingLog', [
-            "data"=>$data,
+            "tables"=>$data,
              'breadcrumbs' => [
             'MCSL IDS - Hacking Log' => route('admin.hackinglog'),
         ],
