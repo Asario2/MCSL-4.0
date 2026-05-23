@@ -637,17 +637,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/api/fonts/zip', [FontController::class, 'zip']);
         Route::get('/fonts', [FontController::class, 'show'])->name('admin.fonts');
         Route::delete("api/del/function/userrights/{xkis}",[RightsController::class,"remFN"])->name('del.uright.function');
-        Route::get('/api/activity-log', function () {
-            if(!CheckZRights("ActivityLog")){
-                return redirect("no-rights");
-            }
-
-            return DB::connection("mariadb")
-                ->table('xgen_activitylog')
-                ->orderBy('id','desc')
-                ->limit(100)
-                ->get();
-        });
+        Route::get('/api/activity-log',[HomeController::class,'ActivityLog'])->name("gen.actlog");
         Route::post('/api/activity-log',[TablesController::class,"Add_Actlog"])
             ->name("act.log.save");
         Route::get('/api/chkcom_log/{id?}', [ActivityPubController::class,'checkLogs'])->name("logs.check");

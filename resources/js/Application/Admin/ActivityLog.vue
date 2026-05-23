@@ -4,6 +4,14 @@
     <template #header>
             <breadcrumb :breadcrumbs="breadcrumbs" />
         </template>
+                        <div class="flex justify-between items-center">
+                    <search-filter
+                        v-model="form.search"
+                        class="w-full"
+
+                        @reset="reset"
+                    />
+                </div>
     <div class="bg-layout-1 text-layout-1 p-6 rounded-lg shadow">
 
       <h2 class="text-lg font-semibold mb-4">Activity Log</h2>
@@ -28,7 +36,7 @@
 
           <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
             <tr
-              v-for="row in logs"
+              v-for="row in paginatedLogs"
               :key="row.id"
               class="transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800/60"
             >
@@ -55,10 +63,10 @@
                   class="text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
                 <span v-if="CheckOL()">
-                  {{ row.URL.substr(22,35) }}
+                  {{ row.URL.substr(22,35).replace("/admin/tables",'') }}
                 </span>
                 <span v-else>
-                    {{ row.URL.substr(18,35) }}
+                    {{ row.URL.substr(18,34).replace("/admin/tables",'') }}
                 </span>
                 </button>
                 <span v-else class="text-gray-400">–</span>
@@ -122,21 +130,63 @@
           <pre class="p-4 text-xs overflow-auto max-h-[70vh] bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100"  v-html="modalContent"></pre>
         </div>
       </div>
+        <!-- <pagination class="dark:bg-black"
+            :links="pagination.links"
+            basePath="admin/ActLog"
+            @navigate="loadLogs" /> -->
 
+<div class="flex flex-wrap gap-2 mt-4">
+
+    <button
+        class="px-3 py-1 border rounded"
+        :disabled="currentPage === 1"
+        @click="currentPage--"
+    >
+        ← Zurück
+    </button>
+
+    <button
+        v-for="page in pageNumbers"
+        :key="page"
+
+        :disabled="page === '...'"
+        @click="page !== '...' && (currentPage = page)"
+
+        class="px-3 py-1 border rounded"
+
+        :class="{
+            'bg-blue-500 text-white': currentPage === page,
+            'opacity-50 cursor-default': page === '...'
+        }"
+    >
+        {{ page }}
+    </button>
+
+    <button
+        class="px-3 py-1 border rounded"
+        :disabled="currentPage >= totalPages"
+        @click="currentPage++"
+    >
+       Weiter →
+    </button>
+
+</div>
     </div>
   </Layout>
 </template>
 
 <script>
+import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 import axios from 'axios';
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import { CleanTable, ucf, SD, rumLaut, GetProfileImagePath,CheckOL } from "@/helpers";
 import MetaHeader from '@/Application/Homepage/Shared/MetaHeader.vue';
+import Pagination from "@/Application/Components/Pagination.vue";
 
 export default {
   name: "ActivityLogTable",
-  components: { Layout, Breadcrumb,MetaHeader },
+  components: { Layout, Breadcrumb,MetaHeader,Pagination,SearchFilter },
 
   props: {
     users: [Object,Array],
@@ -151,25 +201,134 @@ export default {
     default: () => ({}),
 
     },
+    // tables:[String,Object,Array],
   },
 
   data() {
     return {
       logs: [],
+      pagination: [],
+      currentPage: 1,
+      perPage: 20,
       showModal: false,
       modalTitle: '',
       modalContent: '',
       checkedStatus: {},
       sortable: null,
       settings: {},
+         form: {
+            search: ''
+        },
+
     };
   },
 
   computed: {
+
+    pageNumbers() {
+
+        const total = this.totalPages;
+        const current = this.currentPage;
+
+        let pages = [];
+
+        // Alles anzeigen
+        if (total <= 12) {
+
+            for (let i = 1; i <= total; i++) {
+                pages.push(i);
+            }
+
+            return pages;
+        }
+
+        // Anfang
+        if (current <= 9) {
+
+            for (let i = 1; i <= 10; i++) {
+                pages.push(i);
+            }
+
+            pages.push('...');
+            pages.push(total);
+
+            return pages;
+        }
+
+        // Ende
+        if (current >= total - 8) {
+
+            pages.push(1);
+            pages.push('...');
+
+            for (let i = total - 9; i <= total; i++) {
+                pages.push(i);
+            }
+
+            return pages;
+        }
+
+        // Mitte
+
+        pages.push(1);
+        pages.push('...');
+
+        let start = current - 3;
+        let end = current + 3;
+
+        for (let i = start; i <= end; i++) {
+            pages.push(i);
+        }
+
+        // IMMER zweites ...
+        pages.push('...');
+
+        pages.push(total);
+
+        return pages;
+    },
     tableHead() {
       return (this.logs[0]?.admin_table_id) ? "Tabelle" : "";
+    },
+    filteredLogs() {
+
+        if (!this.form.search) {
+            return this.logs;
+        }
+
+        const s = this.form.search.toLowerCase();
+
+        return this.logs.filter(row => {
+
+            return (
+                String(row.id || '').toLowerCase().includes(s) ||
+                String(row.action || '').toLowerCase().includes(s) ||
+                String(row.tablename || '').toLowerCase().includes(s) ||
+                String(row.URL || '').toLowerCase().includes(s) ||
+                String(row.info || '').toLowerCase().includes(s) ||
+                String(row.IP || '').toLowerCase().includes(s) ||
+                String(row.session_id || '').toLowerCase().includes(s) ||
+                String(row.dom || '').toLowerCase().includes(s) ||
+                String(row.user_name || '').toLowerCase().includes(s)
+            );
+
+        });
+
+    },
+
+    paginatedLogs() {
+
+        const start = (this.currentPage - 1) * this.perPage;
+        const end = start + this.perPage;
+
+        return this.filteredLogs.slice(start, end);
+
+    },
+
+    totalPages() {
+        return Math.ceil(this.filteredLogs.length / this.perPage);
     }
-  },
+},
 
   async mounted() {
 //     console.log("ActivityLogTable mounted");
@@ -188,7 +347,22 @@ export default {
         window.removeEventListener("beforeunload", this.markChecked);
     }
   },
+    watch: {
+        // 'form.search': {
+        //     handler(value) {
 
+        //         this.loadLogs(
+        //             '/api/activity-log?search=' + encodeURIComponent(value)
+        //         );
+
+        //     },
+        //     deep: true
+        // }
+
+           'form.search'() {
+        this.currentPage = 1;
+    }
+    },
   methods: {
 
     CleanTable, ucf, SD, rumLaut, GetProfileImagePath,CheckOL,
@@ -210,17 +384,21 @@ export default {
 
     return `${day}.${month}.${year} ${time}`;
 },
-    loadLogs() {
-//       console.log("Loading logs...");
-      axios.get("/api/activity-log")
-        .then(res => {
-//           console.log("Logs geladen:", res.data);
-          this.logs = res.data;
-          this.fetchStatus();
-        })
-        .catch(err => console.error("Fehler beim Laden:", err));
-    },
+    loadLogs(url = null) {
+        url = url || (
+            "/api/activity-log" + window.location.search
+        );
 
+        axios.get(url)
+            .then(res => {
+
+                this.logs = res.data.tables;
+                this.pagination = res.data.pagination;
+
+                this.fetchStatus();
+            })
+            .catch(err => console.error("Fehler beim Laden:", err));
+    },
     markChecked() {
       const unchecked = this.logs
         .filter(row => row.pub === 0)

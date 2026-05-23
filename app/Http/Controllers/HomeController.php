@@ -256,7 +256,7 @@ class HomeController extends Controller
 
         return Inertia::render('Components/Social/mcs-points-ov', ["text"=>nl2br($text),"MCSL_GLOB_PTS"=>$MCSL_GLOB_PTS]);
     }
-    public function admin_actlog()
+    public function admin_actlog(Request $request)
     {
     if(!CheckZRights("ActivityLog")){
             return redirect("no-rights");
@@ -1000,6 +1000,70 @@ public function imprint_dag()
     }
     public function plot_gfx(){
         return Inertia::render('Homepage/Stats');
+    }
+    public function ActivityLog(Request $request)
+    {
+        if(!CheckZRights("ActivityLog")){
+            return redirect("no-rights");
+        }
+
+// $tables = DB::connection("mariadb")
+//     ->table('xgen_activitylog')
+
+//     ->leftJoin('users', 'users.id', '=', 'xgen_activitylog.users_id')
+
+
+
+//     ->select(
+//         'xgen_activitylog.*',
+//         'users.name as user_name'
+//     )
+
+//     ->orderBy('xgen_activitylog.id','desc')
+
+//     ->paginate(
+//         20,
+//         ['*'],
+//         'page',
+//         $request->input('page', 1)
+//     )
+
+//     ->withQueryString();
+
+//         $pagination = [
+//             'current_page' => $tables->currentPage(),
+//             'last_page'    => $tables->lastPage(),
+//             'per_page'     => $tables->perPage(),
+//             'total'        => $tables->total(),
+//             'from'         => $tables->firstItem(),
+//             'to'           => $tables->lastItem(),
+//             'links'        => collect($tables->linkCollection())->map(function ($link) {
+//                 return [
+//                     'url'    => $link['url'],
+//                     'label'  => $link['label'],
+//                     'active' => $link['active'],
+//                 ];
+//             }),
+//         ];
+
+//         return [
+//             "pagination" => $pagination,
+//             "tables" => $tables->items()
+
+//         ];
+        $tables = DB::connection("mariadb")
+            ->table('xgen_activitylog')
+            ->leftJoin('users', 'users.id', '=', 'xgen_activitylog.users_id')
+            ->select(
+                'xgen_activitylog.*',
+                'users.name as user_name'
+            )
+            ->orderBy('xgen_activitylog.id','desc')
+            ->get();
+
+        return [
+            "tables" => $tables
+        ];
     }
     public function home_mfx()
     {

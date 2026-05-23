@@ -112,7 +112,8 @@ class RequestInspectionMiddleware
     }
     public function handle(Request $request, Closure $next)
     {
-    if (str_contains($request->path(), 'countpixel')) {
+        if (str_contains($request->path(), 'countpixel') && $request->filled('url') && $request->filled('route') && count($request->query()) === 2)
+        {
             return $next($request);
         }
 
