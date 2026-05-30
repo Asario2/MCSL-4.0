@@ -1,213 +1,273 @@
 @php
     use App\Http\Controllers\GlobalController;
+    use App\Http\Controllers\DarkModeController;
+
     App::setLocale('de');
     setlocale(LC_ALL, 'deu_deu.1252');
-    // GlobalController::SetDomain();
 
-    use App\Http\Controllers\DarkModeController;
-    if (!session_id()) {
-        // session_start();
-    }
-    $subdomain = SD(); // z.B. "foo", "bar"
+    $subdomain = SD();
     $pagen = SD("pn");
 
     $favicon = "/images/_{$subdomain}/web/alogo.png";
     $ahost = $_SERVER['HTTP_HOST'];
+
     $_SESSION['comment_ids'] = [];
 @endphp
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>
-    window.subdomain = "{{ $subdomain }}";
-    window.subdomain_alt = "{{ $sd_alt }}";
-    window.pagename = "{{ $pagen }}";
-    window.ahost = "{{ $ahost }}";
-    window.app_name = "{{ $pagen }}"
-</script>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <meta
+        name="csrf-token"
+        content="{{ csrf_token() }}"
+    >
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- Scripts -->
-    <?php
-    // Subdomain extrahieren (erster Teil des Hosts)
-    $subdomain = SD();
-    ?>
-    <link rel="icon" href="_<?php echo $subdomain; ?>/web/alogo.png" type="image/png">
-    <link type='text/css' href='/css/app.css' rel='stylesheet'>
-    <script src='/js/app.js' type='module'></script>
+
+    <script>
+        window.subdomain = "{{ $subdomain }}";
+        window.subdomain_alt = "{{ $sd_alt ?? '' }}";
+        window.pagename = "{{ $pagen }}";
+        window.ahost = "{{ $ahost }}";
+        window.app_name = "{{ $pagen }}";
+    </script>
+
+    <link
+        rel="icon"
+        href="{{ $favicon }}"
+        type="image/png"
+    >
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/photoswipe/photoswipe.css">
     <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="/css/shariff.complete.css">
+    <link rel="stylesheet" href="/css/tailw/{{ $subdomain }}.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 
-    <!-- java scripts for datepicker-->
-    <!-- Moment.js (abhängig vom datetimepicker) -->
-    <script src="/js/moment.min.js"></script>
+    <!-- JS -->
+    <script src="/js/app.js" type="module"></script>
 
-    <!-- Datetimepicker CSS -->
-    <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css') }}" />
-
-    <!-- Datetimepicker JS -->
-    <link rel="stylesheet" type="text/css" href="/css/shariff.complete.css">
-    <link rel="stylesheet" type="text/css" href="/css/tailw/{{$subdomain}}.css">
-
-
-    <link type='text/css' href='{{ asset('css/bootstrap.css') }}' rel='stylesheet'>
-    <link type='text/css' href='{{ asset('css/user.css') }}' rel='stylesheet'>
-    {{-- <script src="/js/jquery.min.js"></script> --}}
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/shariff.complete.js') }}"></script>
-
-    {{-- <script async src="/js/shariff.complete.js"></script> --}}
-    {{-- <script src="/js/bootstrap.min.js"></script> --}}
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/users.js') }}"></script>
 
+    <script src="/js/moment.min.js"></script>
 
-    {{-- <script src="/js/users.js"></script> --}}
+    <style>
 
+        /*
+        |--------------------------------------------------------------------------
+        | Scroll To Top Button
+        |--------------------------------------------------------------------------
+        */
+
+        .back-to-top {
+
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9999px;
+
+            background: #2563eb;
+            color: #fff;
+
+            font-size: 20px;
+
+            text-decoration: none;
+
+            z-index: 9999;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 4px 14px rgba(0,0,0,.25);
+
+            transition:
+                opacity .3s ease,
+                transform .3s ease,
+                background .3s ease;
+        }
+
+        .back-to-top:hover {
+
+            background: #1d4ed8;
+
+            color: #fff;
+
+            transform: translateY(-4px);
+        }
+
+        .dark .back-to-top {
+
+            background: #111827;
+        }
+
+        .dark .back-to-top:hover {
+
+            background: #1f2937;
+        }
+
+    </style>
 
 </head>
-<!-- layouts/app -->
+
 @php
 
     if (empty($_SESSION['dm'])) {
+
         DarkModeController::setDarkMode('dark');
+
         $_SESSION['dm'] = 'dark';
     }
+
     $dm = $_SESSION['dm'] ?? 'dark';
 
 @endphp
 
 <body class="{{ $dm }}">
-    <input type='hidden' id="csrf-token" value="{{ csrf_token() }}">
+
+    <input
+        type="hidden"
+        id="csrf-token"
+        value="{{ csrf_token() }}"
+    >
+
     @if(isset($page['props']['im_cont']))
-    <div style="display:none;">
-        @foreach($page['props']['im_cont'] as $img)
-            <img
-                src="/images/{{ $img['fileName'] }}"
-                alt="{{ $img['label'] }}"
-            >
-        @endforeach
-    </div>
+        <div style="display:none;">
+
+            @foreach($page['props']['im_cont'] as $img)
+
+                <img
+                    src="/images/{{ $img['fileName'] }}"
+                    alt="{{ $img['label'] }}"
+                >
+
+            @endforeach
+
+        </div>
     @endif
+
     <div id="app">
-        @php
-            $subdomain = SD();
-        @endphp
 
-        <!-- Navigation basierend auf der Subdomain laden -->
         @if ($subdomain == 'hm')
-            @include('layouts.hm.hm_navigation') <!-- Spezifische Navigation für Subdomain "hm" -->
-        @else
-            @include('layouts.navigation') <!-- Standardnavigation -->
-        @endif
 
+            @include('layouts.hm.hm_navigation')
+
+        @else
+
+            @include('layouts.navigation')
+
+        @endif
 
         <main class="py-4 w10">
+
             @yield('content')
+
         </main>
+
         @if ($subdomain == 'hm')
-            @include('layouts.hm.hm_subfooter') <!-- Spezifische Navigation für Subdomain "hm" -->
+
+            @include('layouts.hm.hm_subfooter')
+
         @else
+
             @include('layouts.subfooter')
+
         @endif
 
     </div>
-    <script>
-        if (document.getElementById('uploadForm')) {
-            // document.addEventListener("DOMContentLoaded", function() {
-            // Überprüfen, ob eine Success Message in Local Storage existiert
-            let successMessage = localStorage.getItem('successMessage');
 
-            if (successMessage) {
-                // Anzeigen der Nachricht
-                //alert(successMessage); // oder eine andere Methode, z.B. toastr
-
-                // Nach der Anzeige die Nachricht aus Local Storage löschen
-                localStorage.removeItem('successMessage');
-            }
-
-
-            document.addEventListener("DOMContentLoaded", function() {
-                // Funktion, um das Twitter-Icon zu ersetzen
-                function replaceTwitterIcon() {
-                    // Suche alle Twitter-Buttons
-                    const twitterButtons = document.querySelectorAll(".twitter");
-
-                    twitterButtons.forEach(button => {
-                        // Entferne das vorhandene Icon (SVG oder Bild)
-                        const icon = button.querySelector("img, svg");
-                        if (icon) {
-                            alert("jaaa");
-                            icon.remove();
-                        }
-
-                        // Neues X-Icon mit Font Awesome hinzufügen
-                        const xIcon = document.createElement("i");
-                        xIcon.classList.add("fab",
-                            "fa-x-twitter"); // Verwende die gewünschte Klasse von Font Awesome
-                        xIcon.style.fontSize = "1em"; // Stil anpassen, falls gewünscht
-                        button.prepend(xIcon); // Icon am Anfang des Buttons hinzufügen
-                    });
-                }
-
-                // Überprüfe periodisch, ob die Shariff-Buttons erstellt wurden
-                const checkShariffLoaded = setInterval(function() {
-                    if (document.querySelector(".shariff-button-twitter")) {
-                        clearInterval(checkShariffLoaded); // Überwachung stoppen
-                        replaceTwitterIcon(); // Icons ersetzen
-                    }
-                }, 300); // Alle 300ms prüfen
-            });
-
-
-
-
-        }
-    </script>
-    <script>
-        var $y = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konflikte zu vermeiden
-    </script>
-    <a href="#top" class="back-to-top">
-        <i class="fas fa-scroll-up"></i>
+    <!-- Scroll To Top -->
+    <a
+        href="#top"
+        class="back-to-top"
+        aria-label="Nach oben"
+    >
+        <i class="fas fa-arrow-up"></i>
     </a>
-    <script language='javascript'>
+
+    <script>
+
+        var $y = jQuery.noConflict();
+
         $y(document).ready(function() {
-            // Der Button wird ausgeblendet
+
+            /*
+            |--------------------------------------------------------------------------
+            | Scroll To Top
+            |--------------------------------------------------------------------------
+            */
+
             $y(".back-to-top").hide();
 
-            // Funktion für das Scroll-Verhalten
             $y(window).scroll(function() {
-                if ($y(this).scrollTop() > 100) {
+
+                if ($y(this).scrollTop() > 150) {
+
                     $y(".back-to-top").fadeIn();
+
                 } else {
+
                     $y(".back-to-top").fadeOut();
                 }
             });
 
-            $y(".back-to-top").click(function() {
-                $y("body, html").animate({
+            $y(".back-to-top").click(function(e) {
+
+                e.preventDefault();
+
+                $y("html, body").animate({
+
                     scrollTop: 0
-                }, 900, "swing");
-                return false;
+
+                }, 700);
+
             });
+
         });
+
     </script>
-    <script src="{{ asset('js/jquery.js') }}"></script>
+
+    <!-- Optional -->
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-<img src="{{ route('countpixel', [
+
+    <img
+        src="{{ route('countpixel', [
             'url'   => urldecode(request()->fullUrl()),
-            'route' => request()->route()?->getName() ?? 'unknown'
+            'route' => request()->route()?->getName() ?? 'unknown',
             'page'  => request()->query('page')
         ]) }}"
-            alt="" width="1" height="1" style="display:none;">
+        alt=""
+        width="1"
+        height="1"
+        style="display:none;"
+    >
+
 </body>
 
 </html>

@@ -1,320 +1,511 @@
-    <?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    ini_set('memory_limit', '-1');
-    error_reporting(E_ALL);
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('memory_limit', '-1');
+error_reporting(E_ALL);
 
-    use Illuminate\Support\Facades\Auth;
-    use App\Http\Controllers\GlobalController;
-    use Illuminate\Support\Facades\App;
-    use Illuminate\Support\Facades\Route;
-    use Illuminate\Support\Str;
-    use App\Models\Settings;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\GlobalController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use App\Models\Settings;
 
-    App::setLocale('de');
-    $subdomain = SD(); // z.B. "foo", "bar"
-    // $sd_alt = SD();
-    $pagen = SD("pn");
-    $favicon = "/images/_{$subdomain}/web/alogo.png";
-    $ahost = request()->getHost();
-    $chost = request()->getSchemeAndHttpHost();
-    $glo = new GlobalController();
-    if (!file_exists(public_path($favicon))) {
-        $favicon = "/images/favicon_default.png";
-    }
-    if (isset($_GET['re']) && $_GET['re'] === '1') {
-    header("Location: http://".$_SERVER['HTTP_HOST'].str_replace("re=1",'',$_SERVER['REQUEST_URI']));
-    exit;
-    }
-    ?>
+App::setLocale('de');
 
-    <!DOCTYPE html>
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title inertia>{{ CleanTable(1) }}</title>
-        <link rel="canonical" href="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">        <script>
-            if (typeof global === 'undefined') window.global = window;
-            window.Laravel = { userId: {{ auth()->id() ?? 'null' }} };
-            window.authid = "{{ Auth::id() }}";
-            window.subdomain = "{{ $subdomain }}";
-            window.subdomain_alt = "{{ $sd_alt ?? '' }}";
-            window.pagename = "{{ $pagen }}";
-            window.ahost = "{{ $ahost }}";
-            window.chost = "{{ $chost }}";
-            window.app_name = "{{ $pagen }}";
+$subdomain = SD();
+$pagen = SD("pn");
 
-        </script>
-        {{-- <script>
-        window.forceLightMode = @json(
-            SD() == "chh" || in_array(request()->path(), Settings::$loginpages)
-        );
-        </script> --}}
-        {{-- <script>
-        // (function () {
+$favicon = "/images/_{$subdomain}/web/alogo.png";
 
-        //     const forceLight =
-        //         @json(SD() == "chh" || in_array(request()->path(), Settings::$loginpages));
+$ahost = request()->getHost();
+$chost = request()->getSchemeAndHttpHost();
 
-        //     if (forceLight) {
-        //         document.documentElement.classList.remove('dark');
-        //         return;
-        //     }
+$glo = new GlobalController();
 
-        //     const theme = localStorage.getItem('theme');
+if (!file_exists(public_path($favicon))) {
+    $favicon = "/images/favicon_default.png";
+}
 
-        //     document.documentElement.classList.toggle(
-        //         'dark',
-        //         theme === 'dark' || theme === null
-        //     );
+if (isset($_GET['re']) && $_GET['re'] === '1') {
 
-        // })();
-        // </script>
-        {{-- @if(SD() == "chh" || in_array(request()->path(), Settings::$loginpages))
-        <script>
-        (function () {
-            document.documentElement.classList.remove('dark');
-        })();
-        </script>
-        @else
-        <script>
-        (function () {
-            const theme = localStorage.getItem('theme');
-
-            document.documentElement.classList.toggle(
-                'dark',
-                theme === 'dark' || theme === null
-            );
-        })();
-        </script>
-        @endif --}}
-            {{-- <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        window.toastBusEmit('toast', {
-            type: 'points',
-            message: 'Du hast 8 MCSL Points gesammelt 🎉'
-        });
-    });
-    </script> --}}
-
-
-        <link rel="icon" type="image/png" href="{{ $favicon }}">
-
-        <script src="/js/jquery-3.6.0.min.js"></script>
-        <script src="/js/users.js"></script>
-
-        {{-- <script>
-            window.Ziggy = {
-                ...@json((new \Tighten\Ziggy\Ziggy)->toArray()),
-                url: "{{ request()->getSchemeAndHttpHost() }}"
-            };
-        </script> --}}
-        <script>
-(function () {
-
-    const forceLight =
-        @json(SD() == "chh" || in_array(request()->path(), Settings::$loginpages));
-
-    if (forceLight) {
-        document.documentElement.classList.remove('dark');
-        return;
-    }
-
-    const theme = localStorage.getItem('theme');
-
-    document.documentElement.classList.toggle(
-        'dark',
-        theme === 'dark' || theme === null
+    header(
+        "Location: http://"
+        . $_SERVER['HTTP_HOST']
+        . str_replace("re=1", '', $_SERVER['REQUEST_URI'])
     );
 
-})();
-</script>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    exit;
+}
+?>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <link href="/css/tailw/extra.css?time={{ time() }}" rel="stylesheet">
-        <link href="/css/tailw/{{ $sd_alt ?? 'default' }}.css?time={{ time() }}" rel="stylesheet">
+<!DOCTYPE html>
 
-        <link rel="stylesheet" href="/Shariff/shariff.complete.css">
-        <script src="/Shariff/shariff.min.js"></script>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+<head>
 
+    <meta charset="utf-8">
 
-        @inertiaHead
+    <meta
+        name="csrf-token"
+        content="{{ csrf_token() }}"
+    >
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title inertia>
+        {{ CleanTable(1) }}
+    </title>
+
+    <link
+        rel="canonical"
+        href="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}"
+    >
+
+    <script>
+
+        if (typeof global === 'undefined') {
+            window.global = window;
+        }
+
+        window.Laravel = {
+            userId: {{ auth()->id() ?? 'null' }}
+        };
+
+        window.authid = "{{ Auth::id() }}";
+
+        window.subdomain = "{{ $subdomain }}";
+
+        window.subdomain_alt = "{{ $sd_alt ?? '' }}";
+
+        window.pagename = "{{ $pagen }}";
+
+        window.ahost = "{{ $ahost }}";
+
+        window.chost = "{{ $chost }}";
+
+        window.app_name = "{{ $pagen }}";
+
+    </script>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="{{ $favicon }}"
+    >
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+
+    <script src="/js/users.js"></script>
+
+    <script>
+
+    (function () {
+
+        const forceLight =
+            @json(
+                SD() == "chh"
+                || in_array(
+                    request()->path(),
+                    Settings::$loginpages
+                )
+            );
+
+        if (forceLight) {
+
+            document.documentElement.classList.remove('dark');
+
+            return;
+        }
+
+        const theme =
+            localStorage.getItem('theme');
+
+        document.documentElement.classList.toggle(
+            'dark',
+            theme === 'dark'
+            || theme === null
+        );
+
+    })();
+
+    </script>
+
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link
+        href="/css/tailw/extra.css?time={{ time() }}"
+        rel="stylesheet"
+    >
+
+    <link
+        href="/css/tailw/{{ $sd_alt ?? 'default' }}.css?time={{ time() }}"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/Shariff/shariff.complete.css"
+    >
+
+    <script src="/Shariff/shariff.min.js"></script>
+
+    @inertiaHead
 
     {!! CookieConsent::styles() !!}
-    <script>
-    (function () {
-        function handleReload() {
-            const url = new URL(window.location.href);
 
-            if (url.searchParams.get('re') === '1') {
+    <script>
+
+    (function () {
+
+        function handleReload() {
+
+            const url =
+                new URL(window.location.href);
+
+            if (
+                url.searchParams.get('re') === '1'
+            ) {
+
                 url.searchParams.delete('re');
-                window.location.replace(url.toString());
+
+                window.location.replace(
+                    url.toString()
+                );
             }
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', handleReload);
+        if (
+            document.readyState === 'loading'
+        ) {
+
+            document.addEventListener(
+                'DOMContentLoaded',
+                handleReload
+            );
+
         } else {
-            // DOM ist bereits geladen → sofort ausführen
+
             handleReload();
         }
+
     })();
+
     </script>
-    </head>
-    <body class="font-sans antialiased">
-        <input type="hidden" id="token" value="{{ csrf_token() }}">
-        {{-- @if(isset($page['props']['im_cont']))
-            <div style="display:none;">
-                @foreach($page['props']['im_cont'] as $img)
-                    <img
-                        src="/images/{{ $img->fileName }}"
-                        alt="{{ $img->label }}"
-                    >
-                @endforeach
-            </div>
-            @endif
-            @if(isset($page['props']['entries']['data']))
-                <div style="display:none;">
-                    @foreach($page['props']['entries']['data'] as $img)
-                        <img
-                            src="/images/{{ $img->image_path }}"
-                            alt="{{ $img->name ?? $img->headline_en ?? 'image' }}"
-                        >
-                    @endforeach
-                </div>
-            @endif
-            @if(isset($page['props']['entries']['links']))
-                <div style="display:none;">
-                    @foreach($page['props']['entries']['links'] as $link)
-                        <a href="{{ str_replace("/",'',$link->url) ?? '#' }}">
-                            {!! $link->label !!}
-                        </a>
-                    @endforeach
-                </div>
-            @endif
-            @if(isset($page['props']['blogs']['data']))
-                <div style="display:none;">
-                    @foreach($page['props']['blogs']['data'] as $blog)
-                        <img
-                            src="/images/{{ $blog['url'] }}"
-                            alt="{{ $blog['name'] ?? $blog['title'] ?? 'image' }}"
-                        >
-                    @endforeach
-                </div>
-            @endif
-            @if(isset($page['props']['pagination']['links']))
-                <div style="display:none;">
-                    @foreach($page['props']['pagination']['links'] as $link)
-                        <a href="{{ str_replace("/",'',$link['url']) ?? '#' }}">
-                            {!! $link['label'] !!}
-                        </a>
 
-                    @endforeach
-                </div>
-            @endif --}}
-<script type="module">
-import { reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
+</head>
 
-const toastBus = reactive({ toasts: [] });
-toastBus.toasts.push({ message: 'Hallo', type: 'success', duration: 5000 });
-// console.log(toastBus);
-</script>
+<body class="font-sans antialiased">
 
-        {{-- @php Notify(); @endphp --}}
+    <input
+        type="hidden"
+        id="token"
+        value="{{ csrf_token() }}"
+    >
 
+    <script type="module">
 
-        @inertia
+    import {
+        reactive
+    } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
 
+    const toastBus =
+        reactive({
+            toasts: []
+        });
 
-        {!! CookieConsent::scripts(options: [
-            'cookie_lifetime' => config('laravel-cookie-consent.cookie_lifetime', 7),
-            'reject_lifetime' => config('laravel-cookie-consent.reject_lifetime', 1),
-            'disable_page_interaction' => config('laravel-cookie-consent.disable_page_interaction', true),
-            'preferences_modal_enabled' => config('laravel-cookie-consent.preferences_modal_enabled', true),
-            'consent_modal_layout' => config('laravel-cookie-consent.consent_modal_layout', 'bar-inline'),
-            'flip_button' => config('laravel-cookie-consent.flip_button', true),
-            'theme' => config('laravel-cookie-consent.theme', 'default'),
-            'cookie_prefix' => config('laravel-cookie-consent.cookie_prefix', 'Laravel_App'),
-            'policy_links' => config('laravel-cookie-consent.policy_links', [
-                ['text' => CookieConsent::translate('Privacy Policy'), 'link' => url('privacy-policy')],
-                ['text' => CookieConsent::translate('Terms & Conditions'), 'link' => url('terms-and-conditions')],
-            ]),
-            'cookie_categories' => config('laravel-cookie-consent.cookie_categories', [
-                'necessary' => [
-                    'enabled' => true,
-                    'locked' => true,
-                    'js_action' => 'loadGoogleAnalytics',
-                    'title' => CookieConsent::translate('Essential Cookies'),
-                    'description' => CookieConsent::translate('These cookies are essential for the website to function properly.'),
-                ],
-                'analytics' => [
-                    'enabled' => env('COOKIE_CONSENT_ANALYTICS', false),
-                    'locked' => false,
-                    'checked_by_default' => false,
+    toastBus.toasts.push({
+        message: 'Hallo',
+        type: 'success',
+        duration: 5000
+    });
 
-                    'title' => CookieConsent::translate('Analytics Cookies'),
-                    'description' => CookieConsent::translate('These cookies help us understand how visitors interact with our website.'),
-                ],
-                'marketing' => [
-                    'enabled' => env('COOKIE_CONSENT_MARKETING', false),
-                    'locked' => false,
-                    'selected' => false,
-                    'js_action' => 'loadFacebookPixel',
-                    'title' => CookieConsent::translate('Marketing Cookies'),
-                    'description' => CookieConsent::translate('These cookies are used for advertising and tracking purposes.'),
-                ],
-                'preferences' => [
-                    'enabled' => env('COOKIE_CONSENT_PREFERENCES', false),
-                    'locked' => false,
-                    'js_action' => 'loadPreferencesFunc',
-                    'title' => CookieConsent::translate('Preferences Cookies'),
-                    'description' => CookieConsent::translate('These cookies allow the website to remember user preferences.'),
-                ],
-            ]),
-            'cookie_title' => CookieConsent::translate('Cookie Disclaimer'),
-            'cookie_description' => CookieConsent::translate('This website uses cookies to enhance your browsing experience, analyze site traffic, and personalize content. By continuing to use this site, you consent to our use of cookies.'),
-            'cookie_modal_title' => CookieConsent::translate('Cookie Preferences'),
-            'cookie_modal_intro' => CookieConsent::translate('You can customize your cookie preferences below.'),
-            'cookie_accept_btn_text' => CookieConsent::translate('Accept All'),
-            'cookie_reject_btn_text' => CookieConsent::translate('Reject All'),
-            'cookie_preferences_btn_text' => CookieConsent::translate('Manage Preferences'),
-            'cookie_preferences_save_text' => CookieConsent::translate('Save Preferences'),
-        ]) !!}
-        <script>
-            @if(session('force_reload'))
-                sessionStorage.setItem("force_reload", "true");
-            @endif
-        </script>
-        <script>
+    </script>
+
+    @inertia
+
+    {!! CookieConsent::scripts(options: [
+
+        'cookie_lifetime' =>
+            config(
+                'laravel-cookie-consent.cookie_lifetime',
+                7
+            ),
+
+        'reject_lifetime' =>
+            config(
+                'laravel-cookie-consent.reject_lifetime',
+                1
+            ),
+
+        'disable_page_interaction' =>
+            config(
+                'laravel-cookie-consent.disable_page_interaction',
+                true
+            ),
+
+        'preferences_modal_enabled' =>
+            config(
+                'laravel-cookie-consent.preferences_modal_enabled',
+                true
+            ),
+
+        'consent_modal_layout' =>
+            config(
+                'laravel-cookie-consent.consent_modal_layout',
+                'bar-inline'
+            ),
+
+        'flip_button' =>
+            config(
+                'laravel-cookie-consent.flip_button',
+                true
+            ),
+
+        'theme' =>
+            config(
+                'laravel-cookie-consent.theme',
+                'default'
+            ),
+
+        'cookie_prefix' =>
+            config(
+                'laravel-cookie-consent.cookie_prefix',
+                'Laravel_App'
+            ),
+
+        'policy_links' => [
+
+            [
+                'text' =>
+                    CookieConsent::translate(
+                        'Privacy Policy'
+                    ),
+
+                'link' =>
+                    url('privacy-policy')
+            ],
+
+            [
+                'text' =>
+                    CookieConsent::translate(
+                        'Terms & Conditions'
+                    ),
+
+                'link' =>
+                    url('terms-and-conditions')
+            ],
+        ],
+
+    ]) !!}
+
+    <script>
+
+    @if(session('force_reload'))
+
+        sessionStorage.setItem(
+            "force_reload",
+            "true"
+        );
+
+    @endif
+
+    </script>
+
+    <script>
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        function () {
+
+            if (window?.toastBus) {
+
+                @php
+                    echo Notify();
+                @endphp
+
+            } else {
+
+                console.error(
+                    "toastBus existiert noch nicht"
+                );
+            }
+
+        }
+    );
+
+    </script>
+
+    <style>
+
+        .cc-window {
+            display: inline-block !important;
+        }
+
+    </style>
+
+    <img
+        width="1"
+        height="1"
+        src="{{ route('countpixel', [
+            'url'   => rawurldecode(request()->fullUrl()),
+            'route' => request()->route()?->getName() ?? 'unknown',
+            'page'  => request()->query('page')
+        ]) }}"
+    >
+
+    <!-- Scroll To Top -->
+
+    <!-- Scroll To Top -->
+{{-- <a
+    href="#top"
+    class="back-to-top"
+    id="scrollTopBtn"
+    aria-label="Nach oben"
+    style="display:none;"
+>
+    <i class="fas fa-arrow-up"></i>
+</a> --}}
+
+<a
+    href="#top"
+    id="scrollTopBtn"
+      class="
+        fixed
+        bottom-6
+        right-6
+        w-12
+        h-12
+        hidden
+        items-center
+        justify-center
+        rounded-full
+        bg-blue-600
+        hover:bg-blue-700
+        dark:bg-gray-900
+        dark:hover:bg-gray-800
+        text-xl
+        shadow-lg
+        transition-all
+        duration-300
+        z-[9999]
+    "
+    style="color:#FC9000 !important;"
+>
+<!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+<svg xmlns="http://www.w3.org/2000/svg" fill='currentColor' class='w-7 h-7' viewBox="0 0 448 512"><path d="M201.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L224 173.3 54.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"/></svg>
+</a>
+<script>
+
 document.addEventListener('DOMContentLoaded', function () {
-    if (window?.toastBus) {
-        // Notify Banner
-        @php
-            echo Notify();
-        @endphp
 
+    /*
+    |--------------------------------------------------------------------------
+    | Elements
+    |--------------------------------------------------------------------------
+    */
 
+    const button =
+        document.getElementById(
+            'scrollTopBtn'
+        );
 
-    } else {
-        console.error("toastBus existiert noch nicht");
+    if (!button) {
+
+        console.error(
+            'ScrollTop Button nicht gefunden'
+        );
+
+        return;
     }
-});
-</script>
 
-        <style>
-            /* Fix für kurzes Aufblitzen des Banners */
-            .cc-window { display: inline-block !important; }
-        </style>
-        <img width="1"
-     height="1"
-     src="{{ route('countpixel', [
-        'url'   => rawurldecode(request()->fullUrl()),
-        'route' => request()->route()?->getName() ?? 'unknown',
-        'page'  => request()->query('page')
-     ]) }}">
-    </body>
-    </html>
+    /*
+    |--------------------------------------------------------------------------
+    | Toggle Button Visibility
+    |--------------------------------------------------------------------------
+    */
+
+    function toggleButton() {
+
+        if (window.scrollY > 200) {
+
+            button.classList.remove(
+                'hidden'
+            );
+
+            button.classList.add(
+                'flex'
+            );
+
+        } else {
+
+            button.classList.remove(
+                'flex'
+            );
+
+            button.classList.add(
+                'hidden'
+            );
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Initial Check
+    |--------------------------------------------------------------------------
+    */
+
+    toggleButton();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Scroll Event
+    |--------------------------------------------------------------------------
+    */
+
+    window.addEventListener(
+        'scroll',
+        toggleButton
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Smooth Scroll To Top
+    |--------------------------------------------------------------------------
+    */
+
+    button.addEventListener(
+        'click',
+        function (e) {
+
+            e.preventDefault();
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: 'smooth'
+
+            });
+
+        }
+    );
+
+});
+
+</script>
+</body>
+
+</html>

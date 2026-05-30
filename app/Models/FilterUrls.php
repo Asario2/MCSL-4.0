@@ -41,7 +41,12 @@
         '/home/shortpoems1',
         '/home/shortpoems2',
         '/home/shortpoems3',
-        '/5'
+        '/5',
+        '/blogs%2Fshow',
+        '/blogsyg0s',
+        '/home/users1',
+        '/home/users2',
+        '/sitemap-ganerator'
     ];
 
     }

@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <MetaHeader title="Zugriffs-Statistik" />
+    <MetaHeader title="Statistik" />
     <template #header>
       <breadcrumb :breadcrumbs="breadcrumbs" :current="'Zugriffs-Statistik'"></breadcrumb>
     </template>
@@ -202,8 +202,8 @@ export default {
     },
 
     renderChart(labels, datasets) {
-      console.log('Labels:', labels);
-      console.log('Datasets:', datasets);
+    //   console.log('Labels:', labels);
+    //   console.log('Datasets:', datasets);
 
       if (!datasets || datasets.length === 0) {
         datasets = [{
@@ -241,7 +241,7 @@ export default {
     let save = confirm(`Möchten Sie diesen Eintrag für immer entfernen?`);
 
     try {
-        const res = await axios.post('/api/delete-stat', {
+        const res = await axios.post('/delete-stat', {
             url: label,
             dom: this.dom,
             save

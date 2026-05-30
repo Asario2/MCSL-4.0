@@ -53817,8 +53817,6 @@ const _sfc_main$F = {
       return this.month;
     },
     renderChart(labels, datasets) {
-      console.log("Labels:", labels);
-      console.log("Datasets:", datasets);
       if (!datasets || datasets.length === 0) {
         datasets = [{
           label: "Seitenaufrufe",
@@ -53850,7 +53848,7 @@ const _sfc_main$F = {
       if (!confirm(`Möchten Sie die Statistik für "${label}" wirklich löschen?`)) return;
       let save = confirm(`Möchten Sie diesen Eintrag für immer entfernen?`);
       try {
-        const res = await axios$1.post("/api/delete-stat", {
+        const res = await axios$1.post("/delete-stat", {
           url: label,
           dom: this.dom,
           save
@@ -53894,21 +53892,21 @@ function _sfc_ssrRender$F(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
     }),
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Zugriffs-Statistik" }, null, _parent2, _scopeId));
-        _push2(`<div class="flex justify-between items-center mb-4" data-v-19c5e21b${_scopeId}><div class="flex items-center" data-v-19c5e21b${_scopeId}><h2 class="text-xl font-bold" data-v-19c5e21b${_scopeId}>Seitenaufrufe pro URL</h2></div><div class="flex items-center space-x-4" data-v-19c5e21b${_scopeId}><div class="flex items-center space-x-2" data-v-19c5e21b${_scopeId}><span data-v-19c5e21b${_scopeId}>Zeitraum</span><select class="p-2.5 text-sm rounded-lg border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-19c5e21b${_scopeId}><option value="1" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "1") : ssrLooseEqual($data.month, "1")) ? " selected" : ""}${_scopeId}>1 Monat</option><option value="2" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "2") : ssrLooseEqual($data.month, "2")) ? " selected" : ""}${_scopeId}>2 Monate     </option><option value="3" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "3") : ssrLooseEqual($data.month, "3")) ? " selected" : ""}${_scopeId}>3 Monate</option><option value="4" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "4") : ssrLooseEqual($data.month, "4")) ? " selected" : ""}${_scopeId}>4 Monate</option><option value="5" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "5") : ssrLooseEqual($data.month, "5")) ? " selected" : ""}${_scopeId}>5 Monate</option></select></div>`);
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Statistik" }, null, _parent2, _scopeId));
+        _push2(`<div class="flex justify-between items-center mb-4" data-v-c1d876c6${_scopeId}><div class="flex items-center" data-v-c1d876c6${_scopeId}><h2 class="text-xl font-bold" data-v-c1d876c6${_scopeId}>Seitenaufrufe pro URL</h2></div><div class="flex items-center space-x-4" data-v-c1d876c6${_scopeId}><div class="flex items-center space-x-2" data-v-c1d876c6${_scopeId}><span data-v-c1d876c6${_scopeId}>Zeitraum</span><select class="p-2.5 text-sm rounded-lg border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-c1d876c6${_scopeId}><option value="1" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "1") : ssrLooseEqual($data.month, "1")) ? " selected" : ""}${_scopeId}>1 Monat</option><option value="2" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "2") : ssrLooseEqual($data.month, "2")) ? " selected" : ""}${_scopeId}>2 Monate     </option><option value="3" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "3") : ssrLooseEqual($data.month, "3")) ? " selected" : ""}${_scopeId}>3 Monate</option><option value="4" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "4") : ssrLooseEqual($data.month, "4")) ? " selected" : ""}${_scopeId}>4 Monate</option><option value="5" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "5") : ssrLooseEqual($data.month, "5")) ? " selected" : ""}${_scopeId}>5 Monate</option></select></div>`);
         if ($data.modulRights?.StatisticsAll) {
-          _push2(`<div class="flex items-center space-x-2" data-v-19c5e21b${_scopeId}><span data-v-19c5e21b${_scopeId}>Domain(s)</span><select class="p-2.5 pr-6 text-sm rounded-lg border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-19c5e21b${_scopeId}><option value="all" selected data-v-19c5e21b${_scopeId}>Alle Domains</option><option value="ab" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "ab") : ssrLooseEqual($data.dom, "ab")) ? " selected" : ""}${_scopeId}>Asarios Blog</option><option value="chh" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "chh") : ssrLooseEqual($data.dom, "chh")) ? " selected" : ""}${_scopeId}>Christian Henning</option><option value="mfx" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "mfx") : ssrLooseEqual($data.dom, "mfx")) ? " selected" : ""}${_scopeId}>MarbleFX</option><option value="dag" data-v-19c5e21b${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "dag") : ssrLooseEqual($data.dom, "dag")) ? " selected" : ""}${_scopeId}>Monika Dargies  </option></select></div>`);
+          _push2(`<div class="flex items-center space-x-2" data-v-c1d876c6${_scopeId}><span data-v-c1d876c6${_scopeId}>Domain(s)</span><select class="p-2.5 pr-6 text-sm rounded-lg border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-c1d876c6${_scopeId}><option value="all" selected data-v-c1d876c6${_scopeId}>Alle Domains</option><option value="ab" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "ab") : ssrLooseEqual($data.dom, "ab")) ? " selected" : ""}${_scopeId}>Asarios Blog</option><option value="chh" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "chh") : ssrLooseEqual($data.dom, "chh")) ? " selected" : ""}${_scopeId}>Christian Henning</option><option value="mfx" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "mfx") : ssrLooseEqual($data.dom, "mfx")) ? " selected" : ""}${_scopeId}>MarbleFX</option><option value="dag" data-v-c1d876c6${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "dag") : ssrLooseEqual($data.dom, "dag")) ? " selected" : ""}${_scopeId}>Monika Dargies  </option></select></div>`);
         } else {
           _push2(`<!---->`);
         }
-        _push2(`</div></div><canvas style="${ssrRenderStyle({ "max-height": "500px" })}" data-v-19c5e21b${_scopeId}></canvas><div class="mt-6" data-v-19c5e21b${_scopeId}><h3 class="text-lg font-semibold mb-2" data-v-19c5e21b${_scopeId}>URLs Übersicht</h3><div class="mt-6" data-v-19c5e21b${_scopeId}><h3 class="text-lg font-semibold mb-3 text-layout-sun-900 dark:text-layout-night-900" data-v-19c5e21b${_scopeId}> URLs (mit Löschfunktion) </h3><ul class="space-y-2 pr-1" data-v-19c5e21b${_scopeId}><!--[-->`);
+        _push2(`</div></div><canvas style="${ssrRenderStyle({ "max-height": "500px" })}" data-v-c1d876c6${_scopeId}></canvas><div class="mt-6" data-v-c1d876c6${_scopeId}><h3 class="text-lg font-semibold mb-2" data-v-c1d876c6${_scopeId}>URLs Übersicht</h3><div class="mt-6" data-v-c1d876c6${_scopeId}><h3 class="text-lg font-semibold mb-3 text-layout-sun-900 dark:text-layout-night-900" data-v-c1d876c6${_scopeId}> URLs (mit Löschfunktion) </h3><ul class="space-y-2 pr-1" data-v-c1d876c6${_scopeId}><!--[-->`);
         ssrRenderList($data.labels, (label, idx) => {
-          _push2(`<li class="group flex items-center justify-between p-3 rounded-xl border border-layout-sun-200 dark:border-layout-night-300 bg-layout-sun-50 dark:bg-layout-night-50 hover:bg-layout-sun-100 dark:hover:bg-layout-night-100 transition" data-v-19c5e21b${_scopeId}><div class="flex items-center space-x-3" data-v-19c5e21b${_scopeId}><span class="text-xs px-2 py-1 rounded-md bg-layout-sun-200 text-layout-sun-800 dark:bg-layout-night-200 dark:text-layout-night-800" data-v-19c5e21b${_scopeId}>${ssrInterpolate(idx + 1)}</span><a${ssrRenderAttr("href", label)} target="_blank" class="truncate max-w-[400px] text-blue-600 dark:text-blue-400 hover:underline" data-v-19c5e21b${_scopeId}>${ssrInterpolate(label)}</a></div><div class="flex items-center space-x-2" data-v-19c5e21b${_scopeId}><a${ssrRenderAttr("href", label)} target="_blank" class="opacity-0 group-hover:opacity-100 transition text-gray-400 hover:text-blue-500" title="Öffnen" data-v-19c5e21b${_scopeId}> 🔗 </a><button class="opacity-0 group-hover:opacity-100 transition px-2 py-1 rounded-md text-red-600 hover:text-white hover:bg-red-600 dark:hover:bg-red-700" title="Löschen" data-v-19c5e21b${_scopeId}> ✕ </button></div></li>`);
+          _push2(`<li class="group flex items-center justify-between p-3 rounded-xl border border-layout-sun-200 dark:border-layout-night-300 bg-layout-sun-50 dark:bg-layout-night-50 hover:bg-layout-sun-100 dark:hover:bg-layout-night-100 transition" data-v-c1d876c6${_scopeId}><div class="flex items-center space-x-3" data-v-c1d876c6${_scopeId}><span class="text-xs px-2 py-1 rounded-md bg-layout-sun-200 text-layout-sun-800 dark:bg-layout-night-200 dark:text-layout-night-800" data-v-c1d876c6${_scopeId}>${ssrInterpolate(idx + 1)}</span><a${ssrRenderAttr("href", label)} target="_blank" class="truncate max-w-[400px] text-blue-600 dark:text-blue-400 hover:underline" data-v-c1d876c6${_scopeId}>${ssrInterpolate(label)}</a></div><div class="flex items-center space-x-2" data-v-c1d876c6${_scopeId}><a${ssrRenderAttr("href", label)} target="_blank" class="opacity-0 group-hover:opacity-100 transition text-gray-400 hover:text-blue-500" title="Öffnen" data-v-c1d876c6${_scopeId}> 🔗 </a><button class="opacity-0 group-hover:opacity-100 transition px-2 py-1 rounded-md text-red-600 hover:text-white hover:bg-red-600 dark:hover:bg-red-700" title="Löschen" data-v-c1d876c6${_scopeId}> ✕ </button></div></li>`);
         });
         _push2(`<!--]--></ul></div></div>`);
       } else {
         return [
-          createVNode(_component_MetaHeader, { title: "Zugriffs-Statistik" }),
+          createVNode(_component_MetaHeader, { title: "Statistik" }),
           createVNode("div", { class: "flex justify-between items-center mb-4" }, [
             createVNode("div", { class: "flex items-center" }, [
               createVNode("h2", { class: "text-xl font-bold" }, "Seitenaufrufe pro URL")
@@ -54006,7 +54004,7 @@ _sfc_main$F.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Stats.vue");
   return _sfc_setup$F ? _sfc_setup$F(props, ctx) : void 0;
 };
-const Stats = /* @__PURE__ */ _export_sfc(_sfc_main$F, [["ssrRender", _sfc_ssrRender$F], ["__scopeId", "data-v-19c5e21b"]]);
+const Stats = /* @__PURE__ */ _export_sfc(_sfc_main$F, [["ssrRender", _sfc_ssrRender$F], ["__scopeId", "data-v-c1d876c6"]]);
 const __vite_glob_0_304 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Stats
@@ -55701,22 +55699,39 @@ const _sfc_main$u = {
       this.selectedInbox = {};
       this.selectAllInbox = 0;
     },
-    deleteMessages(tab) {
+    async deleteMessages(tab) {
       const ids = tab === "inbox" ? this.selectedInboxIds : this.selectedOutboxIds;
-      if (!confirm("Sind Sie sicher, dass Sie diese " + ids.length + " Einträge löschen möchten?"))
+      if (!ids.length) {
+        alert("Keine Nachrichten ausgewählt");
         return;
-      if (!ids.length) return;
-      console.log(ids);
-      console.log(this.selectedInbox);
-      axios$1.post("/admin/pm/delmore/", {
-        ids: ids.join(",")
-      }).then(() => {
+      }
+      if (!confirm(
+        "Sind Sie sicher, dass Sie diese " + ids.length + " Einträge löschen möchten?"
+      )) {
+        return;
+      }
+      console.log("DELETE IDS:", ids);
+      try {
+        await axios$1.post("/admin/pm/delmore/", {
+          ids
+        });
+        if (tab === "inbox") {
+          this.localInbox = this.localInbox.filter(
+            (msg) => !ids.includes(msg.id)
+          );
+        } else {
+          this.outboxArr.data = this.outboxArr.data.filter(
+            (msg) => !ids.includes(msg.id)
+          );
+        }
         this.selectedInbox = {};
         this.selectedOutbox = {};
-        this.selectAllInbox = 0;
-        this.selectAllOutbox = 0;
-        this.$inertia.reload({ only: ["inboxArr", "outboxArr"] });
-      });
+        this.selectAllInbox = false;
+        this.selectAllOutbox = false;
+      } catch (e) {
+        console.error(e);
+        alert("Fehler beim Löschen");
+      }
     },
     async ShowMessage(msg) {
       this.localInbox = this.localInbox.map((m) => {
@@ -55864,7 +55879,7 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
           ssrRenderList($data.localInbox, (msg) => {
             _push2(`<tr class="hover:bg-gray-50 dark:hover:bg-gray-700"${_scopeId}><td class="border border-gray-300 dark:border-gray-700 text-center pl-3"${_scopeId}>`);
             _push2(ssrRenderComponent(_component_InputCheckbox, {
-              "model-value": $data.selectedInbox[msg.id] || 0,
+              "model-value": !!$data.selectedInbox[msg.id],
               "onUpdate:modelValue": (val) => $options.setSelected("inbox", msg.id, val),
               name: "inbox_" + msg.id,
               id: "inbox_" + msg.id
@@ -55918,7 +55933,7 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
           ssrRenderList($options.paginatedOutbox, (msg) => {
             _push2(`<tr class="hover:bg-gray-50 dark:hover:bg-gray-700"${_scopeId}><td class="border border-gray-300 dark:border-gray-700 text-center pl-3"${_scopeId}>`);
             _push2(ssrRenderComponent(_component_InputCheckbox, {
-              "model-value": $data.selectedOutbox[msg.id] || 0,
+              "model-value": !!$data.selectedOutbox[msg.id],
               "onUpdate:modelValue": (val) => $options.setSelected("outbox", msg.id, val),
               name: "outbox_" + msg.id,
               id: "outbox_" + msg.id
@@ -56089,7 +56104,7 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                         }, [
                           createVNode("td", { class: "border border-gray-300 dark:border-gray-700 text-center pl-3" }, [
                             createVNode(_component_InputCheckbox, {
-                              "model-value": $data.selectedInbox[msg.id] || 0,
+                              "model-value": !!$data.selectedInbox[msg.id],
                               "onUpdate:modelValue": (val) => $options.setSelected("inbox", msg.id, val),
                               name: "inbox_" + msg.id,
                               id: "inbox_" + msg.id
@@ -56198,7 +56213,7 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                         }, [
                           createVNode("td", { class: "border border-gray-300 dark:border-gray-700 text-center pl-3" }, [
                             createVNode(_component_InputCheckbox, {
-                              "model-value": $data.selectedOutbox[msg.id] || 0,
+                              "model-value": !!$data.selectedOutbox[msg.id],
                               "onUpdate:modelValue": (val) => $options.setSelected("outbox", msg.id, val),
                               name: "outbox_" + msg.id,
                               id: "outbox_" + msg.id

@@ -285,3 +285,7 @@
 ![Version](https://img.shields.io/badge/version-5.39.8-orange) Feature - Added new Sitemaps (#479)  
 ![Version](https://img.shields.io/badge/version-5.40.4-orange) Feature - Added Pagination & Search for Activitlog (#480)  
 ![Version](https://img.shields.io/badge/version-5.41.1-orange) Feature - Adding Pagination & Search for Hackinglog (#481)  
+![Version](https://img.shields.io/badge/version-5.42.0-orange) Feature - Pagination and search on the HackingLog system. (#483)  
+![Version](https://img.shields.io/badge/version-5.43.4-orange) Bug - Bugs in Private Messages (#484)  
+![Version](https://img.shields.io/badge/version-5.44.7-orange) Bug - Another Bug in PMs (#485)  
+![Version](https://img.shields.io/badge/version-5.45.5-orange) Hotfixes - several smaller bugs in Hackinglog have been fixed. (#486)  

@@ -629,7 +629,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 ### ============== API ISADMIN QI ================ ###
         Route::get('/api/activity-log/pub', [ActivityPubController::class, 'getPub']);
         Route::post('/api/activity-log/pub', [ActivityPubController::class, 'updatePub']);
-        Route::post('/api/delete-stat', [CountPixelController::class, 'delete_stats']);
+        Route::post('/delete-stat', [CountPixelController::class, 'delete_stats']);
         Route::get('/sitemap-generator',[HomeController::class, "sitemaps"])->name("gen.sitemap");
         Route::get('/home/QRCodaH', [HomeController::class, 'QRCodaH'])->name('home.qrcodah');
         Route::get("/admin/Kontakte", [TablesController::class, "show_contacts"])->name('admin.kontakte');
