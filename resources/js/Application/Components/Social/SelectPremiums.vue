@@ -77,7 +77,7 @@
 
     <p v-if="Object.keys(groupedImages).length === 0"
        class="text-gray-500 italic">
-      Keine verkaufbaren Bilder unter 300 MCS Points gefunden.
+      Keine verkaufbaren Bilder unter 300 MCSL Points gefunden.
     </p>
 
   </div>

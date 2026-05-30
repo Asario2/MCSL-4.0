@@ -307,7 +307,7 @@
     public static array $searchFields =
         [
             "admin_table" => ['name'],
-            "blogs" => ['title','content'/*'content_en','title_en'*/,"blog_categories.name"],
+            "blogs" => ['title','content'/*'content_en','title_en'*/,'autoslug',"blog_categories.name"],
             "blog_authors" => ['name',"Info"],
             "blog_categories" => ['name',"summary"],
             "blog_images" => ['name'],
@@ -508,6 +508,7 @@ public static array $image_sizes =
     20 => 'ab_users_rights_xkis_DumpDB',
     21 => 'ab_users_rights_xkis_DumpGItDataBase',
     22 => 'ab_contacts_hasyear',
+    23 => 'ab_users_config_cnt_numrows',
 ];
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",

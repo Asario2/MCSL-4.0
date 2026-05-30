@@ -1,29 +1,62 @@
 <IfModule mod_rewrite.c>
+
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
-    # ----- Redirect für Root der Domain/Subdomain -----
-    # chh.test.mcs oder ra-c-henning.de → /visitcard
+
+    # ----------------------------------------------------------------------
+    # Remove index.php from URLs
+    # ----------------------------------------------------------------------
+
+    RewriteCond %{THE_REQUEST} \s/+index\.php[?\s] [NC]
+    RewriteRule ^index\.php/?(.*)$ /$1 [R=301,L]
+
+    # ----------------------------------------------------------------------
+    # Redirect for Root Domain/Subdomain
+    # chh.test.mcs or ra-c-henning.de -> /visitcard
+    # ----------------------------------------------------------------------
+
     RewriteCond %{HTTP_HOST} ^(chh\.test\.mcs|ra-c-henning\.de)$ [NC]
-    RewriteCond %{REQUEST_URI} ^/$
+    RewriteCond %{REQUEST_URI} ^/?$
     RewriteRule ^$ /visitcard [R=302,L]
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)/$ /$1 [L,R=301]
+    # ----------------------------------------------------------------------
+    # Remove trailing slash if not a real folder
+    # ----------------------------------------------------------------------
 
-    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+    # ----------------------------------------------------------------------
+    # Block direct access to sensitive files
+    # ----------------------------------------------------------------------
+
+    RewriteRule ^(\.env|composer\.(json|lock)|artisan)$ - [F,L,NC]
+
+    # ----------------------------------------------------------------------
+    # Laravel Front Controller
+    # ----------------------------------------------------------------------
+
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    # Optional: Force HTTPS (wenn SSL aktiv ist)
+    # ----------------------------------------------------------------------
+    # Optional: Force HTTPS
+    # ----------------------------------------------------------------------
+
     # RewriteCond %{HTTPS} !=on
     # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 </IfModule>
 
 <IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
+
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-XSS-Protection "1; mode=block"
+
 </IfModule>

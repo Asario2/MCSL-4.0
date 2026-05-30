@@ -782,7 +782,7 @@ export function rumLaut(input, table = '') {
     str = str.replace('%5B', '[').replace('%5D', ']');
     // 4. Zeichen ersetzen
     str = str.replace(/â€“/g, '-');
-
+    str = str.replace(/Ãâ/gi,"Ä");
     // 5. HTML Entities dekodieren (basic)
     // const txt = document?.createElement("textarea");
     // txt.innerHTML = str;
@@ -800,7 +800,7 @@ export function rumLaut(input, table = '') {
     // ];
     const replace = [
         '<hr>', 'Ü', 'ü', 'ß', 'ß', 'ä', "'", 'Ä',
-        'Ü', 'ß', 'ö', 'Ü', 'ü', 'ä', 'ß', '…', 'ö','§',"©",'ß'
+        'Ü', 'ß', 'ö', 'Ü', 'ü', 'ä', 'ß', '…', 'ö','§',"©",'ß',"Ä"
     ];
     find.forEach((regex, i) => {
         str = str.replace(regex, replace[i]);

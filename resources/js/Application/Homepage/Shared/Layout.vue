@@ -483,7 +483,7 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
     // window.addEventListener("loader:hide", () => {
     //     //this.isLoading = false;
     // });
-        // MCS POINTS
+        // MCSL POINTS
         this.loadmcslpoints(); // initial
 
 

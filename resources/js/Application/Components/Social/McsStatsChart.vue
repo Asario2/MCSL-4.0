@@ -107,7 +107,7 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <!-- MCS Points -->
+    <!-- MCSL Points -->
     <div class="bg-layout-sun-100 dark:bg-layout-night-100 border border-layout-sun-300 dark:border-layout-night-300 p-4 rounded-xl shadow-sm">
       <h3 class="text-lg font-semibold mb-3">MCSL    Points ({{ count_mcs }})</h3>
       <div class="relative h-64">

@@ -106,11 +106,7 @@
         @else
             @include('layouts.navigation') <!-- Standardnavigation -->
         @endif
-      <img src="{{ route('countpixel', [
-            'url'   => urlencode(request()->fullUrl()),
-            'route' => request()->route()?->getName() ?? 'unknown'
-        ]) }}"
-            alt="" width="1" height="1" style="display:none;">
+
 
         <main class="py-4 w10">
             @yield('content')
@@ -206,7 +202,12 @@
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-
+<img src="{{ route('countpixel', [
+            'url'   => urldecode(request()->fullUrl()),
+            'route' => request()->route()?->getName() ?? 'unknown'
+            'page'  => request()->query('page')
+        ]) }}"
+            alt="" width="1" height="1" style="display:none;">
 </body>
 
 </html>

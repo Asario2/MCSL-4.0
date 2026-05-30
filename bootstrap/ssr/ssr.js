@@ -3338,6 +3338,7 @@ function rumLaut(input, table2 = "") {
   }
   str = str.replace("%5B", "[").replace("%5D", "]");
   str = str.replace(/â€“/g, "-");
+  str = str.replace(/Ãâ/gi, "Ä");
   const find = [
     /---/g,
     /ÃƒÅ“/g,
@@ -3380,7 +3381,8 @@ function rumLaut(input, table2 = "") {
     "ö",
     "§",
     "©",
-    "ß"
+    "ß",
+    "Ä"
   ];
   find.forEach((regex, i) => {
     str = str.replace(regex, replace[i]);
@@ -3639,6 +3641,10 @@ const _sfc_main$5a = {
     title: {
       type: String,
       default: "Administrator-Anwendung"
+    },
+    breadcrumbs: {
+      type: [String, Object, Array],
+      required: false
     }
   },
   data() {
@@ -13900,13 +13906,14 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     }),
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
-        _push2(`<div class="p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"${_scopeId}><div class="flex justify-between items-center mb-4"${_scopeId}>`);
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "MCSL IDS - Hacking Log" }, null, _parent2, _scopeId));
+        _push2(`<div class="p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"${_scopeId}><div class="flex justify-between items-center mb-4"${_scopeId}></div><h2 class="text-xl font-semibold mb-4"${_scopeId}>HackLog</h2>`);
         _push2(ssrRenderComponent(_component_search_filter, {
           modelValue: $data.form.search,
           "onUpdate:modelValue": ($event) => $data.form.search = $event,
           class: "w-full"
         }, null, _parent2, _scopeId));
-        _push2(`</div><h2 class="text-xl font-semibold mb-4"${_scopeId}>HackLog</h2><div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700"${_scopeId}><table class="min-w-full text-sm"${_scopeId}><thead class="bg-gray-100 dark:bg-gray-800"${_scopeId}><tr${_scopeId}><th class="px-3 py-2 text-left"${_scopeId}>Datum</th><th class="px-3 py-2 text-left"${_scopeId}>DOM</th><th class="px-3 py-2 text-left"${_scopeId}>IP</th><th class="px-3 py-2 text-left"${_scopeId}>Number</th><th class="px-3 py-2 text-left"${_scopeId}>URL</th><th class="px-3 py-2 text-left"${_scopeId}>Gesperrt bis</th><th class="px-3 py-2 text-left"${_scopeId}>Method</th><th class="px-3 py-2 text-left"${_scopeId}>Score</th><th class="px-3 py-2 text-left"${_scopeId}>Matches</th><th class="px-3 py-2 text-left"${_scopeId}>Agent</th><th class="px-3 py-2 text-left"${_scopeId}></th></tr></thead><tbody${_scopeId}><!--[-->`);
+        _push2(`<div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700"${_scopeId}><table class="min-w-full text-sm"${_scopeId}><thead class="bg-gray-100 dark:bg-gray-800"${_scopeId}><tr${_scopeId}><th class="px-3 py-2 text-left"${_scopeId}>Datum</th><th class="px-3 py-2 text-left"${_scopeId}>DOM</th><th class="px-3 py-2 text-left"${_scopeId}>IP</th><th class="px-3 py-2 text-left"${_scopeId}>Number</th><th class="px-3 py-2 text-left"${_scopeId}>URL</th><th class="px-3 py-2 text-left"${_scopeId}>Gesperrt bis</th><th class="px-3 py-2 text-left"${_scopeId}>Method</th><th class="px-3 py-2 text-left"${_scopeId}>Score</th><th class="px-3 py-2 text-left"${_scopeId}>Matches</th><th class="px-3 py-2 text-left"${_scopeId}>Agent</th><th class="px-3 py-2 text-left"${_scopeId}></th></tr></thead><tbody${_scopeId}><!--[-->`);
         ssrRenderList($options.paginatedLogs, (row, index) => {
           _push2(`<tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"${_scopeId}><td class="px-3 py-2 whitespace-nowrap"${_scopeId}>${ssrInterpolate(row.created_at)}</td><td class="px-3 py-2 font-mono"${_scopeId}><img${ssrRenderAttr("src", "/images/_" + row.dom + "/web/alogo.png")} class="w-4 h-4"${_scopeId}></td><td class="px-3 py-2 font-mono"${_scopeId}>${ssrInterpolate(row.ip)}</td><td class="px-3 py-2 font-mono"${_scopeId}>${ssrInterpolate(row.violations)}</td><td class="px-3 py-2 truncate max-w-xs"${_scopeId}>`);
           if (row.url) {
@@ -13949,15 +13956,15 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
         _push2(`<!--]--><button class="px-3 py-1 border rounded"${ssrIncludeBooleanAttr($data.currentPage >= $options.totalPages) ? " disabled" : ""}${_scopeId}> Weiter → </button></div>`);
       } else {
         return [
+          createVNode(_component_MetaHeader, { title: "MCSL IDS - Hacking Log" }),
           createVNode("div", { class: "p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100" }, [
-            createVNode("div", { class: "flex justify-between items-center mb-4" }, [
-              createVNode(_component_search_filter, {
-                modelValue: $data.form.search,
-                "onUpdate:modelValue": ($event) => $data.form.search = $event,
-                class: "w-full"
-              }, null, 8, ["modelValue", "onUpdate:modelValue"])
-            ]),
+            createVNode("div", { class: "flex justify-between items-center mb-4" }),
             createVNode("h2", { class: "text-xl font-semibold mb-4" }, "HackLog"),
+            createVNode(_component_search_filter, {
+              modelValue: $data.form.search,
+              "onUpdate:modelValue": ($event) => $data.form.search = $event,
+              class: "w-full"
+            }, null, 8, ["modelValue", "onUpdate:modelValue"]),
             createVNode("div", { class: "overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700" }, [
               createVNode("table", { class: "min-w-full text-sm" }, [
                 createVNode("thead", { class: "bg-gray-100 dark:bg-gray-800" }, [
@@ -29140,12 +29147,29 @@ const __vite_glob_0_69 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$36 = {
   name: "PublishButton",
+  emits: ["update:modelValue"],
   props: {
-    table: String,
-    id: Number,
-    modelValue: { type: Number, default: 0 },
-    // v-model
-    public: { type: Number, default: 0 }
+    table: {
+      type: String,
+      required: true
+    },
+    id: {
+      type: Number,
+      required: true
+    },
+    modelValue: {
+      type: [Number, String],
+      default: 0
+    },
+    public: {
+      type: Number,
+      default: 0
+    }
+  },
+  data() {
+    return {
+      loading: false
+    };
   },
   computed: {
     isPublished: {
@@ -29153,38 +29177,30 @@ const _sfc_main$36 = {
         return Number(this.modelValue);
       },
       set(val) {
-        this.$emit("update:modelValue", val);
+        this.$emit(
+          "update:modelValue",
+          Number(val)
+        );
       }
-    }
-  },
-  data() {
-    return {
-      //   isPublished: this.published,
-      loading: false,
-      isPublishedLocal: Number(this.modelValue)
-    };
-  },
-  watch: {
-    // Reaktivität: Prop-Änderungen vom Parent werden übernommen
-    published(newVal) {
-      this.isPublished = newVal;
     }
   },
   methods: {
     async togglePub() {
       if (this.loading) return;
       this.loading = true;
-      const newStatus = !this.isPublishedLocal;
+      const newStatus = this.isPublished ? 0 : 1;
       try {
         await axios$1.post("/toggle-pub", {
           table: this.table,
           id: this.id,
-          pub: newStatus ? 1 : 0,
+          pub: newStatus,
           public: this.public
         });
-        this.isPublishedLocal = newStatus;
+        this.isPublished = newStatus;
       } catch (error) {
-        console.error(error.response?.data || error.message);
+        console.error(
+          error.response?.data || error.message
+        );
       } finally {
         this.loading = false;
       }
@@ -29193,10 +29209,10 @@ const _sfc_main$36 = {
 };
 function _sfc_ssrRender$35(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${ssrRenderAttrs(_attrs)}>`);
-  if ($data.isPublishedLocal) {
-    _push(`<button title="Veröffentlicht"${ssrIncludeBooleanAttr($data.loading) ? " disabled" : ""}><svg class="w-6 h-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg></button>`);
+  if ($options.isPublished) {
+    _push(`<button title="Veröffentlicht"${ssrIncludeBooleanAttr($data.loading) ? " disabled" : ""} type="button"><svg class="w-6 h-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg></button>`);
   } else {
-    _push(`<button title="Unveröffentlicht"${ssrIncludeBooleanAttr($data.loading) ? " disabled" : ""}><svg class="w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg></button>`);
+    _push(`<button title="Unveröffentlicht"${ssrIncludeBooleanAttr($data.loading) ? " disabled" : ""} type="button"><svg class="w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg></button>`);
   }
   _push(`</div>`);
 }
@@ -47038,7 +47054,7 @@ function _sfc_ssrRender$1p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
         });
         _push2(`<!--]-->`);
         if (Object.keys($options.groupedImages).length === 0) {
-          _push2(`<p class="text-gray-500 italic"${_scopeId}> Keine verkaufbaren Bilder unter 300 MCS Points gefunden. </p>`);
+          _push2(`<p class="text-gray-500 italic"${_scopeId}> Keine verkaufbaren Bilder unter 300 MCSL Points gefunden. </p>`);
         } else {
           _push2(`<!---->`);
         }
@@ -47118,7 +47134,7 @@ function _sfc_ssrRender$1p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
             Object.keys($options.groupedImages).length === 0 ? (openBlock(), createBlock("p", {
               key: 0,
               class: "text-gray-500 italic"
-            }, " Keine verkaufbaren Bilder unter 300 MCS Points gefunden. ")) : createCommentVNode("", true)
+            }, " Keine verkaufbaren Bilder unter 300 MCSL Points gefunden. ")) : createCommentVNode("", true)
           ])
         ];
       }
@@ -49587,7 +49603,7 @@ const _sfc_main$12 = {
   },
   computed: {
     decodedContent() {
-      return this.decodeHtml(replaceSmilies(this.kilp(this.blog.content)));
+      return this.decodeHtml(replaceSmilies(this.kilp(rumLaut(this.blog.content))));
     }
   },
   methods: {
@@ -55560,7 +55576,8 @@ const _sfc_main$u = {
     PublishButton,
     InputCheckbox,
     MessageSettings,
-    Pagination: Pagination$1
+    Pagination: Pagination$1,
+    SearchFilter
   },
   props: {
     inboxArr: {
@@ -55571,13 +55588,17 @@ const _sfc_main$u = {
       type: Object,
       default: () => ({ data: [], links: [] })
     },
-    form: { type: Array, default: () => [] },
+    // form: { type: Array, default: () => [] },
     settings: { type: [Array, Object], default: () => [] }
   },
   data() {
     return {
       // 🔥 SAFE INIT (kein direct URL parsing im data!)
       tab: CleanTab("pm/index/") ?? "inbox",
+      localInbox: [],
+      //    form: {
+      //         search: this.filters?.search ?? "",
+      //       },
       message: "",
       subject: "",
       to_id: 0,
@@ -55590,8 +55611,8 @@ const _sfc_main$u = {
       searchInbox: this.inboxArr?.filters?.search || "",
       searchOutbox: this.outboxArr?.filters?.search || "",
       selectedMessage: null,
-      perPage: this.form[0]?.cnt_numrows || 10,
-      UID: window?.Laravel?.userId || null,
+      perPage: this.settings?.cnt_numrows || 10,
+      UID: null,
       selectAllInbox: 0,
       selectAllOutbox: 0,
       selectedInbox: {},
@@ -55600,13 +55621,16 @@ const _sfc_main$u = {
     };
   },
   mounted() {
+    console.log("TAB:", this.tab);
+    this.localInbox = [...this.inboxArr.data];
+    this.UID = window?.Laravel?.userId;
     const urlTab = new URLSearchParams(window.location.search).get("tab");
     if (urlTab) this.tab = urlTab;
   },
   computed: {
-    paginatedInbox() {
-      return this.inboxArr.data;
-    },
+    // paginatedInbox() {
+    //   return this.inboxArr.data;
+    // },
     paginatedOutbox() {
       return this.outboxArr.data;
     },
@@ -55618,12 +55642,21 @@ const _sfc_main$u = {
     }
   },
   methods: {
+    testClick() {
+      alert("CLICK");
+    },
     SD,
     GetProfileImagePath,
     rumLaut,
     nl2br,
     GetSettings,
     CleanTab,
+    resetIn() {
+      this.searchInbox = "";
+    },
+    resetOut() {
+      this.searchOutbox = "";
+    },
     // 🔥 FIXED TAB SWITCH (NO RACE CONDITION)
     changeTab(newTab) {
       if (this._navigating) return;
@@ -55645,7 +55678,7 @@ const _sfc_main$u = {
       else delete target[id];
     },
     toggleSelectAll(tab, value) {
-      const list = tab === "inbox" ? this.paginatedInbox : this.paginatedOutbox;
+      const list = tab === "inbox" ? this.localInbox : this.paginatedOutbox;
       const target = tab === "inbox" ? this.selectedInbox : this.selectedOutbox;
       list.forEach((msg) => {
         if (value) target[msg.id] = 1;
@@ -55656,19 +55689,26 @@ const _sfc_main$u = {
     },
     async markAsRead() {
       if (!this.selectedInboxIds.length) return;
-      await axios$1.post(route$1("admin.pm.mark"), {
+      this.localInbox.forEach((msg) => {
+        if (this.selectedInbox[msg.id]) {
+          msg.checked = "1";
+        }
+      });
+      this.localInbox = [...this.localInbox];
+      await axios$1.post("/admin/pm/mark", {
         ids: this.selectedInboxIds.join(",")
       });
       this.selectedInbox = {};
       this.selectAllInbox = 0;
-      this.$inertia.reload({ only: ["inboxArr"] });
     },
     deleteMessages(tab) {
       const ids = tab === "inbox" ? this.selectedInboxIds : this.selectedOutboxIds;
       if (!confirm("Sind Sie sicher, dass Sie diese " + ids.length + " Einträge löschen möchten?"))
         return;
       if (!ids.length) return;
-      axios$1.post(route$1("admin.pm.delmore"), {
+      console.log(ids);
+      console.log(this.selectedInbox);
+      axios$1.post("/admin/pm/delmore/", {
         ids: ids.join(",")
       }).then(() => {
         this.selectedInbox = {};
@@ -55678,8 +55718,23 @@ const _sfc_main$u = {
         this.$inertia.reload({ only: ["inboxArr", "outboxArr"] });
       });
     },
-    ShowMessage(msg) {
-      this.selectedMessage = msg;
+    async ShowMessage(msg) {
+      this.localInbox = this.localInbox.map((m) => {
+        if (m.id === msg.id) {
+          return {
+            ...m,
+            checked: "1"
+          };
+        }
+        return m;
+      });
+      this.selectedMessage = {
+        ...msg,
+        checked: "1"
+      };
+      await axios$1.post("/admin/pm/mark", {
+        ids: msg.id
+      });
       if (!this.tabs.find((t) => t.id === "read")) {
         this.tabs.unshift({
           id: "read",
@@ -55694,7 +55749,7 @@ const _sfc_main$u = {
       if (!el) return;
       const msg = el.innerHTML;
       if (!msg || !this.to_id || !this.subject) return;
-      axios$1.post(route$1("pm.save"), {
+      axios$1.post("/pm/save", {
         message: msg,
         to_id: this.to_id,
         subject: this.subject
@@ -55721,6 +55776,13 @@ const _sfc_main$u = {
     }
   },
   watch: {
+    inboxArr: {
+      handler(newVal) {
+        this.localInbox = [...newVal.data];
+      },
+      deep: true,
+      immediate: true
+    },
     searchInbox(value) {
       this.$inertia.get("/pm/index/inbox", {
         search: value
@@ -55747,6 +55809,7 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
   const _component_Layout = resolveComponent("Layout");
   const _component_breadcrumb = resolveComponent("breadcrumb");
   const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_search_filter = resolveComponent("search-filter");
   const _component_InputCheckbox = resolveComponent("InputCheckbox");
   const _component_PublishButton = resolveComponent("PublishButton");
   const _component_editbtns = resolveComponent("editbtns");
@@ -55774,7 +55837,7 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
         _push2(ssrRenderComponent(_component_MetaHeader, { title: "Private Nachrichten" }, null, _parent2, _scopeId));
-        _push2(`<div class="max-w-none bg-layout-sun-100 dark:bg-layout-night-100 p-7 rounded-2xl shadow"${_scopeId}><div class="flex border-b border-gray-300 dark:border-gray-700 mb-6 overflow-x-auto"${_scopeId}><!--[-->`);
+        _push2(`<div class="max-w-none bg-layout-sun-100 dark:bg-layout-night-100 p-7 rounded-2xl shadow"${_scopeId}><div class="flex border-b border-gray-300 dark:border-gray-700 mb-6 overflow-visible"${_scopeId}><!--[-->`);
         ssrRenderList($data.tabs, (tabItem) => {
           _push2(`<button class="${ssrRenderClass([
             "flex-1 text-center p-3 border-b-2 font-medium transition",
@@ -55783,14 +55846,22 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
         });
         _push2(`<!--]--></div><div class="bg-white dark:bg-gray-800 rounded-2xl shadow px-4 pt-1"${_scopeId}>`);
         if ($data.tab === "inbox") {
-          _push2(`<div class="mt-[-20px] pb-3"${_scopeId}><h2 class="text-2xl font-semibold m-3 pt-5"${_scopeId}>📥 Posteingang</h2><input type="text"${ssrRenderAttr("value", $data.searchInbox)} placeholder="Suchen..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-700 dark:text-white mb-4"${_scopeId}><div class="p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-x-auto w-full"${_scopeId}><table class="min-w-full text-left border-collapse border border-gray-300 dark:border-gray-700"${_scopeId}><thead class="bg-gray-100 dark:bg-gray-800"${_scopeId}><tr${_scopeId}><th class="border border-gray-300 dark:border-gray-700 text-center pl-3" width="56"${_scopeId}>`);
+          _push2(`<div class="mt-[-20px] pb-3"${_scopeId}><h2 class="text-2xl font-semibold m-3 pt-5"${_scopeId}>📥 Posteingang</h2><div class="my-6 flex justify-between items-center"${_scopeId}>`);
+          _push2(ssrRenderComponent(_component_search_filter, {
+            modelValue: $data.searchInbox,
+            "onUpdate:modelValue": ($event) => $data.searchInbox = $event,
+            class: "w-full",
+            searchText: "",
+            onReset: $options.resetIn
+          }, null, _parent2, _scopeId));
+          _push2(`</div><div class="p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-visible w-full"${_scopeId}><table class="min-w-full text-left border-collapse border border-gray-300 dark:border-gray-700"${_scopeId}><thead class="bg-gray-100 dark:bg-gray-800"${_scopeId}><tr${_scopeId}><th class="border border-gray-300 dark:border-gray-700 text-center pl-3" width="56"${_scopeId}>`);
           _push2(ssrRenderComponent(_component_InputCheckbox, {
             modelValue: $data.selectAllInbox,
             "onUpdate:modelValue": [($event) => $data.selectAllInbox = $event, ($event) => $options.toggleSelectAll("inbox", $event)],
             name: "select_all_inbox"
           }, null, _parent2, _scopeId));
           _push2(`</th><th class="border border-gray-300 dark:border-gray-700 text-center" width="56"${_scopeId}>Gelesen</th><th class="border border-gray-300 dark:border-gray-700 text-center min-w-[120px]" width="15%"${_scopeId}>Von</th><th class="border border-gray-300 dark:border-gray-700"${_scopeId}>Betreff</th><th class="border border-gray-300 dark:border-gray-700"${_scopeId}></th></tr></thead><tbody${_scopeId}><!--[-->`);
-          ssrRenderList($props.inboxArr?.data ?? [], (msg) => {
+          ssrRenderList($data.localInbox, (msg) => {
             _push2(`<tr class="hover:bg-gray-50 dark:hover:bg-gray-700"${_scopeId}><td class="border border-gray-300 dark:border-gray-700 text-center pl-3"${_scopeId}>`);
             _push2(ssrRenderComponent(_component_InputCheckbox, {
               "model-value": $data.selectedInbox[msg.id] || 0,
@@ -55800,10 +55871,11 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
             }, null, _parent2, _scopeId));
             _push2(`</td><td class="border border-gray-300 dark:border-gray-700 text-center"${_scopeId}>`);
             _push2(ssrRenderComponent(_component_PublishButton, {
+              key: "pub-" + msg.id + "-" + msg.checked,
               table: "private_messages",
               id: msg.id,
               modelValue: msg.checked,
-              "onUpdate:modelValue": ($event) => msg.checked = $event,
+              "onUpdate:modelValue": (val) => msg.checked = val,
               public: 1
             }, null, _parent2, _scopeId));
             _push2(`</td><td class="border border-gray-300 dark:border-gray-700 flex items-center"${_scopeId}><img${ssrRenderAttr("src", $options.GetProfileImagePath(msg.avatar))}${ssrRenderAttr("alt", msg.user)}${ssrRenderAttr("title", msg.user)} class="w-8 h-8 rounded-full object-cover"${_scopeId}><span class="ml-2"${_scopeId}>${ssrInterpolate(msg.user)}</span></td><td class="border border-gray-300 dark:border-gray-700"${_scopeId}><span class="font-bold cursor-pointer"${_scopeId}>${ssrInterpolate($options.rumLaut(msg.subject))}</span></td><td class="border border-gray-300 dark:border-gray-700 text-center pr-2"${_scopeId}>`);
@@ -55816,19 +55888,27 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
             _push2(`</td></tr>`);
           });
           _push2(`<!--]-->`);
-          if ($options.paginatedInbox.length === 0) {
+          if ($data.localInbox.length === 0) {
             _push2(`<tr${_scopeId}><td colspan="5" class="text-center py-4 text-gray-500 dark:text-gray-300"${_scopeId}>Keine Nachrichten gefunden</td></tr>`);
           } else {
             _push2(`<!---->`);
           }
-          _push2(`</tbody></table></div><div class="mt-4 flex gap-2"${_scopeId}><button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"${_scopeId}> Als gelesen markieren </button><button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"${_scopeId}> Löschen </button>`);
+          _push2(`</tbody></table></div><div class="mt-4 flex gap-2"${_scopeId}><button type="button" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"${_scopeId}> Als gelesen markieren </button><button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"${_scopeId}> Löschen </button>`);
           _push2(ssrRenderComponent(_component_pagination, {
             basePath: "pm/index/inbox",
             links: $props.inboxArr.links
           }, null, _parent2, _scopeId));
           _push2(`</div></div>`);
         } else if ($data.tab === "outbox") {
-          _push2(`<div class="mt-[-20px] pb-3"${_scopeId}><h2 class="text-2xl font-semibold m-3 pt-5"${_scopeId}>📤 Gesendete Nachrichten</h2><input type="text"${ssrRenderAttr("value", $data.searchOutbox)} placeholder="Suchen..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-700 dark:text-white mb-4"${_scopeId}><div class="p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-x-auto w-full"${_scopeId}><table class="min-w-full text-left border-collapse border border-gray-300 dark:border-gray-700"${_scopeId}><thead class="bg-gray-100 dark:bg-gray-800"${_scopeId}><tr${_scopeId}><th class="border border-gray-300 dark:border-gray-700 text-center pl-3" width="56"${_scopeId}>`);
+          _push2(`<div class="mt-[-20px] pb-3"${_scopeId}><h2 class="text-2xl font-semibold m-3 pt-5"${_scopeId}>📤 Gesendete Nachrichten</h2><div class="my-6 flex justify-between items-center"${_scopeId}>`);
+          _push2(ssrRenderComponent(_component_search_filter, {
+            modelValue: $data.searchOutbox,
+            "onUpdate:modelValue": ($event) => $data.searchOutbox = $event,
+            class: "w-full",
+            searchText: "",
+            onReset: $options.resetOut
+          }, null, _parent2, _scopeId));
+          _push2(`</div><div class="p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-visible w-full"${_scopeId}><table class="min-w-full text-left border-collapse border border-gray-300 dark:border-gray-700"${_scopeId}><thead class="bg-gray-100 dark:bg-gray-800"${_scopeId}><tr${_scopeId}><th class="border border-gray-300 dark:border-gray-700 text-center pl-3" width="56"${_scopeId}>`);
           _push2(ssrRenderComponent(_component_InputCheckbox, {
             modelValue: $data.selectAllOutbox,
             "onUpdate:modelValue": [($event) => $data.selectAllOutbox = $event, ($event) => $options.toggleSelectAll("outbox", $event)],
@@ -55948,7 +56028,7 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
         return [
           createVNode(_component_MetaHeader, { title: "Private Nachrichten" }),
           createVNode("div", { class: "max-w-none bg-layout-sun-100 dark:bg-layout-night-100 p-7 rounded-2xl shadow" }, [
-            createVNode("div", { class: "flex border-b border-gray-300 dark:border-gray-700 mb-6 overflow-x-auto" }, [
+            createVNode("div", { class: "flex border-b border-gray-300 dark:border-gray-700 mb-6 overflow-visible" }, [
               (openBlock(true), createBlock(Fragment, null, renderList($data.tabs, (tabItem) => {
                 return openBlock(), createBlock("button", {
                   key: tabItem.id,
@@ -55966,15 +56046,16 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                 class: "mt-[-20px] pb-3"
               }, [
                 createVNode("h2", { class: "text-2xl font-semibold m-3 pt-5" }, "📥 Posteingang"),
-                withDirectives(createVNode("input", {
-                  type: "text",
-                  "onUpdate:modelValue": ($event) => $data.searchInbox = $event,
-                  placeholder: "Suchen...",
-                  class: "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-700 dark:text-white mb-4"
-                }, null, 8, ["onUpdate:modelValue"]), [
-                  [vModelText, $data.searchInbox]
+                createVNode("div", { class: "my-6 flex justify-between items-center" }, [
+                  createVNode(_component_search_filter, {
+                    modelValue: $data.searchInbox,
+                    "onUpdate:modelValue": ($event) => $data.searchInbox = $event,
+                    class: "w-full",
+                    searchText: "",
+                    onReset: $options.resetIn
+                  }, null, 8, ["modelValue", "onUpdate:modelValue", "onReset"])
                 ]),
-                createVNode("div", { class: "p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-x-auto w-full" }, [
+                createVNode("div", { class: "p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-visible w-full" }, [
                   createVNode("table", { class: "min-w-full text-left border-collapse border border-gray-300 dark:border-gray-700" }, [
                     createVNode("thead", { class: "bg-gray-100 dark:bg-gray-800" }, [
                       createVNode("tr", null, [
@@ -56001,9 +56082,9 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                       ])
                     ]),
                     createVNode("tbody", null, [
-                      (openBlock(true), createBlock(Fragment, null, renderList($props.inboxArr?.data ?? [], (msg) => {
+                      (openBlock(true), createBlock(Fragment, null, renderList($data.localInbox, (msg) => {
                         return openBlock(), createBlock("tr", {
-                          key: msg.id,
+                          key: msg.id + "-" + msg.checked,
                           class: "hover:bg-gray-50 dark:hover:bg-gray-700"
                         }, [
                           createVNode("td", { class: "border border-gray-300 dark:border-gray-700 text-center pl-3" }, [
@@ -56015,13 +56096,14 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                             }, null, 8, ["model-value", "onUpdate:modelValue", "name", "id"])
                           ]),
                           createVNode("td", { class: "border border-gray-300 dark:border-gray-700 text-center" }, [
-                            createVNode(_component_PublishButton, {
+                            (openBlock(), createBlock(_component_PublishButton, {
+                              key: "pub-" + msg.id + "-" + msg.checked,
                               table: "private_messages",
                               id: msg.id,
                               modelValue: msg.checked,
-                              "onUpdate:modelValue": ($event) => msg.checked = $event,
+                              "onUpdate:modelValue": (val) => msg.checked = val,
                               public: 1
-                            }, null, 8, ["id", "modelValue", "onUpdate:modelValue"])
+                            }, null, 8, ["id", "modelValue", "onUpdate:modelValue"]))
                           ]),
                           createVNode("td", { class: "border border-gray-300 dark:border-gray-700 flex items-center" }, [
                             createVNode("img", {
@@ -56048,7 +56130,7 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                           ])
                         ]);
                       }), 128)),
-                      $options.paginatedInbox.length === 0 ? (openBlock(), createBlock("tr", { key: 0 }, [
+                      $data.localInbox.length === 0 ? (openBlock(), createBlock("tr", { key: 0 }, [
                         createVNode("td", {
                           colspan: "5",
                           class: "text-center py-4 text-gray-500 dark:text-gray-300"
@@ -56059,8 +56141,9 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                 ]),
                 createVNode("div", { class: "mt-4 flex gap-2" }, [
                   createVNode("button", {
+                    type: "button",
                     class: "px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600",
-                    onClick: $options.markAsRead
+                    onClick: withModifiers($options.markAsRead, ["stop", "prevent"])
                   }, " Als gelesen markieren ", 8, ["onClick"]),
                   createVNode("button", {
                     class: "px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600",
@@ -56076,15 +56159,16 @@ function _sfc_ssrRender$u(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                 class: "mt-[-20px] pb-3"
               }, [
                 createVNode("h2", { class: "text-2xl font-semibold m-3 pt-5" }, "📤 Gesendete Nachrichten"),
-                withDirectives(createVNode("input", {
-                  type: "text",
-                  "onUpdate:modelValue": ($event) => $data.searchOutbox = $event,
-                  placeholder: "Suchen...",
-                  class: "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-700 dark:text-white mb-4"
-                }, null, 8, ["onUpdate:modelValue"]), [
-                  [vModelText, $data.searchOutbox]
+                createVNode("div", { class: "my-6 flex justify-between items-center" }, [
+                  createVNode(_component_search_filter, {
+                    modelValue: $data.searchOutbox,
+                    "onUpdate:modelValue": ($event) => $data.searchOutbox = $event,
+                    class: "w-full",
+                    searchText: "",
+                    onReset: $options.resetOut
+                  }, null, 8, ["modelValue", "onUpdate:modelValue", "onReset"])
                 ]),
-                createVNode("div", { class: "p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-x-auto w-full" }, [
+                createVNode("div", { class: "p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-visible w-full" }, [
                   createVNode("table", { class: "min-w-full text-left border-collapse border border-gray-300 dark:border-gray-700" }, [
                     createVNode("thead", { class: "bg-gray-100 dark:bg-gray-800" }, [
                       createVNode("tr", null, [
@@ -61625,7 +61709,7 @@ const __vite_glob_0_356 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
   __proto__: null,
   default: ProfileTextfield
 }, Symbol.toStringTag, { value: "Module" }));
-const Ziggy = { "url": "http://ab.test.mcs", "port": null, "defaults": {}, "routes": { "debugbar.openhandler": { "uri": "_debugbar/open", "methods": ["GET", "HEAD"] }, "debugbar.clockwork": { "uri": "_debugbar/clockwork/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "debugbar.assets.css": { "uri": "_debugbar/assets/stylesheets", "methods": ["GET", "HEAD"] }, "debugbar.assets.js": { "uri": "_debugbar/assets/javascript", "methods": ["GET", "HEAD"] }, "debugbar.cache.delete": { "uri": "_debugbar/cache/{key}/{tags?}", "methods": ["DELETE"], "parameters": ["key", "tags"] }, "debugbar.queries.explain": { "uri": "_debugbar/queries/explain", "methods": ["POST"] }, "laravel-cookie-consent.script-utils": { "uri": "laravel-cookie-consent/script-utils", "methods": ["GET", "HEAD"] }, "login": { "uri": "login", "methods": ["GET", "HEAD"] }, "logout": { "uri": "logout", "methods": ["POST"] }, "password.request": { "uri": "forgot-password", "methods": ["GET", "HEAD"] }, "password.reset": { "uri": "reset-password/{token}", "methods": ["GET", "HEAD"], "parameters": ["token"] }, "password.email": { "uri": "forgot-password", "methods": ["POST"] }, "password.update": { "uri": "reset-password", "methods": ["POST"] }, "register": { "uri": "register", "methods": ["GET", "HEAD"] }, "register.store": { "uri": "register", "methods": ["POST"] }, "verification.notice": { "uri": "email/verify", "methods": ["GET", "HEAD"] }, "verification.verify": { "uri": "email/verify/{id}/{hash}", "methods": ["GET", "HEAD"], "parameters": ["id", "hash"] }, "verification.send": { "uri": "email/verification-notification", "methods": ["POST"] }, "user-profile-information.update": { "uri": "user/profile-information", "methods": ["PUT"] }, "user-password.update": { "uri": "user/password", "methods": ["PUT"] }, "password.confirm": { "uri": "user/confirm-password", "methods": ["GET", "HEAD"] }, "password.confirmation": { "uri": "user/confirmed-password-status", "methods": ["GET", "HEAD"] }, "password.confirm.store": { "uri": "user/confirm-password", "methods": ["POST"] }, "two-factor.login": { "uri": "two-factor-challenge", "methods": ["GET", "HEAD"] }, "two-factor.login.post": { "uri": "two-factor-challenge", "methods": ["POST"] }, "two-factor.enable": { "uri": "user/two-factor-authentication", "methods": ["POST"] }, "two-factor.confirm": { "uri": "user/confirmed-two-factor-authentication", "methods": ["POST"] }, "two-factor.disable": { "uri": "user/two-factor-authentication", "methods": ["DELETE"] }, "two-factor.qr-code": { "uri": "user/two-factor-qr-code", "methods": ["GET", "HEAD"] }, "two-factor.secret-key": { "uri": "user/two-factor-secret-key", "methods": ["GET", "HEAD"] }, "two-factor.recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["GET", "HEAD"] }, "two-factor.regenerate-recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["POST"] }, "terms.show": { "uri": "terms-of-service", "methods": ["GET", "HEAD"] }, "policy.show": { "uri": "privacy-policy", "methods": ["GET", "HEAD"] }, "profile.show": { "uri": "user/profile", "methods": ["GET", "HEAD"] }, "other-browser-sessions.destroy": { "uri": "user/other-browser-sessions", "methods": ["DELETE"] }, "current-user-photo.destroy": { "uri": "user/profile-photo", "methods": ["DELETE"] }, "current-user.destroy": { "uri": "user", "methods": ["DELETE"] }, "api-tokens.index": { "uri": "user/api-tokens", "methods": ["GET", "HEAD"] }, "api-tokens.store": { "uri": "user/api-tokens", "methods": ["POST"] }, "api-tokens.update": { "uri": "user/api-tokens/{token}", "methods": ["PUT"], "parameters": ["token"] }, "api-tokens.destroy": { "uri": "user/api-tokens/{token}", "methods": ["DELETE"], "parameters": ["token"] }, "sanctum.csrf-cookie": { "uri": "sanctum/csrf-cookie", "methods": ["GET", "HEAD"] }, "ignition.healthCheck": { "uri": "_ignition/health-check", "methods": ["GET", "HEAD"] }, "ignition.executeSolution": { "uri": "_ignition/execute-solution", "methods": ["POST"] }, "ignition.updateConfig": { "uri": "_ignition/update-config", "methods": ["POST"] }, "cookieconsent.script": { "uri": "cookie-consent/script", "methods": ["GET", "HEAD"] }, "cookieconsent.accept.all": { "uri": "cookie-consent/accept-all", "methods": ["POST"] }, "cookieconsent.accept.essentials": { "uri": "cookie-consent/accept-essentials", "methods": ["POST"] }, "cookieconsent.accept.configuration": { "uri": "cookie-consent/configure", "methods": ["POST"] }, "cookieconsent.reset": { "uri": "cookie-consent/reset", "methods": ["POST"] }, "admin.add.func": { "uri": "api/AddFunc", "methods": ["POST"] }, "countpixel": { "uri": "countpixel", "methods": ["GET", "HEAD"] }, "api.mcslpoints": { "uri": "api/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "remove.temp": { "uri": "api/delTempz/{path}", "methods": ["GET", "HEAD"], "parameters": ["path"] }, "ggle.login": { "uri": "auth/google", "methods": ["GET", "HEAD"] }, "ri": { "uri": "ri", "methods": ["GET", "HEAD"] }, "get.help": { "uri": "api/gethelp/{slug}/{table}", "methods": ["GET", "HEAD"], "parameters": ["slug", "table"] }, "auth.nickname": { "uri": "auth/nickname", "methods": ["GET", "HEAD"] }, "admin.mcslpoints": { "uri": "admin/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "GetRights_all": { "uri": "api/user/rights", "methods": ["GET", "HEAD"] }, "home.imprint.gen": { "uri": "home/impressum", "methods": ["GET", "HEAD"] }, "home.index": { "uri": "/", "methods": ["GET", "HEAD"] }, "home.spruch": { "uri": "api/spruch-des-monats", "methods": ["GET", "HEAD"] }, "home.lostnfound": { "uri": "lostnfound", "methods": ["GET", "HEAD"] }, "home.privacy.dag": { "uri": "privacy", "methods": ["GET", "HEAD"] }, "home.ai.dag": { "uri": "ai", "methods": ["GET", "HEAD"] }, "home.contacts.dag": { "uri": "contacts", "methods": ["GET", "HEAD"] }, "home.links": { "uri": "links", "methods": ["GET", "HEAD"] }, "home.visit": { "uri": "visitcard", "methods": ["GET", "HEAD"] }, "home.publication": { "uri": "publikationen", "methods": ["GET", "HEAD"] }, "home.imprint.chh": { "uri": "imprint", "methods": ["GET", "HEAD"] }, "user-profile-information.update_alt": { "uri": "user/profile", "methods": ["PUT"] }, "save.shp": { "uri": "save/shortpoems", "methods": ["POST"] }, "profile.photo.get": { "uri": "profile/photo", "methods": ["GET", "HEAD"] }, "mail.subscribe_newsl": { "uri": "newsl_subscribe", "methods": ["POST"] }, "mail.unsubscribe_newsl": { "uri": "unsubscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "mail.savenewsletter": { "uri": "mail/subscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "home.ai": { "uri": "home/ai", "methods": ["GET", "HEAD"] }, "mcs.points": { "uri": "about/mcs-points", "methods": ["GET", "HEAD"] }, "dashboard": { "uri": "dashboard", "methods": ["GET", "HEAD"] }, "newsl.to.mcsp": { "uri": "newslToMCSLPoints/{uhash?}/{comphash?}/{email?}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "comphash", "email"] }, "personal.update": { "uri": "personal_update", "methods": ["POST"] }, "home.qrcodah": { "uri": "home/QRCodaH", "methods": ["GET", "HEAD"] }, "home.about": { "uri": "home/aboutme", "methods": ["GET", "HEAD"] }, "home.imprint": { "uri": "home/imprint", "methods": ["GET", "HEAD"] }, "home.terms": { "uri": "home/terms", "methods": ["GET", "HEAD"] }, "home.images.gallery": { "uri": "home/show/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.gallery.search": { "uri": "home/search/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.index": { "uri": "home/pictures", "methods": ["GET", "HEAD"] }, "home.shortpoems": { "uri": "home/shortpoems", "methods": ["GET", "HEAD"] }, "home.didyouknow": { "uri": "home/didyouknow", "methods": ["GET", "HEAD"] }, "home.blog.index": { "uri": "blogs", "methods": ["GET", "HEAD"] }, "home.blog.show": { "uri": "blogs/show/{autoslug}", "methods": ["GET", "HEAD"], "parameters": ["autoslug"] }, "home.no_application_found": { "uri": "home/no_application_found", "methods": ["GET", "HEAD"] }, "home.user_is_no_admin": { "uri": "home/user_is_no_admin", "methods": ["GET", "HEAD"] }, "home.user_is_no_employee": { "uri": "home/user_is_no_employee", "methods": ["GET", "HEAD"] }, "home.user_is_no_customer": { "uri": "home/user_is_no_customer", "methods": ["GET", "HEAD"] }, "home.invalid_signature": { "uri": "home/invalid_signature", "methods": ["GET", "HEAD"] }, "home.userlist": { "uri": "home/users", "methods": ["GET", "HEAD"] }, "home.user.show": { "uri": "home/users/show/{name}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["name", "id"] }, "home.privacy": { "uri": "home/privacy", "methods": ["GET", "HEAD"] }, "mfx.changelog": { "uri": "changelog", "methods": ["GET", "HEAD"] }, "mfx.changelog.old": { "uri": "changelog_old", "methods": ["GET", "HEAD"] }, "home.projects.mfx": { "uri": "home/projects", "methods": ["GET", "HEAD"] }, "home.images.cat.mfx": { "uri": "home/images", "methods": ["GET", "HEAD"] }, "home.images.mfx": { "uri": "home/images/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.people.mfx": { "uri": "home/people", "methods": ["GET", "HEAD"] }, "home.privacy.mfx": { "uri": "home/privacy_info", "methods": ["GET", "HEAD"] }, "home.infos.mfx": { "uri": "home/infos", "methods": ["GET", "HEAD"] }, "home.infos.show.mfx": { "uri": "home/infos/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.powered.show.mfx": { "uri": "powered-by-mcsl", "methods": ["GET", "HEAD"] }, "home.contacts.mfx": { "uri": "contacts_mfx", "methods": ["GET", "HEAD"] }, "api.table-columns": { "uri": "api/table-columns/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "home.contacts": { "uri": "home/contacts", "methods": ["GET", "HEAD"] }, "user.twofactor.enable": { "uri": "user/twofactor/enable", "methods": ["POST"] }, "user.twofactor.disable": { "uri": "user/twofactor/disable", "methods": ["POST"] }, "images.copyleft": { "uri": "copyleft/images", "methods": ["GET", "HEAD"] }, "mfx.getvotez": { "uri": "api/getVotez", "methods": ["GET", "HEAD"] }, "GetRights": { "uri": "api/user/rights/des/{table}/{right}", "methods": ["GET", "HEAD"], "parameters": ["table", "right"] }, "allRights": { "uri": "api/user/rights/des-all/{right}", "methods": ["GET", "HEAD"], "parameters": ["right"] }, "tables.noview": { "uri": "no-rights", "methods": ["GET", "HEAD"] }, "GetAuth": { "uri": "GetAuth", "methods": ["GET", "HEAD"] }, "api.getRating": { "uri": "api/GetRating/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "admin.users_rights.get": { "uri": "admin/user-rights/get", "methods": ["GET", "HEAD"] }, "two-factor.setup": { "uri": "two-factor/setup", "methods": ["POST"] }, "two-factor.confirm_alt": { "uri": "two-factor/confirm", "methods": ["POST"] }, "admin.users_rights": { "uri": "admin/User_Rights", "methods": ["GET", "HEAD"] }, "admin.GetSRights": { "uri": "api/GetSRights", "methods": ["GET", "HEAD"] }, "admin.users_rights.save": { "uri": "api/admin/user-rights/save", "methods": ["POST"] }, "getSlug": { "uri": "api/getSlug/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "ColumnFetcher": { "uri": "namebindings", "methods": ["GET", "HEAD"] }, "upload.image": { "uri": "upload-image/{table}/{isw?}", "methods": ["POST"], "parameters": ["table", "isw"] }, "upload.file": { "uri": "upload-file/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.ofile": { "uri": "upload-ofile/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.gen": { "uri": "upload-image_alt/{table}/{isw?}/{oripath?}", "methods": ["POST"], "parameters": ["table", "isw", "oripath"] }, "GetUserNull": { "uri": "GetUserNull", "methods": ["GET", "HEAD"] }, "save.image": { "uri": "save-image/{table}", "methods": ["POST"], "parameters": ["table"] }, "comments.fetch": { "uri": "comments/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "GetTableForm": { "uri": "tables/form-data/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "pb": { "uri": "pb", "methods": ["GET", "HEAD"] }, "devmod": { "uri": "devmod", "methods": ["GET", "HEAD"] }, "getnickfromcomments": { "uri": "get-nick-from-comments", "methods": ["GET", "HEAD"] }, "toggle.pub": { "uri": "toggle-pub", "methods": ["POST"] }, "tables.create-table": { "uri": "tables/{table}/create", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "comments.store": { "uri": "comments/store/{table}/{id}", "methods": ["POST"], "parameters": ["table", "id"] }, "GetTablesPosi": { "uri": "api/admin_table_positions", "methods": ["GET", "HEAD"] }, "applicationswitch": { "uri": "applicationswitch", "methods": ["GET", "HEAD"] }, "AddUserAI": { "uri": "api/AddUserAI/{val}", "methods": ["POST"], "parameters": ["val"] }, "admin.dashboard": { "uri": "admin/dashboard", "methods": ["GET", "HEAD"] }, "gen.sitemap": { "uri": "sitemap-generator", "methods": ["GET", "HEAD"] }, "admin.kontakte": { "uri": "admin/Kontakte", "methods": ["GET", "HEAD"] }, "admin.fonts": { "uri": "fonts", "methods": ["GET", "HEAD"] }, "del.uright.function": { "uri": "api/del/function/userrights/{xkis}", "methods": ["DELETE"], "parameters": ["xkis"] }, "gen.actlog": { "uri": "api/activity-log", "methods": ["GET", "HEAD"] }, "act.log.save": { "uri": "api/activity-log", "methods": ["POST"] }, "logs.check": { "uri": "api/chkcom_log/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.actlog": { "uri": "admin/ActLog", "methods": ["GET", "HEAD"] }, "api.get.firstdump": { "uri": "api/getGitDump/{dom?}/{usdis?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "usdis"] }, "api.get.after": { "uri": "api/saveAlt/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "api.showgit": { "uri": "admin/githubdb", "methods": ["GET", "HEAD"] }, "remlogg": { "uri": "api/remlog/{id}", "methods": ["DELETE"], "parameters": ["id"] }, "admin.getunused": { "uri": "admin/get_unused_imgz/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "admin.hackinglog": { "uri": "admin/HackingLog", "methods": ["GET", "HEAD"] }, "admin.CSVImport": { "uri": "api/contacts/import", "methods": ["POST"] }, "GetGenTables": { "uri": "api/getgentables/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "contacts.import.preview": { "uri": "contacts/import-preview", "methods": ["POST"] }, "admin.contacts.updateGroup": { "uri": "admin/contacts/{contact}/group", "methods": ["PUT"], "parameters": ["contact"], "bindings": { "contact": "id" } }, "GetTableOpt": { "uri": "tables/sort-data/{name}", "methods": ["GET", "HEAD"], "parameters": ["name"] }, "zip.images": { "uri": "admin/zip-images/{dom?}", "methods": ["POST"], "parameters": ["dom"] }, "rem.images": { "uri": "admin/removeFiles", "methods": ["POST"] }, "SQL.index": { "uri": "admin/SQLUpdate", "methods": ["GET", "HEAD"] }, "get.db.tables": { "uri": "api/admin-tables", "methods": ["GET", "HEAD"] }, "admin.ausgaben": { "uri": "admin/Ausgaben", "methods": ["GET", "HEAD"] }, "usconfi": { "uri": "userx/update-config/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "dboard.data": { "uri": "dboard/data/{dom?}/{month?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "month"] }, "stats": { "uri": "admin/Statistics", "methods": ["GET", "HEAD"] }, "store.mcslpoints": { "uri": "get_MCSL_Points_Preniums", "methods": ["GET", "HEAD"] }, "send.mcslpoints": { "uri": "SubmitPremiums/{users_id}/{img_id}", "methods": ["GET", "HEAD"], "parameters": ["users_id", "img_id"] }, "get.bash.rights": { "uri": "api/user/batch-rights", "methods": ["POST"] }, "comments.check": { "uri": "api/chkcom/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.contacts": { "uri": "api/contacts", "methods": ["GET", "HEAD"] }, "created.at": { "uri": "api/created-at", "methods": ["GET", "HEAD"] }, "GetCats": { "uri": "api/GetCat/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "save-order": { "uri": "api/save-order/{table}", "methods": ["POST"], "parameters": ["table"] }, "pm.index": { "uri": "pm/index/{tab}", "methods": ["GET", "HEAD"], "parameters": ["tab"] }, "pm.save": { "uri": "pm/save", "methods": ["POST"] }, "admin.pm.check": { "uri": "admin/pm/check/{id}", "methods": ["POST"], "parameters": ["id"] }, "admin.pm.mark": { "uri": "admin/pm/mark", "methods": ["POST"] }, "admin.pm.delete": { "uri": "admin/pm/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.pm.delmore": { "uri": "admin/pm/delmore", "methods": ["POST"] }, "admin.usconf.save": { "uri": "admin/UsConf/save", "methods": ["PUT"] }, "/api-get-image-url": { "uri": "api/images/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "destroy.comments": { "uri": "comments/delete/{comment_id}", "methods": ["DELETE"], "parameters": ["comment_id"] }, "save-json-gallery": { "uri": "api/save-json", "methods": ["POST"] }, "save-dirsave": { "uri": "api/saveFolder", "methods": ["POST"] }, "remove.img": { "uri": "api/del_image/{column}/{folder}/{posi}", "methods": ["POST"], "parameters": ["column", "folder", "posi"] }, "mfx.getstyles": { "uri": "api/tailwind-colors/{subdomain}", "methods": ["GET", "HEAD"], "parameters": ["subdomain"] }, "comments.check.done": { "uri": "api/getCheckedBatch", "methods": ["POST"] }, "admin.laravel_log": { "uri": "admin/laravel_log", "methods": ["GET", "HEAD"] }, "admin.handbook": { "uri": "admin/handbook", "methods": ["GET", "HEAD"] }, "admin.blog.index": { "uri": "admin/blogs/index", "methods": ["GET", "HEAD"] }, "admin.blog.create": { "uri": "admin/blogs/create", "methods": ["GET", "HEAD"] }, "admin.blog.store": { "uri": "admin/blogs/store", "methods": ["POST"] }, "admin.blog.edit": { "uri": "admin/blogs/{blog}/edit", "methods": ["GET", "HEAD"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.blog.update": { "uri": "admin/blogs/{blog}", "methods": ["PUT"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.tables.store": { "uri": "admin/tables/store/{table}", "methods": ["POST"], "parameters": ["table"] }, "admin.tables.copy": { "uri": "admin/tables/copy/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "admin.tables.create": { "uri": "admin/tables/create/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.tables.index": { "uri": "admin/tables", "methods": ["GET", "HEAD"] }, "admin.tables.show": { "uri": "admin/tables/{table}/show", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "pw.form": { "uri": "tables/pwform", "methods": ["GET", "HEAD"] }, "pw.print": { "uri": "tables/pwprint", "methods": ["POST"] }, "admin.tables.edit": { "uri": "admin/tables/edit/{id}/{table}", "methods": ["GET", "HEAD"], "parameters": ["id", "table"] }, "admin.tables.delete": { "uri": "admin/tables/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.table.update": { "uri": "admin/tables/update/{table}/{id?}", "methods": ["POST"], "parameters": ["table", "id"] }, "admin.mailcenter": { "uri": "admin/email", "methods": ["GET", "HEAD"] }, "admin.mailprev": { "uri": "email/preview", "methods": ["POST"] }, "admin.mail.save": { "uri": "email/save", "methods": ["POST"] }, "admin.email.signatur.save": { "uri": "email/signatur/save", "methods": ["POST"] }, "admin.mail.send": { "uri": "email/send", "methods": ["POST"] }, "admin.mail.sended": { "uri": "email/sended", "methods": ["GET", "HEAD"] }, "admin.blog.delete": { "uri": "admin/blogs/{blog}", "methods": ["DELETE"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.redirect.route": { "uri": "admin", "methods": ["GET", "HEAD"] }, "hasCreated": { "uri": "hasCreated/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.profile": { "uri": "admin/profile", "methods": ["GET", "HEAD"] }, "admin.api_tokens.index": { "uri": "admin/api_tokens", "methods": ["GET", "HEAD"] }, "employee.dashboard": { "uri": "employee/dashboard", "methods": ["GET", "HEAD"] }, "customer.dashboard": { "uri": "home/dashboard", "methods": ["GET", "HEAD"] }, "GetTableEnum": { "uri": "tables/sort-enum/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "ArtAct": { "uri": "act-category/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "toggle.darkmode": { "uri": "toggle-dark-mode", "methods": ["POST"] }, "GetTableItemScope": { "uri": "tables/sort-enumis/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "home": { "uri": "home", "methods": ["GET", "HEAD"] } } };
+const Ziggy = { "url": "http://ab.test.mcs", "port": null, "defaults": {}, "routes": { "debugbar.openhandler": { "uri": "_debugbar/open", "methods": ["GET", "HEAD"] }, "debugbar.clockwork": { "uri": "_debugbar/clockwork/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "debugbar.assets.css": { "uri": "_debugbar/assets/stylesheets", "methods": ["GET", "HEAD"] }, "debugbar.assets.js": { "uri": "_debugbar/assets/javascript", "methods": ["GET", "HEAD"] }, "debugbar.cache.delete": { "uri": "_debugbar/cache/{key}/{tags?}", "methods": ["DELETE"], "parameters": ["key", "tags"] }, "debugbar.queries.explain": { "uri": "_debugbar/queries/explain", "methods": ["POST"] }, "laravel-cookie-consent.script-utils": { "uri": "laravel-cookie-consent/script-utils", "methods": ["GET", "HEAD"] }, "login": { "uri": "login", "methods": ["GET", "HEAD"] }, "logout": { "uri": "logout", "methods": ["POST"] }, "password.request": { "uri": "forgot-password", "methods": ["GET", "HEAD"] }, "password.reset": { "uri": "reset-password/{token}", "methods": ["GET", "HEAD"], "parameters": ["token"] }, "password.email": { "uri": "forgot-password", "methods": ["POST"] }, "password.update": { "uri": "reset-password", "methods": ["POST"] }, "register": { "uri": "register", "methods": ["GET", "HEAD"] }, "register.store": { "uri": "register", "methods": ["POST"] }, "verification.notice": { "uri": "email/verify", "methods": ["GET", "HEAD"] }, "verification.verify": { "uri": "email/verify/{id}/{hash}", "methods": ["GET", "HEAD"], "parameters": ["id", "hash"] }, "verification.send": { "uri": "email/verification-notification", "methods": ["POST"] }, "user-profile-information.update": { "uri": "user/profile-information", "methods": ["PUT"] }, "user-password.update": { "uri": "user/password", "methods": ["PUT"] }, "password.confirm": { "uri": "user/confirm-password", "methods": ["GET", "HEAD"] }, "password.confirmation": { "uri": "user/confirmed-password-status", "methods": ["GET", "HEAD"] }, "password.confirm.store": { "uri": "user/confirm-password", "methods": ["POST"] }, "two-factor.login": { "uri": "two-factor-challenge", "methods": ["GET", "HEAD"] }, "two-factor.login.post": { "uri": "two-factor-challenge", "methods": ["POST"] }, "two-factor.enable": { "uri": "user/two-factor-authentication", "methods": ["POST"] }, "two-factor.confirm": { "uri": "user/confirmed-two-factor-authentication", "methods": ["POST"] }, "two-factor.disable": { "uri": "user/two-factor-authentication", "methods": ["DELETE"] }, "two-factor.qr-code": { "uri": "user/two-factor-qr-code", "methods": ["GET", "HEAD"] }, "two-factor.secret-key": { "uri": "user/two-factor-secret-key", "methods": ["GET", "HEAD"] }, "two-factor.recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["GET", "HEAD"] }, "two-factor.regenerate-recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["POST"] }, "terms.show": { "uri": "terms-of-service", "methods": ["GET", "HEAD"] }, "policy.show": { "uri": "privacy-policy", "methods": ["GET", "HEAD"] }, "profile.show": { "uri": "user/profile", "methods": ["GET", "HEAD"] }, "other-browser-sessions.destroy": { "uri": "user/other-browser-sessions", "methods": ["DELETE"] }, "current-user-photo.destroy": { "uri": "user/profile-photo", "methods": ["DELETE"] }, "current-user.destroy": { "uri": "user", "methods": ["DELETE"] }, "api-tokens.index": { "uri": "user/api-tokens", "methods": ["GET", "HEAD"] }, "api-tokens.store": { "uri": "user/api-tokens", "methods": ["POST"] }, "api-tokens.update": { "uri": "user/api-tokens/{token}", "methods": ["PUT"], "parameters": ["token"] }, "api-tokens.destroy": { "uri": "user/api-tokens/{token}", "methods": ["DELETE"], "parameters": ["token"] }, "sanctum.csrf-cookie": { "uri": "sanctum/csrf-cookie", "methods": ["GET", "HEAD"] }, "ignition.healthCheck": { "uri": "_ignition/health-check", "methods": ["GET", "HEAD"] }, "ignition.executeSolution": { "uri": "_ignition/execute-solution", "methods": ["POST"] }, "ignition.updateConfig": { "uri": "_ignition/update-config", "methods": ["POST"] }, "cookieconsent.script": { "uri": "cookie-consent/script", "methods": ["GET", "HEAD"] }, "cookieconsent.accept.all": { "uri": "cookie-consent/accept-all", "methods": ["POST"] }, "cookieconsent.accept.essentials": { "uri": "cookie-consent/accept-essentials", "methods": ["POST"] }, "cookieconsent.accept.configuration": { "uri": "cookie-consent/configure", "methods": ["POST"] }, "cookieconsent.reset": { "uri": "cookie-consent/reset", "methods": ["POST"] }, "admin.add.func": { "uri": "api/AddFunc", "methods": ["POST"] }, "countpixel": { "uri": "countpixel/{url}/{route}/{page?}", "methods": ["GET", "HEAD"], "parameters": ["url", "route", "page"] }, "api.mcslpoints": { "uri": "api/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "remove.temp": { "uri": "api/delTempz/{path}", "methods": ["GET", "HEAD"], "parameters": ["path"] }, "ggle.login": { "uri": "auth/google", "methods": ["GET", "HEAD"] }, "ri": { "uri": "ri", "methods": ["GET", "HEAD"] }, "get.help": { "uri": "api/gethelp/{slug}/{table}", "methods": ["GET", "HEAD"], "parameters": ["slug", "table"] }, "auth.nickname": { "uri": "auth/nickname", "methods": ["GET", "HEAD"] }, "admin.mcslpoints": { "uri": "admin/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "GetRights_all": { "uri": "api/user/rights", "methods": ["GET", "HEAD"] }, "home.imprint.gen": { "uri": "home/impressum", "methods": ["GET", "HEAD"] }, "home.index": { "uri": "/", "methods": ["GET", "HEAD"] }, "home.spruch": { "uri": "api/spruch-des-monats", "methods": ["GET", "HEAD"] }, "home.lostnfound": { "uri": "lostnfound", "methods": ["GET", "HEAD"] }, "home.privacy.dag": { "uri": "privacy", "methods": ["GET", "HEAD"] }, "home.ai.dag": { "uri": "ai", "methods": ["GET", "HEAD"] }, "home.contacts.dag": { "uri": "contacts", "methods": ["GET", "HEAD"] }, "home.links": { "uri": "links", "methods": ["GET", "HEAD"] }, "home.visit": { "uri": "visitcard", "methods": ["GET", "HEAD"] }, "home.publication": { "uri": "publikationen", "methods": ["GET", "HEAD"] }, "home.imprint.chh": { "uri": "imprint", "methods": ["GET", "HEAD"] }, "user-profile-information.update_alt": { "uri": "user/profile", "methods": ["PUT"] }, "save.shp": { "uri": "save/shortpoems", "methods": ["POST"] }, "profile.photo.get": { "uri": "profile/photo", "methods": ["GET", "HEAD"] }, "mail.subscribe_newsl": { "uri": "newsl_subscribe", "methods": ["POST"] }, "mail.unsubscribe_newsl": { "uri": "unsubscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "mail.savenewsletter": { "uri": "mail/subscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "home.ai": { "uri": "home/ai", "methods": ["GET", "HEAD"] }, "mcs.points": { "uri": "about/mcs-points", "methods": ["GET", "HEAD"] }, "dashboard": { "uri": "dashboard", "methods": ["GET", "HEAD"] }, "newsl.to.mcsp": { "uri": "newslToMCSLPoints/{uhash?}/{comphash?}/{email?}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "comphash", "email"] }, "personal.update": { "uri": "personal_update", "methods": ["POST"] }, "home.qrcodah": { "uri": "home/QRCodaH", "methods": ["GET", "HEAD"] }, "home.about": { "uri": "home/aboutme", "methods": ["GET", "HEAD"] }, "home.imprint": { "uri": "home/imprint", "methods": ["GET", "HEAD"] }, "home.terms": { "uri": "home/terms", "methods": ["GET", "HEAD"] }, "home.images.gallery": { "uri": "home/show/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.gallery.search": { "uri": "home/search/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.index": { "uri": "home/pictures", "methods": ["GET", "HEAD"] }, "home.shortpoems": { "uri": "home/shortpoems", "methods": ["GET", "HEAD"] }, "home.didyouknow": { "uri": "home/didyouknow", "methods": ["GET", "HEAD"] }, "home.blog.index": { "uri": "blogs", "methods": ["GET", "HEAD"] }, "home.blog.show": { "uri": "blogs/show/{autoslug}", "methods": ["GET", "HEAD"], "parameters": ["autoslug"] }, "home.no_application_found": { "uri": "home/no_application_found", "methods": ["GET", "HEAD"] }, "home.user_is_no_admin": { "uri": "home/user_is_no_admin", "methods": ["GET", "HEAD"] }, "home.user_is_no_employee": { "uri": "home/user_is_no_employee", "methods": ["GET", "HEAD"] }, "home.user_is_no_customer": { "uri": "home/user_is_no_customer", "methods": ["GET", "HEAD"] }, "home.invalid_signature": { "uri": "home/invalid_signature", "methods": ["GET", "HEAD"] }, "home.userlist": { "uri": "home/users", "methods": ["GET", "HEAD"] }, "home.user.show": { "uri": "home/users/show/{name}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["name", "id"] }, "home.privacy": { "uri": "home/privacy", "methods": ["GET", "HEAD"] }, "mfx.changelog": { "uri": "changelog", "methods": ["GET", "HEAD"] }, "mfx.changelog.old": { "uri": "changelog_old", "methods": ["GET", "HEAD"] }, "home.projects.mfx": { "uri": "home/projects", "methods": ["GET", "HEAD"] }, "home.images.cat.mfx": { "uri": "home/images", "methods": ["GET", "HEAD"] }, "home.images.mfx": { "uri": "home/images/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.people.mfx": { "uri": "home/people", "methods": ["GET", "HEAD"] }, "home.privacy.mfx": { "uri": "home/privacy_info", "methods": ["GET", "HEAD"] }, "home.infos.mfx": { "uri": "home/infos", "methods": ["GET", "HEAD"] }, "home.infos.show.mfx": { "uri": "home/infos/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.powered.show.mfx": { "uri": "powered-by-mcsl", "methods": ["GET", "HEAD"] }, "home.contacts.mfx": { "uri": "contacts_mfx", "methods": ["GET", "HEAD"] }, "api.table-columns": { "uri": "api/table-columns/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "home.contacts": { "uri": "home/contacts", "methods": ["GET", "HEAD"] }, "user.twofactor.enable": { "uri": "user/twofactor/enable", "methods": ["POST"] }, "user.twofactor.disable": { "uri": "user/twofactor/disable", "methods": ["POST"] }, "images.copyleft": { "uri": "copyleft/images", "methods": ["GET", "HEAD"] }, "mfx.getvotez": { "uri": "api/getVotez", "methods": ["GET", "HEAD"] }, "GetRights": { "uri": "api/user/rights/des/{table}/{right}", "methods": ["GET", "HEAD"], "parameters": ["table", "right"] }, "allRights": { "uri": "api/user/rights/des-all/{right}", "methods": ["GET", "HEAD"], "parameters": ["right"] }, "tables.noview": { "uri": "no-rights", "methods": ["GET", "HEAD"] }, "GetAuth": { "uri": "GetAuth", "methods": ["GET", "HEAD"] }, "api.getRating": { "uri": "api/GetRating/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "admin.users_rights.get": { "uri": "admin/user-rights/get", "methods": ["GET", "HEAD"] }, "two-factor.setup": { "uri": "two-factor/setup", "methods": ["POST"] }, "two-factor.confirm_alt": { "uri": "two-factor/confirm", "methods": ["POST"] }, "admin.users_rights": { "uri": "admin/User_Rights", "methods": ["GET", "HEAD"] }, "admin.GetSRights": { "uri": "api/GetSRights", "methods": ["GET", "HEAD"] }, "admin.users_rights.save": { "uri": "api/admin/user-rights/save", "methods": ["POST"] }, "getSlug": { "uri": "api/getSlug/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "ColumnFetcher": { "uri": "namebindings", "methods": ["GET", "HEAD"] }, "upload.image": { "uri": "upload-image/{table}/{isw?}", "methods": ["POST"], "parameters": ["table", "isw"] }, "upload.file": { "uri": "upload-file/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.ofile": { "uri": "upload-ofile/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.gen": { "uri": "upload-image_alt/{table}/{isw?}/{oripath?}", "methods": ["POST"], "parameters": ["table", "isw", "oripath"] }, "GetUserNull": { "uri": "GetUserNull", "methods": ["GET", "HEAD"] }, "save.image": { "uri": "save-image/{table}", "methods": ["POST"], "parameters": ["table"] }, "comments.fetch": { "uri": "comments/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "GetTableForm": { "uri": "tables/form-data/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "pb": { "uri": "pb", "methods": ["GET", "HEAD"] }, "devmod": { "uri": "devmod", "methods": ["GET", "HEAD"] }, "getnickfromcomments": { "uri": "get-nick-from-comments", "methods": ["GET", "HEAD"] }, "toggle.pub": { "uri": "toggle-pub", "methods": ["POST"] }, "tables.create-table": { "uri": "tables/{table}/create", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "comments.store": { "uri": "comments/store/{table}/{id}", "methods": ["POST"], "parameters": ["table", "id"] }, "GetTablesPosi": { "uri": "api/admin_table_positions", "methods": ["GET", "HEAD"] }, "applicationswitch": { "uri": "applicationswitch", "methods": ["GET", "HEAD"] }, "AddUserAI": { "uri": "api/AddUserAI/{val}", "methods": ["POST"], "parameters": ["val"] }, "admin.dashboard": { "uri": "admin/dashboard", "methods": ["GET", "HEAD"] }, "gen.sitemap": { "uri": "sitemap-generator", "methods": ["GET", "HEAD"] }, "admin.kontakte": { "uri": "admin/Kontakte", "methods": ["GET", "HEAD"] }, "admin.fonts": { "uri": "fonts", "methods": ["GET", "HEAD"] }, "del.uright.function": { "uri": "api/del/function/userrights/{xkis}", "methods": ["DELETE"], "parameters": ["xkis"] }, "gen.actlog": { "uri": "api/activity-log", "methods": ["GET", "HEAD"] }, "act.log.save": { "uri": "api/activity-log", "methods": ["POST"] }, "logs.check": { "uri": "api/chkcom_log/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.actlog": { "uri": "admin/ActLog", "methods": ["GET", "HEAD"] }, "api.get.firstdump": { "uri": "api/getGitDump/{dom?}/{usdis?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "usdis"] }, "api.get.after": { "uri": "api/saveAlt/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "api.showgit": { "uri": "admin/githubdb", "methods": ["GET", "HEAD"] }, "remlogg": { "uri": "api/remlog/{id}", "methods": ["DELETE"], "parameters": ["id"] }, "admin.getunused": { "uri": "admin/get_unused_imgz/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "admin.hackinglog": { "uri": "admin/HackingLog", "methods": ["GET", "HEAD"] }, "admin.CSVImport": { "uri": "api/contacts/import", "methods": ["POST"] }, "GetGenTables": { "uri": "api/getgentables/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "contacts.import.preview": { "uri": "contacts/import-preview", "methods": ["POST"] }, "admin.contacts.updateGroup": { "uri": "admin/contacts/{contact}/group", "methods": ["PUT"], "parameters": ["contact"], "bindings": { "contact": "id" } }, "GetTableOpt": { "uri": "tables/sort-data/{name}", "methods": ["GET", "HEAD"], "parameters": ["name"] }, "zip.images": { "uri": "admin/zip-images/{dom?}", "methods": ["POST"], "parameters": ["dom"] }, "rem.images": { "uri": "admin/removeFiles", "methods": ["POST"] }, "SQL.index": { "uri": "admin/SQLUpdate", "methods": ["GET", "HEAD"] }, "get.db.tables": { "uri": "api/admin-tables", "methods": ["GET", "HEAD"] }, "admin.ausgaben": { "uri": "admin/Ausgaben", "methods": ["GET", "HEAD"] }, "usconfi": { "uri": "userx/update-config/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "dboard.data": { "uri": "dboard/data/{dom?}/{month?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "month"] }, "stats": { "uri": "admin/Statistics", "methods": ["GET", "HEAD"] }, "store.mcslpoints": { "uri": "get_MCSL_Points_Preniums", "methods": ["GET", "HEAD"] }, "send.mcslpoints": { "uri": "SubmitPremiums/{users_id}/{img_id}", "methods": ["GET", "HEAD"], "parameters": ["users_id", "img_id"] }, "get.bash.rights": { "uri": "api/user/batch-rights", "methods": ["POST"] }, "comments.check": { "uri": "api/chkcom/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.contacts": { "uri": "api/contacts", "methods": ["GET", "HEAD"] }, "created.at": { "uri": "api/created-at", "methods": ["GET", "HEAD"] }, "GetCats": { "uri": "api/GetCat/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "save-order": { "uri": "api/save-order/{table}", "methods": ["POST"], "parameters": ["table"] }, "pm.index": { "uri": "pm/index/{tab}", "methods": ["GET", "HEAD"], "parameters": ["tab"] }, "pm.save": { "uri": "pm/save", "methods": ["POST"] }, "admin.pm.check": { "uri": "admin/pm/check/{id}", "methods": ["POST"], "parameters": ["id"] }, "admin.pm.mark": { "uri": "admin/pm/mark", "methods": ["POST"] }, "admin.pm.delete": { "uri": "admin/pm/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.pm.delmore": { "uri": "admin/pm/delmore", "methods": ["POST"] }, "admin.usconf.save": { "uri": "admin/UsConf/save", "methods": ["PUT"] }, "/api-get-image-url": { "uri": "api/images/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "destroy.comments": { "uri": "comments/delete/{comment_id}", "methods": ["DELETE"], "parameters": ["comment_id"] }, "save-json-gallery": { "uri": "api/save-json", "methods": ["POST"] }, "save-dirsave": { "uri": "api/saveFolder", "methods": ["POST"] }, "remove.img": { "uri": "api/del_image/{column}/{folder}/{posi}", "methods": ["POST"], "parameters": ["column", "folder", "posi"] }, "mfx.getstyles": { "uri": "api/tailwind-colors/{subdomain}", "methods": ["GET", "HEAD"], "parameters": ["subdomain"] }, "comments.check.done": { "uri": "api/getCheckedBatch", "methods": ["POST"] }, "admin.laravel_log": { "uri": "admin/laravel_log", "methods": ["GET", "HEAD"] }, "admin.handbook": { "uri": "admin/handbook", "methods": ["GET", "HEAD"] }, "admin.blog.index": { "uri": "admin/blogs/index", "methods": ["GET", "HEAD"] }, "admin.blog.create": { "uri": "admin/blogs/create", "methods": ["GET", "HEAD"] }, "admin.blog.store": { "uri": "admin/blogs/store", "methods": ["POST"] }, "admin.blog.edit": { "uri": "admin/blogs/{blog}/edit", "methods": ["GET", "HEAD"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.blog.update": { "uri": "admin/blogs/{blog}", "methods": ["PUT"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.tables.store": { "uri": "admin/tables/store/{table}", "methods": ["POST"], "parameters": ["table"] }, "admin.tables.copy": { "uri": "admin/tables/copy/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "admin.tables.create": { "uri": "admin/tables/create/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.tables.index": { "uri": "admin/tables", "methods": ["GET", "HEAD"] }, "admin.tables.show": { "uri": "admin/tables/{table}/show", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "pw.form": { "uri": "tables/pwform", "methods": ["GET", "HEAD"] }, "pw.print": { "uri": "tables/pwprint", "methods": ["POST"] }, "admin.tables.edit": { "uri": "admin/tables/edit/{id}/{table}", "methods": ["GET", "HEAD"], "parameters": ["id", "table"] }, "admin.tables.delete": { "uri": "admin/tables/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.table.update": { "uri": "admin/tables/update/{table}/{id?}", "methods": ["POST"], "parameters": ["table", "id"] }, "admin.mailcenter": { "uri": "admin/email", "methods": ["GET", "HEAD"] }, "admin.mailprev": { "uri": "email/preview", "methods": ["POST"] }, "admin.mail.save": { "uri": "email/save", "methods": ["POST"] }, "admin.email.signatur.save": { "uri": "email/signatur/save", "methods": ["POST"] }, "admin.mail.send": { "uri": "email/send", "methods": ["POST"] }, "admin.mail.sended": { "uri": "email/sended", "methods": ["GET", "HEAD"] }, "admin.blog.delete": { "uri": "admin/blogs/{blog}", "methods": ["DELETE"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.redirect.route": { "uri": "admin", "methods": ["GET", "HEAD"] }, "hasCreated": { "uri": "hasCreated/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.profile": { "uri": "admin/profile", "methods": ["GET", "HEAD"] }, "admin.api_tokens.index": { "uri": "admin/api_tokens", "methods": ["GET", "HEAD"] }, "employee.dashboard": { "uri": "employee/dashboard", "methods": ["GET", "HEAD"] }, "customer.dashboard": { "uri": "home/dashboard", "methods": ["GET", "HEAD"] }, "GetTableEnum": { "uri": "tables/sort-enum/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "ArtAct": { "uri": "act-category/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "toggle.darkmode": { "uri": "toggle-dark-mode", "methods": ["POST"] }, "GetTableItemScope": { "uri": "tables/sort-enumis/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "home": { "uri": "home", "methods": ["GET", "HEAD"] } } };
 if (typeof window !== "undefined" && typeof window.Ziggy !== "undefined") {
   Object.assign(Ziggy.routes, window.Ziggy.routes);
 }

@@ -47,6 +47,7 @@ class CountPixelController extends Controller
 
     public function track(Request $request)
     {
+         \Log::info('TRACK HIT');
 
         try {
             $host = $request->getHost();

@@ -3,18 +3,86 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Carbon\Carbon;
+use Normalizer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use App\Services\hackinglogService;
 
 class RequestInspectionMiddleware
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Configuration
+    |--------------------------------------------------------------------------
+    */
+
     protected int $maxScore = 15;
 
-    protected int $maxInputLength = 5000;
+    protected int $maxInputLength = 10000;
 
-    protected int $maxStoredMatches = 20;
+    protected int $maxStoredMatches = 50;
+
+    protected int $maxRequestsPerMinute = 120;
 
     protected hackinglogService $hackinglogService;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ignored Keys
+    |--------------------------------------------------------------------------
+    */
+
+    protected array $ignoredInputKeys = [
+
+        'headers.accept',
+        'headers.accept-language',
+        'headers.sec-fetch-site',
+        'headers.sec-fetch-mode',
+        'headers.sec-fetch-dest',
+        'headers.sec-fetch-user',
+        'headers.sec-ch-ua',
+        'headers.sec-ch-ua-mobile',
+        'headers.sec-ch-ua-platform',
+        'headers.priority',
+        'headers.connection',
+        'headers.host',
+        'headers.content-length',
+        'headers.cookie',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Skip Entropy Keys
+    |--------------------------------------------------------------------------
+    */
+
+    protected array $skipEntropyKeys = [
+
+        'headers.',
+        'server.user_agent',
+        'server.referer',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Honeypot Fields
+    |--------------------------------------------------------------------------
+    */
+
+    protected array $honeypotFields = [
+
+        'website',
+        'homepage',
+        'url',
+        'nickname',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Detection Patterns
+    |--------------------------------------------------------------------------
+    */
 
     protected array $patterns = [
 
@@ -24,13 +92,17 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/<\s*script\b/i'              => 15,
-        '/<\s*svg\b/i'                 => 15,
-        '/javascript\s*:/i'            => 10,
-        '/\bon\w+\s*=/i'               => 8,
-        '/document\.cookie/i'          => 10,
-        '/window\.location/i'          => 8,
-        '/<\s*iframe\b/i'              => 12,
+        '/<\s*script\b/i'                    => 15,
+        '/<\s*svg\b/i'                       => 12,
+        '/<\s*iframe\b/i'                    => 15,
+        '/javascript\s*:/i'                 => 12,
+        '/vbscript\s*:/i'                   => 12,
+        '/data\s*:\s*text\/html/i'          => 12,
+        '/\bon\w+\s*=/i'                    => 8,
+        '/document\.cookie/i'               => 10,
+        '/window\.location/i'               => 10,
+        '/alert\s*\(/i'                     => 8,
+        '/eval\s*\(/i'                      => 12,
 
         /*
         |--------------------------------------------------------------------------
@@ -38,13 +110,16 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/union\s+select/i'            => 15,
-        '/\bselect\b.+\bfrom\b/i'      => 8,
-        '/\binformation_schema\b/i'    => 15,
-        '/\bsleep\s*\(/i'              => 15,
-        '/\bbenchmark\s*\(/i'          => 15,
-        '/or\s+1\s*=\s*1/i'            => 12,
-        '/--/'                         => 5,
+        '/union\s+select/i'                 => 20,
+        '/\bselect\b.+\bfrom\b/i'           => 8,
+        '/\binformation_schema\b/i'         => 20,
+        '/\bsleep\s*\(/i'                   => 20,
+        '/\bbenchmark\s*\(/i'               => 20,
+        '/\bload_file\s*\(/i'               => 20,
+        '/into\s+outfile/i'                 => 20,
+        '/or\s+1\s*=\s*1/i'                 => 15,
+        '/and\s+1\s*=\s*1/i'                => 10,
+        '/\s--(\s|$)/'                      => 5,
 
         /*
         |--------------------------------------------------------------------------
@@ -52,10 +127,11 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/;\s*(rm|cat|wget|curl)\s+/i' => 20,
-        '/\$\(/'                       => 15,
-        '/`.+`/'                       => 15,
-        '/\|\s*(sh|bash|powershell)/i' => 20,
+        '/;\s*(rm|cat|wget|curl|bash|sh)\s+/i' => 25,
+        '/\|\s*(bash|sh|powershell)/i'         => 25,
+        '/\$\(/'                               => 20,
+        '/(?:^|[\s;|&])`[^`\n]{1,200}`(?:$|[\s;|&])/i' => 20,
+        '/nc\s+-e/i'                           => 30,
 
         /*
         |--------------------------------------------------------------------------
@@ -63,10 +139,12 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/\.\.\//i'                    => 10,
-        '/\.\.\\\\/i'                  => 10,
-        '/\/etc\/passwd/i'             => 20,
-        '/boot\.ini/i'                 => 20,
+        '/\.\.\//i'                         => 15,
+        '/\.\.\\\\/i'                      => 15,
+        '/\/etc\/passwd/i'                 => 30,
+        '/boot\.ini/i'                     => 30,
+        '/\/proc\/self/i'                  => 20,
+        '/\.env/i'                         => 20,
 
         /*
         |--------------------------------------------------------------------------
@@ -74,7 +152,55 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/<\?(php)?/i'                 => 20,
+        '/<\?(php)?/i'                     => 30,
+        '/php:\/\/input/i'                 => 20,
+        '/base64_decode\s*\(/i'            => 15,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Upload Attacks
+        |--------------------------------------------------------------------------
+        */
+
+        '/\.(php|phtml|phar)\./i'          => 30,
+        '/shell\.php/i'                    => 40,
+        '/cmd\.php/i'                      => 40,
+        '/backdoor/i'                      => 40,
+
+        /*
+        |--------------------------------------------------------------------------
+        | SSRF
+        |--------------------------------------------------------------------------
+        */
+
+        '/127\.0\.0\.1/i'                  => 20,
+        '/localhost/i'                     => 5,
+        '/169\.254\./i'                    => 25,
+        '/file:\/\//i'                     => 25,
+        '/gopher:\/\//i'                   => 30,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Scanner / Recon
+        |--------------------------------------------------------------------------
+        */
+
+        '/phpmyadmin/i'                    => 15,
+        '/vendor\/phpunit/i'               => 20,
+        '/cgi-bin/i'                       => 15,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Scanner User Agents
+        |--------------------------------------------------------------------------
+        */
+
+        '/sqlmap/i'                        => 50,
+        '/nikto/i'                         => 40,
+        '/acunetix/i'                      => 40,
+        '/nmap/i'                          => 30,
+        '/masscan/i'                       => 30,
+        '/python-requests/i'               => 15,
 
         /*
         |--------------------------------------------------------------------------
@@ -82,55 +208,201 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/\\\\x[0-9a-fA-F]{2}/'        => 10,
-        '/%[0-9a-fA-F]{2}/'            => 5,
+        '/\\\\x[0-9a-fA-F]{2}/'            => 10,
+        '/%[0-9a-fA-F]{2}/'                => 5,
     ];
 
-    public function __construct(hackinglogService $hackinglogService)
-    {
+    public function __construct(
+        hackinglogService $hackinglogService
+    ) {
         $this->hackinglogService = $hackinglogService;
     }
-    protected function flattenInputs(array $inputs, string $prefix = ''): array
-    {
-        $result = [];
 
-        foreach ($inputs as $key => $value) {
+    /*
+    |--------------------------------------------------------------------------
+    | Middleware Handle
+    |--------------------------------------------------------------------------
+    */
 
-            $newKey = $prefix ? $prefix . '.' . $key : $key;
-
-            if (is_array($value)) {
-
-                $result += $this->flattenInputs($value, $newKey);
-
-            } else {
-
-                $result[$newKey] = $value;
-            }
-        }
-
-        return $result;
-    }
     public function handle(Request $request, Closure $next)
     {
-        if (str_contains($request->path(), 'countpixel') && $request->filled('url') && $request->filled('route') && count($request->query()) === 2)
-        {
-            return $next($request);
+        /*
+        |--------------------------------------------------------------------------
+        | Dangerous HTTP Methods
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            in_array(
+                strtoupper($request->method()),
+                ['TRACE', 'TRACK', 'DEBUG']
+            )
+        ) {
+            abort(403, 'Dangerous HTTP method blocked.');
         }
 
-        if ($this->hackinglogService->isBanned($request->ip())) {
+        /*
+        |--------------------------------------------------------------------------
+        | Honeypot Fields
+        |--------------------------------------------------------------------------
+        */
 
-                abort(403, 'IP is banned.');
+        foreach (
+            $this->honeypotFields
+            as $field
+        ) {
+
+            if ($request->filled($field)) {
+
+                abort(
+                    403,
+                    'Honeypot triggered.'
+                );
             }
+        }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Velocity Detection
+        |--------------------------------------------------------------------------
+        */
 
-        $result = $this->inspectRequest($request);
+        $rateKey = 'ids_rate_' . $request->ip();
+
+        $requestCount = Cache::increment(
+            $rateKey
+        );
+
+        Cache::put(
+            $rateKey,
+            $requestCount,
+            60
+        );
+
+        if (
+            $requestCount >
+            $this->maxRequestsPerMinute
+        ) {
+
+            abort(
+                429,
+                'Too many requests.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Honeypot / Recon Paths
+        |--------------------------------------------------------------------------
+        */
+
+        $honeypots = [
+
+            '/.env',
+            '/.git/config',
+            '/phpmyadmin',
+            '/adminer.php',
+            '/vendor/phpunit',
+        ];
+
+        foreach ($honeypots as $honeypot) {
+
+            if (
+                str_contains(
+                    strtolower($request->path()),
+                    strtolower($honeypot)
+                )
+            ) {
+
+                $this->hackinglogService->banIp(
+                    $request,
+                    $request->ip(),
+                    999,
+                    [[
+                        'source'  => 'honeypot',
+                        'pattern' => $honeypot,
+                        'value'   => $request->path(),
+                        'points'  => 999,
+                    ]]
+                );
+
+                abort(
+                    403,
+                    'Recon attack detected.'
+                );
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Already banned?
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $this->hackinglogService->isBanned(
+                $request->ip()
+            )
+        ) {
+            abort(403, 'IP is banned.');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Countpixel reduced sensitivity
+        |--------------------------------------------------------------------------
+        */
+
+        $reducedSensitivity =
+            str_contains($request->path(), 'countpixel')
+            && $request->filled('url')
+            && $request->filled('route')
+            && count($request->query()) <= 3;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Inspect Request
+        |--------------------------------------------------------------------------
+        */
+
+        $result = $this->inspectRequest(
+            $request,
+            $reducedSensitivity
+        );
 
         $score = $result['score'];
+
         $matches = $result['matches'];
 
         /*
         |--------------------------------------------------------------------------
-        | Skip clean requests
+        | Ignore empty matches
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            count($matches) === 0
+        ) {
+            return $next($request);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Trust Score
+        |--------------------------------------------------------------------------
+        */
+
+        $trust = $this->calculateTrust(
+            $request
+        );
+
+        $score -= $trust;
+
+        $score = max(0, $score);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Clean Request
         |--------------------------------------------------------------------------
         */
 
@@ -140,7 +412,7 @@ class RequestInspectionMiddleware
 
         /*
         |--------------------------------------------------------------------------
-        | Current accumulated score
+        | Current Score
         |--------------------------------------------------------------------------
         */
 
@@ -151,23 +423,23 @@ class RequestInspectionMiddleware
 
         /*
         |--------------------------------------------------------------------------
-        | Instant Ban
+        | Ban IP
         |--------------------------------------------------------------------------
         */
 
         if ($newScore >= $this->maxScore) {
 
             $banUntil = $this->hackinglogService
-                ->banIp($request,$request->ip(),$newScore,$matches);
+                ->banIp(
+                    $request,
+                    $request->ip(),
+                    $newScore,
+                    $matches
+                );
 
-            // $this->hackinglogService->logHit(
-            //     $request->ip(),
-            //     $request,
-            //     $score,
-            //     $matches
-            // );
             $banUntil = Carbon::parse($banUntil)
                 ->format('d.m.Y H:i:s');
+
             abort(
                 403,
                 "Request blocked. IP banned until {$banUntil}"
@@ -192,26 +464,451 @@ class RequestInspectionMiddleware
 
     /*
     |--------------------------------------------------------------------------
-    | Public Score Helper
+    | Main Inspection
     |--------------------------------------------------------------------------
     */
 
-    public function getScore($ip, Request $request): int
-    {
-        return $this->inspectRequest($request)['score'];
+    protected function inspectRequest(
+        Request $request,
+        bool $reducedSensitivity = false
+    ): array {
+            /*
+        |--------------------------------------------------------------------------
+        | Ignore internal countpixel requests
+        |--------------------------------------------------------------------------
+        */
+
+        if (str_contains($request->path(), 'countpixel')
+            && $request->filled('url')
+            && $request->filled('route'))
+        {
+
+            return [
+
+                'score'   => 0,
+
+                'matches' => [],
+            ];
+        }
+        $score = 0;
+
+        $matches = [];
+
+        $inputs = $this->flattenInputs(
+            $this->collectInputs($request)
+        );
+
+        foreach ($inputs as $key => $value) {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Ignore noisy headers
+            |--------------------------------------------------------------------------
+            */
+
+            foreach (
+                $this->ignoredInputKeys
+                as $ignored
+            ) {
+
+                if (
+                    str_starts_with(
+                        $key,
+                        $ignored
+                    )
+                ) {
+                    continue 2;
+                }
+            }
+
+            $value = $this->normalizeValue(
+                $value
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Ignore empty payloads
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                $value === ''
+                || $value === '[]'
+                || $value === '{}'
+                || $value === 'null'
+            ) {
+                continue;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Ignore tiny values
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                mb_strlen($value) <= 1
+            ) {
+                continue;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Entropy Detection
+            |--------------------------------------------------------------------------
+            */
+
+            $skipEntropy = false;
+
+            foreach (
+                $this->skipEntropyKeys
+                as $skipKey
+            ) {
+
+                if (
+                    str_starts_with(
+                        $key,
+                        $skipKey
+                    )
+                ) {
+
+                    $skipEntropy = true;
+
+                    break;
+                }
+            }
+
+            if (
+                !$skipEntropy
+                && strlen($value) > 120
+                && $this->shannonEntropy($value) > 5.2
+            ) {
+
+                $score += 10;
+
+                $matches[] = [
+
+                    'source'  => $key,
+
+                    'pattern' => 'ENTROPY',
+
+                    'value'   => mb_substr(
+                        $value,
+                        0,
+                        300
+                    ),
+
+                    'points'  => 10,
+                ];
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Heuristics
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                substr_count($value, '%') > 15
+            ) {
+                $score += 5;
+            }
+
+            if (
+                substr_count(
+                    $value,
+                    '../'
+                ) > 3
+            ) {
+                $score += 15;
+            }
+
+            if (
+                strlen($value) > 3000
+            ) {
+                $score += 5;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Regex Scan
+            |--------------------------------------------------------------------------
+            */
+
+            foreach (
+                $this->patterns
+                as $pattern => $points
+            ) {
+
+                preg_match_all(
+                    $pattern,
+                    $value,
+                    $found
+                );
+
+                if (
+                    !empty($found[0])
+                ) {
+
+                    $matchCount = count(
+                        $found[0]
+                    );
+
+                    $calculatedPoints =
+                        $points * $matchCount;
+
+                    if (
+                        $reducedSensitivity
+                    ) {
+
+                        $calculatedPoints =
+                            (int)ceil(
+                                $calculatedPoints / 2
+                            );
+                    }
+
+                    $score +=
+                        $calculatedPoints;
+
+                    if (
+                        count($matches)
+                        < $this->maxStoredMatches
+                    ) {
+
+                        $matches[] = [
+
+                            'source' =>
+                                $key,
+
+                            'pattern' =>
+                                $pattern,
+
+                            'match_count' =>
+                                $matchCount,
+
+                            'value' =>
+                                mb_substr(
+                                    $value,
+                                    0,
+                                    300
+                                ),
+
+                            'points' =>
+                                $calculatedPoints,
+                        ];
+                    }
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | SQL Combo Detection
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                preg_match(
+                    '/select/i',
+                    $value
+                )
+                &&
+                preg_match(
+                    '/sleep\s*\(/i',
+                    $value
+                )
+            ) {
+
+                $score += 30;
+
+                $matches[] = [
+
+                    'source'  => $key,
+
+                    'pattern' => 'SQL_COMBO',
+
+                    'value'   => mb_substr(
+                        $value,
+                        0,
+                        300
+                    ),
+
+                    'points'  => 30,
+                ];
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Base64 Detection
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                $this->looksLikeBase64(
+                    $value
+                )
+            ) {
+
+                $decoded = base64_decode(
+                    $value,
+                    true
+                );
+
+                if ($decoded !== false) {
+
+                    $decoded =
+                        $this->recursiveDecode(
+                            $decoded
+                        );
+
+                    if (
+                        trim($decoded) === ''
+                        || trim($decoded)
+                            === '[]'
+                        || trim($decoded)
+                            === '{}'
+                    ) {
+                        continue;
+                    }
+
+                    foreach (
+                        $this->patterns
+                        as $pattern => $points
+                    ) {
+
+                        if (
+                            preg_match(
+                                $pattern,
+                                $decoded
+                            )
+                        ) {
+
+                            $extraPoints =
+                                $points + 10;
+
+                            $score +=
+                                $extraPoints;
+
+                            if (
+                                count($matches)
+                                < $this->maxStoredMatches
+                            ) {
+
+                                $matches[] = [
+
+                                    'source' =>
+                                        $key
+                                        . '_base64',
+
+                                    'pattern' =>
+                                        $pattern,
+
+                                    'value' =>
+                                        mb_substr(
+                                            $decoded,
+                                            0,
+                                            300
+                                        ),
+
+                                    'points' =>
+                                        $extraPoints,
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $score = min($score, 999);
+
+        return [
+
+            'score'   => $score,
+
+            'matches' => $matches,
+        ];
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Main Inspection Logic
+    | Trust Score
     |--------------------------------------------------------------------------
     */
 
-    protected function inspectRequest(Request $request): array
-{
-    $score = 0;
+    protected function calculateTrust(
+        Request $request
+    ): int {
 
-    $matches = [];
+        $trust = 0;
+
+        if (
+            $request->header(
+                'accept-language'
+            )
+        ) {
+            $trust += 2;
+        }
+
+        if (
+            $request->header(
+                'sec-fetch-site'
+            )
+        ) {
+            $trust += 3;
+        }
+
+        if (
+            $request->header(
+                'sec-ch-ua'
+            )
+        ) {
+            $trust += 3;
+        }
+
+        if (
+            str_contains(
+                strtolower(
+                    $request->userAgent()
+                ),
+                'mozilla'
+            )
+        ) {
+            $trust += 5;
+        }
+
+        return $trust;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Shannon Entropy
+    |--------------------------------------------------------------------------
+    */
+
+    protected function shannonEntropy(
+        string $string
+    ): float {
+
+        $h = 0;
+
+        $len = strlen($string);
+
+        if ($len === 0) {
+            return 0;
+        }
+
+        foreach (
+            count_chars($string, 1)
+            as $count
+        ) {
+
+            $p = $count / $len;
+
+            $h -= $p * log($p, 2);
+        }
+
+        return $h;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -219,143 +916,257 @@ class RequestInspectionMiddleware
     |--------------------------------------------------------------------------
     */
 
-    $inputs = array_merge(
-        $request->query(),
-        $request->post(),
-        is_array($request->json()?->all())
-            ? $request->json()->all()
-            : []
-    );
+    protected function collectInputs(
+        Request $request
+    ): array {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Flatten Nested Arrays
-    |--------------------------------------------------------------------------
-    */
+        $files = [];
 
-    $inputs = $this->flattenInputs($inputs);
+        foreach (
+            $request->allFiles()
+            as $key => $file
+        ) {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Scan Inputs
-    |--------------------------------------------------------------------------
-    */
+            $filename =
+                $file->getClientOriginalName();
 
-    foreach ($inputs as $key => $value) {
+            /*
+            |--------------------------------------------------------------------------
+            | Dangerous upload extension
+            |--------------------------------------------------------------------------
+            */
 
-        $value = $this->normalizeValue($value);
+            if (
+                preg_match(
+                    '/\.(php|phtml|phar)$/i',
+                    $filename
+                )
+            ) {
 
-        if ($value === '') {
-            continue;
-        }
+                abort(
+                    403,
+                    'Dangerous file upload.'
+                );
+            }
 
-        foreach ($this->patterns as $pattern => $points) {
+            /*
+            |--------------------------------------------------------------------------
+            | Upload content scan
+            |--------------------------------------------------------------------------
+            */
 
-            if (preg_match($pattern, $value)) {
+            $content =
+                @file_get_contents(
+                    $file->getRealPath()
+                );
 
-                $score += $points;
+            if (
+                $content !== false
+            ) {
 
-                if (count($matches) < $this->maxStoredMatches) {
+                if (
+                    preg_match(
+                        '/<\?php/i',
+                        $content
+                    )
+                ) {
 
-                    $matches[] = [
-                        'source'  => $key,
-                        'pattern' => $pattern,
-                        'value'   => mb_substr($value, 0, 200),
-                        'points'  => $points,
-                    ];
+                    abort(
+                        403,
+                        'PHP payload detected.'
+                    );
                 }
             }
+
+            $files[$key] = [
+
+                'name' => $filename,
+
+                'mime' =>
+                    $file->getMimeType(),
+            ];
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Base64 Attack Detection
-        |--------------------------------------------------------------------------
-        */
+        return [
 
-        if ($this->looksLikeBase64($value)) {
+            'query' =>
+                $request->query(),
 
-            $decoded = base64_decode($value, true);
+            'post' =>
+                $request->post(),
 
-            if ($decoded !== false) {
+            'json' => is_array(
+                $request->json()?->all()
+            )
+                ? $request
+                    ->json()
+                    ->all()
+                : [],
 
-                $decoded = $this->recursiveDecode($decoded);
+            'headers' =>
+                $request->headers->all(),
 
-                foreach ($this->patterns as $pattern => $points) {
+            'server' => [
 
-                    if (preg_match($pattern, $decoded)) {
+                'user_agent' =>
+                    $request->userAgent(),
 
-                        $score += ($points + 5);
+                'referer' =>
+                    $request->headers->get(
+                        'referer'
+                    ),
 
-                        if (count($matches) < $this->maxStoredMatches) {
+                'path' =>
+                    $request->path(),
 
-                            $matches[] = [
-                                'source'  => $key . '_base64',
-                                'pattern' => $pattern,
-                                'value'   => mb_substr($decoded, 0, 200),
-                                'points'  => $points + 5,
-                            ];
-                        }
-                    }
-                }
-            }
-        }
+                'method' =>
+                    $request->method(),
+            ],
+
+            'files' => $files,
+
+            'raw' =>
+                $request->getContent(),
+        ];
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Limit Maximum Score
+    | Flatten Arrays
     |--------------------------------------------------------------------------
     */
 
-    $score = min($score, 999);
+    protected function flattenInputs(
+        array $inputs,
+        string $prefix = ''
+    ): array {
 
-    return [
-        'score'   => $score,
-        'matches' => $matches,
-    ];
-}
+        $result = [];
+
+        foreach (
+            $inputs as $key => $value
+        ) {
+
+            $newKey = $prefix
+                ? $prefix . '.'
+                    . $key
+                : $key;
+
+            if (is_array($value)) {
+
+                $result +=
+                    $this->flattenInputs(
+                        $value,
+                        $newKey
+                    );
+
+            } else {
+
+                $result[$newKey]
+                    = $value;
+            }
+        }
+
+        return $result;
+    }
 
     /*
     |--------------------------------------------------------------------------
-    | Normalize Input
+    | Normalize Value
     |--------------------------------------------------------------------------
     */
 
-    protected function normalizeValue(mixed $value): string
-    {
+    protected function normalizeValue(
+        mixed $value
+    ): string {
+
         if (is_array($value)) {
-            $value = json_encode($value);
+
+            $value = json_encode(
+                $value,
+                JSON_UNESCAPED_UNICODE
+            );
         }
 
         $value = (string)$value;
 
-        $value = mb_substr($value, 0, $this->maxInputLength);
+        $value = mb_substr(
+            $value,
+            0,
+            $this->maxInputLength
+        );
 
-        $value = $this->recursiveDecode($value);
+        /*
+        |--------------------------------------------------------------------------
+        | Unicode normalize
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            class_exists(
+                Normalizer::class
+            )
+        ) {
+
+            $value =
+                normalizer_normalize(
+                    $value,
+                    Normalizer::FORM_KC
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Lowercase
+        |--------------------------------------------------------------------------
+        */
+
+        $value = mb_strtolower(
+            $value
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Recursive decode
+        |--------------------------------------------------------------------------
+        */
+
+        $value =
+            $this->recursiveDecode(
+                $value
+            );
 
         return trim($value);
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Recursive URL Decode
+    | Recursive Decode
     |--------------------------------------------------------------------------
     */
 
-    protected function recursiveDecode(string $value): string
-    {
+    protected function recursiveDecode(
+        string $value
+    ): string {
+
         do {
 
-            $decoded = urldecode($value);
+            $old = $value;
 
-            if ($decoded === $value) {
-                break;
-            }
+            $value =
+                urldecode($value);
 
-            $value = $decoded;
+            $value =
+                html_entity_decode(
+                    $value,
+                    ENT_QUOTES
+                    | ENT_HTML5,
+                    'UTF-8'
+                );
 
-        } while (true);
+        } while (
+            $old !== $value
+        );
 
         return $value;
     }
@@ -366,15 +1177,53 @@ class RequestInspectionMiddleware
     |--------------------------------------------------------------------------
     */
 
-    protected function looksLikeBase64(string $value): bool
-    {
-        if (strlen($value) < 16) {
+    protected function looksLikeBase64(
+        string $value
+    ): bool {
+
+        if (
+            strlen($value) < 32
+        ) {
             return false;
         }
 
-        return preg_match(
-            '/^[A-Za-z0-9\/\r\n+]*={0,2}$/',
-            $value
-        ) === 1;
+        if (
+            strlen($value) % 4 !== 0
+        ) {
+            return false;
+        }
+
+        $decoded = base64_decode(
+            $value,
+            true
+        );
+
+        if (
+            $decoded === false
+        ) {
+            return false;
+        }
+
+        return
+            base64_encode(
+                $decoded
+            ) === $value;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Public Score Helper
+    |--------------------------------------------------------------------------
+    */
+
+    public function getScore(
+        $ip,
+        Request $request
+    ): int {
+
+        return
+            $this->inspectRequest(
+                $request
+            )['score'];
     }
 }

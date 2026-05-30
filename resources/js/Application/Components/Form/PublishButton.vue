@@ -1,76 +1,137 @@
-    <template>
+<template>
     <div>
+
         <!-- Veröffentlicht -->
-        <button  v-if="isPublishedLocal" @click="togglePub" title="Veröffentlicht" :disabled="loading">
-        <svg class="w-6 h-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-            <circle cx="12" cy="12" r="10"/>
-        </svg>
+        <button
+            v-if="isPublished"
+            @click="togglePub"
+            title="Veröffentlicht"
+            :disabled="loading"
+            type="button"
+        >
+            <svg
+                class="w-6 h-6 text-green-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+            >
+                <circle cx="12" cy="12" r="10"/>
+            </svg>
         </button>
 
         <!-- Unveröffentlicht -->
-        <button v-else @click="togglePub" title="Unveröffentlicht" :disabled="loading">
-        <svg class="w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-            <circle cx="12" cy="12" r="10"/>
-        </svg>
+        <button
+            v-else
+            @click="togglePub"
+            title="Unveröffentlicht"
+            :disabled="loading"
+            type="button"
+        >
+            <svg
+                class="w-6 h-6 text-gray-400"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+            >
+                <circle cx="12" cy="12" r="10"/>
+            </svg>
         </button>
+
     </div>
-    </template>
+</template>
 
-    <script>
-    import axios from "axios";
-    import { route } from "ziggy-js";
+<script>
+import axios from "axios";
 
-    export default {
+export default {
+
     name: "PublishButton",
+
+    emits: ['update:modelValue'],
+
     props: {
-    table: String,
-    id: Number,
-    modelValue: { type: Number, default: 0 }, // v-model
-    public: { type: Number, default: 0 }
+
+        table: {
+            type: String,
+            required: true
+        },
+
+        id: {
+            type: Number,
+            required: true
+        },
+
+        modelValue: {
+            type: [Number, String],
+            default: 0
+        },
+
+        public: {
+            type: Number,
+            default: 0
+        }
     },
-    computed: {
-    isPublished: {
-        get() { return Number(this.modelValue); },
-        set(val) { this.$emit('update:modelValue', val); }
-    }
-    },
+
     data() {
+
         return {
-        //   isPublished: this.published,
-        loading: false,
-        isPublishedLocal: Number(this.modelValue),
+            loading: false
         };
     },
-    watch: {
-        // Reaktivität: Prop-Änderungen vom Parent werden übernommen
-        published(newVal) {
-        this.isPublished = newVal;
+
+    computed: {
+
+        isPublished: {
+
+            get() {
+
+                return Number(this.modelValue);
+            },
+
+            set(val) {
+
+                this.$emit(
+                    'update:modelValue',
+                    Number(val)
+                );
+            }
         }
     },
+
     methods: {
-     async togglePub() {
-        if (this.loading) return;
 
-        this.loading = true;
-        const newStatus = !this.isPublishedLocal;
+        async togglePub() {
 
-        try {
-                    await axios.post("/toggle-pub", {
-                        table: this.table,
-                        id: this.id,
-                        pub: newStatus ? 1 : 0,
-                        public: this.public,
-                    });
+            if (this.loading) return;
 
-            this.isPublishedLocal = newStatus; // Aktualisiert Anzeige sofort
+            this.loading = true;
 
-        } catch (error) {
-            console.error(error.response?.data || error.message);
-        } finally {
-            this.loading = false;
+            const newStatus =
+                this.isPublished ? 0 : 1;
+
+            try {
+
+                await axios.post('/toggle-pub', {
+
+                    table: this.table,
+                    id: this.id,
+                    pub: newStatus,
+                    public: this.public,
+                });
+
+                // SOFORT Parent updaten
+                this.isPublished = newStatus;
+
+            } catch (error) {
+
+                console.error(
+                    error.response?.data ||
+                    error.message
+                );
+
+            } finally {
+
+                this.loading = false;
+            }
         }
     }
-
-    }
-    };
-    </script>
+};
+</script>

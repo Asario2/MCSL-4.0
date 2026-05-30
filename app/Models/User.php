@@ -7,7 +7,7 @@ use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Writer;
-use BaconQrCode\Renderer\Image\SvgImageBackEnd; 
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,8 +47,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'old_password',
-        'remember_token',
+        'password_old',
+        'users_rights_id',
+        'email_verified_at',
+        'two_factor_confirmed_at',
         "two_factor_enabled",
+        'remember_token',
+        'uhash',
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
@@ -68,6 +73,8 @@ class User extends Authenticatable implements MustVerifyEmail
             'is_admin' => 'boolean',
              'pub' => 'boolean',
             'is_employee' => 'boolean',
+            'two_factor_enabled'=>'boolean',
+
             'is_customer' => 'boolean',
             'xch_newsletter' => 'boolean',
             'xis_disabled' => 'boolean',

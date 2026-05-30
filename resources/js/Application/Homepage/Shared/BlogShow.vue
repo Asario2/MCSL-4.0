@@ -230,7 +230,7 @@ export default {
     },
     computed: {
         decodedContent() {
-            return this.decodeHtml(replaceSmilies(this.kilp(this.blog.content)));
+            return this.decodeHtml(replaceSmilies(this.kilp(rumLaut(this.blog.content))));
         }
     },
     methods: {

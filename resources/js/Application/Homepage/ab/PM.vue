@@ -8,7 +8,7 @@
     <div class="max-w-none bg-layout-sun-100 dark:bg-layout-night-100 p-7 rounded-2xl shadow">
 
       <!-- Tabs -->
-            <div class="flex border-b border-gray-300 dark:border-gray-700 mb-6 overflow-x-auto">
+            <div class="flex border-b border-gray-300 dark:border-gray-700 mb-6 overflow-visible">
                 <button
                 v-for="tabItem in tabs"
                 :key="tabItem.id"
@@ -31,14 +31,17 @@
         <div v-if="tab === 'inbox'" class="mt-[-20px] pb-3">
           <h2 class="text-2xl font-semibold m-3 pt-5">📥 Posteingang</h2>
 
-          <input
-            type="text"
-            v-model="searchInbox"
-            placeholder="Suchen..."
-            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-700 dark:text-white mb-4"
-          />
+                        <div class="my-6 flex justify-between items-center">
+                            <search-filter
+                                v-model="searchInbox"
+                                class="w-full"
+                                searchText=""
+                                @reset="resetIn"
+                            />
+                        </div>
 
-          <div class="p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-x-auto w-full">
+
+          <div class="p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-visible w-full">
             <table class="min-w-full text-left border-collapse border border-gray-300 dark:border-gray-700">
               <thead class="bg-gray-100 dark:bg-gray-800">
                 <tr>
@@ -56,21 +59,24 @@
                 </tr>
               </thead>
               <tbody>
-                    <tr v-for="msg in inboxArr?.data ?? []" :key="msg.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <tr v-for="msg in localInbox" :key="msg.id + '-' + msg.checked" class="hover:bg-gray-50 dark:hover:bg-gray-700">
                   <td class="border border-gray-300 dark:border-gray-700 text-center pl-3">
                 <InputCheckbox
-                :model-value="selectedInbox[msg.id] || 0"
+                :model-value="!!selectedInbox[msg.id]"
                 @update:modelValue="val => setSelected('inbox', msg.id, val)"
                 :name="'inbox_' + msg.id"
                 :id="'inbox_' + msg.id"
                 />
                 </td>
                   <td class="border border-gray-300 dark:border-gray-700 text-center">
-               <PublishButton
-                table="private_messages"
-                :id="msg.id"
-                v-model="msg.checked"
-                :public="1"
+                    <PublishButton
+                    :key="'pub-' + msg.id + '-' + msg.checked"
+                    table="private_messages"
+                    :id="msg.id"
+
+                    :modelValue="msg.checked"
+                    @update:modelValue="val => msg.checked = val"
+                    :public="1"
                 />
                   </td>
                   <td class="border border-gray-300 dark:border-gray-700 flex items-center">
@@ -85,7 +91,7 @@
                   </td>
                 </tr>
 
-                <tr v-if="paginatedInbox.length === 0">
+                <tr v-if="localInbox.length === 0">
                   <td colspan="5" class="text-center py-4 text-gray-500 dark:text-gray-300">Keine Nachrichten gefunden</td>
                 </tr>
               </tbody>
@@ -96,8 +102,9 @@
           <!-- Buttons Inbox -->
           <div class="mt-4 flex gap-2">
             <button
+              type="button"
               class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-              @click="markAsRead"
+              @click.stop.prevent="markAsRead"
 
             >
               Als gelesen markieren
@@ -119,14 +126,16 @@
         <div v-else-if="tab === 'outbox'" class="mt-[-20px] pb-3">
           <h2 class="text-2xl font-semibold m-3 pt-5">📤 Gesendete Nachrichten</h2>
 
-          <input
-            type="text"
-            v-model="searchOutbox"
-            placeholder="Suchen..."
-            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-700 dark:text-white mb-4"
-          />
+          <div class="my-6 flex justify-between items-center">
+                            <search-filter
+                                v-model="searchOutbox"
+                                class="w-full"
+                                searchText=""
+                                @reset="resetOut"
+                                />
+                        </div>
 
-          <div class="p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-x-auto w-full">
+          <div class="p-6 bg-layout-sun-100 dark:bg-layout-night-100 rounded-xl overflow-visible w-full">
             <table class="min-w-full text-left border-collapse border border-gray-300 dark:border-gray-700">
               <thead class="bg-gray-100 dark:bg-gray-800">
                 <tr>
@@ -146,7 +155,7 @@
                 <tr v-for="(msg) in paginatedOutbox" :key="msg.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
                   <td class="border border-gray-300 dark:border-gray-700 text-center pl-3">
                     <InputCheckbox
-                :model-value="selectedOutbox[msg.id] || 0"
+                :model-value="!!selectedOutbox[msg.id]"
                 @update:modelValue="val => setSelected('outbox', msg.id, val)"
                 :name="'outbox_' + msg.id"
                 :id="'outbox_' + msg.id"
@@ -305,9 +314,9 @@ import InputHtml from "@/Application/Components/Form/InputHtml.vue";
 import InputCheckbox from "@/Application/Components/Form/InputCheckbox.vue";
 import axios from "axios";
 // import { router } from '@inertiajs/vue3'
-import {route} from 'ziggy-js';
 import InputFormText from "@/Application/Components/Form/InputFormText.vue";
 import Pagination from "@/Application/Components/Pagination.vue";
+import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 
 export default {
   components: {
@@ -322,6 +331,7 @@ export default {
     InputCheckbox,
     MessageSettings,
     Pagination,
+    SearchFilter,
   },
 
   props: {
@@ -333,15 +343,19 @@ export default {
       type: Object,
       default: () => ({ data: [], links: [] })
     },
-    form: { type: Array, default: () => [] },
+    // form: { type: Array, default: () => [] },
     settings: { type: [Array, Object], default: () => [] },
   },
 
   data() {
     return {
+
       // 🔥 SAFE INIT (kein direct URL parsing im data!)
       tab: CleanTab("pm/index/") ?? 'inbox',
-
+      localInbox: [],
+//    form: {
+//         search: this.filters?.search ?? "",
+//       },
       message: "",
       subject: "",
       to_id: 0,
@@ -358,9 +372,9 @@ export default {
 
       selectedMessage: null,
 
-      perPage: this.form[0]?.cnt_numrows || 10,
+      perPage: this.settings?.cnt_numrows || 10,
 
-      UID: window?.Laravel?.userId || null,
+      UID:  null,
 
       selectAllInbox: 0,
       selectAllOutbox: 0,
@@ -374,6 +388,10 @@ export default {
   },
 
   mounted() {
+    console.log("TAB:", this.tab);
+        this.localInbox = [...this.inboxArr.data];
+
+    this.UID = window?.Laravel?.userId;
     // 🔥 URL sync SAFE (after mount only)
     const urlTab = new URLSearchParams(window.location.search).get('tab');
     if (urlTab) this.tab = urlTab;
@@ -381,9 +399,9 @@ export default {
 
   computed: {
 
-    paginatedInbox() {
-      return this.inboxArr.data;
-    },
+    // paginatedInbox() {
+    //   return this.inboxArr.data;
+    // },
 
     paginatedOutbox() {
       return this.outboxArr.data;
@@ -403,9 +421,18 @@ export default {
   },
 
   methods: {
+    testClick() {
+
+        alert("CLICK");
+    },
 
     SD, GetProfileImagePath, rumLaut, nl2br, GetSettings, CleanTab,
-
+ resetIn() {
+      this.searchInbox =''
+    },
+    resetOut() {
+      this.searchOutbox =''
+    },
     // 🔥 FIXED TAB SWITCH (NO RACE CONDITION)
     changeTab(newTab) {
       if (this._navigating) return;
@@ -435,8 +462,8 @@ export default {
     },
 
     toggleSelectAll(tab, value) {
-      const list = tab === 'inbox'
-        ? this.paginatedInbox
+        const list = tab === 'inbox'
+        ? this.localInbox
         : this.paginatedOutbox;
 
       const target = tab === 'inbox'
@@ -453,52 +480,118 @@ export default {
     },
 
     async markAsRead() {
-      if (!this.selectedInboxIds.length) return;
 
-      await axios.post(route('admin.pm.mark'), {
-        ids: this.selectedInboxIds.join(',')
-      });
+        if (!this.selectedInboxIds.length) return;
 
-      this.selectedInbox = {};
-      this.selectAllInbox = 0;
+        this.localInbox.forEach(msg => {
 
-      this.$inertia.reload({ only: ['inboxArr'] });
+            if (this.selectedInbox[msg.id]) {
+
+                msg.checked = '1';
+            }
+        });
+
+        // FORCE REACTIVE REFRESH
+        this.localInbox = [...this.localInbox];
+
+        await axios.post('/admin/pm/mark', {
+            ids: this.selectedInboxIds.join(',')
+        });
+
+        this.selectedInbox = {};
+        this.selectAllInbox = 0;
+
     },
 
-    deleteMessages(tab) {
+    async deleteMessages(tab) {
 
-      const ids = tab === 'inbox'
+    const ids = tab === 'inbox'
         ? this.selectedInboxIds
         : this.selectedOutboxIds;
-      if (!confirm("Sind Sie sicher, dass Sie diese " + ids.length + " Einträge löschen möchten?"))
-          return;
-      if (!ids.length) return;
 
-      axios.post(route('admin.pm.delmore'), {
-        ids: ids.join(',')
-      }).then(() => {
+    if (!ids.length) {
+        alert("Keine Nachrichten ausgewählt");
+        return;
+    }
+
+    if (!confirm(
+        "Sind Sie sicher, dass Sie diese "
+        + ids.length +
+        " Einträge löschen möchten?"
+    )) {
+        return;
+    }
+
+    console.log("DELETE IDS:", ids);
+
+    try {
+
+        await axios.post('/admin/pm/delmore/', {
+            ids: ids
+        });
+
+        if (tab === 'inbox') {
+
+            this.localInbox =
+                this.localInbox.filter(
+                    msg => !ids.includes(msg.id)
+                );
+
+        } else {
+
+            this.outboxArr.data =
+                this.outboxArr.data.filter(
+                    msg => !ids.includes(msg.id)
+                );
+        }
+
         this.selectedInbox = {};
         this.selectedOutbox = {};
-        this.selectAllInbox = 0;
-        this.selectAllOutbox = 0;
 
-        this.$inertia.reload({ only: ['inboxArr', 'outboxArr'] });
-      });
-    },
+        this.selectAllInbox = false;
+        this.selectAllOutbox = false;
 
-    ShowMessage(msg) {
-      this.selectedMessage = msg;
+    } catch (e) {
 
-      if (!this.tabs.find(t => t.id === "read")) {
+        console.error(e);
+        alert("Fehler beim Löschen");
+    }
+},  
+async ShowMessage(msg) {
+
+    this.localInbox = this.localInbox.map(m => {
+
+        if (m.id === msg.id) {
+
+            return {
+                ...m,
+                checked: '1',
+            };
+        }
+
+        return m;
+    });
+
+    this.selectedMessage = {
+        ...msg,
+        checked: '1',
+    };
+
+    await axios.post('/admin/pm/mark', {
+        ids: msg.id
+    });
+
+    if (!this.tabs.find(t => t.id === "read")) {
+
         this.tabs.unshift({
-          id: "read",
-          label: "Nachricht",
-          icon: "📖"
+            id: "read",
+            label: "Nachricht",
+            icon: "📖"
         });
-      }
+    }
 
-      this.tab = "read";
-    },
+    this.tab = "read";
+},
 
     sendMessage() {
       const el = document.getElementById("editor_message");
@@ -508,7 +601,7 @@ export default {
 
       if (!msg || !this.to_id || !this.subject) return;
 
-      axios.post(route('pm.save'), {
+      axios.post('/pm/save', {
         message: msg,
         to_id: this.to_id,
         subject: this.subject,
@@ -541,6 +634,14 @@ export default {
     },
   },
   watch: {
+        inboxArr: {
+        handler(newVal) {
+            this.localInbox = [...newVal.data];
+        },
+        deep: true,
+        immediate: true
+    },
+
   searchInbox(value) {
     this.$inertia.get('/pm/index/inbox', {
       search: value

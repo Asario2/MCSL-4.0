@@ -83,7 +83,7 @@ GlobalController::SetDomain();
 
 // Route::middleware(['checksubd:ab,asario'])->group(function () {
     // Route::middleware('checksubd:ab,asario')->group(function () {
-        Route::get('/countpixel', [CountPixelController::class, 'track'])->name('countpixel');
+        Route::get('/countpixel/{url}/{route}/{page?}', [CountPixelController::class, 'track'])->name('countpixel');
         Route::get("/api/mcslpoints/{users_id?}",[MCSLPointsController::class,"GetCount"])->name("api.mcslpoints");
         Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');

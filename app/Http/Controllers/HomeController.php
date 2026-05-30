@@ -330,7 +330,8 @@ class HomeController extends Controller
         if ($search = $request->input('search')) {
             $query->where(function($q) use ($search) {
                 $q->where('blogs.title', 'like', "%{$search}%")
-                ->orWhere('blogs.summary', 'like', "%{$search}%");
+                ->orWhere('blogs.summary', 'like', "%{$search}%")
+                ->orWhere('blogs.autoslug', 'like', "%{$search}%");
             });
 //             \Log::info('[HomeController] Filter applied: search=' . $search);
         }
@@ -1062,7 +1063,7 @@ public function imprint_dag()
             ->get();
 
         return [
-            "tables" => $tables
+            "tables" => $tables,"breadcrumbs"=>"Activitylog"
         ];
     }
     public function home_mfx()

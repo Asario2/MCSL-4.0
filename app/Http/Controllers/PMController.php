@@ -24,41 +24,90 @@ class PMController extends Controller
 
 
         $inboxArr = DB::table('private_messages')
-        ->leftJoin('private_messages_text', 'private_messages.private_messages_text_id', '=', 'private_messages_text.id')
-        ->leftJoin('users', 'private_messages.users_id', '=', 'users.id')
-        ->leftJoin("users_config","users_config.users_id", "=","users.id")
+        ->leftJoin(
+            'private_messages_text',
+            'private_messages.private_messages_text_id',
+            '=',
+            'private_messages_text.id'
+        )
+
+        ->leftJoin(
+            'users',
+            'private_messages.users_id',
+            '=',
+            'users.id'
+        )
+
+        ->leftJoin(
+            'users_config',
+            'users_config.users_id',
+            '=',
+            'users.id'
+        )
+
         ->where('private_messages.to_id', Auth::id())
         ->where('private_messages.xis_disabled', '0')
-        ->where('private_messages.public','1')
+        ->where('private_messages.public', '1')
+
         ->when(request('search'), function ($query) {
-        $query->where(function ($q) {
-            $q->filterdefault(['search' => request('search')]);
-        });
-    })
+
+            $search = request('search');
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where(
+                    'private_messages.subject',
+                    'LIKE',
+                    '%' . $search . '%'
+                )
+
+                ->orWhere(
+                    'private_messages_text.message',
+                    'LIKE',
+                    '%' . $search . '%'
+                )
+
+                ->orWhere(
+                    'users.name',
+                    'LIKE',
+                    '%' . $search . '%'
+                )
+
+                ->orWhere(
+                    'users.first_name',
+                    'LIKE',
+                    '%' . $search . '%'
+                );
+            });
+        })
+
         ->select(
             'private_messages.subject',
             'private_messages.id as id',
-            "users.first_name",
-            "users.id AS UID",
-            "users.website",
-            "private_messages.public",
-            "users.last_login_at as lastlogin",
-            "private_messages.to_id",
+            'users.first_name',
+            'users.id AS UID',
+            'users.website',
+            'private_messages.public',
+            'users.last_login_at as lastlogin',
+            'private_messages.to_id',
             'private_messages.checked',
-            "users.birthday",
+            'users.birthday',
             'private_messages_text.message as message',
-            "private_messages.created_at as created_at",
-            "private_messages.users_id as users_id",
+            'private_messages.created_at as created_at',
+            'private_messages.users_id as users_id',
             'users.name as user',
-            "users.profile_photo_path as avatar"
+            'users.profile_photo_path as avatar'
         )
-        ->orderBy("private_messages.created_at","DESC")
+
+        ->orderBy('private_messages.created_at', 'DESC')
+
         ->paginate(
             $this->perPage,
             ['*'],
             'page',
             $request->input('page', 1)
         )
+
         ->withQueryString();
 
         $inboxArr->getCollection()->transform(function ($msg) {
@@ -85,25 +134,75 @@ class PMController extends Controller
     }
     private function getOutbox(Request $request){
         $outbox = DB::table('private_messages')
-        ->leftJoin('private_messages_text', 'private_messages.private_messages_text_id', '=', 'private_messages_text.id')
-        ->leftJoin('users', 'private_messages.to_id', '=', 'users.id')
+        ->leftJoin(
+            'private_messages_text',
+            'private_messages.private_messages_text_id',
+            '=',
+            'private_messages_text.id'
+        )
+        ->leftJoin(
+            'users',
+            'private_messages.to_id',
+            '=',
+            'users.id'
+        )
+
         ->where('private_messages.users_id', Auth::id())
         ->where('private_messages.xis_disabled', '0')
-        ->where("private_messages.public","2")
+        ->where('private_messages.public', '2')
+
         ->when(request('search'), function ($query) {
-            $query->where(function ($q) {
-                $q->filterdefault(['search' => request('search')]);
+
+            $search = request('search');
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where(
+                    'private_messages_text.message',
+                    'LIKE',
+                    '%' . $search . '%'
+                )
+
+                ->orWhere(
+                    'private_messages.subject',
+                    'LIKE',
+                    '%' . $search . '%'
+                )
+
+                ->orWhere(
+                    'users.name',
+                    'LIKE',
+                    '%' . $search . '%'
+                );
             });
         })
-        ->select('private_messages.subject','private_messages.id as id',"users_id as users_id","users.first_name","users.last_login_at as lastlogin","private_messages.public","private_messages.to_id","users.birthday",'private_messages_text.message as message',"private_messages.created_at as created_at",'users.name as user',"users.profile_photo_path as avatar")
-        ->orderBy("private_messages.created_at","DESC")
+
+        ->select(
+            'private_messages.subject',
+            'private_messages.id as id',
+            'users_id as users_id',
+            'users.first_name',
+            'users.last_login_at as lastlogin',
+            'private_messages.public',
+            'private_messages.to_id',
+            'users.birthday',
+            'private_messages_text.message as message',
+            'private_messages.created_at as created_at',
+            'users.name as user',
+            'users.profile_photo_path as avatar'
+        )
+
+        ->orderBy('private_messages.created_at', 'DESC')
+
         ->paginate(
             $this->perPage,
             ['*'],
             'page',
             $request->input('page', 1)
         )
+
         ->withQueryString();
+
 
         $outbox->getCollection()->transform(function ($msg) {
             $msg->subject = decval($msg->subject);
@@ -224,11 +323,20 @@ class PMController extends Controller
     }
     public function update_more(Request $request)
     {
-        //
-         $ids = explode(",",$request->ids);
-         foreach($ids as $id){
-            DB::table("private_messages")->where("id",$id)->update(["checked"=>"1","xis_checked"=>"1"]);
-         }
+        $ids = $request->ids;
+        if (!is_array($ids)) {
+    $ids = explode(',', $ids);
+}
+
+        foreach($ids as $id){
+
+            DB::table("private_messages")
+                ->where("id",$id)
+                ->update([
+                    "checked"=>"1",
+                    "xis_checked"=>"1"
+                ]);
+        }
 
         return true;
     }
@@ -264,35 +372,38 @@ class PMController extends Controller
 
     }
     public function destroy_more(Request $request)
-    {
-        // if(!CheckRights(Auth::id(),'private_messages',"delete")){
-        //     header("Location: /no-rights");
-        //     exit;
-        // }
-        $ids = explode(",",$request->ids);
-//         \Log::info(["IDS:"=>$ids]);
-        foreach($ids as $id){
+{
+    $ids = $request->ids;
+    if (!is_array($ids)) {
+    $ids = explode(',', $ids);
+}
 
-        $iid = DB::table("private_messages")->where("id",$id)->value("private_messages_text_id AS iid");
+    foreach($ids as $id){
 
-        $res2 = DB::table("private_messages")->where('private_messages_text_id',$iid)->count();
-        $res = DB::table("private_messages")->where('id', $id)->delete();
-        if(@$res2 < 2){
-//             \Log::info("IID:".$iid);
-            DB::table("private_messages_text")->where("id",$iid)->delete();
+        $iid = DB::table("private_messages")
+            ->where("id",$id)
+            ->value("private_messages_text_id AS iid");
+
+        $res2 = DB::table("private_messages")
+            ->where('private_messages_text_id',$iid)
+            ->count();
+
+        DB::table("private_messages")
+            ->where('id', $id)
+            ->delete();
+
+        if($res2 < 2){
+
+            DB::table("private_messages_text")
+                ->where("id",$iid)
+                ->delete();
         }
-        }
-
-
-
-
-        return response()->json([
-                'status' => 'success',
-                'message' => 'Einträge erfolgreich gelöscht',
-
-            ]);
-
-
     }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Einträge erfolgreich gelöscht',
+    ]);
+}
 }
 

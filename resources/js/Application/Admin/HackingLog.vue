@@ -5,17 +5,18 @@
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
     </template>
+     <MetaHeader title="MCSL IDS - Hacking Log" />
     <div class="p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
         <div class="flex justify-between items-center mb-4">
 
-    <search-filter
-        v-model="form.search"
-        class="w-full"
-    />
+
 
 </div>
       <h2 class="text-xl font-semibold mb-4">HackLog</h2>
-
+        <search-filter
+            v-model="form.search"
+            class="w-full"
+        />
       <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
         <table class="min-w-full text-sm">
           <thead class="bg-gray-100 dark:bg-gray-800">

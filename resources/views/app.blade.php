@@ -309,10 +309,12 @@ document.addEventListener('DOMContentLoaded', function () {
             /* Fix für kurzes Aufblitzen des Banners */
             .cc-window { display: inline-block !important; }
         </style>
-        <img width='1' height='1' src="{{ route('countpixel', [
-            'url'   => urlencode(request()->fullUrl()),
-            'route' => request()->route()?->getName() ?? 'unknown',
-            "page" => @$_GET['page']
-        ]) }}">
+        <img width="1"
+     height="1"
+     src="{{ route('countpixel', [
+        'url'   => rawurldecode(request()->fullUrl()),
+        'route' => request()->route()?->getName() ?? 'unknown',
+        'page'  => request()->query('page')
+     ]) }}">
     </body>
     </html>
