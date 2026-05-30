@@ -289,3 +289,4 @@
 ![Version](https://img.shields.io/badge/version-5.43.4-orange) Bug - Bugs in Private Messages (#484)  
 ![Version](https://img.shields.io/badge/version-5.44.7-orange) Bug - Another Bug in PMs (#485)  
 ![Version](https://img.shields.io/badge/version-5.45.5-orange) Hotfixes - several smaller bugs in Hackinglog have been fixed. (#486)  
+![Version](https://img.shields.io/badge/version-5.46.1-orange) Scroll to top link (#477)  
