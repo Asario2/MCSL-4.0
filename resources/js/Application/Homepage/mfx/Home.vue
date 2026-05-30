@@ -19,9 +19,23 @@
                 <div class="grid grid-cols-12 gap-0">
                     <div class="col-span-6 p-1 md:p-4 lg:rounded-lg ">
                     <div v-for="item in news.data" :key="item.id">
-                    <div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6  border border-layout-sun-1000 dark:border-layout-night-1050" >
-                        <span class="dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl" v-html="cleanHtml(item.headline)"></span> <editbtns :id="item.id" table="news"></editbtns><br />
-                        <span class="text-layout-sun-1000 dark:text-layout-night-1000" v-html="cleanHtml(item.message)"></span>
+                    <div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050">
+                        <div class="flex items-center gap-2">
+                            <H2
+                                class="dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl mt-0"
+                                v-html="cleanHtml(item.headline)"
+                            ></H2>
+
+                            <editbtns
+                                :id="item.id"
+                                table="news"
+                            ></editbtns>
+
+                        </div>
+                        <span
+                            class="text-layout-sun-1000 dark:text-layout-night-1000"
+                            v-html="cleanHtml(item.message)"
+                        ></span>
 
                     </div>
 

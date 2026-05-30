@@ -53,10 +53,10 @@
 
             <!-- Datenzeilen -->
             <template v-slot:datarow="data">
-                <td class="np-dl-td-normal" draggable="false" @dragstart.prevent @dragstart.prevent.stop>{{ getMixId(data.datarow) }}</td>
+                <td class="np-dl-td-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>{{ getMixId(data.datarow) }}</td>
 
                 <!-- Pub -->
-                <td class="np-dl-td-normal" draggable="false" v-if="data.datarow.pub !== 'undefined'">
+                <td class="np-dl-td-normal" :draggable="false" v-if="data.datarow.pub !== 'undefined'">
                 <PublishButton
                     :table="CleanTable()"
                     :id="data.datarow.id"
@@ -65,10 +65,10 @@
                 </td>
 
                 <!-- Kategorie -->
-                <td v-if="data.datarow.image_categories" class="np-dl-td-normal"  draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-if="data.datarow.image_categories" class="np-dl-td-normal"  :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <img :src="'/images/_ab/images_categories/sm/' + data.datarow.image_categories + '.jpg'" :title="ucf(data.datarow.image_categories)" :alt="ucf(data.datarow.image_categories)"/>
                 </td>
-                <td v-if="data.datarow.blog_categories" class="np-dl-td-normal" draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-if="data.datarow.blog_categories" class="np-dl-td-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <span
                     class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900
                         dark:bg-primary-night-500 dark:text-primary-night-900
@@ -79,12 +79,12 @@
                 </td>
 
                 <!-- Projekte -->
-                <td v-if="table === 'projects_sheets'" class="np-dl-td-normal break-words whitespace-normal" draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-if="table === 'projects_sheets'" class="np-dl-td-normal break-words whitespace-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 {{ ucf(data.datarow.projects) }}
                 </td>
 
                 <!-- comments Tabelle -->
-                <td v-if="table == 'comments'" class="np-dl-td-normal"  draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-if="table == 'comments'" class="np-dl-td-normal"  :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <CreatedAt :post_id="data.datarow.post_id" :table="data.datarow.admin_table">
                     <span
                     class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900
@@ -97,7 +97,7 @@
                 </td>
 
                 <!-- Admin Table -->
-                <td v-else-if="table != 'comments' && table_head" class="np-dl-td-normal" draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-else-if="table != 'comments' && table_head" class="np-dl-td-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <span
                     class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900
                         dark:bg-primary-night-500 dark:text-primary-night-900
@@ -108,13 +108,13 @@
                 </td>
 
                 <!-- Name -->
-                <td class="np-dl-td-normal break-words whitespace-normal max-w-[600px]"  draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td class="np-dl-td-normal break-words whitespace-normal max-w-[600px]"  :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <span v-html="rumLaut(data.datarow.name)"></span>
                 </td>
 
                 <!-- User bei Kommentaren -->
                 <td
-                class="np-dl-td-normal" draggable="false" @dragstart.prevent @dragstart.prevent.stop
+                class="np-dl-td-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop
                 v-if="table != 'people' && (users[data.datarow.users_id]?.img || data.datarow.nick || data.datarow.users)"
                 >
                 <div v-if="users[data.datarow.users_id]?.img && users[data.datarow.users_id].img !== '008.jpg'">
@@ -139,17 +139,17 @@
 
                 <!-- Description -->
                 <td
-                class="np-dl-td-normal break-words whitespace-normal" draggable="false" @dragstart.prevent @dragstart.prevent.stop
+                class="np-dl-td-normal break-words whitespace-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop
                 v-if="table !== 'comments' && table != 'ratings' && table != 'projects_sheets'"
                 >
                 <span v-html="rumLaut(data.datarow.description)"></span>
                 </td>
 
                 <!-- ratings -->
-                <td v-else-if="table === 'ratings'" class="np-dl-td-normal break-words whitespace-normal" draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-else-if="table === 'ratings'" class="np-dl-td-normal break-words whitespace-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 {{ data.datarow.images }}
                 </td>
-                <td v-if="table === 'ratings'" class="np-dl-td-normal break-words whitespace-normal" draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-if="table === 'ratings'" class="np-dl-td-normal break-words whitespace-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <IconStar
                     v-for="i in data.datarow.rating"
                     :key="i"

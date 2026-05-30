@@ -41,7 +41,7 @@
                         </thead>
     <tbody v-if="numberOfRows > 0">
     <template v-for="(row, index) in rows" :key="row.id">
-        <tr class="hover:dark:bg-gray-800 hover:bg-gray-800" draggable="false">
+        <tr class="hover:dark:bg-gray-800 hover:bg-gray-800" :draggable="false">
     <!-- Drag Button Spalte: nur diese Zelle draggable -->
         <td class="np-dl-td-edit text-center cursor-move"   v-if="rows?.length && !rows?.isNAN && CleanTable()?.trim() !== ''">
         <button
@@ -54,7 +54,7 @@
         </button>
         </td>
         <!-- Slot für normale Datenzellen -->
-    <slot name="datarow" :datarow="row" draggable="false"></slot>
+    <slot name="datarow" :datarow="row" :draggable="false"></slot>
         <!-- Created At -->
         <td v-if="row.created_at && view" class="np-dl-td-normal">
             {{ new Date(row.created_at).toLocaleString('de-DE', {

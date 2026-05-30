@@ -1,9 +1,9 @@
 <template>
 <template v-if="routeName">
     <a
-        class="pad cursor-pointer inline-flex items-center gap-2 rounded-lg px-4 py-2 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000"
+        class="pad cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-2 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000"
         :href="routeName"
-        style="font-family:Alfredo;"
+        style="font-family:Good;"
     >
         <slot></slot>
         <span>{{ name }}</span>
@@ -12,7 +12,7 @@
     <template v-else>
         <div
             class="cursor-pointer inline-flex items-center gap-2 rounded-lg px-3 py-3 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000"
-            style="font-family:Alfredo;"
+            style="font-family:Good;"
         >
             <slot></slot>
         </div>
