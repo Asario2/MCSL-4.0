@@ -291,3 +291,4 @@
 ![Version](https://img.shields.io/badge/version-5.45.5-orange) Hotfixes - several smaller bugs in Hackinglog have been fixed. (#486)  
 ![Version](https://img.shields.io/badge/version-5.46.1-orange) Scroll to top link (#477)  
 ![Version](https://img.shields.io/badge/version-5.47.9-orange) Feature - New Font on marblefx.net (#487)  
+![Version](https://img.shields.io/badge/version-5.48.0-orange) Hotfix - Checked Status on Comments (#488)  
