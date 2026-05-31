@@ -11405,7 +11405,7 @@ const _sfc_main$4t = {
       try {
         const payload = this.rows.filter((row) => row.position !== row.original_position).map((row) => ({ id: row.id, position: row.position }));
         if (payload.length === 0) return;
-        await axios.post("/api/save-order/" + CleanTable(), { rows: payload });
+        await axios$1.post("/api/save-order/" + CleanTable(), { rows: payload });
         this.rows.forEach((row) => {
           row.original_position = row.position;
         });
@@ -11418,7 +11418,7 @@ const _sfc_main$4t = {
       this.$emit("update-checked-status", this.checkedStatus);
     },
     async fetchCheckedStatus() {
-      const response = await axios.get("/api/chkcom/");
+      const response = await axios$1.get("/api/chkcom/");
       this.checkedStatus = response.data.success;
       this.$emit("update-checked-status", this.checkedStatus);
     },
@@ -11437,7 +11437,7 @@ const _sfc_main$4t = {
         return;
       }
       try {
-        const response = await axios.get("/api/chkcom/");
+        const response = await axios$1.get("/api/chkcom/");
         this.checkedStatus = response.data.success;
       } catch (error) {
         console.error("Fehler beim Batch-Status laden:", error);
@@ -11452,7 +11452,7 @@ const _sfc_main$4t = {
       this.table = CleanTable();
       this.table = this.table ? this.table : "admin_table";
       if (confirm("Wollen Sie diesen Beitrag wirklich löschen?")) {
-        axios.delete("/admin/tables/delete/" + this.table + "/" + id, {
+        axios$1.delete("/admin/tables/delete/" + this.table + "/" + id, {
           headers: {
             "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
           }
@@ -11512,7 +11512,7 @@ function _sfc_ssrRender$4s(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   if ($options.numberOfRows > 0) {
     _push(`<tbody><!--[-->`);
     ssrRenderList($data.rows, (row, index) => {
-      _push(`<tr class="hover:dark:bg-gray-800 hover:bg-gray-800" draggable="false">`);
+      _push(`<tr class="hover:dark:bg-gray-800 hover:bg-gray-800"${ssrRenderAttr("draggable", false)}>`);
       if ($data.rows?.length && !$data.rows?.isNAN && $options.CleanTable()?.trim() !== "") {
         _push(`<td class="np-dl-td-edit text-center cursor-move"><button class="drag-handle-btn" draggable="true">`);
         _push(ssrRenderComponent(_component_icon_plus_circle, { class: "w-6 h-6" }, null, _parent));
@@ -11522,7 +11522,7 @@ function _sfc_ssrRender$4s(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
       }
       ssrRenderSlot(_ctx.$slots, "datarow", {
         datarow: row,
-        draggable: "false"
+        draggable: false
       }, null, _push, _parent);
       if (row.created_at && $props.view) {
         _push(`<td class="np-dl-td-normal">${ssrInterpolate(new Date(row.created_at).toLocaleString("de-DE", {
@@ -29242,27 +29242,69 @@ const _sfc_main$35 = defineComponent({
     IconStar
   },
   props: {
-    applicationName: { type: String, default: "Administrator-Anwendung" },
+    applicationName: {
+      type: String,
+      default: "Administrator-Anwendung"
+    },
     users: Object,
     pag: [Object, Array],
-    table_alt: { type: String },
-    table_q: { type: String, default: table_alt },
-    table: { type: String, required: true },
-    startPage: { type: Boolean, default: true },
-    breadcrumbs: { type: Object, required: true },
-    additionalEntries: { type: Array, default: () => [] },
-    tableq: { type: String },
-    current: { type: String, required: true },
-    filters: { type: Object, default: () => ({}) },
-    rows: { type: [Array, Object], required: true, default: () => [] },
-    datarows: { type: [Array, String], required: true, default: () => [] },
-    itemName_des: { type: String, default: "" },
-    formData: { type: String, default: "" },
+    table_alt: {
+      type: String
+    },
+    table_q: {
+      type: String,
+      default: table_alt
+    },
+    table: {
+      type: String,
+      required: true
+    },
+    startPage: {
+      type: Boolean,
+      default: true
+    },
+    breadcrumbs: {
+      type: Object,
+      required: true
+    },
+    additionalEntries: {
+      type: Array,
+      default: () => []
+    },
+    tableq: {
+      type: String
+    },
+    current: {
+      type: String,
+      required: true
+    },
+    filters: {
+      type: Object,
+      default: () => ({})
+    },
+    rows: {
+      type: [Array, Object],
+      required: true,
+      default: () => []
+    },
+    datarows: {
+      type: [Array, String],
+      required: true,
+      default: () => []
+    },
+    itemName_des: {
+      type: String,
+      default: ""
+    },
+    formData: {
+      type: String,
+      default: ""
+    },
     thirdparty: String
   },
   data() {
     return {
-      aftsetting: this.aftSET(),
+      aftsetting: "",
       imagedesc: "Bild",
       searchQuery: "",
       ItemName: "Tabellen",
@@ -29270,7 +29312,6 @@ const _sfc_main$35 = defineComponent({
       checkedStatus: {},
       sortable: null,
       table: CleanTable().toLowerCase(),
-      // tableq: CleanTable(),
       settings: {},
       namealias: "",
       descalias: "",
@@ -29295,22 +29336,44 @@ const _sfc_main$35 = defineComponent({
       return this.descalias[this.table] ?? "Beschreibung";
     },
     table_head() {
-      return Array.isArray(this.localRows) && this.localRows[0]?.admin_table_id || typeof this.localRows[0]?.admin_table_id !== "undefined" ? "Tabelle" : "";
+      return Array.isArray(
+        this.localRows
+      ) && this.localRows[0]?.admin_table_id || typeof this.localRows[0]?.admin_table_id !== "undefined" ? "Tabelle" : "";
     },
     routeCreate() {
-      if (!this.tableq) return null;
-      return route$1("admin.tables.create", this.tableq);
+      if (!this.tableq)
+        return null;
+      return route$1(
+        "admin.tables.create",
+        this.tableq
+      );
     },
     showRoute() {
-      return route$1("admin.tables.show", table);
+      return route$1(
+        "admin.tables.show",
+        table
+      );
     }
   },
   watch: {
     searchValue(newVal) {
-      router.get(route$1("admin.tables.show", this.table_q ?? ""), { search: newVal ?? "" }, { preserveState: true, replace: true });
+      router.get(
+        route$1(
+          "admin.tables.show",
+          this.table_q ?? ""
+        ),
+        {
+          search: newVal ?? ""
+        },
+        {
+          preserveState: true,
+          replace: true
+        }
+      );
     }
   },
   async mounted() {
+    this.aftsetting = this.aftSET();
     this.cat_on_head = this.checkCat();
     this.checkhasCreated();
     this.settings = await GetSettings();
@@ -29322,7 +29385,21 @@ const _sfc_main$35 = defineComponent({
       this.descalias = window.settings.descalias;
     }
     this.initSortable();
-    this.fetchStatus();
+    await this.fetchStatus();
+    if (this.table === "comments") {
+      window.addEventListener(
+        "beforeunload",
+        this.markCommentsAsChecked
+      );
+    }
+  },
+  beforeUnmount() {
+    if (this.table === "comments") {
+      window.removeEventListener(
+        "beforeunload",
+        this.markCommentsAsChecked
+      );
+    }
   },
   methods: {
     GetProfileImagePath,
@@ -29330,37 +29407,113 @@ const _sfc_main$35 = defineComponent({
     ucf,
     SD,
     rumLaut,
-    async removeItem() {
-      try {
-        const response = await axios$1.get(`/admin/tables/data/${this.table}`);
-        this.localRows = response.data.rows;
-        this.localRows = [...this.localRows];
-      } catch (error) {
-        console.error("Fehler beim Neuladen der Tabelle:", error);
-      }
+    /*
+    |--------------------------------------------------------------------------
+    | Checked Status
+    |--------------------------------------------------------------------------
+    */
+    isChecked(id) {
+      const value = this.checkedStatus?.[id];
+      return value == 1 || value === true || value === "true";
     },
-    initSortable() {
-      const tableBody = this.$el.querySelector("tbody");
-      if (!tableBody) return;
-      this.sortable = Sortable.create(tableBody, {
-        animation: 150,
-        onEnd: async (evt) => {
-          const movedItem = this.localRows.splice(evt.oldIndex, 1)[0];
-          this.localRows.splice(evt.newIndex, 0, movedItem);
-          this.localRows = [...this.localRows];
-          try {
-            await axios$1.post("/api/save-order/" + CleanTable(), {
-              rows: this.localRows.map((row, index) => ({
-                id: row.id,
-                position: index
-              }))
-            });
-          } catch (error) {
-            console.error("Fehler beim Speichern der Reihenfolge:", error);
-          }
-        }
+    /*
+    |--------------------------------------------------------------------------
+    | Mark comments checked
+    |--------------------------------------------------------------------------
+    */
+    markCommentsAsChecked() {
+      if (!this.localRows || !this.localRows.length) {
+        return;
+      }
+      const ids = this.localRows.map(
+        (row) => row.id
+      );
+      navigator.sendBeacon(
+        "/api/set-comments-checked",
+        JSON.stringify({
+          ids
+        })
+      );
+      ids.forEach((id) => {
+        this.checkedStatus[id] = 1;
       });
     },
+    /*
+    |--------------------------------------------------------------------------
+    | Remove Item
+    |--------------------------------------------------------------------------
+    */
+    async removeItem() {
+      try {
+        const response = await axios$1.get(
+          `/admin/tables/data/${this.table}`
+        );
+        this.localRows = response.data.rows;
+        this.localRows = [
+          ...this.localRows
+        ];
+      } catch (error) {
+        console.error(
+          "Fehler beim Neuladen der Tabelle:",
+          error
+        );
+      }
+    },
+    /*
+    |--------------------------------------------------------------------------
+    | Sortable
+    |--------------------------------------------------------------------------
+    */
+    initSortable() {
+      const tableBody = this.$el.querySelector(
+        "tbody"
+      );
+      if (!tableBody)
+        return;
+      this.sortable = Sortable.create(
+        tableBody,
+        {
+          animation: 150,
+          onEnd: async (evt) => {
+            const movedItem = this.localRows.splice(
+              evt.oldIndex,
+              1
+            )[0];
+            this.localRows.splice(
+              evt.newIndex,
+              0,
+              movedItem
+            );
+            this.localRows = [
+              ...this.localRows
+            ];
+            try {
+              await axios$1.post(
+                "/api/save-order/" + CleanTable(),
+                {
+                  rows: this.localRows.map(
+                    (row, index) => ({
+                      id: row.id,
+                      position: index
+                    })
+                  )
+                }
+              );
+            } catch (error) {
+              console.error(
+                "Fehler beim Speichern der Reihenfolge:",
+                error
+              );
+            }
+          }
+        }
+      );
+    },
+    /*
+    |--------------------------------------------------------------------------
+    | Aft Setting
+    |--------------------------------------------------------------------------
+    */
     aftSET() {
       if (CleanTable() == "shortpoems" || CleanTable() == "didyouknow" || CleanTable() == "texts") {
         return "Beschreibung";
@@ -29371,57 +29524,118 @@ const _sfc_main$35 = defineComponent({
       if (CleanTable() == "projects_sheets") {
         return "Benutzer";
       }
+      return "";
     },
+    /*
+    |--------------------------------------------------------------------------
+    | Checked Status Update
+    |--------------------------------------------------------------------------
+    */
     onCheckedStatusUpdate(status) {
     },
+    /*
+    |--------------------------------------------------------------------------
+    | Fetch Status
+    |--------------------------------------------------------------------------
+    */
     async fetchStatus() {
       await this.$nextTick();
-      if (!this.localRows || this.localRows.length === 0) return;
+      if (!this.localRows || this.localRows.length === 0) {
+        return;
+      }
       try {
-        const response = await axios$1.get("/api/chkcom/");
-        this.checkedStatus = response.data.success;
+        const response = await axios$1.get(
+          "/api/chkcom/"
+        );
+        this.checkedStatus = response.data.success || {};
+        console.log(
+          "CHECK STATUS:",
+          this.checkedStatus
+        );
       } catch (error) {
-        console.error("Fehler beim Batch-Status laden:", error);
+        console.error(
+          "Fehler beim Batch-Status laden:",
+          error
+        );
       }
     },
+    /*
+    |--------------------------------------------------------------------------
+    | Mix ID
+    |--------------------------------------------------------------------------
+    */
     getMixId(row) {
       return this.table !== "comments" ? row.id : row.post_id;
     },
+    /*
+    |--------------------------------------------------------------------------
+    | Check Category
+    |--------------------------------------------------------------------------
+    */
     checkCat() {
       let rows;
       if (typeof this.localRows === "string") {
         try {
-          rows = JSON.parse(this.localRows);
+          rows = JSON.parse(
+            this.localRows
+          );
         } catch (e) {
           console.error(e);
           return null;
         }
-      } else if (Array.isArray(this.localRows)) {
+      } else if (Array.isArray(
+        this.localRows
+      )) {
         rows = this.localRows;
       } else if (typeof this.localRows === "object") {
-        rows = Object.values(this.localRows);
+        rows = Object.values(
+          this.localRows
+        );
       } else {
         return null;
       }
-      if (!rows.length) return null;
-      const hasCategory = rows.some((row) => row?.image_categories || row?.blog_categories);
+      if (!rows.length)
+        return null;
+      const hasCategory = rows.some(
+        (row) => row?.image_categories || row?.blog_categories
+      );
       return hasCategory ? "Kategorie" : null;
     },
+    /*
+    |--------------------------------------------------------------------------
+    | Get Checked
+    |--------------------------------------------------------------------------
+    */
     async getChecked(id) {
       try {
-        const response = await axios$1.get(`/api/getCheckedDone/${id}`);
+        const response = await axios$1.get(
+          `/api/getCheckedDone/${id}`
+        );
         return response.data.done === true;
       } catch (error) {
-        console.error("Fehler beim Abrufen des Status:", error);
+        console.error(
+          "Fehler beim Abrufen des Status:",
+          error
+        );
         return false;
       }
     },
+    /*
+    |--------------------------------------------------------------------------
+    | Has Created
+    |--------------------------------------------------------------------------
+    */
     async checkhasCreated() {
       try {
-        const response = await axios$1.get(`/hasCreated/${this.table}`);
+        const response = await axios$1.get(
+          `/hasCreated/${this.table}`
+        );
         this.hasCreated = response.data;
       } catch (error) {
-        console.error("Fehler bei hasCreated:", error);
+        console.error(
+          "Fehler bei hasCreated:",
+          error
+        );
         this.hasCreated = false;
       }
     }
@@ -29577,9 +29791,9 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           }),
           datarow: withCtx((data, _push3, _parent3, _scopeId2) => {
             if (_push3) {
-              _push3(`<td class="np-dl-td-normal" draggable="false"${_scopeId2}>${ssrInterpolate(_ctx.getMixId(data.datarow))}</td>`);
+              _push3(`<td class="np-dl-td-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}>${ssrInterpolate(_ctx.getMixId(data.datarow))}</td>`);
               if (data.datarow.pub !== "undefined") {
-                _push3(`<td class="np-dl-td-normal" draggable="false"${_scopeId2}>`);
+                _push3(`<td class="np-dl-td-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}>`);
                 _push3(ssrRenderComponent(_component_PublishButton, {
                   table: _ctx.CleanTable(),
                   id: data.datarow.id,
@@ -29591,22 +29805,22 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _push3(`<!---->`);
               }
               if (data.datarow.image_categories) {
-                _push3(`<td class="np-dl-td-normal" draggable="false"${_scopeId2}><img${ssrRenderAttr("src", "/images/_ab/images_categories/sm/" + data.datarow.image_categories + ".jpg")}${ssrRenderAttr("title", _ctx.ucf(data.datarow.image_categories))}${ssrRenderAttr("alt", _ctx.ucf(data.datarow.image_categories))}${_scopeId2}></td>`);
+                _push3(`<td class="np-dl-td-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}><img${ssrRenderAttr("src", "/images/_ab/images_categories/sm/" + data.datarow.image_categories + ".jpg")}${ssrRenderAttr("title", _ctx.ucf(data.datarow.image_categories))}${ssrRenderAttr("alt", _ctx.ucf(data.datarow.image_categories))}${_scopeId2}></td>`);
               } else {
                 _push3(`<!---->`);
               }
               if (data.datarow.blog_categories) {
-                _push3(`<td class="np-dl-td-normal" draggable="false"${_scopeId2}><span class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"${_scopeId2}>${ssrInterpolate(_ctx.ucf(data.datarow.blog_categories))}</span></td>`);
+                _push3(`<td class="np-dl-td-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}><span class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"${_scopeId2}>${ssrInterpolate(_ctx.ucf(data.datarow.blog_categories))}</span></td>`);
               } else {
                 _push3(`<!---->`);
               }
               if (_ctx.table === "projects_sheets") {
-                _push3(`<td class="np-dl-td-normal break-words whitespace-normal" draggable="false"${_scopeId2}>${ssrInterpolate(_ctx.ucf(data.datarow.projects))}</td>`);
+                _push3(`<td class="np-dl-td-normal break-words whitespace-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}>${ssrInterpolate(_ctx.ucf(data.datarow.projects))}</td>`);
               } else {
                 _push3(`<!---->`);
               }
               if (_ctx.table == "comments") {
-                _push3(`<td class="np-dl-td-normal" draggable="false"${_scopeId2}>`);
+                _push3(`<td class="np-dl-td-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}>`);
                 _push3(ssrRenderComponent(_component_CreatedAt, {
                   post_id: data.datarow.post_id,
                   table: data.datarow.admin_table
@@ -29624,13 +29838,13 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 }, _parent3, _scopeId2));
                 _push3(`</td>`);
               } else if (_ctx.table != "comments" && _ctx.table_head) {
-                _push3(`<td class="np-dl-td-normal" draggable="false"${_scopeId2}><span class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"${_scopeId2}>${ssrInterpolate(_ctx.ucf(data.datarow.admin_table))}</span></td>`);
+                _push3(`<td class="np-dl-td-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}><span class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"${_scopeId2}>${ssrInterpolate(_ctx.ucf(data.datarow.admin_table))}</span></td>`);
               } else {
                 _push3(`<!---->`);
               }
-              _push3(`<td class="np-dl-td-normal break-words whitespace-normal max-w-[600px]" draggable="false"${_scopeId2}><span${_scopeId2}>${_ctx.rumLaut(data.datarow.name) ?? ""}</span></td>`);
+              _push3(`<td class="np-dl-td-normal break-words whitespace-normal max-w-[600px]"${ssrRenderAttr("draggable", false)}${_scopeId2}><span${_scopeId2}>${_ctx.rumLaut(data.datarow.name) ?? ""}</span></td>`);
               if (_ctx.table != "people" && (_ctx.users[data.datarow.users_id]?.img || data.datarow.nick || data.datarow.users)) {
-                _push3(`<td class="np-dl-td-normal" draggable="false"${_scopeId2}>`);
+                _push3(`<td class="np-dl-td-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}>`);
                 if (_ctx.users[data.datarow.users_id]?.img && _ctx.users[data.datarow.users_id].img !== "008.jpg") {
                   _push3(`<div${_scopeId2}><span class="whitespace-nowrap"${_scopeId2}><img${ssrRenderAttr("src", _ctx.GetProfileImagePath(_ctx.users[data.datarow.users_id].img))} class="w-[24px] h-[24px] object-cover rounded-full inline"${_scopeId2}>  ${ssrInterpolate(data.datarow.users)}</span></div>`);
                 } else {
@@ -29641,14 +29855,14 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _push3(`<!---->`);
               }
               if (_ctx.table !== "comments" && _ctx.table != "ratings" && _ctx.table != "projects_sheets") {
-                _push3(`<td class="np-dl-td-normal break-words whitespace-normal" draggable="false"${_scopeId2}><span${_scopeId2}>${_ctx.rumLaut(data.datarow.description) ?? ""}</span></td>`);
+                _push3(`<td class="np-dl-td-normal break-words whitespace-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}><span${_scopeId2}>${_ctx.rumLaut(data.datarow.description) ?? ""}</span></td>`);
               } else if (_ctx.table === "ratings") {
-                _push3(`<td class="np-dl-td-normal break-words whitespace-normal" draggable="false"${_scopeId2}>${ssrInterpolate(data.datarow.images)}</td>`);
+                _push3(`<td class="np-dl-td-normal break-words whitespace-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}>${ssrInterpolate(data.datarow.images)}</td>`);
               } else {
                 _push3(`<!---->`);
               }
               if (_ctx.table === "ratings") {
-                _push3(`<td class="np-dl-td-normal break-words whitespace-normal" draggable="false"${_scopeId2}><!--[-->`);
+                _push3(`<td class="np-dl-td-normal break-words whitespace-normal"${ssrRenderAttr("draggable", false)}${_scopeId2}><!--[-->`);
                 ssrRenderList(data.datarow.rating, (i) => {
                   _push3(ssrRenderComponent(_component_IconStar, {
                     key: i,
@@ -29664,8 +29878,8 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
               }
               if (_ctx.table === "comments") {
                 _push3(`<td class="np-dl-td-normal"${_scopeId2}>`);
-                if (Number(_ctx.checkedStatus?.[data.datarow.id]) === 1) {
-                  _push3(`<span style="${ssrRenderStyle({ "font-size": "24px" })}"${_scopeId2}>✅</span>`);
+                if (_ctx.isChecked(data.datarow.id)) {
+                  _push3(`<span style="${ssrRenderStyle({ "font-size": "24px" })}"${_scopeId2}> ✅ </span>`);
                 } else {
                   _push3(`<span class="bg-[rgb(50,174,179)] rounded-full w-[24px] h-[24px] px-[3px] text-white"${_scopeId2}>O</span>`);
                 }
@@ -29677,7 +29891,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
               return [
                 createVNode("td", {
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29688,7 +29902,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 data.datarow.pub !== "undefined" ? (openBlock(), createBlock("td", {
                   key: 0,
                   class: "np-dl-td-normal",
-                  draggable: "false"
+                  draggable: false
                 }, [
                   createVNode(_component_PublishButton, {
                     table: _ctx.CleanTable(),
@@ -29700,7 +29914,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 data.datarow.image_categories ? (openBlock(), createBlock("td", {
                   key: 1,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29717,7 +29931,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 data.datarow.blog_categories ? (openBlock(), createBlock("td", {
                   key: 2,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29730,7 +29944,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table === "projects_sheets" ? (openBlock(), createBlock("td", {
                   key: 3,
                   class: "np-dl-td-normal break-words whitespace-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29741,7 +29955,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table == "comments" ? (openBlock(), createBlock("td", {
                   key: 4,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29761,7 +29975,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 ], 40, ["onDragstart"])) : _ctx.table != "comments" && _ctx.table_head ? (openBlock(), createBlock("td", {
                   key: 5,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29773,7 +29987,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 ], 40, ["onDragstart"])) : createCommentVNode("", true),
                 createVNode("td", {
                   class: "np-dl-td-normal break-words whitespace-normal max-w-[600px]",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29788,7 +30002,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table != "people" && (_ctx.users[data.datarow.users_id]?.img || data.datarow.nick || data.datarow.users) ? (openBlock(), createBlock("td", {
                   key: 6,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29817,7 +30031,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table !== "comments" && _ctx.table != "ratings" && _ctx.table != "projects_sheets" ? (openBlock(), createBlock("td", {
                   key: 7,
                   class: "np-dl-td-normal break-words whitespace-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29831,7 +30045,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 ], 40, ["onDragstart"])) : _ctx.table === "ratings" ? (openBlock(), createBlock("td", {
                   key: 8,
                   class: "np-dl-td-normal break-words whitespace-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29842,7 +30056,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table === "ratings" ? (openBlock(), createBlock("td", {
                   key: 9,
                   class: "np-dl-td-normal break-words whitespace-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29865,10 +30079,10 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   key: 10,
                   class: "np-dl-td-normal"
                 }, [
-                  Number(_ctx.checkedStatus?.[data.datarow.id]) === 1 ? (openBlock(), createBlock("span", {
+                  _ctx.isChecked(data.datarow.id) ? (openBlock(), createBlock("span", {
                     key: 0,
                     style: { "font-size": "24px" }
-                  }, "✅")) : (openBlock(), createBlock("span", {
+                  }, " ✅ ")) : (openBlock(), createBlock("span", {
                     key: 1,
                     class: "bg-[rgb(50,174,179)] rounded-full w-[24px] h-[24px] px-[3px] text-white"
                   }, "O"))
@@ -29952,7 +30166,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
               datarow: withCtx((data) => [
                 createVNode("td", {
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29963,7 +30177,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 data.datarow.pub !== "undefined" ? (openBlock(), createBlock("td", {
                   key: 0,
                   class: "np-dl-td-normal",
-                  draggable: "false"
+                  draggable: false
                 }, [
                   createVNode(_component_PublishButton, {
                     table: _ctx.CleanTable(),
@@ -29975,7 +30189,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 data.datarow.image_categories ? (openBlock(), createBlock("td", {
                   key: 1,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -29992,7 +30206,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 data.datarow.blog_categories ? (openBlock(), createBlock("td", {
                   key: 2,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30005,7 +30219,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table === "projects_sheets" ? (openBlock(), createBlock("td", {
                   key: 3,
                   class: "np-dl-td-normal break-words whitespace-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30016,7 +30230,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table == "comments" ? (openBlock(), createBlock("td", {
                   key: 4,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30036,7 +30250,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 ], 40, ["onDragstart"])) : _ctx.table != "comments" && _ctx.table_head ? (openBlock(), createBlock("td", {
                   key: 5,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30048,7 +30262,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 ], 40, ["onDragstart"])) : createCommentVNode("", true),
                 createVNode("td", {
                   class: "np-dl-td-normal break-words whitespace-normal max-w-[600px]",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30063,7 +30277,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table != "people" && (_ctx.users[data.datarow.users_id]?.img || data.datarow.nick || data.datarow.users) ? (openBlock(), createBlock("td", {
                   key: 6,
                   class: "np-dl-td-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30092,7 +30306,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table !== "comments" && _ctx.table != "ratings" && _ctx.table != "projects_sheets" ? (openBlock(), createBlock("td", {
                   key: 7,
                   class: "np-dl-td-normal break-words whitespace-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30106,7 +30320,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 ], 40, ["onDragstart"])) : _ctx.table === "ratings" ? (openBlock(), createBlock("td", {
                   key: 8,
                   class: "np-dl-td-normal break-words whitespace-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30117,7 +30331,7 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 _ctx.table === "ratings" ? (openBlock(), createBlock("td", {
                   key: 9,
                   class: "np-dl-td-normal break-words whitespace-normal",
-                  draggable: "false",
+                  draggable: false,
                   onDragstart: [
                     withModifiers(() => {
                     }, ["prevent"]),
@@ -30140,10 +30354,10 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   key: 10,
                   class: "np-dl-td-normal"
                 }, [
-                  Number(_ctx.checkedStatus?.[data.datarow.id]) === 1 ? (openBlock(), createBlock("span", {
+                  _ctx.isChecked(data.datarow.id) ? (openBlock(), createBlock("span", {
                     key: 0,
                     style: { "font-size": "24px" }
-                  }, "✅")) : (openBlock(), createBlock("span", {
+                  }, " ✅ ")) : (openBlock(), createBlock("span", {
                     key: 1,
                     class: "bg-[rgb(50,174,179)] rounded-full w-[24px] h-[24px] px-[3px] text-white"
                   }, "O"))
@@ -41409,16 +41623,16 @@ const _sfc_main$2t = {
 function _sfc_ssrRender$2s(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   if ($props.routeName) {
     _push(`<a${ssrRenderAttrs(mergeProps({
-      class: "pad cursor-pointer inline-flex items-center gap-2 rounded-lg px-4 py-2 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000",
+      class: "pad cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-2 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000",
       href: $props.routeName,
-      style: { "font-family": "Alfredo" }
+      style: { "font-family": "Good" }
     }, _attrs))}>`);
     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
     _push(`<span>${ssrInterpolate($props.name)}</span></a>`);
   } else {
     _push(`<div${ssrRenderAttrs(mergeProps({
       class: "cursor-pointer inline-flex items-center gap-2 rounded-lg px-3 py-3 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000",
-      style: { "font-family": "Alfredo" }
+      style: { "font-family": "Good" }
     }, _attrs))}>`);
     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
     _push(`</div>`);
@@ -58520,6 +58734,7 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
   const _component_page_content = resolveComponent("page-content");
   const _component_page_title = resolveComponent("page-title");
   const _component_page_paragraph = resolveComponent("page-paragraph");
+  const _component_H2 = resolveComponent("H2");
   const _component_editbtns = resolveComponent("editbtns");
   const _component_emailview = resolveComponent("emailview");
   _push(ssrRenderComponent(_component_layout, mergeProps({
@@ -58531,11 +58746,11 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
         _push2(ssrRenderComponent(_component_page_content, null, {
           content: withCtx((_2, _push3, _parent3, _scopeId2) => {
             if (_push3) {
-              _push3(`<div data-v-bf9274e9${_scopeId2}>`);
+              _push3(`<div data-v-3a52276c${_scopeId2}>`);
               _push3(ssrRenderComponent(_component_page_title, null, {
                 title: withCtx((_3, _push4, _parent4, _scopeId3) => {
                   if (_push4) {
-                    _push4(`<span class="dark:text-layout-night-1050 text-layout-sun-1000" data-v-bf9274e9${_scopeId3}>MarbleFX</span>`);
+                    _push4(`<span class="dark:text-layout-night-1050 text-layout-sun-1000" data-v-3a52276c${_scopeId3}>MarbleFX</span>`);
                   } else {
                     return [
                       createVNode("span", { class: "dark:text-layout-night-1050 text-layout-sun-1000" }, "MarbleFX")
@@ -58547,7 +58762,7 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
               _push3(ssrRenderComponent(_component_page_paragraph, null, {
                 paragraph: withCtx((_3, _push4, _parent4, _scopeId3) => {
                   if (_push4) {
-                    _push4(`<span class="text-layout-sun-1000 dark:text-layout-night-1000" data-v-bf9274e9${_scopeId3}> MarbleFX ihr Webdienstleister </span>`);
+                    _push4(`<span class="text-layout-sun-1000 dark:text-layout-night-1000" data-v-3a52276c${_scopeId3}> MarbleFX ihr Webdienstleister </span>`);
                   } else {
                     return [
                       createVNode("span", { class: "text-layout-sun-1000 dark:text-layout-night-1000" }, " MarbleFX ihr Webdienstleister ")
@@ -58556,25 +58771,26 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                 }),
                 _: 1
               }, _parent3, _scopeId2));
-              _push3(`<div class="grid grid-cols-12 gap-0" data-v-bf9274e9${_scopeId2}><div class="col-span-6 p-1 md:p-4 lg:rounded-lg" data-v-bf9274e9${_scopeId2}><!--[-->`);
+              _push3(`<div class="grid grid-cols-12 gap-0" data-v-3a52276c${_scopeId2}><div class="col-span-6 p-1 md:p-4 lg:rounded-lg" data-v-3a52276c${_scopeId2}><!--[-->`);
               ssrRenderList(_ctx.news.data, (item) => {
-                _push3(`<div data-v-bf9274e9${_scopeId2}><div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" data-v-bf9274e9${_scopeId2}><span class="dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl" data-v-bf9274e9${_scopeId2}>${_ctx.cleanHtml(item.headline) ?? ""}</span> `);
+                _push3(`<div data-v-3a52276c${_scopeId2}><div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" data-v-3a52276c${_scopeId2}><div class="flex items-center gap-2" data-v-3a52276c${_scopeId2}>`);
+                _push3(ssrRenderComponent(_component_H2, { class: "dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl mt-0" }, null, _parent3, _scopeId2));
                 _push3(ssrRenderComponent(_component_editbtns, {
                   id: item.id,
                   table: "news"
                 }, null, _parent3, _scopeId2));
-                _push3(`<br data-v-bf9274e9${_scopeId2}><span class="text-layout-sun-1000 dark:text-layout-night-1000" data-v-bf9274e9${_scopeId2}>${_ctx.cleanHtml(item.message) ?? ""}</span></div></div>`);
+                _push3(`</div><span class="text-layout-sun-1000 dark:text-layout-night-1000" data-v-3a52276c${_scopeId2}>${_ctx.cleanHtml(item.message) ?? ""}</span></div></div>`);
               });
-              _push3(`<!--]--></div><div class="col-span-6 p-1 md:p-4 lg:rounded-lg" data-v-bf9274e9${_scopeId2}><div class="bg-layout-sun-5000 dark:bg-layout-night-5000 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" data-v-bf9274e9${_scopeId2}>`);
+              _push3(`<!--]--></div><div class="col-span-6 p-1 md:p-4 lg:rounded-lg" data-v-3a52276c${_scopeId2}><div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" data-v-3a52276c${_scopeId2}>`);
               if (_ctx.text) {
-                _push3(`<div class="dark:text-layout-night-1000 dark:text-layout-orange" data-v-bf9274e9${_scopeId2}><span class="text-2xl font-bold dark:text-layout-sun-1060" data-v-bf9274e9${_scopeId2}>${ssrInterpolate(_ctx.text.headline)}</span> `);
+                _push3(`<div class="dark:text-layout-night-1000" data-v-3a52276c${_scopeId2}><span class="text-2xl font-bold dark:text-layout-sun-1060" data-v-3a52276c${_scopeId2}>${ssrInterpolate(_ctx.text.headline)}</span> `);
                 _push3(ssrRenderComponent(_component_editbtns, {
                   id: "14",
                   table: "texts"
                 }, null, _parent3, _scopeId2));
-                _push3(`<div class="dark:text-layout-orange" data-v-bf9274e9${_scopeId2}>${_ctx.text.text ?? ""}</div></div>`);
+                _push3(`<div class="" data-v-3a52276c${_scopeId2}>${_ctx.text.text ?? ""}</div></div>`);
               } else {
-                _push3(`<div data-v-bf9274e9${_scopeId2}><p class="text-gray-500 italic" data-v-bf9274e9${_scopeId2}>Kein Willkommenstext vorhanden.</p></div>`);
+                _push3(`<div data-v-3a52276c${_scopeId2}><p class="text-gray-500 italic" data-v-3a52276c${_scopeId2}>Kein Willkommenstext vorhanden.</p></div>`);
               }
               _push3(`</div>`);
               _push3(ssrRenderComponent(_component_emailview, null, null, _parent3, _scopeId2));
@@ -58601,16 +58817,16 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                           key: item.id
                         }, [
                           createVNode("div", { class: "bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" }, [
-                            createVNode("span", {
-                              class: "dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl",
-                              innerHTML: _ctx.cleanHtml(item.headline)
-                            }, null, 8, ["innerHTML"]),
-                            createTextVNode(),
-                            createVNode(_component_editbtns, {
-                              id: item.id,
-                              table: "news"
-                            }, null, 8, ["id"]),
-                            createVNode("br"),
+                            createVNode("div", { class: "flex items-center gap-2" }, [
+                              createVNode(_component_H2, {
+                                class: "dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl mt-0",
+                                innerHTML: _ctx.cleanHtml(item.headline)
+                              }, null, 8, ["innerHTML"]),
+                              createVNode(_component_editbtns, {
+                                id: item.id,
+                                table: "news"
+                              }, null, 8, ["id"])
+                            ]),
                             createVNode("span", {
                               class: "text-layout-sun-1000 dark:text-layout-night-1000",
                               innerHTML: _ctx.cleanHtml(item.message)
@@ -58620,10 +58836,10 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                       }), 128))
                     ]),
                     createVNode("div", { class: "col-span-6 p-1 md:p-4 lg:rounded-lg" }, [
-                      createVNode("div", { class: "bg-layout-sun-5000 dark:bg-layout-night-5000 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" }, [
+                      createVNode("div", { class: "bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" }, [
                         _ctx.text ? (openBlock(), createBlock("div", {
                           key: 0,
-                          class: "dark:text-layout-night-1000 dark:text-layout-orange"
+                          class: "dark:text-layout-night-1000"
                         }, [
                           createVNode("span", { class: "text-2xl font-bold dark:text-layout-sun-1060" }, toDisplayString(_ctx.text.headline), 1),
                           createTextVNode(),
@@ -58632,7 +58848,7 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                             table: "texts"
                           }),
                           createVNode("div", {
-                            class: "dark:text-layout-orange",
+                            class: "",
                             innerHTML: _ctx.text.text
                           }, null, 8, ["innerHTML"])
                         ])) : (openBlock(), createBlock("div", { key: 1 }, [
@@ -58673,16 +58889,16 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                         key: item.id
                       }, [
                         createVNode("div", { class: "bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" }, [
-                          createVNode("span", {
-                            class: "dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl",
-                            innerHTML: _ctx.cleanHtml(item.headline)
-                          }, null, 8, ["innerHTML"]),
-                          createTextVNode(),
-                          createVNode(_component_editbtns, {
-                            id: item.id,
-                            table: "news"
-                          }, null, 8, ["id"]),
-                          createVNode("br"),
+                          createVNode("div", { class: "flex items-center gap-2" }, [
+                            createVNode(_component_H2, {
+                              class: "dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl mt-0",
+                              innerHTML: _ctx.cleanHtml(item.headline)
+                            }, null, 8, ["innerHTML"]),
+                            createVNode(_component_editbtns, {
+                              id: item.id,
+                              table: "news"
+                            }, null, 8, ["id"])
+                          ]),
                           createVNode("span", {
                             class: "text-layout-sun-1000 dark:text-layout-night-1000",
                             innerHTML: _ctx.cleanHtml(item.message)
@@ -58692,10 +58908,10 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                     }), 128))
                   ]),
                   createVNode("div", { class: "col-span-6 p-1 md:p-4 lg:rounded-lg" }, [
-                    createVNode("div", { class: "bg-layout-sun-5000 dark:bg-layout-night-5000 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" }, [
+                    createVNode("div", { class: "bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050" }, [
                       _ctx.text ? (openBlock(), createBlock("div", {
                         key: 0,
-                        class: "dark:text-layout-night-1000 dark:text-layout-orange"
+                        class: "dark:text-layout-night-1000"
                       }, [
                         createVNode("span", { class: "text-2xl font-bold dark:text-layout-sun-1060" }, toDisplayString(_ctx.text.headline), 1),
                         createTextVNode(),
@@ -58704,7 +58920,7 @@ function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                           table: "texts"
                         }),
                         createVNode("div", {
-                          class: "dark:text-layout-orange",
+                          class: "",
                           innerHTML: _ctx.text.text
                         }, null, 8, ["innerHTML"])
                       ])) : (openBlock(), createBlock("div", { key: 1 }, [
@@ -58730,7 +58946,7 @@ _sfc_main$f.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/mfx/Home.vue");
   return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const Home = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["ssrRender", _sfc_ssrRender$f], ["__scopeId", "data-v-bf9274e9"]]);
+const Home = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["ssrRender", _sfc_ssrRender$f], ["__scopeId", "data-v-3a52276c"]]);
 const __vite_glob_0_329 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Home
@@ -61724,7 +61940,7 @@ const __vite_glob_0_356 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
   __proto__: null,
   default: ProfileTextfield
 }, Symbol.toStringTag, { value: "Module" }));
-const Ziggy = { "url": "http://ab.test.mcs", "port": null, "defaults": {}, "routes": { "debugbar.openhandler": { "uri": "_debugbar/open", "methods": ["GET", "HEAD"] }, "debugbar.clockwork": { "uri": "_debugbar/clockwork/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "debugbar.assets.css": { "uri": "_debugbar/assets/stylesheets", "methods": ["GET", "HEAD"] }, "debugbar.assets.js": { "uri": "_debugbar/assets/javascript", "methods": ["GET", "HEAD"] }, "debugbar.cache.delete": { "uri": "_debugbar/cache/{key}/{tags?}", "methods": ["DELETE"], "parameters": ["key", "tags"] }, "debugbar.queries.explain": { "uri": "_debugbar/queries/explain", "methods": ["POST"] }, "laravel-cookie-consent.script-utils": { "uri": "laravel-cookie-consent/script-utils", "methods": ["GET", "HEAD"] }, "login": { "uri": "login", "methods": ["GET", "HEAD"] }, "logout": { "uri": "logout", "methods": ["POST"] }, "password.request": { "uri": "forgot-password", "methods": ["GET", "HEAD"] }, "password.reset": { "uri": "reset-password/{token}", "methods": ["GET", "HEAD"], "parameters": ["token"] }, "password.email": { "uri": "forgot-password", "methods": ["POST"] }, "password.update": { "uri": "reset-password", "methods": ["POST"] }, "register": { "uri": "register", "methods": ["GET", "HEAD"] }, "register.store": { "uri": "register", "methods": ["POST"] }, "verification.notice": { "uri": "email/verify", "methods": ["GET", "HEAD"] }, "verification.verify": { "uri": "email/verify/{id}/{hash}", "methods": ["GET", "HEAD"], "parameters": ["id", "hash"] }, "verification.send": { "uri": "email/verification-notification", "methods": ["POST"] }, "user-profile-information.update": { "uri": "user/profile-information", "methods": ["PUT"] }, "user-password.update": { "uri": "user/password", "methods": ["PUT"] }, "password.confirm": { "uri": "user/confirm-password", "methods": ["GET", "HEAD"] }, "password.confirmation": { "uri": "user/confirmed-password-status", "methods": ["GET", "HEAD"] }, "password.confirm.store": { "uri": "user/confirm-password", "methods": ["POST"] }, "two-factor.login": { "uri": "two-factor-challenge", "methods": ["GET", "HEAD"] }, "two-factor.login.post": { "uri": "two-factor-challenge", "methods": ["POST"] }, "two-factor.enable": { "uri": "user/two-factor-authentication", "methods": ["POST"] }, "two-factor.confirm": { "uri": "user/confirmed-two-factor-authentication", "methods": ["POST"] }, "two-factor.disable": { "uri": "user/two-factor-authentication", "methods": ["DELETE"] }, "two-factor.qr-code": { "uri": "user/two-factor-qr-code", "methods": ["GET", "HEAD"] }, "two-factor.secret-key": { "uri": "user/two-factor-secret-key", "methods": ["GET", "HEAD"] }, "two-factor.recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["GET", "HEAD"] }, "two-factor.regenerate-recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["POST"] }, "terms.show": { "uri": "terms-of-service", "methods": ["GET", "HEAD"] }, "policy.show": { "uri": "privacy-policy", "methods": ["GET", "HEAD"] }, "profile.show": { "uri": "user/profile", "methods": ["GET", "HEAD"] }, "other-browser-sessions.destroy": { "uri": "user/other-browser-sessions", "methods": ["DELETE"] }, "current-user-photo.destroy": { "uri": "user/profile-photo", "methods": ["DELETE"] }, "current-user.destroy": { "uri": "user", "methods": ["DELETE"] }, "api-tokens.index": { "uri": "user/api-tokens", "methods": ["GET", "HEAD"] }, "api-tokens.store": { "uri": "user/api-tokens", "methods": ["POST"] }, "api-tokens.update": { "uri": "user/api-tokens/{token}", "methods": ["PUT"], "parameters": ["token"] }, "api-tokens.destroy": { "uri": "user/api-tokens/{token}", "methods": ["DELETE"], "parameters": ["token"] }, "sanctum.csrf-cookie": { "uri": "sanctum/csrf-cookie", "methods": ["GET", "HEAD"] }, "ignition.healthCheck": { "uri": "_ignition/health-check", "methods": ["GET", "HEAD"] }, "ignition.executeSolution": { "uri": "_ignition/execute-solution", "methods": ["POST"] }, "ignition.updateConfig": { "uri": "_ignition/update-config", "methods": ["POST"] }, "cookieconsent.script": { "uri": "cookie-consent/script", "methods": ["GET", "HEAD"] }, "cookieconsent.accept.all": { "uri": "cookie-consent/accept-all", "methods": ["POST"] }, "cookieconsent.accept.essentials": { "uri": "cookie-consent/accept-essentials", "methods": ["POST"] }, "cookieconsent.accept.configuration": { "uri": "cookie-consent/configure", "methods": ["POST"] }, "cookieconsent.reset": { "uri": "cookie-consent/reset", "methods": ["POST"] }, "admin.add.func": { "uri": "api/AddFunc", "methods": ["POST"] }, "countpixel": { "uri": "countpixel/{url}/{route}/{page?}", "methods": ["GET", "HEAD"], "parameters": ["url", "route", "page"] }, "api.mcslpoints": { "uri": "api/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "remove.temp": { "uri": "api/delTempz/{path}", "methods": ["GET", "HEAD"], "parameters": ["path"] }, "ggle.login": { "uri": "auth/google", "methods": ["GET", "HEAD"] }, "ri": { "uri": "ri", "methods": ["GET", "HEAD"] }, "get.help": { "uri": "api/gethelp/{slug}/{table}", "methods": ["GET", "HEAD"], "parameters": ["slug", "table"] }, "auth.nickname": { "uri": "auth/nickname", "methods": ["GET", "HEAD"] }, "admin.mcslpoints": { "uri": "admin/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "GetRights_all": { "uri": "api/user/rights", "methods": ["GET", "HEAD"] }, "home.imprint.gen": { "uri": "home/impressum", "methods": ["GET", "HEAD"] }, "home.index": { "uri": "/", "methods": ["GET", "HEAD"] }, "home.spruch": { "uri": "api/spruch-des-monats", "methods": ["GET", "HEAD"] }, "home.lostnfound": { "uri": "lostnfound", "methods": ["GET", "HEAD"] }, "home.privacy.dag": { "uri": "privacy", "methods": ["GET", "HEAD"] }, "home.ai.dag": { "uri": "ai", "methods": ["GET", "HEAD"] }, "home.contacts.dag": { "uri": "contacts", "methods": ["GET", "HEAD"] }, "home.links": { "uri": "links", "methods": ["GET", "HEAD"] }, "home.visit": { "uri": "visitcard", "methods": ["GET", "HEAD"] }, "home.publication": { "uri": "publikationen", "methods": ["GET", "HEAD"] }, "home.imprint.chh": { "uri": "imprint", "methods": ["GET", "HEAD"] }, "user-profile-information.update_alt": { "uri": "user/profile", "methods": ["PUT"] }, "save.shp": { "uri": "save/shortpoems", "methods": ["POST"] }, "profile.photo.get": { "uri": "profile/photo", "methods": ["GET", "HEAD"] }, "mail.subscribe_newsl": { "uri": "newsl_subscribe", "methods": ["POST"] }, "mail.unsubscribe_newsl": { "uri": "unsubscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "mail.savenewsletter": { "uri": "mail/subscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "home.ai": { "uri": "home/ai", "methods": ["GET", "HEAD"] }, "mcs.points": { "uri": "about/mcs-points", "methods": ["GET", "HEAD"] }, "dashboard": { "uri": "dashboard", "methods": ["GET", "HEAD"] }, "newsl.to.mcsp": { "uri": "newslToMCSLPoints/{uhash?}/{comphash?}/{email?}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "comphash", "email"] }, "personal.update": { "uri": "personal_update", "methods": ["POST"] }, "home.qrcodah": { "uri": "home/QRCodaH", "methods": ["GET", "HEAD"] }, "home.about": { "uri": "home/aboutme", "methods": ["GET", "HEAD"] }, "home.imprint": { "uri": "home/imprint", "methods": ["GET", "HEAD"] }, "home.terms": { "uri": "home/terms", "methods": ["GET", "HEAD"] }, "home.images.gallery": { "uri": "home/show/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.gallery.search": { "uri": "home/search/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.index": { "uri": "home/pictures", "methods": ["GET", "HEAD"] }, "home.shortpoems": { "uri": "home/shortpoems", "methods": ["GET", "HEAD"] }, "home.didyouknow": { "uri": "home/didyouknow", "methods": ["GET", "HEAD"] }, "home.blog.index": { "uri": "blogs", "methods": ["GET", "HEAD"] }, "home.blog.show": { "uri": "blogs/show/{autoslug}", "methods": ["GET", "HEAD"], "parameters": ["autoslug"] }, "home.no_application_found": { "uri": "home/no_application_found", "methods": ["GET", "HEAD"] }, "home.user_is_no_admin": { "uri": "home/user_is_no_admin", "methods": ["GET", "HEAD"] }, "home.user_is_no_employee": { "uri": "home/user_is_no_employee", "methods": ["GET", "HEAD"] }, "home.user_is_no_customer": { "uri": "home/user_is_no_customer", "methods": ["GET", "HEAD"] }, "home.invalid_signature": { "uri": "home/invalid_signature", "methods": ["GET", "HEAD"] }, "home.userlist": { "uri": "home/users", "methods": ["GET", "HEAD"] }, "home.user.show": { "uri": "home/users/show/{name}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["name", "id"] }, "home.privacy": { "uri": "home/privacy", "methods": ["GET", "HEAD"] }, "mfx.changelog": { "uri": "changelog", "methods": ["GET", "HEAD"] }, "mfx.changelog.old": { "uri": "changelog_old", "methods": ["GET", "HEAD"] }, "home.projects.mfx": { "uri": "home/projects", "methods": ["GET", "HEAD"] }, "home.images.cat.mfx": { "uri": "home/images", "methods": ["GET", "HEAD"] }, "home.images.mfx": { "uri": "home/images/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.people.mfx": { "uri": "home/people", "methods": ["GET", "HEAD"] }, "home.privacy.mfx": { "uri": "home/privacy_info", "methods": ["GET", "HEAD"] }, "home.infos.mfx": { "uri": "home/infos", "methods": ["GET", "HEAD"] }, "home.infos.show.mfx": { "uri": "home/infos/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.powered.show.mfx": { "uri": "powered-by-mcsl", "methods": ["GET", "HEAD"] }, "home.contacts.mfx": { "uri": "contacts_mfx", "methods": ["GET", "HEAD"] }, "api.table-columns": { "uri": "api/table-columns/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "home.contacts": { "uri": "home/contacts", "methods": ["GET", "HEAD"] }, "user.twofactor.enable": { "uri": "user/twofactor/enable", "methods": ["POST"] }, "user.twofactor.disable": { "uri": "user/twofactor/disable", "methods": ["POST"] }, "images.copyleft": { "uri": "copyleft/images", "methods": ["GET", "HEAD"] }, "mfx.getvotez": { "uri": "api/getVotez", "methods": ["GET", "HEAD"] }, "GetRights": { "uri": "api/user/rights/des/{table}/{right}", "methods": ["GET", "HEAD"], "parameters": ["table", "right"] }, "allRights": { "uri": "api/user/rights/des-all/{right}", "methods": ["GET", "HEAD"], "parameters": ["right"] }, "tables.noview": { "uri": "no-rights", "methods": ["GET", "HEAD"] }, "GetAuth": { "uri": "GetAuth", "methods": ["GET", "HEAD"] }, "api.getRating": { "uri": "api/GetRating/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "admin.users_rights.get": { "uri": "admin/user-rights/get", "methods": ["GET", "HEAD"] }, "two-factor.setup": { "uri": "two-factor/setup", "methods": ["POST"] }, "two-factor.confirm_alt": { "uri": "two-factor/confirm", "methods": ["POST"] }, "admin.users_rights": { "uri": "admin/User_Rights", "methods": ["GET", "HEAD"] }, "admin.GetSRights": { "uri": "api/GetSRights", "methods": ["GET", "HEAD"] }, "admin.users_rights.save": { "uri": "api/admin/user-rights/save", "methods": ["POST"] }, "getSlug": { "uri": "api/getSlug/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "ColumnFetcher": { "uri": "namebindings", "methods": ["GET", "HEAD"] }, "upload.image": { "uri": "upload-image/{table}/{isw?}", "methods": ["POST"], "parameters": ["table", "isw"] }, "upload.file": { "uri": "upload-file/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.ofile": { "uri": "upload-ofile/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.gen": { "uri": "upload-image_alt/{table}/{isw?}/{oripath?}", "methods": ["POST"], "parameters": ["table", "isw", "oripath"] }, "GetUserNull": { "uri": "GetUserNull", "methods": ["GET", "HEAD"] }, "save.image": { "uri": "save-image/{table}", "methods": ["POST"], "parameters": ["table"] }, "comments.fetch": { "uri": "comments/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "GetTableForm": { "uri": "tables/form-data/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "pb": { "uri": "pb", "methods": ["GET", "HEAD"] }, "devmod": { "uri": "devmod", "methods": ["GET", "HEAD"] }, "getnickfromcomments": { "uri": "get-nick-from-comments", "methods": ["GET", "HEAD"] }, "toggle.pub": { "uri": "toggle-pub", "methods": ["POST"] }, "tables.create-table": { "uri": "tables/{table}/create", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "comments.store": { "uri": "comments/store/{table}/{id}", "methods": ["POST"], "parameters": ["table", "id"] }, "GetTablesPosi": { "uri": "api/admin_table_positions", "methods": ["GET", "HEAD"] }, "applicationswitch": { "uri": "applicationswitch", "methods": ["GET", "HEAD"] }, "AddUserAI": { "uri": "api/AddUserAI/{val}", "methods": ["POST"], "parameters": ["val"] }, "admin.dashboard": { "uri": "admin/dashboard", "methods": ["GET", "HEAD"] }, "gen.sitemap": { "uri": "sitemap-generator", "methods": ["GET", "HEAD"] }, "admin.kontakte": { "uri": "admin/Kontakte", "methods": ["GET", "HEAD"] }, "admin.fonts": { "uri": "fonts", "methods": ["GET", "HEAD"] }, "del.uright.function": { "uri": "api/del/function/userrights/{xkis}", "methods": ["DELETE"], "parameters": ["xkis"] }, "gen.actlog": { "uri": "api/activity-log", "methods": ["GET", "HEAD"] }, "act.log.save": { "uri": "api/activity-log", "methods": ["POST"] }, "logs.check": { "uri": "api/chkcom_log/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.actlog": { "uri": "admin/ActLog", "methods": ["GET", "HEAD"] }, "api.get.firstdump": { "uri": "api/getGitDump/{dom?}/{usdis?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "usdis"] }, "api.get.after": { "uri": "api/saveAlt/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "api.showgit": { "uri": "admin/githubdb", "methods": ["GET", "HEAD"] }, "remlogg": { "uri": "api/remlog/{id}", "methods": ["DELETE"], "parameters": ["id"] }, "admin.getunused": { "uri": "admin/get_unused_imgz/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "admin.hackinglog": { "uri": "admin/HackingLog", "methods": ["GET", "HEAD"] }, "admin.CSVImport": { "uri": "api/contacts/import", "methods": ["POST"] }, "GetGenTables": { "uri": "api/getgentables/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "contacts.import.preview": { "uri": "contacts/import-preview", "methods": ["POST"] }, "admin.contacts.updateGroup": { "uri": "admin/contacts/{contact}/group", "methods": ["PUT"], "parameters": ["contact"], "bindings": { "contact": "id" } }, "GetTableOpt": { "uri": "tables/sort-data/{name}", "methods": ["GET", "HEAD"], "parameters": ["name"] }, "zip.images": { "uri": "admin/zip-images/{dom?}", "methods": ["POST"], "parameters": ["dom"] }, "rem.images": { "uri": "admin/removeFiles", "methods": ["POST"] }, "SQL.index": { "uri": "admin/SQLUpdate", "methods": ["GET", "HEAD"] }, "get.db.tables": { "uri": "api/admin-tables", "methods": ["GET", "HEAD"] }, "admin.ausgaben": { "uri": "admin/Ausgaben", "methods": ["GET", "HEAD"] }, "usconfi": { "uri": "userx/update-config/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "dboard.data": { "uri": "dboard/data/{dom?}/{month?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "month"] }, "stats": { "uri": "admin/Statistics", "methods": ["GET", "HEAD"] }, "store.mcslpoints": { "uri": "get_MCSL_Points_Preniums", "methods": ["GET", "HEAD"] }, "send.mcslpoints": { "uri": "SubmitPremiums/{users_id}/{img_id}", "methods": ["GET", "HEAD"], "parameters": ["users_id", "img_id"] }, "get.bash.rights": { "uri": "api/user/batch-rights", "methods": ["POST"] }, "comments.check": { "uri": "api/chkcom/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.contacts": { "uri": "api/contacts", "methods": ["GET", "HEAD"] }, "created.at": { "uri": "api/created-at", "methods": ["GET", "HEAD"] }, "GetCats": { "uri": "api/GetCat/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "save-order": { "uri": "api/save-order/{table}", "methods": ["POST"], "parameters": ["table"] }, "pm.index": { "uri": "pm/index/{tab}", "methods": ["GET", "HEAD"], "parameters": ["tab"] }, "pm.save": { "uri": "pm/save", "methods": ["POST"] }, "admin.pm.check": { "uri": "admin/pm/check/{id}", "methods": ["POST"], "parameters": ["id"] }, "admin.pm.mark": { "uri": "admin/pm/mark", "methods": ["POST"] }, "admin.pm.delete": { "uri": "admin/pm/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.pm.delmore": { "uri": "admin/pm/delmore", "methods": ["POST"] }, "admin.usconf.save": { "uri": "admin/UsConf/save", "methods": ["PUT"] }, "/api-get-image-url": { "uri": "api/images/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "destroy.comments": { "uri": "comments/delete/{comment_id}", "methods": ["DELETE"], "parameters": ["comment_id"] }, "save-json-gallery": { "uri": "api/save-json", "methods": ["POST"] }, "save-dirsave": { "uri": "api/saveFolder", "methods": ["POST"] }, "remove.img": { "uri": "api/del_image/{column}/{folder}/{posi}", "methods": ["POST"], "parameters": ["column", "folder", "posi"] }, "mfx.getstyles": { "uri": "api/tailwind-colors/{subdomain}", "methods": ["GET", "HEAD"], "parameters": ["subdomain"] }, "comments.check.done": { "uri": "api/getCheckedBatch", "methods": ["POST"] }, "admin.laravel_log": { "uri": "admin/laravel_log", "methods": ["GET", "HEAD"] }, "admin.handbook": { "uri": "admin/handbook", "methods": ["GET", "HEAD"] }, "admin.blog.index": { "uri": "admin/blogs/index", "methods": ["GET", "HEAD"] }, "admin.blog.create": { "uri": "admin/blogs/create", "methods": ["GET", "HEAD"] }, "admin.blog.store": { "uri": "admin/blogs/store", "methods": ["POST"] }, "admin.blog.edit": { "uri": "admin/blogs/{blog}/edit", "methods": ["GET", "HEAD"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.blog.update": { "uri": "admin/blogs/{blog}", "methods": ["PUT"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.tables.store": { "uri": "admin/tables/store/{table}", "methods": ["POST"], "parameters": ["table"] }, "admin.tables.copy": { "uri": "admin/tables/copy/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "admin.tables.create": { "uri": "admin/tables/create/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.tables.index": { "uri": "admin/tables", "methods": ["GET", "HEAD"] }, "admin.tables.show": { "uri": "admin/tables/{table}/show", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "pw.form": { "uri": "tables/pwform", "methods": ["GET", "HEAD"] }, "pw.print": { "uri": "tables/pwprint", "methods": ["POST"] }, "admin.tables.edit": { "uri": "admin/tables/edit/{id}/{table}", "methods": ["GET", "HEAD"], "parameters": ["id", "table"] }, "admin.tables.delete": { "uri": "admin/tables/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.table.update": { "uri": "admin/tables/update/{table}/{id?}", "methods": ["POST"], "parameters": ["table", "id"] }, "admin.mailcenter": { "uri": "admin/email", "methods": ["GET", "HEAD"] }, "admin.mailprev": { "uri": "email/preview", "methods": ["POST"] }, "admin.mail.save": { "uri": "email/save", "methods": ["POST"] }, "admin.email.signatur.save": { "uri": "email/signatur/save", "methods": ["POST"] }, "admin.mail.send": { "uri": "email/send", "methods": ["POST"] }, "admin.mail.sended": { "uri": "email/sended", "methods": ["GET", "HEAD"] }, "admin.blog.delete": { "uri": "admin/blogs/{blog}", "methods": ["DELETE"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.redirect.route": { "uri": "admin", "methods": ["GET", "HEAD"] }, "hasCreated": { "uri": "hasCreated/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.profile": { "uri": "admin/profile", "methods": ["GET", "HEAD"] }, "admin.api_tokens.index": { "uri": "admin/api_tokens", "methods": ["GET", "HEAD"] }, "employee.dashboard": { "uri": "employee/dashboard", "methods": ["GET", "HEAD"] }, "customer.dashboard": { "uri": "home/dashboard", "methods": ["GET", "HEAD"] }, "GetTableEnum": { "uri": "tables/sort-enum/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "ArtAct": { "uri": "act-category/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "toggle.darkmode": { "uri": "toggle-dark-mode", "methods": ["POST"] }, "GetTableItemScope": { "uri": "tables/sort-enumis/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "home": { "uri": "home", "methods": ["GET", "HEAD"] } } };
+const Ziggy = { "url": "http://ab.test.mcs", "port": null, "defaults": {}, "routes": { "debugbar.openhandler": { "uri": "_debugbar/open", "methods": ["GET", "HEAD"] }, "debugbar.clockwork": { "uri": "_debugbar/clockwork/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "debugbar.assets.css": { "uri": "_debugbar/assets/stylesheets", "methods": ["GET", "HEAD"] }, "debugbar.assets.js": { "uri": "_debugbar/assets/javascript", "methods": ["GET", "HEAD"] }, "debugbar.cache.delete": { "uri": "_debugbar/cache/{key}/{tags?}", "methods": ["DELETE"], "parameters": ["key", "tags"] }, "debugbar.queries.explain": { "uri": "_debugbar/queries/explain", "methods": ["POST"] }, "laravel-cookie-consent.script-utils": { "uri": "laravel-cookie-consent/script-utils", "methods": ["GET", "HEAD"] }, "login": { "uri": "login", "methods": ["GET", "HEAD"] }, "logout": { "uri": "logout", "methods": ["POST"] }, "password.request": { "uri": "forgot-password", "methods": ["GET", "HEAD"] }, "password.reset": { "uri": "reset-password/{token}", "methods": ["GET", "HEAD"], "parameters": ["token"] }, "password.email": { "uri": "forgot-password", "methods": ["POST"] }, "password.update": { "uri": "reset-password", "methods": ["POST"] }, "register": { "uri": "register", "methods": ["GET", "HEAD"] }, "register.store": { "uri": "register", "methods": ["POST"] }, "verification.notice": { "uri": "email/verify", "methods": ["GET", "HEAD"] }, "verification.verify": { "uri": "email/verify/{id}/{hash}", "methods": ["GET", "HEAD"], "parameters": ["id", "hash"] }, "verification.send": { "uri": "email/verification-notification", "methods": ["POST"] }, "user-profile-information.update": { "uri": "user/profile-information", "methods": ["PUT"] }, "user-password.update": { "uri": "user/password", "methods": ["PUT"] }, "password.confirm": { "uri": "user/confirm-password", "methods": ["GET", "HEAD"] }, "password.confirmation": { "uri": "user/confirmed-password-status", "methods": ["GET", "HEAD"] }, "password.confirm.store": { "uri": "user/confirm-password", "methods": ["POST"] }, "two-factor.login": { "uri": "two-factor-challenge", "methods": ["GET", "HEAD"] }, "two-factor.login.post": { "uri": "two-factor-challenge", "methods": ["POST"] }, "two-factor.enable": { "uri": "user/two-factor-authentication", "methods": ["POST"] }, "two-factor.confirm": { "uri": "user/confirmed-two-factor-authentication", "methods": ["POST"] }, "two-factor.disable": { "uri": "user/two-factor-authentication", "methods": ["DELETE"] }, "two-factor.qr-code": { "uri": "user/two-factor-qr-code", "methods": ["GET", "HEAD"] }, "two-factor.secret-key": { "uri": "user/two-factor-secret-key", "methods": ["GET", "HEAD"] }, "two-factor.recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["GET", "HEAD"] }, "two-factor.regenerate-recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["POST"] }, "terms.show": { "uri": "terms-of-service", "methods": ["GET", "HEAD"] }, "policy.show": { "uri": "privacy-policy", "methods": ["GET", "HEAD"] }, "profile.show": { "uri": "user/profile", "methods": ["GET", "HEAD"] }, "other-browser-sessions.destroy": { "uri": "user/other-browser-sessions", "methods": ["DELETE"] }, "current-user-photo.destroy": { "uri": "user/profile-photo", "methods": ["DELETE"] }, "current-user.destroy": { "uri": "user", "methods": ["DELETE"] }, "api-tokens.index": { "uri": "user/api-tokens", "methods": ["GET", "HEAD"] }, "api-tokens.store": { "uri": "user/api-tokens", "methods": ["POST"] }, "api-tokens.update": { "uri": "user/api-tokens/{token}", "methods": ["PUT"], "parameters": ["token"] }, "api-tokens.destroy": { "uri": "user/api-tokens/{token}", "methods": ["DELETE"], "parameters": ["token"] }, "sanctum.csrf-cookie": { "uri": "sanctum/csrf-cookie", "methods": ["GET", "HEAD"] }, "ignition.healthCheck": { "uri": "_ignition/health-check", "methods": ["GET", "HEAD"] }, "ignition.executeSolution": { "uri": "_ignition/execute-solution", "methods": ["POST"] }, "ignition.updateConfig": { "uri": "_ignition/update-config", "methods": ["POST"] }, "cookieconsent.script": { "uri": "cookie-consent/script", "methods": ["GET", "HEAD"] }, "cookieconsent.accept.all": { "uri": "cookie-consent/accept-all", "methods": ["POST"] }, "cookieconsent.accept.essentials": { "uri": "cookie-consent/accept-essentials", "methods": ["POST"] }, "cookieconsent.accept.configuration": { "uri": "cookie-consent/configure", "methods": ["POST"] }, "cookieconsent.reset": { "uri": "cookie-consent/reset", "methods": ["POST"] }, "admin.add.func": { "uri": "api/AddFunc", "methods": ["POST"] }, "countpixel": { "uri": "countpixel/{url}/{route}/{page?}", "methods": ["GET", "HEAD"], "parameters": ["url", "route", "page"] }, "api.mcslpoints": { "uri": "api/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "remove.temp": { "uri": "api/delTempz/{path}", "methods": ["GET", "HEAD"], "parameters": ["path"] }, "ggle.login": { "uri": "auth/google", "methods": ["GET", "HEAD"] }, "ri": { "uri": "ri", "methods": ["GET", "HEAD"] }, "get.help": { "uri": "api/gethelp/{slug}/{table}", "methods": ["GET", "HEAD"], "parameters": ["slug", "table"] }, "auth.nickname": { "uri": "auth/nickname", "methods": ["GET", "HEAD"] }, "admin.mcslpoints": { "uri": "admin/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "GetRights_all": { "uri": "api/user/rights", "methods": ["GET", "HEAD"] }, "home.imprint.gen": { "uri": "home/impressum", "methods": ["GET", "HEAD"] }, "home.index": { "uri": "/", "methods": ["GET", "HEAD"] }, "home.spruch": { "uri": "api/spruch-des-monats", "methods": ["GET", "HEAD"] }, "home.lostnfound": { "uri": "lostnfound", "methods": ["GET", "HEAD"] }, "home.privacy.dag": { "uri": "privacy", "methods": ["GET", "HEAD"] }, "home.ai.dag": { "uri": "ai", "methods": ["GET", "HEAD"] }, "home.contacts.dag": { "uri": "contacts", "methods": ["GET", "HEAD"] }, "home.links": { "uri": "links", "methods": ["GET", "HEAD"] }, "home.visit": { "uri": "visitcard", "methods": ["GET", "HEAD"] }, "home.publication": { "uri": "publikationen", "methods": ["GET", "HEAD"] }, "home.imprint.chh": { "uri": "imprint", "methods": ["GET", "HEAD"] }, "user-profile-information.update_alt": { "uri": "user/profile", "methods": ["PUT"] }, "save.shp": { "uri": "save/shortpoems", "methods": ["POST"] }, "profile.photo.get": { "uri": "profile/photo", "methods": ["GET", "HEAD"] }, "mail.subscribe_newsl": { "uri": "newsl_subscribe", "methods": ["POST"] }, "mail.unsubscribe_newsl": { "uri": "unsubscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "mail.savenewsletter": { "uri": "mail/subscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "home.ai": { "uri": "home/ai", "methods": ["GET", "HEAD"] }, "mcs.points": { "uri": "about/mcs-points", "methods": ["GET", "HEAD"] }, "dashboard": { "uri": "dashboard", "methods": ["GET", "HEAD"] }, "newsl.to.mcsp": { "uri": "newslToMCSLPoints/{uhash?}/{comphash?}/{email?}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "comphash", "email"] }, "personal.update": { "uri": "personal_update", "methods": ["POST"] }, "home.qrcodah": { "uri": "home/QRCodaH", "methods": ["GET", "HEAD"] }, "home.about": { "uri": "home/aboutme", "methods": ["GET", "HEAD"] }, "home.imprint": { "uri": "home/imprint", "methods": ["GET", "HEAD"] }, "home.terms": { "uri": "home/terms", "methods": ["GET", "HEAD"] }, "home.images.gallery": { "uri": "home/show/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.gallery.search": { "uri": "home/search/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.index": { "uri": "home/pictures", "methods": ["GET", "HEAD"] }, "home.shortpoems": { "uri": "home/shortpoems", "methods": ["GET", "HEAD"] }, "home.didyouknow": { "uri": "home/didyouknow", "methods": ["GET", "HEAD"] }, "home.blog.index": { "uri": "blogs", "methods": ["GET", "HEAD"] }, "home.blog.show": { "uri": "blogs/show/{autoslug}", "methods": ["GET", "HEAD"], "parameters": ["autoslug"] }, "home.no_application_found": { "uri": "home/no_application_found", "methods": ["GET", "HEAD"] }, "home.user_is_no_admin": { "uri": "home/user_is_no_admin", "methods": ["GET", "HEAD"] }, "home.user_is_no_employee": { "uri": "home/user_is_no_employee", "methods": ["GET", "HEAD"] }, "home.user_is_no_customer": { "uri": "home/user_is_no_customer", "methods": ["GET", "HEAD"] }, "home.invalid_signature": { "uri": "home/invalid_signature", "methods": ["GET", "HEAD"] }, "home.userlist": { "uri": "home/users", "methods": ["GET", "HEAD"] }, "home.user.show": { "uri": "home/users/show/{name}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["name", "id"] }, "home.privacy": { "uri": "home/privacy", "methods": ["GET", "HEAD"] }, "mfx.changelog": { "uri": "changelog", "methods": ["GET", "HEAD"] }, "mfx.changelog.old": { "uri": "changelog_old", "methods": ["GET", "HEAD"] }, "home.projects.mfx": { "uri": "home/projects", "methods": ["GET", "HEAD"] }, "home.images.cat.mfx": { "uri": "home/images", "methods": ["GET", "HEAD"] }, "home.images.mfx": { "uri": "home/images/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.people.mfx": { "uri": "home/people", "methods": ["GET", "HEAD"] }, "home.privacy.mfx": { "uri": "home/privacy_info", "methods": ["GET", "HEAD"] }, "home.infos.mfx": { "uri": "home/infos", "methods": ["GET", "HEAD"] }, "home.infos.show.mfx": { "uri": "home/infos/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.powered.show.mfx": { "uri": "powered-by-mcsl", "methods": ["GET", "HEAD"] }, "home.contacts.mfx": { "uri": "contacts_mfx", "methods": ["GET", "HEAD"] }, "api.table-columns": { "uri": "api/table-columns/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "home.contacts": { "uri": "home/contacts", "methods": ["GET", "HEAD"] }, "user.twofactor.enable": { "uri": "user/twofactor/enable", "methods": ["POST"] }, "user.twofactor.disable": { "uri": "user/twofactor/disable", "methods": ["POST"] }, "images.copyleft": { "uri": "copyleft/images", "methods": ["GET", "HEAD"] }, "mfx.getvotez": { "uri": "api/getVotez", "methods": ["GET", "HEAD"] }, "GetRights": { "uri": "api/user/rights/des/{table}/{right}", "methods": ["GET", "HEAD"], "parameters": ["table", "right"] }, "allRights": { "uri": "api/user/rights/des-all/{right}", "methods": ["GET", "HEAD"], "parameters": ["right"] }, "tables.noview": { "uri": "no-rights", "methods": ["GET", "HEAD"] }, "GetAuth": { "uri": "GetAuth", "methods": ["GET", "HEAD"] }, "api.getRating": { "uri": "api/GetRating/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "admin.users_rights.get": { "uri": "admin/user-rights/get", "methods": ["GET", "HEAD"] }, "two-factor.setup": { "uri": "two-factor/setup", "methods": ["POST"] }, "two-factor.confirm_alt": { "uri": "two-factor/confirm", "methods": ["POST"] }, "admin.users_rights": { "uri": "admin/User_Rights", "methods": ["GET", "HEAD"] }, "admin.GetSRights": { "uri": "api/GetSRights", "methods": ["GET", "HEAD"] }, "admin.users_rights.save": { "uri": "api/admin/user-rights/save", "methods": ["POST"] }, "getSlug": { "uri": "api/getSlug/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "ColumnFetcher": { "uri": "namebindings", "methods": ["GET", "HEAD"] }, "upload.image": { "uri": "upload-image/{table}/{isw?}", "methods": ["POST"], "parameters": ["table", "isw"] }, "upload.file": { "uri": "upload-file/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.ofile": { "uri": "upload-ofile/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.gen": { "uri": "upload-image_alt/{table}/{isw?}/{oripath?}", "methods": ["POST"], "parameters": ["table", "isw", "oripath"] }, "GetUserNull": { "uri": "GetUserNull", "methods": ["GET", "HEAD"] }, "save.image": { "uri": "save-image/{table}", "methods": ["POST"], "parameters": ["table"] }, "comments.fetch": { "uri": "comments/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "GetTableForm": { "uri": "tables/form-data/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "pb": { "uri": "pb", "methods": ["GET", "HEAD"] }, "devmod": { "uri": "devmod", "methods": ["GET", "HEAD"] }, "getnickfromcomments": { "uri": "get-nick-from-comments", "methods": ["GET", "HEAD"] }, "toggle.pub": { "uri": "toggle-pub", "methods": ["POST"] }, "tables.create-table": { "uri": "tables/{table}/create", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "comments.store": { "uri": "comments/store/{table}/{id}", "methods": ["POST"], "parameters": ["table", "id"] }, "GetTablesPosi": { "uri": "api/admin_table_positions", "methods": ["GET", "HEAD"] }, "applicationswitch": { "uri": "applicationswitch", "methods": ["GET", "HEAD"] }, "AddUserAI": { "uri": "api/AddUserAI/{val}", "methods": ["POST"], "parameters": ["val"] }, "admin.dashboard": { "uri": "admin/dashboard", "methods": ["GET", "HEAD"] }, "gen.sitemap": { "uri": "sitemap-generator", "methods": ["GET", "HEAD"] }, "admin.kontakte": { "uri": "admin/Kontakte", "methods": ["GET", "HEAD"] }, "admin.fonts": { "uri": "fonts", "methods": ["GET", "HEAD"] }, "del.uright.function": { "uri": "api/del/function/userrights/{xkis}", "methods": ["DELETE"], "parameters": ["xkis"] }, "gen.actlog": { "uri": "api/activity-log", "methods": ["GET", "HEAD"] }, "act.log.save": { "uri": "api/activity-log", "methods": ["POST"] }, "logs.check": { "uri": "api/chkcom_log/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.actlog": { "uri": "admin/ActLog", "methods": ["GET", "HEAD"] }, "api.get.firstdump": { "uri": "api/getGitDump/{dom?}/{usdis?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "usdis"] }, "api.get.after": { "uri": "api/saveAlt/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "api.showgit": { "uri": "admin/githubdb", "methods": ["GET", "HEAD"] }, "remlogg": { "uri": "api/remlog/{id}", "methods": ["DELETE"], "parameters": ["id"] }, "admin.getunused": { "uri": "admin/get_unused_imgz/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "admin.hackinglog": { "uri": "admin/HackingLog", "methods": ["GET", "HEAD"] }, "admin.CSVImport": { "uri": "api/contacts/import", "methods": ["POST"] }, "GetGenTables": { "uri": "api/getgentables/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "contacts.import.preview": { "uri": "contacts/import-preview", "methods": ["POST"] }, "admin.contacts.updateGroup": { "uri": "admin/contacts/{contact}/group", "methods": ["PUT"], "parameters": ["contact"], "bindings": { "contact": "id" } }, "GetTableOpt": { "uri": "tables/sort-data/{name}", "methods": ["GET", "HEAD"], "parameters": ["name"] }, "zip.images": { "uri": "admin/zip-images/{dom?}", "methods": ["POST"], "parameters": ["dom"] }, "rem.images": { "uri": "admin/removeFiles", "methods": ["POST"] }, "SQL.index": { "uri": "admin/SQLUpdate", "methods": ["GET", "HEAD"] }, "get.db.tables": { "uri": "api/admin-tables", "methods": ["GET", "HEAD"] }, "admin.ausgaben": { "uri": "admin/Ausgaben", "methods": ["GET", "HEAD"] }, "usconfi": { "uri": "userx/update-config/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "dboard.data": { "uri": "dboard/data/{dom?}/{month?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "month"] }, "stats": { "uri": "admin/Statistics", "methods": ["GET", "HEAD"] }, "store.mcslpoints": { "uri": "get_MCSL_Points_Preniums", "methods": ["GET", "HEAD"] }, "send.mcslpoints": { "uri": "SubmitPremiums/{users_id}/{img_id}", "methods": ["GET", "HEAD"], "parameters": ["users_id", "img_id"] }, "get.bash.rights": { "uri": "api/user/batch-rights", "methods": ["POST"] }, "comments.check": { "uri": "api/chkcom/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "SetComPub": { "uri": "api/set-comments-checked", "methods": ["POST"] }, "admin.contacts": { "uri": "api/contacts", "methods": ["GET", "HEAD"] }, "created.at": { "uri": "api/created-at", "methods": ["GET", "HEAD"] }, "GetCats": { "uri": "api/GetCat/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "save-order": { "uri": "api/save-order/{table}", "methods": ["POST"], "parameters": ["table"] }, "pm.index": { "uri": "pm/index/{tab}", "methods": ["GET", "HEAD"], "parameters": ["tab"] }, "pm.save": { "uri": "pm/save", "methods": ["POST"] }, "admin.pm.check": { "uri": "admin/pm/check/{id}", "methods": ["POST"], "parameters": ["id"] }, "admin.pm.mark": { "uri": "admin/pm/mark", "methods": ["POST"] }, "admin.pm.delete": { "uri": "admin/pm/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.pm.delmore": { "uri": "admin/pm/delmore", "methods": ["POST"] }, "admin.usconf.save": { "uri": "admin/UsConf/save", "methods": ["PUT"] }, "/api-get-image-url": { "uri": "api/images/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "destroy.comments": { "uri": "comments/delete/{comment_id}", "methods": ["DELETE"], "parameters": ["comment_id"] }, "save-json-gallery": { "uri": "api/save-json", "methods": ["POST"] }, "save-dirsave": { "uri": "api/saveFolder", "methods": ["POST"] }, "remove.img": { "uri": "api/del_image/{column}/{folder}/{posi}", "methods": ["POST"], "parameters": ["column", "folder", "posi"] }, "mfx.getstyles": { "uri": "api/tailwind-colors/{subdomain}", "methods": ["GET", "HEAD"], "parameters": ["subdomain"] }, "comments.check.done": { "uri": "api/getCheckedBatch", "methods": ["POST"] }, "admin.laravel_log": { "uri": "admin/laravel_log", "methods": ["GET", "HEAD"] }, "admin.handbook": { "uri": "admin/handbook", "methods": ["GET", "HEAD"] }, "admin.blog.index": { "uri": "admin/blogs/index", "methods": ["GET", "HEAD"] }, "admin.blog.create": { "uri": "admin/blogs/create", "methods": ["GET", "HEAD"] }, "admin.blog.store": { "uri": "admin/blogs/store", "methods": ["POST"] }, "admin.blog.edit": { "uri": "admin/blogs/{blog}/edit", "methods": ["GET", "HEAD"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.blog.update": { "uri": "admin/blogs/{blog}", "methods": ["PUT"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.tables.store": { "uri": "admin/tables/store/{table}", "methods": ["POST"], "parameters": ["table"] }, "admin.tables.copy": { "uri": "admin/tables/copy/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "admin.tables.create": { "uri": "admin/tables/create/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.tables.index": { "uri": "admin/tables", "methods": ["GET", "HEAD"] }, "admin.tables.show": { "uri": "admin/tables/{table}/show", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "pw.form": { "uri": "tables/pwform", "methods": ["GET", "HEAD"] }, "pw.print": { "uri": "tables/pwprint", "methods": ["POST"] }, "admin.tables.edit": { "uri": "admin/tables/edit/{id}/{table}", "methods": ["GET", "HEAD"], "parameters": ["id", "table"] }, "admin.tables.delete": { "uri": "admin/tables/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.table.update": { "uri": "admin/tables/update/{table}/{id?}", "methods": ["POST"], "parameters": ["table", "id"] }, "admin.mailcenter": { "uri": "admin/email", "methods": ["GET", "HEAD"] }, "admin.mailprev": { "uri": "email/preview", "methods": ["POST"] }, "admin.mail.save": { "uri": "email/save", "methods": ["POST"] }, "admin.email.signatur.save": { "uri": "email/signatur/save", "methods": ["POST"] }, "admin.mail.send": { "uri": "email/send", "methods": ["POST"] }, "admin.mail.sended": { "uri": "email/sended", "methods": ["GET", "HEAD"] }, "admin.blog.delete": { "uri": "admin/blogs/{blog}", "methods": ["DELETE"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.redirect.route": { "uri": "admin", "methods": ["GET", "HEAD"] }, "hasCreated": { "uri": "hasCreated/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.profile": { "uri": "admin/profile", "methods": ["GET", "HEAD"] }, "admin.api_tokens.index": { "uri": "admin/api_tokens", "methods": ["GET", "HEAD"] }, "employee.dashboard": { "uri": "employee/dashboard", "methods": ["GET", "HEAD"] }, "customer.dashboard": { "uri": "home/dashboard", "methods": ["GET", "HEAD"] }, "GetTableEnum": { "uri": "tables/sort-enum/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "ArtAct": { "uri": "act-category/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "toggle.darkmode": { "uri": "toggle-dark-mode", "methods": ["POST"] }, "GetTableItemScope": { "uri": "tables/sort-enumis/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "home": { "uri": "home", "methods": ["GET", "HEAD"] } } };
 if (typeof window !== "undefined" && typeof window.Ziggy !== "undefined") {
   Object.assign(Ziggy.routes, window.Ziggy.routes);
 }

@@ -116,6 +116,7 @@
     import pickBy from "lodash/pickBy";
     import throttle from "lodash/throttle";
     // import { hasRight } from "@/utils/rights";
+    import axios from "axios";
     import { Inertia } from '@inertiajs/inertia'
     //import { safeInertiaGet,safeInertiaVisit } from '@/utils/inertia';
 

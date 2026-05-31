@@ -92,6 +92,7 @@
                             font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"
                     >
                     {{ ucf(data.datarow.admin_table) }}
+
                     </span>
                 </CreatedAt>
                 </td>
@@ -163,12 +164,18 @@
 
                 <!-- Check -->
                 <td class="np-dl-td-normal" v-if="table === 'comments'">
-                <span v-if="Number(checkedStatus?.[data.datarow.id]) === 1" style="font-size:24px;">✅</span>
+                <span
+                    v-if="checkedStatus[String(data.datarow.id)] == 1"
+                    style="font-size:24px;">
+                    ✅
+                </span>
                 <span v-else class="bg-[rgb(50,174,179)] rounded-full w-[24px] h-[24px] px-[3px] text-white">O</span>
-                </td>
+                {{ checkedStatus[String(data.datarow.id)] == 1 }}
+            </td>
             </template>
             </list-container>
             <div class="flex items-center justify-center flex-wrap mt-6 -mb-1 text-xs md:text-base bg-transparent text-layout-sun-700 dark:text-layout-night-700">
+
 
 
     </div>
@@ -176,255 +183,880 @@
     </layout>
     </template>
 
-    <script>
-    import { defineComponent } from "vue";
-    import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
-    import CreatedAt from "@/Application/Components/Form/CreatedAt.vue";
-    import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
-    import ListContainer from "@/Application/Components/Lists/ListContainer.vue";
+<script>
+import { defineComponent } from "vue";
 
-    import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-    import PublishButton from "@/Application/Components/Form/PublishButton.vue";
-    import IconStar from "@/Application/Components/Icons/IconStar.vue";
-    import { CleanTable, ucf, SD, GetSettings, rumLaut,GetProfileImagePath } from "@/helpers";
-    //import { safeInertiaGet } from '@/utils/inertia';
-    import { router } from '@inertiajs/vue3'
+import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
+import CreatedAt from "@/Application/Components/Form/CreatedAt.vue";
+import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
+import ListContainer from "@/Application/Components/Lists/ListContainer.vue";
 
-    import {route} from 'ziggy-js';
-    import Sortable from "sortablejs";
-    import axios from "axios";
+import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
+import PublishButton from "@/Application/Components/Form/PublishButton.vue";
+import IconStar from "@/Application/Components/Icons/IconStar.vue";
 
-    let table_z = CleanTable();
-    let table_alt = table_z;
-    let table = CleanTable();
+import {
+    CleanTable,
+    ucf,
+    SD,
+    GetSettings,
+    rumLaut,
+    GetProfileImagePath
+} from "@/helpers";
 
-    export default defineComponent({
-        name: "AdminTableShow",
-        components: {
+import { router } from '@inertiajs/vue3';
+
+import { route } from 'ziggy-js';
+
+import Sortable from "sortablejs";
+
+import axios from "axios";
+
+let table_z = CleanTable();
+
+let table_alt = table_z;
+
+let table = CleanTable();
+
+export default defineComponent({
+
+    name: "AdminTableShow",
+
+    components: {
+
         MetaHeader,
+
         Layout,
+
         Breadcrumb,
+
         CreatedAt,
+
         ListContainer,
+
         PublishButton,
+
         IconStar,
+    },
+
+    props: {
+
+        applicationName: {
+
+            type: String,
+
+            default:
+                "Administrator-Anwendung"
         },
-        props: {
-        applicationName: { type: String, default: "Administrator-Anwendung" },
+
         users: Object,
-        pag:[Object,Array],
-        table_alt: { type: String },
-        table_q: { type: String, default: table_alt },
-        table: { type: String, required: true },
-        startPage: { type: Boolean, default: true },
-        breadcrumbs: { type: Object, required: true },
-        additionalEntries: { type: Array, default: () => [] },
-        tableq: { type: String },
-        current: { type: String, required: true },
-        filters: { type: Object, default: () => ({}) },
-        rows: { type: [Array, Object], required: true, default: () => [] },
-        datarows: { type: [Array, String], required: true, default: () => [] },
-        itemName_des: { type: String, default: "" },
-        formData: { type: String, default: "" },
+
+        pag: [Object, Array],
+
+        table_alt: {
+
+            type: String
+        },
+
+        table_q: {
+
+            type: String,
+
+            default: table_alt
+        },
+
+        table: {
+
+            type: String,
+
+            required: true
+        },
+
+        startPage: {
+
+            type: Boolean,
+
+            default: true
+        },
+
+        breadcrumbs: {
+
+            type: Object,
+
+            required: true
+        },
+
+        additionalEntries: {
+
+            type: Array,
+
+            default: () => []
+        },
+
+        tableq: {
+
+            type: String
+        },
+
+        current: {
+
+            type: String,
+
+            required: true
+        },
+
+        filters: {
+
+            type: Object,
+
+            default: () => ({})
+        },
+
+        rows: {
+
+            type: [Array, Object],
+
+            required: true,
+
+            default: () => []
+        },
+
+        datarows: {
+
+            type: [Array, String],
+
+            required: true,
+
+            default: () => []
+        },
+
+        itemName_des: {
+
+            type: String,
+
+            default: ""
+        },
+
+        formData: {
+
+            type: String,
+
+            default: ""
+        },
+
         thirdparty: String,
-        },
-        data() {
+    },
+
+    data() {
+
         return {
-            aftsetting: this.aftSET(),
+
+            aftsetting: "",
+
             imagedesc: "Bild",
+
             searchQuery: "",
+
             ItemName: "Tabellen",
+
             tablez: this.ucf(table_z),
+
             checkedStatus: {},
+
             sortable: null,
-            table: CleanTable().toLowerCase(),
-            // tableq: CleanTable(),
+
+            table:
+                CleanTable()
+                    .toLowerCase(),
+
             settings: {},
+
             namealias: "",
+
             descalias: "",
+
             hasCreated: false,
+
             cat_on_head: "",
+
             userName: "",
+
             tablet: "Übersicht",
-            localRows: this.datarows ?? [],
+
+            localRows:
+                this.datarows ?? [],
         };
+    },
+
+    computed: {
+
+        tpart() {
+
+            if (this.thirdparty) {
+
+                return this.thirdparty[
+                    this.table
+                ];
+            }
+
+            return false;
         },
-        computed: {
-            tpart(){
-                if(this.thirdparty){
-                    return this.thirdparty[this.table];
-                }
-                return false;
-            },
+
         prename() {
-            return this.namealias[this.table] ?? "Name";
+
+            return this.namealias[
+                this.table
+            ] ?? "Name";
         },
+
         predesc() {
-            return this.descalias[this.table] ?? "Beschreibung";
+
+            return this.descalias[
+                this.table
+            ] ?? "Beschreibung";
         },
+
         table_head() {
-            return (Array.isArray(this.localRows) && this.localRows[0]?.admin_table_id) ||
-            typeof this.localRows[0]?.admin_table_id !== "undefined"
-            ? "Tabelle"
-            : "";
+
+            return (
+
+                Array.isArray(
+                    this.localRows
+                )
+
+                &&
+
+                this.localRows[0]
+                    ?.admin_table_id
+
+            )
+
+            ||
+
+            typeof this.localRows[0]
+                ?.admin_table_id
+                !== "undefined"
+
+                ? "Tabelle"
+
+                : "";
         },
+
         routeCreate() {
-            if (!this.tableq) return null;
-            return route("admin.tables.create", this.tableq);
+
+            if (!this.tableq)
+                return null;
+
+            return route(
+
+                "admin.tables.create",
+
+                this.tableq
+            );
         },
+
         showRoute() {
-            return route("admin.tables.show", table);
+
+            return route(
+
+                "admin.tables.show",
+
+                table
+            );
         },
-        },
-        watch: {
+    },
+
+    watch: {
+
         searchValue(newVal) {
-        router.get(route('admin.tables.show', this.table_q ?? ''), { search: newVal ?? '' }, { preserveState: true, replace: true });
+
+            router.get(
+
+                route(
+
+                    'admin.tables.show',
+
+                    this.table_q ?? ''
+                ),
+
+                {
+                    search:
+                        newVal ?? ''
+                },
+
+                {
+                    preserveState: true,
+
+                    replace: true
+                }
+            );
         }
-        },
+    },
 
-        async mounted() {
+    async mounted() {
 
-        this.cat_on_head = this.checkCat();
+        this.aftsetting =
+            this.aftSET();
+
+        this.cat_on_head =
+            this.checkCat();
+
         this.checkhasCreated();
-        this.settings = await GetSettings();
-        window.settings = this.settings;
+
+        this.settings =
+            await GetSettings();
+
+        window.settings =
+            this.settings;
 
         if (window.settings?.namealias) {
-            this.namealias = window.settings.namealias;
+
+            this.namealias =
+                window.settings.namealias;
         }
+
         if (window.settings?.descalias) {
-            this.descalias = window.settings.descalias;
+
+            this.descalias =
+                window.settings.descalias;
         }
 
         this.initSortable();
-        this.fetchStatus();
 
-        },
-        methods: {
-            GetProfileImagePath,
+        await this.fetchStatus();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Mark comments checked on leave/reload
+        |--------------------------------------------------------------------------
+        */
+
+        if (this.table === 'comments') {
+
+            window.addEventListener(
+
+                'beforeunload',
+
+                this.markCommentsAsChecked
+            );
+        }
+    },
+    beforeUnmount() {
+
+        if (this.table === 'comments') {
+
+            window.removeEventListener(
+
+                'beforeunload',
+
+                this.markCommentsAsChecked
+            );
+        }
+    },
+    methods: {
+
+        GetProfileImagePath,
+
         CleanTable,
+
         ucf,
+
         SD,
+
         rumLaut,
 
-        async removeItem() {
+        /*
+        |--------------------------------------------------------------------------
+        | Checked Status
+        |--------------------------------------------------------------------------
+        */
+
+        isChecked(id) {
+
+            const value =
+                this.checkedStatus?.[id];
+
+            return (
+
+                value == 1
+
+                ||
+
+                value === true
+
+                ||
+
+                value === 'true'
+            );
+        },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Mark comments checked
+        |--------------------------------------------------------------------------
+        */
+
+        async markCommentsAsChecked() {
+
+            if (
+                !this.localRows
+                ||
+                !this.localRows.length
+            ) {
+                return;
+            }
+
             try {
-            const response = await axios.get(`/admin/tables/data/${this.table}`);
-            this.localRows = response.data.rows;
-            this.localRows = [...this.localRows]; // Update erzwingen
+
+                const ids =
+                    this.localRows.map(
+                        row => row.id
+                    );
+
+                await fetch(
+
+                    '/api/set-comments-checked',
+
+                    {
+
+                        method: 'POST',
+
+                        keepalive: true,
+
+                        headers: {
+
+                            'Content-Type':
+                                'application/json',
+
+                            'X-CSRF-TOKEN':
+
+                                document
+                                    .querySelector(
+                                        'meta[name="csrf-token"]'
+                                    )
+                                    .content
+                        },
+
+                        body: JSON.stringify({
+
+                            ids: ids
+                        })
+                    }
+
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Local update
+                |--------------------------------------------------------------------------
+                */
+
+                ids.forEach(id => {
+
+                    this.checkedStatus[id] = 1;
+                });
+
             } catch (error) {
-            console.error("Fehler beim Neuladen der Tabelle:", error);
+
+                console.error(
+                    'Fehler beim Speichern:',
+                    error
+                );
             }
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Remove Item
+        |--------------------------------------------------------------------------
+        */
+
+        async removeItem() {
+
+            try {
+
+                const response =
+                    await axios.get(
+
+                        `/admin/tables/data/${this.table}`
+                    );
+
+                this.localRows =
+                    response.data.rows;
+
+                this.localRows = [
+                    ...this.localRows
+                ];
+
+            } catch (error) {
+
+                console.error(
+
+                    "Fehler beim Neuladen der Tabelle:",
+
+                    error
+                );
+            }
+        },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sortable
+        |--------------------------------------------------------------------------
+        */
 
         initSortable() {
-            const tableBody = this.$el.querySelector("tbody");
-            if (!tableBody) return;
 
-            this.sortable = Sortable.create(tableBody, {
-            animation: 150,
-            onEnd: async (evt) => {
-                const movedItem = this.localRows.splice(evt.oldIndex, 1)[0];
-                this.localRows.splice(evt.newIndex, 0, movedItem);
+            const tableBody =
+                this.$el.querySelector(
+                    "tbody"
+                );
 
-                // Vue-Update erzwingen
-                this.localRows = [...this.localRows];
+            if (!tableBody)
+                return;
 
-                // Reihenfolge speichern
-                try {
-                    await axios.post('/api/save-order/'+ CleanTable(), {
-                    rows: this.localRows.map((row, index) => ({
-                        id: row.id,
-                        position: index
-                    }))
+            this.sortable =
+                Sortable.create(
 
-                });
-                } catch (error) {
-                console.error("Fehler beim Speichern der Reihenfolge:", error);
-                }
-            },
-            });
+                    tableBody,
+
+                    {
+
+                        animation: 150,
+
+                        onEnd: async (
+                            evt
+                        ) => {
+
+                            const movedItem =
+                                this.localRows.splice(
+
+                                    evt.oldIndex,
+
+                                    1
+                                )[0];
+
+                            this.localRows.splice(
+
+                                evt.newIndex,
+
+                                0,
+
+                                movedItem
+                            );
+
+                            this.localRows = [
+                                ...this.localRows
+                            ];
+
+                            try {
+
+                                await axios.post(
+
+                                    '/api/save-order/'
+                                    + CleanTable(),
+
+                                    {
+
+                                        rows:
+                                            this.localRows.map(
+
+                                                (
+                                                    row,
+                                                    index
+                                                ) => ({
+
+                                                    id:
+                                                        row.id,
+
+                                                    position:
+                                                        index
+                                                })
+                                            )
+                                    }
+
+                                );
+
+                            } catch (error) {
+
+                                console.error(
+
+                                    "Fehler beim Speichern der Reihenfolge:",
+
+                                    error
+                                );
+                            }
+                        },
+                    }
+                );
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Aft Setting
+        |--------------------------------------------------------------------------
+        */
 
         aftSET() {
-            if (CleanTable() == "shortpoems" || CleanTable() == "didyouknow" || CleanTable() == "texts") {
-            return "Beschreibung";
+
+            if (
+
+                CleanTable()
+                    == "shortpoems"
+
+                ||
+
+                CleanTable()
+                    == "didyouknow"
+
+                ||
+
+                CleanTable()
+                    == "texts"
+            ) {
+
+                return "Beschreibung";
             }
-            if (CleanTable() == "ratings") {
-            return "Sterne";
+
+            if (
+                CleanTable()
+                    == "ratings"
+            ) {
+
+                return "Sterne";
             }
-            if (CleanTable() == "projects_sheets") {
-            return "Benutzer";
+
+            if (
+                CleanTable()
+                    == "projects_sheets"
+            ) {
+
+                return "Benutzer";
             }
+
+            return "";
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Checked Status Update
+        |--------------------------------------------------------------------------
+        */
 
         onCheckedStatusUpdate(status) {
-            //this.checkedStatus = status;
+
+            // this.checkedStatus = status;
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fetch Status
+        |--------------------------------------------------------------------------
+        */
 
         async fetchStatus() {
-            await this.$nextTick();
-            if (!this.localRows || this.localRows.length === 0) return;
-            try {
-            const response = await axios.get("/api/chkcom/");
-            this.checkedStatus = response.data.success;
-            // console.log(this.checkedStatus);
-//             console.log("response: " + JSON.stringify(response.data, null, 2));
 
+            await this.$nextTick();
+
+            if (
+                !this.localRows
+                ||
+                this.localRows.length === 0
+            ) {
+                return;
+            }
+
+            try {
+
+                const response =
+                    await axios.get(
+                        "/api/chkcom/"
+                    );
+
+                this.checkedStatus =
+                    response.data.success
+                    || {};
+
+                console.log(
+                    "CHECK STATUS:",
+                    this.checkedStatus
+                );
 
             } catch (error) {
-            console.error("Fehler beim Batch-Status laden:", error);
+
+                console.error(
+
+                    "Fehler beim Batch-Status laden:",
+
+                    error
+                );
             }
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Mix ID
+        |--------------------------------------------------------------------------
+        */
 
         getMixId(row) {
-            return this.table !== "comments" ? row.id : row.post_id;
+
+            return this.table !== "comments"
+
+                ? row.id
+
+                : row.post_id;
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Check Category
+        |--------------------------------------------------------------------------
+        */
 
         checkCat() {
+
             let rows;
-            if (typeof this.localRows === "string") {
-            try {
-                rows = JSON.parse(this.localRows);
-            } catch (e) {
-                console.error(e);
+
+            if (
+                typeof this.localRows
+                === "string"
+            ) {
+
+                try {
+
+                    rows =
+                        JSON.parse(
+                            this.localRows
+                        );
+
+                } catch (e) {
+
+                    console.error(e);
+
+                    return null;
+                }
+
+            } else if (
+
+                Array.isArray(
+                    this.localRows
+                )
+
+            ) {
+
+                rows =
+                    this.localRows;
+
+            } else if (
+
+                typeof this.localRows
+                === "object"
+
+            ) {
+
+                rows =
+                    Object.values(
+                        this.localRows
+                    );
+
+            } else {
+
                 return null;
             }
-            } else if (Array.isArray(this.localRows)) {
-            rows = this.localRows;
-            } else if (typeof this.localRows === "object") {
-            rows = Object.values(this.localRows);
-            } else {
-            return null;
-            }
-            if (!rows.length) return null;
-            const hasCategory = rows.some((row) => row?.image_categories || row?.blog_categories);
-            return hasCategory ? "Kategorie" : null;
+
+            if (!rows.length)
+                return null;
+
+            const hasCategory =
+                rows.some(
+
+                    row =>
+
+                        row
+                            ?.image_categories
+
+                        ||
+
+                        row
+                            ?.blog_categories
+                );
+
+            return hasCategory
+
+                ? "Kategorie"
+
+                : null;
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Get Checked
+        |--------------------------------------------------------------------------
+        */
 
         async getChecked(id) {
+
             try {
-            const response = await axios.get(`/api/getCheckedDone/${id}`);
-            return response.data.done === true;
+
+                const response =
+                    await axios.get(
+
+                        `/api/getCheckedDone/${id}`
+                    );
+
+                return (
+                    response.data.done
+                    === true
+                );
+
             } catch (error) {
-            console.error("Fehler beim Abrufen des Status:", error);
-            return false;
+
+                console.error(
+
+                    "Fehler beim Abrufen des Status:",
+
+                    error
+                );
+
+                return false;
             }
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | Has Created
+        |--------------------------------------------------------------------------
+        */
 
         async checkhasCreated() {
+
             try {
-            const response = await axios.get(`/hasCreated/${this.table}`);
-            this.hasCreated = response.data;
+
+                const response =
+                    await axios.get(
+
+                        `/hasCreated/${this.table}`
+                    );
+
+                this.hasCreated =
+                    response.data;
+
             } catch (error) {
-            console.error("Fehler bei hasCreated:", error);
-            this.hasCreated = false;
+
+                console.error(
+
+                    "Fehler bei hasCreated:",
+
+                    error
+                );
+
+                this.hasCreated = false;
             }
         },
-        },
-    });
-    </script>
-
+    },
+});
+</script>
     <style>
     td {
         white-space: normal;

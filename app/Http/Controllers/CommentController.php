@@ -74,7 +74,7 @@ class CommentController extends Controller
             'rating' => $request->rating,
 
             ]);
-            
+
         }
         $upd = ["created_at"=>now()];
         $updu = ["updated_at"=>now()];
@@ -307,6 +307,8 @@ public function sendmc(Request $request)
         $comment = $comment->content;
         $content = $comment;
         // $MailHelper = NEW MailHelper();
+        if (!str_contains(request()->host(), 'test.mcs'))
+        {
         Mail::to('parie@gmx.de')->send(
             (new CommentMail(
                 '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
@@ -315,6 +317,7 @@ public function sendmc(Request $request)
                 $content
             ))->from('no-reply@marblefx.net', 'MCSL Kommentare')
         );
+        }
 //         \Log::info("MAIL SENDED");
         // $MailHelper->SendMailer("parie@gmx.de","Neuer Kommentar auf www.asario.net","",'','','','newcomment',["name"=>$nick,"table"=>$table,"comment"=>$comment]);
 
@@ -450,41 +453,68 @@ return response()->json([
         }
         return response()->json(["success"=>$com]);
     }
-public function checkLogs()
+    public function checkLogs()
     {
-        $userId = Auth::id();
-
-    if (!$userId) {
-        // throw new \Exception('User not authenticated');
-    }
-    if(!Schema::hasTable("comments")){
-        return;
-    }
-    if(!Schema::hasTable("commments"))
-    {
-        return;
-    }
-    // 2. Hole alle Kommentare
-    $logs = DB::table('comments')->select('id', 'ischecked')->get();
-
-    // 3. Für jeden Kommentar prüfen und ischecked aktualisieren
-    foreach ($logs as $log) {
-
-            $com[$log->id] = $log->ischecked;
-
-        // // Update, falls Wert sich geändert hat
-        DB::table('comments')
-                ->where('ischecked', '0')
-                ->update([
-                    'ischecked' =>"1",
-                    'checked_at' => now(),
-                ]);
-
+        if (
+            !Schema::connection("mariadb")
+                ->hasTable("comments")
+        ) {
+            return response()->json([
+                "success" => []
+            ]);
         }
-        return response()->json(["success"=>$com]);
+
+        $logs = DB::connection("mariadb")
+            ->table('comments')
+            ->select('id', 'ischecked')
+            ->get();
+
+        $com = [];
+
+        foreach ($logs as $log) {
+
+            $com[$log->id] =
+                (int)$log->ischecked;
+        }
+
+        return response()->json([
+            "success" => $com
+        ]);
     }
 
+    public function setCommentsChecked(Request $request)
+    {
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
 
+        $ids =
+            $data['ids'] ?? [];
+
+        if (empty($ids)) {
+
+            return response()->json([
+
+                'success' => false
+            ]);
+        }
+
+        DB::connection("mariadb")
+            ->table('comments')
+            ->whereIn('id', $ids)
+            ->update([
+
+                'ischecked' => 1,
+
+                'checked_at' => now()
+            ]);
+
+        return response()->json([
+
+            'success' => true
+        ]);
+    }
     //     $userId = Auth::id();
     //     $user = User::with('rights')->findOrFail($userId); // load users_rights relation
     //     $userRights = $user->rights; // users_rights record
