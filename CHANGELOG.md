@@ -292,3 +292,5 @@
 ![Version](https://img.shields.io/badge/version-5.46.1-orange) Scroll to top link (#477)  
 ![Version](https://img.shields.io/badge/version-5.47.9-orange) Feature - New Font on marblefx.net (#487)  
 ![Version](https://img.shields.io/badge/version-5.48.0-orange) Hotfix - Checked Status on Comments (#488)  
+![Version](https://img.shields.io/badge/version-5.49.7-orange) Hotfix - Dark/Lightmode didn't worked (#490)  
+![Version](https://img.shields.io/badge/version-5.50.1-orange) Hotfix - Commentmail Error (#489)  
