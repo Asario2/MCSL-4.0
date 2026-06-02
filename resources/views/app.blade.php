@@ -207,7 +207,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
 
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased light">
 
     <input
         type="hidden"
@@ -391,18 +391,16 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
         hidden
         items-center
         justify-center
-        rounded-full
-        bg-blue-600
+        rounded-lg
+        bg-black
         hover:bg-blue-700
-        dark:bg-gray-900
-        dark:hover:bg-gray-800
         text-xl
         shadow-lg
         transition-all
         duration-300
         z-[9999]
     "
-    style="color:#FC9000 !important;"
+    style="color:#FFF !important; border:2px solid #fff !important;box-shadow:0px 0px 3px 2.5px Black !important;"
 >
 <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
 <svg xmlns="http://www.w3.org/2000/svg" fill='currentColor' class='w-7 h-7' viewBox="0 0 448 512"><path d="M201.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L224 173.3 54.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"/></svg>
