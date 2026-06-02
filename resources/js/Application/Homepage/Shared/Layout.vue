@@ -752,6 +752,7 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
 
             localStorage.theme = this.mode;
             }
+
             this.isOpen_Menu = false;
             },
 

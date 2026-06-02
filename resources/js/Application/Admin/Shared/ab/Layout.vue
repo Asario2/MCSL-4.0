@@ -518,6 +518,7 @@ async mounted() {
 
         changeMode(value) {
             this.mode = value;
+            
             this.isOpen = false;
             if(typeof window !== "undefined")
             {

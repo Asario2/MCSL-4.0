@@ -170,7 +170,7 @@
                     ✅
                 </span>
                 <span v-else class="bg-[rgb(50,174,179)] rounded-full w-[24px] h-[24px] px-[3px] text-white">O</span>
-                {{ checkedStatus[String(data.datarow.id)] == 1 }}
+
             </td>
             </template>
             </list-container>
