@@ -141,13 +141,13 @@ class CommentController extends Controller
         $content = $comment->content;
         // $MailHelper = NEW MailHelper();
         Mail::to('parie@gmx.de')->send(
-    (new CommentMail(
-        '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
-        'https://' . request()->getHost() . '/admin/tables/comments/show?search=' . $now,
-        $nick,
-        $content
-    ))->from('no-reply@marblefx.net', 'MCSL Kommentare')
-);
+            (new CommentMail(
+                '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
+                'https://' . request()->getHost() . '/admin/tables/comments/show?search=' . $now,
+                $nick,
+                $content
+            ))->from('no-reply@marblefx.net', 'MCSL Kommentare')
+        );
 //         \Log::info("MAIL SENDED");
         // return redirect(url()->previous() . '#comment_' . $request->postid)
         //     ->with('success', 'Kommentar erfolgreich gepostet!');
