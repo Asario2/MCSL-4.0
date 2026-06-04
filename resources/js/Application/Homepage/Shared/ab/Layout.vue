@@ -78,6 +78,13 @@
                     </template>
 
                     <button-change-mode :mode="mode" @changeMode="changeMode"></button-change-mode>
+                                   <button
+                type="button" style="background-color: #ff0000;"
+                @click="console.log('BUTTON CLICK')"
+            >
+                TEST
+            </button>
+            
                     <div class="ms-3 relative">
 
                           <Dropdown align="right" width="72"  v-if="$page.props.auth.user"  >
@@ -259,10 +266,13 @@
                 <Toast></Toast>
             </div>
 
+
             <!-- Slot für Content -->
             <div class="mt-4">
                 <slot></slot>
             </div>
+
+
             </div>
         </section>
 
@@ -274,7 +284,8 @@
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 xl:col-span-2 xl:mt-0">
                 <div class="md:grid md:grid-cols-2 md:gap-4">
                     <div class="text-center md:text-left">
-                    <h3 class="text-sm font-semibold leading-6 px-2">
+
+                        <h3 class="text-sm font-semibold leading-6 px-2">
                         <span> Webseite </span>
                     </h3>
                     <ul role="list" class="mt-6 space-y-4 list-none">
@@ -429,18 +440,27 @@
         headerUrl: this.$page?.props?.url ?? null,
         headerImage: this.$page?.props?.image ?? null,
         mode: (() => {
-            if (typeof window === "undefined") {
-                return 'dark';
-            }
 
-            const savedTheme = localStorage.getItem('theme');
+    if (typeof window === "undefined") {
+        return 'dark';
+    }
 
-            return (
-                savedTheme === 'dark' || savedTheme === 'light'
-            )
-                ? savedTheme
-                : 'dark';
-        })(),
+    let savedTheme =
+        localStorage.getItem('theme');
+
+    if (!savedTheme) {
+
+        savedTheme = 'dark';
+
+        localStorage.setItem(
+            'theme',
+            'dark'
+        );
+    }
+
+    return savedTheme;
+
+})(),
         isOpen_Menu: false,
         year: new Date().getFullYear(),
         pendingRequests: 0,
@@ -548,9 +568,9 @@
     }, 500),
     deep: true,
   },
- '$page.url'() {
-        this.applyTheme();
-    },
+//  '$page.url'() {
+//         this.applyTheme();
+//     },
 
 },
 
@@ -558,29 +578,119 @@
         GetProfileImagePath,
         SD,
         CheckTRights,
-        applyTheme() {
-            const html = document.documentElement;
 
-                const forceLight =
-                    window.location.pathname === '/login' ||
-                    window.location.pathname === '/register' ||
-                    "{{ SD() }}" === "chh";
 
-                if (forceLight) {
-                    html.classList.remove('dark');
-                    return;
-                }
+methods: {
 
-                html.classList.toggle('dark', this.mode === 'dark');
-            },
+    applyTheme() {
 
-    changeMode() {
-        this.mode = this.mode === "dark" ? "light" : "dark";
+        const html =
+            document.documentElement;
 
-        localStorage.setItem('theme', this.mode);
+        console.log(
+            "[applyTheme] mode:",
+            this.mode
+        );
+
+        console.log(
+            "[applyTheme] vorher:",
+            html.className
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Force Light
+        |--------------------------------------------------------------------------
+        */
+
+        const forceLight =
+            window.location.pathname === '/login'
+            || window.location.pathname === '/register';
+
+        if (forceLight) {
+
+            console.log(
+                "[applyTheme] forceLight aktiv"
+            );
+
+            html.classList.remove('dark');
+
+            return;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Theme anwenden
+        |--------------------------------------------------------------------------
+        */
+
+        if (this.mode === 'dark') {
+
+            console.log(
+                "[applyTheme] ADD DARK"
+            );
+
+            html.classList.add('dark');
+
+        } else {
+
+            console.log(
+                "[applyTheme] REMOVE DARK"
+            );
+
+            html.classList.remove('dark');
+        }
+
+        console.log(
+            "[applyTheme] nachher:",
+            html.className
+        );
+    },
+
+    changeMode(newMode) {
+
+        console.log(
+            "[changeMode] ALT:",
+            this.mode
+        );
+
+        console.log(
+            "[changeMode] NEU:",
+            newMode
+        );
+
+        this.mode = newMode;
+
+        localStorage.setItem(
+            'theme',
+            newMode
+        );
+
+        console.log(
+            "[changeMode] localStorage:",
+            localStorage.getItem('theme')
+        );
 
         this.applyTheme();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Nächster Tick prüfen
+        |--------------------------------------------------------------------------
+        */
+
+        this.$nextTick(() => {
+
+            console.log(
+                "[nextTick] html classes:",
+                document.documentElement.className
+            );
+        });
     },
+},
+
+
+
         setLoadingState(state) {
         this.isLoading = state;
         if(typeof window !== "undefined")

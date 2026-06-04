@@ -39,7 +39,7 @@
               <div class="flex lg:hidden">
                 <button v-on:click="toggleNavbar()" type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 focus:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800 dark:focus:text-primary-night-800" aria-label="toggle menu">
                   <icon-menu class="w-6 h-6" v-if="!isOpen_Menu"></icon-menu>
-                  <IconClose class="w-6 h-6" v-if="isOpen_Menu" />  
+                  <IconClose class="w-6 h-6" v-if="isOpen_Menu" />
                 </button>
               </div>
             </div>
@@ -218,7 +218,7 @@
           </div>
 
           <!-- Slot für Content -->
-          <div class="mt-4 dark">
+          <div class="mt-4">
             <slot></slot>
           </div>
         </div>

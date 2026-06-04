@@ -1,5 +1,5 @@
 <template>
-    <div class="dark" id="app-layout-start">
+    <div class="light" id="app-layout-start">
         <Head :title="title"></Head>
 
         <div

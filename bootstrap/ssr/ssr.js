@@ -2409,31 +2409,58 @@ const __vite_glob_0_206 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$5q = defineComponent({
   name: "ButtonChangeMode",
-  components: { IconNight, IconSun },
+  components: {
+    IconNight,
+    IconSun
+  },
   props: {
-    mode: { type: String, default: "dark" },
+    mode: {
+      type: String
+    },
     class: {
       type: String,
-      default: `cursor-pointer inline-block rounded-lg px-2 py-1 text-sm
-                text-layout-sun-700 hover:bg-layout-sun-100 hover:text-layout-sun-900
-                dark:text-layout-night-700 dark:hover:bg-layout-night-100 dark:hover:text-layout-night-900`
+      default: `
+                cursor-pointer
+                inline-block
+                rounded-lg
+                px-2
+                py-1
+                text-sm
+                text-layout-sun-700
+                hover:bg-layout-sun-100
+                hover:text-layout-sun-900
+                dark:text-layout-night-700
+                dark:hover:bg-layout-night-100
+                dark:hover:text-layout-night-900
+            `
     }
   },
   emits: ["changeMode"],
   setup(props, { emit }) {
     function changeMode() {
-      let newMode = props.mode === "dark" ? "light" : "dark";
-      localStorage.setItem("theme", newMode);
+      const newMode = props.mode === "dark" ? "light" : "dark";
+      localStorage.setItem(
+        "theme",
+        newMode
+      );
+      emit(
+        "changeMode",
+        newMode
+      );
       fetch("/toggle-dark-mode", {
         method: "POST",
         headers: {
           "X-CSRF-TOKEN": document.getElementById("token").value,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ dark_mode: newMode })
-      }).then(() => {
-        emit("changeMode", newMode);
-        reloadQrCode();
+        body: JSON.stringify({
+          dark_mode: newMode
+        })
+      }).catch((error) => {
+        console.error(
+          "Darkmode konnte nicht gespeichert werden:",
+          error
+        );
       });
       document.querySelectorAll(".ai-button").forEach((aibut) => {
         aibut.src = `/images/icons/ai-${newMode}.png`;
@@ -2441,19 +2468,34 @@ const _sfc_main$5q = defineComponent({
       document.querySelectorAll("#ai-image").forEach((aiim) => {
         aiim.src = `/images/_ab/ai-teaser-${newMode}.jpg`;
       });
+      reloadQrCode();
     }
     function reloadQrCode() {
       fetch(location.href).then((response) => response.text()).then((html) => {
         const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const newSvg = doc.querySelector("svg#QrCode");
-        const currentSvg = document.querySelector("svg#QrCode");
+        const doc = parser.parseFromString(
+          html,
+          "text/html"
+        );
+        const newSvg = doc.querySelector(
+          "svg#QrCode"
+        );
+        const currentSvg = document.querySelector(
+          "svg#QrCode"
+        );
         if (newSvg && currentSvg) {
           currentSvg.innerHTML = newSvg.innerHTML;
         }
-      }).catch((error) => console.error("Error reloading QR Code:", error));
+      }).catch((error) => {
+        console.error(
+          "Error reloading QR Code:",
+          error
+        );
+      });
     }
-    return { changeMode };
+    return {
+      changeMode
+    };
   }
 });
 function _sfc_ssrRender$5o(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
@@ -3649,7 +3691,7 @@ const _sfc_main$5a = {
   },
   data() {
     return {
-      mode: "light",
+      mode: "dark",
       isOpen: false,
       // ✅ jetzt im data statt props
       year: (/* @__PURE__ */ new Date()).getFullYear(),
@@ -3735,10 +3777,7 @@ function _sfc_ssrRender$58(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_Loader = resolveComponent("Loader");
   const _component_Toast = resolveComponent("Toast");
   const _component_FooterGrid = resolveComponent("FooterGrid");
-  _push(`<div${ssrRenderAttrs(mergeProps({
-    class: "light",
-    id: "app-layout-start"
-  }, _attrs))}>`);
+  _push(`<div${ssrRenderAttrs(mergeProps({ id: "app-layout-start" }, _attrs))}>`);
   _push(ssrRenderComponent(_component_Head, { title: $props.title }, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
@@ -21631,7 +21670,7 @@ function _sfc_ssrRender$3s(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_Toast = resolveComponent("Toast");
   const _component_FooterGrid = resolveComponent("FooterGrid");
   _push(`<div${ssrRenderAttrs(mergeProps({
-    class: "dark",
+    class: "light",
     id: "app-layout-start"
   }, _attrs))}>`);
   _push(ssrRenderComponent(_component_Head, { title: $props.title }, null, _parent));
@@ -42324,7 +42363,7 @@ function _sfc_ssrRender$2p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   _push(ssrRenderComponent(_component_Loader, null, null, _parent));
   _push(`<div class="container mx-auto max-w-6xl min-h-screen py-32 px-2"><div>`);
   _push(ssrRenderComponent(_component_Toast, null, null, _parent));
-  _push(`</div><div class="mt-4 dark">`);
+  _push(`</div><div class="mt-4">`);
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</div></div></section><footer class="bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" aria-labelledby="footer-heading"><div class="container mx-auto max-w-6xl"><h2 id="footer-heading" class="sr-only">Footer</h2><div class="px-1 md:px-4 lg:px-8 pb-8 pt-8"><div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 xl:col-span-2 xl:mt-0"><div class="md:grid md:grid-cols-2 md:gap-4"><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2"><span> Webseite </span></h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
   _push(ssrRenderComponent(_component_link_footer, {
@@ -52776,8 +52815,15 @@ const _sfc_main$I = {
         if (typeof window === "undefined") {
           return "dark";
         }
-        const savedTheme = localStorage.getItem("theme");
-        return savedTheme === "dark" || savedTheme === "light" ? savedTheme : "dark";
+        let savedTheme = localStorage.getItem("theme");
+        if (!savedTheme) {
+          savedTheme = "dark";
+          localStorage.setItem(
+            "theme",
+            "dark"
+          );
+        }
+        return savedTheme;
       })(),
       isOpen_Menu: false,
       year: (/* @__PURE__ */ new Date()).getFullYear(),
@@ -52856,28 +52902,76 @@ const _sfc_main$I = {
         );
       }, 500),
       deep: true
-    },
-    "$page.url"() {
-      this.applyTheme();
     }
+    //  '$page.url'() {
+    //         this.applyTheme();
+    //     },
   },
   methods: {
     GetProfileImagePath,
     SD,
     CheckTRights,
-    applyTheme() {
-      const html = document.documentElement;
-      const forceLight = window.location.pathname === "/login" || window.location.pathname === "/register" || false;
-      if (forceLight) {
-        html.classList.remove("dark");
-        return;
+    methods: {
+      applyTheme() {
+        const html = document.documentElement;
+        console.log(
+          "[applyTheme] mode:",
+          this.mode
+        );
+        console.log(
+          "[applyTheme] vorher:",
+          html.className
+        );
+        const forceLight = window.location.pathname === "/login" || window.location.pathname === "/register";
+        if (forceLight) {
+          console.log(
+            "[applyTheme] forceLight aktiv"
+          );
+          html.classList.remove("dark");
+          return;
+        }
+        if (this.mode === "dark") {
+          console.log(
+            "[applyTheme] ADD DARK"
+          );
+          html.classList.add("dark");
+        } else {
+          console.log(
+            "[applyTheme] REMOVE DARK"
+          );
+          html.classList.remove("dark");
+        }
+        console.log(
+          "[applyTheme] nachher:",
+          html.className
+        );
+      },
+      changeMode(newMode) {
+        console.log(
+          "[changeMode] ALT:",
+          this.mode
+        );
+        console.log(
+          "[changeMode] NEU:",
+          newMode
+        );
+        this.mode = newMode;
+        localStorage.setItem(
+          "theme",
+          newMode
+        );
+        console.log(
+          "[changeMode] localStorage:",
+          localStorage.getItem("theme")
+        );
+        this.applyTheme();
+        this.$nextTick(() => {
+          console.log(
+            "[nextTick] html classes:",
+            document.documentElement.className
+          );
+        });
       }
-      html.classList.toggle("dark", this.mode === "dark");
-    },
-    changeMode() {
-      this.mode = this.mode === "dark" ? "light" : "dark";
-      localStorage.setItem("theme", this.mode);
-      this.applyTheme();
     },
     setLoadingState(state) {
       this.isLoading = state;
@@ -53151,7 +53245,7 @@ function _sfc_ssrRender$I(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
   }
   _push(ssrRenderComponent(_component_button_change_mode, {
     mode: $data.mode,
-    onChangeMode: $options.changeMode
+    onChangeMode: _ctx.changeMode
   }, null, _parent));
   _push(`<div class="ms-3 relative">`);
   if (_ctx.$page.props.auth.user) {
@@ -53519,7 +53613,7 @@ function _sfc_ssrRender$I(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
   _push(ssrRenderComponent(_component_Toast, null, null, _parent));
   _push(`</div><div class="mt-4">`);
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
-  _push(`</div></div></section><footer class="foot bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" style="${ssrRenderStyle({ "z-index": "1001" })}" aria-labelledby="footer-heading"><div class="container mx-auto max-w-6xl"><h2 id="footer-heading" class="sr-only">Footer</h2><div class="px-1 md:px-4 lg:px-8 pb-8 pt-8"><div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 xl:col-span-2 xl:mt-0"><div class="md:grid md:grid-cols-2 md:gap-4"><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2"><span> Webseite </span></h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
+  _push(`</div></div></section><footer class="foot bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" style="${ssrRenderStyle({ "z-index": "1001" })}" aria-labelledby="footer-heading"><div class="container mx-auto max-w-6xl"><h2 id="footer-heading" class="sr-only">Footer</h2><div class="px-1 md:px-4 lg:px-8 pb-8 pt-8"><div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 xl:col-span-2 xl:mt-0"><div class="md:grid md:grid-cols-2 md:gap-4"><div class="text-center md:text-left"><button type="button" style="${ssrRenderStyle({ "background-color": "#ff0000" })}"> TEST </button><h3 class="text-sm font-semibold leading-6 px-2"><span> Webseite </span></h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
   _push(ssrRenderComponent(_component_link_footer, {
     name: "Benutzer",
     href: _ctx.route("home.userlist")

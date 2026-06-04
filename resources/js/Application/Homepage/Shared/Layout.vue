@@ -745,17 +745,92 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
             this.isOpen_Menu = !this.isOpen_Menu;
             },
 
-            changeMode() {
-            this.mode = this.mode === "dark" ? "light" : "dark";
-            if(typeof window !== "undefined")
-            {
 
-            localStorage.theme = this.mode;
-            }
+changeMode(newMode) {
 
-            this.isOpen_Menu = false;
-            },
+    // console.log(
+    //     "[Layout] changeMode gestartet"
+    // );
 
+    // console.log(
+    //     "[Layout] alter mode:",
+    //     this.mode
+    // );
+
+    // console.log(
+    //     "[Layout] neuer mode:",
+    //     newMode
+    // );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mode setzen
+    |--------------------------------------------------------------------------
+    */
+
+    this.mode = newMode;
+
+    /*
+    |--------------------------------------------------------------------------
+    | LocalStorage speichern
+    |--------------------------------------------------------------------------
+    */
+
+    localStorage.setItem(
+        'theme',
+        newMode
+    );
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | HTML Element
+    |--------------------------------------------------------------------------
+    */
+
+    const html =
+        document.documentElement;
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Theme anwenden
+    |--------------------------------------------------------------------------
+    */
+
+    if (newMode === 'dark') {
+
+
+
+        html.classList.add('dark');
+
+    } else {
+
+
+
+        html.classList.remove('dark');
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Vue nextTick prüfen
+    |--------------------------------------------------------------------------
+    */
+
+    this.$nextTick(() => {
+
+        // console.log(
+        //     "[Layout] nextTick:",
+        //     document.documentElement.className
+        // );
+    });
+    this.isOpen_Menu = false;
+    },
+//ToggleCookieLink cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900
             logoutUser() {
             this.$inertia.post(this.route("logout"));
             },

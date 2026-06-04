@@ -1,5 +1,5 @@
 <template>
-    <div class="dark" id="app-layout-start">
+    <div id="app-layout-start">
         <Head :title="title">Admin Dashboard</Head>
 
         <div
@@ -518,7 +518,7 @@ async mounted() {
 
         changeMode(value) {
             this.mode = value;
-            
+
             this.isOpen = false;
             if(typeof window !== "undefined")
             {

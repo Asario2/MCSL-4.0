@@ -103,35 +103,65 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
     <script src="/js/users.js"></script>
 
     <script>
+(function () {
 
-    (function () {
-
-        const forceLight =
-            @json(
-                SD() == "chh"
-                || in_array(
-                    request()->path(),
-                    Settings::$loginpages
-                )
-            );
-
-        if (forceLight) {
-
-            document.documentElement.classList.remove('dark');
-
-            return;
-        }
-
-        const theme =
-            localStorage.getItem('theme');
-
-        document.documentElement.classList.toggle(
-            'dark',
-            theme === 'dark'
-            || theme === null
+    const forceLight =
+        @json(
+            SD() == "chh"
+            || in_array(
+                request()->path(),
+                Settings::$loginpages
+            )
         );
 
-    })();
+    if (forceLight) {
+
+        document.documentElement
+            .classList
+            .remove('dark');
+
+        return;
+    }
+
+    let theme =
+        localStorage.getItem('theme');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default = Dark
+    |--------------------------------------------------------------------------
+    */
+
+    if (!theme) {
+
+        theme = 'dark';
+
+        localStorage.setItem(
+            'theme',
+            'dark'
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Theme anwenden
+    |--------------------------------------------------------------------------
+    */
+
+    if (theme === 'dark') {
+
+        document.documentElement
+            .classList
+            .add('dark');
+
+    } else {
+
+        document.documentElement
+            .classList
+            .remove('dark');
+    }
+
+})();
 
     </script>
 
@@ -207,7 +237,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
 
 </head>
 
-<body class="font-sans antialiased light">
+<body class="font-sans antialiased  ">
 
     <input
         type="hidden"
