@@ -127,57 +127,23 @@ return [
      *
      * @default "Cookie Disclaimer"
      */
-    'cookie_title' => "Cookie Disclaimer",
+'cookie_title' => 'Cookie-Hinweis',
 
-    /**
-     * Cookie banner description text
-     *
-     * @default "This website uses cookies to enhance your browsing experience, analyze site traffic, and personalize content. By continuing to use this site, you consent to our use of cookies."
-     */
-    'cookie_description' => "This website uses cookies to enhance your browsing experience, analyze site traffic, and personalize content. By continuing to use this site, you consent to our use of cookies.",
+'cookie_description' =>
+    'Diese Website verwendet Cookies, um Ihr Nutzungserlebnis zu verbessern, den Datenverkehr zu analysieren und Inhalte zu personalisieren. Durch die weitere Nutzung dieser Website stimmen Sie der Verwendung von Cookies zu.',
 
-    /**
-     * Accept all cookies button text
-     *
-     * @default 'Accept all'
-     */
-    'cookie_accept_btn_text' => 'Accept all',
+'cookie_accept_btn_text' => 'Alle akzeptieren',
 
-    /**
-     * Reject all cookies button text
-     *
-     * @default 'Reject all'
-     */
-    'cookie_reject_btn_text' => 'Reject all',
+'cookie_reject_btn_text' => 'Alle ablehnen',
 
-    /**
-     * Manage preferences button text
-     *
-     * @default 'Manage preferences'
-     */
-    'cookie_preferences_btn_text' => 'Manage preferences',
+'cookie_preferences_btn_text' => 'Einstellungen verwalten',
 
-    /**
-     * Save preferences button text
-     *
-     * @default 'Save preferences'
-     */
-    'cookie_preferences_save_text' => 'Save preferences',
+'cookie_preferences_save_text' => 'Einstellungen speichern',
 
-    /**
-     * Preferences modal title text
-     *
-     * @default 'Cookie Preferences'
-     */
-    'cookie_modal_title' => 'Cookie Preferences',
+'cookie_modal_title' => 'Cookie-Einstellungen',
 
-    /**
-     * Preferences modal introduction text
-     *
-     * @default 'You can customize your cookie preferences below.'
-     */
-    'cookie_modal_intro' => 'You can customize your cookie preferences below.',
-
+'cookie_modal_intro' =>
+    'Hier können Sie festlegen, welche Cookies auf dieser Website verwendet werden dürfen.',
     /**
      * Cookie categories configuration
      *
@@ -189,31 +155,39 @@ return [
      * @category preferences - Cookies for user preference storage
      */
     'cookie_categories' => [
+
         'necessary' => [
             'enabled' => true,
             'locked' => true,
             'title' => 'Essenzielle Cookies',
-            'description' => 'Diese Cookies sind für die einwandfreie Funktion der Website erforderlich.',
+            'description' =>
+                'Diese Cookies sind für den Betrieb der Website erforderlich und können nicht deaktiviert werden.',
         ],
+
         'preferences' => [
             'enabled' => env('COOKIE_CONSENT_PREFERENCES', false),
             'locked' => false,
-            'title' => 'Einstellungs-Cookies',
-            'description' => 'Diese Cookies ermöglichen es der Website, sich an Benutzereinstellungen zu erinnern.',
+            'title' => 'Präferenz-Cookies',
+            'description' =>
+                'Diese Cookies speichern Ihre Einstellungen und verbessern die Benutzerfreundlichkeit.',
         ],
+
         'analytics' => [
             'enabled' => env('COOKIE_CONSENT_ANALYTICS', false),
             'locked' => false,
             'js_action' => 'loadGoogleAnalytics',
             'title' => 'Analyse-Cookies',
-            'description' => 'Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren.',
+            'description' =>
+                'Diese Cookies helfen uns zu verstehen, wie Besucher unsere Website nutzen, damit wir sie verbessern können.',
         ],
+
         'marketing' => [
             'enabled' => env('COOKIE_CONSENT_MARKETING', false),
             'locked' => false,
             'js_action' => 'loadFacebookPixel',
             'title' => 'Marketing-Cookies',
-            'description' => 'Diese Cookies werden für Werbe- und Trackingzwecke verwendet.',
+            'description' =>
+                'Diese Cookies werden verwendet, um Inhalte und Werbung besser auf Ihre Interessen abzustimmen.',
         ],
 
     ],
@@ -230,7 +204,7 @@ return [
     'policy_links' => [
         [
             'text' => 'Datenschutzerklärung',
-            'link' => env('COOKIE_CONSENT_PRIVACY_POLICY_URL', '') ?? url('privacy-policy')
+            'link' => env('COOKIE_CONSENT_PRIVACY_POLICY_URL', '') ?? url('/home/privacy')
         ],
         // [
         //     'text' => 'Terms and Conditions',

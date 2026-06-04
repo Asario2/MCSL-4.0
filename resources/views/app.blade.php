@@ -263,10 +263,15 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
     });
 
     </script>
-
+@php
+//   dd(
+//     CookieConsent::translate('Privacy Policy')
+// );
+@endphp
     @inertia
 
     {!! CookieConsent::scripts(options: [
+
 
         'cookie_lifetime' =>
             config(
@@ -325,18 +330,9 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
                     ),
 
                 'link' =>
-                    url('privacy-policy')
+                    url('/home/privacy')
             ],
 
-            [
-                'text' =>
-                    CookieConsent::translate(
-                        'Terms & Conditions'
-                    ),
-
-                'link' =>
-                    url('terms-and-conditions')
-            ],
         ],
 
     ]) !!}

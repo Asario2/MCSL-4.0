@@ -2,7 +2,7 @@
 
 return [
     'Privacy Policy' => 'Datenschutzerklärung',
-    'Terms & Conditions' => 'Allgemeine Geschäftsbedingungen',
+    'Terms & Conditions' => '',
     'Essential Cookies' => 'Essenzielle Cookies',
     'These cookies are essential for the website to function properly.' => 'Diese Cookies sind für die einwandfreie Funktion der Website erforderlich.',
     'Analytics Cookies' => 'Analyse-Cookies',
