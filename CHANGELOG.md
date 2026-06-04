@@ -294,3 +294,6 @@
 ![Version](https://img.shields.io/badge/version-5.48.0-orange) Hotfix - Checked Status on Comments (#488)  
 ![Version](https://img.shields.io/badge/version-5.49.7-orange) Hotfix - Dark/Lightmode didn't worked (#490)  
 ![Version](https://img.shields.io/badge/version-5.50.1-orange) Hotfix - Commentmail Error (#489)  
+![Version](https://img.shields.io/badge/version-5.51.0-orange) Hotfix - Change ordering in Hackinglog (#494)  
+![Version](https://img.shields.io/badge/version-5.52.4-orange) Bug - Change Dark Mode handling (#495)  
+![Version](https://img.shields.io/badge/version-5.53.1-orange) Hotfix - fixed bug in table collation (#496)  
