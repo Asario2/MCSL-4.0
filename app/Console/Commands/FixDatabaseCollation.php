@@ -16,7 +16,7 @@ class FixDatabaseCollation extends Command
 
     public function handle()
     {
-        $connection = DB::connection('mariadb_mfx');
+        $connection = DB::connection('mariadb');
 
         $db = $connection->getDatabaseName();
 
