@@ -297,3 +297,4 @@
 ![Version](https://img.shields.io/badge/version-5.51.0-orange) Hotfix - Change ordering in Hackinglog (#494)  
 ![Version](https://img.shields.io/badge/version-5.52.4-orange) Bug - Change Dark Mode handling (#495)  
 ![Version](https://img.shields.io/badge/version-5.53.1-orange) Hotfix - fixed bug in table collation (#496)  
+![Version](https://img.shields.io/badge/version-5.54.2-orange) Hotfix - Search on PMs (#491)  
