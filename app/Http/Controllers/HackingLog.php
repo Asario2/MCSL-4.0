@@ -40,7 +40,7 @@ class hackinglog extends Controller
                 ->select(
                 'xgen_hackinglog.*'
 
-            )->orderBy("created_at","DESC")->get();
+            )->orderBy("id","DESC")->get();
             $data->transform(function ($item) {
                 $item->created_at = date("d.m.Y H:i:s", strtotime($item->created_at));
                 $item->url = rawurldecode($item->url);
