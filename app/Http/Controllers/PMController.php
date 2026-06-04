@@ -22,7 +22,6 @@ class PMController extends Controller
     private function getInbox(Request $request)
     {
 
-
         $inboxArr = DB::table('private_messages')
         ->leftJoin(
             'private_messages_text',
@@ -110,6 +109,8 @@ class PMController extends Controller
 
         ->withQueryString();
 
+
+
         $inboxArr->getCollection()->transform(function ($msg) {
             $msg->subject = decval($msg->subject);
             $msg->message = decval($msg->message);
@@ -120,6 +121,7 @@ class PMController extends Controller
 
             return $msg;
         });
+
         return [
             "data" => $inboxArr->items(),
             "links" => $inboxArr->linkCollection(),
@@ -216,7 +218,7 @@ class PMController extends Controller
         });
 
 
-         return [
+        return [
     "data" => $outbox->items(),
     "links" => $outbox->linkCollection(),
     'filters'   => $request->only('search'),
