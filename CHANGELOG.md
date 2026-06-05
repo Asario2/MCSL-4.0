@@ -300,3 +300,4 @@
 ![Version](https://img.shields.io/badge/version-5.54.2-orange) Hotfix - Search on PMs (#491)  
 ![Version](https://img.shields.io/badge/version-5.55.9-orange) Bug - Have to fix translation of cookie banner (#497)  
 ![Version](https://img.shields.io/badge/version-5.56.8-orange) Hotfix - Check of privacy on email form (#476)  
+![Version](https://img.shields.io/badge/version-5.57.2-orange) Feature - The Privacy Page No Cookie Consent (#499)  
