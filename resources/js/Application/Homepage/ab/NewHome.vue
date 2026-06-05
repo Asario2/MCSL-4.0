@@ -5,8 +5,8 @@
         <section class="bg-layout-sun-0 text-layout-sun-800 dark:bg-layout-night-0 dark:text-layout-night-800 p-4">
             <div
                 id="arrow"
-                style="display:none;"
-                class="absolute right-5 top-[calc(var(--nav-height,5.7rem)+0.5rem)] z-40 flex justify-center items-center hover:scale-110 transition-transform duration-300"
+                style="display:none;z-index:50000"
+                class="absolute right-5 top-[calc(var(--nav-height,5.7rem)+0.5rem)] flex justify-center items-center hover:scale-110 transition-transform duration-300"
             >
                 <JArrow />
             </div>

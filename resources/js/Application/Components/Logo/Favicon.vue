@@ -23,7 +23,7 @@
             fill="#0EA5E9"
         />
     </svg> -->
-    <img :src="'/images/_' + SD() + '/web/alogo.png'" style="height:40px;min-width:40px !important;max-width:40px;">
+    <img :src="'/images/_' + SD() + '/web/alogo.png'" style="height:60px;min-width:60px !important;max-width:60px;">
 </template>
 <script>
 import {SD} from "@/helpers/dom.js";

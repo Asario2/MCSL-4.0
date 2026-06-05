@@ -45,7 +45,7 @@
             <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-b border-layout-sun-200 dark:border-layout-night-200"  style='z-index:50;'>
             <div class="container mx-auto max-w-6xl p-6 lg:flex lg:items-center lg:justify-between" style='z-index:50;'>
                 <div class="flex items-center justify-between">
-                <brand-header :route-name="route('home.index')" :brand_1="$page.props.applications.brand_name_1" :brand_2="$page.props.applications.brand_name_2" :app-name="$page.props.applications.app_name"></brand-header>
+                <brand-header :route-name="route('home.index')" :brand_1="mupper($page.props.applications.brand_name_1)" :brand_2="mupper($page.props.applications.brand_name_2)" :app-name="$page.props.applications.app_name"></brand-header>
 
                 <!-- Mobile menu button -->
                 <div class="flex lg:hidden">
@@ -84,7 +84,7 @@
             >
                 TEST
             </button>
-            
+
                     <div class="ms-3 relative">
 
                           <Dropdown align="right" width="72"  v-if="$page.props.auth.user"  >
@@ -461,6 +461,7 @@
     return savedTheme;
 
 })(),
+        isLoading:false,
         isOpen_Menu: false,
         year: new Date().getFullYear(),
         pendingRequests: 0,
@@ -580,9 +581,7 @@
         CheckTRights,
 
 
-methods: {
-
-    applyTheme() {
+   applyTheme() {
 
         const html =
             document.documentElement;
@@ -687,7 +686,7 @@ methods: {
             );
         });
     },
-},
+
 
 
 
@@ -698,6 +697,7 @@ methods: {
             localStorage.setItem('loading', state ? state.toString():'');
         }
     },
+
         checkLoadingState() {
         if (this.pendingRequests === 0 && this.imagesLoaded) {
             this.setLoadingState(false);
@@ -733,44 +733,44 @@ methods: {
             this.imagesLoaded = true;
             this.checkLoadingState();
         }
-        },
-        },
-        checkLoadingState() {
-        if (this.pendingRequests === 0 && this.imagesLoaded) {
-            this.setLoadingState(false);
-        }
-        },
 
-        waitForImagesToLoad() {
-        const images = document.querySelectorAll('img');
-        const totalImages = images.length;
-        let imagesLoadedCount = 0;
-
-        if (totalImages === 0) {
-            this.imagesLoaded = true;
-            this.checkLoadingState();
-            return;
-        }
-
-        images.forEach((img) => {
-            if (img.complete) {
-            imagesLoadedCount++;
-            } else {
-            img.addEventListener('load', () => {
-                imagesLoadedCount++;
-                if (imagesLoadedCount === totalImages) {
-                this.imagesLoaded = true;
-                this.checkLoadingState();
-                }
-            });
-            }
-        });
-
-        if (imagesLoadedCount === totalImages) {
-            this.imagesLoaded = true;
-            this.checkLoadingState();
-        }
         },
+        // checkLoadingState() {
+        // if (this.pendingRequests === 0 && this.imagesLoaded) {
+        //     this.setLoadingState(false);
+        // }
+        // },
+
+        // waitForImagesToLoad() {
+        // const images = document.querySelectorAll('img');
+        // const totalImages = images.length;
+        // let imagesLoadedCount = 0;
+
+        // if (totalImages === 0) {
+        //     this.imagesLoaded = true;
+        //     this.checkLoadingState();
+        //     return;
+        // }
+
+        // images.forEach((img) => {
+        //     if (img.complete) {
+        //     imagesLoadedCount++;
+        //     } else {
+        //     img.addEventListener('load', () => {
+        //         imagesLoadedCount++;
+        //         if (imagesLoadedCount === totalImages) {
+        //         this.imagesLoaded = true;
+        //         this.checkLoadingState();
+        //         }
+        //     });
+        //     }
+        // });
+
+        // if (imagesLoadedCount === totalImages) {
+        //     this.imagesLoaded = true;
+        //     this.checkLoadingState();
+        // }
+        // },
 
         toggleNavbar() {
         this.isOpen_Menu = !this.isOpen_Menu;
