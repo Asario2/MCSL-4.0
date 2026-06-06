@@ -4,7 +4,7 @@ return [
     'version' => [
         'brandname' => 'Asarios Blog',
         'copyrightname' => '© '.date("Y").' MCSL von Asario & Oliver Reinking',
-        'versionnr' => '5.59.6',
+        'versionnr' => '5.60.7',
         'versionsdatum' => '06.06.2026',
     ],
 ];
