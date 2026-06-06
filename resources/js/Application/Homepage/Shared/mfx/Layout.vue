@@ -290,7 +290,7 @@
 
                 <div class="w-full flex flex-col md:flex-row flex-1 items-center justify-between gap-4">
                   <div class="text-xs leading-6">
-                      {{ year }} Starter Eleven/MCSL. Ein Template von Oliver Reinking / Asario.
+                      &copy; {{ year }} Starter Eleven/MCSL. Ein Template von <b>Oliver Reinking</b> / <b>Asario</b>.
                   </div>
 
                   <div class="text-xs leading-6">
@@ -306,34 +306,34 @@
     </main>
   </template>
 <script>
-import axios from "axios";
-import { router } from "@inertiajs/vue3";
-import { useLoadingStore } from "@/loading";
+// import axios from "axios";
+// import { router } from "@inertiajs/vue3";
+// import { useLoadingStore } from "@/loading";
 import mfxlogo from "@/Application/Shared/mfxlogo.vue";
 import IconClose from "@/Application/Components/Icons/Close.vue";
 import ClientOnly from "@/Application/Components/ClientOnly.vue"
 import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-import BrandHeader from "@/Application/Shared/BrandHeader.vue";
+// import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
-import LinkHeader_mfx from "@/Application/Shared/LinkHeader_mfx.vue";
+// import LinkHeader_mfx from "@/Application/Shared/LinkHeader_mfx.vue";
 import BrandFooter from "@/Application/Shared/BrandFooter.vue";
 import LinkFooter from "@/Application/Shared/LinkFooter.vue";
 import IconMenu from "@/Application/Components/Icons/Menu.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
-import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+// import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { SD } from "@/helpers";
 import Loader from "@/Application/Components/Loader.vue";
-import { ref } from "vue";
+// import { ref } from "vue";
 
 export default {
   name: "Homepage_Shared_Layout_mfx",
 
   components: {
     MetaHeader,
-    BrandHeader,
-    LinkHeader_mfx,
+    // BrandHeader,
+    // LinkHeader_mfx,
     BrandFooter,
     Loader,
     LinkFooter,
@@ -345,7 +345,7 @@ export default {
     Dropdown,
     DropdownLink,
     ClientOnly,
-    ButtonChangeMode,
+    // ButtonChangeMode,
   },
 
   props: {

@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs mt-2">
-                  <div>{{ year }} Starter Eleven/MCSL. Ein Template von Oliver Reinking / Asario.</div>
+                  <div>&copy; {{ year }} Starter Eleven/MCSL. Ein Template von <b>Oliver Reinking</b> / <b>Asario.</b></div>
                   <div><IconMCSL /> Version: {{ $page.props.version.versionnr }}</div>
                 </div>
               </div>
