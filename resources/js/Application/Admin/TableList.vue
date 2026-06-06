@@ -2,11 +2,14 @@
   <layout>
     <meta-header :title="'Übersicht der Tabelle Admin Table'" />
     <template #header>
-      <breadcrumb v-if="CleanTable() !== 'contacts'"
-                  :application-name="$page.props.applications.app_admin_name"
-                  :start-page="false"
-                  current="Liste der Tabellen"
-      />
+<breadcrumb
+    :application-name="$page.props.applications.app_admin_name"
+    :breadcrumbs="{
+        'Liste der Tabellen': route('admin.tables'),
+        'Blogs': route('admin.blog.index')
+    }"
+    current="Übersicht"
+/>
     </template>
 
     <section class="mt-8">

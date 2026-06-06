@@ -19,24 +19,6 @@
         </template>
         </meta-header>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <main id="app-layout-start">
 
         <section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000"  style='z-index:50;'>
@@ -105,7 +87,7 @@
                                                         .full_name
                                                 "
                                             />
-                                            {{  }}
+
                                         </button>
 
                                         <span
@@ -383,6 +365,7 @@
     import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
     import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
     import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
+    import { Inertia } from '@inertiajs/inertia'
     import IconPM from "@/Application/Components/Icons/IconPM.vue";
     import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
     import BrandFooter from "@/Application/Shared/BrandFooter.vue";
@@ -803,7 +786,7 @@
         this.search = event.target.value;
         this.startSearchTimeout();
         },
-
+    },
     };
     </script>
 

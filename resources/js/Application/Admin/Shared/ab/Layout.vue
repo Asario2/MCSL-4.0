@@ -45,7 +45,7 @@
                                     label="Dashboard"
                                 >
                                 </NavLink>
-                                <NavLink v-if="SD() == 'abc'" icon="IconStar"
+                                <NavLink v-if="SD() == 'ab'" icon="IconStar"
                                     :routeName="route('admin.mcslpoints')"
                                     :active="route().current('admin.mcslpoints')"
                                     :label="mcslpoints"
@@ -537,6 +537,7 @@ async mounted() {
 }
 
     },
+
 };
 </script>
 

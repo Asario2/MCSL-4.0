@@ -3,7 +3,14 @@
             <MetaHeader :title="ucf(CleanTable()) + ' - Übersicht'" />
         <!-- Header -->
         <template #header>
-            <breadcrumb :breadcrumbs="breadcrumbs" :current="tablet"></breadcrumb>
+        <breadcrumb
+            :application-name="$page.props.applications.app_admin_name"
+            :breadcrumbs="{
+                'Liste der Tabellen': route('admin.tables.index'),
+                [`Tabelle ${ucf(CleanTable())}`]: `/admin/tables/${CleanTable()}/show`
+            }"
+            current="Übersicht"
+        />
         </template>
 
         <!-- Table -->

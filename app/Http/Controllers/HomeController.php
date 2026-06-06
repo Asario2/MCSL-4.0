@@ -59,7 +59,7 @@ class HomeController extends Controller
             'entries_in' => $entries_in, // sicheres Array
              'res' => $resLocal , // sicheres Array
              'breadcrumbs' => [
-            'Ein / Ausgaben'=>''
+            'Ein / Ausgaben'=>'Ein / Ausgaben'
         ],
         ]);
     }
