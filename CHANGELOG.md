@@ -304,3 +304,4 @@
 ![Version](https://img.shields.io/badge/version-5.58.0-orange) Feature - Changed Brandheader on asario.de (#500)  
 ![Version](https://img.shields.io/badge/version-5.59.6-orange) Feature - Change Footer (#498)  
 ![Version](https://img.shields.io/badge/version-5.60.7-orange) Hotfix - Breadcrumbs are not shown (#492)  
+![Version](https://img.shields.io/badge/version-5.61.9-orange) Bug - Fixed Bug in Hackinglog (#501)  
