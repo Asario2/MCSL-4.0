@@ -302,3 +302,4 @@
 ![Version](https://img.shields.io/badge/version-5.56.8-orange) Hotfix - Check of privacy on email form (#476)  
 ![Version](https://img.shields.io/badge/version-5.57.2-orange) Feature - The Privacy Page No Cookie Consent (#499)  
 ![Version](https://img.shields.io/badge/version-5.58.0-orange) Feature - Changed Brandheader on asario.de (#500)  
+![Version](https://img.shields.io/badge/version-5.59.6-orange) Feature - Change Footer (#498)  
