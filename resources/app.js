@@ -89,7 +89,7 @@ import 'photoswipe/dist/photoswipe.css';
 
     // Query-Parameter aus der URL holen
 
-    // Globale Ziggy-Route mit Fallback
+    // Globale Ziggy-Route mit Fallback 
     function safeRoute(...args) {
         try {
             return ziggyRoute(...args);

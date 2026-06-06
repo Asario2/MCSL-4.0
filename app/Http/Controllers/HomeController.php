@@ -32,7 +32,7 @@ class HomeController extends Controller
 {
     //
     public  function home_ausgaben(){
-        $entries_in = DB::table("ausgaben")->where('pub',"1")->where("users_id",Auth::id())->orderBy("plus_minus","DESC")->orderBy(DB::raw('CAST(cur_amount AS DECIMAL(10,2))'), 'DESC')->get();
+        $entries_in = DB::table("ausgaben")->where('pub',"1")->where("users_id",Auth::id())->where("users_id",Auth::id())->orderBy("plus_minus","DESC")->orderBy(DB::raw('CAST(cur_amount AS DECIMAL(10,2))'), 'DESC')->get();
     $res = DB::table('ausgaben')->where("users_id",Auth::id())->where("pub","1")
         ->selectRaw("
         SUM(CASE WHEN plus_minus = 'Einnahme'

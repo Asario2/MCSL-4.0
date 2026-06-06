@@ -265,11 +265,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
     });
 
     </script>
-@php
-//   dd(
-//     CookieConsent::translate('Privacy Policy')
-// );
-@endphp
+
     @inertia
 
     {!! CookieConsent::scripts(options: [

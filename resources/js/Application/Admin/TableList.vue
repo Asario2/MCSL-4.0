@@ -3,10 +3,10 @@
     <meta-header :title="'Übersicht der Tabelle Admin Table'" />
     <template #header>
 <breadcrumb
+    v-if="CleanTable() !== 'contacts'"
     :application-name="$page.props.applications.app_admin_name"
     :breadcrumbs="{
-        'Liste der Tabellen': route('admin.tables'),
-        'Blogs': route('admin.blog.index')
+        'Liste der Tabellen': route('admin.tables.index'),
     }"
     current="Übersicht"
 />

@@ -3,7 +3,10 @@
 
     <Layout>
     <template #header>
-      <Breadcrumb :breadcrumbs="breadcrumbs" />
+          <Breadcrumb
+        :breadcrumbs="breadcrumbs"
+        current="HackLog"
+    />
     </template>
      <MetaHeader title="MCSL IDS - Hacking Log" />
     <div class="p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
@@ -13,7 +16,7 @@
 
 </div>
       <h2 class="text-xl font-semibold mb-4">HackLog</h2>
-        <search-filter
+        <SearchFilter
             v-model="form.search"
             class="w-full"
         />
@@ -173,8 +176,7 @@ export default {
     },
     breadcrumbs:{
         type: Object,
-        required: false,
-        default: () => [],
+        default: () => ({})
     },
   },
   data() {
@@ -291,6 +293,9 @@ export default {
 
         return pages;
     }
+},
+mounted() {
+    console.log('HackingLog mounted');
 },
   methods: {
   formatDateTime(datetime) {

@@ -1448,7 +1448,7 @@
         const editorRef = this.$refs.editor;
 
     let isValid = true;
-
+    console.log(this.localFfo.original);
     if (!editorRef) {
     console.error('Kein Editor-Ref gefunden');
     } else if (Array.isArray(editorRef)) {

@@ -13825,8 +13825,7 @@ const _sfc_main$3V = {
     },
     breadcrumbs: {
       type: Object,
-      required: false,
-      default: () => []
+      default: () => ({})
     }
   },
   data() {
@@ -13902,6 +13901,9 @@ const _sfc_main$3V = {
       return pages2;
     }
   },
+  mounted() {
+    console.log("HackingLog mounted");
+  },
   methods: {
     formatDateTime(datetime) {
       if (!datetime) return "";
@@ -13929,17 +13931,23 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_MetaHeader = resolveComponent("MetaHeader");
   const _component_Layout = resolveComponent("Layout");
   const _component_Breadcrumb = resolveComponent("Breadcrumb");
-  const _component_search_filter = resolveComponent("search-filter");
+  const _component_SearchFilter = resolveComponent("SearchFilter");
   const _component_delhackinglog = resolveComponent("delhackinglog");
   _push(`<!--[-->`);
   _push(ssrRenderComponent(_component_MetaHeader, { title: "HackLog" }, null, _parent));
   _push(ssrRenderComponent(_component_Layout, null, {
     header: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
-        _push2(ssrRenderComponent(_component_Breadcrumb, { breadcrumbs: $props.breadcrumbs }, null, _parent2, _scopeId));
+        _push2(ssrRenderComponent(_component_Breadcrumb, {
+          breadcrumbs: $props.breadcrumbs,
+          current: "HackLog"
+        }, null, _parent2, _scopeId));
       } else {
         return [
-          createVNode(_component_Breadcrumb, { breadcrumbs: $props.breadcrumbs }, null, 8, ["breadcrumbs"])
+          createVNode(_component_Breadcrumb, {
+            breadcrumbs: $props.breadcrumbs,
+            current: "HackLog"
+          }, null, 8, ["breadcrumbs"])
         ];
       }
     }),
@@ -13947,7 +13955,7 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
       if (_push2) {
         _push2(ssrRenderComponent(_component_MetaHeader, { title: "MCSL IDS - Hacking Log" }, null, _parent2, _scopeId));
         _push2(`<div class="p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"${_scopeId}><div class="flex justify-between items-center mb-4"${_scopeId}></div><h2 class="text-xl font-semibold mb-4"${_scopeId}>HackLog</h2>`);
-        _push2(ssrRenderComponent(_component_search_filter, {
+        _push2(ssrRenderComponent(_component_SearchFilter, {
           modelValue: $data.form.search,
           "onUpdate:modelValue": ($event) => $data.form.search = $event,
           class: "w-full"
@@ -13999,7 +14007,7 @@ function _sfc_ssrRender$3U(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           createVNode("div", { class: "p-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100" }, [
             createVNode("div", { class: "flex justify-between items-center mb-4" }),
             createVNode("h2", { class: "text-xl font-semibold mb-4" }, "HackLog"),
-            createVNode(_component_search_filter, {
+            createVNode(_component_SearchFilter, {
               modelValue: $data.form.search,
               "onUpdate:modelValue": ($event) => $data.form.search = $event,
               class: "w-full"
@@ -24578,6 +24586,7 @@ const _sfc_main$39 = defineComponent({
     async submitForm() {
       const editorRef = this.$refs.editor;
       let isValid = true;
+      console.log(this.localFfo.original);
       if (!editorRef) {
         console.error("Kein Editor-Ref gefunden");
       } else if (Array.isArray(editorRef)) {
@@ -28944,8 +28953,7 @@ function _sfc_ssrRender$37(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           _push2(ssrRenderComponent(_component_breadcrumb, {
             "application-name": _ctx.$page.props.applications.app_admin_name,
             breadcrumbs: {
-              "Liste der Tabellen": _ctx.route("admin.tables"),
-              "Blogs": _ctx.route("admin.blog.index")
+              "Liste der Tabellen": _ctx.route("admin.tables.index")
             },
             current: "Übersicht"
           }, null, _parent2, _scopeId));
@@ -28958,8 +28966,7 @@ function _sfc_ssrRender$37(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
             key: 0,
             "application-name": _ctx.$page.props.applications.app_admin_name,
             breadcrumbs: {
-              "Liste der Tabellen": _ctx.route("admin.tables"),
-              "Blogs": _ctx.route("admin.blog.index")
+              "Liste der Tabellen": _ctx.route("admin.tables.index")
             },
             current: "Übersicht"
           }, null, 8, ["application-name", "breadcrumbs"])) : createCommentVNode("", true)
@@ -29715,15 +29722,23 @@ function _sfc_ssrRender$34(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     header: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
         _push2(ssrRenderComponent(_component_breadcrumb, {
-          breadcrumbs: _ctx.breadcrumbs,
-          current: _ctx.tablet
+          "application-name": _ctx.$page.props.applications.app_admin_name,
+          breadcrumbs: {
+            "Liste der Tabellen": _ctx.route("admin.tables.index"),
+            [`Tabelle ${_ctx.ucf(_ctx.CleanTable())}`]: `/admin/tables/${_ctx.CleanTable()}/show`
+          },
+          current: "Übersicht"
         }, null, _parent2, _scopeId));
       } else {
         return [
           createVNode(_component_breadcrumb, {
-            breadcrumbs: _ctx.breadcrumbs,
-            current: _ctx.tablet
-          }, null, 8, ["breadcrumbs", "current"])
+            "application-name": _ctx.$page.props.applications.app_admin_name,
+            breadcrumbs: {
+              "Liste der Tabellen": _ctx.route("admin.tables.index"),
+              [`Tabelle ${_ctx.ucf(_ctx.CleanTable())}`]: `/admin/tables/${_ctx.CleanTable()}/show`
+            },
+            current: "Übersicht"
+          }, null, 8, ["application-name", "breadcrumbs"])
         ];
       }
     }),

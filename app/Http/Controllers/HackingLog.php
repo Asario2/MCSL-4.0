@@ -46,6 +46,38 @@ class hackinglog extends Controller
                 $item->url = rawurldecode($item->url);
                 return $item;
             });
+            // dd(Inertia::render('Admin/HackingLog', [
+            //     'tables' => $data,
+            //     'breadcrumbs' => [
+            //         'MCSL IDS - Hacking Log' => route('admin.hackinglog'),
+            //     ],
+            // ]));
+
+$data = $data->map(function ($row) {
+
+    return collect($row)->map(function ($value) {
+
+        if (is_string($value)) {
+
+            return iconv(
+                'UTF-8',
+                'UTF-8//IGNORE',
+                $value
+            );
+        }
+
+        return $value;
+
+    });
+
+});
+
+            return Inertia::render('Admin/HackingLog', [
+                'tables' => $data->toArray(),
+                'breadcrumbs' => [
+                    'MCSL IDS - Hacking Log' => route('admin.hackinglog'),
+                ],
+            ]);
         return Inertia::render('Admin/HackingLog', [
             "tables"=>$data,
              'breadcrumbs' => [
