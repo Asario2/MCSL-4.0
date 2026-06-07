@@ -162,7 +162,7 @@ class GenerateSitemap extends Command
         }
         }
         // === 4️⃣ Datei speichern ===
-        $path = public_path("sitemap." . $currentSD . ".xml");
+        $path = public_path("sitemap." . $currentSD . "_v2.xml");
         $xml->asXML($path);
 
         $this->info("✅ Sitemap für Subdomain {$currentSD} erstellt: {$path}");

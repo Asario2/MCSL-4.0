@@ -305,3 +305,4 @@
 ![Version](https://img.shields.io/badge/version-5.59.6-orange) Feature - Change Footer (#498)  
 ![Version](https://img.shields.io/badge/version-5.60.7-orange) Hotfix - Breadcrumbs are not shown (#492)  
 ![Version](https://img.shields.io/badge/version-5.61.9-orange) Bug - Fixed Bug in Hackinglog (#501)  
+![Version](https://img.shields.io/badge/version-5.62.2-orange) Feature - Secure Income/Outcome Script (#493)  

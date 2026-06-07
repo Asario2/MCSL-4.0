@@ -317,7 +317,7 @@ import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 // import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
-// import LinkHeader_mfx from "@/Application/Shared/LinkHeader_mfx.vue";
+import LinkHeader_mfx from "@/Application/Shared/LinkHeader_mfx.vue";
 import BrandFooter from "@/Application/Shared/BrandFooter.vue";
 import LinkFooter from "@/Application/Shared/LinkFooter.vue";
 import IconMenu from "@/Application/Components/Icons/Menu.vue";
@@ -333,7 +333,7 @@ export default {
   components: {
     MetaHeader,
     // BrandHeader,
-    // LinkHeader_mfx,
+    LinkHeader_mfx,
     BrandFooter,
     Loader,
     LinkFooter,
@@ -542,6 +542,13 @@ border-color:#1f2937;
     background-position:center center;
     background-repeat: repeat-y;
 }
+
+}
+.pad{
+ font-size:20px;
+ font-family:Helvetica !important;
+ margin-bottom:2px;
+ padding:3px !important
 }
 </style>
 

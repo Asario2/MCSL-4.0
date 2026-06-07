@@ -32,7 +32,7 @@ class HomeController extends Controller
 {
     //
     public  function home_ausgaben(){
-        $entries_in = DB::table("ausgaben")->where('pub',"1")->where("users_id",Auth::id())->where("users_id",Auth::id())->orderBy("plus_minus","DESC")->orderBy(DB::raw('CAST(cur_amount AS DECIMAL(10,2))'), 'DESC')->get();
+        $entries_in = DB::table("ausgaben")->where('pub',"1")->where("users_id",Auth::id())->orderBy("plus_minus","DESC")->orderBy(DB::raw('CAST(cur_amount AS DECIMAL(10,2))'), 'DESC')->get();
     $res = DB::table('ausgaben')->where("users_id",Auth::id())->where("pub","1")
         ->selectRaw("
         SUM(CASE WHEN plus_minus = 'Einnahme'
@@ -59,7 +59,7 @@ class HomeController extends Controller
             'entries_in' => $entries_in, // sicheres Array
              'res' => $resLocal , // sicheres Array
              'breadcrumbs' => [
-            'Ein / Ausgaben'=>'Ein / Ausgaben'
+            'Ein / Ausgaben'=>route('admin.ausgaben')
         ],
         ]);
     }
@@ -1179,9 +1179,18 @@ public function imprint_dag()
     {
         foreach(Settings::$mariaDBs as $dom=>$db)
         {
+        $dbExists = DB::select(
+            "SELECT SCHEMA_NAME
+            FROM INFORMATION_SCHEMA.SCHEMATA
+            WHERE SCHEMA_NAME = ?",
+            [$dom]
+        );
+
+        if ($dbExists) {
             Artisan::call('sitemap:generate', [
                 'SD' => $dom
             ]);
+        }
         }
         file_put_contents(public_path("timespy/sitemaps.dat"),date("Y-m-d H:i:s"));
         return Inertia::render('Components/sitemap_gen');

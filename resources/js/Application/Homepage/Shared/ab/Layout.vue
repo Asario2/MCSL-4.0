@@ -62,7 +62,7 @@
                     <button-change-mode :mode="mode" @changeMode="changeMode"></button-change-mode>
                                    <button
                 type="button" style="background-color: #ff0000;"
-                @click="console.log('BUTTON CLICK')"
+                @click="changeMode"
             >
                 TEST
             </button>
@@ -424,26 +424,15 @@
         headerImage: this.$page?.props?.image ?? null,
         mode: (() => {
 
-    if (typeof window === "undefined") {
-        return 'dark';
-    }
+            if (typeof window === "undefined") {
+                return 'dark';
+            }
 
-    let savedTheme =
-        localStorage.getItem('theme');
+            const savedTheme = localStorage.getItem('theme');
 
-    if (!savedTheme) {
+            return savedTheme || 'dark';
 
-        savedTheme = 'dark';
-
-        localStorage.setItem(
-            'theme',
-            'dark'
-        );
-    }
-
-    return savedTheme;
-
-})(),
+        })(),
         isLoading:false,
         isOpen_Menu: false,
         year: new Date().getFullYear(),
@@ -629,46 +618,23 @@
         );
     },
 
-    changeMode(newMode) {
+   changeMode(newMode) {
 
-        console.log(
-            "[changeMode] ALT:",
-            this.mode
-        );
+    this.mode = newMode;
+    if(typeof newMode === "undefined")
+    {
+        newMode = 'dark';
+    }
+    const forceLight =
+        window.location.pathname === '/login'
+        || window.location.pathname === '/register';
 
-        console.log(
-            "[changeMode] NEU:",
-            newMode
-        );
+    if (!forceLight) {
+        localStorage.setItem('theme', newMode);
+    }
 
-        this.mode = newMode;
-
-        localStorage.setItem(
-            'theme',
-            newMode
-        );
-
-        console.log(
-            "[changeMode] localStorage:",
-            localStorage.getItem('theme')
-        );
-
-        this.applyTheme();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Nächster Tick prüfen
-        |--------------------------------------------------------------------------
-        */
-
-        this.$nextTick(() => {
-
-            console.log(
-                "[nextTick] html classes:",
-                document.documentElement.className
-            );
-        });
-    },
+    this.applyTheme();
+},
 
 
 

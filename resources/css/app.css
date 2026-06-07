@@ -26,6 +26,22 @@
     font-display: swap;
 }
 @font-face {
+    font-family: 'BuschGardenz';
+    src: url('webfonts/NewWGL4Font.eot');
+    src: url('webfonts/NewWGL4Font.eot?#iefix') format('embedded-opentype'),
+        url('webfonts/NewWGL4Font.woff2') format('woff2'),
+        url('webfonts/NewWGL4Font.woff') format('woff'),
+        url('webfonts/NewWGL4Font.ttf') format('truetype'),
+        url('webfonts/NewWGL4Font.svg#NewWGL4Font') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+/*
+@font-face {
     font-family: 'Good';
         src:
         url('./webfonts/Good\ Times.woff2') format('woff2'),
@@ -36,7 +52,7 @@
     font-style: normal;
     font-display: swap;
     font-size:17px;
-}
+} */
 .back-to-top {
     position: fixed;
     bottom: 25px;

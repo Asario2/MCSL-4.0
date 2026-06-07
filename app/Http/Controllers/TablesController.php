@@ -617,7 +617,7 @@ public function ShowTable(Request $request, $table_alt = null)
     foreach ($joins as $relatedTable => $join) {
         $query->leftJoin($relatedTable, $join['to'], '=', $join['from']);
     }
-    if(in_array($table,Settings::$private_tables) && Auth::user()->users_rights_id != '1')
+    if(in_array($table,Settings::$private_tables))
     {
         $query->where("users_id",Auth::id());
     }
