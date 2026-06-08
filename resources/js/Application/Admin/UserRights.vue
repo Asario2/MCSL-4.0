@@ -736,7 +736,9 @@ export default {
 
 async deleteXkis(key) {
   try {
-    const res = await axios.delete(route("del.uright.function", { xkis: key }));
+// DELETE https://www.marblefx.net/api/del/function/userrights/xkis_test_211 419 (unknown status)
+
+    const res = await axios.delete('/api/del/function/userrights/'+ key);
 
     // Prüfen, ob Backend einen Redirect vorschlägt
     if (res.data?.redirect) {
