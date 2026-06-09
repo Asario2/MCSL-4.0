@@ -42,7 +42,7 @@
         <label :for="font">
             <img
             :src="getImage(font)"
-            class="max-w-[400px] h-[50px] border"
+            class="max-w-[800px] min-w-[800px] h-[50px] border"
             />
         </label>
         <!-- Checkbox + Label -->

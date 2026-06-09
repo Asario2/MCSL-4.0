@@ -41693,16 +41693,16 @@ const _sfc_main$2t = {
 function _sfc_ssrRender$2s(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   if ($props.routeName) {
     _push(`<a${ssrRenderAttrs(mergeProps({
-      class: "pad cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-2 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000",
+      class: "pad cursor-pointer tracking-wide inline-flex items-center gap-2 rounded-lg px-2 py-2 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000",
       href: $props.routeName,
-      style: { "font-family": "Cutting" }
+      style: { "font-family": "CuttingCorners" }
     }, _attrs))}>`);
     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
     _push(`<span>${ssrInterpolate($props.name)}</span></a>`);
   } else {
     _push(`<div${ssrRenderAttrs(mergeProps({
-      class: "cursor-pointer inline-flex items-center gap-2 rounded-lg px-3 py-3 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000",
-      style: { "font-family": "Cutting" }
+      class: "cursor-pointer tracking-wide inline-flex items-center gap-2 rounded-lg px-3 py-3 text-layout-sun-700 hover:bg-layout-sun-200 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200 dark:hover:text-layout-night-1000",
+      style: { "font-family": "CuttingCorners" }
     }, _attrs))}>`);
     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
     _push(`</div>`);
@@ -60166,7 +60166,8 @@ const _sfc_main$7 = defineComponent({
       },
       voteHtml: "",
       changelogText: "",
-      todolist: []
+      todolist: [],
+      long: false
     };
   },
   async mounted() {
@@ -60251,6 +60252,7 @@ const _sfc_main$7 = defineComponent({
       }
     },
     async loadChangelog() {
+      this.long = true;
       try {
         const response = await fetch("https://raw.githubusercontent.com/Asario2/MCSL-4.0/main/CHANGELOG.md");
         const markdown = await response.text();
@@ -60390,7 +60392,13 @@ function _sfc_ssrRender$7(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                   }),
                   _: 1
                 }, _parent3, _scopeId2));
-                _push3(`<div class="min-h-[350px] pl-0 bg-layout-sun-50 dark:bg-layout-night-0 lg:rounded-lg p-4 border border-layout-sun-1000 dark:border-layout-night-1050 flex gap-4"${_scopeId2}><div class="w-[150px] shrink-0 items-center hidden md:flex"${_scopeId2}><img class="w-[150px] h-auto rounded"${ssrRenderAttr("src", "/images/_mfx/infos/img_big/" + _ctx.data.img_big)}${ssrRenderAttr("alt", _ctx.data.headline)}${ssrRenderAttr("title", _ctx.data.headline)}${_scopeId2}></div><div class="flex-1 space-y-2"${_scopeId2}><div class="text-layout-sun-1000 dark:text-layout-night-1000 items-start p-2 mt-[-20px]"${_scopeId2}>${_ctx.cleanHtml(_ctx.data.message) ?? ""}</div></div></div></div>`);
+                _push3(`<div class="min-h-[350px] pl-0 bg-layout-sun-50 dark:bg-layout-night-0 lg:rounded-lg p-4 border border-layout-sun-1000 dark:border-layout-night-1050 flex gap-4"${_scopeId2}>`);
+                if (!_ctx.long) {
+                  _push3(`<div class="w-[150px] shrink-0 items-center hidden md:flex"${_scopeId2}><img class="w-[150px] h-auto rounded"${ssrRenderAttr("src", "/images/_mfx/infos/img_big/" + _ctx.data.img_big)}${ssrRenderAttr("alt", _ctx.data.headline)}${ssrRenderAttr("title", _ctx.data.headline)}${_scopeId2}></div>`);
+                } else {
+                  _push3(`<!---->`);
+                }
+                _push3(`<div class="flex-1 space-y-2"${_scopeId2}><div class="text-layout-sun-1000 dark:text-layout-night-1000 items-start p-2 mt-[-20px]"${_scopeId2}>${_ctx.cleanHtml(_ctx.data.message) ?? ""}</div></div></div></div>`);
               } else {
                 return [
                   createVNode("div", null, [
@@ -60411,14 +60419,17 @@ function _sfc_ssrRender$7(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                       _: 1
                     }),
                     createVNode("div", { class: "min-h-[350px] pl-0 bg-layout-sun-50 dark:bg-layout-night-0 lg:rounded-lg p-4 border border-layout-sun-1000 dark:border-layout-night-1050 flex gap-4" }, [
-                      createVNode("div", { class: "w-[150px] shrink-0 items-center hidden md:flex" }, [
+                      !_ctx.long ? (openBlock(), createBlock("div", {
+                        key: 0,
+                        class: "w-[150px] shrink-0 items-center hidden md:flex"
+                      }, [
                         createVNode("img", {
                           class: "w-[150px] h-auto rounded",
                           src: "/images/_mfx/infos/img_big/" + _ctx.data.img_big,
                           alt: _ctx.data.headline,
                           title: _ctx.data.headline
                         }, null, 8, ["src", "alt", "title"])
-                      ]),
+                      ])) : createCommentVNode("", true),
                       createVNode("div", { class: "flex-1 space-y-2" }, [
                         createVNode("div", {
                           class: "text-layout-sun-1000 dark:text-layout-night-1000 items-start p-2 mt-[-20px]",
@@ -60458,14 +60469,17 @@ function _sfc_ssrRender$7(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                   _: 1
                 }),
                 createVNode("div", { class: "min-h-[350px] pl-0 bg-layout-sun-50 dark:bg-layout-night-0 lg:rounded-lg p-4 border border-layout-sun-1000 dark:border-layout-night-1050 flex gap-4" }, [
-                  createVNode("div", { class: "w-[150px] shrink-0 items-center hidden md:flex" }, [
+                  !_ctx.long ? (openBlock(), createBlock("div", {
+                    key: 0,
+                    class: "w-[150px] shrink-0 items-center hidden md:flex"
+                  }, [
                     createVNode("img", {
                       class: "w-[150px] h-auto rounded",
                       src: "/images/_mfx/infos/img_big/" + _ctx.data.img_big,
                       alt: _ctx.data.headline,
                       title: _ctx.data.headline
                     }, null, 8, ["src", "alt", "title"])
-                  ]),
+                  ])) : createCommentVNode("", true),
                   createVNode("div", { class: "flex-1 space-y-2" }, [
                     createVNode("div", {
                       class: "text-layout-sun-1000 dark:text-layout-night-1000 items-start p-2 mt-[-20px]",

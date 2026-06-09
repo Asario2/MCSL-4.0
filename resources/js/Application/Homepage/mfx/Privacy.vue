@@ -1,10 +1,7 @@
-
 <template>
     <Layout>
     <MetaHeader title="Datenschutzerklärung" />
-        <div class="prose prose-layout dark:prose-invert max-w-none">
-            <div v-html="privacy" />
-        </div>
+
     </Layout>
   </template>
 
@@ -15,42 +12,15 @@
   export default {
     components: {
     Layout, MetaHeader},
-    props: {
-      privacy: String,
-    },
-    mounted() {
-        this.scrollToHashAnchor();
-        window.addEventListener("hashchange", this.scrollToHashAnchor);
-        this.getscro();
-    },
-        beforeUnmount() {
-        window.removeEventListener("hashchange", this.scrollToHashAnchor);
 
+    mounted() {
+        location.href='/home/infos/show/43';
+        let asd = this.sadasd ;
+        alert(asd);
         },
 
   methods: {
-    getscro(){
 
-        if(CleanTable() != "dag"){
-            return "136";
-        }
-        else if(CleanTable() == "dag")
-        {
-            return "250";
-        }
-    },
-    scrollToHashAnchor() {
-    const hash = window?.location.hash;
-    if (hash && hash.startsWith("#")) {
-      setTimeout(() => {
-        const el = document.getElementById(hash.substring(1));
-        if (el) {
-          const y = el.getBoundingClientRect().top + window.pageYOffset - this.getscro();
-          window.scrollTo({ top: y, behavior: "smooth" });
-        }
-      }, 50); // etwas Delay, bis DOM fertig gerendert ist
-    }
-  }
 }
 };
   </script>

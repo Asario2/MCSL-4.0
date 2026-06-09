@@ -135,7 +135,35 @@ router.on("finish", (event) => {
     window.dispatchEvent(new CustomEvent("loader:hide"));
 });
 
+// ======================
+// GLOBAL JS ERROR LOGGING
+// ======================
 
+if (typeof window !== 'undefined') {
+
+    window.addEventListener('error', (event) => {
+
+        axios.post('/api/log-js-error', {
+            type: 'window-error',
+            message: event.message,
+            file: event.filename,
+            line: event.lineno,
+            column: event.colno,
+            stack: event.error?.stack || null,
+            url: window.location.href,
+        }).catch(() => {});
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+
+        axios.post('/api/log-js-error', {
+            type: 'promise',
+            message: event.reason?.message || String(event.reason),
+            stack: event.reason?.stack || null,
+            url: window.location.href,
+        }).catch(() => {});
+    });
+}
 import { SD } from "@/helpers";
 // ======================
 // APP
@@ -172,6 +200,19 @@ createInertiaApp({
         // Plugins
         app.use(createPinia());
         app.use(plugin);
+
+        app.config.errorHandler = (err, instance, info) => {
+
+            console.error(err);
+
+            axios.post('/api/log-js-error', {
+                message: err?.message || String(err),
+                stack: err?.stack || null,
+                info,
+                url: window.location.href,
+                component: instance?.$options?.name || null,
+            }).catch(() => {});
+        };
 
         // ======================
         // TIPPY FIX (WICHTIG)

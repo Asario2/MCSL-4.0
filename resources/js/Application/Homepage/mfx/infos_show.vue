@@ -17,7 +17,7 @@
                     <div class="min-h-[350px] pl-0 bg-layout-sun-50 dark:bg-layout-night-0 lg:rounded-lg p-4 border border-layout-sun-1000 dark:border-layout-night-1050 flex gap-4">
 
         <!-- Bild links (feste Breite 150px) -->
-        <div class="w-[150px] shrink-0 items-center hidden md:flex">
+        <div class="w-[150px] shrink-0 items-center hidden md:flex" v-if="!long">
         <img
             class="w-[150px] h-auto rounded"
             :src="'/images/_mfx/infos/img_big/' + data.img_big"
@@ -86,6 +86,7 @@ export default defineComponent({
             voteHtml: '',
             changelogText: '',
             todolist: [],
+            long:false,
         }
     },
 
@@ -207,6 +208,7 @@ export default defineComponent({
         },
 
         async loadChangelog() {
+
             try {
                 const response = await fetch('https://raw.githubusercontent.com/Asario2/MCSL-4.0/main/CHANGELOG.md');
                 const markdown = await response.text();
@@ -270,7 +272,13 @@ export default defineComponent({
         parseMessage(text) {
             return text.replace(/{{\s*(.*?)\s*}}/g, (match, key) => {
                 const func = this.replacements()[key];
+                if (String(func).includes("changelog") || String(func).includes("privacy"))
+                {
+                    this.long = true;
+                }
+
                 return func ? func() : match;
+
             });
         },
 

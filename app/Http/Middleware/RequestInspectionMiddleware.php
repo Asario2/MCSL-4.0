@@ -174,7 +174,7 @@ class RequestInspectionMiddleware
         */
 
         '/127\.0\.0\.1/i'                  => 20,
-        '/localhost/i'                     => 5,
+        // '/localhost/i'                     => 5,
         '/169\.254\./i'                    => 25,
         '/file:\/\//i'                     => 25,
         '/gopher:\/\//i'                   => 30,

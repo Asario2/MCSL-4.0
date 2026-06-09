@@ -1,12 +1,12 @@
 <?php
 $file = basename($_GET['file']);
 
-$image = imagecreate(370, 50);
+$image = imagecreate(800, 50);
 
 $white = ImageColorAllocate($image, 255, 255, 255);
 $black = ImageColorAllocate($image, 0, 0, 0);
 
-imagefilledrectangle($image, 0, 0, 370, 50, $white);
+imagefilledrectangle($image, 0, 0, 800, 50, $white);
 
 $text = stripslashes($_GET['text']);
 

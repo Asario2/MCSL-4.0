@@ -84,6 +84,12 @@ GlobalController::SetDomain();
 // Route::middleware(['checksubd:ab,asario'])->group(function () {
     // Route::middleware('checksubd:ab,asario')->group(function () {
         Route::get('/countpixel/{url}/{route}/{page?}', [CountPixelController::class, 'track'])->name('countpixel');
+        Route::post('/api/log-js-error', function (\Illuminate\Http\Request $request) {
+
+            \Log::error('Frontend Error', $request->all());
+
+            return response()->json(['ok' => true]);
+        });
         Route::get("/api/mcslpoints/{users_id?}",[MCSLPointsController::class,"GetCount"])->name("api.mcslpoints");
         Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
