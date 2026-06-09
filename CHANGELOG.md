@@ -311,3 +311,4 @@
 ![Version](https://img.shields.io/badge/version-5.65.1-orange) Feature - Change width of Fontographer Preview (#504)  
 ![Version](https://img.shields.io/badge/version-5.66.0-orange) Hotfix - adding & removing in user rights (#503)  
 ![Version](https://img.shields.io/badge/version-5.67.8-orange) Feature - Changed home/info/show layout (#506)  
+![Version](https://img.shields.io/badge/version-5.68.9-orange) Feature - Git DB Refresh actualized (#507)  
