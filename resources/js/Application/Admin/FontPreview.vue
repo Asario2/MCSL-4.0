@@ -1,4 +1,4 @@
-<template>
+    <template>
 <Layout>
         <MetaHeader :title="'Fontographer'" />
 <div class="p-4 space-y-4">
@@ -6,12 +6,19 @@
 
     <!-- TEXT INPUT -->
         <div class="fixed top-0 left-0 right-0 bg-white border-b p-4 flex items-center gap-2 z-50 shadow max-h-24 overflow-y-auto">
-    <input
-        v-model="textInput"
-        type="text"
-        placeholder="Text eingeben..."
-        class="border p-2 rounded flex-1 text-layout-sun-100 dark:text-layout-sun-1000"
-    />
+        <input
+            v-model="textInput"
+            @keyup.enter="applyText"
+            type="text"
+            placeholder="Text eingeben..."
+            class="border p-2 rounded flex-1 text-layout-sun-100 dark:text-layout-sun-1000"
+        />
+        <button
+            @click="applyText"
+            class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+            Vorschau laden
+        </button>
     <button
         @click="applyFilter"
         class="bg-blue-500 text-white px-4 py-2 rounded"
@@ -32,7 +39,7 @@
     </div>
 
     <!-- Fonts untereinander -->
-    <div v-if="textInput && displayedFonts.length" class="space-y-4">
+    <div v-if="previewText && displayedFonts.length" class="space-y-4">
     <div
         v-for="font in displayedFonts"
         :key="font"
@@ -91,10 +98,13 @@ export default {
   },
   data() {
     return {
-      fonts: [],          // Alle Fonts vom Backend
-      selected: [],       // Ausgewählte Fonts
-      textInput: '',      // Textinput für Vorschau
-      filtered: []        // Fonts nach Klick auf Filter
+         fonts: [],
+        selected: [],
+        textInput: '',
+
+        previewText: '',
+
+        filtered: [],      // Fonts nach Klick auf Filter
     }
   },
   computed: {
@@ -115,10 +125,11 @@ export default {
         console.error('Fehler beim Laden der Fonts:', e)
       }
     },
-
+    applyText() {
+        this.previewText = this.textInput
+    },
     getImage(font) {
-      // Live-Vorschau mit aktuellem textInput
-      return `/toolz/image.php?file=${encodeURIComponent(font)}&text=${encodeURIComponent(this.textInput)}&t=${Date.now()}`
+        return `/toolz/image.php?file=${encodeURIComponent(font)}&text=${encodeURIComponent(this.previewText)}`
     },
 
     // Filter-Klick oben → nur die angehakten Fonts anzeigen

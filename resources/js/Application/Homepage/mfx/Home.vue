@@ -22,9 +22,8 @@
                     <div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050">
                         <div class="flex items-center gap-2">
                             <H2
-                                class="dark:text-layout-night-1050 font-bold text-layout-sun-1000 text-2xl mt-0"
-                                v-html="cleanHtml(item.headline)"
-                            ></H2>
+                                class="font-bold text-2xl mt-0">
+                                <span v-html="cleanHtml(item.headline)"></span></H2>
 
                             <editbtns
                                 :id="item.id"
@@ -47,7 +46,7 @@
 
                 <div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6  border border-layout-sun-1000 dark:border-layout-night-1050">
                     <div v-if="text" class="dark:text-layout-night-1000 ">
-                        <span class="text-2xl  font-bold dark:text-layout-sun-1060">{{ text.headline }}</span> <editbtns id="14" table="texts"></editbtns>
+                        <h2 class="font-bold text-2xl mt-0"><span v-html="text.headline"></span></h2> <editbtns id="14" table="texts"></editbtns>
                         <div class="" v-html="text.text"></div>
                     </div>
                     <div v-else>

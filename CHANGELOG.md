@@ -309,3 +309,5 @@
 ![Version](https://img.shields.io/badge/version-5.63.6-orange) Changed Layout of marblefx.net Navi (#502)  
 ![Version](https://img.shields.io/badge/version-5.64.2-orange) Hotfix - Fixed layout of privacy Page (#505)  
 ![Version](https://img.shields.io/badge/version-5.65.1-orange) Feature - Change width of Fontographer Preview (#504)  
+![Version](https://img.shields.io/badge/version-5.66.0-orange) Hotfix - adding & removing in user rights (#503)  
+![Version](https://img.shields.io/badge/version-5.67.8-orange) Feature - Changed home/info/show layout (#506)  

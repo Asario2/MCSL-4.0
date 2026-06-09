@@ -31,7 +31,19 @@ class ExportPrivacyMarkdown extends Command
             return;
         }
 
-        $markdown = "# Datenschutzerklärung\n\n## Inhaltsverzeichnis\n\n";
+        if($sdd == "mfx")
+        {
+            // dd($sdd);
+        }
+        if($sdd !== "mfx")
+        {
+            $markdown = "# Datenschutzerklärung\n\n";
+        }
+        else{
+            $markdown = '';
+        }
+
+        $markdown .= "## Inhaltsverzeichnis\n\n";
 
         // Inhaltsverzeichnis aufbauen
         $o = 1;
