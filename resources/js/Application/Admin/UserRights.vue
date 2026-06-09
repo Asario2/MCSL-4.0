@@ -387,7 +387,7 @@ export default {
     });
     console.log("res:", res);
     console.log("res.data:", res.data);
-    console.log(this.fdesc);
+    // console.log(this.fdesc);
     // Toast richtig benutzen
     window.toastBus.emit({
       message: res.data?.message || 'Funktion hinzugefügt!2',

@@ -307,3 +307,5 @@
 ![Version](https://img.shields.io/badge/version-5.61.9-orange) Bug - Fixed Bug in Hackinglog (#501)  
 ![Version](https://img.shields.io/badge/version-5.62.2-orange) Feature - Secure Income/Outcome Script (#493)  
 ![Version](https://img.shields.io/badge/version-5.63.6-orange) Changed Layout of marblefx.net Navi (#502)  
+![Version](https://img.shields.io/badge/version-5.64.2-orange) Hotfix - Fixed layout of privacy Page (#505)  
+![Version](https://img.shields.io/badge/version-5.65.1-orange) Feature - Change width of Fontographer Preview (#504)  
