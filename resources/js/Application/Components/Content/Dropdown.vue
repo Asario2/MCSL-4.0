@@ -21,9 +21,11 @@
         >
             <div
                 v-show="open"
-                class="absolute z-40 mt-2 rounded-md shadow-lg bg-layout-sun-0 dark:bg-layout-night-0 p-0.5"
+                class="absolute mt-2 rounded-md shadow-lg bg-layout-sun-0 dark:bg-layout-night-0 p-0.5"
+
+                style="z-index:50;display: none"
                 :class="[widthClass, alignmentClasses]"
-                style="display: none"
+
                 @click="closeDropdown"
             >
                 <div

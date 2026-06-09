@@ -9,6 +9,8 @@
             v-show="open"
             class="fixed inset-0 z-40"
             @click="close"
+
+
         />
 
         <transition
@@ -21,9 +23,9 @@
         >
             <div
                 v-show="open"
-                class="absolute z-50 mt-2 rounded-md shadow-lg"
+                class="absolute mt-2 rounded-md shadow-lg"
+                style="display: none;z-index:50;"
                 :class="[widthClass, alignmentClasses]"
-                style="display: none"
                 @click="close"
             >
                 <div

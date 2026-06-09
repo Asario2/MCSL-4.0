@@ -28,8 +28,8 @@
         <span v-if="item.original['Summe Änderung'] != 0 ">✅</span><span v-else>✔</span> <strong>Änderungen:</strong> {{ item.original['Summe Änderung'] }}
         <!-- {{ item }} -->
           <br />
-        <span v-if="item.original['Summe Änderung'] != 0 "><b>Veränderungen:</b><br /><div class="whitespace-pre-line">
-        <span class="code" v-html="GetQRYS(item.original['QueryString'])"></span>
+        <span v-if="item.original['Summe Änderung'] != 0 "><b>Veränderungen:</b><br /><div class="whitespace-pre-line code">
+        <span v-html="GetQRYS(item.original['QueryString'])"></span>
         </div></span>
     </div>
 

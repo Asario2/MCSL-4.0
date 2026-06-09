@@ -93,7 +93,88 @@ class DumpgitdatabaseController extends Controller
         return "INSERT INTO `users` (`id`, `pub`, `users_rights_id`, `name`,  `password`, `email_verified_at`, `email`, `first_name`, `last_login_at`, `created_at`, `is_admin`, `profile_photo_path`, `uhash`, `updated_at`) VALUES
         (2, 1, 1, 'Developer', '\$2y\$12\$EXn0jqj9QLRxnLzSkU7DguiMc4Z10RAbwzHkn9Dh0Gp2V7bCl0vXS','2026-02-24 12:08:26', 'email@example.com', 'Devel',  '2026-02-25 12:34:39', '2026-02-25 12:07:00', 1, NULL, 'py9Q9fupN6goi52WMgghh3-s2XZb6nO48NnIZImy4EDrMQvi6JO33um5aRrSiMCb', '2026-02-25 12:36:17');";
     }
+private function buildSqlIndex($dom)
+{
+    $index = [];
 
+    // First Commit
+    $firstFile = base_path("database/dumps/First_Commmit_{$dom}_No_User.sql");
+
+    if (file_exists($firstFile)) {
+        foreach (file($firstFile) as $line) {
+            $line = trim($line);
+
+            if ($line !== '') {
+                $index[md5($line)] = true;
+            }
+        }
+    }
+
+    // Alle Newer_Data Dateien
+    $path = base_path('database/dumps');
+
+    foreach (File::files($path) as $file) {
+
+        if (
+            preg_match(
+                '/^Newer_Data_'.$dom.'_.+\.sql$/',
+                $file->getFilename()
+            )
+        ) {
+            foreach (file($file->getPathname()) as $line) {
+
+                $line = trim($line);
+
+                if ($line !== '') {
+                    $index[md5($line)] = true;
+                }
+            }
+        }
+    }
+
+    return $index;
+    }
+    // private function buildSqlIndex($dom)
+    // {
+    //     $index = [];
+
+    //     // First Commit
+    //     $firstFile = base_path("database/dumps/First_Commmit_{$dom}_No_User.sql");
+
+    //     if (file_exists($firstFile)) {
+    //         foreach (file($firstFile) as $line) {
+    //             $line = trim($line);
+
+    //             if ($line !== '') {
+    //                 $index[md5($line)] = true;
+    //             }
+    //         }
+    //     }
+
+    //     // Alle Newer_Data Dateien
+    //     $path = base_path('database/dumps');
+
+    //     foreach (File::files($path) as $file) {
+
+    //         if (
+    //             preg_match(
+    //                 '/^Newer_Data_'.$dom.'_.+\.sql$/',
+    //                 $file->getFilename()
+    //             )
+    //         ) {
+    //             foreach (file($file->getPathname()) as $line) {
+
+    //                 $line = trim($line);
+
+    //                 if ($line !== '') {
+    //                     $index[md5($line)] = true;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     return $index;
+    // }
     public function ScanForNew($dom)
     {
     $path = base_path('database/dumps');
@@ -119,114 +200,197 @@ class DumpgitdatabaseController extends Controller
     return $cont;
     }
 
-public function GetAfter(Request $request)
-{
-    $this->connectionName = (!empty($request->dom) && $request->dom != 'ab')
-        ? 'mariadb_' . $request->dom
-        : 'mariadb';
-    $dom = $request->dom ?: 'ab';
-    $dumpFile = base_path("database/dumps/First_Commmit_{$dom}_No_User.sql");
-    $changesFile = base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql");
-    $cfiles = $this->ScanForNew($dom);
-    $addfield = @file_get_contents($changesFile) ?? '';
+    public function GetAfter(Request $request)
+    {
+        $this->connectionName = (!empty($request->dom) && $request->dom != 'ab')
+            ? 'mariadb_' . $request->dom
+            : 'mariadb';
 
-    if (!file_exists($dumpFile)) {
-        return response()->json(['error' => 'Dump-Datei nicht gefunden.'], 404);
-    }
+        $dom = $request->dom ?: 'ab';
 
-    // 1️⃣ Dump einlesen und CREATE TABLEs extrahieren
-    $dumpContent = file_get_contents($dumpFile).$cfiles;
-    preg_match_all('/CREATE TABLE `(.*?)`\s*\((.*?)\)\s*ENGINE=/is', $dumpContent, $matches, PREG_SET_ORDER);
+        $dumpFile = base_path("database/dumps/First_Commmit_{$dom}_No_User.sql");
+        $changesFile = base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql");
 
-    $dumpTables = [];
-    foreach ($matches as $match) {
-        $tableName = $match[1];
-        $columnsDef = $match[2];
+        $knownSql = $this->buildSqlIndex($dom);
 
-        // Jede Spalte korrekt auslesen, inkl. datetime etc.
-        preg_match_all('/`([^`]+)`\s+([^\n,]+)/', $columnsDef, $colMatches, PREG_SET_ORDER);
-        foreach ($colMatches as $col) {
-            $colName = $col[1];
-            $colType = trim($col[2]);
+        if (!file_exists($dumpFile)) {
+            return response()->json([
+                'error' => 'Dump-Datei nicht gefunden.'
+            ], 404);
+        }
 
-            if (stripos($colType,'primary key') !== false ||
-                stripos($colType,'key') !== false ||
-                stripos($colType,'unique') !== false) {
+        $dumpContent = file_get_contents($dumpFile).$this->ScanForNew($dom);
+
+        preg_match_all(
+            '/CREATE TABLE `(.*?)`\s*\((.*?)\)\s*ENGINE=/is',
+            $dumpContent,
+            $matchez,
+            PREG_SET_ORDER
+        );
+
+        $dumpTables = [];
+
+        foreach ($matchez as $match) {
+
+            $tableName = $match[1];
+            $columnsDef = $match[2];
+
+            preg_match_all(
+                '/`([^`]+)`\s+([^\n,]+)/',
+                $columnsDef,
+                $colMatches,
+                PREG_SET_ORDER
+            );
+
+            foreach ($colMatches as $col) {
+
+                $colName = $col[1];
+                $colType = trim($col[2]);
+
+                if (
+                    stripos($colType,'primary key') !== false ||
+                    stripos($colType,'key') !== false ||
+                    stripos($colType,'unique') !== false
+                ) {
+                    continue;
+                }
+
+                $dumpTables[$tableName]['columns'][$colName] = $colType;
+                $dumpTables[$tableName]['order'][] = $colName;
+            }
+        }
+
+        $tables = DB::connection($this->connectionName)->select('SHOW TABLES');
+
+        $alterStatements = '';
+        $this->changesCount = 0;
+
+        $hasNewAlter = false;
+
+        foreach ($tables as $tableRow) {
+
+            $tableName = array_values((array)$tableRow)[0];
+
+            if (
+                substr_count($tableName,"cleo_") ||
+                substr_count($tableName,"monxx_")
+            ) {
                 continue;
             }
 
-            $dumpTables[$tableName]['columns'][$colName] = $colType;
-            $dumpTables[$tableName]['order'][] = $colName;
-        }
-    }
+            if (!isset($dumpTables[$tableName])) {
+                continue;
+            }
 
-    // 2️⃣ Tabellen der aktuellen DB abrufen
-    $tables = DB::connection($this->connectionName)->select('SHOW TABLES');
-    $alterStatements = '';
-    $this->changesCount = 0;
-    $added_fields = [];
+            $currentColumns = DB::connection($this->connectionName)
+                ->select("SHOW COLUMNS FROM `$tableName`");
 
-    foreach ($tables as $tableRow) {
-        $tableName = array_values((array)$tableRow)[0];
+            foreach ($currentColumns as $col) {
 
-        if (substr_count($tableName,"cleo_") || substr_count($tableName,"monxx_")) continue;
-        if (!isset($dumpTables[$tableName])) continue;
+                $colName = $col->Field;
 
-        $currentColumns = DB::connection($this->connectionName)->select("SHOW COLUMNS FROM `$tableName`");
+                if (!isset($dumpTables[$tableName]['columns'][$colName])) {
 
-        foreach ($currentColumns as $col) {
-            $colName = $col->Field;
+                    $colDef = $col->Type;
+                    $colDef .= ($col->Null === 'NO')
+                        ? ' NOT NULL'
+                        : ' NULL';
 
-            if (!isset($dumpTables[$tableName]['columns'][$colName])){
+                    if (!is_null($col->Default)) {
 
-                $colDef = $col->Type;
-                $colDef .= ($col->Null === 'NO') ? ' NOT NULL' : ' NULL';
+                        $defaultVal = $col->Default;
 
-                if (!is_null($col->Default)) {
-                    $defaultVal = $col->Default;
-                    if (!is_numeric($defaultVal) && strtolower($defaultVal) !== 'null') {
-                        $defaultVal = "'$defaultVal'";
+                        if (
+                            !is_numeric($defaultVal) &&
+                            strtolower($defaultVal) !== 'null'
+                        ) {
+                            $defaultVal = "'$defaultVal'";
+                        }
+
+                        $colDef .= " DEFAULT $defaultVal";
                     }
-                    $colDef .= " DEFAULT $defaultVal";
-                }
 
-                if (!empty($col->Extra)) {
-                    $colDef .= " " . $col->Extra;
-                }
-                // 🔥 AFTER-Spalte bestimmen
-                $afterCol = $this->getAfterColumn($dumpTables[$tableName], $colName);
+                    if (!empty($col->Extra)) {
+                        $colDef .= " ".$col->Extra;
+                    }
 
-                // vorhandene Spalten
-                $existingColumns = collect($currentColumns)->pluck('Field')->toArray();
+                    $afterCol = $this->getAfterColumn(
+                        $dumpTables[$tableName],
+                        $colName
+                    );
 
-                // SQL bauen
-                if ($afterCol && in_array($afterCol, $existingColumns)) {
-                    $sql_q = "ALTER TABLE `$tableName` ADD COLUMN `$colName` $colDef AFTER `$afterCol`;\n";
-                } else {
-                    $sql_q = "ALTER TABLE `$tableName` ADD COLUMN `$colName` $colDef;\n";
-                }
-                if (!str_contains($addfield, $sql_q)) {
-                    $alterStatements .= $sql_q;
-                    $added_fields[] = [$tableName,$colName];
-                    $alterStatements .= $this->alterTableCont([[$tableName,$colName]], $this->connectionName, $dom);
-                    $this->changesCount++;
+                    $existingColumns = collect($currentColumns)
+                        ->pluck('Field')
+                        ->toArray();
+
+                    if (
+                        $afterCol &&
+                        in_array($afterCol, $existingColumns)
+                    ) {
+                        $sql_q =
+                            "ALTER TABLE `$tableName` ADD COLUMN `$colName` $colDef AFTER `$afterCol`;";
+                    } else {
+                        $sql_q =
+                            "ALTER TABLE `$tableName` ADD COLUMN `$colName` $colDef;";
+                    }
+
+                    // if (str_contains($sql_q, 'private_messages_text')) {
+                    //     dd(
+                    //         $sql_q,
+                    //         isset($knownSql[md5(trim($sql_q))])
+                    //     );
+                    // }
+                    // dump($sql_q);
+                    // dump(isset($knownSql[md5(trim($sql_q))]));
+                    // dd("ASD");
+                    if (!isset($knownSql[md5(trim($sql_q))])) {
+
+                        $hasNewAlter = true;
+
+                        $knownSql[md5(trim($sql_q))] = true;
+
+                        $alterStatements .= $sql_q."\n";
+
+                        $alterStatements .= $this->alterTableCont(
+                            [[$tableName,$colName]],
+                            $this->connectionName,
+                            $dom,
+                            $knownSql
+                        );
+
+                        $this->changesCount++;
+                    }
                 }
             }
         }
-    }
+// dd([
+//     'exists' => file_exists($changesFile),
+//     'path' => $changesFile,
+//     'alterStatements' => $alterStatements
+// ]);
+        if ($hasNewAlter) {
 
-    if (!empty($alterStatements)) {
-        file_put_contents($changesFile, $alterStatements, FILE_APPEND);
+
+            file_put_contents(
+                $changesFile,
+                $alterStatements,
+                FILE_APPEND
+            );
+        }
+
+        file_put_contents(
+            public_path("/timespy/gitdbmake.dat"),
+            date("Y-m-d H:i:s")
+        );
+
+        return response()->json([
+            "dom" => $dom,
+            'message' => 'Vergleich abgeschlossen.',
+            'Datei verändert' => $changesFile,
+            'Summe Änderung' => $this->changesCount,
+            'QueryString' => $alterStatements
+        ]);
     }
-    file_put_contents(public_path("/timespy/gitdbmake.dat"),date("Y-m-d H:i:s"));
-    return response()->json([
-        "dom"=>$dom,
-        'message' => 'Vergleich abgeschlossen.',
-        'Datei verändert' => $changesFile,
-        'Summe Änderung' => $this->changesCount,
-        'QueryString' => $alterStatements
-    ]);
-}
 private function getAfterColumn($dumpTable, $columnName)
 {
     $order = $dumpTable['order'] ?? [];
@@ -239,49 +403,55 @@ private function getAfterColumn($dumpTable, $columnName)
     return $order[$index - 1];
 }
 
-public function alterTableCont($arr, $connectionName, $dom)
-{
-//     \Log::info("alterTableCont gestartet", $arr);
-    $allOldContent = $this->ScanForNew($dom);
-    $this->ddr = '';
-    $addfield = file_exists(base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql"))
-        ? file_get_contents(base_path("database/dumps/Newer_Data_{$dom}_".$this->mcsl_version.".sql"))
-        : '';
+    public function alterTableCont(
+        $arr,
+        $connectionName,
+        $dom,
+        &$knownSql
+    )
+    {
+        $this->ddr = '';
 
-    foreach ($arr as $cont) {
-        $table  = $cont[0];
-        $column = $cont[1];
+        foreach ($arr as $cont) {
 
-        $rows = DB::connection($connectionName)
-            ->table($table)
-            ->where($column, '!=', '0')
-            ->whereNotNull($column)
-            ->where($column, '!=', '')
-            ->get();
+            $table  = $cont[0];
+            $column = $cont[1];
 
-        foreach ($rows as $row) {
-            $id = $row->id;
-            $value = $row->$column;
+            $rows = DB::connection($connectionName)
+                ->table($table)
+                ->where($column, '!=', '0')
+                ->whereNotNull($column)
+                ->where($column, '!=', '')
+                ->get();
 
-            $valueSql = is_null($value) ? "NULL" : "'" . addslashes($value) . "'";
+            foreach ($rows as $row) {
 
-            $sql_q = "UPDATE `$table` SET `$column` = $valueSql WHERE `id` = '$id';";
+                $id = $row->id;
+                $value = $row->$column;
 
-            if (
-                    !str_contains($addfield, $sql_q) &&
-                    !str_contains($this->ddr, $sql_q) &&
-                    !str_contains($allOldContent, $sql_q) &&
+                $valueSql = is_null($value)
+                    ? "NULL"
+                    : "'" . addslashes($value) . "'";
+
+                $sql_q =
+                    "UPDATE `$table` SET `$column` = $valueSql WHERE `id` = '$id';";
+
+                if (
+                    !isset($knownSql[md5(trim($sql_q))]) &&
                     $column != 'position'
                 ) {
-                $this->ddr .= $sql_q . "\n";
-                $this->changesCount++;
+
+                    $knownSql[md5(trim($sql_q))] = true;
+
+                    $this->ddr .= $sql_q."\n";
+
+                    $this->changesCount++;
+                }
             }
         }
-    }
 
-//     \Log::info("Kompletter DDR SQL:", ['sql' => $this->ddr]);
-    return $this->ddr;
-}
+        return $this->ddr;
+    }
 
 
 public function show(Request $request)

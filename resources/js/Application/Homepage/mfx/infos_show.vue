@@ -8,7 +8,7 @@
                 <div>
                 <page-title>
                     <template #title>
-                        <span style="border-bottom:4px solid orange;" class="dark:text-layout-night-1050 text-layout-sun-1000 inline"><a href='home/infos'>Infos</a> &rarr;
+                        <span style="border-bottom:4px solid orange;" class="dark:text-layout-night-1050 text-layout-sun-1000 inline"><a href='/home/infos'>Infos</a> &rarr;
                         <span v-html="cleanHtml(data.headline)"></span> <editbtns :id="data?.id" table="infos" /></span><br /><img :src="'/images/spacer.gif'" height="5" width="1" style="line-height: 5px;"/><br />
                 </template>
                 </page-title>

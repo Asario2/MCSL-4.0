@@ -45,12 +45,12 @@
                                     label="Dashboard"
                                 >
                                 </NavLink>
-                                <NavLink v-if="SD() == 'ab'" icon="IconStar"
+                                <!-- <NavLink v-if="SD() == 'ab'" icon="IconStar"
                                     :routeName="route('admin.mcslpoints')"
                                     :active="route().current('admin.mcslpoints')"
                                     :label="mcslpoints"
                                 >
-                                </NavLink>
+                                </NavLink> -->
                               </div>
                         </div>
 
