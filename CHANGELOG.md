@@ -312,3 +312,6 @@
 ![Version](https://img.shields.io/badge/version-5.66.0-orange) Hotfix - adding & removing in user rights (#503)  
 ![Version](https://img.shields.io/badge/version-5.67.8-orange) Feature - Changed home/info/show layout (#506)  
 ![Version](https://img.shields.io/badge/version-5.68.9-orange) Feature - Git DB Refresh actualized (#507)  
+![Version](https://img.shields.io/badge/version-5.69.7-orange) Feature - Add Sitemap Generator Link to Dashboard (#508)  
+![Version](https://img.shields.io/badge/version-5.70.4-orange) Feature - Changed Logo on asario.de (#509)  
+![Version](https://img.shields.io/badge/version-5.71.6-orange) Hotfix - Sharing of Content now works properly (#510)  
