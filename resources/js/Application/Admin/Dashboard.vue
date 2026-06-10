@@ -83,6 +83,19 @@
                     Fontographer Toolz
                 </template>
             </navigation-card>
+            <navigation-card v-if="modulRights?.FontographerToolz"
+                class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
+                title="Google Sitemap"
+                linkName="Aktualisiere Sitempas"
+                target="_self"
+                :routeName="route('gen.sitemap')"
+                :withIcon="true"
+                icon="IconGoogle"
+            >
+                <template #description>
+                    Google XML Sitemap
+                </template>
+            </navigation-card>
             <navigation-card v-if="modulRights?.SendMail"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
                 title="Email Center"

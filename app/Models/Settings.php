@@ -163,19 +163,14 @@
         'StatisticsAll' => 'Statistiken alle Domains',
         'UserDisable' => 'Benutzer deaktivieren',
         'SQLUpdate' => 'Datenbank Synchronisieren',
-        'test dzads' => 'asdasd',
         'UnusedImages' => 'Unbenutzte Bilder Galerie',
         'hackinglog' => 'Hacking Log',
         'DumpDB' => 'Datenbank Sicherung',
         'Ausgaben' => 'Ein / Ausgaben',
         'DumpGItDataBase' => 'Speichern von DB Dumps for Github',
-        'sdfsdf' => 'adsd',
-        'addddddddddddddd' => 'asadad',
         'ActivityLog' => 'All actions in one List',
-        'test func' => 'TEst zum checken',
         'FontographerToolz' => 'Schriftartentool',
-        'test 213' => 'sda',
-        'adaaaaaa' => 'adddddddddddddddddddddd',
+        'SitemapGenerator' => 'Generate Sitemap for Google',
     ];
     public static array $regdom =   ['ab'=>true];
     public static array $domss =   ['ab',"mfx","dag","chh"];

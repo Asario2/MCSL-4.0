@@ -1177,6 +1177,10 @@ public function imprint_dag()
     }
     public function sitemaps()
     {
+        if(!CheckZRights('SitemapGenerator'))
+        {
+            return redirect("/no-rights");
+        }
         foreach(Settings::$mariaDBs as $dom=>$db)
         {
         $dbExists = DB::select(

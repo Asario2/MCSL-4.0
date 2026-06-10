@@ -80,7 +80,7 @@ import IconDidyou from "@/Application/Components/Icons/IconDidyou.vue";
 import IconComment_bl from "@/Application/Components/Icons/IconComment_bl.vue";
 import Iconhackinglog from "@/Application/Components/Icons/IconHackingLog.vue";
 import IconMoney from "@/Application/Components/Icons/IconMoney.vue";
-
+import IconGoogle from "@/Application/Components/Icons/IconGoogle.vue";
 export default {
     name: "Components_NavigationCard",
 
@@ -110,6 +110,7 @@ export default {
         IconNews,
         IconTexts,
         IconInfos,
+        IconGoogle,
         IconFont,
         texts,
         IconStar,
@@ -188,6 +189,7 @@ export default {
                 IconPublicat,
                 IconSources,
                 IconFont,
+                IconGoogle,
             };
             //
             return icons[this.icon];
