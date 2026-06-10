@@ -26,7 +26,7 @@
         </alert>
       </div>
 
-      <div
+      <article
         v-for="(item, index) in items.data"
         :key="item.id || index"
         class="mb-4 border border-gray-300 dark:border-gray-600 rounded-lg"
@@ -60,7 +60,7 @@
           <editbtns :id="item.id" table="didyouknow" /><br />
           <SocialButtons :name="item?.headline" :postId="item.id"  :title="'Wussten Sie schon, '+item.headline" :xslug="true" :nostars="true" :sse="item.headline"/>
         </div>
-      </div>
+      </article>
     </section>
 
     <Pagination :links="items.links" basePath="home/didyouknow" />

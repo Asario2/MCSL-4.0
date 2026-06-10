@@ -8,7 +8,7 @@
                     <!-- Linke Spalte: Text (9 von 12) -->
                     <div class="col-span-12 md:col-span-9 dark:bg-layout-night-100 p-3 border-[2px] rounded-lg border-black">
                         <h1 class="text-black blackcan">Lost & Found</h1>
-                        <div v-for="(entry, index) in data[0]" :key="index" class="mb-4">
+                        <article v-for="(entry, index) in data[0]" :key="index" class="mb-4">
                             <div class="shadow-[inset_0_0_10px_rgba(0,0,0,0.5)] pt-2 lg:rounded-lg dark:bg-layout-night-3000 border-[2px] border-black">
                                 <img :src="'/images/_dag/icons/' + entry.typ + '.png'" class="inline mt-[1px] m-3"/>
                                 <h3 class='inline'>{{ rumLaut(entry.headline) }}</h3>
@@ -16,13 +16,15 @@
                             <div class="p-3">
                                 {{ rumLaut(entry.message) }}
                             </div>
+                    </article>
                         </div>
-                    </div>
+
+
 
                     <!-- Rechte Spalte: Spruch des Monats -->
-                    <div class="col-span-12 md:col-span-3 flex flex-col gap-4">
+                    <article class="col-span-12 md:col-span-3 flex flex-col gap-4">
                         <Poems :quotes="quotes" :rumLaut="rumLaut" />
-                    </div>
+                    </article>
 
                 </div>
                 </template>

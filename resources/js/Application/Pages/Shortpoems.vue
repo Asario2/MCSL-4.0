@@ -49,7 +49,7 @@
     </div>
   </div>
   </form>
-      <div
+      <article
         v-for="(item, index) in items.data"
         :key="item.id || index"
         class="mb-4 border border-gray-300 dark:border-gray-600 rounded-lg"
@@ -89,8 +89,8 @@
         </div>
 
         <!-- Accordion Button -->
+        </article>
 
-      </div>
     </section>
 
     <!-- Pagination -->

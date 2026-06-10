@@ -10,7 +10,7 @@
                 </template>
                 </page-title>
                 <div class="grid grid-cols-12">
-  <div v-for="item in data.data" :key="item.id" class="col-span-6 p-4 lg:rounded-lg">
+  <article v-for="item in data.data" :key="item.id" class="col-span-6 p-4 lg:rounded-lg">
     <a :href="'/home/images/show/' + item.id" class="block text-layout-sun-600 dark:text-layout-night-900">
       <div
         class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg pr-2 border border-layout-sun-1000 dark:border-layout-night-1050
@@ -41,11 +41,12 @@
       </div>
     </a>
 
-
+</article>
 
                         </div>
+
                     </div>
-                    </div>
+
 
 
 

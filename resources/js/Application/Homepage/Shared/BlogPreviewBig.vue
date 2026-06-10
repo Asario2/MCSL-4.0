@@ -1,8 +1,9 @@
 <template>
 
-
+    <article>
      <div id="teaser-img2" class="block max-w-sm gap-3 mx-auto  sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100 overfl" style="z-index:0;margin-bottom:-0px;" :class="{ 'disable-link': isCommentActive }"
     >
+
         <!-- Das Bild des Blog-Posts -->
         <div class="blog-container mh_64 lg:col-span-7" style="padding:0px;margin:0px;">
             <Link
@@ -87,7 +88,9 @@
             <socialButtons  :name="blog?.title" :postId="blog.id" :slug="blog.autoslug" :title="'Blog: '+blog.title" :nostars="true" :big="true"/>
         </div>
         </div>
+
     </div>
+    </article>
 </template>
 
 <script>

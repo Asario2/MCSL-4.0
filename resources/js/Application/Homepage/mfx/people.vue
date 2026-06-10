@@ -10,7 +10,7 @@
                 </template>
                 </page-title>
                 <div class="grid grid-cols-12 gap-6">
-                <div
+                <article
                     v-for="item in data"
                     :key="item.id"
                     class="col-span-6 border border-layout-sun-1000 dark:border-layout-night-1050 bg-layout-sun-50 dark:bg-layout-night-50 rounded-lg grid grid-cols-6"
@@ -46,11 +46,11 @@
                         </div>
 
                     </div>
+                    </article>
                 </div>
                 </div>
 
 
-                    </div>
 
 
 

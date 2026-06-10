@@ -1,6 +1,7 @@
 <template>
 
     <div class="blog-container w-full max-w-sm mx-auto group rounded hover:no-underline focus:no-underline bg-layout-sun-100 dark:bg-layout-night-100">
+        <article>
         <Link
             :href="route('home.blog.show', blog.autoslug)"
             class="block text-layout-sun-600 dark:text-layout-night-900 twi nul"
@@ -69,8 +70,9 @@
 
         <!-- **Tabelle direkt unterhalb des Blog-Containers (fixiert)** -->
         <SocialButtons :name="blog?.title" :postId="blog.id" sm="Sm" :slug="blog.autoslug"  :title="'Blog: '+blog.title"  :nostars="true"       />
-
+    </article>
     </div>
+
 </template>
 
 <script>

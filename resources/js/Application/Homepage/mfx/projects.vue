@@ -10,7 +10,7 @@
                 </template>
                 </page-title>
                 <div class="space-y-3">
-    <div
+    <article
         v-for="item in data"
         :key="item.id"
         class="min-h-[102px] bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg border border-layout-sun-1000 dark:border-layout-night-1050 grid grid-cols-12 gap-4"
@@ -71,11 +71,13 @@
                 alt="mcs"
             />
         </div>
+        </article>
     </div>
+
 </div>
 
 
-                    </div>
+
             </template>
         </page-content>
     </layout>

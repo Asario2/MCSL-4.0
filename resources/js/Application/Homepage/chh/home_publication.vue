@@ -13,7 +13,7 @@
                 /></div>
 <div class="w-full">
 
-    <div
+    <article
         v-for="(db, index) in filteredContacts"
         :key="db.pid"
         :class="rowClass(index)"
@@ -51,9 +51,11 @@
             </div>
 
         </div>
-    </div>
+</article>
+
 
 </div>
+
 <Pagination :links="pag.links" basePath="publikationen" />
 </div>
 

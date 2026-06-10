@@ -1,53 +1,84 @@
 <template>
     <div class="rim">
-    <layout :header-url="$page.props.saas_url + '/'">
-        <MetaHeader title="Meine Links" />
+        <layout :header-url="$page.props.saas_url + '/'">
+            <MetaHeader title="Meine Links" />
+
             <page-content>
                 <template #content>
-                <div class="grid grid-cols-12 gap-6">
-                    <!-- Linke Spalte: Text (9 von 12) -->
-                    <div class="col-span-12 md:col-span-9">
-                        <h1 class="text-black blackcan dark:bg-layout-night-100 p-3 border-[2px] rounded-lg border-black">Meine Links</h1>
-                        <div v-for="(entry, index) in data[0]" :key="index" class="mb-6">
-                            <!-- Flex-Box: Bild links, Text rechts -->
-                            <div class="flex gap-4 dark:bg-layout-night-100 border-[2px] rounded-lg border-black p-3">
-                                <!-- Linkes Bild -->
-                                <div class="flex-shrink-0">
-                                    <a :href="entry.url" target="_blank">
-                                    <img
-                                        v-if="entry.img_bild"
-                                        :src="'/images/_dag/links/' + entry.img_bild"
-                                        alt="Bild"
-                                        class="w-[150px] h-[150px] object-cover rounded shadow"
-                                    />
-                                    </a>
-                                </div>
 
-                                <!-- Rechter Text-Bereich -->
-                                <div class="flex-1">
-                                    <!-- Headline -->
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <h3 class="font-bold text-black dark:text-black mt-[-3px]" v-html="rumLaut(entry.headline)"></h3>
+                    <div class="grid grid-cols-12 gap-6">
+
+                        <!-- Linke Spalte -->
+                        <div class="col-span-12 md:col-span-9">
+
+                            <h1
+                                class="text-black blackcan dark:bg-layout-night-100 p-3 pb-0 border-[2px] rounded-lg border-black"
+                            >
+                                Meine Links
+                            </h1>
+
+                            <article
+                                v-for="(entry, index) in data[0]"
+                                :key="index"
+                                class="mb-6"
+                            >
+                                <div
+                                    class="flex gap-4 dark:bg-layout-night-100 border-[2px] rounded-lg border-black p-3"
+                                >
+                                    <!-- Linkes Bild -->
+                                    <div class="flex-shrink-0">
+                                        <a :href="entry.url" target="_blank">
+                                            <img
+                                                v-if="entry.img_bild"
+                                                :src="'/images/_dag/links/' + entry.img_bild"
+                                                alt="Bild"
+                                                class="w-[150px] h-[150px] object-cover rounded shadow"
+                                            />
+                                        </a>
                                     </div>
 
-                                    <!-- Message -->
-                                    <div class="text-gray-800 dark:text-gray-200" v-html="rumLaut(entry.message)"></div>
-                                    <span><a :href="entry.url" target="_blank">{{ entry.url }}</a></span>
+                                    <!-- Rechter Text -->
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <h3
+                                                class="font-bold text-black dark:text-black mt-[-3px]"
+                                                v-html="rumLaut(entry.headline)"
+                                            ></h3>
+                                        </div>
+
+                                        <div
+                                            class="text-gray-800 dark:text-gray-200"
+                                            v-html="rumLaut(entry.message)"
+                                        ></div>
+
+                                        <span>
+                                            <a :href="entry.url" target="_blank">
+                                                {{ entry.url }}
+                                            </a>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                            </article>
+
                         </div>
+
+                        <!-- Rechte Spalte -->
+                        <div class="col-span-12 md:col-span-3">
+                            <article>
+                            <Poems
+                                :quotes="quotes"
+                                :rumLaut="rumLaut"
+                            />
+                            </article>
+                        </div>
+
                     </div>
 
-                    <!-- Rechte Spalte: Spruch des Monats -->
-                    <div class="col-span-12 md:col-span-3 flex flex-col gap-4">
-                        <Poems :quotes="quotes" :rumLaut="rumLaut" />
-                    </div>
-                </div>
                 </template>
             </page-content>
         </layout>
     </div>
-    </template>
+</template>
 
 <script>
 import { defineComponent } from "vue";

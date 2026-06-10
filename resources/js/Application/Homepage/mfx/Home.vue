@@ -18,7 +18,7 @@
                 </page-paragraph>
                 <div class="grid grid-cols-12 gap-0">
                     <div class="col-span-6 p-1 md:p-4 lg:rounded-lg ">
-                    <div v-for="item in news.data" :key="item.id">
+                    <article v-for="item in news.data" :key="item.id">
                     <div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050">
                         <div class="flex items-center gap-2">
                             <H2
@@ -36,22 +36,25 @@
                             v-html="cleanHtml(item.message)"
                         ></span>
 
-                    </div>
+
 
                 </div>
-
+                </article>
                 </div>
 
                 <div class="col-span-6 p-1 md:p-4 lg:rounded-lg ">
 
                 <div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6  border border-layout-sun-1000 dark:border-layout-night-1050">
-                    <div v-if="text" class="dark:text-layout-night-1000 ">
-                        <h2 class="font-bold text-2xl mt-0"><span v-html="text.headline"></span></h2> <editbtns id="14" table="texts"></editbtns>
-                        <div class="" v-html="text.text"></div>
-                    </div>
-                    <div v-else>
-                    <p class="text-gray-500 italic">Kein Willkommenstext vorhanden.</p>
-                    </div>
+                    <div v-if="text" class="flex items-center gap-2">
+                    <h2 class="font-bold text-2xl mt-0 mb-2">
+                        <span v-html="text.headline"></span>
+                    </h2>
+
+                    <editbtns id="14" table="texts" />
+                </div>
+
+                <span v-html="text.text"></span>
+
                 </div>
 
                 <emailview></emailview>
@@ -69,7 +72,7 @@
 import { defineComponent } from "vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import Layout from "@/Application/Homepage/Shared/mfx/Layout.vue";
-import { selectionHelper, GetSettings,rumLaut } from "@/helpers";
+import { selectionHelper, stripTags,rumLaut } from "@/helpers";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import PageContent from "@/Application/Components/Content/PageContent.vue";
 import PageTitle from "@/Application/Components/Content/PageTitle.vue";
@@ -110,6 +113,7 @@ export default defineComponent({
     }
   },
     methods: {
+        stripTags,
         cleanHtml(html) {
       const result = rumLaut(html);
      // console.log("rumLaut output:", result);
