@@ -58,7 +58,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
     >
 
     <title inertia>
-        {{ CleanTable(1) }}
+        {{ ucf(CleanTable(1)) }}
     </title>
 
     <link
@@ -103,8 +103,6 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
     <script src="/js/users.js"></script>
 
 <script>
-console.log(localStorage.getItem('theme'));
-console.log(typeof localStorage.getItem('theme'));
 (function () {
 
     const forceLight =

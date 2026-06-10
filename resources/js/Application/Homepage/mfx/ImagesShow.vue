@@ -17,12 +17,14 @@
           <div v-if="!Object.keys(im_cont || {}).length" class="text-layout-sun-1000 dark:text-layout-night-1000">
             <p>Keine Bilder gefunden.</p>
           </div>
-
           <div v-else class="">
+
             <photoswipe_new :images="im_cont" :basePath="'/images/_mfx/images/imgdir_content/' + def + '/'">
 
             </photoswipe_new>
+
         </div>
+
         </template>
       </page-content>
     </layout>

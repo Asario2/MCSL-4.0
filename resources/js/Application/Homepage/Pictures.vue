@@ -55,7 +55,7 @@
                     </alert>
                 </div>
                     <div id="gallery">
-                    <div v-for="item in entries.data" :key="item?.id"
+                    <article v-for="item in entries.data" :key="item?.id"
         class="w-full block max-w-sm gap-3 mx-auto sm:max-w-full group mb-4
             lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100
             border-2 border-layout-sun-300 dark:border-layout-night-300 p-4"
@@ -122,7 +122,9 @@
             <IconCamera />&nbsp;&nbsp;{{ item?.camera }}
             </div>
         </div>
-    </div>
+        </article>
+
+
     </div>
 
     <!-- Pagination -->

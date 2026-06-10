@@ -1,4 +1,3 @@
-console.log('APP JS LOADED');
 import './ziggy-global';
 import './bootstrap/client';
 
@@ -174,14 +173,14 @@ createInertiaApp({
 
     resolve: async (name) => {
 
-    console.log('Loading page:', name);
+    // console.log('Loading page:', name);
 
     const page = await resolvePageComponent(
         `./Application/${name}.vue`,
         import.meta.glob("./Application/**/*.vue")
     );
 
-    console.log('Page loaded:', page);
+    // console.log('Page loaded:', page);
 
     return page;
 },

@@ -12,6 +12,7 @@
       @click.prevent="openLightbox(index)"
       class="w-full bg-layout-sun-0 border border-layout-sun-1000 dark:border-layout-night-1050 rounded-lg shadow text-center bg-layout-sun-2050 dark:bg-layout-night-0 cursor-pointer"
     >
+    <article>
       <ZoomImage
         awidth="a_320"
         :src="`${basePath}/thumbs/${cc(image.fileName)}`"
@@ -29,6 +30,7 @@
       ></div>
 
       <div v-else style="margin-bottom: -25px;"></div>
+      </article>
     </a>
   </div>
 </template>
