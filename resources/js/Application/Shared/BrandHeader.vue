@@ -12,17 +12,17 @@
                 >
                     <span
                         v-if="brand_1"
-                        class="text-primary-sun-500 dark:text-primary-night-500 glow-blue"
+                        class="text-primary-sun-500 dark:text-primary-night-500 glow-blue euros text-2xl"
                         >{{ brand_1 }}</span
                     >
                     <span
                         v-if="brand_2"
-                        class="text-layout-sun-500 dark:text-layout-night-500 glow-blue-gray"
+                        class="text-layout-sun-500 dark:text-layout-night-500 glow-blue-gray euros text-2xl"
                         >{{ brand_2 }}</span
                     >
                 </div>
                 <div
-                    class="font-title text-xs lg:text-sm ml-[70px] leading-snug whitespace-nowrap tracking-wide text-layout-sun-600 dark:text-layout-night-900"
+                    class="font-title text-xs lg:text-sm mt-[5px] ml-[59px] leading-snug whitespace-nowrap tracking-wide text-layout-sun-600 dark:text-layout-night-900 euros"
                     v-if="appName"
                 >
                     <span v-html="appName"></span>
@@ -101,3 +101,9 @@ export default {
 
 </script>
 
+<style>
+.euros{
+    font-family:Eurostile !important;
+
+}
+</style>
