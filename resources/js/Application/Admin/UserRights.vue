@@ -381,6 +381,10 @@ export default {
   if (event) event.preventDefault(); // optional, @click.prevent reicht eigentlich
 
   try {
+    console.log({
+    name: this.addedF,
+    desc: this.fdesc
+});
     const res = await axios.post('/api/AddFunc', {
       name: this.addedF,
       desc: this.fdesc,
@@ -404,6 +408,8 @@ export default {
 
     // Funktionen neu laden (sichtbar + reaktiv)
     await this.loadFunctions(this.selected);
+    console.log('LABELS', this.labels);
+    console.log('SETTINGS', this.settings.exl);
 
   } catch (err) {
     console.error(err);
@@ -616,7 +622,7 @@ export default {
 
         // initialize rights array states
         this.initializeRights();
-      } catch (e) {
+          } catch (e) {
         console.error(e);
       }
     },
@@ -670,6 +676,7 @@ export default {
 
     // --- Funktionen ---
     async loadFunctions(urid) {
+
   try {
     const res = await axios.get(`/admin/user-rights/get?urid=${urid}`);
 
@@ -754,6 +761,9 @@ async deleteXkis(key) {
 
     // Funktionen neu laden
     await this.loadFunctions(this.selected);
+    console.log(res.data);
+await this.reloadSettings();
+console.log(this.settings.exl);
 
   } catch (e) {
     if (e.response?.status === 403 && e.response.data?.redirect) {
