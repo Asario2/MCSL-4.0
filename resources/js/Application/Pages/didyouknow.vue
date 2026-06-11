@@ -56,7 +56,8 @@
           :ref="`content-${item.id}`"
           class="px-4 py-3 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300 border-t border-gray-300 dark:border-gray-700"
         >
-          <p>{{ item.answer || 'Kein Text vorhanden.' }}</p>
+          <p v-html="item.answer || 'Kein Text vorhanden.'">
+          </p>
           <editbtns :id="item.id" table="didyouknow" /><br />
           <SocialButtons :name="item?.headline" :postId="item.id"  :title="'Wussten Sie schon, '+item.headline" :xslug="true" :nostars="true" :sse="item.headline"/>
         </div>
@@ -73,6 +74,7 @@ import MetaHeader from '@/Application/Homepage/Shared/MetaHeader.vue';
 import newbtn from '@/Application/Components/Form/newbtn.vue';
 import SearchFilter from '@/Application/Components/Lists/SearchFilter.vue';
 import Alert from '@/Application/Components/Content/Alert.vue';
+import {stripTags} from "@/helpers";
 import editbtns from '@/Application/Components/Form/editbtns.vue';
 import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
 // import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
@@ -117,6 +119,7 @@ export default {
     }
   },
   methods: {
+    stripTags,
     reset() { this.form.search = null },
 
     toggle(index, item) {

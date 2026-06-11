@@ -37,6 +37,18 @@
     font-style: normal;
     font-display: swap;
 }
+@font-face {
+    font-family: 'IBMPlex';
+    src: url('webfonts/IBMPlex.eot');
+    src: url('webfonts/IBMPlex.eot?#iefix') format('embedded-opentype'),
+        url('webfonts/IBMPlex.woff2') format('woff2'),
+        url('webfonts/IBMPlex.woff') format('woff'),
+        url('webfonts/IBMPlex.ttf') format('truetype'),
+        url('webfonts/IBMPlex.svg#NewWGL4Font') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 @font-face {
     font-family: 'Eurostile';
