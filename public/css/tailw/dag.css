@@ -115,6 +115,6 @@ a:link:hover, a:visited:hover, a:active:hover
      text-shadow: 1px 1px #333 !important;
     font-size:20px !important;
  }
-FORM.em_bg{
-        background-color:rgba(200,200,200,0.4) !important;
+DIV.em_bg,SPAN.em_bg{
+        background-color:rgb(218, 83, 14,0.4) !important
     }

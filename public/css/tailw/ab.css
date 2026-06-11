@@ -66,6 +66,9 @@
             0 0 40px darkblue!important;
 
     }
+    FORM.em_bg{
+        background-color: #79cbf120;
+    }
     .glow-blue-gray {
         color: #ccc  !important;
         color:#3395c2 !important;

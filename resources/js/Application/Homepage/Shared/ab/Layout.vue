@@ -551,7 +551,9 @@
         GetProfileImagePath,
         SD,
         CheckTRights,
-
+            mupper(text) {
+               return text;
+            },
 
    applyTheme() {
 

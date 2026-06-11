@@ -157,6 +157,7 @@
     color: #ff9600;
     font-family: Tahoma;
     margin: 3px;
+    margin-bottom: 19px;
     text-decoration: none;
     }
     .button-primary:hover, a.button-primary:visited:hover {
@@ -166,9 +167,9 @@
     padding: 5px 7px !important;
     }
     FORM.em_bg{
-        background-color:rgba(200,200,200,0.4) !important;
+        /* background-color:rgba(200,200,200,0.4) !important; */
     }
     .dark .em_bg {
-    background-color: rgba(255,189,103,0.5) !important;
+    /* background-color: rgba(255,189,103,0.5) !important; */
 }
     </style>
