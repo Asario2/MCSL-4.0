@@ -319,3 +319,4 @@
 ![Version](https://img.shields.io/badge/version-5.73.4-orange) Feature - included article tags on the rest of the pages. (#512)  
 ![Version](https://img.shields.io/badge/version-5.74.5-orange) Feature - The text font has been changed. (#514)  
 ![Version](https://img.shields.io/badge/version-5.75.6-orange) Feature - Changed Layout of Contacts (#513)  
+![Version](https://img.shields.io/badge/version-5.76.2-orange) Changed Fonts on other projects (#515)  
