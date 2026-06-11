@@ -10,7 +10,7 @@
                             <span class="dark:text-layout-night-1050 text-layout-sun-100 ">
                                 {{ text?.headline }}
                             </span>
-
+                            &nbsp;
                             <editbtns id="16" table="texts" />
                         </template>
                     </page-title>
