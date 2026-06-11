@@ -1,6 +1,10 @@
 TABLE.trans TD, thead, tbody, tfoot{
 background-color:rgba(0,0,0,0) !important;
 }
+#app-layout-start{
+        font-family:Inter !important;
+        font-size:102%;
+    }
 DIV.acontent{
 background-color:#ccc !important;
 }

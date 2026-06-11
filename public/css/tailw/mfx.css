@@ -38,6 +38,10 @@ H1,H2,H3,H4,H5,H6{
     color:#ffa200 !important;
 
 }
+#app-layout-start{
+        font-family:Merriweather !important;
+        font-size:102%;
+    }
 .dark\:text-layout-night-1050:is(.dark *) {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity, 1)) !important;

@@ -71,6 +71,7 @@
     }
     #app-layout-start{
         font-family:IBMPLex !important;
+        font-size:105%;
     }
     .glow-blue-gray {
         color: #ccc  !important;
