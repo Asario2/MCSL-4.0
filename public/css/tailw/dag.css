@@ -118,3 +118,7 @@ a:link:hover, a:visited:hover, a:active:hover
 DIV.em_bg,SPAN.em_bg{
         background-color:rgb(218, 83, 14,0.4) !important
     }
+    #app-layout-start{
+        font-family:Lora !important;
+        font-size:100%;
+    }
