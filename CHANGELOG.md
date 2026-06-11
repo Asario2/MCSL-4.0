@@ -316,3 +316,4 @@
 ![Version](https://img.shields.io/badge/version-5.70.4-orange) Feature - Changed Logo on asario.de (#509)  
 ![Version](https://img.shields.io/badge/version-5.71.6-orange) Hotfix - Sharing of Content now works properly (#510)  
 ![Version](https://img.shields.io/badge/version-5.72.2-orange) Add <article> Tag to users & blog (#511)  
+![Version](https://img.shields.io/badge/version-5.73.4-orange) Feature - included article tags on the rest of the pages. (#512)  
