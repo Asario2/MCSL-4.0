@@ -172,7 +172,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
 
     <link
         rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        href="/css/all.min.css"
     >
 
     <link
@@ -247,24 +247,6 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
         value="{{ csrf_token() }}"
     >
 
-    <script type="module">
-
-    import {
-        reactive
-    } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
-
-    const toastBus =
-        reactive({
-            toasts: []
-        });
-
-    toastBus.toasts.push({
-        message: 'Hallo',
-        type: 'success',
-        duration: 5000
-    });
-
-    </script>
 
     @inertia
 
@@ -380,15 +362,15 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
 
     </style>
 
-    <img
-        width="1"
-        height="1"
-        src="{{ route('countpixel', [
-            'url'   => rawurldecode(request()->fullUrl()),
-            'route' => request()->route()?->getName() ?? 'unknown',
-            'page'  => request()->query('page')
-        ]) }}"
-    >
+        <img
+            width="1"
+            height="1"
+            src="{{ route('countpixel', [
+                'url'   => rawurldecode(request()->fullUrl()),
+                'route' => request()->route()?->getName() ?? 'unknown',
+                'page'  => request()->query('page')
+            ]) }}"
+        >
 
     <!-- Scroll To Top -->
 

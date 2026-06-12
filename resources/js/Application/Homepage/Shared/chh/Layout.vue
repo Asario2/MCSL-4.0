@@ -1,5 +1,5 @@
 <template>
-<img :src="'/images/_chh/web/new-summer-2022-9.jpg'" class="mt-[-1px]" style='min-width:100%'>
+<img :src="'/images/_chh/web/new-summer-2026.jpg'" class="mt-[-1px]" style='min-width:100%'>
 <nav class="bg-gray-300 border-b">
     <div class="max-w-7xl mx-auto">
         <div class="flex justify-between items-center">
@@ -9,7 +9,10 @@
                 <a
                 class="navbtn p-4"
                 href="/visitcard"
-                :class="{ active: isActive('/visitcard') }"
+                :class="[
+                    'ml-[30px]',
+                    { active: isActive('/visitcard') }
+                ]"
                 @mouseenter="hovered = '/visitcard'"
                 @mouseleave="hovered = null"
                 >

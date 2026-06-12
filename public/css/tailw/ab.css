@@ -73,6 +73,9 @@
         font-family:IBMPLex !important;
         font-size:105%;
     }
+    H1,h2,h3,.font-euros{
+        font-family: Eurostile !important;
+    }
     .glow-blue-gray {
         color: #ccc  !important;
         color:#3395c2 !important;

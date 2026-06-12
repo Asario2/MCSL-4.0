@@ -38,7 +38,7 @@ p    <template>
                     class="absolute left-0 right-0 text-center text-white transition-all duration-300 bott title-top"
                     >
                     <span
-                        class="text-lg font-semibold group-hover:text-shadow-md transition-all duration-300 capitalize font-ald2"
+                        class="text-lg font-semibold group-hover:text-shadow-md transition-all duration-300 capitalize font-euros"
                     >
                         {{ ima.name }}
                 </span>
