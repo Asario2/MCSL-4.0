@@ -88,7 +88,7 @@
                         >
                     </input-container>
                 </input-group>
-            <input type="hidden" name="redirect" value="{{ request('redirect') }}">
+            <input type="hidden" v-model="form.redirect">
             </template>
             <template #actions>
                 <!-- Befehle -->
@@ -170,6 +170,7 @@ export default defineComponent({
                 email: "",
                 password: "",
                 remember: false,
+                redirect: new URLSearchParams(window.location.search).get('redirect')
             },
         };
     },
