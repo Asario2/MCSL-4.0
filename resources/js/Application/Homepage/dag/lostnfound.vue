@@ -13,8 +13,8 @@
                                 <img :src="'/images/_dag/icons/' + entry.typ + '.png'" class="inline mt-[1px] m-3"/>
                                 <h3 class='inline'>{{ rumLaut(entry.headline) }}</h3>
                             </div>
-                            <div class="p-3">
-                                {{ rumLaut(entry.message) }}
+                            <div class="p-3" v-html="rumLaut(entry.message)">
+
                             </div>
                     </article>
                         </div>

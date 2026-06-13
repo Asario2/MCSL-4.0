@@ -297,6 +297,15 @@ public static function getOptions($name)
                 ["id" => "inwork", "name" => "In Arbeit"]
             ];
         }
+        if($name == "typus")
+        {
+            $statusvals = [
+                ["id"=>'Gesucht',"name"=>'Gesucht'],
+                ["id"=>'Gefunden',"name"=>'Gefunden'],
+                ["id"=>'GesuchtnGefunden',"name"=>'GesuchtnGefunden']
+
+            ];
+        }
         if($name == "itemscope"){
             $statusvals = [
 
@@ -565,6 +574,9 @@ public static function getOptions($name)
                 return "hidden";
             break;
             case "typ":
+                return "select";
+            break;
+            case "typus":
                 return "select";
             break;
             case "us_poster":

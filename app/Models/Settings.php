@@ -143,6 +143,7 @@
         'about_en' => 'Über dich Englisch',
         'website' => 'Website',
         'fbd' => 'facebook ID',
+        'typus'=> "Status",
         'xis_disabled' => 'Benutzer deaktivieren',
         'CommentsEdit' => 'Alle Felder bearbeiten',
         'wohnort' => 'Wohnort',

@@ -167,7 +167,7 @@ class HomeController extends Controller
         ]);
     }
     public function lostnfound(){
-        $data = DB::table("lostnfound")->where("pub","1")->select('typ','headline','message')->get();
+        $data = DB::table("lostnfound")->where("pub","1")->select('typus as typ','headline','message')->get();
         return Inertia::render('Homepage/dag/lostnfound', ["data" => [$data]]);
     }
     public function dag_links(){
@@ -255,7 +255,7 @@ class HomeController extends Controller
     $mcsl = NEW MCSLPointsController();
     $MCSL_GLOB_PTS = $mcsl->GetCount($request);
 
-        return Inertia::render('Components/Social/mcs-points-ov', ["text"=>nl2br($text),"MCSL_GLOB_PTS"=>$MCSL_GLOB_PTS]);
+        return Inertia::render('Components/Social/mcsl-points-ov', ["text"=>nl2br($text),"MCSL_GLOB_PTS"=>$MCSL_GLOB_PTS]);
     }
     public function admin_actlog(Request $request)
     {
