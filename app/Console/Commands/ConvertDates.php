@@ -18,7 +18,7 @@ class ConvertDates extends Command
     public function handle()
     {
         GlobalController::SetDomain();
-        $table = "oliver_rein.privacy";
+        $table = "dagidag.lostnfound";
         // Beispiel: Tabelle "your_table_name"
         $rows = DB::table($table)->get();
 

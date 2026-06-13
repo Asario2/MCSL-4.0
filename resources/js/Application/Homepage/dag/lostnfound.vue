@@ -11,7 +11,7 @@
                         <article v-for="(entry, index) in data[0]" :key="index" class="mb-4">
                             <div class="shadow-[inset_0_0_10px_rgba(0,0,0,0.5)] pt-2 lg:rounded-lg dark:bg-layout-night-3000 border-[2px] border-black">
                                 <img :src="'/images/_dag/icons/' + entry.typ + '.png'" class="inline mt-[1px] m-3"/>
-                                <h3 class='inline'>{{ rumLaut(entry.headline) }}</h3>
+                                <h3 class='inline'>{{ rumLaut(entry.headline) }}</h3>&nbsp;<editbtns :id="entry.id" table="lostnfound"></editbtns>
                             </div>
                             <div class="p-3" v-html="rumLaut(entry.message)">
 

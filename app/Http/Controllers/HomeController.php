@@ -167,7 +167,7 @@ class HomeController extends Controller
         ]);
     }
     public function lostnfound(){
-        $data = DB::table("lostnfound")->where("pub","1")->select('typus as typ','headline','message')->get();
+        $data = DB::table("lostnfound")->where("pub","1")->select("id",'typus as typ','headline','message')->get();
         return Inertia::render('Homepage/dag/lostnfound', ["data" => [$data]]);
     }
     public function dag_links(){
