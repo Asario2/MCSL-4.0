@@ -228,13 +228,17 @@ public function sendmc(Request $request)
 
         // Mail versenden
         try {
+            $message = str_replace("</div>", "\n", $request->message);
+            $message = strip_tags($message);
+
+
     Mail::to(config('mail.maintainer'))->send(
         (new ContactMail(
             $request->getHost(),
             $request->name,
             $request->email,
             $request->subject,
-            $request->message
+            $message,
         ))->from('no-reply@marblefx.net', 'MCSL Kontaktformular ('.Settings::$dom[SD()].')')
     );
 

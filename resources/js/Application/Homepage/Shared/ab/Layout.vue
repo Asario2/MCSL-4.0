@@ -7,7 +7,7 @@
 
         <template #description>
             <meta head-key="description" name="description" :content="headerDescription" />
-            <link rel="canonical" v-if="headerUrl" :href="headerUrl" />
+            <!-- <link rel="canonical" v-if="headerUrl" :href="headerUrl" /> -->
         </template>
 
         <template #opengraph>
@@ -306,7 +306,7 @@
                 <div class="flex flex-col items-center justify-between text-xs leading-5 gap-4">
                     <div class="w-full flex flex-col md:flex-row flex-1 items-center justify-between gap-4">
                     <div>
-                        <brand-footer></brand-footer>
+                        <brand-footer :appName="$page.props.applications.app_name"></brand-footer>
                     </div>
                     <div>
                         <!-- <link-footer>

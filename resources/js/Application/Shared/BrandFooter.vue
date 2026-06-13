@@ -1,29 +1,31 @@
 <template>
     <div v-if="sd == 'ab'">
-        <Link :href="routeName" class="flex items-center">
+<Link :href="routeName" class="flex items-center nul">
             <div>
-                <favicon class="h-10 w-10 mr-2"></favicon>
+                <favicon class="h-10 w-10 mr-4"></favicon>
             </div>
-            <div class="flex-col items-start justify-center md:flex">
+            <div
+                class="hidden lg:block flex-col items-start justify-center md:flex"
+            >
                 <div
                     class="font-logo text-xl lg:text-3xl leading-snug whitespace-nowrap tracking-widest font-bold"
                 >
                     <span
                         v-if="brand_1"
-                        class="text-primary-sun-500 dark:text-primary-night-500"
+                        class="text-primary-sun-500 dark:text-primary-night-500 glow-blue euros text-2xl"
                         >{{ brand_1 }}</span
                     >
                     <span
                         v-if="brand_2"
-                        class="text-layout-sun-500 dark:text-layout-night-500"
+                        class="text-layout-sun-500 dark:text-layout-night-500 glow-blue-gray euros text-2xl"
                         >{{ brand_2 }}</span
                     >
                 </div>
                 <div
-                    class="font-title text-xs lg:text-sm leading-snug whitespace-nowrap tracking-wide"
+                    class="font-title text-xs lg:text-sm mt-[5px] ml-[59px] leading-snug whitespace-nowrap tracking-wide text-layout-sun-600 dark:text-layout-night-900 euros"
                     v-if="appName"
                 >
-                    <span> {{ appName }}</span>
+                    <span v-html="appName"></span>
                 </div>
             </div>
         </Link>

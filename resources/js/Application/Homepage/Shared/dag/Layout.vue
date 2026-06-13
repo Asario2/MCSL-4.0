@@ -9,7 +9,7 @@
 
         <template #description>
           <meta head-key="description" name="description" :content="headerDescription" />
-          <link rel="canonical" v-if="headerUrl" :href="headerUrl" />
+          <!-- <link rel="canonical" v-if="headerUrl" :href="headerUrl" /> -->
         </template>
 
         <template #opengraph>

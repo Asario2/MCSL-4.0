@@ -61,10 +61,25 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
         {{ ucf(CleanTable(1)) }}
     </title>
 
-    <link
-        rel="canonical"
-        href="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}"
-    >
+@php
+    $query = request()->query();
+
+    unset(
+        $query['utm_source'],
+        $query['utm_medium'],
+        $query['utm_campaign'],
+        $query['gclid'],
+        $query['fbclid']
+    );
+
+    $canonical = request()->url();
+
+    if (!empty($query)) {
+        $canonical .= '?' . http_build_query($query);
+    }
+@endphp
+
+<link rel="canonical" href="{{ $canonical }}">
 
     <script>
 

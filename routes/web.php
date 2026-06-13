@@ -86,7 +86,14 @@ GlobalController::SetDomain();
         Route::get('/countpixel/{url}/{route}/{page?}', [CountPixelController::class, 'track'])->name('countpixel');
         Route::post('/api/log-js-error', function (\Illuminate\Http\Request $request) {
 
-            \Log::error('Console Error', $request->all());
+            \Log::error('Console Error', [
+                'url'       => $request->fullUrl(),
+                'path'      => $request->path(),
+                'ip'        => $request->ip(),
+                'method'    => $request->method(),
+                'userAgent' => $request->userAgent(),
+                'payload'   => $request->all(),
+            ]);
 
             return response()->json(['ok' => true]);
         });
