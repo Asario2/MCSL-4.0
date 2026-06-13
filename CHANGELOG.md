@@ -324,3 +324,5 @@
 ![Version](https://img.shields.io/badge/version-5.78.0-orange) Feature - Changed text fonts (#517)  
 ![Version](https://img.shields.io/badge/version-5.79.9-orange) Hotfix - Repair of Canonical URLs (#519)  
 ![Version](https://img.shields.io/badge/version-5.80.8-orange) Hotfix - Fix of MCSL-Points thread (#520)  
+![Version](https://img.shields.io/badge/version-5.81.4-orange) Feature - Add edit/delete buttons (#521)  
+![Version](https://img.shields.io/badge/version-5.82.0-orange) Change Select on monikadargies.de (#516)  
