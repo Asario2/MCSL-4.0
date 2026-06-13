@@ -323,3 +323,4 @@
 ![Version](https://img.shields.io/badge/version-5.77.9-orange) Hotfix - Fixed IDS detection on login (#518)  
 ![Version](https://img.shields.io/badge/version-5.78.0-orange) Feature - Changed text fonts (#517)  
 ![Version](https://img.shields.io/badge/version-5.79.9-orange) Hotfix - Repair of Canonical URLs (#519)  
+![Version](https://img.shields.io/badge/version-5.80.8-orange) Hotfix - Fix of MCSL-Points thread (#520)  
