@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 #use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ExFuncController;
 use App\Models\Tenant;  // <-- hier Tenant importieren
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -294,8 +295,13 @@ class HomeController extends Controller
 //         \Log::info('     Zeitpunkt: ' . $zeitpunkt);
 
         // Nur gültige Page-Nummer akzeptieren
-        $page = (int) $request->input('page', 1);
-        if ($page < 1) $page = 1;
+        $page = filter_var(
+            $request->input('page', 1),
+            FILTER_VALIDATE_INT,
+            ['options' => ['min_range' => 1]]
+        );
+
+        $page = $page ?: 1;
 
         // Zusätzlich: nie größer als lastPage
         $totalItems = Blog::whereDate('blog_date', '<=', $zeitpunkt)
@@ -610,7 +616,13 @@ return Inertia::render('Homepage/Pictures', [
     {
         $rat = RatingController::getTotalRating("shortpoems");
         $perPage = 25;
-        $page = $request->input('page', 1);
+        $page = filter_var(
+            $request->input('page', 1),
+            FILTER_VALIDATE_INT,
+            ['options' => ['min_range' => 1]]
+        );
+
+        $page = $page ?: 1;
         $query = ShortPoem::published()
             ->when(request('search'), function ($query) {
                 $query->where(function ($q) {
@@ -694,7 +706,13 @@ return Inertia::render('Homepage/Pictures', [
         // ->orderBy('created_at', 'desc')
         // ->paginate(25);
         $perPage = 25;
-        $page = $request->input('page', 1);
+        $page = filter_var(
+            $request->input('page', 1),
+            FILTER_VALIDATE_INT,
+            ['options' => ['min_range' => 1]]
+        );
+
+        $page = $page ?: 1;
         $query = DidYouKnow::published()
             ->when(request('search'), function ($query) {
                 $query->where(function ($q) {
@@ -819,11 +837,13 @@ return Inertia::render('Homepage/Pictures', [
              $blogarticle = renderText($blog->content);
             //  \Log::info("md:".json_encode($blogarticle));
             $blog->content = renderText($blog->content);
+
             // $filePathName = 'blogs/blog_' . $blog->id . '.md';
             // $blogarticleFile = Jetstream::localizedMarkdownPath($filePathName);
             // $blogarticle = Str::markdown(file_get_contents($blogarticleFile));
         }
 
+            $blog->content = $this->ReFunc($blog->content);
             $blog->content = RUMLAUT($blog->content);
             $blog->title = RUMLAUT($blog->title);
         $author = DB::table('blog_authors')
@@ -838,6 +858,26 @@ return Inertia::render('Homepage/Pictures', [
             'blog' => $blog,
             'blogarticle' => $blogarticle
         ]);
+    }
+    public function ReFunc($text)
+    {
+
+        \Log::info("EF RUN");
+        $exfunc = new ExFuncController();
+        return preg_replace_callback(
+            '/\{\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\(\)\s*\}\}/',
+            function ($matches) use ($exfunc) {
+
+                $function = $matches[1];
+                \Log::info($matches);
+                if (method_exists($exfunc, $function)) {
+                    return $exfunc->$function();
+                }
+
+                return $matches[0];
+            },
+            $text
+        );
     }
     public function home_userlist(Request $request)
     {
