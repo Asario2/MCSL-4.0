@@ -1,5 +1,5 @@
 <template>
-    <draggable></draggable>
+    <!-- <draggable></draggable> -->
 </template>
 <script>
 import Draggable from "vuedraggable";
