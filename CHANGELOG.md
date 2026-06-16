@@ -327,3 +327,4 @@
 ![Version](https://img.shields.io/badge/version-5.81.4-orange) Feature - Add edit/delete buttons (#521)  
 ![Version](https://img.shields.io/badge/version-5.82.0-orange) Change Select on monikadargies.de (#516)  
 ![Version](https://img.shields.io/badge/version-5.83.6-orange) Feature - Scrollable contacts (#523)  
+![Version](https://img.shields.io/badge/version-5.84.1-orange) Hotfix - Countpixel  (#525)  
