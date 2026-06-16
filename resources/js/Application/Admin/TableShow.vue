@@ -711,93 +711,43 @@ export default defineComponent({
         | Sortable
         |--------------------------------------------------------------------------
         */
-
         initSortable() {
+            const tableBody = this.$el.querySelector("tbody");
+            if (!tableBody) return;
 
-            const tableBody =
-                this.$el.querySelector(
-                    "tbody"
-                );
+            this.sortable?.destroy();
 
-            if (!tableBody)
-                return;
+            this.sortable = Sortable.create(tableBody, {
+                animation: 150,
+                draggable: "tr",
+                handle: ".drag-handle-btn",
 
-            this.sortable =
-                Sortable.create(
+                onEnd: async (evt) => {
+                    if (evt.oldIndex === evt.newIndex) return;
 
-                    tableBody,
+                    const moved = this.localRows.splice(evt.oldIndex, 1)[0];
+                    this.localRows.splice(evt.newIndex, 0, moved);
+                    this.localRows = [...this.localRows];
 
-                    {
-
-                        animation: 150,
-
-                        onEnd: async (
-                            evt
-                        ) => {
-
-                            const movedItem =
-                                this.localRows.splice(
-
-                                    evt.oldIndex,
-
-                                    1
-                                )[0];
-
-                            this.localRows.splice(
-
-                                evt.newIndex,
-
-                                0,
-
-                                movedItem
-                            );
-
-                            this.localRows = [
-                                ...this.localRows
-                            ];
-
-                            try {
-
-                                await axios.post(
-
-                                    '/api/save-order/'
-                                    + CleanTable(),
-
-                                    {
-
-                                        rows:
-                                            this.localRows.map(
-
-                                                (
-                                                    row,
-                                                    index
-                                                ) => ({
-
-                                                    id:
-                                                        row.id,
-
-                                                    position:
-                                                        index
-                                                })
-                                            )
-                                    }
-
-                                );
-
-                            } catch (error) {
-
-                                console.error(
-
-                                    "Fehler beim Speichern der Reihenfolge:",
-
-                                    error
-                                );
+                    try {
+                        await axios.post(
+                            '/api/save-order/' + CleanTable(),
+                            {
+                                rows: this.localRows.map((row, index) => ({
+                                    id: row.id,
+                                    position: index
+                                }))
                             }
-                        },
+                        );
+                    } catch (error) {
+                        console.error(
+                            "Fehler beim Speichern der Reihenfolge:",
+                            error
+                        );
                     }
-                );
+                }
+            });
         },
-
         /*
         |--------------------------------------------------------------------------
         | Aft Setting

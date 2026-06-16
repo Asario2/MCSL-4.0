@@ -51,6 +51,7 @@ bootstrap/ssr/assets/**
 !vendor/laravel/framework/src/Illuminate/Http/**
 !public/css/webfonts
 .env.backup
+app/Models/FilterUrls.php
 .env.production
 .phpunit.result.cache
 !public/images/**/index.json

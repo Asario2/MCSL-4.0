@@ -740,6 +740,26 @@ export async function GetSettings() {
 // }
 let cachedRights = null;
 
+export function GetDomUrl(dom) {
+    const doms = {
+        ab_lh: "http://ab.test.mcs",
+        mfx_lh: "http://mfx.test.mcs",
+        chh_lh: "http://chh.test.mcs",
+        dag_lh: "http://dag.test.mcs",
+
+        ab_ol: "https://www.asario.de",
+        mfx_ol: "https://www.marblefx.de",
+        chh_ol: "https://www.ra-c-henning.de",
+        dag_ol: "https://www.monikadargies.de",
+    };
+
+    const type = window.location.hostname.includes("test.mcs")
+        ? "lh"
+        : "ol";
+
+    return doms[`${dom}_${type}`] ?? "";
+}
+
 export async function loadRights() {
   if (cachedRights) return cachedRights;
 

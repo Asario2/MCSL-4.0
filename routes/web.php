@@ -83,7 +83,18 @@ GlobalController::SetDomain();
 
 // Route::middleware(['checksubd:ab,asario'])->group(function () {
     // Route::middleware('checksubd:ab,asario')->group(function () {
-        Route::get('/countpixel/{url}/{route}/{page?}', [CountPixelController::class, 'track'])->name('countpixel');
+        // Route::get('/countpixel-{url}-{route}-{page?}', [CountPixelController::class, 'track'])->name('countpixel');
+
+        Route::get(
+        '/countpixel/{url}/{route}/{page?}',
+        [CountPixelController::class, 'track']
+        )->where('url', '.*')
+        ->name('countpixel');
+
+        // Route::get('/countpixel/{url}/{route}/{page?}', function ($url, $route, $page = null) {
+        //     dd('ROUTE HIT', $url, $route, $page);
+        // })->name("countpixel");
+        Route::permanentRedirect('/home', '/');
         Route::post('/api/log-js-error', function (\Illuminate\Http\Request $request) {
 
             \Log::error('Console Error', [

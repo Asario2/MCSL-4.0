@@ -11,7 +11,6 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { i18nVue } from "laravel-vue-i18n";
 import { route } from 'ziggy-js';
 import { Ziggy } from './ziggy';
-import { router } from '@inertiajs/vue3'
 import { createPinia } from "pinia";
 import axios from "axios";
 
@@ -26,6 +25,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPencilAlt, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+
+import { router } from '@inertiajs/vue3';
+
 library.add(faPencilAlt, faTrashCan, faXTwitter);
 
 // Toast
@@ -168,6 +170,59 @@ import { SD } from "@/helpers";
 // APP
 // ======================
 
+
+
+router.on('navigate', (event) => {
+    console.log('NAVIGATE', event.detail.page.url);
+});
+
+// router.on('success', (event) => {
+//     const url_allt = event.detail.page.url;
+
+//     console.log('TRACK', url_allt);
+//     const encoded = btoa(encodeURIComponent(url_allt));
+//      axios.get('/countpixel', {
+//          params: {
+//         url: encoded,
+//         route: event.detail.page.props.route_name,
+//         page: event.detail.page.props.get_page
+//     }
+//     }).then((r) => {
+
+//         console.log('COUNTPIXEL OK', r);
+
+//     }).catch(err => {
+//         console.error(err);
+//     });
+// });
+router.on('success', (event) => {
+
+    const url = btoa(encodeURIComponent(
+        event.detail.page.url
+    ));
+
+    const route =
+        event.detail.page.props.route_name ??
+        'unknown';
+
+    const page =
+        event.detail.page.props.get_page ??
+        '';
+
+    axios.get(
+        `/countpixel/${url}/${route}/${page}`
+    )
+    .then(() => {
+        console.log('TRACK OK');
+    })
+    .catch((e) => {
+        console.error('TRACK ERROR', e);
+    });
+
+});
+router.on('finish', (event) => {
+    console.log('FINISH');
+});
 createInertiaApp({
     title: title => `${title} - ${SD(1)}`,
 

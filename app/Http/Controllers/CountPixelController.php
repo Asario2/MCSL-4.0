@@ -44,104 +44,218 @@ class CountPixelController extends Controller
         'pm/index',
         'mail/subscr',
     ];
-
-    public function track(Request $request)
+    public function track(Request $request,$url, $route, $page = null)
     {
-         \Log::info('TRACK HIT');
+
+        $url = base64_decode($url);
+
+
+        \Log::info('TRACK START', [
+            'url'   => $url,
+            'route' => $route,
+            'page'  => $page,
+            'host'  => $request->getHost(),
+            'ua'    => $request->userAgent(),
+        ]);
 
         try {
-            $host = $request->getHost();
-            if ($host === 'mail.marblefx.net') {
-                return $this->pixelResponse();
-            }
 
-            $routeName = request()->route()?->getName()
-                ?? $request->query('route')
-                ?? 'unknown';
-                // \Log::info([
-                //     'routeName' => $routeName,
-                //     'exists' => Route::getRoutes()->getByName($routeName) !== null
+            $userAgent = strtolower($request->userAgent() ?? '');
+
+            if (
+                !str_contains($userAgent, 'chrome') &&
+                !str_contains($userAgent, 'firefox') &&
+                !str_contains($userAgent, 'safari') &&
+                !str_contains($userAgent, 'edg')
+            ) {
+
+                // \Log::info('TRACK STOP: USER AGENT', [
+                //     'ua' => $userAgent
                 // ]);
 
-                $routeName = $request->query('route');
-
-                if (!$routeName) {
-
-
-            $referer = $request->headers->get('referer');
-            if ($referer) {
-                try {
-                    $fakeRequest = HttpRequest::create($referer);
-                    $route = app('router')->getRoutes()->match($fakeRequest);
-                    $routeName = $route->getName() ?? 'unknown';
-                } catch (\Exception $e) {
-                    // fallback bleibt 'unknown'
-                }
-            }
-            }
-            // \Log::info('Pixel hit');
-
-            // 0️⃣ Leere, ungültige oder 404-Routen ausschließen
-            if ($routeName && Route::getRoutes()->getByName($routeName) === null) {
-               return $this->pixelResponse();
-            }
-
-            // 1️⃣ Route anhand der Muster ausschließen
-            foreach ($this->excludeRoutes as $pattern) {
-                if (fnmatch($pattern, $routeName)) {
-                // \Log::info("HIER WE GO");
                 return $this->pixelResponse();
+            }
+
+            $host = $request->getHost();
+
+            if ($host === 'mail.marblefx.net') {
+
+                // \Log::info('TRACK STOP: MAIL HOST');
+
+                return $this->pixelResponse();
+            }
+
+            $routeName = $route;
+
+            // \Log::info('TRACK ROUTE CHECK', [
+            //     'route' => $routeName,
+            //     'exists' => Route::getRoutes()->getByName($routeName) !== null,
+            // ]);
+
+            if (
+                $routeName &&
+                Route::getRoutes()->getByName($routeName) === null
+            ) {
+
+                // \Log::info('TRACK STOP: INVALID ROUTE', [
+                //     'route' => $routeName
+                // ]);
+
+                return $this->pixelResponse();
+            }
+
+            foreach ($this->excludeRoutes as $pattern) {
+
+                if (fnmatch($pattern, $routeName)) {
+
+                    // \Log::info('TRACK STOP: EXCLUDED ROUTE', [
+                    //     'route' => $routeName,
+                    //     'pattern' => $pattern,
+                    // ]);
+
+                    return $this->pixelResponse();
                 }
             }
-            // URL bereinigen
-            $rawUrl = $this->SH($request->query('url')) ?? '/';
 
-            // 2️⃣ URL anhand Dateiendungen ausschließen
+            $rawUrl = $this->SH($url) ?? '/';
+
+            // \Log::info('TRACK URL', [
+            //     'rawUrl' => $rawUrl
+            // ]);
+
+            if (str_contains($rawUrl, '?')) {
+
+                parse_str(
+                    parse_url($rawUrl, PHP_URL_QUERY) ?? '',
+                    $params
+                );
+
+                // \Log::info('TRACK PARAMS', [
+                //     'params' => $params
+                // ]);
+
+                foreach (array_keys($params) as $param) {
+
+                    if (!in_array($param, ['page', 'search'])) {
+
+                        // \Log::info('TRACK STOP: INVALID PARAM', [
+                        //     'param' => $param,
+                        //     'url' => $rawUrl,
+                        // ]);
+
+                        return $this->pixelResponse();
+                    }
+                }
+            }
+
             foreach ($this->excludeURLs as $pattern) {
+
                 if (fnmatch($pattern, $rawUrl)) {
+
+                    // \Log::info('TRACK STOP: EXCLUDED URL', [
+                    //     'url' => $rawUrl,
+                    //     'pattern' => $pattern,
+                    // ]);
 
                     return $this->pixelResponse();
                 }
             }
+
             foreach (FilterUrls::$FilterUrls as $pattern) {
-                if (fnmatch($pattern, $rawUrl)) {
+
+                if (fnmatch($pattern, $rawUrl) && $rawUrl != '/') {
+
+                    // \Log::info('TRACK STOP: FILTER URL', [
+                    //     'url' => $rawUrl,
+                    //     'pattern' => $pattern,
+                    // ]);
 
                     return $this->pixelResponse();
                 }
             }
 
-            // 3️⃣ Prüfen ob Route Auth-Middleware besitzt
-            $routeAction = Route::getRoutes()->getByName($routeName)?->action ?? [];
-            $middlewares = $routeAction['middleware'] ?? [];
-            $middlewares = is_array($middlewares) ? $middlewares : [$middlewares];
+            $routeAction =
+                Route::getRoutes()
+                    ->getByName($routeName)
+                    ?->action ?? [];
+
+            $middlewares =
+                $routeAction['middleware'] ?? [];
+
+            $middlewares = is_array($middlewares)
+                ? $middlewares
+                : [$middlewares];
+
+            // \Log::info('TRACK MIDDLEWARES', [
+            //     'middlewares' => $middlewares
+            // ]);
+
             if (in_array('auth', $middlewares)) {
-            \Log::info("AUTH HIT");
-            return $this->pixelResponse();
+
+                // \Log::info('TRACK STOP: AUTH ROUTE');
+
+                return $this->pixelResponse();
             }
 
-            // 4️⃣ IP anonymisieren
             $ip = $request->ip();
-            if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+
+            if (
+                filter_var(
+                    $ip,
+                    FILTER_VALIDATE_IP,
+                    FILTER_FLAG_IPV4
+                )
+            ) {
+
                 $parts = explode('.', $ip);
                 $parts[3] = '0';
                 $ip = implode('.', $parts);
-            } elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+
+            } elseif (
+                filter_var(
+                    $ip,
+                    FILTER_VALIDATE_IP,
+                    FILTER_FLAG_IPV6
+                )
+            ) {
+
                 $parts = explode(':', $ip);
                 $parts[count($parts) - 1] = '0000';
                 $ip = implode(':', $parts);
             }
 
-            // 5️⃣ Tracking speichern
+            \Log::info('SAVE PAGEVIEW SUCCESS', [
+                'dom'   => SD(),
+                'url'   => $rawUrl,
+                'route' => $routeName,
+                'ip'    => $ip,
+            ]);
+
             PageView::create([
                 'dom'        => SD(),
-                'url'        => $rawUrl,
+                   'url'        => $rawUrl,
                 'ip'         => $ip,
                 'visited_at' => now(),
             ]);
-        } catch (\Throwable $e) {
-            \Log::error("CountPixel DB Error: " . $e->getMessage());
-        }
 
+            // \Log::info('TRACK SUCCESS');
+
+        } catch (\Throwable $e) {
+
+            \Log::error('COUNTPIXEL EXCEPTION', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
+        // \Log::info('FINAL ROWS', [
+        //     'count' => $urlRows->count(),
+        //     'picures_show' => $urlRows
+        //         ->where('url', '/picures_show')
+        //         ->values()
+        //         ->all()
+        // ]);
         return $this->pixelResponse();
     }
 
@@ -176,23 +290,40 @@ class CountPixelController extends Controller
 
     public function delete_stats(Request $request)
     {
+        \Log::info($request);
         try {
-    $url = $request->url;
-    $url = $this->killtimestamp($url);
+            $url = $request->input('url');
+
+            if (is_array($url)) {
+                $dom = $url['dom'] ?? SD();
+                $url = $url['url'] ?? '/';
+            } else {
+                $dom = $request->input('dom', SD());
+            }
+
+            $url = $this->killtimestamp($url);
 //     \Log::info("DELETE URL: {$url} | dom: {$request->dom}");
 
     $dom = $request->dom ?? SD();
-
+\Log::info('DELETE DEBUG', [
+    'url' => $url,
+    'dom' => $dom,
+    'url_type' => gettype($url),
+    'dom_type' => gettype($dom),
+]);
     $query = DB::connection('mariadb')->table('xgen_page_views')
-        ->where("url",$url);
+        ->where("url","/".$url)
+        ->orWhere("url",$url)
+        ->orWhere("url",ltrim($url,"/"));
 
     // Prüfen, ob "all" angefragt und Rechte vorhanden
     if ($dom !== "all" || !CheckZRights("StatisticsAll")) {
         $query->where('dom', $dom);
     }
 
+
     $deleted = $query->delete(); // Anzahl der gelöschten Zeilen
-//     \Log::info("Deleted rows: {$deleted}");
+   \Log::info("Deleted rows: {$deleted}");
 
     // Optional: dauerhaft in FilterUrls speichern
     if ($request->save) {
@@ -217,7 +348,7 @@ class CountPixelController extends Controller
     return response()->json([
         'success' => true,
         'deleted' => $deleted,
-        'message' => "Statistik für '{$request->url}' wurde gelöscht."
+        'message' => "Statistik für '{$url}' wurde gelöscht."
     ]);
 
 } catch (\Throwable $e) {
@@ -228,7 +359,14 @@ class CountPixelController extends Controller
     ], 500);
 }
     }
-
+    function TrailSlash($txt)
+    {
+        if(str_starts_with($txt,"/"))
+        {
+            return ltrim($txt,"/");
+        }
+        return $txt;
+    }
     function killtimestamp(string $url): string
     {
         return $url;
@@ -251,8 +389,12 @@ class CountPixelController extends Controller
         if (substr_count($clean, "&page=")) $clean = str_replace("&page=" . @$_GET['page'], '', $clean);
         if (substr_count($clean, "?page=")) $clean = str_replace("?page=" . @$_GET['page'], '', $clean);
         if (substr_count($clean, "?search=")) $clean = str_replace("?search=" . @$_GET['search'], '', $clean);
-        if (substr_count($clean, "home/show/pictures/")) $clean = "/picures_show";
+        if (substr_count($clean, "home/show/pictures")) $clean = "/picures_show";
         if (substr_count($clean, "home/users/show/")) $clean = "/users_show";
+
+        if (!empty($clean) && $clean !== '/' && !str_starts_with($clean, '/')) {
+            $clean = '/' . $clean;
+        }
 
         return empty($clean) ? '/' : $clean;
     }
@@ -283,11 +425,25 @@ class CountPixelController extends Controller
 
         // $rawRows = DB::connection('mariadb')->table('xgen_page_views')->get();
         // Log::info("All DB rows: " . json_encode($rawRows));
-        $rows = $query
-            ->select('url', DB::raw('LOWER(dom) as dom'), DB::raw('COUNT(*) as cnt'))
-            ->groupBy('url', 'dom')
-            ->orderBy('url', "ASC")
-            ->get();
+        $rows = $query->select(
+            DB::raw("
+                CASE
+                    WHEN url = '/' THEN '/'
+                    WHEN LEFT(url, 1) = '/' THEN url
+                    ELSE CONCAT('/', url)
+                END AS url
+            "),
+            DB::raw('LOWER(dom) as dom'),
+            DB::raw('COUNT(*) as cnt')
+        )
+        ->groupBy('url', 'dom')
+        ->orderBy('url', 'ASC')
+        ->get();
+
+            // \Log::info(
+            //     'DOM COUNTS',
+            //     $rows->groupBy('dom')->map->count()->toArray()
+            // );
 
 //         Log::info("Rows fetched: " . count($rows));
 
@@ -297,6 +453,28 @@ class CountPixelController extends Controller
             }
             return true;
         })->sortBy('url')->values();
+
+        // /home als / behandeln und Werte zusammenfassen
+
+        $rows = $rows
+            ->map(function ($row) {
+                if ($row->url === '/home') {
+                    $row->url = '/';
+                }
+                return $row;
+            })
+            ->groupBy(function ($row) {
+                return $row->url . '|' . $row->dom;
+            })
+            ->map(function ($group) {
+                $first = $group->first();
+
+                $first->cnt = $group->sum('cnt');
+
+                return $first;
+            })
+            ->values();
+
 
 //         Log::info("Rows after filter: " . count($rows));
 
@@ -322,7 +500,12 @@ class CountPixelController extends Controller
         }
 
 //         Log::info("DOMs to display: " . json_encode($doms));
-
+        // \Log::info('PICURES ROWS', [
+        //     'rows' => $rows
+        //         ->where('url', '/picures_show')
+        //         ->values()
+        //         ->all()
+        // ]);
         $datasets = [];
         foreach ($doms as $dom) {
             $label = SD('1', $dom);
@@ -332,7 +515,7 @@ class CountPixelController extends Controller
             foreach ($rows as $r) {
                 if ($r->dom === $dom) {
                     $idx = array_search($r->url, $labels);
-                    if ($idx !== false) $data[$idx] = (int)$r->cnt;
+                    if ($idx !== false) $data[$idx] += (int)$r->cnt;
                 }
             }
 
@@ -347,9 +530,44 @@ class CountPixelController extends Controller
 
 //         Log::info("Datasets: " . json_encode($datasets));
 
+        $urlRows = $rows
+        ->sort(function ($a, $b) {
+
+            $urlCompare = strcmp($a->url, $b->url);
+
+            if ($urlCompare !== 0) {
+                return $urlCompare; // alphabetisch nach URL
+            }
+
+            return $b->cnt <=> $a->cnt; // gleiche URL => höchste cnt zuerst
+        })
+        ->map(function ($row) {
+            return [
+                'url' => $row->url,
+                'dom' => $row->dom,
+                'cnt' => $row->cnt,
+            ];
+        })
+        ->values();
+
+        $labels = array_map(function ($url) {
+            return $url === '/home' ? '/' : $url;
+        }, $labels);
+
+        $urlRows = $urlRows->map(function ($row) {
+
+            if ($row['url'] === '/home') {
+                $row['url'] = '/';
+            }
+
+            return $row;
+        })->values();
+
+
         return response()->json([
             'labels' => array_values($labels),
             'datasets' => $datasets,
+            'rows' => $urlRows,
         ]);
     }
 

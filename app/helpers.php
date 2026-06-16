@@ -303,7 +303,19 @@ if(!function_exists("CleanId"))
     return null; // falls keine ID gefunden wird
 }
 }
+if(!function_exists("GetDomUrl"))
+{
+    function GetDomUrl($dom)
+    {
+        $type = str_contains(request()->getHost(), 'test.mcs')
+            ? 'lh'
+            : 'ol';
 
+        $key = $dom . '_' . $type;
+
+        return Settings::$doms[$key] ?? '';
+    }
+}
 
 
 

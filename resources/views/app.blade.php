@@ -376,16 +376,19 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
         }
 
     </style>
+    @php
 
-        <img
-            width="1"
-            height="1"
-            src="{{ route('countpixel', [
-                'url'   => rawurldecode(request()->fullUrl()),
-                'route' => request()->route()?->getName() ?? 'unknown',
-                'page'  => request()->query('page')
-            ]) }}"
-        >
+$url = str_replace(Settings::$doms,'',request()->fullUrl());
+@endphp
+<img
+    width="1"
+    height="1"
+    src="{{ route('countpixel', [
+        'url'   => base64_encode($url ?: '/'),
+        'route' => request()->route()?->getName() ?? 'unknown',
+        'page'  => request()->query('page')
+    ]) }}"
+>
 
     <!-- Scroll To Top -->
 

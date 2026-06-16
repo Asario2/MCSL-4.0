@@ -41,22 +41,28 @@
                         </thead>
     <tbody v-if="numberOfRows > 0">
     <template v-for="(row, index) in rows" :key="row.id">
-        <tr class="hover:dark:bg-gray-800 hover:bg-gray-800" :draggable="false">
-    <!-- Drag Button Spalte: nur diese Zelle draggable -->
-        <td class="np-dl-td-edit text-center cursor-move"   v-if="rows?.length && !rows?.isNAN && CleanTable()?.trim() !== ''">
+<tr
+    class="hover:dark:bg-gray-800 hover:bg-gray-800"
+    @dragover.prevent
+    @drop="onDrop($event, index)"
+>
+    <td
+        class="np-dl-td-edit text-center"
+        v-if="rows?.length && !rows?.isNAN && CleanTable()?.trim() !== ''"
+    >
         <button
-            class="drag-handle-btn"
+            class="drag-handle-btn cursor-move"
             draggable="true"
             @dragstart="onDragStart($event, index)"
-            @dragend="onDragEnd"
         >
             <icon-plus-circle class="w-6 h-6" />
         </button>
-        </td>
-        <!-- Slot für normale Datenzellen -->
+    </td>
+
     <slot name="datarow" :datarow="row" :draggable="false"></slot>
+
         <!-- Created At -->
-        <td v-if="row.created_at && view" class="np-dl-td-normal">
+        <td  v-if="row.created_at && view" class="np-dl-td-normal"  draggable="false" @dragstart.prevent>
             {{ new Date(row.created_at).toLocaleString('de-DE', {
                 day: '2-digit', month: '2-digit', year: 'numeric',
                 hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -65,7 +71,7 @@
         <!-- <td v-else-if="hasRight('view', row.full_name)" class="np-dl-td-edit"></td> -->
 
         <!-- Edit Button -->
-        <td class="np-dl-td-edit" v-if="CleanTable() != ''">
+        <td class="np-dl-td-edit" v-if="CleanTable() != ''" draggable="false" @dragstart.prevent>
 
     <editbtns :table="CleanTable()" :id="row.id"></editbtns>
         </td>
@@ -313,11 +319,20 @@
         }))
         },
         onDragStart(event, index) {
-        if (!this.rows[index]) return;
-        event.dataTransfer.effectAllowed = "move";
-        event.dataTransfer.setData("text/plain", index.toString());
-        },
 
+            if (!event.target.closest('.drag-handle-btn')) {
+                event.preventDefault();
+                return;
+            }
+
+            this.dragIndex = index;
+
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData(
+                'text/plain',
+                index.toString()
+            );
+        },
     onDrop(event, dropIndex) {
         const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
         if (isNaN(dragIndex)) return;

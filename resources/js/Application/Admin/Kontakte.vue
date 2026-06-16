@@ -91,6 +91,7 @@
               </div>
 
               <!-- Tabelle -->
+               <div class="overflow-x-auto">
               <table class="min-w-full table-auto border-collapse">
                 <thead>
                   <tr class="bg-gray-700">
@@ -197,6 +198,7 @@
 
                 </tbody>
               </table>
+              </div>
             </div>
           </template>
         </template>

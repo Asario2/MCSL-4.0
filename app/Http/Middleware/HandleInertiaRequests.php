@@ -66,7 +66,8 @@ class HandleInertiaRequests extends Middleware
                 'brand_name_subtitle_app_employee' => 'für Mitarbeiter',
                 'brand_name_subtitle_app_customer' => 'für Kunden',
             ],
-
+            'route_name' => $request->route()?->getName(),
+            'get_page' => $request->query('page'),
             'userdata' => function () use ($user) {
                 if (!$user) {
                     return [

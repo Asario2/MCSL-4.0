@@ -326,3 +326,4 @@
 ![Version](https://img.shields.io/badge/version-5.80.8-orange) Hotfix - Fix of MCSL-Points thread (#520)  
 ![Version](https://img.shields.io/badge/version-5.81.4-orange) Feature - Add edit/delete buttons (#521)  
 ![Version](https://img.shields.io/badge/version-5.82.0-orange) Change Select on monikadargies.de (#516)  
+![Version](https://img.shields.io/badge/version-5.83.6-orange) Feature - Scrollable contacts (#523)  

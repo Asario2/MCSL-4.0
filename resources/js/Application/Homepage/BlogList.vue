@@ -4,7 +4,7 @@
         :header-url="$page.props.saas_url + '/blogs'"
         :header-image="$page.props.saas_url + '/images/blogimages/Blog_Idee_480x360.jpg'"
     >
-    <MetaHeader title="Asarios Blog" />
+    <MetaHeader title="Mein Blog" />
         <section class="bg-layout-sun-0 text-layout-sun-800 dark:bg-layout-night-0 dark:text-layout-night-800">
             <div class="p-2 md:p-4" v-if="blogs.data.length === 0 && !form.search">
                 <alert type="warning">

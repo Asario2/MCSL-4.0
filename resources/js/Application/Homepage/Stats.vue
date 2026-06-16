@@ -69,9 +69,7 @@
 
   <ul class="space-y-2 pr-1">
 
-    <li
-      v-for="(label, idx) in labels"
-      :key="idx"
+    <li v-for="(row, idx) in rows" :key="idx"
       class="group flex items-center justify-between
              p-3 rounded-xl border
              border-layout-sun-200 dark:border-layout-night-300
@@ -92,42 +90,42 @@
 
         <!-- URL -->
         <a
-          :href="label"
-          target="_blank"
-          class="truncate max-w-[400px]
-                 text-blue-600 dark:text-blue-400
-                 hover:underline"
+            :href="GetDomUrl(row.dom) + row.url"
+            target="_blank"
+            class="flex items-center gap-2
+                text-blue-600 dark:text-blue-400
+                hover:underline"
         >
-          {{ label }}
-        </a>
-
+            <favio :dom="row.dom" />
+            <span>{{ row.url }}</span>
+        </a>&nbsp;({{ row.cnt }})
       </div>
 
       <!-- Actions -->
       <div class="flex items-center space-x-2">
 
         <!-- Open Icon -->
-        <a
-          :href="label"
-          target="_blank"
-          class="opacity-0 group-hover:opacity-100 transition
-                 text-gray-400 hover:text-blue-500"
-          title="Öffnen"
-        >
-          🔗
-        </a>
+    <a
+        :href="GetDomUrl(row.dom) + row.url"
+        target="_blank"
+        class="opacity-0 group-hover:opacity-100 transition
+            text-gray-400 hover:text-blue-500"
+        title="Öffnen"
+    >
+        🔗
+    </a>
 
         <!-- Delete Button -->
         <button
-          @click="deleteLabel(label, idx)"
-          class="opacity-0 group-hover:opacity-100 transition
-                 px-2 py-1 rounded-md
-                 text-red-600 hover:text-white
-                 hover:bg-red-600
-                 dark:hover:bg-red-700"
-          title="Löschen"
+            @click="deleteLabel(row, idx)"
+            class="opacity-0 group-hover:opacity-100 transition
+                px-2 py-1 rounded-md
+                text-red-600 hover:text-white
+                hover:bg-red-600
+                dark:hover:bg-red-700"
+            title="Löschen"
         >
-          ✕
+            ✕
         </button>
 
       </div>
@@ -141,6 +139,7 @@
 
 <script>
 import axios from "axios";
+import favio from "@/Application/Components/Logo/favio.vue";
 import { loadRights } from '@/helpers';
 import {
   Chart,
@@ -154,34 +153,76 @@ import {
 } from "chart.js";
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
-import { SD } from "@/helpers";
+import { SD, GetDomUrl } from "@/helpers";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 
 export default {
   name: "PageViewsChart",
-  components: { Layout, Breadcrumb, MetaHeader },
+  components: { Layout, Breadcrumb, MetaHeader,favio },
 
-  data() {
+data() {
     return {
-      chart: null,
-      dom: "all",       // Domain-Auswahl
-      save:false,
-      month: '1',
-      modulRights: null,
-      labels: [],    // URLs für die Liste
+        chart: null,
+        dom: "all",
+        save:false,
+        month: '1',
+        modulRights: null,
+        labels: [],
+        rows: [],
     };
-  },
+},
 
   async mounted() {
-    this.loadData();
+    await this.loadData();
     this.modulRights = await loadRights();
   },
 
   methods: {
     SD,
+    GetDomUrl,
+    async deleteLabel(row, idx) {
 
+        if (!confirm(
+            `Möchten Sie die Statistik für "${row.url}" wirklich löschen?`
+        )) {
+            return;
+        }
+
+        const save = confirm(
+            'Möchten Sie diesen Eintrag für immer entfernen?'
+        );
+
+        try {
+            const res = await axios.post('/delete-stat', {
+                url: row.url.replace(GetDomUrl(row.dom),''),
+                dom: this.dom,
+                save
+            });
+
+            if (res.data.success && res.data.deleted > 0) {
+
+                this.rows.splice(idx, 1);
+
+                await this.loadData();
+
+            } else {
+
+                console.log(res.data);
+
+                alert(
+                    'Eintrag wurde nicht gefunden oder konnte nicht gelöscht werden.'
+                );
+            }
+
+        } catch (error) {
+
+            console.error('Fehler beim Löschen:', error);
+
+            alert('Fehler beim Löschen der Statistik.');
+        }
+    },
     async loadData() {
       try {
         if (!this.dom) this.dom = '';
@@ -191,6 +232,7 @@ export default {
         const payload = res.data;
 
         this.labels = payload.labels || [];
+        this.rows = payload.rows || [];
         this.renderChart(this.labels, payload.datasets || []);
       } catch (error) {
         console.error("Fehler beim Laden der Statistik:", error);
@@ -202,8 +244,8 @@ export default {
     },
 
     renderChart(labels, datasets) {
-    //   console.log('Labels:', labels);
-    //   console.log('Datasets:', datasets);
+    console.log('Labels:', labels);
+    console.log('Datasets:', datasets);
 
       if (!datasets || datasets.length === 0) {
         datasets = [{
@@ -217,7 +259,17 @@ export default {
 
       const ctx = this.$refs.canvas.getContext("2d");
       if (this.chart) this.chart.destroy();
+        console.log('CTX:', ctx);
+        console.log('LABEL COUNT:', labels.length);
 
+        datasets.forEach((d, i) => {
+            console.log(
+                `Dataset ${i}:`,
+                d.label,
+                'Data Length:',
+                d.data?.length
+            );
+        });
       this.chart = new Chart(ctx, {
         type: "bar",
         data: { labels, datasets },
@@ -235,38 +287,15 @@ export default {
       });
     },
 
-   async deleteLabel(label, idx) {
-    if (!confirm(`Möchten Sie die Statistik für "${label}" wirklich löschen?`)) return;
 
-    let save = confirm(`Möchten Sie diesen Eintrag für immer entfernen?`);
-
-    try {
-        const res = await axios.post('/delete-stat', {
-            url: label,
-            dom: this.dom,
-            save
-        });
-
-        if (res.data.success && res.data.deleted > 0) {
-            // Lokales Entfernen
-            this.labels.splice(idx, 1);
-
-            // Optional: Chart neu rendern
-            this.renderChart(this.labels, this.chart?.data?.datasets || []);
-        } else {
-            console.log(res.data);
-            alert("Eintrag wurde nicht gefunden oder konnte nicht gelöscht werden.");
-        }
-
-    } catch (error) {
-        console.error("Fehler beim Löschen:", error);
-        alert("Fehler beim Löschen der Statistik.");
-    }
-},
   },
 
-  beforeUnmount() {
-    if (this.chart) this.chart.destroy();
+    beforeUnmount() {
+        if (this.chart) {
+        this.chart.stop();
+        this.chart.destroy();
+        this.chart = null;
+    }
   }
 };
 </script>
