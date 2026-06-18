@@ -1040,12 +1040,16 @@ public function imprint_dag()
         return Inertia::render("Homepage/ri");
     }
     public function plot_gfx(){
+        if(!CheckZRights("Statistics"))
+        {
+            return redirect("/no-rights");
+        }
         return Inertia::render('Homepage/Stats');
     }
     public function ActivityLog(Request $request)
     {
         if(!CheckZRights("ActivityLog")){
-            return redirect("no-rights");
+
         }
 
 // $tables = DB::connection("mariadb")

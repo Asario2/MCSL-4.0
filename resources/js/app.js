@@ -170,10 +170,51 @@ import { SD } from "@/helpers";
 // APP
 // ======================
 
+let alr = false;
+
+// router.on('navigate', (event) => {
+//     console.log('NAVIGATE', event.detail.page.url);
+//      const url = btoa(encodeURIComponent(
+//         event.detail.page.url
+//     ));
+
+//     const route =
+//         event.detail.page.props.route_name ??
+//         'unknown';
+
+//     const page =
+//         event.detail.page.props.get_page ??
+//         '';
+
+//     axios.get(
+//         `/countpixel/${url}/${route}/${page}`
+//     )
+//     .then(() => {
+//         console.log('TRACK OK',url);
+//         alr = true;
+//     })
+//     .catch((e) => {
+//         console.error('TRACK ERROR', e);
+//     });
 
 
-router.on('navigate', (event) => {
-    console.log('NAVIGATE', event.detail.page.url);
+// });
+router.on('success', (event) => {
+    const url = btoa(encodeURIComponent(
+        event.detail.page.url
+    ));
+
+    const route =
+        event.detail.page.props.route_name ?? 'unknown';
+
+    const page =
+        event.detail.page.props.get_page ?? '';
+
+    axios.get(`/countpixel/${url}/${route}/${page}`);
+    console.log("NAvig to: " + url)
+});
+router.on('finish', (event) => {
+    console.log('FINISH');
 });
 
 // router.on('success', (event) => {
@@ -195,34 +236,8 @@ router.on('navigate', (event) => {
 //         console.error(err);
 //     });
 // });
-router.on('success', (event) => {
 
-    const url = btoa(encodeURIComponent(
-        event.detail.page.url
-    ));
 
-    const route =
-        event.detail.page.props.route_name ??
-        'unknown';
-
-    const page =
-        event.detail.page.props.get_page ??
-        '';
-
-    axios.get(
-        `/countpixel/${url}/${route}/${page}`
-    )
-    .then(() => {
-        console.log('TRACK OK');
-    })
-    .catch((e) => {
-        console.error('TRACK ERROR', e);
-    });
-
-});
-router.on('finish', (event) => {
-    console.log('FINISH');
-});
 createInertiaApp({
     title: title => `${title} - ${SD(1)}`,
 

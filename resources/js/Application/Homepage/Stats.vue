@@ -117,7 +117,7 @@
 
         <!-- Delete Button -->
         <button
-            @click="deleteLabel(row, idx)"
+            @click="deleteLabel(row, idx,row.dom)"
             class="opacity-0 group-hover:opacity-100 transition
                 px-2 py-1 rounded-md
                 text-red-600 hover:text-white
@@ -182,7 +182,7 @@ data() {
   methods: {
     SD,
     GetDomUrl,
-    async deleteLabel(row, idx) {
+    async deleteLabel(row, idx, dom_alt) {
 
         if (!confirm(
             `Möchten Sie die Statistik für "${row.url}" wirklich löschen?`
@@ -195,9 +195,10 @@ data() {
         );
 
         try {
+
             const res = await axios.post('/delete-stat', {
                 url: row.url.replace(GetDomUrl(row.dom),''),
-                dom: this.dom,
+                dom: dom_alt,
                 save
             });
 
@@ -233,6 +234,7 @@ data() {
 
         this.labels = payload.labels || [];
         this.rows = payload.rows || [];
+        
         this.renderChart(this.labels, payload.datasets || []);
       } catch (error) {
         console.error("Fehler beim Laden der Statistik:", error);

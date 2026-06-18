@@ -50,13 +50,7 @@ class CountPixelController extends Controller
         $url = base64_decode($url);
 
 
-        \Log::info('TRACK START', [
-            'url'   => $url,
-            'route' => $route,
-            'page'  => $page,
-            'host'  => $request->getHost(),
-            'ua'    => $request->userAgent(),
-        ]);
+
 
         try {
 
@@ -290,7 +284,14 @@ class CountPixelController extends Controller
 
     public function delete_stats(Request $request)
     {
-        \Log::info($request);
+        if(!CheckZRights("Statistics"))
+        {
+            return response()->json([
+                'success' => false,
+                'deleted' => 1,
+                'message' => "Statistik für '{$url}' wurde gelöscht."
+            ]);
+        }
         try {
             $url = $request->input('url');
 
@@ -311,19 +312,19 @@ class CountPixelController extends Controller
     'url_type' => gettype($url),
     'dom_type' => gettype($dom),
 ]);
-    $query = DB::connection('mariadb')->table('xgen_page_views')
-        ->where("url","/".$url)
-        ->orWhere("url",$url)
-        ->orWhere("url",ltrim($url,"/"));
+   $query = DB::connection('mariadb')
+    ->table('xgen_page_views')
+    ->where(function ($q) use ($url) {
 
-    // Prüfen, ob "all" angefragt und Rechte vorhanden
-    if ($dom !== "all" || !CheckZRights("StatisticsAll")) {
-        $query->where('dom', $dom);
-    }
+        $q->where('url', '/' . ltrim($url, '/'))
+          ->orWhere('url', ltrim($url, '/'))
+          ->orWhere('url', $url);
 
+    })
+    ->where('dom', $dom);
 
-    $deleted = $query->delete(); // Anzahl der gelöschten Zeilen
-   \Log::info("Deleted rows: {$deleted}");
+    $deleted = $query->delete();
+    \Log::info("Deleted rows: {$deleted}");
 
     // Optional: dauerhaft in FilterUrls speichern
     if ($request->save) {
@@ -531,24 +532,17 @@ class CountPixelController extends Controller
 //         Log::info("Datasets: " . json_encode($datasets));
 
         $urlRows = $rows
-        ->sort(function ($a, $b) {
-
-            $urlCompare = strcmp($a->url, $b->url);
-
-            if ($urlCompare !== 0) {
-                return $urlCompare; // alphabetisch nach URL
-            }
-
-            return $b->cnt <=> $a->cnt; // gleiche URL => höchste cnt zuerst
-        })
-        ->map(function ($row) {
-            return [
-                'url' => $row->url,
-                'dom' => $row->dom,
-                'cnt' => $row->cnt,
-            ];
-        })
-        ->values();
+    ->map(function ($row) {
+        return [
+            'url' => $row->url,
+            'dom' => $row->dom,
+            'cnt' => $row->cnt,
+        ];
+    })
+    ->sortBy(function ($row) {
+        return strtolower($row['url']);
+    })
+    ->values();
 
         $labels = array_map(function ($url) {
             return $url === '/home' ? '/' : $url;
@@ -573,6 +567,7 @@ class CountPixelController extends Controller
 
     public function stats()
     {
+
         $data = DB::connection('mariadb')
             ->table('xgen_page_views')
             ->select('url', DB::raw('COUNT(*) as views'))
