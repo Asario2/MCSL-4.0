@@ -47,10 +47,9 @@ class CountPixelController extends Controller
     public function track(Request $request,$url, $route, $page = null)
     {
 
-        $url = base64_decode($url);
-
-
-
+        $url = rawurldecode(
+            base64_decode($url)
+        );
 
         try {
 
@@ -241,6 +240,8 @@ class CountPixelController extends Controller
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
                 'trace' => $e->getTraceAsString(),
+                "url"=>$rawUrl,
+                "visited_at"=>now(),
             ]);
         }
         // \Log::info('FINAL ROWS', [
@@ -386,12 +387,12 @@ class CountPixelController extends Controller
 
         if (substr_count($clean, "home/infos/show")) $clean = "/home/infos_show";
         if (substr_count($clean, "blogs/show")) $clean = "/blogs_show";
-        if (substr_count($clean, "images/show/")) $clean = "/images_show";
+        if (substr_count($clean, "images/show/")) $clean = "/home/  images_show";
         if (substr_count($clean, "&page=")) $clean = str_replace("&page=" . @$_GET['page'], '', $clean);
         if (substr_count($clean, "?page=")) $clean = str_replace("?page=" . @$_GET['page'], '', $clean);
         if (substr_count($clean, "?search=")) $clean = str_replace("?search=" . @$_GET['search'], '', $clean);
-        if (substr_count($clean, "home/show/pictures")) $clean = "/picures_show";
-        if (substr_count($clean, "home/users/show/")) $clean = "/users_show";
+        if (substr_count($clean, "home/show/pictures")) $clean = "/home/pictures_show";
+        if (substr_count($clean, "home/users/show/")) $clean = "/home/users_show";
 
         if (!empty($clean) && $clean !== '/' && !str_starts_with($clean, '/')) {
             $clean = '/' . $clean;

@@ -47,6 +47,7 @@
 </template>
 <script>
 import { defineComponent } from "vue";
+import axios from "axios";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import Layout from "@/Application/Homepage/Shared/mfx/Layout.vue";
 import { marked } from 'marked';
@@ -88,6 +89,7 @@ export default defineComponent({
             changelogText: '',
             todolist: [],
             long:false,
+            commitCount: 0,
         }
     },
 
@@ -210,15 +212,35 @@ export default defineComponent({
 
         async loadChangelog() {
 
-            try {
-                const response = await fetch('https://raw.githubusercontent.com/Asario2/MCSL-4.0/main/CHANGELOG.md');
-                const markdown = await response.text();
-                this.changelogText = this.repimg(marked(markdown)); // ✅ Markdown in HTML umwandeln
-            } catch (err) {
-                console.error('Fehler beim Laden des Changelogs:', err);
-                this.changelogText = 'Changelog konnte nicht geladen werden.';
-            }
-        },
+        try {
+            const response = await fetch(
+                'https://raw.githubusercontent.com/Asario2/MCSL-4.0/main/CHANGELOG.md'
+            );
+
+            const markdown = await response.text();
+
+            // Anzahl der Changelog-Einträge zählen
+            this.commitCount =
+                (markdown.match(/version-\d+\.\d+\.\d+/gi) || [])
+                    .length;
+
+            this.changelogText = this.repimg(
+                marked(markdown)
+            );
+
+        } catch (err) {
+
+            console.error(
+                'Fehler beim Laden des Changelogs:',
+                err
+            );
+
+            this.changelogText =
+                'Changelog konnte nicht geladen werden.';
+
+            this.commitCount = 0;
+        }
+    },
 
         cleanHtml(html) {
             if (!html) return '';
@@ -240,10 +262,16 @@ export default defineComponent({
         replacements() {
             return {
                 'votez()': () => rumLaut(nl2br(this.voteHtml)),
-                'changelog()': () => this.changelogText,
+                'changelog()': () => `${this.changelogText}
+                <div class="mb-4 text-center font-bold">
+                    ${this.commitCount} Commits insgesamt
+                </div>
+
+            `,
                 'showtodo()': () => this.showtodo(),
                 'showprivacy()': () => this.showprivacy(),
                 'vcard': () => this.showVCard(),
+                'commitcount()': () => this.commitCount,
             };
         },
         async showVCard() {

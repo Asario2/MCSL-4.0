@@ -3,12 +3,17 @@
     <div class="prose max-w-none p-4">
       <div v-if="loading">Lade Changelog...</div>
       <div v-else v-html="stripTagsKeepImgAndA(changelogHtml)"></div>
+         <div class="mt-8 text-center font-semibold">
+             <strong>{{ commitCount }}</strong>
+    Commits / Changelog-Einträge    
+        </div>
     </div>
   </template>
 
   <script>
   import { marked } from 'marked';
   import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
+  import axios from 'axios';
   export default {
 
   components: { MetaHeader },
@@ -17,6 +22,8 @@
         changelogMd: '',
         changelogHtml: '',
         loading: true,
+        commitCount: 0,
+
       };
     },
     mounted() {
@@ -30,6 +37,7 @@
         })
         .then(md => {
           this.changelogMd = md;
+          this.commitCount = this.countCommits(md);
           this.changelogHtml = this.linkit(marked.parse(md));
           this.loading = false;
         })
@@ -40,6 +48,9 @@
         });
     },
     methods:{
+        countCommits(md) {
+           return (md.match(/alt="Version"/g) || []).length;
+        },
         linkit(str)
         {
             return str.replace(/(?<!&)#(\d+)/g, "<a href='https://github.com/Asario2/MCSL-4.0/issues/$1'>#$1</a>");

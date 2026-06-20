@@ -302,7 +302,7 @@ public static function getOptions($name)
             $statusvals = [
                 ["id"=>'Gesucht',"name"=>'Gesucht'],
                 ["id"=>'Gefunden',"name"=>'Gefunden'],
-                ["id"=>'GesuchtnGefunden',"name"=>'GesuchtnGefunden']
+                ["id"=>'GesuchtnGefunden',"name"=>'Gesucht und Gefunden']
 
             ];
         }

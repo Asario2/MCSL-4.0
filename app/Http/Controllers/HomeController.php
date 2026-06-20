@@ -862,14 +862,14 @@ return Inertia::render('Homepage/Pictures', [
     public function ReFunc($text)
     {
 
-        \Log::info("EF RUN");
+        // \Log::info("EF RUN");
         $exfunc = new ExFuncController();
         return preg_replace_callback(
             '/\{\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\(\)\s*\}\}/',
             function ($matches) use ($exfunc) {
 
                 $function = $matches[1];
-                \Log::info($matches);
+                // \Log::info($matches);
                 if (method_exists($exfunc, $function)) {
                     return $exfunc->$function();
                 }
