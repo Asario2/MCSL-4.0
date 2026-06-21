@@ -216,6 +216,15 @@ router.on('success', (event) => {
 router.on('finish', (event) => {
     console.log('FINISH');
 });
+router.onError((error) => {
+    if (
+        error?.message?.includes(
+            'Failed to fetch dynamically imported module'
+        )
+    ) {
+        window.location.reload();
+    }
+});
 
 // router.on('success', (event) => {
 //     const url_allt = event.detail.page.url;

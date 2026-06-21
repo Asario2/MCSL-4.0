@@ -738,3 +738,12 @@ DIV.bg-text-blue-500{
 .bg-layout-sun-5000{
     background-color:#121212 !important;
 }
+::selection {
+    background: #facc15; /* yellow-400 */
+    color: #000;
+}
+
+::-moz-selection {
+    background: #facc15;
+    color: #000;
+}   
