@@ -446,10 +446,10 @@ export default {
             type: String,
             default: "Administrator-Anwendung",
         },
-        breadcrumbs:{
-            type:[String,Object,Array],
-            required:false,
-        }
+        // breadcrumbs:{
+        //     type:[String,Object,Array],
+        //     required:false,
+        // }
     },
 
     data() {

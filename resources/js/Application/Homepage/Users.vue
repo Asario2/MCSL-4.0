@@ -28,7 +28,7 @@
 
             <div class="p-2 md:p-4">
     <page-title>
-        <template #title> Benutzerlsite </template>
+        <template #title> Benutzerliste </template>
     </page-title>
 
     <div class="flex justify-between items-center">
@@ -120,7 +120,7 @@ export default defineComponent({
             form: {
                 search: this.filters.search,
             },
-            searchFilter:false, 
+            searchFilter:false,
         };
     },
 

@@ -1,6 +1,6 @@
-<template>
+S<template>
 <Layout>
-    <MetaHeader title="Email Gesendet" />
+    <MetaHeader title="Vom Newsletter abmelden" />
     <div class="flex flex-col items-center justify-center h-screen space-y-4 mt-[-80px]">
       <VerifySVG></VerifySVG>
       <div class="text-center text-lg font-semibold">

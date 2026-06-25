@@ -8,7 +8,7 @@
         <slot name="label">Label</slot>
       </label>
       <input
-        :type="type ?? 'text'"
+        type="email"
         :id="id"
         :name="name"
         :placeholder="placeholder"
@@ -28,12 +28,16 @@
       />
     </div>
     <input type="hidden" :name="name" :id="name + '_alt'" :value="modelValue" />
+    <input type="hidden" name="email_hash" id="email_hash" :value="email_hash" />
     </template>
 
   <script>
+  import { sha256 } from "@/helpers";
   export default {
-    name: 'InputFormText',
+    name: 'InputEmSecure',
+
     inheritAttrs: false, // <-- Damit $attrs.class manuell verarbeitet werden kann
+
     props: {
       id: { type: String, required: true },
       name: { type: String, required: true },
@@ -46,6 +50,26 @@
         default: 'text'
     }
     },
+    data() {
+        return {
+            email_hash: '',
+        };
+    },
+    watch: {
+    async modelValue(val) {
+        this.email_hash = await this.sha256(val);
+    }
+},
+    methods:
+    {
+        sha256,
+    },
+    async mounted() {
+        this.email_hash =
+            await this.sha256(
+                this.modelValue || ''
+            );
+    }
   };
   </script>
 

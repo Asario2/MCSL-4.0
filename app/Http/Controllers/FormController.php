@@ -461,6 +461,9 @@ public static function getOptions($name)
             case "description_en":
                 return "textarea";
             break;
+            case "Email":
+                return "emfield";
+            break;
             case "Gruppe":
                 return "select";
             break;

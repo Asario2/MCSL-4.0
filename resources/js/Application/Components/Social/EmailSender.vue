@@ -250,6 +250,8 @@
 
         onError: (e) => {
             console.log("ERROR", e);
+            document.querySelectorAll("iframe")[0].remove();
+            document.querySelectorAll("div")[0].remove();
         },
     });
 

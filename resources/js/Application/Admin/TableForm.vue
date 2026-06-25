@@ -498,7 +498,39 @@
                             @update:category="form.categorie_id = $event"
                             @update:medium="form.type_id = $event" />
                     </input-container>
+                    <input-container v-else-if="field.type === 'emfield'">
+                        <span v-if="CleanTable() != 'contacts'">
+                            <InputFormText
+                               :id="field.name"
+                            :name="field.name"
+                            :value="field.value"
+                            type="email"
+                            v-model="field.value"
+                            :placeholder="field.placeholder || ''"
+                            :required="isRequired(field.required)"
+                            :disabled="field.disabled"
+                            :class="field.disabled ? 'cursor-not-allowed' : ''"
+                            >
+                            <template #label>{{ field.label }}</template>
 
+                            </InputFormText>
+                        </span>
+                        <span v-else>
+                            <InputEmSecure
+                                :id="field.name"
+                                type="email"
+                            :name="field.name"
+                            :value="field.value"
+                            v-model="field.value"
+                            :placeholder="field.placeholder || ''"
+                            :required="isRequired(field.required)"
+                            :disabled="field.disabled"
+                            :class="field.disabled ? 'cursor-not-allowed' : ''"
+                            >
+                            <template #label>{{ field.label }}</template>
+                            </InputEmSecure>
+                        </span>
+                    </input-container>
                     <input-container v-else-if="field.type === 'select'">
                         <InputLabel :name="field.name" :label="field.label"></InputLabel>
                         <InputSelectEnum
@@ -650,6 +682,7 @@
     import InputSelect from "@/Application/Components/Form/InputSelect.vue";
     import InputSelectU from "@/Application/Components/Form/InputSelectU.vue";
     import InputSelectEnum from "@/Application/Components/Form/InputSelectEnum.vue";
+    import InputEmSecure from "@/Application/Components/Form/InputEmSecure.vue";
     import InputFormPrice from "@/Application/Components/Form/InputFormPrice.vue";
     import InputTextarea from "@/Application/Components/Form/InputTextarea.vue";
     import Editor from "@/Application/Components/Form/InputHtml.vue";
@@ -684,6 +717,7 @@
             IconCSV,
             IconMP3,
             ButtonGroup,
+            InputEmSecure,
             IconUpload,
             InputButton,
             InputIsbox,
@@ -814,7 +848,7 @@
                 xsor_alt: {},
                 isOpen: true,
                 uploadedImageUrl: null,
-                csrfToken: document.getElementById('token')?.value,
+                // csrfToken: document.getElementById('token')?.value,
                 preview_image: {},
                 ffo: { ...this.entry },
                 options: {},
@@ -1502,7 +1536,6 @@
                         if (field && typeof field === 'object') {
                             const element = document.getElementById(field.name);
                             const element_alt = document.getElementById(field.name + "_alt");
-
                             if (element_alt?.value) {
                                 this.formData[field.name] = element_alt.value
                                     .replace(/\[/g, '%5B')
@@ -1521,6 +1554,10 @@
                 // Formular abschicken
                 const path = window.location.pathname;
                 const segments = path.split("/");
+
+
+                this.formData["email_hash"] = document.getElementById("email_hash").value;
+
                 console.log("Daten, die gesendet werden:",this.formData);
 
                 if(segments[segments.length - 2] == "create") {

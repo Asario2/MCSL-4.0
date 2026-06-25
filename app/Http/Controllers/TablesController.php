@@ -971,7 +971,7 @@ public function ShowTable(Request $request, $table_alt = null)
             $ch = DB::table("newsletter")->where("id",$request->mailbodyId)->select("comphash")->first();
             $uhash = @$res->uhash;
             $email = @decval_user($res->email,Auth::id());
-            $link[2] = "http://".request()->getHost()."/newslToMCSLPoints/".$uhash."/".$ch->comphash."/".rawurlencode($email);
+            $link[2] = "http://".request()->getHost()."/newslToMCSLPoints/".$uhash."/".@$ch->comphash."/".rawurlencode($email);
             $link[1] = "http://".request()->getHost()."/unsubscribe/$uhash/".rawurlencode($email);
             $link[0] = "http://".request()->getHost();
 
@@ -3206,9 +3206,10 @@ return Inertia::render('Admin/Kontakte', [
             $formData['ripdate']      = !empty($formData['ripdate'])
                 ? encval_user($formData['ripdate'], $userId)
                 : null;
-
+            $email_hash = $formData['email_hash'];
 
         }
+
         if(!FormController::CheckCreate()){
             unset($formData['password']);
         }
@@ -3232,7 +3233,14 @@ return Inertia::render('Admin/Kontakte', [
         if(empty($formData['preis']) && Schema::hasColumn($table, 'preis')){
             $formData['preis'] = "0.0";
         }
+
         $formData = array_diff_key($formData, array_flip(Settings::$excl_cols));
+
+        if(@$email_hash){
+            $formData["email_hash"] = $email_hash;
+        }
+
+
         if (Schema::hasColumn($table,"updated_at")) {
             $formData["updated_at"] = now();
         }

@@ -719,6 +719,21 @@ export async function GetSettings() {
     }
 
 }
+
+import CryptoJS from 'crypto-js';
+
+export function sha256(text = '')
+{
+    return CryptoJS
+        .SHA256(
+            String(text)
+                .trim()
+                .toLowerCase()
+        )
+        .toString();
+}
+
+
 // export async function GetSRights(modul)
 // {
 //     try {

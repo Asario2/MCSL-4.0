@@ -211,20 +211,26 @@ router.on('success', (event) => {
         event.detail.page.props.get_page ?? '';
 
     axios.get(`/countpixel/${url}/${route}/${page}`);
-    console.log("NAvig to: " + url)
+    console.log("NAvig to: " + event.detail.page.url)
 });
 router.on('finish', (event) => {
-    console.log('FINISH');
+
 });
-router.onError((error) => {
-    if (
-        error?.message?.includes(
-            'Failed to fetch dynamically imported module'
-        )
-    ) {
-        window.location.reload();
+window.addEventListener(
+    'unhandledrejection',
+    (event) => {
+
+        const msg =
+            event.reason?.message ||
+            String(event.reason);
+
+        if (msg.includes(
+                'Failed to fetch dynamically imported module')) {
+
+            window.location.reload();
+        }
     }
-});
+);
 
 // router.on('success', (event) => {
 //     const url_allt = event.detail.page.url;

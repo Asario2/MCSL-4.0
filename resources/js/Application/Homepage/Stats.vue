@@ -2,7 +2,7 @@
   <Layout>
     <MetaHeader title="Statistik" />
     <template #header>
-      <breadcrumb :breadcrumbs="breadcrumbs" :current="'Zugriffs-Statistik'"></breadcrumb>
+      <Breadcrumb  :current="'Zugriffs-Statistik'"></Breadcrumb>
     </template>
 
     <div class="flex justify-between items-center mb-4">
@@ -161,7 +161,9 @@ Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, L
 export default {
   name: "PageViewsChart",
   components: { Layout, Breadcrumb, MetaHeader,favio },
+props:{
 
+},
 data() {
     return {
         chart: null,
@@ -171,10 +173,18 @@ data() {
         modulRights: null,
         labels: [],
         rows: [],
+        breadcrumbs: [
+            {
+                title: 'Dashboard',
+                href: '/admin'
+            }
+        ]
     };
 },
 
   async mounted() {
+        // console.log('STATS VERSION 123');
+
     await this.loadData();
     this.modulRights = await loadRights();
   },
@@ -234,7 +244,7 @@ data() {
 
         this.labels = payload.labels || [];
         this.rows = payload.rows || [];
-        
+
         this.renderChart(this.labels, payload.datasets || []);
       } catch (error) {
         console.error("Fehler beim Laden der Statistik:", error);

@@ -226,6 +226,10 @@ class RequestInspectionMiddleware
 
     public function handle(Request $request, Closure $next)
     {
+
+        if ($request->is('admin/email')) {
+             return $next($request);
+        }
         /*
         |--------------------------------------------------------------------------
         | Dangerous HTTP Methods

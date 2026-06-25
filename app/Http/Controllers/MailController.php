@@ -205,10 +205,48 @@ $mailPassword = env('MAIL_PASSWORD');
         // Wenn nichts gefunden wurde
         return null;
     }
-    public function UnSubscribe_Newsl($uhash)
+    function UnSubscribe_NewslbyMail()
     {
-        $email = $this->getEmailByUhash($uhash);
-        $email = $email;
+        return Inertia::render("Components/Social/Newsl_BlacklistMail");
+    }
+    public function UnSubsc(Request $request)
+    {
+        $email = $request->email;
+        if(empty($uhash))
+        {
+            $uhash = $this->MuHash('',$email);
+        }
+
+        if($email){
+            // $resul = DB::table("newsletter_blacklist")->updateOrInsert(["mail"=>$email,"created_at"=>now(),"pub"=>"1"]);
+       $exists = DB::table('newsletter_blacklist')
+            ->where('mail', $email)
+            ->exists();
+
+        if (!$exists) {
+            DB::table('newsletter_blacklist')->insert([
+                'mail' => $email,
+                'pub' => 1,          // 👈 nur beim Insert
+                'created_at' => now(),
+                "uhash" => $uhash,
+
+            ]);
+        } else {
+            DB::table('newsletter_blacklist')->update([
+                'updated_at' => now(),
+            ]);
+        }
+        }
+    }
+    public function UnSubscribe_Newsl($uhash,$email)
+    {
+        // $email = $this->getEmailByUhash($uhash);
+        // $email = $email;
+        if(empty($uhash))
+        {
+            $uhash = $this->MuHash('',$email);
+        }
+
         if($email){
             // $resul = DB::table("newsletter_blacklist")->updateOrInsert(["mail"=>$email,"created_at"=>now(),"pub"=>"1"]);
        $exists = DB::table('newsletter_blacklist')
@@ -294,6 +332,17 @@ $mailPassword = env('MAIL_PASSWORD');
     </button>
     ';
     }
+    function MuHash($id='',$email='')
+    {
+        $uhash = $this->randomString64();
+        if(!Auth::user()->uhash)
+        {
+            $eh = hash('sha256',strtolower(trim($email)));
+
+            DB::table("contacts")->where("id",$id)->orWhere("email_hash",$eh)->update(["uhash"=>$uhash]);
+        }
+        return $uhash;
+    }
     function send_newsletter(Request $request)
     {
 
@@ -308,7 +357,6 @@ $mailPassword = env('MAIL_PASSWORD');
         $users = [];
         $pm = NEW PMController();
         // $to = DB::table("newsletter")
-
         foreach($entries as $key=>$val){
             if(substr_count($val,"{")){
                 $groups[] = $val;
@@ -374,9 +422,28 @@ $mailPassword = env('MAIL_PASSWORD');
 
             $nick = $email;
 
-            $res_alt = DB::table('contacts')->where('email_hash', hash('sha256', $email))->select("uhash","email")->first();
+            $res_alt = DB::table('contacts')->where('email_hash', hash('sha256', trim(strtolower($email))))->select("id","uhash","email")->first();
 
-            $uhash = $res_alt->uhash;
+            \Log::info("res: ", (array) $res_alt);
+
+            if (empty($res_alt->uhash))
+            {
+                $uhash = $this->randomString64();
+
+                DB::table('contacts')
+                    ->where('id', $res_alt->id)
+                    ->update([
+                        'uhash' => $uhash
+                    ]);
+            }
+            else
+            {
+                $uhash = $res_alt->uhash;
+            }
+            if(empty($res_alt))
+            {
+                return false;
+            }
             $email = decval_user($res_alt->email,Auth::id());
 
             $isBlackListed = DB::table("newsletter_blacklist")->where("mail",$email)->exists();
