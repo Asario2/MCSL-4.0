@@ -970,7 +970,14 @@ public function ShowTable(Request $request, $table_alt = null)
             }
             $ch = DB::table("newsletter")->where("id",$request->mailbodyId)->select("comphash")->first();
             $uhash = @$res->uhash;
+
             $email = @decval_user($res->email,Auth::id());
+
+            if(!$uhash)
+            {
+                $ma->MuHash('',$email);
+            }
+
             $link[2] = "http://".request()->getHost()."/newslToMCSLPoints/".$uhash."/".@$ch->comphash."/".rawurlencode($email);
             $link[1] = "http://".request()->getHost()."/unsubscribe/$uhash/".rawurlencode($email);
             $link[0] = "http://".request()->getHost();

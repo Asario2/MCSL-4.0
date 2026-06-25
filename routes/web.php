@@ -97,9 +97,11 @@ GlobalController::SetDomain();
         Route::permanentRedirect('/home', '/');
         Route::post('/api/log-js-error', function (\Illuminate\Http\Request $request) {
 
-            \Log::error('Console Error', [
+            \Log::error('CE', [
+                'user_id'   => auth()->id(),
                 'url'       => $request->fullUrl(),
                 'path'      => $request->path(),
+                'referer'   => $request->header('referer'),
                 'ip'        => $request->ip(),
                 'method'    => $request->method(),
                 'userAgent' => $request->userAgent(),
@@ -230,7 +232,7 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::post("/newsl_subscribe", [MailController::class, "Subscribe_Newsl"])->name("mail.subscribe_newsl");
 Route::get("/unsubscribe/{uhash?}/{email}", [MailController::class, "UnSubscribe_Newsl"])->name("mail.unsubscribe_newsl");
-Route::get("/unsubscribe", [MailController::class, "UnSubscribe_NewslbyMail"])->name("mail.unsubscribe");
+Route::post("/unsubscribe", [MailController::class, "UnSubscribe_NewslbyMail"])->name("mail.unsubscribe");
 Route::post("/unsubsc_mail", [MailController::class, "UnSubsc"])->name("mail.unsubsc");
 
 
@@ -722,8 +724,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post("/admin/pm/check/{id}",[PMController::class,"update"])
             ->name("admin.pm.check");
         Route::post('/admin/pm/mark', [PmController::class, 'update_more'])->name('admin.pm.mark');
-        Route::delete("/admin/pm/delete/{table}/{id}",[PMController::class,"destroy"])
-            ->name("admin.pm.delete");
+        Route::delete('/admin/pm/delmore', [PMController::class, 'destroy_more'])->name("admin.pm.delete");
         Route::post("/admin/pm/delmore/",[PMController::class,"destroy_more"])
             ->name("admin.pm.delmore");
         // Route::get('/email/signatur/{id}', function ($id) {

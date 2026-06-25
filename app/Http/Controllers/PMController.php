@@ -356,11 +356,24 @@ class PMController extends Controller
         $iid = DB::table("private_messages")->where("id",$id)->value("private_messages_text_id AS iid");
 
         $res2 = DB::table("private_messages")->where('private_messages_text_id',$iid)->count();
+        \Log::info([
+    'delete_id' => $id,
+    'pm' => DB::table('private_messages')
+        ->where('id',$id)
+        ->first()
+]);
+        \Log::info([
+    'remaining' => DB::table('private_messages')
+        ->where('private_messages_text_id',$iid)
+        ->get()
+]);
         $res = DB::table("private_messages")->where('id', $id)->delete();
+
         if(@$res2 < 2){
 //             \Log::info("IID:".$iid);
             DB::table("private_messages_text")->where("id",$iid)->delete();
         }
+
 
 
 
@@ -380,28 +393,37 @@ class PMController extends Controller
     $ids = explode(',', $ids);
 }
 
-    foreach($ids as $id){
+    foreach ($ids as $id) {
 
-        $iid = DB::table("private_messages")
-            ->where("id",$id)
-            ->value("private_messages_text_id AS iid");
+    // \Log::info([
+    //     'delete_id' => $id,
+    // ]);
 
-        $res2 = DB::table("private_messages")
-            ->where('private_messages_text_id',$iid)
-            ->count();
+    $iid = DB::table('private_messages')
+        ->where('id', $id)
+        ->value('private_messages_text_id');
 
-        DB::table("private_messages")
-            ->where('id', $id)
+    $res2 = DB::table('private_messages')
+        ->where('private_messages_text_id', $iid)
+        ->count();
+
+    DB::table('private_messages')
+        ->where('id', $id)
+        ->delete();
+
+    if ($res2 < 2) {
+
+        DB::table('private_messages_text')
+            ->where('id', $iid)
             ->delete();
-
-        if($res2 < 2){
-
-            DB::table("private_messages_text")
-                ->where("id",$iid)
-                ->delete();
-        }
     }
 
+    // \Log::info([
+    //     'remaining' => DB::table('private_messages')
+    //         ->where('private_messages_text_id', $iid)
+    //         ->get()
+    // ]);
+}
     return response()->json([
         'status' => 'success',
         'message' => 'Einträge erfolgreich gelöscht',

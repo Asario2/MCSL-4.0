@@ -526,8 +526,10 @@ export default {
 
     try {
 
-        await axios.post('/admin/pm/delmore/', {
-            ids: ids
+        axios.delete('/admin/pm/delmore', {
+            data: {
+                ids: ids
+            }
         });
 
         if (tab === 'inbox') {
@@ -539,7 +541,7 @@ export default {
 
         } else {
 
-            this.outboxArr.data =
+            this.localOutbox.data =
                 this.outboxArr.data.filter(
                     msg => !ids.includes(msg.id)
                 );
@@ -556,7 +558,7 @@ export default {
         console.error(e);
         alert("Fehler beim Löschen");
     }
-},  
+},
 async ShowMessage(msg) {
 
     this.localInbox = this.localInbox.map(m => {
