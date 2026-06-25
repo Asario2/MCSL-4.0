@@ -329,3 +329,7 @@
 ![Version](https://img.shields.io/badge/version-5.83.6-orange) Feature - Scrollable contacts (#523)  
 ![Version](https://img.shields.io/badge/version-5.84.1-orange) Hotfix - Countpixel  (#525)  
 ![Version](https://img.shields.io/badge/version-5.85.1-orange) Hotfix - Dom on activity delete (#524)  
+![Version](https://img.shields.io/badge/version-5.86.8-orange) Hotfix - darkmode toggle button doesn't works (#530)  
+![Version](https://img.shields.io/badge/version-5.87.3-orange) Bug - have to fix mail by contacts (#528)  
+![Version](https://img.shields.io/badge/version-5.88.7-orange) Feature - Add newsletter blacklist manual way (#529)  
+![Version](https://img.shields.io/badge/version-5.89.8-orange) Hotfix -  Delete of PM's aren't working (#533)  
