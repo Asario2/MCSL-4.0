@@ -2560,35 +2560,33 @@ public function ListTables(Request $request, $table_alt = '')
         if(!CheckZRights("Contacts")){
             return redirect("/no-rights");
         }
-        $search = $request->input('search');
+$search = mb_strtolower(trim($request->input('search','')));
 
 $data = DB::table('contacts')
-    ->where(function ($query) {
-        $query->where('us_poster', Auth::id())
-              ->orWhere('xis_public_con', '1');
+    ->where(function($q){
+        $q->where('us_poster',Auth::id())
+          ->orWhere('xis_public_con',1);
     })
-    ->when($request->filled('search'), function ($query) use ($search) {
-        $search = strtolower(trim($search)); // Kleinbuchstaben für case-insensitive
-        $headline = 'Name';
-        $otherField = 'Gruppe';
-
-        $query->where(function ($q) use ($search, $headline, $otherField) {
-            $q->whereRaw('LOWER(' . $headline . ') LIKE ?', ["%{$search}%"]);
-
-            if ($otherField && !in_array($otherField, ['id', 'created_at', 'updated_at'])) {
-                $q->orWhereRaw('LOWER(' . $otherField . ') LIKE ?', ["%{$search}%"]);
-            }
-        });
-    })
-    ->orderBy('Gruppe', 'ASC')
-    ->orderBy('Name', 'ASC')
+    ->orderBy('Gruppe')
+    ->orderBy('Name')
     ->get()
-    ->map(function ($item) {
-        foreach ($item as $key => $value) {
-            $item->$key = (decval_user($value,Auth::id())); // 🔐 jede Spalte entschlüsseln
+    ->map(function($item){
+        foreach($item as $key=>$value){
+            $item->$key = decval_user($value,Auth::id());
         }
         return $item;
     });
+
+if($search!==''){
+    $data = $data->filter(function($item) use($search){
+        foreach((array)$item as $value){
+            if($value!==null && str_contains(mb_strtolower((string)$value),$search)){
+                return true;
+            }
+        }
+        return false;
+    })->values();
+}
 
 
 return Inertia::render('Admin/Kontakte', [
