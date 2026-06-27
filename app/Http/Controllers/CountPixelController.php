@@ -387,7 +387,7 @@ class CountPixelController extends Controller
 
         if (substr_count($clean, "home/infos/show")) $clean = "/home/infos_show";
         if (substr_count($clean, "blogs/show")) $clean = "/blogs_show";
-        if (substr_count($clean, "images/show/")) $clean = "/home/  images_show";
+        if (substr_count($clean, "images/show/")) $clean = "/home/images_show";
         if (substr_count($clean, "&page=")) $clean = str_replace("&page=" . @$_GET['page'], '', $clean);
         if (substr_count($clean, "?page=")) $clean = str_replace("?page=" . @$_GET['page'], '', $clean);
         if (substr_count($clean, "?search=")) $clean = str_replace("?search=" . @$_GET['search'], '', $clean);

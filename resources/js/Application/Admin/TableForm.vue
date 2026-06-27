@@ -1555,8 +1555,11 @@
                 const path = window.location.pathname;
                 const segments = path.split("/");
 
+                if(document?.getElementById("email_hash"))
+                {
+                    this.formData["email_hash"] = document?.getElementById("email_hash").value;
+                }
 
-                this.formData["email_hash"] = document.getElementById("email_hash").value;
 
                 console.log("Daten, die gesendet werden:",this.formData);
 
