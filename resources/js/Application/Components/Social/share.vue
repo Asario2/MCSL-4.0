@@ -33,10 +33,10 @@
     import { nextTick } from 'vue';
     import { parse } from 'url';
     import IconShare from "@/Application/Components/Icons/IconShare.vue";
-    // import IconWhatsapp from "@/Application/Components/Icons/IconWhatsapp.vue";
-    // import IconTelegram from "@/Application/Components/Icons/IconTelegram.vue";
-    // import IconFacebook from "@/Application/Components/Icons/IconFacebook.vue";
-    // import IconX from "@/Application/Components/Icons/IconX.vue";
+    import IconWhatsapp from "@/Application/Components/Icons/IconWhatsapp.vue";
+    import IconTelegram from "@/Application/Components/Icons/IconTelegram.vue";
+    import IconFacebook from "@/Application/Components/Icons/IconFacebook.vue";
+    import IconX from "@/Application/Components/Icons/IconX.vue";
     import { faL } from '@fortawesome/free-solid-svg-icons';
     export default {
         components: {

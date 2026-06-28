@@ -143,25 +143,23 @@ return this.$page?.props?.auth?.user?.id;
   },
 },
   watch: {
-    form: {
-handler: throttle(function () {
-  const query = pickBy(this.form, v => v != null && v !== '');
+    'form.search': throttle(function () {
+        const query = pickBy(this.form, v => v != null && v !== '');
 
-  this.$inertia.get(this.route("home.shortpoems"), query, {
-    preserveState: true,
-    preserveScroll: false,
-    replace: true,
-    skipLoading: true,
-  });
-}, 300, { leading: false, trailing: true }),
-    },
+        this.$inertia.get(this.route("home.shortpoems"), query, {
+        preserveState: true,
+        preserveScroll: false,
+        replace: true,
+        skipLoading: true,
+        });
+    }, 300),
 
     items: {
-      immediate: true,
-      async handler() {
+        immediate: true,
+        async handler() {
         await this.$nextTick();
         this.scrollToHash();
-      }
+        }
     }
   },
   methods: {

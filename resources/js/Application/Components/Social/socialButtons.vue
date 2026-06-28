@@ -150,9 +150,19 @@ export default {
     },
     methods: {
         CleanTable,
+        closeAllModals() {
+            this.showComments = null;
+            this.showShareBox = {};
+            this.showStarBox = {};
+        },
+
         openComments(id) {
-            this.imageRemove(id);
-            this.showComments = this.showComments === id ? null : id;
+            const wasOpen=this.showComments===id;
+            this.closeAllModals();
+            if(!wasOpen){
+                this.imageRemove(id);
+                this.showComments=id;
+            }
             this.updateTeaserOverflow();
         },
         closeComments() {
@@ -163,26 +173,22 @@ export default {
 
 
         toggleStarBox(id) {
-            this.showStarBox[id] = !this.showStarBox[id];
+            const wasOpen=!!this.showStarBox[id];
+            this.closeAllModals();
+            if(!wasOpen) this.showStarBox[id]=true;
             this.updateTeaserOverflow();
         },
         toggleShareBox(id) {
-            console.log("Button",id);
-            this.showShareBox[id] = !this.showShareBox[id];
-            this.updateTeaserOverflow();
+            const wasOpen=!!this.showShareBox[id];
+            this.closeAllModals();
 
-            if (this.showShareBox[id]) {
-                nextTick(() => this.initShariff(id));
-            } else {
-                nextTick(() => {
-                    const shariffRef = this.$refs['shariff_' + id];
-                    if (shariffRef) shariffRef.innerHTML = "";
-                });
+            if(!wasOpen){
+                this.showShareBox[id]=true;
+                this.updateTeaserOverflow();
+                nextTick(()=>this.initShariff(id));
+            }else{
+                this.updateTeaserOverflow();
             }
-            if (this.showShareBox[id]) {
-        console.log("initShariff");
-        this.initShariff();
-    }
         },
       initShariff(id) {
 //             nextTick(() => {
@@ -270,6 +276,7 @@ export default {
 }
 
 };
+
 </script>
 
 <style>
