@@ -334,3 +334,4 @@
 ![Version](https://img.shields.io/badge/version-5.88.7-orange) Feature - Add newsletter blacklist manual way (#529)  
 ![Version](https://img.shields.io/badge/version-5.89.8-orange) Hotfix -  Delete of PM's aren't working (#533)  
 ![Version](https://img.shields.io/badge/version-5.90.8-orange) Hotifx - fixed small Bug (#535)  
+![Version](https://img.shields.io/badge/version-5.91.5-orange) Hotfix - Repaired Share Buttons (#536)  
