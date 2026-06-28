@@ -254,7 +254,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
 
 </head>
 
-<body class="font-sans antialiased  ">
+<body class="'font-sans antialiased {{SD()}}">
 
     <input
         type="hidden"

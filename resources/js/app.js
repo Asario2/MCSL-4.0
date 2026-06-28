@@ -22,6 +22,7 @@ import 'tippy.js/dist/tippy.css';
 
 // FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
+import "@fortawesome/fontawesome-free/css/all.css";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPencilAlt, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { faXTwitter } from '@fortawesome/free-brands-svg-icons';

@@ -40,7 +40,7 @@
 </div>
 
 <!-- Kommentar-Eingabefeld -->
-<div v-if="showComments" class="mb-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800">
+<div v-if="showComments" class="mb-4 p-4 rounded-lg bg-layout-sun-200 dark:bg-layout-night-200">
     <textarea @click.stop
     :id="'editor_' + this.postId"
     name="editor"

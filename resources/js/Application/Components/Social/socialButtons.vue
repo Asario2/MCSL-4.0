@@ -5,8 +5,8 @@
                 <tr class="border-0">
                     <td class="text-center" width="60%">
                         <button @click.stop.prevent="openComments(postId)"
-                                class="flex items-center gap-2 px-2 py-1 rounded-lg font-semibold bg-blue-500 text-white hover:bg-blue-600
-                                       dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white text-center tog-tab"
+                                class="flex items-center gap-2 px-2 py-1 rounded-lg font-semibold bg-button text-white hover:bg-button-600
+                                       dark:bg-button-600 dark:hover:bg-button-700 dark:text-white text-center tog-tab"
                                 :data-post-id="postId">
                             <icon-comment /> Kommentare
                         </button>
@@ -14,8 +14,8 @@
 
                     <td class="p-1.5 text-center" width="40%">
                         <button @click.stop.prevent="toggleShareBox(postId)"
-                                class="flex items-center gap-2 px-2 py-1 rounded-lg font-semibold bg-blue-500 text-white hover:bg-blue-600
-                                       dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white text-center tog-tab"
+                                class="flex items-center gap-2 px-2 py-1 rounded-lg font-semibold bg-button text-white hover:bg-button-600
+                                       dark:bg-button-600 dark:hover:bg-button-700 dark:text-white text-center tog-tab"
                                 :data-post-id="postId">
                             <icon-share /> Teilen
                         </button>
@@ -23,8 +23,8 @@
 
                     <td class="text-center" v-if="!nostars">
                         <button @click.stop.prevent="toggleStarBox(postId)"
-                                class="flex items-center gap-2 px-2 py-1 rounded-lg font-semibold bg-blue-500 text-white hover:bg-blue-600
-                                       dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white text-center tog-tab"
+                                class="flex items-center gap-2 px-2 py-1 rounded-lg font-semibold bg-button text-white hover:bg-button-600
+                                       dark:bg-button-600 dark:hover:bg-button-700 dark:text-white text-center tog-tab""
                                 :data-post-id="postId">
                             <icon-star we="16" he="16" /> Bewerten
                         </button>
@@ -34,7 +34,7 @@
                 <!-- Kommentarbox -->
                 <tr v-if="showComments === postId">
                     <td colspan="3" class="p-4 h-auto align-top" style="z-index:1000 !important;" :id="'commentBox_' + postId">
-                        <div class="w300 zi relative border border-gray-300 p-4 rounded-lg shadow-sm bg-white dark:bg-gray-800">
+                        <div class="w300 zi relative border border-gray-300 p-4 rounded-lg shadow-sm bg-layout-sun-100 dark:bg-layout-night-100">
                             <button
                                 @click.stop.prevent="closeComments()"
                                 class="absolute top-4 right-5 text-gray-500 hover:text-gray-700 text-xl font-bold z-30"
@@ -56,7 +56,11 @@
                              class="shariff w-full w300 relative border border-gray-300 p-4 pb-2 rounded-lg shadow-sm bg-white dark:bg-gray-800"
                              data-button-style="icon">
                         </div> -->
-                        <ShareButtons :url="Murl" :title="title"/>
+                        <ShareButtons
+                            v-if="showShareBox[postId]"
+                            :url="Murl"
+                            :title="title"
+                        />
                     </td>
                 </tr>
 
@@ -155,11 +159,15 @@ export default {
             this.showComments = null;
             this.updateTeaserOverflow();
         },
+
+
+
         toggleStarBox(id) {
             this.showStarBox[id] = !this.showStarBox[id];
             this.updateTeaserOverflow();
         },
         toggleShareBox(id) {
+            console.log("Button",id);
             this.showShareBox[id] = !this.showShareBox[id];
             this.updateTeaserOverflow();
 
@@ -171,6 +179,10 @@ export default {
                     if (shariffRef) shariffRef.innerHTML = "";
                 });
             }
+            if (this.showShareBox[id]) {
+        console.log("initShariff");
+        this.initShariff();
+    }
         },
       initShariff(id) {
 //             nextTick(() => {
@@ -285,12 +297,31 @@ export default {
     content: "\e61b";
     color: #fff !important;
 }
-.zi{
-    z-index:1000;
-}
-.zi2{
-   overflow:auto;height:auto;
-}
+        .zi{
+            z-index:1000;
+        }
+        .zi2{
+        overflow:auto;height:auto;
+        }
+        .bg-button {
+            background-color: rgb(37 99 235);
+        }
+        .bg-button-600{
+            background-color: rgb(37 99 235);
+        }
+        .dark .dark\:hover\:bg-button-700:hover{
+            background-color: rgb(17 59 235);
+        }
+        .pna .bg-button{
+                background-color:darkred;
 
-</style>
+        }
+        .pna .bg-button-600{
+            background-color: darkred;
+        }
+        .pna .dark .dark\:hover\:bg-button-700:hover{
+            background-color: #DD2222;
+        }
+
+        </style>
 

@@ -31,9 +31,6 @@
                     <ClientOnly>
                         <pnalogo />
                     </ClientOnly>
-                    <noscript>
-                         <img :src="'/images/logos/mfx.jpg'" alt="Logo" />
-                    </noscript>
                 </a>
               <!-- Mobile menu button -->
               <div class="flex lg:hidden absolute right-6 top-6">
@@ -48,13 +45,11 @@
             <div :class="[isOpen_Menu ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" style='z-index:10000000;' class="absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-layout-trans dark:bg-primary-night-200 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent">
               <div class="flex flex-col items-center space-y-1 lg:mt-4 lg:flex-row lg:justify-center lg:space-y-0 lg:space-x-0 trans2 border border-layout-sun-1000 dark:border-layout-night-1050 lg:rounded-lg" style='z-index:10000000;'>
                 <link-header_mfx :route-name="route('home.index')" name="News"></link-header_mfx>
-                <link-header_mfx :route-name="route('home.infos.mfx')" name="Infos"></link-header_mfx>
+                <link-header_mfx :route-name="route('home.pna.grafitty')" name="Grafittys"></link-header_mfx>
                 <!--<link-header_mfx :route-name="route('home.pricing')" name="Preise"></link-header_mfx>-->
                 <!-- <link-header_mfx :route-name="route('home.blog.index')" name="Blog"></link-header_mfx> -->
-                <link-header_mfx :route-name="route('home.projects.mfx')" name="Projects"></link-header_mfx>
-                <link-header_mfx :route-name="route('home.images.cat.mfx')" name="Images"></link-header_mfx>
-                <link-header_mfx :route-name="route('home.people.mfx')" name="People"></link-header_mfx>
-                <link-header_mfx :route-name="route('home.contacts.mfx')" name="Contact"></link-header_mfx>
+                <link-header_mfx :route-name="route('home.pna.portraits')" name="Potraits"></link-header_mfx>
+                <link-header_mfx :route-name="route('home.pna.contacts')" name="Kontakt"></link-header_mfx>
                 <template v-if="!$page.props.userdata.user_id">
                   <link-header_mfx :route-name="route('login')" name="Login"></link-header_mfx>
                 </template>
@@ -530,7 +525,7 @@ border-color:#1f2937;
 }
 @media (min-width: 1023px){
 .trans{
-    background: linear-gradient(to right, #1a0a00, #1a0a00, #4d3213);
+    /* background: linear-gradient(to right, #1a0a00, #1a0a00, #4d3213); */
 
 }
 }
@@ -539,9 +534,7 @@ border-color:#1f2937;
 }
 @media (min-width: 1023px){
 .bggrad{
-    background-image:url("/images/logos/grad_bg_9000x1.jpg");
-    background-position:center center;
-    background-repeat: repeat-y;
+    background-color:#000;
 }
 
 }

@@ -1,8 +1,10 @@
 <template>
   <div class="share-wrapper">
+    <span v-for="item in items"
+      :key="item.name">
+    <span v-if="item.name != 'x'">
     <a
-      v-for="item in items"
-      :key="item.name"
+
 
       target="_blank"
       rel="noopener noreferrer"
@@ -14,13 +16,33 @@
     >
       <i :class="item.icon"></i>
     </a>
+    </span>
+    <span v-else>
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      class="share-button"
+      @click="openShare(item.url)"
+
+      :class="item.name"
+      :title="item.label"
+    >
+      <IconX />
+    </a>
+    </span>
+    </span>
   </div>
 </template>
 
 <script>
+import IconX from "@/Application/Components/Icons/IconX.vue"
 export default {
   name: "ShareButtons",
 
+  components:
+  {
+    IconX,
+  },
   props: {
     url: {
       type: String,
@@ -128,4 +150,8 @@ export default {
 
   color: #fff !important;
 }
+.fab .fa-x-twitter:before {
+        content: "\e61b" !important;
+        }
+
 </style>

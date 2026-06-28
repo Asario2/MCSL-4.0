@@ -239,6 +239,17 @@ Route::post("/unsubsc_mail", [MailController::class, "UnSubsc"])->name("mail.uns
 Route::get("/mail/subscribe/{uhash}/{email}",[TablesController::class, "newsletter_save"])->name("mail.savenewsletter");
 Route::get('/home/ai', [HomeController::class, 'home_AI'])->name('home.ai');
 
+//
+//  PNA- Paul Nadler
+//
+Route::middleware(\App\Http\Middleware\CheckSubd::class . ':pna,paulnadler')->group(function () {
+
+Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
+Route::get('/grafitty', [HomeController::class, 'home_grafitty'])->name('home.pna.grafitty');
+Route::get('/portraits', [HomeController::class, 'home_portraits'])->name('home.pna.portraits');
+Route::get('/Kontakt', [HomeController::class, 'home_contacts'])->name('home.pna.contacts');
+
+});
 
 //
 //     AB- Asarios BLog
