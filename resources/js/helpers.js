@@ -576,7 +576,8 @@ export function SD(pn = '') {
         dag: "Monika Dargies",
         mfx: "MarbleFX",
         mjs: "Mitja Schult",
-        chh: "Rechtsanwalt Christian Henning"
+        chh: "Rechtsanwalt Christian Henning",
+        pna: "Paul Nadler
     };
 
     // Switch-Mapping wie in PHP
@@ -596,6 +597,9 @@ export function SD(pn = '') {
         case "ra-c-henning":
             subb = "chh";
             break;
+        case "paulnadler":
+            subb = "pna"
+        break;
         case "localhost":
 		case "test.mcs":
         case "241":
