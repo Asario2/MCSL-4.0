@@ -1386,7 +1386,8 @@ if(!function_exists("SD"))
                 "mfx"=>"MarbleFX",
                 "mjs"=>"Mitja Schult",
                 "chh"=>"Rechtsanwalt Christian Henning",
-                "mail"=>"MCSL Mail Service"];
+                "mail"=>"MCSL Mail Service",
+                "pna"=>"Paul Nadler"];
         switch($subb){
             case "asario":
                 $subb = "ab";
@@ -1422,6 +1423,9 @@ if(!function_exists("SD"))
             break;
             case "217":
                 $subb = "ab";
+            break;
+            case "paulnadler":
+                $subb = "pna";
             break;
             default:
             $subb = $subb;
