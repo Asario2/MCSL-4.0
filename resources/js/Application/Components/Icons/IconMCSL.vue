@@ -1,5 +1,7 @@
 <template>
-Powered by <a @click="stop" href="https://www.marblefx.net/powered-by-mcsl"><img :src="'/images/icons/MCSL_sm.png'" height="30" alt="Powered by MCSL" title="Powered by MCSL" class="mh-[30px]"/></a>
+<span class="euros">
+Powered by</span> <a @click="stop" href="https://www.marblefx.net/powered-by-mcsl"><img :src="'/images/icons/MCSL_sm.png'" height="30" alt="Powered by MCSL" title="Powered by MCSL" class="mh-[30px]"/></a>
+
 </template>
 <script>
 export default {
@@ -7,4 +9,8 @@ export default {
 
 };
 </script>
-
+<style>
+.euros{
+    font-family: Eurostile;
+}
+</style>

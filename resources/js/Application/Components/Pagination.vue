@@ -10,16 +10,17 @@
       @click.prevent="go(link)"
       class="px-3 py-1 border rounded lolink"
       :class="{
-            'flex items-center font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-900': link.active,
+            'flex items-center font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-500': link.active,
             'opacity-50 cursor-not-allowed': !link.url
       }"
     >
-      <span v-if="link.label === 'pagination.previous'">« Zurück</span>
-      <span v-else-if="link.label === 'pagination.next'">Weiter »</span>
-      <span v-else v-html="link.label"></span>
+      <span class="text-primary-sun-900 dark:text-primary-night-500" v-if="link.label === 'pagination.previous'">« Zurück</span>
+      <span class="text-primary-sun-900 dark:text-primary-night-900" v-else-if="link.label === 'pagination.next'">Weiter »</span>
+      <span class="text-primary-sun-900 dark:text-primary-night-900" v-else v-html="link.label"></span>
     </a>
 
   </div>
+
 </template>
 
 <script>

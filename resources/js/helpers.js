@@ -577,7 +577,7 @@ export function SD(pn = '') {
         mfx: "MarbleFX",
         mjs: "Mitja Schult",
         chh: "Rechtsanwalt Christian Henning",
-        pna: "Paul Nadler
+        pna: "Paul Nadler",
     };
 
     // Switch-Mapping wie in PHP

@@ -253,6 +253,10 @@ Layout: defineAsyncComponent(() => {
 
             return import('@/Application/Admin/Shared/chh/Layout.vue');
         }
+        if (sd === 'pna') {
+
+            return import('@/Application/Admin/Shared/pna/Layout.vue');
+        }
         return import('@/Application/Admin/Shared/ab/Layout.vue');
     }),
         Breadcrumb,

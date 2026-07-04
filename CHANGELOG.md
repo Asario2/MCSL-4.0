@@ -336,3 +336,4 @@
 ![Version](https://img.shields.io/badge/version-5.90.8-orange) Hotifx - fixed small Bug (#535)  
 ![Version](https://img.shields.io/badge/version-5.91.5-orange) Hotfix - Repaired Share Buttons (#536)  
 ![Version](https://img.shields.io/badge/version-5.92.2-orange) Hotfix - Fixed Search bug on shortpoems (#537)  
+![Version](https://img.shields.io/badge/version-5.93.1-orange) Feature - Resize Landing Page Image (#538)  

@@ -11,6 +11,7 @@
         v-if="!link.url"
         class="flex items-center px-3 py-0.5 mx-1 mb-1 rounded-md cursor-not-allowed opacity-50"
       >
+      
         <span v-html="translateLabel(link.label)" />
       </div>
 

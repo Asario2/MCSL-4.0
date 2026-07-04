@@ -2442,3 +2442,13 @@
     --tw-ring-color:rgb(255 255 255) !important;
 }
 
+BODY,.text-sm,p,span,#app-layout-start{
+        font-family:Lora !important;
+        font-size:102% !important;
+    }
+.dark .dark\:bg-layout-night-00{
+    background-color:rgb(0 0 0) !important;
+}
+.bg-layout-sun-00{
+    background-color:rgb(240 240 240) !important;
+}

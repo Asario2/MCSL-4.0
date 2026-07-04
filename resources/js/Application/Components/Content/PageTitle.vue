@@ -1,7 +1,7 @@
 <template>
-    <div class="mb-2 text-2xl lg:text-3xl font-semibold">
+    <h1 class="mb-2 text-2xl lg:text-3xl font-semibold">
         <slot name="title" />
-    </div>
+    </h1>
 </template>
 
 <script>

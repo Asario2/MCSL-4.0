@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class Image extends Model
+class Image extends MultiDbModel
 {
     // falls du mehrere DB-Verbindungen hast, sonst weglassen
-    protected $connection = 'mysql';          // oder 'mariadb'
+    // protected $connection = 'mysql';          // oder 'mariadb'
 
     protected $table      = 'images';
 
@@ -29,7 +29,16 @@ class Image extends Model
     // {
     // //    return $this->belongsTo(Camera::class);
     // }
-
+    public function getConnectionName()
+{
+    return match (SD()) {
+        'pna' => 'mariadb_pna',
+        'mfx' => 'mariadb_mfx',
+        'dag' => 'mariadb_dag',
+        'chh' => 'mariadb_chh',
+        default => 'mariadb',
+    };
+}
     public function category()
     {
         return $this->belongsTo(ImageCategory::class, 'image_categories_id');
@@ -46,7 +55,8 @@ class Image extends Model
             $query->where(function ($q) use ($s) {
                 $q->where('name',      'like', "%{$s}%")
                   ->orWhere('message',  'like', "%{$s}%")
-                  ->orWhere('images.created_at',  'like', "%{$s}%");
+                  ->orWhere('images.created_at',  'like', "%{$s}%")
+                  ->orWhere('id',  'like', "%{$s}%");
             });
         }
 

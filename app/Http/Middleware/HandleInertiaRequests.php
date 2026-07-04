@@ -56,7 +56,7 @@ class HandleInertiaRequests extends Middleware
                 'app_customer_name' => 'Kunden-Anwendung',
                 'app_name' => '<div class="flex justify-center items-center gap-2 text-sm text-layout-sun-700 dark:text-layout-night-700">
                                 <a href="https://marblefx.net/powered-by-mcsl" onclick="event.stopPropagation();">
-                                <span>Powered by</span>
+                                <span class="euros">Powered by</span>
                                 <img src="/images/smilies/icon_mcsl.gif" alt="MCSL Icon" class="inline-block mt-1   align-middle" />
                                 </a>
                                 </div>',

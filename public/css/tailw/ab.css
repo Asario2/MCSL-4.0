@@ -69,12 +69,17 @@
     FORM.em_bg{
         background-color: #79cbf114;
     }
-    #app-layout-start{
+
+    .ab BODY,.ab .text-sm,.ab p,.ap span,.ab #app-layout-start{
         font-family:IBMPLex !important;
-        font-size:105%;
+        font-size:100%;
     }
-    H1,.font-euros{
+    .ab H1,.ab .font-euros, .ab .euros{
         font-family: Eurostile !important;
+    }
+    .pna BODY,.pna .text-sm,.pna p,.pna span,.pna #app-layout-start{
+        font-family:Lora !important;
+        font-size:102% !important;
     }
     .glow-blue-gray {
         color: #ccc  !important;

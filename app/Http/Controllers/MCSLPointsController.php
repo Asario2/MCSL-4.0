@@ -45,7 +45,7 @@ class MCSLPointsController extends Controller
             ->first();
         $uhash = Auth::user()->uhash;
         $link = '';
-        $email = "[EMAIL]";
+        $email = "parie@gmx.de";
         $row['nick'] = Auth::user()->name;
         $row['punkte'] = $row['preis']*3;
         $cont = '<div style="font-family:Tahoma, Geneva, Verdana, sans-serif !important;">'.MCSL_GRAD().'
@@ -481,7 +481,11 @@ foreach ($commentsStatsRaw as $stat) {
 
         $cnt = $this->GetCommentsCount($request)*$this->ccnt;
         $cnt = $cnt + ($this->GetStarsCount($request)*$this->scnt);
-        $cnt = $cnt + ($this->GetShortPCount($request)*$this->SPcnt);
+        if(Schema::hasTable("shortpoems"))
+        {
+            $cnt = $cnt + ($this->GetShortPCount($request)*$this->SPcnt);
+        }
+
         $cnt = $cnt + ($this->GetNewslCount($request));
         // dd($cnt);
 

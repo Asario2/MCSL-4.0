@@ -1,5 +1,5 @@
 <template>
-    <button class="backbtn inline-flex  button-icon items-center px-1 py-1.5 md:px-2 md:py-2 h-6 md:h-8 rounded-md font-medium text-xs tracking-widest disabled:opacity-25 transition cursor-pointer focus:ring focus:outline-none button_bg button_text_case_bg mb-4"
+    <button class="backbtn inline-flex button-icon items-center px-1 py-1.5 md:px-2 md:py-2 h-6 md:h-8 rounded-md font-medium text-xs tracking-widest disabled:opacity-25 transition cursor-pointer focus:ring focus:outline-none bg-primary-sun-500 dark:bg-primary-night-500 text-xs tw mb-4"
             @click="goBack(url)" title="Zurück" alt="Zurück" aria-title="Zurück">
            <IconCircleLeft />
             Zurück zu{{ r }} <slot></slot>
@@ -39,19 +39,26 @@
     align-items: center;
     gap: 6px;        /* Abstand zwischen Text und Icon */
     cursor: pointer;
-    font-weight: 500;
+    /* font-weight: bold; */
 
     border: none;
-    padding: 17px 4px;
-    font-size: 0.9rem;
+    /* padding: 17px 4px;
+    font-size: 0.9rem; */
   }
 
   .backbtn i {
-    font-size: 25px;
+    /* font-size: 25px; */
   }
   .button-icon{
-    line-height: 27px;
-    height:27px !important;
+    /* line-height: 27px;
+    height:27px !important; */
   }
+   .tw{
+        color:#000 !important;
+        font-weight: bold;
+    }
+    .pna .tw{
+        color:#fff !important;
+    }
   </style>
 

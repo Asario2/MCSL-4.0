@@ -38,7 +38,7 @@
         <!-- Tabellen Zeilen -->
         <template #datarow="data" >
           <td class="np-dl-td-normal" v-if="rights.view[data.datarow.full_name] == '1'">
-            <a :href="'/admin/tables/' + data.datarow.name + '/show'"
+            <a :href="'/admin/tables/' + lowercase(data.datarow.name) + '/show'"
                           class="!text-blue-600 !dark:text-blue-600 hover:underline as">
               {{ data.datarow.name }}
             </a>
@@ -124,7 +124,10 @@ export default defineComponent({
     CleanTable,
     route,
     CheckTRights,
-hasRight(right, table) {
+    lowercase(str) {
+        return str.trim().toLowerCase().replace(/\s+/g, '_');
+    },
+    hasRight(right, table) {
             return hasRightSync(right, table);
         },
     async getAllRights(right) {

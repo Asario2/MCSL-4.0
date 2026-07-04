@@ -1,7 +1,7 @@
     <template>
         <Layout>
             <template v-if="ocont">
-                <MetaHeader :title="'Bilder - ' + ocont?.slug" />
+                <MetaHeader title="Grafitti" />
             </template>
 
             <div class="flex items-center justify-between px-4 py-3">
@@ -65,13 +65,13 @@
         <!-- Linke Spalte: Thumbnail -->
         <div :id="'st' + item?.id" class="relative lg:col-span-4">
             <a
-    :href="'/images/_'+ SD() +'/images/image_path/big/' + item?.image_path"
+    :href="'/images/_ab/images/image_path/big/' + item?.image_path"
     :data-pswp-width="item?.img_x"
     :data-pswp-height="item?.img_y"
     >
 
     <ZoomImage
-    :src="'/images/_'+ SD() +'/images/image_path/thumbs/' + item?.image_path"
+    :src="'/images/_ab/images/image_path/thumbs/' + item?.image_path"
     :alt="item?.name"
     :title="item?.name"
     :width="300"
@@ -128,7 +128,7 @@
     </div>
 
     <!-- Pagination -->
-    <Pagination :links="entries.links" :basePath="'home/show/pictures/' + (ocont && ocont?.slug ? ocont?.slug : '') + '/'"    />
+    <!-- <Pagination :links="entries.links" :basePath="'home/show/pictures/' + (ocont && ocont?.slug ? ocont?.slug : '') + '/'"    /> -->
 
     </div>
 
@@ -136,12 +136,12 @@
     </template>
 
     <script>
-    import Layout from "@/Application/Homepage/Shared/Layout.vue";
+    import Layout from "@/Application/Homepage/Shared/pna/Layout.vue";
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import PhotoSwipeLightbox from 'photoswipe/dist/photoswipe-lightbox.esm.js';
     import Pagination from "@/Application/Components/Pagination.vue";
     import 'photoswipe/dist/photoswipe.css'
-    import {stripTags,remBrackets, SD,CleanTable} from "@/helpers";
+    import {stripTags,remBrackets} from "@/helpers";
     import ZoomImage from "@/Application/Components/Content/ZoomImage.vue";
     import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
     import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
@@ -162,6 +162,7 @@
     import he from "he";
     import BackBtn from "@/Application/Components/Form/BackBtn.vue";
     import Alert from "@/Application/Components/Content/Alert.vue";
+    import { CleanTable } from '@/helpers';
     export default {
         name:"PictureGallery",
     components: {
@@ -274,8 +275,6 @@
     computed: {
     },
     methods: {
-        SD,
-
         getStatus(str)
     {
         if(str == 'lost')
@@ -449,6 +448,7 @@
     },
 
     };
+
     </script>
 
 

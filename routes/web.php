@@ -245,10 +245,10 @@ Route::get('/home/ai', [HomeController::class, 'home_AI'])->name('home.ai');
 Route::middleware(\App\Http\Middleware\CheckSubd::class . ':pna,paulnadler')->group(function () {
 
 Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
-Route::get('/grafitty', [HomeController::class, 'home_grafitty'])->name('home.pna.grafitty');
+Route::get('/grafitti', [HomeController::class, 'home_grafitti'])->name('home.pna.grafitti');
 Route::get('/portraits', [HomeController::class, 'home_portraits'])->name('home.pna.portraits');
 Route::get('/Kontakt', [HomeController::class, 'home_contacts'])->name('home.pna.contacts');
-
+// Route::get('/home/show/pictures3/{slug}', [HomeController::class, 'home_images'])->name('home.images.gallery');
 });
 
 //
@@ -928,7 +928,7 @@ Route::get('/email/sended', function () {
 
 // Darkmode Route
 
-;
+
 Route::get('/api/dark-mode', function () {
 
     return response()->json(['darkMode' => session('dark_mode', 'dark')]);

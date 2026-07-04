@@ -1,24 +1,38 @@
 <template>
-  <div class="relative w-full h-[180px] overflow-hidden">
+  <div
+  :class="[
+        'relative w-full overflow-hidden',
+        small ? 'h-[70px]' : 'md:h-[180px]'
+    ]">
     <!-- Hintergrundbild -->
-    <div
-      class="absolute top-0 left-0 w-[200%] h-full bg-repeat-x bg-contain"
-      ref="bg"
-      :style="{ backgroundImage: 'url(/images/logos/pna_bg.jpg)' }"
-    ></div>
+<div
+    ref="bg"
+    class="absolute top-0 left-0 h-full"
+    :style="{
+        width: '4225px',
+        backgroundImage: 'url(/images/logos/pna_bg.jpg)',
+        backgroundRepeat: 'repeat-x',
+        backgroundSize: 'auto 100%',
+        backgroundPosition: 'left center'
+    }"
+/>
 
     <!-- Vordergrundbild -->
     <img
-      class="relative z-10 mx-auto !h-[180px]"
-      height="18ß"
-      :src="'/images/logos/pna_logo.png'"
-      alt="Logo"
+        :class="[
+            'relative z-10 mx-auto',
+            small
+                ? 'h-[70px] w-auto'
+                : 'h-auto w-full md:w-auto md:h-[180px]'
+        ]"
+        :src="'/images/logos/pna_logo_'+ mode +'.png'"
+        alt="Paul Nadler Logo"
     />
   </div>
 </template>
 
 <script>
-import { gsap } from 'gsap';
+// import { gsap } from 'gsap';
 
 export default {
     name: "PnaLogo",
@@ -27,33 +41,42 @@ export default {
             default:'',
             type:String
 
-        }
+        },
+        small: {
+            type: Boolean,
+            default: false,
+        },
+        mode:
+        {
+            type:String,
+        },
+
     },
-  mounted() {
-  if (typeof window === "undefined") return;
+    mounted() {
+        if (typeof window === "undefined") return;
 
-  import('gsap').then(({ gsap }) => {
-    const bg = this.$refs.bg;
+        import("gsap").then(({ gsap }) => {
+            const bg = this.$refs.bg;
 
-    const timeline = gsap.timeline({ repeat: -1 });
+            const timeline = gsap.timeline({ repeat: -1 });
 
-    timeline.to(bg, {
-      x: '-50%',
-      duration: 20,
-      ease: 'power1.inOut',
-    });
+            timeline.to(bg, {
+                x: "-50%",
+                duration: 90,
+                ease: "none",
+            });
 
-    timeline.to({}, { duration: 30 });
+            timeline.to({}, { duration: 30 });
 
-    timeline.to(bg, {
-      x: '0%',
-      duration: 20,
-      ease: 'power1.inOut',
-    });
+            timeline.to(bg, {
+                x: "0%",
+                duration: 90,
+                ease: "none",
+            });
 
-    timeline.to({}, { duration: 30 });
-  });
-}
+            timeline.to({}, { duration: 30 });
+        });
+    }
 };
 </script>
 

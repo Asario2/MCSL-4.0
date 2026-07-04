@@ -230,6 +230,12 @@ class RequestInspectionMiddleware
         if ($request->is('admin/email')) {
              return $next($request);
         }
+        if (str_contains($request->path(), 'admin/tables/store/')) {
+            return $next($request);
+        }
+        if (str_contains($request->path(), 'admin/tables/update/')) {
+           return $next($request);
+        }
         /*
         |--------------------------------------------------------------------------
         | Dangerous HTTP Methods

@@ -36,8 +36,11 @@
     <div v-else-if="GetSd() == 'chh'">
     <a href="/admin/dashboard"><chhlogo :ab="'_chh' + this.GetLogin()"></chhlogo></a>
     </div>
-    <div v-else-if="GetSd() == 'dag'">
-    <a href="/admin/dashboard"><daglogo :ab="'_chh' + this.GetLogin()"></daglogo></a>
+    <div v-else-if="GetSd() === 'dag'">
+    <a href="/admin/dashboard"><daglogo :ab="'_dag' + this.GetLogin()"></daglogo></a>
+    </div>
+    <div v-else-if="GetSd() == 'pna'">
+    <a href="/admin/dashboard"><pnalogo :small="true" :ab="'_pna' + this.GetLogin()"></pnalogo></a>
     </div>
 </template>
 
@@ -49,11 +52,13 @@ import mfxlogo from "@/Application/Shared/mfxlogo.vue";
 import { SD } from "@/helpers/dom";
 import chhlogo from "@/Application/Shared/ChhLogo.vue";
 import Daglogo from "@/Application/Shared/daglogo.vue";
+import pnalogo from "@/Application/Shared/pnalogo.vue";
 export default {
     name: "Shared_BrandHeader",
     //
     components: {
         Link,
+        pnalogo,
         chhlogo,
         Daglogo,
         Favicon,

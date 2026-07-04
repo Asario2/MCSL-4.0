@@ -104,6 +104,22 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+        'mariadb_pna' => [
+            'driver' => 'mariadb',
+            'host' => env('MDB_HOST', '127.0.0.1'),
+            'port' => env('MDB_PORT', '3307'),
+            'database' => env('PDB_DATABASE', 'pnad'),
+            'username' => env('MDB_USERNAME', ''),
+            'password' => env('MDB_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
         'mariadb_chh' => [
             'driver' => 'mariadb',
             'host' => env('CDB_HOST', '127.0.0.1'),

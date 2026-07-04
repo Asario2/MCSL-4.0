@@ -19,17 +19,17 @@
       </template>
     </meta-header>
 
-    <main class="dark" id="app-layout-start">
+    <main id="app-layout-start">
       <section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000"  style='z-index:50;'>
         <!-- Header -->
-        <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-night-50 bggrad text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-b border-layout-sun-200 dark:border-layout-night-1060"  style='z-index:50;'>
+        <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-00 dark:bg-layout-night-00 text-layout-sun-900 dark:bg-layout-night-00 dark:text-layout-night-900 border-b border-layout-sun-200 dark:border-layout-night-1060"  style='z-index:50;'>
 
-          <div class="container mx-auto max-w-6xl p-6 trans" style='z-index:50;'>
+          <div class="w-full minw-[100%] max-w-[1000px] mx-auto px-6" style='z-index:50;'>
             <div class="flex flex-col items-center justify-center gap-4">
               <!-- <brand-header :route-name="route('home.index')" :brand_1="$page.props.applications.brand_name_1" :brand_2="$page.props.applications.brand_name_2" :app-name="$page.props.applications.app_name"></brand-header> -->
                 <a href="/">
                     <ClientOnly>
-                        <pnalogo />
+                        <pnalogo :mode="mode"/>
                     </ClientOnly>
                 </a>
               <!-- Mobile menu button -->
@@ -42,14 +42,21 @@
             </div>
 
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
-            <div :class="[isOpen_Menu ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" style='z-index:10000000;' class="absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-layout-trans dark:bg-primary-night-200 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent">
-              <div class="flex flex-col items-center space-y-1 lg:mt-4 lg:flex-row lg:justify-center lg:space-y-0 lg:space-x-0 trans2 border border-layout-sun-1000 dark:border-layout-night-1050 lg:rounded-lg" style='z-index:10000000;'>
-                <link-header_mfx :route-name="route('home.index')" name="News"></link-header_mfx>
-                <link-header_mfx :route-name="route('home.pna.grafitty')" name="Grafittys"></link-header_mfx>
+            <div :class="[isOpen_Menu ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" style='z-index:10000000;' class="absolute inset-x-0 mt-[6] w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-layout-trans dark:bg-primary-night-200 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent">
+            <div class="flex flex-col items-center space-y-1
+                lg:mt-[4] lg:flex-row
+                lg:justify-between lg:items-center
+                lg:w-full
+                lg:space-y-0
+                border border-layout-sun-1000
+                dark:border-layout-night-1050 lg:rounded-lg">
+                <link-header_mfx class="ml-[26px]"   :route-name="route('home.index')" name="News"></link-header_mfx>
+                <link-header_mfx :route-name="route('home.pna.grafitti')" name="Grafittis"></link-header_mfx>
                 <!--<link-header_mfx :route-name="route('home.pricing')" name="Preise"></link-header_mfx>-->
                 <!-- <link-header_mfx :route-name="route('home.blog.index')" name="Blog"></link-header_mfx> -->
                 <link-header_mfx :route-name="route('home.pna.portraits')" name="Potraits"></link-header_mfx>
                 <link-header_mfx :route-name="route('home.pna.contacts')" name="Kontakt"></link-header_mfx>
+                <button-change-mode :mode="mode" @changeMode="changeMode"></button-change-mode>
                 <template v-if="!$page.props.userdata.user_id">
                   <link-header_mfx :route-name="route('login')" name="Login"></link-header_mfx>
                 </template>
@@ -60,7 +67,7 @@
                 <img
                     id="prof_pic"
                     class="h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]"
-                    :src="`/images/_${SD()}/users/profile_photo_path/` +
+                    :src="imagebasepath($page.props.auth.user?.profile_photo_url) +
                                                 $page.props.auth.user?.profile_photo_url.replace('public','').replace('http://localhost/images/','').replace('images/images/','images/') || '/images/profile-photos/008.jpg'
                                                     "
                     :alt="$page.props.userdata.full_name"
@@ -94,7 +101,7 @@
                                             id="prof_pic"
                                             class="h-8 w-8 rounded-full object-cover mr-6"
 
-                                               :src="'/images/_' + SD() + '/users/profile_photo_path/'+ $page.props.auth.user.profile_photo_url.replace('public','')
+                                               :src="imagebasepath($page.props.auth.user.profile_photo_url) +  $page.props.auth.user.profile_photo_url.replace('public','')
                                                 "
                                                 :alt="
                                                     $page.props.userdata
@@ -206,14 +213,14 @@
         </div> -->
         <Loader />
         <!-- Content -->
-        <div class="container mx-auto max-w-6xl min-h-screen py-48 px-2">
+        <div class="container mx-auto max-w-6xl min-h-screen py-48 px-2 md:mt-[120px] !sm:mt-[-70px]">
           <!-- Toast -->
           <div>
             <Toast></Toast>
           </div>
 
           <!-- Slot für Content -->
-          <div class="mt-4">
+          <div>
             <slot></slot>
           </div>
         </div>
@@ -320,6 +327,7 @@ import Toast from "@/Application/Components/Content/Toast.vue";
 // import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { SD } from "@/helpers";
 import Loader from "@/Application/Components/Loader.vue";
+import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 // import { ref } from "vue";
 
 export default {
@@ -330,6 +338,7 @@ export default {
     // BrandHeader,
     LinkHeader_mfx,
     BrandFooter,
+    ButtonChangeMode,
     Loader,
     LinkFooter,
     Toast,
@@ -362,10 +371,20 @@ export default {
         headerDescription: this.$page?.props?.description ?? "",
         headerUrl: this.$page?.props?.url ?? null,
         headerImage: this.$page?.props?.image ?? null,
-      mode: 'dark',
-        isOpen_Menu: false,
-      year: new Date().getFullYear(),
 
+        isOpen_Menu: false,
+        year: new Date().getFullYear(),
+        mode: (() => {
+
+            if (typeof window === "undefined") {
+                return 'dark';
+            }
+
+            const savedTheme = localStorage.getItem('theme');
+
+            return savedTheme || 'dark';
+
+        })(),
     //   isLoading: localStorage.getItem("loading") === "true",
       search: "",
       isLoading: true,
@@ -379,11 +398,13 @@ export default {
 mounted() {
 //   this.headerTitle = this.$page?.props?.title ?? "";
 
-    if (typeof window !== "undefined") {
-  this.mode = localStorage.theme || 'dark';
-}
+//     if (typeof window !== "undefined") {
+//   this.mode = localStorage.theme || 'dark';
+// }
     // SSR-Schutz (wichtig!)
     if (typeof window === "undefined") return;
+
+    this.applyTheme();
 
     // =============================================
     // URL Parameter
@@ -416,7 +437,105 @@ mounted() {
 
   methods: {
     SD,
+    applyTheme() {
 
+        const html =
+            document.documentElement;
+
+        console.log(
+            "[applyTheme] mode:",
+            this.mode
+        );
+
+        console.log(
+            "[applyTheme] vorher:",
+            html.className
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Force Light
+        |--------------------------------------------------------------------------
+        */
+
+        const forceLight =
+            window.location.pathname === '/login'
+            || window.location.pathname === '/register';
+
+        if (forceLight) {
+
+            console.log(
+                "[applyTheme] forceLight aktiv"
+            );
+
+            html.classList.remove('dark');
+
+            return;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Theme anwenden
+        |--------------------------------------------------------------------------
+        */
+
+        if (this.mode === 'dark') {
+
+            console.log(
+                "[applyTheme] ADD DARK"
+            );
+
+            html.classList.add('dark');
+
+        } else {
+
+            console.log(
+                "[applyTheme] REMOVE DARK"
+            );
+
+            html.classList.remove('dark');
+        }
+
+        console.log(
+            "[applyTheme] nachher:",
+            html.className
+        );
+    },
+
+//    changeMode(newMode) {
+
+//     this.mode = newMode;
+//     if(typeof newMode === "undefined")
+//     {
+//         newMode = 'dark';
+//     }
+//     const forceLight =
+//         window.location.pathname === '/login'
+//         || window.location.pathname === '/register';
+
+//     if (!forceLight) {
+//         localStorage.setItem('theme', newMode);
+//     }
+
+//     this.applyTheme();
+// },
+changeMode(newMode) {
+    console.log(this);
+    console.log(this.applyTheme);
+
+    this.mode = newMode ?? (this.mode === 'dark' ? 'light' : 'dark');
+    localStorage.setItem('theme', this.mode);
+
+    this.applyTheme();
+},
+    imagebasepath(str){
+        if(str.includes("https://"))
+        {
+            return ''
+        }
+        alert(str);
+        return `/images/_${SD()}/users/profile_photo_path/`
+    },
     setLoadingState(state) {
 //       console.log("🔄 setLoadingState:", state);
       this.isLoading = state;
@@ -483,15 +602,6 @@ mounted() {
     toggleNavbar() {
       this.isOpen_Menu = !this.isOpen_Menu;
     },
-
-    changeMode() {
-      this.mode = this.mode === "dark" ? "light" : "dark";
-      if(typeof window !== "undefined")
-            {
-      localStorage.theme = this.mode;
-        }
-    },
-
     logoutUser() {
       this.$inertia.post(this.route("logout"));
     },
@@ -530,12 +640,10 @@ border-color:#1f2937;
 }
 }
 .trans2{
-    background-color:rgba(0,0,0,0.5) !important;
+    background-color:rgba(0,0,0) !important;
 }
 @media (min-width: 1023px){
-.bggrad{
-    background-color:#000;
-}
+
 
 }
 .pad{

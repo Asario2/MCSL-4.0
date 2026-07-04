@@ -6,11 +6,11 @@
         :href="'/admin/tables/create/' + table"
         display_type="table"
         @click.stop
-        class="text-black tb"
+        class="text-white tb"
       >
         <template #icon>
           <!-- Flex-Container für Icon + Text -->
-          <span class="flex items-center gap-2 text-black">
+          <span class="flex items-center gap-2 tw">
             <plus-circle class="w-5 h-5" />
             Erstellen
           </span>
@@ -117,6 +117,12 @@
     .sm-pencil{
         width:20px;
         display:inline;
+    }
+    .tw{
+        color:#000 !important;
+    }
+    .pna .tw{
+        color:#fff !important;
     }
     </style>
 

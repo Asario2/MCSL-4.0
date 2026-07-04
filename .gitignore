@@ -90,3 +90,4 @@ build_pna_css.js
 buildcss.js
 resources/js/Application/Components/Social/old_share.vue
 tailwind_colors_pna.js
+app/Console/Commands/resimgz_pna.php

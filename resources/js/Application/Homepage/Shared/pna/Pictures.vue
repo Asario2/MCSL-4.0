@@ -5,9 +5,7 @@
             </template>
 
             <div class="flex items-center justify-between px-4 py-3">
-        <back-btn url="/home/pictures" r="r">Übersicht</back-btn>
-
-        <newbtn table="images"></newbtn>
+                <newbtn table="images"></newbtn>
     </div>
             <div @click="handleBodyClick">
             <div v-if="ocont?.id" class="p-4 bg-layout-sun-200 dark:bg-layout-night-200">
@@ -65,17 +63,17 @@
         <!-- Linke Spalte: Thumbnail -->
         <div :id="'st' + item?.id" class="relative lg:col-span-4">
             <a
-    :href="'/images/_'+ SD() +'/images/image_path/big/' + item?.image_path"
+    :href="'/images/_pna/images/image_path/big/' + item?.image_path"
     :data-pswp-width="item?.img_x"
     :data-pswp-height="item?.img_y"
     >
 
     <ZoomImage
-    :src="'/images/_'+ SD() +'/images/image_path/thumbs/' + item?.image_path"
+    :src="'/images/_pna/images/image_path/thumbs/' + item?.image_path"
     :alt="item?.name"
     :title="item?.name"
     :width="300"
-    :height="300"
+
     class="imgprev"
     />
     </a>
@@ -128,7 +126,8 @@
     </div>
 
     <!-- Pagination -->
-    <Pagination :links="entries.links" :basePath="'home/show/pictures/' + (ocont && ocont?.slug ? ocont?.slug : '') + '/'"    />
+
+    <Pagination :links="entries.links" :basePath="'grafitti'"    />
 
     </div>
 
@@ -136,12 +135,12 @@
     </template>
 
     <script>
-    import Layout from "@/Application/Homepage/Shared/Layout.vue";
+    import Layout from "@/Application/Homepage/Shared/pna/Layout.vue";
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import PhotoSwipeLightbox from 'photoswipe/dist/photoswipe-lightbox.esm.js';
     import Pagination from "@/Application/Components/Pagination.vue";
     import 'photoswipe/dist/photoswipe.css'
-    import {stripTags,remBrackets, SD,CleanTable} from "@/helpers";
+    import {stripTags,remBrackets} from "@/helpers";
     import ZoomImage from "@/Application/Components/Content/ZoomImage.vue";
     import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
     import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
@@ -160,8 +159,8 @@
     // import PhotoSwipeLightbox from "photoswipe/lightbox";
     // import "photoswipe/style.css";
     import he from "he";
-    import BackBtn from "@/Application/Components/Form/BackBtn.vue";
     import Alert from "@/Application/Components/Content/Alert.vue";
+    import { CleanTable } from '@/helpers';
     export default {
         name:"PictureGallery",
     components: {
@@ -177,8 +176,7 @@
         IconCamera,
         SearchFilter,
         Alert,
-        BackBtn,
-    },
+        },
     props: {
         entries: {
         type: Object,
@@ -225,7 +223,7 @@
     watch: {
     'form.search': throttle(function () {
         this.$inertia.get(
-        this.route('home.images.gallery', {
+        this.route('home.pna.' + CleanTable(), {
             slug: this.ocont && this.ocont?.slug ? this.ocont?.slug : '',
         }),
         { search: this.form.search },
@@ -274,8 +272,6 @@
     computed: {
     },
     methods: {
-        SD,
-
         getStatus(str)
     {
         if(str == 'lost')
