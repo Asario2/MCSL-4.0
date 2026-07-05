@@ -575,3 +575,26 @@ a
 		span .fab .fa-twitter::before {
  content: "\e61b" !important;
 }
+/* .cookie-consent-hide {
+    display: none;
+}
+
+.cookie-preferences-modal[aria-hidden="false"] {
+    display: block;
+}
+.cookie-preferences-modal[aria-hidden="true"] {
+    display: none;
+} */
+.cookie-preferences-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0,0,0,.5);
+    display: none;
+}
+
+.cookie-preferences-modal[aria-hidden="false"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

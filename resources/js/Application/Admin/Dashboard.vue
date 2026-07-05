@@ -86,7 +86,7 @@
             <navigation-card v-if="modulRights?.FontographerToolz"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
                 title="Google Sitemap"
-                linkName="Aktualisiere Sitempas"
+                linkName="Aktualisiere Sitemaps"
                 target="_self"
                 :routeName="route('gen.sitemap')"
                 :withIcon="true"
@@ -307,13 +307,14 @@ Layout: defineAsyncComponent(() => {
         GetRights,
         fetchAdminTables() {
             axios.get('/api/admin-tables')
-                .then(response => {
-                this.adminTables = response.data;
-                // console.log(this.adminTables);
-                })
-                .catch(error => {
-                console.error('Fehler beim Laden der Tabellen:', error);
-                });
+            .then(response => {
+                console.log(response.data);
+                console.log(Array.isArray(response.data));
+
+                this.adminTables = Array.isArray(response.data)
+                ? response.data
+                : Object.values(response.data);
+            });
 
         },
         async checkRight(right, table) {

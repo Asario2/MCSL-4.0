@@ -2452,3 +2452,15 @@ BODY,.text-sm,p,span,#app-layout-start{
 .bg-layout-sun-00{
     background-color:rgb(240 240 240) !important;
 }
+.border-layout-sun-2000,.border-layout-night-2000{
+    border-color:#8b1a1a;
+}
+.rating-text{
+    color:#f00 !important;
+}
+.dark .rating-text{
+    color:#facc15 !important;
+}
+/* LI a:link SPAN, LI a:visited SPAN{
+    color:#222 !important;
+} */

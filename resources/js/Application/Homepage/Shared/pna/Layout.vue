@@ -1,4 +1,5 @@
 <template>
+
     <meta-header :title="headerTitle">
       <template #robots>
 
@@ -22,7 +23,7 @@
     <main id="app-layout-start">
       <section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000"  style='z-index:50;'>
         <!-- Header -->
-        <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-00 dark:bg-layout-night-00 text-layout-sun-900 dark:bg-layout-night-00 dark:text-layout-night-900 border-b border-layout-sun-200 dark:border-layout-night-1060"  style='z-index:50;'>
+        <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 dark:bg-layout-night-00 text-layout-sun-900 dark:bg-layout-night-00 dark:text-layout-night-900 border-b border-layout-sun-2000 dark:border-layout-night-1060 overflow-visible  "  style='z-index:50;'>
 
           <div class="w-full minw-[100%] max-w-[1000px] mx-auto px-6" style='z-index:50;'>
             <div class="flex flex-col items-center justify-center gap-4">
@@ -48,9 +49,9 @@
                 lg:justify-between lg:items-center
                 lg:w-full
                 lg:space-y-0
-                border border-layout-sun-1000
-                dark:border-layout-night-1050 lg:rounded-lg">
-                <link-header_mfx class="ml-[26px]"   :route-name="route('home.index')" name="News"></link-header_mfx>
+                border-4 border-layout-sun-2000
+                dark:border-layout-night-2000 lg:rounded-lg mb-[8px]">
+                <link-header_mfx class="ml-[26px]"   :route-name="route('home.index')" name="Home"></link-header_mfx>
                 <link-header_mfx :route-name="route('home.pna.grafitti')" name="Grafittis"></link-header_mfx>
                 <!--<link-header_mfx :route-name="route('home.pricing')" name="Preise"></link-header_mfx>-->
                 <!-- <link-header_mfx :route-name="route('home.blog.index')" name="Blog"></link-header_mfx> -->
@@ -95,7 +96,7 @@
                                                 $page.props.jetstream
                                                     .managesProfilePhotos
                                             "
-                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
+                                            class="flex text-sm border-4 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
                                         >
                                             <img
                                             id="prof_pic"
@@ -239,13 +240,23 @@
                   </h3>
                   <ul role="list" class="mt-6 space-y-4 list-none">
                     <li>
-                      <link-footer name="Impressum" :route-name="route('home.imprint.gen')"></link-footer>
+                      <link-footer name="Impressum" :route-name="route('home.imprint')"></link-footer>
                     </li>
                     <li>
                       <link-footer name="Datenschutzerklärung" :route-name="route('home.privacy')"></link-footer>
                     </li>
                     <li>
-                     <a class="ToggleCookieLink text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900" @click="showHideToggleCookiePreferencesModal()"><span>Cookie Einstellungen</span></a>
+                            <a
+                                class="ToggleCookieLink cursor-pointer inline-flex items-center gap-2
+                                        rounded-lg px-2 py-1 text-sm
+                                        text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900
+                                        dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900"
+
+                                        onclick="showHideToggleCookiePreferencesModal()"
+                                >
+                                <IconCookies width="18" height="18" class="mr-[-4px]" color="#e8c456"/>
+                                <span>Cookie Einstellungen</span>
+                                </a>
                     </li>
                   </ul>
                 </div>
@@ -325,7 +336,7 @@ import LinkFooter from "@/Application/Shared/LinkFooter.vue";
 import IconMenu from "@/Application/Components/Icons/Menu.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 // import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
-import { SD } from "@/helpers";
+import { SD,showHideToggleCookiePreferencesModal } from "@/helpers";
 import Loader from "@/Application/Components/Loader.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 // import { ref } from "vue";
@@ -374,16 +385,21 @@ export default {
 
         isOpen_Menu: false,
         year: new Date().getFullYear(),
+        // mode: (() => {
+
+        //     if (typeof window === "undefined") {
+        //         return 'dark';
+        //     }
+
+        //     const savedTheme = localStorage.getItem('theme');
+
+        //     return savedTheme || 'dark';
+
+        // })(),
         mode: (() => {
-
-            if (typeof window === "undefined") {
-                return 'dark';
-            }
-
-            const savedTheme = localStorage.getItem('theme');
-
-            return savedTheme || 'dark';
-
+            const savedTheme = localStorage.getItem("theme");
+            console.log("INIT THEME:", savedTheme);
+            return savedTheme || "dark";
         })(),
     //   isLoading: localStorage.getItem("loading") === "true",
       search: "",
@@ -396,15 +412,30 @@ export default {
   },
 
 mounted() {
+        if (typeof window === "undefined") return;
+        console.log(window.LaravelCookieConsent);
+console.log(document.cookie);
+
+    this.mode = localStorage.getItem("theme") || "dark";
+
+    if (localStorage.getItem("mreload") === "true") {
+        localStorage.setItem("mreload", "false");
+        this.$nextTick(() => location.reload());
+        return;
+    }
+
+    this.applyTheme();
+
 //   this.headerTitle = this.$page?.props?.title ?? "";
 
 //     if (typeof window !== "undefined") {
 //   this.mode = localStorage.theme || 'dark';
 // }
     // SSR-Schutz (wichtig!)
+    //  localStorage.theme = this.mode;
     if (typeof window === "undefined") return;
 
-    this.applyTheme();
+
 
     // =============================================
     // URL Parameter
@@ -437,8 +468,12 @@ mounted() {
 
   methods: {
     SD,
-    applyTheme() {
 
+showHideToggleCookiePreferencesModal,
+    applyTheme() {
+        console.log("COMPONENT UID:", this._.uid);
+        console.log("PATH:", window.location.pathname);
+        console.log("MODE:", this.mode);
         const html =
             document.documentElement;
 
@@ -520,10 +555,10 @@ mounted() {
 //     this.applyTheme();
 // },
 changeMode(newMode) {
-    console.log(this);
-    console.log(this.applyTheme);
+ console.trace("changeMode", newMode);
 
     this.mode = newMode ?? (this.mode === 'dark' ? 'light' : 'dark');
+
     localStorage.setItem('theme', this.mode);
 
     this.applyTheme();
@@ -533,7 +568,7 @@ changeMode(newMode) {
         {
             return ''
         }
-        alert(str);
+
         return `/images/_${SD()}/users/profile_photo_path/`
     },
     setLoadingState(state) {

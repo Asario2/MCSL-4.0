@@ -70,9 +70,12 @@
         background-color: #79cbf114;
     }
 
-    .ab BODY,.ab .text-sm,.ab p,.ap span,.ab #app-layout-start{
+    .ab BODY,.ab p,.ap span,.ab #app-layout-start,.ab .text-sm{
         font-family:IBMPLex !important;
         font-size:100%;
+    }
+    .ab .text-sm{
+        font-size:96%;
     }
     .ab H1,.ab .font-euros, .ab .euros{
         font-family: Eurostile !important;

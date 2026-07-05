@@ -108,7 +108,7 @@ return [
             'driver' => 'mariadb',
             'host' => env('MDB_HOST', '127.0.0.1'),
             'port' => env('MDB_PORT', '3307'),
-            'database' => env('PDB_DATABASE', 'pnad'),
+            'database' => env('PDB_DATABASE', 'pna'),
             'username' => env('MDB_USERNAME', ''),
             'password' => env('MDB_PASSWORD', ''),
             'charset' => 'utf8mb4',

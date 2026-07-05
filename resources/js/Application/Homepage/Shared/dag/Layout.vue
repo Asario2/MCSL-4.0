@@ -185,6 +185,8 @@
   import Toast from "@/Application/Components/Content/Toast.vue";
   import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
   import {SD} from "@/helpers/dom.js"
+  import {showHideToggleCookiePreferencesModal} from "@/helpers"
+
   export default {
     name: "Homepage_Shared_Layout_dag",
 
@@ -289,7 +291,7 @@ setup() {
 },
     methods: {
       SD,
-
+        showHideToggleCookiePreferencesModal,
       reopenCookieBanner() {
         if (window.LaravelCookieConsent && typeof window.LaravelCookieConsent.reset === 'function') {
           window.LaravelCookieConsent.reset();

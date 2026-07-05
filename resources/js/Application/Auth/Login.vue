@@ -192,17 +192,23 @@ export default defineComponent({
             //
             if(typeof window !== "undefined")
             {
-                localStorage.theme = this.mode;
+                // localStorage.theme = this.mode;
                 localStorage.setItem('reload_dashboard', '1');
             }
             if(typeof window !== "undefined")
             {
-                localStorage.theme = this.mode;
+                localStorage.mreload = "true";
             }
             this.loading = true;
             this.loadingText = "Die Anmeldung wird durchgeführt!";
             //s
             this.$inertia.post(this.route(routeLogin), formData, {
+                onSuccess: () => {
+                    document.documentElement.classList.toggle(
+                        "dark",
+                        localStorage.getItem("theme") === "dark"
+                    );
+                },
                 onFinish: () => {
                     this.loading = false;
                     this.form.password = ""; // Passwort zurücksetzen nach dem Absenden

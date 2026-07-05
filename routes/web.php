@@ -248,7 +248,10 @@ Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
 Route::get('/grafitti', [HomeController::class, 'home_grafitti'])->name('home.pna.grafitti');
 Route::get('/portraits', [HomeController::class, 'home_portraits'])->name('home.pna.portraits');
 Route::get('/Kontakt', [HomeController::class, 'home_contacts'])->name('home.pna.contacts');
+Route::get('/home/imprint', [HomeController::class, 'home_imprint_pna'])->name('home.imprint.pna');
+// Route::get('/home/privacy', [HomeController::class, 'home_privacy'])->name('home.privacy.pnad');
 // Route::get('/home/show/pictures3/{slug}', [HomeController::class, 'home_images'])->name('home.images.gallery');
+
 });
 
 //
@@ -662,10 +665,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
             return redirect('/admin/dashboard');
         })->name('dashboard');
         // Dashboard
-        Route::get(
-            '/admin/dashboard',
-            [DashboardAdminController::class, 'admin_index']
-        )->name('admin.dashboard');
+        Route::get('/admin/dashboard',[DashboardAdminController::class,'admin_index'])->name('admin.dashboard');
 
 ### ============== API ISADMIN QI ================ ###
         Route::get('/api/activity-log/pub', [ActivityPubController::class, 'getPub']);

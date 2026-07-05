@@ -22,7 +22,7 @@
     <main class="dark" id="app-layout-start">
       <section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000"  style='z-index:50;'>
         <!-- Header -->
-        <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-night-50 bggrad text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-b border-layout-sun-200 dark:border-layout-night-1060"  style='z-index:50;'>
+        <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-night-50 bggrad text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 !!border-[20px] border-layout-sun-200 dark:border-layout-night-1060"  style='z-index:50;'>
 
           <div class="container mx-auto max-w-6xl p-6 lg:flex lg:items-center lg:justify-between trans" style='z-index:50;'>
             <div class="flex items-center justify-between ">
@@ -46,7 +46,7 @@
 
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
             <div :class="[isOpen_Menu ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" style='z-index:10000000;' class="absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-layout-trans dark:bg-primary-night-200 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent">
-              <div class="flex flex-col items-center space-y-1 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-0 trans2 border border-layout-sun-1000 dark:border-layout-night-1050 lg:rounded-lg" style='z-index:10000000;'>
+              <div class="flex flex-col items-center space-y-1 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-0 trans2 !!border-[20px] border-layout-sun-1000 dark:border-layout-night-1050 lg:rounded-lg" style='z-index:10000000;'>
                 <link-header_mfx :route-name="route('home.index')" name="News"></link-header_mfx>
                 <link-header_mfx :route-name="route('home.infos.mfx')" name="Infos"></link-header_mfx>
                 <!--<link-header_mfx :route-name="route('home.pricing')" name="Preise"></link-header_mfx>-->
@@ -93,7 +93,7 @@
                                                 $page.props.jetstream
                                                     .managesProfilePhotos
                                             "
-                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
+                                            class="flex text-sm !!border-[20px] border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
                                         >
                                             <img
                                             id="prof_pic"
@@ -116,7 +116,7 @@
                                         >
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
+                                                class="inline-flex items-center px-3 py-2 !!border-[20px] border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
                                             >
                                                 {{
                                                     $page.props.userdata
@@ -180,7 +180,7 @@
                                         </dropdown-link>
 
                                     <div
-                                            class="my-2 border-t border-layout-sun-200 dark:border-layout-night-1050"
+                                            class="my-2 !!border-[20px] border-layout-sun-200 dark:border-layout-night-1050"
                                         />
 
                                         <!-- Authentication -->
@@ -243,7 +243,8 @@
                       <link-footer name="Datenschutzerklärung" :route-name="route('home.privacy')"></link-footer>
                     </li>
                     <li>
-                     <a class="ToggleCookieLink text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900" @click="showHideToggleCookiePreferencesModal()"><span>Cookie Einstellungen</span></a>
+                     <a class="ToggleCookieLink text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900"
+                     onclick="showHideToggleCookiePreferencesModal()"><span>Cookie Einstellungen</span></a>
                     </li>
                   </ul>
                 </div>
@@ -323,7 +324,8 @@ import LinkFooter from "@/Application/Shared/LinkFooter.vue";
 import IconMenu from "@/Application/Components/Icons/Menu.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 // import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
-import { SD } from "@/helpers";
+
+import { SD,showHideToggleCookiePreferencesModal } from "@/helpers";
 import Loader from "@/Application/Components/Loader.vue";
 // import { ref } from "vue";
 
@@ -420,7 +422,7 @@ mounted() {
 
   methods: {
     SD,
-
+showHideToggleCookiePreferencesModal,
     setLoadingState(state) {
 //       console.log("🔄 setLoadingState:", state);
       this.isLoading = state;

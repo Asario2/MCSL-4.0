@@ -17,7 +17,7 @@ class ExportPrivacyMarkdown extends Command
     public function handle()
     {
         GlobalController::SetDomain();
-        $tabs = ["ab_mcsl","chh","dag_mcsl","mfx_mcsl"];
+        $tabs = ["ab_mcsl","chh","dag_mcsl","mfx_mcsl","pna_mcsl"];
         foreach($tabs as $table)
         {
 

@@ -938,6 +938,58 @@ return Inertia::render('Homepage/Pictures', [
         ]);
 
     }
+    public function home_portraits(Request $request)
+    {
+
+            $ord[0] = "position";
+            $ord[1] = "ASC";
+
+        \Log::info($request);
+        $slug = "portraits";
+        $search = $request->input('search');
+
+        Paginator::currentPageResolver(function () {
+            return request()->input('page', 1);
+        });
+
+//         \Log::info('PAGE PARAM: ' . $request->input('page'));
+
+        DB::enableQueryLog();
+        Paginator::currentPageResolver(function () {
+            return request()->input('page', 1);
+        });
+        $entries = DB::connection('mariadb_pna')->table("images")
+            ->leftJoin("image_categories", "image_categories.id", "=", "images.image_categories_id")
+            ->whereIn("images.pub", [1, 2])
+            ->where("image_categories.slug", $slug)
+            ->select("images.created_at AS created_at", "images.*", "images.status", "image_categories.slug as slug")
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where("images.name", "like", "%{$search}%")
+                    ->orWhere("images.message", "like", "%{$search}%")
+                    ->orWhere("images.id", "like", "%{$search}%")
+                    ->orWhere("images.created_at", "like", "%{$search}%");
+                });
+            })
+            ->orderBy($ord[0], $ord[1])
+            ->paginate(10)      // <-- hier korrekt
+
+            ->withQueryString();
+
+
+//         \Log::info(DB::getQueryLog());
+
+        $rat = RatingController::getTotalRating("images");
+        $ocont = DB::connection("mariadb_pna")->table("image_categories")->where("slug",$slug)->first();
+
+        return Inertia::render('Homepage/Shared/pna/Pictures', [
+            'entries' => $entries,
+            'ocont' => $ocont,
+            'filters' => Request()->all('search'),
+            'ratings' => $rat,
+        ]);
+
+    }
     public function home_userlist(Request $request)
     {
         Paginator::currentPageResolver(function () {
@@ -986,6 +1038,16 @@ return Inertia::render('Homepage/Pictures', [
         $imprint = Str::markdown(file_get_contents($imprintFile));
         //
         return Inertia::render('Homepage/Imprint', [
+            'imprint' => $imprint,
+        ]);
+    }
+        public function home_imprint_pna()
+    {
+        dd('imprint');
+        $imprintFile = Jetstream::localizedMarkdownPath('imprint_pna.md');
+        $imprint = Str::markdown(file_get_contents($imprintFile));
+        //
+        return Inertia::render('Homepage/pna/Imprint', [
             'imprint' => $imprint,
         ]);
     }
@@ -1258,6 +1320,16 @@ public function imprint_dag()
     {
         $data = DB::table("infos")->where("pub","1")->where("id",$id)->select("id","headline","message","img_big")->orderBy("position","DESC")->first();
         return Inertia::render('Homepage/mfx/infos_show',compact('data'));
+    }
+    public function home_contacts(){
+        $text = DB::table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
+        $contacts = DB::table("texts")->where("autoslug", "ContactsInfos")->select('headline', 'text')->first();
+        // \Log::info("TT:".json_encode($text));
+
+        return Inertia::render('Homepage/pna/contacts', [
+            "text" => $text,
+            'contacts'=>$contacts,
+        ]);
     }
     public function projects()
     {

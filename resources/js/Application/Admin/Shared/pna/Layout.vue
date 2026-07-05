@@ -1,5 +1,5 @@
 <template>
-    <div class="dark" id="app-layout-start">
+    <div class="dark" data-theme="dark" id="app-layout-start">
         <Head :title="title"></Head>
 
         <div
@@ -385,6 +385,7 @@ export default {
     },
 
     mounted() {
+        localStorage.theme = this.mode ?? "dark";
         // let shouldReload = localStorage.getItem('reload_dashboard');
         // if (shouldReload) {
         //     localStorage.removeItem('reload_dashboard');
@@ -417,8 +418,9 @@ export default {
             this.isOpen = false;
            if(typeof window !== "undefined")
             {
-                localStorage.theme = this.mode;
+                //localStorage.theme = this.mode ?? "dark";
             }
+
         },
 
         toggleNavbar() {

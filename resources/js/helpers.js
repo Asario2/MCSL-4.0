@@ -562,6 +562,19 @@ export function CleanTab(rem) {
     const path = window.location.pathname; // Gibt "/admin/tables/show/Example" zur�ck
     return path.replace(rem,'').replace("/",'');
 }
+
+export function showHideToggleCookiePreferencesModal() {
+    const modal = document.getElementById("cookie-preferences-modal");
+    if (!modal) return;
+
+    const open = modal.getAttribute("aria-hidden") !== "false";
+
+    modal.setAttribute("aria-hidden", open ? "false" : "true");
+    modal.classList.toggle("show", open);
+
+    document.body.classList.toggle("overflow-hidden", open);
+}
+
 export function CheckOL() {
     return !window.location.host.includes("test.mcs");
 }

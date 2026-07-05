@@ -1,5 +1,5 @@
 <template>
-    <div id="app-layout-start">
+    <div class="dark" data-theme="dark" id="app-layout-start">
         <Head :title="title">Admin Dashboard</Head>
 
         <div

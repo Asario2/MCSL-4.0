@@ -1578,8 +1578,10 @@
                 }
 
             } catch (error) {
-                console.error("Fehler beim Absenden:", error);
-            }
+                console.error("Status:", error.response?.status);
+                console.error("Data:", error.response?.data);
+                console.error("Headers:", error.response?.headers);
+                console.error(error);            }
         },
         async deleteTable() {
             try {

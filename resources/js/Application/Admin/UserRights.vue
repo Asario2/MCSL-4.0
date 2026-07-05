@@ -446,11 +446,15 @@ export default {
           });
         })
         .catch(err => {
-          console.error(err);
-          window.toastBus.emit( {
-            message: 'Fehler beim Aktualisieren des Status!',
-            type: 'error'
-          });
+            console.error(err);
+
+            console.log("Status:", err.response?.status);
+            console.log("Data:", err.response?.data);
+
+            window.toastBus.emit({
+                message: err.response?.data?.message || "Fehler beim Speichern!",
+                type: "error"
+            });
         });
     },
 

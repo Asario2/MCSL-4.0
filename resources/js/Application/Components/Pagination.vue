@@ -1,6 +1,6 @@
 <template>
 
-  <div v-if="links?.length > 1" class="flex justify-center gap-2">
+  <div v-if="links?.length > 3" class="flex justify-center gap-2">
 
     <a
       v-for="(link, i) in links"

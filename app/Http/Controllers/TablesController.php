@@ -1457,17 +1457,16 @@ public function ShowTable(Request $request, $table_alt = null)
 
     public function GetDBTables()
     {
-        $tz = DB::table('admin_table')
+        return DB::table('admin_table')
             ->whereNotNull('db_name')
             ->where('db_name', '!=', '')
-            ->select('id', 'name', 'db_name', 'db_icon', 'db_new', 'db_desc', 'db_link','checkzrights')
-            ->orderBy("position","ASC")
+            ->select('id','name','db_name','db_icon','db_new','db_desc','db_link','checkzrights')
+            ->orderBy('position')
             ->get()
             ->filter(function ($item) {
                 return CheckRights(Auth::id(), $item->name, 'view');
-            });
-
-        return $tz;
+            })
+            ->values();   // <- wichtig!
     }
     public function getHeadlines($table){
         if(!Schema::hasColumn($table,"position"))
@@ -2132,20 +2131,21 @@ public function ListTables(Request $request, $table_alt = '')
         $updated = [];
 
         foreach ($entries as $Ec) {
-            foreach($Ec as $entry){
-            // Prüfen, ob beide Felder vorhanden sind
-            if (isset($entry['id']) && isset($entry['users_rights_id'])) {
+            foreach ($Ec as $entry) {
 
-                // User aktualisieren
-                User::where('id', $entry['id'])
-                    ->update(['users_rights_id' => $entry['users_rights_id'],"xis_disabled"=>$entry["xis_disabled"]]);
+                if (isset($entry['id']) && isset($entry['users_rights_id'])) {
 
-                $updated[] = [
-                    'user_id' => $entry['id'],
-                    'users_rights_id' => $entry['users_rights_id'],
+                    User::where('id', $entry['id'])->update([
+                        'users_rights_id' => $entry['users_rights_id'],
+                        'xis_disabled'    => $entry['xis_disabled'] ?? 0,
+                    ]);
 
-                ];
-            }
+                    $updated[] = [
+                        'user_id'         => $entry['id'],
+                        'users_rights_id' => $entry['users_rights_id'],
+                        'xis_disabled'    => $entry['xis_disabled'] ?? 0,
+                    ];
+                }
             }
         }
         $table = CleanTable();
@@ -3033,7 +3033,7 @@ return Inertia::render('Admin/Kontakte', [
             return response()->json(["status" => "success", "message" => "Gespeichert, Bitte <a href='/admin/User_Rights'>Benutzerrechte</a> aktualisieren"]);
         }
 
-        return response()->json(['status' => 'success', 'message' => 'Daten erfolgreich gespeichert!']);
+        return response()->json(['type' => 'success', 'message' => 'Daten erfolgreich gespeichert!']);
     }
 
 

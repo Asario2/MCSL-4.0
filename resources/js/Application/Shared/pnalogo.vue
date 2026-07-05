@@ -25,6 +25,7 @@
                 ? 'h-[70px] w-auto'
                 : 'h-auto w-full md:w-auto md:h-[180px]'
         ]"
+        id="pna_logo"
         :src="'/images/logos/pna_logo_'+ mode +'.png'"
         alt="Paul Nadler Logo"
     />
@@ -32,6 +33,8 @@
 </template>
 
 <script>
+import { get } from 'jquery';
+
 // import { gsap } from 'gsap';
 
 export default {
@@ -46,14 +49,18 @@ export default {
             type: Boolean,
             default: false,
         },
-        mode:
-        {
-            type:String,
-        },
 
+    },
+    data()
+    {
+            this.mod = /\/(login|register)(\/|$)/i.test(window.location.pathname)
+    ? 'light'
+    : localStorage.theme;
+                  this.mode =  this.mod ??  "";
     },
     mounted() {
         if (typeof window === "undefined") return;
+
 
         import("gsap").then(({ gsap }) => {
             const bg = this.$refs.bg;

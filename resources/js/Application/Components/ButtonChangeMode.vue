@@ -61,7 +61,7 @@ export default {
                 'changeMode',
                 newMode
             );
-
+            document.getElementById("pna_logo").src='/images/logos/pna_logo_'+ newMode +'.png';
             fetch('/toggle-dark-mode',{
                 method:'POST',
                 headers:{
@@ -71,6 +71,7 @@ export default {
                 body:JSON.stringify({
                     dark_mode:newMode
                 })
+
             }).catch(console.error);
 
             document.querySelectorAll('.ai-button')

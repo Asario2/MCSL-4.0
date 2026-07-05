@@ -57,14 +57,13 @@ if (typeof global === 'undefined') {
 // ======================
 function safeRoute(name, params = {}) {
     try {
+
+
         return route(name, params, false, Ziggy);
-    } catch (error) {
-        if (error.message.includes('is not in the route list')) {
-            console.error(`Ziggy: Route '${name}' nicht gefunden.`);
-            router.visit('/404');
-            return '/404';
-        }
-        throw error;
+    } catch (e) {
+        console.error(e);
+
+        throw e;
     }
 }
 

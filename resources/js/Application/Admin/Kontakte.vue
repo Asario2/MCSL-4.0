@@ -179,7 +179,7 @@
                       </td>
                       <td class="px-4 py-1 border-r border-black">{{ contact.Telefon || '-' }}</td>
                       <td class="px-4 py-1 border-black">{{ contact.Handy || '-' }}</td>
-                      <td class="px-4 py-1 border-black"><editbtns v-if="contact.us_poster == UID" table="contacts" :id="contact.id" :uid="contact.us_poster" :safe="false"></editbtns></td>
+                      <td class="px-4 py-1 border-black"><editbtns table="contacts" :id="contact.id" :uid="contact.us_poster" :safe="false" :users_id="contact.us_poster"></editbtns></td>
                     </tr>
 
                     <!-- Detail-Zeile -->
@@ -346,7 +346,8 @@ export default {
   return grouped;
 }       ,
   UID(){
-       return this.$page?.props?.auth?.user?.id ?? null;
+        console.log(this.$page?.props?.auth?.user?.id);
+        return this.$page?.props?.auth?.user?.id ?? null;
     },
 sortedLetters() {
   if (!this.groupedContacts || typeof this.groupedContacts !== "object") {
