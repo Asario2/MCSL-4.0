@@ -196,7 +196,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
     >
 
     <link
-        href="/css/tailw/{{ $sd_alt ?? 'default' }}.css?time={{ time() }}"
+        href="/css/tailw/{{ $subdomain ?? 'default' }}.css?time={{ time() }}"
         rel="stylesheet"
     >
 
