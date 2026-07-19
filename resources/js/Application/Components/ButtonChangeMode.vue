@@ -61,7 +61,10 @@ export default {
                 'changeMode',
                 newMode
             );
-            document.getElementById("pna_logo").src='/images/logos/pna_logo_'+ newMode +'.png';
+            document.getElementById("pna_logo")?.setAttribute(
+                "src",
+                `/images/logos/pna_logo_${newMode}.png`
+            );
             fetch('/toggle-dark-mode',{
                 method:'POST',
                 headers:{

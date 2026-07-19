@@ -751,7 +751,70 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
             toggleNavbar() {
             this.isOpen_Menu = !this.isOpen_Menu;
             },
+ applyTheme() {
 
+        const html =
+            document.documentElement;
+
+        // console.log(
+        //     "[applyTheme] mode:",
+        //     this.mode
+        // );
+
+        // console.log(
+        //     "[applyTheme] vorher:",
+        //     html.className
+        // );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Force Light
+        |--------------------------------------------------------------------------
+        */
+
+        const forceLight =
+            window.location.pathname === '/login'
+            || window.location.pathname === '/register';
+
+        if (forceLight) {
+
+            // console.log(
+            //     "[applyTheme] forceLight aktiv"
+            // );
+
+            html.classList.remove('dark');
+
+            return;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Theme anwenden
+        |--------------------------------------------------------------------------
+        */
+
+        if (this.mode === 'dark') {
+
+            // console.log(
+            //     "[applyTheme] ADD DARK"
+            // );
+
+            html.classList.add('dark');
+
+        } else {
+
+            // console.log(
+            //     "[applyTheme] REMOVE DARK"
+            // );
+
+            html.classList.remove('dark');
+        }
+
+        // console.log(
+        //     "[applyTheme] nachher:",
+        //     html.className
+        // );
+    },
 
 changeMode(newMode) {
 
