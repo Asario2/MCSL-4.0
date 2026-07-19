@@ -11,45 +11,43 @@
             >
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
+                    <div class="flex justify-between items-center h-16">
+
+                        <div class="flex items-center justify-between w-full">
                             <div class="shrink-0 flex items-center">
-                                <brand-header
+                                <brand-header class="!sm:ml-[-10px]"
                                     :route-name="route('admin.dashboard')"
-                                    :brand_1="
-                                        $page.props.applications.brand_name_1
-                                    "
-                                    :brand_2="
-                                        $page.props.applications.brand_name_2
-                                    "
-                                    :app-name="
-                                        $page.props.applications.app_admin_name
-                                    "
-                                ></brand-header>
+                                    :brand_1="$page.props.applications.brand_name_1"
+                                    :brand_2="$page.props.applications.brand_name_2"
+                                    :app-name="$page.props.applications.app_admin_name"
+                                />
+
+                                <div class="hidden sm:flex space-x-8 ms-10">
+                                    <NavLink
+                                        :routeName="route('home.index')"
+                                        :active="route().current('home.index')"
+                                        label="Home"
+                                    />
+                                    <NavLink
+                                        :routeName="route('admin.dashboard')"
+                                        :active="route().current('admin.dashboard')"
+                                        label="Dashboard"
+                                    />
+                                </div>
                             </div>
 
-                            <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            <button
+                                class="button_menu colored_white flex items-center justify-center sm:hidden"
+                                @click="toggleNavbar"
+                                type="button"
                             >
-                            <NavLink
-                                    :routeName="route('home.index')"
-                                    :active="route().current('home.index')"
-                                    label="Home"
-                                >
-                                </NavLink>
-                            <NavLink
-                                    :routeName="route('admin.dashboard')"
-                                    :active="route().current('admin.dashboard')"
-                                    label="Dashboard"
-                                >
-                                </NavLink>
-
+                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path :class="{ hidden: isOpen, 'inline-flex': !isOpen }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                    <path :class="{ hidden: !isOpen, 'inline-flex': isOpen }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
                             </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                            <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <!-- <div class="mr-1">
                                 <button-change-mode
                                     :mode="mode"
@@ -171,41 +169,7 @@
                             </div>
                         </div>
 
-                        <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
-                            <button
-                                class="button_menu"
-                                v-on:click="toggleNavbar()"
-                            >
-                                <svg
-                                    class="h-6 w-6"
-                                    stroke="currentColor" fill="none"
 
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        :class="{
-                                            hidden: isOpen,
-                                            'inline-flex': !isOpen,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !isOpen,
-                                            'inline-flex': isOpen,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -282,9 +246,9 @@
 
 
                             <!-- Authentication -->
-                            <form method="POST" @submit.prevent="logoutUser">
+                            <form @submit.prevent="logoutUser">
 
-                                <ResponsiveNavLink as="button">
+                                <ResponsiveNavLink as="submit">
                                     Abmelden
                                 </ResponsiveNavLink>
                             </form>
@@ -436,5 +400,9 @@ export default {
     },
 };
 </script>
-
+<style>
+.pna .colored_white{
+    color:#F00 !important;
+}
+</style>
 
