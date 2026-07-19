@@ -24,7 +24,7 @@
                     <td class="text-center" v-if="!nostars">
                         <button @click.stop.prevent="toggleStarBox(postId)"
                                 class="flex items-center gap-2 px-2 py-1 rounded-lg font-semibold bg-button text-white hover:bg-button-600
-                                       dark:bg-button-600 dark:hover:bg-button-700 dark:text-white text-center tog-tab""
+                                       dark:bg-button-600 dark:hover:bg-button-700 dark:text-white text-center tog-tab"
                                 :data-post-id="postId">
                             <icon-star we="16" he="16" /> Bewerten
                         </button>
@@ -72,6 +72,7 @@
                 </tr>
             </tbody>
         </table>
+
     </div>
 
 </template>
