@@ -343,3 +343,8 @@
 ![Version](https://img.shields.io/badge/version-5.97.7-orange) Tailwind CSS Bug (#544)  
 ![Version](https://img.shields.io/badge/version-5.98.0-orange) Hotfix - add pub check on pictures_cat page (#545)  
 ![Version](https://img.shields.io/badge/version-5.99.7-orange) Hotfix - MailController bug (#546)  
+![Version](https://img.shields.io/badge/version-6.00.5-orange) Hotfix - CheckBday script has bugs (#547)  
+![Version](https://img.shields.io/badge/version-6.01.0-orange) Feature - New Sitemap Generator (#550)  
+![Version](https://img.shields.io/badge/version-6.02.5-orange) Feature - Smaller features (#549)  
+![Version](https://img.shields.io/badge/version-6.03.4-orange) Feature - Sort of Hackinglog (#548)  
+![Version](https://img.shields.io/badge/version-6.04.9-orange) Hotfixes in different files (#551)  
