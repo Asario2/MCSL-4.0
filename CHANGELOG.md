@@ -348,3 +348,4 @@
 ![Version](https://img.shields.io/badge/version-6.02.5-orange) Feature - Smaller features (#549)  
 ![Version](https://img.shields.io/badge/version-6.03.4-orange) Feature - Sort of Hackinglog (#548)  
 ![Version](https://img.shields.io/badge/version-6.04.9-orange) Hotfixes in different files (#551)  
+![Version](https://img.shields.io/badge/version-6.05.6-orange) Hotfix - Fixed Dark Mode (#553)  
