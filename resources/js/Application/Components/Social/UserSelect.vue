@@ -201,6 +201,7 @@ emitSelection() {
     },
 
     async mounted() {
+        console.table(this.users);
     this.$nextTick(() => {
         let storedUsers = [];
         try { storedUsers = JSON.parse(sessionStorage.getItem('selectedUsers') || '[]'); }

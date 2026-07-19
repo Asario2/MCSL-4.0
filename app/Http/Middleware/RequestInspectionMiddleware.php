@@ -2,12 +2,14 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+use App\Services\hackinglogService;
 use Carbon\Carbon;
-use Normalizer;
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use App\Services\hackinglogService;
+use Normalizer;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RequestInspectionMiddleware
 {
@@ -17,7 +19,7 @@ class RequestInspectionMiddleware
     |--------------------------------------------------------------------------
     */
 
-    protected int $maxScore = 15;
+    protected int $maxScore = 25;
 
     protected int $maxInputLength = 10000;
 
@@ -92,17 +94,17 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/<\s*script\b/i'                    => 15,
-        '/<\s*svg\b/i'                       => 12,
-        '/<\s*iframe\b/i'                    => 15,
-        '/javascript\s*:/i'                 => 12,
-        '/vbscript\s*:/i'                   => 12,
-        '/data\s*:\s*text\/html/i'          => 12,
-        '/\bon\w+\s*=/i'                    => 8,
-        '/document\.cookie/i'               => 10,
-        '/window\.location/i'               => 10,
-        '/alert\s*\(/i'                     => 8,
-        '/eval\s*\(/i'                      => 12,
+        '/<\s*script\b/i' => 15,
+        '/<\s*svg\b/i' => 12,
+        '/<\s*iframe\b/i' => 15,
+        '/javascript\s*:/i' => 12,
+        '/vbscript\s*:/i' => 12,
+        '/data\s*:\s*text\/html/i' => 12,
+        '/\bon\w+\s*=/i' => 8,
+        '/document\.cookie/i' => 10,
+        '/window\.location/i' => 10,
+        '/alert\s*\(/i' => 8,
+        '/eval\s*\(/i' => 12,
 
         /*
         |--------------------------------------------------------------------------
@@ -110,16 +112,16 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/union\s+select/i'                 => 20,
-        '/\bselect\b.+\bfrom\b/i'           => 8,
-        '/\binformation_schema\b/i'         => 20,
-        '/\bsleep\s*\(/i'                   => 20,
-        '/\bbenchmark\s*\(/i'               => 20,
-        '/\bload_file\s*\(/i'               => 20,
-        '/into\s+outfile/i'                 => 20,
-        '/or\s+1\s*=\s*1/i'                 => 15,
-        '/and\s+1\s*=\s*1/i'                => 10,
-        '/\s--(\s|$)/'                      => 5,
+        '/union\s+select/i' => 20,
+        '/\bselect\b.+\bfrom\b/i' => 8,
+        '/\binformation_schema\b/i' => 20,
+        '/\bsleep\s*\(/i' => 20,
+        '/\bbenchmark\s*\(/i' => 20,
+        '/\bload_file\s*\(/i' => 20,
+        '/into\s+outfile/i' => 20,
+        '/or\s+1\s*=\s*1/i' => 15,
+        '/and\s+1\s*=\s*1/i' => 10,
+        '/\s--(\s|$)/' => 5,
 
         /*
         |--------------------------------------------------------------------------
@@ -128,10 +130,10 @@ class RequestInspectionMiddleware
         */
 
         '/;\s*(rm|cat|wget|curl|bash|sh)\s+/i' => 25,
-        '/\|\s*(bash|sh|powershell)/i'         => 25,
-        '/\$\(/'                               => 20,
+        '/\|\s*(bash|sh|powershell)/i' => 25,
+        '/\$\(/' => 20,
         '/(?:^|[\s;|&])`[^`\n]{1,200}`(?:$|[\s;|&])/i' => 20,
-        '/nc\s+-e/i'                           => 30,
+        '/nc\s+-e/i' => 30,
 
         /*
         |--------------------------------------------------------------------------
@@ -139,12 +141,12 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/\.\.\//i'                         => 15,
-        '/\.\.\\\\/i'                      => 15,
-        '/\/etc\/passwd/i'                 => 30,
-        '/boot\.ini/i'                     => 30,
-        '/\/proc\/self/i'                  => 20,
-        '/\.env/i'                         => 20,
+        '/\.\.\//i' => 15,
+        '/\.\.\\\\/i' => 15,
+        '/\/etc\/passwd/i' => 30,
+        '/boot\.ini/i' => 30,
+        '/\/proc\/self/i' => 20,
+        '/\.env/i' => 20,
 
         /*
         |--------------------------------------------------------------------------
@@ -152,9 +154,9 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/<\?(php)?/i'                     => 30,
-        '/php:\/\/input/i'                 => 20,
-        '/base64_decode\s*\(/i'            => 15,
+        '/<\?(php)?/i' => 30,
+        '/php:\/\/input/i' => 20,
+        '/base64_decode\s*\(/i' => 15,
 
         /*
         |--------------------------------------------------------------------------
@@ -162,10 +164,10 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/\.(php|phtml|phar)\./i'          => 30,
-        '/shell\.php/i'                    => 40,
-        '/cmd\.php/i'                      => 40,
-        '/backdoor/i'                      => 40,
+        '/\.(php|phtml|phar)\./i' => 30,
+        '/shell\.php/i' => 40,
+        '/cmd\.php/i' => 40,
+        '/backdoor/i' => 40,
 
         /*
         |--------------------------------------------------------------------------
@@ -173,11 +175,11 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/127\.0\.0\.1/i'                  => 20,
+        '/127\.0\.0\.1/i' => 20,
         // '/localhost/i'                     => 5,
-        '/169\.254\./i'                    => 25,
-        '/file:\/\//i'                     => 25,
-        '/gopher:\/\//i'                   => 30,
+        '/169\.254\./i' => 25,
+        '/file:\/\//i' => 25,
+        '/gopher:\/\//i' => 30,
 
         /*
         |--------------------------------------------------------------------------
@@ -185,9 +187,9 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/phpmyadmin/i'                    => 15,
-        '/vendor\/phpunit/i'               => 20,
-        '/cgi-bin/i'                       => 15,
+        '/phpmyadmin/i' => 15,
+        '/vendor\/phpunit/i' => 20,
+        '/cgi-bin/i' => 15,
 
         /*
         |--------------------------------------------------------------------------
@@ -195,12 +197,12 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/sqlmap/i'                        => 50,
-        '/nikto/i'                         => 40,
-        '/acunetix/i'                      => 40,
-        '/nmap/i'                          => 30,
-        '/masscan/i'                       => 30,
-        '/python-requests/i'               => 15,
+        '/sqlmap/i' => 50,
+        '/nikto/i' => 40,
+        '/acunetix/i' => 40,
+        '/nmap/i' => 30,
+        '/masscan/i' => 30,
+        '/python-requests/i' => 15,
 
         /*
         |--------------------------------------------------------------------------
@@ -208,8 +210,8 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        '/\\\\x[0-9a-fA-F]{2}/'            => 10,
-        '/%[0-9a-fA-F]{2}/'                => 5,
+        '/\\\\x[0-9a-fA-F]{2}/' => 10,
+        '/%[0-9a-fA-F]{2}/' => 5,
     ];
 
     public function __construct(
@@ -226,15 +228,30 @@ class RequestInspectionMiddleware
 
     public function handle(Request $request, Closure $next)
     {
+        // Route existiert nicht oder HTTP-Methode passt nicht → nicht als Angriff werten
+        try {
+            $request->route();
+        } catch (MethodNotAllowedHttpException $e) {
+            return $next($request);
+        } catch (NotFoundHttpException $e) {
+            return $next($request);
+        }
+        $route = $request->route();
 
+        if (
+            $route &&
+            ! in_array($request->method(), $route->methods(), true)
+        ) {
+            return $next($request);
+        }
         if ($request->is('admin/email')) {
-             return $next($request);
+            return $next($request);
         }
         if (str_contains($request->path(), 'admin/tables/store/')) {
             return $next($request);
         }
         if (str_contains($request->path(), 'admin/tables/update/')) {
-           return $next($request);
+            return $next($request);
         }
         /*
         |--------------------------------------------------------------------------
@@ -258,8 +275,7 @@ class RequestInspectionMiddleware
         */
 
         foreach (
-            $this->honeypotFields
-            as $field
+            $this->honeypotFields as $field
         ) {
 
             if ($request->filled($field)) {
@@ -277,7 +293,7 @@ class RequestInspectionMiddleware
         |--------------------------------------------------------------------------
         */
 
-        $rateKey = 'ids_rate_' . $request->ip();
+        $rateKey = 'ids_rate_'.$request->ip();
 
         $requestCount = Cache::increment(
             $rateKey
@@ -329,10 +345,10 @@ class RequestInspectionMiddleware
                     $request->ip(),
                     999,
                     [[
-                        'source'  => 'honeypot',
+                        'source' => 'honeypot',
                         'pattern' => $honeypot,
-                        'value'   => $request->path(),
-                        'points'  => 999,
+                        'value' => $request->path(),
+                        'points' => 999,
                     ]]
                 );
 
@@ -482,7 +498,7 @@ class RequestInspectionMiddleware
         Request $request,
         bool $reducedSensitivity = false
     ): array {
-            /*
+        /*
         |--------------------------------------------------------------------------
         | Ignore internal countpixel requests
         |--------------------------------------------------------------------------
@@ -490,12 +506,11 @@ class RequestInspectionMiddleware
 
         if (str_contains($request->path(), 'countpixel')
             && $request->filled('url')
-            && $request->filled('route'))
-        {
+            && $request->filled('route')) {
 
             return [
 
-                'score'   => 0,
+                'score' => 0,
 
                 'matches' => [],
             ];
@@ -517,8 +532,7 @@ class RequestInspectionMiddleware
             */
 
             foreach (
-                $this->ignoredInputKeys
-                as $ignored
+                $this->ignoredInputKeys as $ignored
             ) {
 
                 if (
@@ -571,8 +585,7 @@ class RequestInspectionMiddleware
             $skipEntropy = false;
 
             foreach (
-                $this->skipEntropyKeys
-                as $skipKey
+                $this->skipEntropyKeys as $skipKey
             ) {
 
                 if (
@@ -589,7 +602,7 @@ class RequestInspectionMiddleware
             }
 
             if (
-                !$skipEntropy
+                ! $skipEntropy
                 && strlen($value) > 120
                 && $this->shannonEntropy($value) > 5.2
             ) {
@@ -598,17 +611,17 @@ class RequestInspectionMiddleware
 
                 $matches[] = [
 
-                    'source'  => $key,
+                    'source' => $key,
 
                     'pattern' => 'ENTROPY',
 
-                    'value'   => mb_substr(
+                    'value' => mb_substr(
                         $value,
                         0,
                         300
                     ),
 
-                    'points'  => 10,
+                    'points' => 10,
                 ];
             }
 
@@ -646,8 +659,7 @@ class RequestInspectionMiddleware
             */
 
             foreach (
-                $this->patterns
-                as $pattern => $points
+                $this->patterns as $pattern => $points
             ) {
 
                 preg_match_all(
@@ -657,7 +669,7 @@ class RequestInspectionMiddleware
                 );
 
                 if (
-                    !empty($found[0])
+                    ! empty($found[0])
                 ) {
 
                     $matchCount = count(
@@ -672,7 +684,7 @@ class RequestInspectionMiddleware
                     ) {
 
                         $calculatedPoints =
-                            (int)ceil(
+                            (int) ceil(
                                 $calculatedPoints / 2
                             );
                     }
@@ -687,24 +699,19 @@ class RequestInspectionMiddleware
 
                         $matches[] = [
 
-                            'source' =>
-                                $key,
+                            'source' => $key,
 
-                            'pattern' =>
-                                $pattern,
+                            'pattern' => $pattern,
 
-                            'match_count' =>
-                                $matchCount,
+                            'match_count' => $matchCount,
 
-                            'value' =>
-                                mb_substr(
-                                    $value,
-                                    0,
-                                    300
-                                ),
+                            'value' => mb_substr(
+                                $value,
+                                0,
+                                300
+                            ),
 
-                            'points' =>
-                                $calculatedPoints,
+                            'points' => $calculatedPoints,
                         ];
                     }
                 }
@@ -732,17 +739,17 @@ class RequestInspectionMiddleware
 
                 $matches[] = [
 
-                    'source'  => $key,
+                    'source' => $key,
 
                     'pattern' => 'SQL_COMBO',
 
-                    'value'   => mb_substr(
+                    'value' => mb_substr(
                         $value,
                         0,
                         300
                     ),
 
-                    'points'  => 30,
+                    'points' => 30,
                 ];
             }
 
@@ -781,8 +788,7 @@ class RequestInspectionMiddleware
                     }
 
                     foreach (
-                        $this->patterns
-                        as $pattern => $points
+                        $this->patterns as $pattern => $points
                     ) {
 
                         if (
@@ -805,22 +811,18 @@ class RequestInspectionMiddleware
 
                                 $matches[] = [
 
-                                    'source' =>
-                                        $key
-                                        . '_base64',
+                                    'source' => $key
+                                        .'_base64',
 
-                                    'pattern' =>
-                                        $pattern,
+                                    'pattern' => $pattern,
 
-                                    'value' =>
-                                        mb_substr(
-                                            $decoded,
-                                            0,
-                                            300
-                                        ),
+                                    'value' => mb_substr(
+                                        $decoded,
+                                        0,
+                                        300
+                                    ),
 
-                                    'points' =>
-                                        $extraPoints,
+                                    'points' => $extraPoints,
                                 ];
                             }
                         }
@@ -833,7 +835,7 @@ class RequestInspectionMiddleware
 
         return [
 
-            'score'   => $score,
+            'score' => $score,
 
             'matches' => $matches,
         ];
@@ -908,8 +910,7 @@ class RequestInspectionMiddleware
         }
 
         foreach (
-            count_chars($string, 1)
-            as $count
+            count_chars($string, 1) as $count
         ) {
 
             $p = $count / $len;
@@ -933,8 +934,7 @@ class RequestInspectionMiddleware
         $files = [];
 
         foreach (
-            $request->allFiles()
-            as $key => $file
+            $request->allFiles() as $key => $file
         ) {
 
             $filename =
@@ -992,18 +992,15 @@ class RequestInspectionMiddleware
 
                 'name' => $filename,
 
-                'mime' =>
-                    $file->getMimeType(),
+                'mime' => $file->getMimeType(),
             ];
         }
 
         return [
 
-            'query' =>
-                $request->query(),
+            'query' => $request->query(),
 
-            'post' =>
-                $request->post(),
+            'post' => $request->post(),
 
             'json' => is_array(
                 $request->json()?->all()
@@ -1013,30 +1010,24 @@ class RequestInspectionMiddleware
                     ->all()
                 : [],
 
-            'headers' =>
-                $request->headers->all(),
+            'headers' => $request->headers->all(),
 
             'server' => [
 
-                'user_agent' =>
-                    $request->userAgent(),
+                'user_agent' => $request->userAgent(),
 
-                'referer' =>
-                    $request->headers->get(
-                        'referer'
-                    ),
+                'referer' => $request->headers->get(
+                    'referer'
+                ),
 
-                'path' =>
-                    $request->path(),
+                'path' => $request->path(),
 
-                'method' =>
-                    $request->method(),
+                'method' => $request->method(),
             ],
 
             'files' => $files,
 
-            'raw' =>
-                $request->getContent(),
+            'raw' => $request->getContent(),
         ];
     }
 
@@ -1058,8 +1049,8 @@ class RequestInspectionMiddleware
         ) {
 
             $newKey = $prefix
-                ? $prefix . '.'
-                    . $key
+                ? $prefix.'.'
+                    .$key
                 : $key;
 
             if (is_array($value)) {
@@ -1098,7 +1089,7 @@ class RequestInspectionMiddleware
             );
         }
 
-        $value = (string)$value;
+        $value = (string) $value;
 
         $value = mb_substr(
             $value,

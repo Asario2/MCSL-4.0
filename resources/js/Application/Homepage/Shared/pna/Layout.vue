@@ -23,39 +23,51 @@
     <main id="app-layout-start">
       <section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000"  style='z-index:50;'>
         <!-- Header -->
-        <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 dark:bg-layout-night-00 text-layout-sun-900 dark:bg-layout-night-00 dark:text-layout-night-900 border-b border-layout-sun-2000 dark:border-layout-night-1060 overflow-visible  "  style='z-index:50;'>
+        <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 dark:bg-layout-night-00 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-b border-layout-sun-2000 dark:border-layout-night-1060 overflow-visible  "  style='z-index:50;'>
 
-          <div class="w-full minw-[100%] max-w-[1000px] mx-auto px-6" style='z-index:50;'>
-            <div class="flex flex-col items-center justify-center gap-4">
-              <!-- <brand-header :route-name="route('home.index')" :brand_1="$page.props.applications.brand_name_1" :brand_2="$page.props.applications.brand_name_2" :app-name="$page.props.applications.app_name"></brand-header> -->
-                <a href="/">
+          <div class="mx-auto w-fit px-6" style='z-index:50;'>
+            <div class="flex items-center justify-between py-4 lg:flex-col lg:justify-center lg:gap-4">
+                <!-- Logo -->
+                <a href="/" class="">
                     <ClientOnly>
                         <pnalogo :mode="mode"/>
                     </ClientOnly>
                 </a>
-              <!-- Mobile menu button -->
-              <div class="flex lg:hidden absolute right-6 top-6">
-                <button v-on:click="toggleNavbar()" type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 focus:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800 dark:focus:text-primary-night-800" aria-label="toggle menu">
-                  <icon-menu class="w-6 h-6" v-if="!isOpen_Menu"></icon-menu>
-                  <IconClose class="w-6 h-6" v-if="isOpen_Menu" />
+
+                <!-- Hamburger nur Mobile -->
+                <button
+                    @click="toggleNavbar"
+                    type="button"
+                    class="lg:hidden p-2 focus:outline-none  hover:text-primary-sun-800 dark:text-primary-night-1000 colored_white"
+                    aria-label="Menü öffnen"
+                >
+                    <IconMenu class="w-7 h-7" v-if="!isOpen_Menu" />
+                    <IconClose class="w-7 h-7" v-else />
                 </button>
-              </div>
             </div>
 
+
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
-            <div :class="[isOpen_Menu ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" style='z-index:10000000;' class="absolute inset-x-0 mt-[6] w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-layout-trans dark:bg-primary-night-200 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent">
-            <div class="flex flex-col items-center space-y-1
-                lg:mt-[4] lg:flex-row
-                lg:justify-between lg:items-center
-                lg:w-full
+            <div :class="[isOpen_Menu ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" style='z-index:10000000;' class="absolute inset-x-0 mt-[6] w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-layout-sun-00  dark:bg-layout-night-00  lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center  lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent">
+            <div class="flex flex-col items-center space-y-1 SDAA
+                lg:mt-4
+                lg:flex-row
+                lg:items-center
+                lg:w-fit
+                lg:mx-auto
+                lg:justify-center
+                lg:gap-2
                 lg:space-y-0
                 border-4 border-layout-sun-2000
-                dark:border-layout-night-2000 lg:rounded-lg mb-[8px]">
+                dark:border-layout-night-2000
+                lg:rounded-lg
+                mb-2
+            ">
                 <link-header_mfx class="ml-[26px]"   :route-name="route('home.index')" name="Home"></link-header_mfx>
                 <link-header_mfx :route-name="route('home.pna.grafitti')" name="Grafittis"></link-header_mfx>
                 <!--<link-header_mfx :route-name="route('home.pricing')" name="Preise"></link-header_mfx>-->
                 <!-- <link-header_mfx :route-name="route('home.blog.index')" name="Blog"></link-header_mfx> -->
-                <link-header_mfx :route-name="route('home.pna.portraits')" name="Potraits"></link-header_mfx>
+                <link-header_mfx :route-name="route('home.pna.portraits')" name="Portraits"></link-header_mfx>
                 <link-header_mfx :route-name="route('home.pna.contacts')" name="Kontakt"></link-header_mfx>
                 <button-change-mode :mode="mode" @changeMode="changeMode"></button-change-mode>
                 <template v-if="!$page.props.userdata.user_id">
@@ -74,7 +86,13 @@
                     :alt="$page.props.userdata.full_name"
                 /></link-header_mfx><br />
                 <hr />
-                <link-header_mfx :route-name="route('logout')" name="Abmelden" />
+                <form @submit.prevent="logoutUser">
+                    <button type="submit">
+                        <dropdown-link>
+                            <b>Abmelden</b>
+                        </dropdown-link>
+                    </button>
+                </form>
                 </div>
                 <template v-if="$page.props.userdata.user_id">
                   <!-- <link-header_mfx :route-name="route('applicationswitch')" name="Dashboard"></link-header_mfx> -->
@@ -214,7 +232,7 @@
         </div> -->
         <Loader />
         <!-- Content -->
-        <div class="container mx-auto max-w-6xl min-h-screen py-48 px-2 md:mt-[120px] !sm:mt-[-70px]">
+        <div class="container mx-auto max-w-6xl min-h-screen px-2 pm_top">
           <!-- Toast -->
           <div>
             <Toast></Toast>
@@ -677,8 +695,14 @@ border-color:#1f2937;
 .trans2{
     background-color:rgba(0,0,0) !important;
 }
+.pm_top{
+    margin-top:85px;
+}
 @media (min-width: 1023px){
-
+.pm_top{
+padding-top:200px !important;
+margin-top:150px !important;
+}
 
 }
 .pad{
@@ -686,6 +710,12 @@ border-color:#1f2937;
  font-family:Helvetica !important;
  margin-bottom:2px;
  padding:3px !important
+}
+.dark .ddbg{
+    background-color: rgb(3 7 18) !important;
+}
+.pna .colored_white{
+    color:#F00 !important;
 }
 </style>
 

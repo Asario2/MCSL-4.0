@@ -7,7 +7,7 @@
                 <div>
                     <page-title>
                         <template #title>
-                            <span class="dark:text-layout-night-1050 text-layout-sun-100 ">
+                            <span class="dark:text-layout-night-1050 text-layout-sun-1000 ">
                                 {{ text?.headline }}
                             </span>
                             &nbsp;
@@ -22,7 +22,7 @@
                             class="bg-layout-sun-100 dark:bg-layout-night-50
                                    lg:rounded-lg p-2 mb-6
                                    border border-layout-sun-1000
-                                   dark:border-layout-night-1050 em_bg">
+                                   dark:border-layout-night-1050 dark:em_bg">
                             <div
                                 v-if="text"
                                 class="text-layout-sun-1000 dark:text-layout-night-1000 p-3"

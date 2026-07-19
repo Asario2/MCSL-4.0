@@ -16,11 +16,27 @@ class GoogleController extends Controller
     /**
      * Schritt 1: Weiterleitung zu Google
      */
+    // public function redirectToGoogle()
+    // {
+    //     $redirectUri = $this->getRedirectUri();
+
+    //     // Dynamisch Redirect setzen
+    //     config(['services.google.redirect' => $redirectUri]);
+
+    //     return Socialite::driver('google')
+    //         ->scopes(['openid', 'profile', 'email'])
+    //         ->with(['prompt' => 'select_account'])
+    //         ->redirect();
+    // }
     public function redirectToGoogle()
     {
         $redirectUri = $this->getRedirectUri();
 
-        // Dynamisch Redirect setzen
+        \Log::info('Google Redirect', [
+            'host' => request()->getHost(),
+            'redirect' => $redirectUri,
+        ]);
+
         config(['services.google.redirect' => $redirectUri]);
 
         return Socialite::driver('google')
@@ -28,7 +44,6 @@ class GoogleController extends Controller
             ->with(['prompt' => 'select_account'])
             ->redirect();
     }
-
     /**
      * Schritt 2: Callback von Google
      */
@@ -134,6 +149,8 @@ class GoogleController extends Controller
             'www.marblefx.net',
             'www.asario.de',
             'www.monikadargies.de',
+            "www.paulnadler.marblefx.net",
+            "paulnadler.marblefx.net",
         ];
 
         if (!in_array($host, $allowedHosts)) {

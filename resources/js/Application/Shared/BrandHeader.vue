@@ -40,7 +40,7 @@
     <a href="/admin/dashboard"><daglogo :ab="'_dag' + this.GetLogin()"></daglogo></a>
     </div>
     <div v-else-if="GetSd() == 'pna'">
-    <a href="/admin/dashboard"><pnalogo :small="true" :ab="'_pna' + this.GetLogin()"></pnalogo></a>
+    <a href="/admin/dashboard"><pnalogo :small="true" :ab="this.GetLogin()"></pnalogo></a>
     </div>
 </template>
 
@@ -83,6 +83,11 @@ export default {
             default: null,
         },
     },
+    data() {
+        return {
+            mode: localStorage.theme || "light",
+        };
+    },
     mounted() {
 
   },
@@ -94,7 +99,10 @@ export default {
     GetLogin()
     {
         const url = location.href;
-        if(!url.includes("/login") && !url.includes("/forgot-password") && !url.includes("/register") && !url.includes("/email/verify") && !url.includes("reset-password") && !url.includes("/confirm-password") && !url.includes("/verify-email"))
+        if((!url.includes("/login") && !url.includes("/forgot-password") &&
+        !url.includes("/register") && !url.includes("/email/verify") &&
+        !url.includes("reset-password") && !url.includes("/confirm-password") &&
+        !url.includes("/verify-email")) && this.mode=='dark')
         {
             return "";
         }

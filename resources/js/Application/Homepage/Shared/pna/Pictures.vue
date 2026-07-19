@@ -9,7 +9,7 @@
     </div>
             <div @click="handleBodyClick">
             <div v-if="ocont?.id" class="p-4 bg-layout-sun-200 dark:bg-layout-night-200">
-
+                
                 <hgroup>
 
                 <h1 class="text-2xl font-bold">{{ decodeEntities(ocont?.slug) }}</h1>

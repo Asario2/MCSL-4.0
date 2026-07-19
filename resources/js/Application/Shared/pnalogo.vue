@@ -1,8 +1,9 @@
 <template>
+  <div class="w-full flex justify-center">
   <div
   :class="[
-        'relative w-full overflow-hidden',
-        small ? 'h-[70px]' : 'md:h-[180px]'
+        'relative w-full overflow-hidden max-w-6xl',
+        small ? 'h-[60px] ml-2' : 'md:h-[180px] '
     ]">
     <!-- Hintergrundbild -->
 <div
@@ -19,16 +20,14 @@
 
     <!-- Vordergrundbild -->
     <img
-        :class="[
-            'relative z-10 mx-auto',
-            small
-                ? 'h-[70px] w-auto'
-                : 'h-auto w-full md:w-auto md:h-[180px]'
-        ]"
+       class="relative z-10 w-full"
+    :class="small ? 'h-[60px]' : 'h-auto md:h-[180px]'"
         id="pna_logo"
-        :src="'/images/logos/pna_logo_'+ mode +'.png'"
+        :src="'/images/logos/pna_logo'+ ab2 +'.png'"
         alt="Paul Nadler Logo"
+
     />
+  </div>
   </div>
 </template>
 
@@ -56,8 +55,14 @@ export default {
             this.mod = /\/(login|register)(\/|$)/i.test(window.location.pathname)
     ? 'light'
     : localStorage.theme;
-                  this.mode =  this.mod ??  "";
-    },
+                  this.mode =  this.mod ??  "light";
+          return {
+            mode: localStorage.theme || "light",
+            ab2: this.GetLogin(),
+        }
+
+                },
+
     mounted() {
         if (typeof window === "undefined") return;
 
@@ -83,7 +88,22 @@ export default {
 
             timeline.to({}, { duration: 30 });
         });
+
+    },
+    methods:{
+GetLogin()
+    {
+        const url = location.href;
+        if((!url.includes("/login") && !url.includes("/forgot-password") &&
+        !url.includes("/register") && !url.includes("/email/verify") &&
+        !url.includes("reset-password") && !url.includes("/confirm-password") &&
+        !url.includes("/verify-email")) && this.mode=='dark')
+        {
+            return "";
+        }
+        return "l";
     }
+    },
 };
 </script>
 

@@ -76,13 +76,13 @@ const showingNavigationDropdown = ref(false);
                                         >
                                             Profile
                                         </DropdownLink>
-                                        <DropdownLink
-                                            :href="route('logout')"
-                                            method="post"
-                                            as="button"
-                                        >
-                                            Log Out
-                                        </DropdownLink>
+                                        <form @submit.prevent="logoutUser">
+                                            <button type="submit">
+                                                <dropdown-link>
+                                                    <b>Abmelden</b>
+                                                </dropdown-link>
+                                            </button>
+                                        </form>
                                     </template>
                                 </Dropdown>
                             </div>
@@ -167,13 +167,13 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('profile.edit')">
                                 Profile
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Log Out
-                            </ResponsiveNavLink>
+                            <form @submit.prevent="logoutUser">
+                    <button type="submit">
+                        <dropdown-link>
+                            <b>Abmelden</b>
+                        </dropdown-link>
+                    </button>
+                </form>
                         </div>
                     </div>
                 </div>

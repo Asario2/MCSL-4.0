@@ -113,8 +113,15 @@ EOT;
                     if ($ripdate_formatiert === $heute) {
                         $birthdayDate = Carbon::createFromFormat('d.m.Y', $geburtstag);
                         $ripDate      = Carbon::createFromFormat('d.m.Y', $ripdate);
-                        $age          = ceil($birthdayDate->diffInYears($ripDate));
-                        $old = $currentYear - $jahr;
+
+                        // Alter beim Tod
+                        $ageAtDeath = $birthdayDate->diffInYears($ripDate);
+
+                        // Vor wie vielen Jahren verstorben
+                        $yearsSinceDeath = $ripDate->diffInYears(Carbon::today());
+
+                        // Wie alt wäre die Person heute?
+                        $wouldBeAge = $birthdayDate->diffInYears(Carbon::today());
                         $this->info("🕯 {$vorname} {$nachname} hat heute Todestag! ({$age} Jahre)");
 
                         $grad = MCSL_GRAD(); // Header-HTML
@@ -124,13 +131,20 @@ EOT;
 <body>
 {$grad}
 <br>
-{$vorname} {$nachname} hat heute Todestag!<br /><br />
-Alter beim Todestag: {$age} Jahre<br />
-Diese Person währe jetzt {$old} Jahre alt<br />
-Verstorben am: {$ripdate}<br />
-Tel: {$telefon}<br />
-Mobil: {$handy}<br />
-Email: {$email}<br />
+
+<b>{$vorname} {$nachname}</b> hat heute Todestag. 🕯<br><br>
+
+Verstorben vor: <b>{$yearsSinceDeath} Jahren</b><br>
+Alter beim Tod: <b>{$ageAtDeath} Jahre</b><br>
+Wäre heute: <b>{$wouldBeAge} Jahre</b><br><br>
+
+Geboren: {$geburtstag}<br>
+Verstorben: {$ripdate}<br><br>
+
+Tel: {$telefon}<br>
+Mobil: {$handy}<br>
+Email: {$email}<br>
+
 </body>
 </html>
 EOT;

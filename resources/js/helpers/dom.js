@@ -91,20 +91,21 @@ export function CleanTab(rem) {
  * Subdomain / Projektkennung
  */
 export function SD(pn = '') {
+    // Hostname ohne www.
     if (typeof window === 'undefined') return '';
+    let subb = window.location.hostname.replace(/^www\./, '').split('.')[0];
 
-    let subb = window.location.hostname
-        .replace(/^www\./, '')
-        .split('.')[0];
-
+    // Mapping
     const pm = {
         ab: "Asarios Blog",
         dag: "Monika Dargies",
         mfx: "MarbleFX",
         mjs: "Mitja Schult",
-        chh: "Rechtsanwalt Christian Henning"
+        chh: "Rechtsanwalt Christian Henning",
+        pna: "Paul Nadler",
     };
 
+    // Switch-Mapping wie in PHP
     switch (subb) {
         case "asario":
             subb = "ab";
@@ -121,19 +122,30 @@ export function SD(pn = '') {
         case "ra-c-henning":
             subb = "chh";
             break;
+        case "paulnadler":
+            subb = "pna"
+        break;
         case "localhost":
-        case "test.mcs":
+		case "test.mcs":
         case "241":
         case "217":
             subb = "ab";
             break;
         default:
+            // bleibt wie es ist
             break;
     }
 
-    if (!subb) subb = "ab";
+    // Falls leer → Standard
+    if (!subb) {
+        subb = "ab";
+    }
 
-    if (!pn) return subb;
+    // Wenn kein Parameter: subdomain-key zurückgeben
+    if (!pn) {
+        return subb;
+    }
 
+    // Ansonsten den gemappten Namen zurückgeben
     return pm[subb] || subb;
 }

@@ -1,18 +1,18 @@
 <template>
     <div class="flex gap-2 flex-wrap">
-        <a :href="facebook" target="_blank" class="share-btn bg-blue-600">
+        <a href="facebook" target="_blank" class="share-btn bg-blue-600">
             <IconFacebook class="w-5 h-5"/>
         </a>
 
-        <a :href="twitter" target="_blank" class="share-btn bg-black">
+        <a href="twitter" target="_blank" class="share-btn bg-black">
             <IconX class="w-5 h-5"/>
         </a>
 
-        <a :href="telegram" target="_blank" class="share-btn bg-sky-500">
+        <a href="telegram" target="_blank" class="share-btn bg-sky-500">
             <IconTelegram class="w-5 h-5"/>
         </a>
 
-        <a :href="whatsapp" target="_blank" class="share-btn bg-green-500">
+        <a href="whatsapp" target="_blank" class="share-btn bg-green-500">
             <IconWhatsapp class="w-5 h-5"/>
         </a>
 
@@ -31,13 +31,13 @@
 
     <script>
     import { nextTick } from 'vue';
-    import { parse } from 'url';
+
     import IconShare from "@/Application/Components/Icons/IconShare.vue";
     import IconWhatsapp from "@/Application/Components/Icons/IconWhatsapp.vue";
     import IconTelegram from "@/Application/Components/Icons/IconTelegram.vue";
     import IconFacebook from "@/Application/Components/Icons/IconFacebook.vue";
     import IconX from "@/Application/Components/Icons/IconX.vue";
-    import { faL } from '@fortawesome/free-solid-svg-icons';
+    
     export default {
         components: {
                 IconShare,

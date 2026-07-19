@@ -71,7 +71,13 @@
                     :alt="$page.props.userdata.full_name"
                 /></link-header_mfx><br />
                 <hr />
-                <link-header_mfx :route-name="route('logout')" name="Abmelden" />
+                <form @submit.prevent="logoutUser">
+                    <button type="submit">
+                        <dropdown-link>
+                            <b>Abmelden</b>
+                        </dropdown-link>
+                    </button>
+                </form>
                 </div>
                 <template v-if="$page.props.userdata.user_id">
                   <!-- <link-header_mfx :route-name="route('applicationswitch')" name="Dashboard"></link-header_mfx> -->

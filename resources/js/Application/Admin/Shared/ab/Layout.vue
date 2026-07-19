@@ -14,7 +14,7 @@
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
+                            <div class="shrink-0 flex items-center justify-start w-full sm:w-auto sm:justify-center">
                                 <brand-header
                                     :route-name="route('admin.dashboard')"
                                     :brand_1="
@@ -291,12 +291,12 @@
                             Dashboard
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink as="button">
+                        <!-- <ResponsiveNavLink as="button">
                             <button-change-mode
                                 :mode="mode"
                                 @changeMode="changeMode"
                             ></button-change-mode>
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -540,5 +540,7 @@ async mounted() {
 
 };
 </script>
+<style>
 
+</style>
 

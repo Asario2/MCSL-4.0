@@ -48,7 +48,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 
     use App\Services\SimpleMailService;
-
+use App\Console\Commands\ReturnGenerateSitemap;
 use App\Models\User;
 use App\Http\Middleware\CheckSubdomain;
 use App\Http\Controllers\TablesController;
@@ -95,21 +95,47 @@ GlobalController::SetDomain();
         //     dd('ROUTE HIT', $url, $route, $page);
         // })->name("countpixel");
         Route::permanentRedirect('/home', '/');
+        Route::get('/sitemap_v3.xml', function () {
+
+        $xml = app(ReturnGenerateSitemap::class)->handle();
+
+            return response($xml)
+                ->header('Content-Type', 'application/xml');
+        });
         Route::post('/api/log-js-error', function (\Illuminate\Http\Request $request) {
 
-            \Log::error('CE', [
-                'user_id'   => auth()->id(),
-                'url'       => $request->fullUrl(),
-                'path'      => $request->path(),
-                'referer'   => $request->header('referer'),
-                'ip'        => $request->ip(),
-                'method'    => $request->method(),
-                'userAgent' => $request->userAgent(),
-                'payload'   => $request->all(),
-            ]);
+    $ua = strtolower($request->userAgent() ?? '');
 
-            return response()->json(['ok' => true]);
-        });
+    // Bots, Crawler, Scanner ignorieren
+    if (preg_match('/bot|crawl|spider|bingbot|googlebot|slurp|duckduckbot|yandex|baiduspider|facebookexternalhit|twitterbot|uptimerobot|headless|curl|wget/i', $ua)) {
+        return response()->noContent();
+    }
+
+    // Nur Requests akzeptieren, die von der eigenen Website kommen
+    $referer = $request->header('referer', '');
+
+    if (
+        empty($referer) ||
+        !str_contains(parse_url($referer, PHP_URL_HOST) ?? '', $request->getHost())
+    ) {
+        return response()->noContent();
+    }
+
+    \Log::error('[CE]', [
+        'user_id'   => auth()->id(),
+        'url'       => $request->fullUrl(),
+        'path'      => $request->path(),
+        'referer'   => $referer,
+        'ip'        => $request->ip(),
+        'method'    => $request->method(),
+        'userAgent' => $request->userAgent(),
+        'payload'   => $request->all(),
+    ]);
+
+    return response()->json([
+        'ok' => true,
+    ]);
+});
         Route::get("/api/mcslpoints/{users_id?}",[MCSLPointsController::class,"GetCount"])->name("api.mcslpoints");
         Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
@@ -698,7 +724,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
         # TABLEDIFF
         Route::get('/debug-table-diff/{domain}/{table}', [SQLUpdateController::class, 'debugTableDiff']);
-        Route::get('/api/table-diff/{table}/{domain}', [SQLUpdateController::class, 'diffTable']);
+        Route::get('/api/mysqlops/table-diff/{table}/{domain}', [SQLUpdateController::class, 'diffTable']);
 
 
 

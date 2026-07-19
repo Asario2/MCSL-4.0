@@ -174,8 +174,8 @@
         'SitemapGenerator' => 'Generate Sitemap for Google',
     ];
     public static array $regdom =   ['ab'=>true];
-    public static array $domss =   ['ab',"mfx","dag","chh"];
-    public static array $connect_dbname = ["ab"=>"mariadb","dag"=>"mariadb_dag","mfx"=>"mariadb_mfx","chh"=>"mariadb_chh"];
+    public static array $domss =   ['ab',"mfx","dag","chh","pna"];
+    public static array $connect_dbname = ["ab"=>"mariadb","dag"=>"mariadb_dag","mfx"=>"mariadb_mfx","chh"=>"mariadb_chh","pna"=>"mariadb_pna"];
     public static array $loginpages = ["login","register"];
     /*
 
@@ -244,7 +244,7 @@
 
         public static array $impath = ["users"=>'profile_photo_path','default'=>"image_path"];
 
-        public static array $dom = ["ab"=>'www.asario.de','mfx'=>"www.marblefx.net",'dag'=>"www.monikadargies.de",'chh'=>"www.ra-c-henning.de",'mjs'=>"mjs.marblefx.net"];
+        public static array $dom = ["ab"=>'www.asario.de','mfx'=>"www.marblefx.net",'dag'=>"www.monikadargies.de",'chh'=>"www.ra-c-henning.de",'mjs'=>"mjs.marblefx.net","pna"=>"paulnadler@marblefx.net"];
 
         //
         // RSS FEEDS
@@ -507,6 +507,9 @@ public static array $image_sizes =
     21 => 'ab_users_rights_xkis_DumpGItDataBase',
     22 => 'ab_contacts_hasyear',
     23 => 'ab_users_config_cnt_numrows',
+    24 => 'ab_image_categories_updated_at',
+    25 => 'pna_blog_authors_updated_at',
+    26 => 'ab_contacts_updated_at',
 ];
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",
@@ -514,9 +517,11 @@ public static array $doms = [
     "chh_lh" => 'http://chh,test.mcs',
     "chh_ol" => 'https://www.ra-c-henning.de',
     "dag_lh"=>"http://dag.test.mcs",
+    "pna_lh"=>"http://pna.test.mcs",
     "ab_ol"=>"https://www.asario.de",
     "mfx_ol"=>"https://www.marblefx.de",
     "dag_ol"=>"https://www.monikadargies.de",
+    "pna_ol"=>"https://paulnadler.marblefx.net",
 ];
 public static array $private_tables = [
     "comtacts","ausgaben"
@@ -526,6 +531,7 @@ public static array $mariaDBs = [
     "dag"=>"mariadb_dag",
     "mfx"=>"mariadb_mfx",
     "chh"=>"mariadb_chh",
+    "pna"=>"mariadb_pna"
 ];
     public static array $nostats = [
     '/admin',

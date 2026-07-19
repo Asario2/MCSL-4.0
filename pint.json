@@ -1,0 +1,9 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "method_argument_space": true,
+        "binary_operator_spaces": {
+            "default": "single_space"
+        }
+    }
+}

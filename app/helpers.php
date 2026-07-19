@@ -135,11 +135,28 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
             return "<a href='dump://parameter1/parameter2'>Start Dump</a>";
         }
     }
+    if(!function_exists("SD_DOMM"))
+    {
+        function SD_DOMM()
+        {
+
+
+        $route = request()->route();
+        if ($route) {
+                foreach ($route->gatherMiddleware() as $middleware) {
+                    if (str_starts_with($middleware, 'auth')) {
+                        return 'ab';
+                    }
+                }
+            }
+        return SD();
+    }
+    }
 if (!function_exists('Notify')) {
 
     function Notify()
     {
-        $entries = DB::connection("mariadb")->table('notifications')->get();
+        $entries = DB::connection("mariadb")->table('notifications')->where("pub","1")->get();
 
         $output = '';
         $xx = '';

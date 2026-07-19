@@ -16,6 +16,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.24",
         "laravel/tinker": "^2.9",
+        "league/csv": "^9.28",
+        "nikic/php-parser": "^5.8",
         "rap2hpoutre/laravel-log-viewer": "^2.4",
         "reinink/remember-query-strings": "^0.1.2",
         "scify/laravel-cookies-consent": "^4.1",
@@ -29,18 +31,20 @@
         "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.23",
         "laravel-lang/lang": "^15.28",
-        "laravel/pint": "^1.13",
+        "laravel/pint": "^1.29",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^10.5",
+        "rector/rector": "^2.5",
         "spatie/laravel-ignition": "^2.4"
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "CompactPHP\\": "tools/src/"
         },
 		 "files": [
             "app/helpers.php"

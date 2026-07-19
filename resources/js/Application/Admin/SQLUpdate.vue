@@ -31,6 +31,7 @@
               <option value="chh">Christian Henning</option>
               <option value="mfx">MarbleFX</option>
               <option value="dag">Monika Dargies</option>
+              <option value="pna">Paul Nadler</option>
             </select>
 
             <button
@@ -204,11 +205,15 @@
             </td>
             <!-- local change-->
             <td class="px-3 py-2  break-words whitespace-normal">
-                <pre class="whitespace-pre-wrap">"{{ br2nl(change.local) }}"</pre>
+                <pre class="whitespace-pre-wrap">
+                "{{ br2nl(change.local) }}"
+                </pre>
             </td>
             <!-- online change -->
             <td class="px-3 py-2  break-words whitespace-normal">
-              <pre class="whitespace-pre-wrap">"{{ br2nl(change.online) }}"</pre>
+              <pre class="whitespace-pre-wrap">
+                "{{ br2nl(change.online) }}"
+                </pre>
             </td>
             <td class="px-3 py-2  break-words whitespace-normal">
                 {{ row.name }}
@@ -269,7 +274,7 @@
 
 <script>
 import axios from "axios";
-import { toastBus } from '@/utils/toastBus';
+// import { toastBus } from '@/utils/toastBus';
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue"
 import IconMagni from "@/Application/Components/Icons/IconMagni.vue";
 import ErrorSVG from "@/Application/Components/Icons/ErrorSVG.vue";
@@ -338,8 +343,11 @@ export default {
         const res = await axios.get("/api/mysqlops/tables/" + this.domain);
         this.localTables = res.data.local;
         this.onlineTables = res.data.online;
+
+    console.table(this.allTables);   // <-- HIER
+    console.log(this.allTables);
       } catch (e) {
-        const q = e     + " <a href='/admin/laravel_log'>Zum Log</a>";
+        const q = e     + " <a href='/admin/laravel_log' target='_blank'>Zum Log</a>";
         window.toastBus.emit({type:'error',message: q, duration:30000 });
         console.error("Fehler beim Laden:", e);
       }
@@ -352,6 +360,7 @@ export default {
         this.loadTables();
     },
     async loadDiff(table) {
+
     if (!table || !table.name) return;
 
 
@@ -359,9 +368,9 @@ export default {
     this.selectedTable = table.name;
 
     try {
-        const res = await axios.get(`/api/table-diff/${table.name}/${this.domain}`);
+        const res = await axios.get(`/api/mysqlops/table-diff/${table.name}/${this.domain}`);
         this.diffData = res.data.diff || [];
-
+        console.log("TA ",res.data.diff);
         if (this.diffData.length) {
         this.showDiffModal = true; // 👈 MODAL AUF
         }
@@ -372,10 +381,7 @@ export default {
 
     async syncTables(direction) {
       try {
-        const tablesToSync =
-          direction === "local_to_online"
-            ? this.allTables.filter(t => t.status_local === "green" || t.status_local === "red").map(t => t.name)
-            : this.allTables.filter(t => t.status_online === "green"|| t.status_local === "red").map(t => t.name);
+        const tablesToSync = this.filteredTables.map(t => t.name);
 
         if (!tablesToSync.length) {
           this.syncStatus = "Keine Tabellen zum Sync vorhanden.";
@@ -390,6 +396,8 @@ export default {
             : "<span class='text-purple-700 font-bold'>Sync Online → Local</span> abgeschlossen!";
 
         await this.loadTables();
+
+        console.table(this.allTables);
       } catch (e) {
         console.error("Sync Fehler:", e);
         this.syncStatus = "Fehler beim Sync: " + e.message;
@@ -411,6 +419,7 @@ export default {
     }
 
     await this.loadTables();
+    console.table(this.allTables);
 
     // Tabellen für Local → Online (Local grün, Online rot)
     const localToOnline = this.allTables
@@ -422,7 +431,7 @@ export default {
     }
 
     await this.loadTables();
-
+    console.table(this.allTables);
     this.syncStatus = `SyncToAll abgeschlossen!<br />
     <span class='text-blue-400 font-bold'>Local→Online:</span> ${localToOnline.length} Tabellen.<br />
     <span class='text-purple-700 font-bold'>Online→Local:</span> ${onlineToLocal.length} Tabellen.<br />`;
@@ -448,6 +457,7 @@ export default {
 },
 
     async syncDiff(direction) {
+
       if (!this.selectedTable) return;
       try {
         await axios.post("/api/mysqlops/sync", { tables: [this.selectedTable], direction });
@@ -461,14 +471,14 @@ export default {
     },
   },
   async mounted() {
-    this.loadTables();
-        const greenTables = this.allTables.filter(
-    t => t.status_local === 'green' && t.status_online === 'green'
-    );
+    // this.loadTables();
+    //     const greenTables = this.allTables.filter(
+    // t => t.status_local === 'green' && t.status_online === 'green'
+    // );
 
-    if (greenTables.length) {
-    await this.loadDiff(greenTables[0]); // öffnet Modal automatisch
-    }
+    // if (greenTables.length) {
+    // await this.loadDiff(greenTables[0]); // öffnet Modal automatisch
+    // }
     },
 };
 </script>

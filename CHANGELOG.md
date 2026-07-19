@@ -339,3 +339,7 @@
 ![Version](https://img.shields.io/badge/version-5.93.1-orange) Feature - Resize Landing Page Image (#538)  
 ![Version](https://img.shields.io/badge/version-5.94.1-orange) Bug in Darkmode Handling (#543)  
 ![Version](https://img.shields.io/badge/version-5.95.7-orange) Bug - fixed bug in cookie banner (#542)  
+![Version](https://img.shields.io/badge/version-5.96.3-orange) Feature - Show and hide on Socialbuttons (#539)  
+![Version](https://img.shields.io/badge/version-5.97.7-orange) Tailwind CSS Bug (#544)  
+![Version](https://img.shields.io/badge/version-5.98.0-orange) Hotfix - add pub check on pictures_cat page (#545)  
+![Version](https://img.shields.io/badge/version-5.99.7-orange) Hotfix - MailController bug (#546)  

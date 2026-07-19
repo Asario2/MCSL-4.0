@@ -46,12 +46,15 @@ class CountPixelController extends Controller
     ];
     public function track(Request $request,$url, $route, $page = null)
     {
+        if (preg_match('/^[A-Za-z0-9+\/=]+$/', $url)) {
+            $decoded = base64_decode($url, true);
 
-        $url = rawurldecode(
-            base64_decode($url)
-        );
+            if ($decoded !== false) {
+                $url = rawurldecode($decoded);
+            }
+        }
 
-        try {
+
 
             $userAgent = strtolower($request->userAgent() ?? '');
 
@@ -111,6 +114,37 @@ class CountPixelController extends Controller
             }
 
             $rawUrl = $this->SH($url) ?? '/';
+
+            // URL absichern
+            if (!is_string($rawUrl) || $rawUrl === '') {
+                return $this->pixelResponse();
+            }
+
+            // Muss gültiges UTF-8 sein
+            if (!mb_check_encoding($rawUrl, 'UTF-8')) {
+
+                Log::warning('COUNTPIXEL INVALID UTF8 URL', [
+                    'ip'         => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                    'url_hex'    => bin2hex($rawUrl),
+                ]);
+
+                return $this->pixelResponse();
+            }
+
+            // Steuerzeichen entfernen
+            $rawUrl = preg_replace('/[\x00-\x1F\x7F]/u', '', $rawUrl);
+
+            // ungültige UTF8-Zeichen entfernen
+            $rawUrl = @iconv('UTF-8', 'UTF-8//IGNORE', $rawUrl);
+
+            // Leer?
+            if ($rawUrl === '') {
+                return $this->pixelResponse();
+            }
+
+            // Maximale Länge
+            $rawUrl = mb_substr($rawUrl, 0, 1024);
 
             // \Log::info('TRACK URL', [
             //     'rawUrl' => $rawUrl
@@ -217,33 +251,41 @@ class CountPixelController extends Controller
                 $ip = implode(':', $parts);
             }
 
-            \Log::info('SAVE PAGEVIEW SUCCESS', [
-                'dom'   => SD(),
-                'url'   => $rawUrl,
-                'route' => $routeName,
-                'ip'    => $ip,
-            ]);
 
-            PageView::create([
-                'dom'        => SD(),
-                   'url'        => $rawUrl,
-                'ip'         => $ip,
-                'visited_at' => now(),
-            ]);
+
+            try {
+
+    PageView::create([
+        'dom'        => SD(),
+        'url'        => $rawUrl,
+        'ip'         => $ip,
+        'visited_at' => now(),
+    ]);
+
+} catch (\Throwable $e) {
+
+    Log::warning('COUNTPIXEL INSERT FAILED', [
+        'message'    => $e->getMessage(),
+        'ip'         => $ip,
+        'url'        => $rawUrl,
+        'url_hex'    => bin2hex($rawUrl),
+        'user_agent' => $request->userAgent(),
+    ]);
+}
 
             // \Log::info('TRACK SUCCESS');
 
-        } catch (\Throwable $e) {
+            // } catch (\Throwable $e) {
 
-            \Log::error('COUNTPIXEL EXCEPTION', [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
-                "url"=>$rawUrl,
-                "visited_at"=>now(),
-            ]);
-        }
+            //     \Log::error('COUNTPIXEL EXCEPTION', [
+            //         'message' => $e->getMessage(),
+            //         'file' => $e->getFile(),
+            //         'line' => $e->getLine(),
+            //         'trace' => $e->getTraceAsString(),
+            //         "url"=>$rawUrl,
+            //         "visited_at"=>now(),
+            //     ]);
+            // }
         // \Log::info('FINAL ROWS', [
         //     'count' => $urlRows->count(),
         //     'picures_show' => $urlRows
@@ -252,6 +294,7 @@ class CountPixelController extends Controller
         //         ->all()
         // ]);
         return $this->pixelResponse();
+
     }
 
     public static function o404()
@@ -380,6 +423,15 @@ class CountPixelController extends Controller
 
     public function SH($str)
     {
+         if (!is_string($str) || $str === '') {
+                return '/';
+            }
+
+            if (!mb_check_encoding($str, 'UTF-8')) {
+                return '/';
+            }
+
+            $str = @iconv('UTF-8', 'UTF-8//IGNORE', $str);
         if (!$str) return '/';
 
         $decoded = rawurldecode($str);

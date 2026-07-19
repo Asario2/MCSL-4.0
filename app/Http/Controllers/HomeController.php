@@ -404,7 +404,7 @@ class HomeController extends Controller
     public function home_images_index()
     {
         $table = "image_categories";
-        $data = DB::table($table)->orderBy("shortname","ASC")->get();
+        $data = DB::table($table)->where("pub","1")->orderBy("shortname","ASC")->get();
         return Inertia::render('Homepage/PicturesCat', [
            'data'=>$data,
 

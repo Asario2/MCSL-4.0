@@ -5,11 +5,12 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Routing\Exceptions\InvalidSignatureException;
-
 use App\Http\Middleware\CheckRight;
 use App\Http\Middleware\RequestInspectionMiddleware;
 // use App\Http\Middleware\DetectTenant;
 use App\Http\Middleware\CheckSubd;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
 
@@ -80,10 +81,25 @@ return Application::configure(basePath: dirname(__DIR__))
     // -------------------------------------------------
     // Exceptions
     // -------------------------------------------------
-    ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (InvalidSignatureException $e, Request $request) {
-            return redirect()->intended(route('home.invalid_signature'));
-        });
-    })
+    // -------------------------------------------------
+// Exceptions
+// -------------------------------------------------
+->withExceptions(function (Exceptions $exceptions) {
+
+    $exceptions->render(function (InvalidSignatureException $e, Request $request) {
+        return redirect()->intended(route('home.invalid_signature'));
+    });
+
+    // 404 -> normal behandeln
+    $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+        return null;
+    });
+
+    // 405 -> normal behandeln
+    $exceptions->render(function (MethodNotAllowedHttpException $e, Request $request) {
+        return null;
+    });
+
+})
 
     ->create();

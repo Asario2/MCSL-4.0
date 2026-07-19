@@ -20,22 +20,21 @@
             v-model="form.search"
             class="w-full"
         />
-      <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
-        <table class="min-w-full text-sm">
+      <div class="overflow-x-auto rounded-lg border !font-sans border-gray-200 dark:border-gray-700">
+        <table class="min-w-full text-sm sm_table">
           <thead class="bg-gray-100 dark:bg-gray-800">
             <tr>
-              <th class="px-3 py-2 text-left">Datum</th>
-              <th class="px-3 py-2 text-left">DOM</th>
-              <th class="px-3 py-2 text-left">IP</th>
-              <th class="px-3 py-2 text-left">Number</th>
-              <th class="px-3 py-2 text-left">URL</th>
-              <th class="px-3 py-2 text-left">Gesperrt bis</th>
-              <th class="px-3 py-2 text-left">Method</th>
-              <th class="px-3 py-2 text-left">Score</th>
-              <th class="px-3 py-2 text-left">Matches</th>
-              <th class="px-3 py-2 text-left">Agent</th>
-              <th class="px-3 py-2 text-left"></th>
-
+                <SortableHeader field="created_at" title="Datum" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="dom" title="DOM" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="ip" title="IP" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="violations" title="Count" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="url" title="URL" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="banned_until" title="Gesperrt bis" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="method" title="Method" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="score" title="Score" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="matches" title="Matches" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <SortableHeader field="agent" title="Agent" :sort-key="sortKey" :sort-direction="sortDirection" @sort="sortBy"/>
+                <th></th>
             </tr>
           </thead>
           <tbody>
@@ -44,27 +43,27 @@
               :key="index"
               class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
-              <td class="px-3 py-2 whitespace-nowrap">{{ row.created_at }}</td>
-              <td class="px-3 py-2 font-mono"><img :src="'/images/_' + row.dom + '/web/alogo.png'" class='w-4 h-4'/></td>
-              <td class="px-3 py-2 font-mono">{{ row.ip }}</td>
-              <td class="px-3 py-2 font-mono">{{ row.violations }}</td>
-              <td class="px-3 py-2 truncate max-w-xs">
+              <td class="px-1 py-2 whitespace-nowrap">{{ formatDateTime(row.created_at) }}</td>
+              <td class="px-1 py-2 font-mono"><img :src="'/images/_' + row.dom + '/web/alogo.png'" class='w-4 h-4'/></td>
+              <td class="px-1 py-2 font-mono">{{ row.ip }}</td>
+              <td class="px-1 py-2 font-mono">{{ row.violations }}</td>
+              <td class="px-1 py-2 truncate max-w-xs">
                 <button
                     v-if="row.url"
                     @click="openModal('URL', row.url)"
                     class="text-indigo-600 dark:text-indigo-400 hover:underline text-left"
                 >
-                    {{ row.url.substr(0,29) }}
+                    {{ row.url.substr(0,20) }}
                 </button>
                 <span v-else class="text-gray-400">–</span>
               </td>
 
-              <td class="px-3 py-2 whitespace-nowrap">{{ formatDateTime(row.banned_until) }}</td>
-              <td class="px-3 py-2">{{ row.method }}</td>
-              <td class="px-3 py-2 font-semibold" :class="row.score > 0 ? 'text-red-500' : ''">
+              <td class="px-1 py-2 whitespace-nowrap">{{ formatDateTime(row.banned_until) }}</td>
+              <td class="px-1 py-2">{{ row.method }}</td>
+              <td class="px-1 py-2 font-semibold" :class="row.score > 0 ? 'text-red-500' : ''">
                 {{ row.score }}
               </td>
-              <td class="px-3 py-2">
+              <td class="px-1 py-2">
                 <button
                   v-if="row.matches"
                   @click="openModal('Matches', row.matches)"
@@ -74,7 +73,7 @@
                 </button>
                 <span v-else class="text-gray-400">–</span>
               </td>
-              <td class="px-3 py-2 truncate max-w-xs">
+              <td class="px-1 py-2 truncate max-w-xs">
                 <button
                   v-if="row.agent"
                   @click="openModal('Agent', row.agent)"
@@ -85,7 +84,7 @@
                 <span v-else class="text-gray-400">–</span>
               </td>
               <td>
-                <delhackinglog :id="row.id"></delhackinglog>
+                <delhackinglog :id="row.id" table="xgen_hackinglog"></delhackinglog>
               </td>
             </tr>
           </tbody>
@@ -117,7 +116,7 @@
     <div class="flex flex-wrap gap-2 mt-4">
 
     <button
-        class="px-3 py-1 border rounded"
+        class="px-1 py-1 border rounded"
         :disabled="currentPage === 1"
         @click="currentPage--"
     >
@@ -131,7 +130,7 @@
         :disabled="page === '...'"
         @click="page !== '...' && (currentPage = page)"
 
-        class="px-3 py-1 border rounded"
+        class="px-1 py-1 border rounded"
 
         :class="{
             'bg-blue-500 text-white': currentPage === page,
@@ -142,7 +141,7 @@
     </button>
 
     <button
-        class="px-3 py-1 border rounded"
+        class="px-1 py-1 border rounded"
         :disabled="currentPage >= totalPages"
         @click="currentPage++"
     >
@@ -159,6 +158,7 @@ import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import delhackinglog from "@/Application/Admin/Shared/delHackingLog.vue"
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
+import SortableHeader from "@/Application/Components/Lists/SortableHeader.vue";
 export default {
   name: 'RequestLogTable',
   components: {
@@ -167,7 +167,7 @@ export default {
     MetaHeader,
     Breadcrumb,
     SearchFilter,
-
+    SortableHeader,
   },
   props: {
     tables: {
@@ -189,7 +189,9 @@ export default {
 
         form: {
             search: ''
-        }
+        },
+    sortKey: 'created_at',
+    sortDirection: 'desc',
     }
   },
     watch: {
@@ -201,25 +203,57 @@ export default {
 
     filteredLogs() {
 
-        if (!this.form.search) {
-            return this.tables;
+        let rows = this.tables;
+
+        // Suche
+        if (this.form.search) {
+
+            const s = this.form.search.toLowerCase();
+
+            rows = rows.filter(row => {
+
+                return (
+                    String(row.id || '').toLowerCase().includes(s) ||
+                    String(row.ip || '').toLowerCase().includes(s) ||
+                    String(row.url || '').toLowerCase().includes(s) ||
+                    String(row.dom || '').toLowerCase().includes(s) ||
+                    String(row.matches || '').toLowerCase().includes(s) ||
+                    String(row.method || '').toLowerCase().includes(s) ||
+                    String(row.agent || '').toLowerCase().includes(s) ||
+                    String(row.score || '').toLowerCase().includes(s) ||
+                    String(row.violations || '').toLowerCase().includes(s) ||
+                    String(row.created_at || '').toLowerCase().includes(s)
+                );
+
+            });
+
         }
 
-        const s = this.form.search.toLowerCase();
+        // Sortieren
+        return [...rows].sort((a, b) => {
 
-        return this.tables.filter(row => {
+            let av = a[this.sortKey];
+            let bv = b[this.sortKey];
 
-            return (
-                String(row.id || '').toLowerCase().includes(s) ||
-                String(row.ip || '').toLowerCase().includes(s) ||
-                String(row.url || '').toLowerCase().includes(s) ||
-                String(row.dom || '').toLowerCase().includes(s) ||
-                String(row.method || '').toLowerCase().includes(s) ||
-                String(row.agent || '').toLowerCase().includes(s) ||
-                String(row.score || '').toLowerCase().includes(s) ||
-                String(row.violations || '').toLowerCase().includes(s) ||
-                String(row.created_at || '').toLowerCase().includes(s)
-            );
+            av = this.sortValue(av);
+            bv = this.sortValue(bv);
+
+            // Zahlen
+            if (!isNaN(av) && !isNaN(bv)) {
+                av = Number(av);
+                bv = Number(bv);
+            }
+
+            // Datum
+            if (this.sortKey === 'created_at' || this.sortKey === 'banned_until') {
+                av = new Date(av).getTime();
+                bv = new Date(bv).getTime();
+            }
+
+            if (av < bv) return this.sortDirection === 'asc' ? -1 : 1;
+            if (av > bv) return this.sortDirection === 'asc' ? 1 : -1;
+
+            return 0;
 
         });
 
@@ -298,14 +332,43 @@ mounted() {
     console.log('HackingLog mounted');
 },
   methods: {
-  formatDateTime(datetime) {
-    if (!datetime) return "";
+    sortBy(field) {
 
-    const [datePart, timePart] = datetime.split(" ");
-    const [year, month, day] = datePart.split("-");
+        if (this.sortKey === field) {
 
-    return `${day}.${month}.${year} ${timePart}`;
-},
+            this.sortDirection =
+                this.sortDirection === 'asc'
+                    ? 'desc'
+                    : 'asc';
+
+        } else {
+
+            this.sortKey = field;
+            this.sortDirection = 'asc';
+
+        }
+
+    },
+
+    sortValue(value) {
+
+        if (value === null || value === undefined)
+            return '';
+
+        if (typeof value === 'number')
+            return value;
+
+        return String(value).toLowerCase();
+
+    },
+    formatDateTime(datetime) {
+        if (!datetime) return "";
+
+        const [datePart, timePart] = datetime.split(" ");
+        const [year, month, day] = datePart.split("-");
+
+        return `${day}.${month}.${year} ${timePart}`;
+    },
     openModal(title, content) {
       this.modalTitle = title
 
@@ -328,3 +391,8 @@ mounted() {
   },
 }
 </script>
+<style>
+.sm_table TD{
+    font-family:Arial !important;
+}
+</style>

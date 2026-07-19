@@ -426,12 +426,12 @@ $mailPassword = env('MAIL_PASSWORD');
 
             \Log::info("res: ", (array) $res_alt);
 
-            if (empty($res_alt->uhash))
+            if (empty($res_alt->uhash) && !empty($res_alt->id))
             {
                 $uhash = $this->randomString64();
 
                 DB::table('contacts')
-                    ->where('id', $res_alt->id)
+                    ->where('id', @$res_alt->id)
                     ->update([
                         'uhash' => $uhash
                     ]);

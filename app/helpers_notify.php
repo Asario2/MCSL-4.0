@@ -18,8 +18,8 @@ if(!function_exists("DUMP_DB"))
     {
         function Notify()
         {
-            
-            $entries = DB::table("notifications")->get();
+
+            $entries = DB::table("notifications")->where("pub","1")->get();
             foreach($entries as $entry)
             {
                 echo "<h3>".$entry['name']."</h3><br />";

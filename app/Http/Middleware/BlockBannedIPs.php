@@ -40,15 +40,7 @@ class BlockBannedIPs
                 ->format('d.m.Y H:i:s');
 
 
-            // Optional: neuen Log-Eintrag erstellen, dass geblockt wurde
-            // $this->hackinglog->logHit(
-            //     $ip,
-            //     $request,
-            //     $this->relog->getScore($ip,$request), // Score 0, da nur Ban-Check
-            //     [['source'=>'banned_check','pattern'=>'active ban','value'=>'IP blocked']]
-            // );
-
-            abort(403, "Request blocked. IP banned until {$until}");
+           abort(403, "Request blocked. IP banned until {$until}");
         }
 
         return $next($request);

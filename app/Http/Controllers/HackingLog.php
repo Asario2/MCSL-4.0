@@ -42,7 +42,8 @@ class hackinglog extends Controller
 
             )->orderBy("id","DESC")->get();
             $data->transform(function ($item) {
-                $item->created_at = date("d.m.Y H:i:s", strtotime($item->created_at));
+                // $item->created_at = date("d.m.Y H:i:s", strtotime($item->created_at));
+                // $item->banned_untill = date("d.m.Y H:i:s", strtotime($item->banned_untill));
                 $item->url = rawurldecode($item->url);
                 return $item;
             });
@@ -53,24 +54,24 @@ class hackinglog extends Controller
             //     ],
             // ]));
 
-$data = $data->map(function ($row) {
+            $data = $data->map(function ($row) {
 
-    return collect($row)->map(function ($value) {
+                return collect($row)->map(function ($value) {
 
-        if (is_string($value)) {
+                    if (is_string($value)) {
 
-            return iconv(
-                'UTF-8',
-                'UTF-8//IGNORE',
-                $value
-            );
-        }
+                        return iconv(
+                            'UTF-8',
+                            'UTF-8//IGNORE',
+                            $value
+                        );
+                    }
 
-        return $value;
+                    return $value;
 
-    });
+                });
 
-});
+            });
 
             return Inertia::render('Admin/HackingLog', [
                 'tables' => $data->toArray(),

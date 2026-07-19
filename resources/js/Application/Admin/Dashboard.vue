@@ -48,7 +48,7 @@
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
                 title="Kontakte"
                 :routeName="route('admin.kontakte')"
-                linkName="KontaktFe verwalten"
+                linkName="Kontakte verwalten"
                 target="_self"
                 :withIcon="true"
                 icon="IconContacts"

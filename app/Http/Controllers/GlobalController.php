@@ -81,10 +81,9 @@ class GlobalController extends Controller
         }
          elseif(SD() === "pna"){
             config(['database.default' => 'mariadb_pna']);
-            \Log::info("PNA FOUND");
+
         }
         else {
-    \Log::info("mariadb FOUND");
         config(['database.default' => 'mariadb']);
         }
         //     if ($subdomain == 'mfx') {

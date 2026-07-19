@@ -404,6 +404,7 @@ export default {
         if (typeof window !== "undefined") {
             this.mode = localStorage.theme || "";
         }
+
     },
     methods: {
         changeMode(value) {

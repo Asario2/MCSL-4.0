@@ -287,7 +287,13 @@ createInertiaApp({
 
         app.config.errorHandler = (err, instance, info) => {
 
+            console.group("Vue Error");
             console.error(err);
+            console.log("Info:", info);
+            console.log("Component:", instance?.$?.type?.name);
+            console.log("File:", instance?.$?.type?.__file);
+            console.log(instance);
+            console.groupEnd();
 
             axios.post('/api/log-js-error', {
                 message: err?.message || String(err),

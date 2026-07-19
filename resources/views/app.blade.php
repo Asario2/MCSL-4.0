@@ -22,7 +22,7 @@ $ahost = request()->getHost();
 $chost = request()->getSchemeAndHttpHost();
 
 $glo = new GlobalController();
-
+$subdomain2 = SD_DOMM();
 if (!file_exists(public_path($favicon))) {
     $favicon = "/images/favicon_default.png";
 }
@@ -196,7 +196,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
     >
 
     <link
-        href="/css/tailw/{{ $subdomain ?? 'default' }}.css?time={{ time() }}"
+        href="/css/tailw/{{ $subdomain2 ?? 'default' }}.css?time={{ time() }}"
         rel="stylesheet"
     >
 

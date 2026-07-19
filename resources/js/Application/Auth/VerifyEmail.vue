@@ -22,13 +22,13 @@
 
                 <input-group>
                     <input-container :full-width="true">
-                        <display-hyperlink
-                            :href="route('logout')"
-                            method="post"
-                            display-type="display"
-                        >
-                            Abmelden</display-hyperlink
-                        >
+                       <form @submit.prevent="logoutUser">
+                    <button type="submit">
+                        <dropdown-link>
+                            <b>Abmelden</b>
+                        </dropdown-link>
+                    </button>
+                </form>
                     </input-container>
                 </input-group>
             </template>

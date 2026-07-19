@@ -14,13 +14,13 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Artisan;
 
 class CSVController extends Controller
 {
     public function importContacts(Request $request)
 {
-    
+
 
     $uploadedFile = $request->file('fileup');
      \Log::info('CSV Upload Request', [
@@ -494,6 +494,7 @@ public function saveImportedContacts(Request $request)
     // \Log::info("===== ENDE saveImportedContacts =====");
     // \Log::info("Neue Datensätze: $new ||| Vorhandene Datensätze: $dup ||| Letzte ID: $id");
 
+    Artisan::call('email:hash');
     return response()->json([
         'type' => 'success',
         'message' => 'Kontakte gespeichert'
