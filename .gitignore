@@ -91,3 +91,23 @@ buildcss.js
 resources/js/Application/Components/Social/old_share.vue
 tailwind_colors_pna.js
 app/Console/Commands/resimgz_pna.php
+
+# fix js files
+# node_modules komplett ignorieren
+node_modules/
+
+# Diese Dateien trotzdem erlauben
+!node_modules/@inertiajs/
+!node_modules/@inertiajs/core/
+!node_modules/@inertiajs/core/dist/
+!node_modules/@inertiajs/core/dist/index.esm.js
+!node_modules/@inertiajs/core/dist/index.js
+
+!node_modules/.vite/
+!node_modules/.vite/deps/
+!node_modules/.vite/deps/@inertiajs_vue3.js
+
+!node_modules/@vue/
+!node_modules/@vue/shared/
+!node_modules/@vue/shared/dist/
+!node_modules/@vue/shared/dist/shared.cjs.js
