@@ -18,7 +18,9 @@ class ExportImprintMarkdown extends Command
     public function handle()
     {
         GlobalController::SetDomain();
-        $tabs = ["ab_mcsl","chh","dag_mcsl","mfx_mcsl"];
+        $tabs = ["ab_mcsl"
+        ,"chh","dag_mcsl","mfx_mcsl","pna_mcsl"
+        ];
         foreach($tabs as $table)
         {
 
@@ -30,11 +32,11 @@ class ExportImprintMarkdown extends Command
         {
             $channel = "_".$sdd;
         }
-        if(!Schema::connection("mariadb".@$channel)->hasTable("impressum"))
+        if(!Schema::connection("mariadb")->hasTable("impressum"))
         {
             continue;
         }
-        $entries = DB::connection("mariadb".@$channel)->table('impressum')->where("pub", "1")->orderBy('position',"ASC")->get();
+        $entries = DB::connection("mariadb")->table('impressum')->where("pub", "1")->orderBy('id',"DESC")->get();
 
         if ($entries->isEmpty()) {
             $this->error('Keine Einträge in der Tabelle "privacy" gefunden.');
@@ -57,7 +59,7 @@ class ExportImprintMarkdown extends Command
         $i = 1;
         foreach ($entries as $entry) {
             $markdown .= "\n## {$entry->name}\n\n";
-            $markdown .= ($this->convertToMarkdown($entry->details,"ab")) . "";
+            $markdown .= ($this->convertToMarkdown($entry->details,$sdd)) . "";
             $markdown .= "\n";
             $markdown = $this->noemtyli($markdown);
             $i++;
@@ -74,10 +76,13 @@ class ExportImprintMarkdown extends Command
         // Hier sehr einfach gehalten – kann bei Bedarf z. B. mit `league/html-to-markdown` ersetzt werden
 
         $text = strip_tags($details, '<br><ul><div><ol><li><strong><h3><h4><h2><em><b><i><a>');
+
         $text = str_replace(['<br>', '<br/>', '<br />'], "\n", $text);
         $text = str_replace("{{ vcard }}",$this->vcard($sdd),$text);
         $text = str_replace("fx_impr_mcs_alt()",impr_mcs_alt($sdd),$text);
-        $text = str_replace(["<code>","</code>"],'',$text);
+        $text = str_replace("fx_impr_mcs()",impr_mcs($sdd),$text);
+        $text = str_replace("fx_gen_impr_head()",gen_impr_head($sdd),$text);
+
 
         return $text;
     }

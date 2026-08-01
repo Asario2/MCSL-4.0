@@ -29,6 +29,115 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
             return true;
         }
     }
+if(!function_exists("gen_impr_head"))
+{
+    function gen_impr_head($dom)
+    {
+
+
+    $row2 = DB::table('kontaktdaten')
+        ->where('dom', $dom)
+        ->first();
+        $row = (array) $row2;
+    $name = $row['name'];
+    $adr = $row['strasse'];
+    $plz = $row['plz'];
+    $ort = $row['ort'];
+    $region = $row['bundesland'];
+    $tel = $row['festnetz'];
+    $mobil = $row['mobil'];
+    $tel = $row['mobil'] ?? $row['festnetz'];
+    if(empty($tel))
+    {
+        $tel = $mobil;
+    }
+
+    $email = gen_hidemail($row['email']);
+    $fax = ($row['fax'] ? "FAX :".$row['fax']."<br />" : '');
+    return rumlaut(killcode("<div class=\"vcard \">
+<address>
+<br />
+<div class='subheader'>
+<span class=\"fn\">$name</span><br />
+<span class=\"adr\">$adr<br />
+<span class='postalCode'>$plz</span> <span class=\"locality\">$ort</span><br /><br />
+<h6 class='suu'>Vertreten Durch:</h6><br />
+<span class=\"fn\">$name</span><br /><br />
+<h6 class='suu'>Kontakt:</h6><br />
+Tel: $tel<br />
+Email: $email<br /><br />
+<h6 class='suu'>Verantwortlich für:</h6><br />
+<span class=\"fn\">$name</span><br />
+<span class=\"adr\">$adr<br />
+<span class='postalCode'>$plz</span> <span class=\"locality\">$ort</span><br />
+</div>
+</address>
+</div>"));
+
+
+
+
+
+    }
+}
+if(!function_exists("killcode"))
+{
+    function killcode($txt)
+    {
+        return str_replace(["<code>","</code>","<pre>","</pre>"],'',$txt);
+    }
+}
+if(!function_exists("impr_mcs"))
+{
+function impr_mcs($dom)
+{
+global $dbg,$lang;
+$row2 = DB::table('kontaktdaten')
+    ->where('dom', $dom)
+    ->first();
+    $row = (array) $row2;
+// $row = $dbg->GetRes();
+$tel = ($row['mobil'] ? "Tel. ".$row['mobil']."" : "Tel. ".@$row['Festnetz']);
+$email = gen_hidemail($row['email']);
+return rumlaut("<span style='font-size:1.2em;'><a style='font-size:1.2em;' href='https://www.marblefx.de'>MarbleFX</a> - Webdesign von Morgen schon Heute</span><br /><br />
+<div class=\"vcard\">
+<address>
+<span class=\"fn\">".($row['name'])."</span><br />
+<span class=\"adr\">".($row['strasse'])."<br />
+<span class='postalCode'>".($row['plz'])."</span> <span class=\"locality\">".($row['ort'])."</span><br /><br />
+Email: ".$email."<br />
+$tel<br /><br />
+<div class=\"flex items-center gap-2\">
+<span>Diese Seite ist</span>
+<a href=\"https://www.marblefx.net/powered-by-mcs\" class=\"inline-flex items-center gap-2\">
+<span>Powered by</span>
+<img src=\"/images/icons/MCSL_sm.png\"
+alt=\"Powered by MCSL\"
+title=\"Powered by MCSL\">
+</a>
+</div>
+</address>
+</div>");
+
+
+
+
+
+
+
+
+// return "<br /><span style='font-size:1.2em;'><a style='font-size:1.2em;' href='https://www.marblefx.de'>MarbleFX</a> - ".$lang['alread_tom']."</span><br /> <br />".
+
+//        $row['name']."<br />".
+//        $row['strasse']."<br />".
+//        $row['plz']." ".($row['ort'])."<br />".
+//        "E-Mail: ".gen_hidemail($row['email'])."<br />".
+//        $tel."<br />".
+//        $lang['this_page']." <a href='https://www.marblefx.de/powered-by-mcs'>Powered by <img src='_images/web/mcs_small.png' alt='Powered by MCS' title='Powered by MCS' /></a><br /><br />";
+}
+}
+
+
     if(!function_exists("ucf"))
     {
         function ucf($str)
@@ -2091,74 +2200,74 @@ if(!function_exists("small_images"))
 }
 if(!function_exists("errlog"))
 {
-    function errlog()
-    {
+    // function errlog()
+    // {
 
 
-        $fname = "../storage/logs/laravel.log";
-        $le = "modules/mod_SEE/errorsize.dat";
+    //     $fname = "../storage/logs/laravel.log";
+    //     $le = "modules/mod_SEE/errorsize.dat";
 
-        $file = file_get_contents($fname);
-        // $file = $this->Exline($file);
-        $file = strip_tags($file,"<br><b>");
-        $div = "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+    //     $file = file_get_contents($fname);
+    //     // $file = $this->Exline($file);
+    //     $file = strip_tags($file,"<br><b>");
+    //     $div = "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
 
-        $PST = $_POST;
+    //     $PST = $_POST;
 
-        if(@$_GET['clear'] == "All")
-        {
-           file_put_contents($fname,$div);
-           file_put_contents($le,1);
-           Header("Location: exxon.php?exx=errlog");
-        }
+    //     if(@$_GET['clear'] == "All")
+    //     {
+    //        file_put_contents($fname,$div);
+    //        file_put_contents($le,1);
+    //        Header("Location: exxon.php?exx=errlog");
+    //     }
 
-        //var_dump($f);
-        if(@$PST['mline'] || @$PST['mline2'])
-        {
+    //     //var_dump($f);
+    //     if(@$PST['mline'] || @$PST['mline2'])
+    //     {
 
-           file_put_contents($fname,$file."\n".$div);
-           file_put_contents($le,filesize($fname));
-           $div = '';
-           header("Location: ".BP() );
-        }
-    $file = strip_tags(file_get_contents($fname),"<br>");
-    // $file = $this->Exline($file);
-    ?>
-    <html>
-    <head>
-    <title>PHP Error Log</title>
-    <link rel="shortcut icon" href="_images/icons/errlog.png">
-    <script src='common/jquery.js' type='text/javascript'></script>
-    <script src='common/scripts.js' type='text/javascript'></script>
-    <style>
-    .bigbtn{
-    height:3% !important;
-    width:33%;
-    padding:9px !important;
-    padding-bottom:9px !important;
-    }
-    </style>
-    </head>
-    <body onload="ScrollBottom();">
-    <a href='#bottom' style='background-color:#00ffff;padding:5px;color:#f00;border-radius:4px;border:1px solid #000;font-weight:bold;text-decoration:none;'>BOTTOM</a><br /><br />
-    <?php
-    echo str_replace("Europe/Berlin","",nl2br($file.$div));
-    $go = "-2";
+    //        file_put_contents($fname,$file."\n".$div);
+    //        file_put_contents($le,filesize($fname));
+    //        $div = '';
+    //        header("Location: ".BP() );
+    //     }
+    // $file = strip_tags(file_get_contents($fname),"<br>");
+    // // $file = $this->Exline($file);
+    // <html>
+    // <head>
+    // <title>PHP Error Log</title>
+    // <link rel="shortcut icon" href="_images/icons/errlog.png">
+    // <script src='common/jquery.js' type='text/javascript'></script>
+    // <script src='common/scripts.js' type='text/javascript'></script>
+    // <style>
+    // .bigbtn{
+    // height:3% !important;
+    // width:33%;
+    // padding:9px !important;
+    // padding-bottom:9px !important;
+    // }
+    // </style>
+    // </head>
+    // <body onload="ScrollBottom();">
+    // <a href='#bottom' style='background-color:#00ffff;padding:5px;color:#f00;border-radius:4px;border:1px solid #000;font-weight:bold;text-decoration:none;'>BOTTOM</a><br /><br />
+    //
 
-    if(!empty($PST))
-    {
-        $go = "-2";
-    }
-    echo "<form method='post' action='exxon.php?exx=errlog'>";
-    echo "<input type='submit' name='mline' value='Check Content' class='bigbtn'> <input type='hidden' name='mline2' value='1'> <input type='button' class='bigbtn' value='Go Backwards' OnClick=\"history.go('$go');\"><input class='bigbtn' type='button' value='Clear History' onclick=\"location.href='".@$_SERVER['REQUEST_URI']."&clear=All'\">";
-    echo "</form>";
-    echo "<a name='bottom'></a>";
+    // echo str_replace("Europe/Berlin","",nl2br($file.$div));
+    // $go = "-2";
 
-    ?>
-    </body>
-    </html>
-    <?php
-    }
+    // if(!empty($PST))
+    // {
+    //     $go = "-2";
+    // }
+    // echo "<form method='post' action='exxon.php?exx=errlog'>";
+    // echo "<input type='submit' name='mline' value='Check Content' class='bigbtn'> <input type='hidden' name='mline2' value='1'> <input type='button' class='bigbtn' value='Go Backwards' OnClick=\"history.go('$go');\"><input class='bigbtn' type='button' value='Clear History' onclick=\"location.href='".@$_SERVER['REQUEST_URI']."&clear=All'\">";
+    // echo "</form>";
+    // echo "<a name='bottom'></a>";
+
+    //
+    // </body>
+    // </html>
+
+    // }
 
 }
 if(!function_exists('updateBladeFiles'))
@@ -2211,5 +2320,15 @@ function processFiles($content, $publicPath, $type, $regex)
     );
 }
 }
-
+if(!function_exists("GetDom"))
+{
+    function GetDom()
+    {
+        if(in_array(SD(),Settings::$doms_avail))
+        {
+            return SD();
+        }
+        return "default";
+    }
+}
 
