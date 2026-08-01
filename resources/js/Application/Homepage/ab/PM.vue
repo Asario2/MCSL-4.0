@@ -440,7 +440,7 @@ export default {
       this._navigating = true;
       this.tab = newTab;
 
-      this.$inertia.get('/pm/index/' + newTab, {
+      router.get('/pm/index/' + newTab, {
       }, {
         replace: true,
         preserveState: false,
@@ -645,7 +645,7 @@ async ShowMessage(msg) {
     },
 
   searchInbox(value) {
-    this.$inertia.get('/pm/index/inbox', {
+    router.get('/pm/index/inbox', {
       search: value
     }, {
       preserveState: true,
@@ -656,7 +656,7 @@ async ShowMessage(msg) {
   },
 
   searchOutbox(value) {
-    this.$inertia.get('/pm/index/outbox', {
+    router.get('/pm/index/outbox', {
       search: value
     }, {
       preserveState: true,

@@ -29,7 +29,11 @@ class HandleInertiaRequests extends Middleware
     {
         $user = Auth::user();
 
+
+
         return array_merge(parent::share($request), [
+                'host' => $request->getSchemeAndHttpHost(),
+                'subdomain' => SD(),
             'toast' => [
                 'success' => $request->session()->get('toast.success'),
                 'warning' => $request->session()->get('toast.warning'),
@@ -100,6 +104,7 @@ class HandleInertiaRequests extends Middleware
                     'is_employee' => $is_employee,
                     'is_customer' => $is_customer,
                     'application_count' => $application_count,
+                    'host' => request()->getSchemeAndHttpHost(),
                 ];
             },
         ]);

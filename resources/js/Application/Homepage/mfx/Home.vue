@@ -21,9 +21,8 @@
                     <article v-for="item in news.data" :key="item.id">
                     <div class="bg-layout-sun-50 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6 border border-layout-sun-1000 dark:border-layout-night-1050">
                         <div class="flex items-center gap-2">
-                            <H2
-                                class="font-bold text-2xl mt-0">
-                                <span v-html="cleanHtml(item.headline)"></span></H2>
+                            <h2 class="font-bold text-2xl mt-0" v-html="cleanHtml(item.headline)">
+                                </h2>
 
                             <editbtns
                                 :id="item.id"

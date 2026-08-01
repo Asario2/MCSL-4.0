@@ -350,12 +350,12 @@ class CountPixelController extends Controller
 //     \Log::info("DELETE URL: {$url} | dom: {$request->dom}");
 
     $dom = $request->dom ?? SD();
-\Log::info('DELETE DEBUG', [
-    'url' => $url,
-    'dom' => $dom,
-    'url_type' => gettype($url),
-    'dom_type' => gettype($dom),
-]);
+// \Log::info('DELETE DEBUG', [
+//     'url' => $url,
+//     'dom' => $dom,
+//     'url_type' => gettype($url),
+//     'dom_type' => gettype($dom),
+// ]);
    $query = DB::connection('mariadb')
     ->table('xgen_page_views')
     ->where(function ($q) use ($url) {
@@ -368,7 +368,7 @@ class CountPixelController extends Controller
     ->where('dom', $dom);
 
     $deleted = $query->delete();
-    \Log::info("Deleted rows: {$deleted}");
+    // \Log::info("Deleted rows: {$deleted}");
 
     // Optional: dauerhaft in FilterUrls speichern
     if ($request->save) {

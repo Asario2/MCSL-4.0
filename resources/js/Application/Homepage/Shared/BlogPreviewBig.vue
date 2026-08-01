@@ -121,6 +121,14 @@ export default {
         tablename:{
             type: String,
         },
+        dmaa:{
+            type:[String,Array,Boolean],
+            default:'',
+        },
+        dma:{
+            type:[Array,Object,String,Number],
+            default:null,
+            }
         // editRights:{
         //     type: Number,
         // },

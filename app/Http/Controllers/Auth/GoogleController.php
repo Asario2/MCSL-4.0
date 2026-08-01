@@ -32,10 +32,10 @@ class GoogleController extends Controller
     {
         $redirectUri = $this->getRedirectUri();
 
-        \Log::info('Google Redirect', [
-            'host' => request()->getHost(),
-            'redirect' => $redirectUri,
-        ]);
+        // \Log::info('Google Redirect', [
+        //     'host' => request()->getHost(),
+        //     'redirect' => $redirectUri,
+        // ]);
 
         config(['services.google.redirect' => $redirectUri]);
 

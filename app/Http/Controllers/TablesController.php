@@ -1490,7 +1490,7 @@ public function ShowTable(Request $request, $table_alt = null)
             $i++;
         }
         $query = DB::table($table)->select('id',"$hd as title","position")->orderBy('position')->get();
-        \Log::info($query);
+        // \Log::info($query);
 
         return $query;
     }

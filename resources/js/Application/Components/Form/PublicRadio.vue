@@ -130,13 +130,13 @@
       }
     },
 
-    is_created() {
-      if (this.is_created && (this.modelValue === null || this.modelValue === undefined || this.modelValue === '')) {
-        alert("created");
-        this.internalValue = '1';
-        this.emitChange('1');
-      }
-    },
+    // is_created() {
+    //   if (this.is_created && (this.modelValue === null || this.modelValue === undefined || this.modelValue === '')) {
+    //     alert("created");
+    //     this.internalValue = '1';
+    //     this.emitChange('1');
+    //   }
+    // },
 
     methods: {
       normalizeValue(val) {

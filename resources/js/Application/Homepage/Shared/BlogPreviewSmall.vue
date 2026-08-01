@@ -134,14 +134,20 @@ export default {
         aiOverlayImage: {
             type: String,
         },
+        dmaa:{
+            type:[Array,Object,String,Number],
+            default:null,
+            },
+
+
     },
     data() {
     return {
-        dma: false,
         showShareBox: {} ,
         showStarBox: {}, // Wert aus localStorage speichern
         showComments: null, // Zustand für die Anzeige der Kommentarfunktion
-        dmaa:false,
+        dma:null,
+
     };
 },
 mounted(){
@@ -253,7 +259,7 @@ return replaceSmilies(text);
                 .delete(this.routeDelete + id)
                 .then(() => {
                     this.$emit("deleted");
-                    this.$inertia.reload();
+                    router.relaod();
                 })
                 .catch((error) => {
                     console.error("Fehler beim Löschen:", error);

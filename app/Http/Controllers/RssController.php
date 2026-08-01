@@ -132,7 +132,7 @@ class RssController extends Controller
             $content = '';
 
             if ($item['image']) {
-                $content .= "<img src=\"https://asario.de{$item['impath']}/{$item['image']}\" alt=\"\" /><br/>";
+                $content .= "<img src=\"https://asario.de{$item['impath']}/{$item['image']}\" alt=\"$headline\" /><br/>";
             }
 
             $content .= "<h2>{$headline}</h2>";

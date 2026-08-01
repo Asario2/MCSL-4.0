@@ -23,10 +23,10 @@ class CSVController extends Controller
 
 
     $uploadedFile = $request->file('fileup');
-     \Log::info('CSV Upload Request', [
-    'hasFile' => $request->hasFile('fileup'),
-    'all_request' => $request->all()
-]);
+    //     \Log::info('CSV Upload Request', [
+    //     'hasFile' => $request->hasFile('fileup'),
+    //     'all_request' => $request->all()
+    // ]);
     if (!$uploadedFile) {
         return response()->json(['error' => 'Keine Datei hochgeladen'], 400);
     }
@@ -139,7 +139,7 @@ class CSVController extends Controller
         fclose($handle);
 
 
-    \Log::info("CON: ",$contacts);
+    // \Log::info("CON: ",$contacts);
     return response()->json(['contacts' => $contacts]);
 }
 

@@ -59,7 +59,7 @@
 
       const submit = () => {
         errors.value = {};
-        Inertia.post('/two-factor-login', form.value, {
+        router.post('/two-factor-login', form.value, {
           onError: (err) => {
             errors.value = err;
           },

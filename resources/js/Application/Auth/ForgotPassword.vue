@@ -142,7 +142,7 @@ export default defineComponent({
             this.loadingText =
                 "Die Mail wird vorbereitet und an Sie versendet!";
             //
-            this.$inertia.post(this.route(routeForgotPassword), this.form, {
+            router.post(this.route(routeForgotPassword), this.form, {
                 onFinish: () => {
                     this.loading = false;
                 },

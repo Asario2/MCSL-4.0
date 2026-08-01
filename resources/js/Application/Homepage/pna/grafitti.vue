@@ -225,7 +225,7 @@
     },
     watch: {
     'form.search': throttle(function () {
-        this.$inertia.get(
+        router.get(
         this.route('home.images.gallery', {
             slug: this.ocont && this.ocont?.slug ? this.ocont?.slug : '',
         }),
@@ -240,7 +240,7 @@
 
 
     //   'form.search': throttle(function (val) {
-    //     this.$inertia.get(
+    //     router.get(
     //       this.route('home.images.gallery'),
     //       {
     //         slug: this.ocont?.slug,

@@ -89,14 +89,14 @@ import 'photoswipe/dist/photoswipe.css';
 
     // Query-Parameter aus der URL holen
 
-    // Globale Ziggy-Route mit Fallback 
+    // Globale Ziggy-Route mit Fallback
     function safeRoute(...args) {
         try {
             return ziggyRoute(...args);
         } catch (error) {
             if (error.message.includes('is not in the route list')) {
                 console.error(`Ziggy: Route '${args[0]}' nicht gefunden. Leite auf 404 um.`);
-                Inertia.visit('/404');
+                router.visit('/404');
                 return '/404';
             }
             throw error;

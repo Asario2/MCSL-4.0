@@ -128,7 +128,14 @@
             news:[Array,Object],
             text: [Array,Object,String],
             contacts: [Array,Object,String],
-            dmaa:[Array,Object,String,Number]
+            dmaa:{
+            type:[Array,Object,String,Number],
+            default:null,
+            },
+            dma:{
+            type:[Array,Object,String,Number],
+            default:null,
+            }
         },
         data() {
         return {

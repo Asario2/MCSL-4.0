@@ -60,7 +60,7 @@
 <script>
 import { defineComponent } from "vue";
 import newbtn from "@/Application/Components/Form/newbtn.vue";
-
+import { router } from "@inertiajs/vue3";               
 import Layout from "@/Application/Homepage/Shared/Layout.vue";
 import PageTitle from "@/Application/Components/Content/PageTitle.vue";
 import BlogPreviewBig from "@/Application/Homepage/Shared/BlogPreviewBig.vue";
@@ -136,7 +136,7 @@ export default defineComponent({
 
 //       console.log('before:', JSON.stringify(this.form.search));
 
-      this.$inertia.visit(this.route("home.blog.index"), {
+      router.visit(this.route("home.blog.index"), {
         method: "get",
         data: params,
         preserveState: true,

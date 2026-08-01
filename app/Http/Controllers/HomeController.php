@@ -25,6 +25,7 @@ use App\Models\Tenant;  // <-- hier Tenant importieren
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use League\CommonMark\CommonMarkConverter;
+use Illuminate\Support\Facades\Hash;
 if(!session_id())
 {
     // session_start();
@@ -32,6 +33,23 @@ if(!session_id())
 class HomeController extends Controller
 {
     //
+
+
+
+        public function show_pwd()
+        {
+            return inertia('Homepage/PWD');
+        }
+
+        public function home_PWD(Request $request)
+        {
+            return response()->json([
+                'hash' => Hash::make($request->password),
+            ]);
+        }
+
+
+
     public  function home_ausgaben(){
         $entries_in = DB::table("ausgaben")->where('pub',"1")->where("users_id",Auth::id())->orderBy("plus_minus","DESC")->orderBy(DB::raw('CAST(cur_amount AS DECIMAL(10,2))'), 'DESC')->get();
     $res = DB::table('ausgaben')->where("users_id",Auth::id())->where("pub","1")
@@ -229,7 +247,10 @@ class HomeController extends Controller
             {
                 return $this->$ho();
             }
-            return Inertia::render('Homepage/NoPageFound_'.SD(),[
+
+            $doma = GetDom();
+
+            return Inertia::render('Homepage/NoPageFound_'.$doma,[
                 'subdomain' => request()->getHost(),
             ]);
         }
@@ -892,7 +913,7 @@ return Inertia::render('Homepage/Pictures', [
             $ord[0] = "position";
             $ord[1] = "ASC";
 
-        \Log::info($request);
+        // \Log::info($request);
         $slug = "grafitti";
         $search = $request->input('search');
 
@@ -944,7 +965,7 @@ return Inertia::render('Homepage/Pictures', [
             $ord[0] = "position";
             $ord[1] = "ASC";
 
-        \Log::info($request);
+        // \Log::info($request);
         $slug = "portraits";
         $search = $request->input('search');
 
@@ -1034,8 +1055,8 @@ return Inertia::render('Homepage/Pictures', [
     //
     public function home_imprint()
     {
-        $imprintFile = Jetstream::localizedMarkdownPath('imprint_chh.md');
-        $imprint = Str::markdown(file_get_contents($imprintFile));
+        $imprintFile = Jetstream::localizedMarkdownPath('imprint_'.SD().'.md');
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
         //
         return Inertia::render('Homepage/Imprint', [
             'imprint' => $imprint,
@@ -1043,9 +1064,8 @@ return Inertia::render('Homepage/Pictures', [
     }
         public function home_imprint_pna()
     {
-        dd('imprint');
         $imprintFile = Jetstream::localizedMarkdownPath('imprint_pna.md');
-        $imprint = Str::markdown(file_get_contents($imprintFile));
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
         //
         return Inertia::render('Homepage/pna/Imprint', [
             'imprint' => $imprint,
@@ -1054,7 +1074,7 @@ return Inertia::render('Homepage/Pictures', [
     public function home_imprint_chh()
     {
         $imprintFile = Jetstream::localizedMarkdownPath('imprint_chh.md');
-        $imprint = Str::markdown(file_get_contents($imprintFile));
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
         $imprint = nl2br($imprint);
         //
         return Inertia::render('Homepage/chh/Imprint', [
@@ -1064,7 +1084,7 @@ return Inertia::render('Homepage/Pictures', [
 public function imprint_dag()
     {
         $imprintFile = Jetstream::localizedMarkdownPath('imprint.md');
-        $imprint = Str::markdown(file_get_contents($imprintFile));
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
         //
         return Inertia::render('Homepage/Imprint', [
             'imprint' => $imprint,
@@ -1266,6 +1286,16 @@ public function imprint_dag()
         // \Log::info("TT:".json_encode($text));
 
         return Inertia::render('Homepage/ab/contacts', [
+            "text" => $text,
+            'contacts'=>$contacts,
+        ]);
+    }
+        public function contacts_pna(){
+        $text = DB::table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
+        $contacts = DB::table("texts")->where("autoslug", "ContactsInfos")->select('headline', 'text')->first();
+        // \Log::info("TT:".json_encode($text));
+
+        return Inertia::render('Homepage/pna/contacts', [
             "text" => $text,
             'contacts'=>$contacts,
         ]);

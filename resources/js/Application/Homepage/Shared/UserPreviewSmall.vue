@@ -48,7 +48,7 @@
         <SocialButtons  :name="user?.name" :postId="user.id" :title="'Benutzer '+user.name" sm="Sm" :nostars="true" :ublock="user.name"      />
 
     </div>
-    </article>  
+    </article>
 </template>
 
 <script>
@@ -227,7 +227,7 @@ methods:{
                 .delete(this.routeDelete + id)
                 .then(() => {
                     this.$emit("deleted");
-                    this.$inertia.reload();
+                    router.relaod();
                 })
                 .catch((error) => {
                     console.error("Fehler beim Löschen:", error);

@@ -580,8 +580,14 @@ export function CheckOL() {
 }
 export function SD(pn = '') {
     // Hostname ohne www.
-    if (typeof window === 'undefined') return '';
-    let subb = window.location.hostname.replace(/^www\./, '').split('.')[0];
+    // if (typeof window === 'undefined') return '';
+
+    let host = "";
+    host = globalThis.APP_HOST;
+    let subb = host;
+
+
+
 
     // Mapping
     const pm = {
@@ -835,6 +841,7 @@ export function rumLaut(input, table = '') {
     // 4. Zeichen ersetzen
     str = str.replace(/â€“/g, '-');
     str = str.replace(/Ãâ/gi,"Ä");
+    str = str.replace(/ÃÅ/gi,"Ü");
     // 5. HTML Entities dekodieren (basic)
     // const txt = document?.createElement("textarea");
     // txt.innerHTML = str;

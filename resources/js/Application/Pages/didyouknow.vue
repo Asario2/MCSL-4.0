@@ -102,7 +102,7 @@ export default {
     form: {
       handler: throttle(function () {
         const query = pickBy(this.form, v => v != null && v !== '');
-        this.$inertia.get(
+        router.get(
           this.route("home.didyouknow"),
           Object.keys(query).length ? query : { remember: "forget" },
           { preserveState: true, preserveScroll: false, replace: true, skipLoading:true }

@@ -111,7 +111,14 @@ export default defineComponent({
     blogarticle: {
             type: String,
         },
-
+        dmaa:{
+            type:[Array,Object,String,Number],
+            default:null,
+            },
+            dma:{
+            type:[Array,Object,String,Number],
+            default:null,
+            }
     },
     created() {
     this.loadLayout();

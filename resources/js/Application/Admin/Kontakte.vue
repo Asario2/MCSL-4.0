@@ -288,7 +288,7 @@ export default {
     // 'form.search': {
     //   handler: throttle(function (newSearch) {
     //     const query = pickBy({ search: newSearch });
-    //     this.$inertia.get(
+    //     router.get(
     //       this.route("admin.kontakte"),
     //       query,
     //       {
@@ -377,7 +377,7 @@ closeGroupPicker() {
                 Gruppe: newGroup
             });
             // optional: UI aktualisieren, z.B. reload der Kontakte
-            this.$inertia.reload({ only: ['contacts'] });
+            router.relaod({ only: ['contacts'] });
             window.toastBus.emit({ type: 'success', message: 'Gruppe erfolgreich geändert!' });
              this.activeGroupPicker = null;
         } catch (error) {
@@ -395,7 +395,7 @@ closeGroupPicker() {
 
             window.toastBus.emit({type:"success",message:"Kontakte erfolgreich gespeichert"});
 
-            this.$inertia.reload({ only: ['contacts'] });
+            router.relaod({ only: ['contacts'] });
         },
         openinfo(type){
             this.info_type = type;

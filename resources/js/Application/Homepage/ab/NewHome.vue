@@ -103,7 +103,7 @@ export default {
 
     methods: {
          redirect() {
-            this.$inertia.visit('/blogs');
+            router.visit('/blogs');
         },
 
     // andere Methoden hier...

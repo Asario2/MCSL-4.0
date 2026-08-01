@@ -123,10 +123,10 @@ import InputLabel from "@/Application/Components/Form/InputLabel.vue";
 import InputElement from "@/Application/Components/Form/InputElement.vue";
 import InputCheckbox from "@/Application/Components/Form/InputCheckbox.vue";
 import InputError from "@/Application/Components/Form/InputError.vue";
-
+import { router } from "@inertiajs/vue3";
 import ButtonGroup from "@/Application/Components/Form/ButtonGroup.vue";
 import InputButton from "@/Application/Components/Form/InputButton.vue";
-
+console.log("router =", router);
 export default defineComponent({
     name: "Auth_Login",
 
@@ -170,11 +170,16 @@ export default defineComponent({
                 email: "",
                 password: "",
                 remember: false,
-                redirect: new URLSearchParams(window.location.search).get('redirect')
+                redirect: null,
             },
         };
     },
-
+     mounted(){
+      if (typeof window !== "undefined") {
+        this.form.redirect =
+            new URLSearchParams(window.location.search).get("redirect");
+    }
+},
     methods: {
         loginUser() {
             if (!this.form.email || !this.form.password) {
@@ -182,8 +187,10 @@ export default defineComponent({
                 return;
             }
             let routeLogin = "login";
+            if(typeof window === "undefined") return;
             // Vorbereitung der Daten, einschließlich der Transformation des `remember`-Feldes
             const params = new URLSearchParams(window.location.search);
+
             const formData = {
                 ...this.form,
                 remember: this.form.remember ? "on" : "",
@@ -201,18 +208,20 @@ export default defineComponent({
             }
             this.loading = true;
             this.loadingText = "Die Anmeldung wird durchgeführt!";
-            //s
-            this.$inertia.post(this.route(routeLogin), formData, {
+
+            router.post("/login", formData, {
                 onSuccess: () => {
                     document.documentElement.classList.toggle(
                         "dark",
                         localStorage.getItem("theme") === "dark"
                     );
                 },
+                onError: (errors) => {
+                    console.log("Login Fehler:", errors);
+                },
                 onFinish: () => {
                     this.loading = false;
-                    this.form.password = ""; // Passwort zurücksetzen nach dem Absenden
-
+                    this.form.password = "";
                 },
             });
         },

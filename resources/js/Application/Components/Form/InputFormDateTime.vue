@@ -47,7 +47,7 @@ export default {
     name: { type: String, required: true },
     modelValue: { type: String, default: '' },
     placeholder: { type: String, default: '' },
-    disabled: { type: [String, Array, Object], default: '' },
+    disabled: { type: [String, Array, Object,Boolean], default: '' },
   },
   emits: ['update:modelValue'],
   data() {

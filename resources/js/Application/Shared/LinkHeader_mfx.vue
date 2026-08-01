@@ -22,7 +22,7 @@
 <script>
 //
 export default {
-    name: "LinkHeader_mfx",
+    name: "LinkHeaderMfx",
     //
     props: {
         routeName: {

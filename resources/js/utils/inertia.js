@@ -1,7 +1,7 @@
-	import { Inertia } from '@inertiajs/inertia'
+	import { router } from '@inertiajs/vue3'
 
 /**
- * Wrapper für Inertia-Requests, der null/undefined automatisch entfernt.
+ * Wrapper fï¿½r Inertia-Requests, der null/undefined automatisch entfernt.
  *
  * @param {String} url - Ziel-Route
  * @param {Object} data - Query-/Formdaten
@@ -16,7 +16,7 @@ export function safeInertiaGet(url, data = {}, options = {}) {
     }
   })
 
-  return Inertia.get(url, cleanData, options)
+  return router.get(url, cleanData, options)
 }
 
 export function safeInertiaVisit(url, data = {}, options = {}) {
@@ -28,5 +28,5 @@ export function safeInertiaVisit(url, data = {}, options = {}) {
     }
   })
 
-  return Inertia.visit(url, { ...options, data: cleanData })
+  return router.visit(url, { ...options, data: cleanData })
 }

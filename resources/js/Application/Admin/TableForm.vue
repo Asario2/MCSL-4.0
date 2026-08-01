@@ -125,12 +125,12 @@
                             @content-updated="handleInput_alt(field.name, $event)"
                         >
                             <template #label>{{ field.label }}</template>
-                        </Editor>
+                </Editor>
                         <div v-if="fieldErrors && fieldErrors[key]" class="text-red-500 text-sm">Dieses Feld ist erforderlich</div>
                     </input-container>
 
                     <input-container v-else-if="field.type === 'textarea'">
-                        <InputFormTextarea
+                        <InputFormTextArea
                             :id="field.name"
                             :name="field.name"
                             v-model="field.value"
@@ -138,7 +138,7 @@
                             :required="isRequired(field.required)"
                             >
                             <template #label>{{ field.label }}</template>
-                        </InputFormTextarea>
+                        </InputFormTextArea>
                     </input-container>
 
                     <input-container v-else-if="field.type === 'text'">
@@ -654,7 +654,7 @@
     import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
     import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
     import SmoothScroll from "@/Application/Components/SmoothScroll.vue";
-
+    import { router } from '@inertiajs/vue3';
     import SectionForm from "@/Application/Components/Content/SectionForm.vue";
     import InputPWD from "@/Application/Components/Form/InputPWD.vue";
     import Addbtn from "@/Application/Components/Form/addbtn.vue"; // KORREKTUR: Import hinzugefügt
@@ -665,7 +665,7 @@
     import InputFormText from "@/Application/Components/Form/InputFormText.vue";
     import InputFormDateTime from "@/Application/Components/Form/InputFormDateTime.vue";
     import InputFormDate from "@/Application/Components/Form/InputFormDate.vue";
-    // import InputFormTextArea from "@/Application/Components/Form/InputFormTextArea.vue";
+    import InputFormTextArea from "@/Application/Components/Form/InputFormTextArea.vue";
     import InputDangerButton from "@/Application/Components/Form/InputDangerButton.vue";
     // import InputLoading from "@/Application/Components/Form/InputLoading.vue";
     import ErrorList from "@/Application/Components/Form/ErrorList.vue";
@@ -736,6 +736,7 @@
             InputPWD,
             IconPDF,
             Editor,
+            InputFormTextArea,
             MetaHeader,
             InputFormDate,
             InputFormPrice,
@@ -850,7 +851,7 @@
                 uploadedImageUrl: null,
                 // csrfToken: document.getElementById('token')?.value,
                 preview_image: {},
-                ffo: { ...this.entry },
+                // ffo: { ...this.entry },
                 options: {},
                 options_sel: {},
                 sdata: {},
@@ -868,8 +869,7 @@
 
         computed: {
             is_created(){
-                const path = window.location.pathname;
-                return path.includes("create");
+              return this.$page?.url?.includes("/create") ?? false;
             },
 
 
@@ -913,9 +913,6 @@
         },
 
         watch:{
-            entry(newVal) {
-                this.ffo = { ...newVal };
-            },
             ffo: {
                 handler(newVal) {
                     if (newVal && Object.keys(newVal).length) {
@@ -1389,6 +1386,7 @@
                             .replace(/},/g, "},{");
 
                         obj = "[" + obj + "]";
+                        // eslint-disable-next-line no-control-regex
                         obj = obj.replace(/[\u0000-\u001F\u007F]/g, '');
                         input = obj;
                     })
@@ -1398,7 +1396,7 @@
             },
 
             getsel_enum(name,table,iscope='getselenumroute') {
-                var sortedOptions_sel = this.sortedOptions_sel ?? [];
+                // var sortedOptions_sel = this.sortedOptions_sel ?? [];
     //             console.log(iscope);
                 let sdata_sel = this.sdata_sel ?? {};
                 axios
@@ -1442,12 +1440,12 @@
                 axios.get(routes.getform(CleanTable(),CleanId()))
                 .then((response) => {
                     this.formFields = response.data;
-                    let formFields_old = response.data;
+                    // let formFields_old = response.data;
 
                     this.formFields =  JSON.stringify(response.data,null,2);
                     let obj = this.formFields;
+                    // eslint-disable-next-line no-control-regex
                     obj = obj.replace(/[\u0000-\u001F\u007F]/g, '');
-
                     try {
                         obj = JSON.parse(obj);
                     } catch (error) {
@@ -1456,12 +1454,13 @@
 
                     this.oobj = obj;
                     this.obj2 = obj;
-                    this.ffo = obj;
+                    // this.ffo = obj;
 
                     const formFieldsArray = Object.values(this.formFields_old ?? {});
                     formFieldsArray.forEach((field) => {
                         if (typeof field === "object" && field !== null) {
                             Object.entries(field).forEach(([subKey, subValue]) => {
+                                this.asd = subKey;
                                 this.setFormField(subValue, subValue?.name ?? '');
                             });
                         }
@@ -1532,7 +1531,7 @@
 
                 // localFfo sicher verwenden
                 if (this.localFfo?.original) {
-                    Object.entries(this.localFfo.original).forEach(([key, field]) => {
+                    Object.entries(this.localFfo.original).forEach(([field]) => {
                         if (field && typeof field === 'object') {
                             const element = document.getElementById(field.name);
                             const element_alt = document.getElementById(field.name + "_alt");
@@ -1599,7 +1598,7 @@
                 });
                 // console.log(response.data);
                window.toastBus.emit( response.data); // ← erwartet { status: "...", message: "..." }
-                this.$inertia.reload();
+                router.relaod();
                 // Optional: Seite neu laden oder Liste aktualisieren
             } catch (error) {
                 console.error("Fehler beim Löschen:", error);
@@ -1610,7 +1609,7 @@
                 // this.loading = true;
                 this.loadingText = "Der Beitrag wird gelöscht!";
 
-                this.$inertia.delete(
+                router.delete(
                     this.route("admin.tables.delete", [CleanTable(),this.table.id]),
                     {
                         onSuccess: () => {
@@ -1631,7 +1630,7 @@
                 // this.loading = true;
                 this.loadingText = "Der neue {{ItemName}} wird gespeichert!";
 
-                this.$inertia.post(this.route("admin.table.store"), this.form, {
+                router.post(this.route("admin.table.store"), this.form, {
                     onSuccess: () => {
                         // this.loading = false;
                     },
@@ -1686,7 +1685,8 @@
                 try {
                     JSON.stringify(data);
                     return typeof data === 'object' && data !== null;
-                } catch (e) {
+                } catch {
+
                     return false;
                 }
             },
@@ -1712,7 +1712,7 @@
 
 
             if(!this.ffo || this.ffo.length < 3 || this.ffo === "undefined"){
-                this.$inertia.visit('/no-rights');
+                router.visit('/no-rights');
                 return;
 
             }
@@ -1732,7 +1732,7 @@
         this.settings = await GetSettings();
         this.xid = CleanId();
         this.xtable = CleanTable();
-        const path = window.location.pathname;
+        // const path = window.location.pathname;
         this.column =  this.settings.impath?.[this.xtable] ?? this.settings.impath?.['default'];
 
         await this.fetchFormData();

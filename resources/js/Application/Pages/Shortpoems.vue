@@ -146,7 +146,7 @@ return this.$page?.props?.auth?.user?.id;
     'form.search': throttle(function () {
         const query = pickBy(this.form, v => v != null && v !== '');
 
-        this.$inertia.get(this.route("home.shortpoems"), query, {
+        router.get(this.route("home.shortpoems"), query, {
         preserveState: true,
         preserveScroll: false,
         replace: true,

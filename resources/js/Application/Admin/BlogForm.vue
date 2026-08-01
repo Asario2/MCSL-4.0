@@ -420,7 +420,7 @@ export default defineComponent({
             // this.loading = true;
             this.loadingText = "Der neue Blogarikel wird gespeichert!";
             //
-            this.$inertia.post(this.route("admin.blog.store"), this.form, {
+            router.post(this.route("admin.blog.store"), this.form, {
                 onSuccess: () => {
                     this.loading = false;
                 },
@@ -435,7 +435,7 @@ export default defineComponent({
             this.loadingText =
                 "Die geänderten Daten des Blogartikels werden jetzt gespeichert!";
             //
-            this.$inertia.put(
+            router.put(
                 this.route("admin.blog.update", this.blog.id),
                 this.form,
                 {

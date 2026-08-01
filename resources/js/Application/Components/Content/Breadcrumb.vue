@@ -90,6 +90,7 @@ export default {
         current: {
             type: String,
             default: null,
+            required:false,
         },
         breadcrumbs: {
             type: [String, Object, Array],

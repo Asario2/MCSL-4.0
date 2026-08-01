@@ -31,7 +31,7 @@
             :delete-on="true"
             :pag="pag"
             route-delete="admin.tables.destroy"
-            :tableq="this.tableq ?? ''"
+            :tableq="tableq ?? ''"
             @update-checked-status="onCheckedStatusUpdate"
             >
 
@@ -223,7 +223,7 @@ let table_z = CleanTable();
 
 let table_alt = table_z;
 
-let table = CleanTable();
+// let table = CleanTable();
 
 export default defineComponent({
 
@@ -275,7 +275,7 @@ export default defineComponent({
         table: {
 
             type: String,
-
+            default: CleanTable(),
             required: true
         },
 
@@ -302,14 +302,15 @@ export default defineComponent({
 
         tableq: {
 
-            type: String
+            type: String,
+            default:CleanTable(),
         },
 
         current: {
 
             type: String,
 
-            required: true
+            required: false,
         },
 
         filters: {
@@ -351,7 +352,11 @@ export default defineComponent({
             default: ""
         },
 
-        thirdparty: String,
+        thirdparty:{
+            type:[Array,Object,String],
+            default: () => ({})
+        }
+
     },
 
     data() {
@@ -372,9 +377,9 @@ export default defineComponent({
 
             sortable: null,
 
-            table:
-                CleanTable()
-                    .toLowerCase(),
+            // table:
+            //     CleanTable()
+            //         .toLowerCase(),
 
             settings: {},
 
@@ -451,14 +456,14 @@ export default defineComponent({
 
         routeCreate() {
 
-            if (!this.tableq)
+            if (!this.table)
                 return null;
 
             return route(
 
                 "admin.tables.create",
 
-                this.tableq
+                this.table
             );
         },
 
@@ -468,7 +473,7 @@ export default defineComponent({
 
                 "admin.tables.show",
 
-                table
+                this.table
             );
         },
     },

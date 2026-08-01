@@ -230,7 +230,7 @@ export default {
                 axios.delete(this.routeDelete + id)
                     .then(() => {
                         this.$emit("deleted");
-                        this.$inertia.reload();
+                        router.relaod();
                     })
                     .catch(err => console.error(err));
             }

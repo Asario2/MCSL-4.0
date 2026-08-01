@@ -17,12 +17,12 @@
                     >
                     <span
                         v-if="brand_2"
-                        class="text-layout-sun-500 dark:text-layout-night-500 glow-blue-gray euros text-2xl"
+                        class="text-layout-sun-500 dark:text-layout-night-500 glow-blue euros text-2xl"
                         >{{ brand_2 }}</span
                     >
                 </div>
                 <div
-                    class="font-title text-xs lg:text-sm mt-[5px] ml-[59px] leading-snug whitespace-nowrap tracking-wide text-layout-sun-600 dark:text-layout-night-900 euros"
+                    class="font-title text-xs lg:text-sm mt-[5px] ml-[65px] leading-snug whitespace-nowrap tracking-wide text-layout-sun-600 dark:text-layout-night-900 euros"
                     v-if="appName"
                 >
                     <span v-html="appName"></span>
@@ -85,12 +85,16 @@ export default {
     },
     data() {
         return {
-            mode: localStorage.theme || "light",
+            mode: "light",
+
         };
     },
     mounted() {
+        if (typeof window === "undefined") return;
 
-  },
+        this.mode = localStorage.getItem("theme") || "light";
+
+    },
     methods:{
         SD,
     GetSd(){
@@ -98,6 +102,10 @@ export default {
     },
     GetLogin()
     {
+      if (typeof window === "undefined") {
+        return "l";
+    }
+
         const url = location.href;
         if((!url.includes("/login") && !url.includes("/forgot-password") &&
         !url.includes("/register") && !url.includes("/email/verify") &&
@@ -117,6 +125,5 @@ export default {
 <style>
 .euros{
     font-family:Eurostile !important;
-
 }
 </style>

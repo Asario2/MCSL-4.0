@@ -1,9 +1,9 @@
-import { Inertia } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3'
 
 // Originalfunktion patchen
-const originalVisit = Inertia.visit
+const originalVisit = router.visit
 
-Inertia.visit = function (url, options = {}) {
+router.visit = function (url, options = {}) {
     // Null-Werte aus Daten entfernen
     if (options.data) {
         options.data = Object.fromEntries(

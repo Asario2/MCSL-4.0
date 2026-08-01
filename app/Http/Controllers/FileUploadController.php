@@ -209,12 +209,12 @@ class FileUploadController extends Controller
     //     $fullPath = $fileName; //"/images/_{$subdomain}/{$table_ori}/{$column}/{$fileName}";
     // }
     $fullPath = "/files/_{$subdomain}/{$table_ori}/{$fileName}";
-     \Log::info('Upload completed successfully', [
-        'fileName' => $fileName,
-        'fullPath' => $fullPath,
-        'Message' => $Message,
-        'final_fileName' => $fileName // Sollte MD5 sein
-    ]);
+    //  \Log::info('Upload completed successfully', [
+    //     'fileName' => $fileName,
+    //     'fullPath' => $fullPath,
+    //     'Message' => $Message,
+    //     'final_fileName' => $fileName // Sollte MD5 sein
+    // ]);
 
     return response()->json([
         'message' => 'Bild erfolgreich hochgeladen.',

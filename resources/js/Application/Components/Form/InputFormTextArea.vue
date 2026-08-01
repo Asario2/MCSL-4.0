@@ -42,7 +42,7 @@ InputHtml,
         required: { type: [String, Boolean], default: false },
         rows: {
             type: [String, Array, Object],
-            default: 4,
+            default: '' ,
         },
     },
 };

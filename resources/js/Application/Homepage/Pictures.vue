@@ -65,13 +65,12 @@
         <!-- Linke Spalte: Thumbnail -->
         <div :id="'st' + item?.id" class="relative lg:col-span-4">
             <a
-    :href="'/images/_'+ SD() +'/images/image_path/big/' + item?.image_path"
+    :href="'/images/_' + SD() + '/images/image_path/big/' + item?.image_path.replace('/','')"
     :data-pswp-width="item?.img_x"
     :data-pswp-height="item?.img_y"
     >
-
     <ZoomImage
-    :src="'/images/_'+ SD() +'/images/image_path/thumbs/' + item?.image_path"
+    :src="'/images/_' + SD() + '/images/image_path/thumbs/' + item?.image_path"
     :alt="item?.name"
     :title="item?.name"
     :width="300"
@@ -224,7 +223,7 @@
     },
     watch: {
     'form.search': throttle(function () {
-        this.$inertia.get(
+        router.get(
         this.route('home.images.gallery', {
             slug: this.ocont && this.ocont?.slug ? this.ocont?.slug : '',
         }),
@@ -239,7 +238,7 @@
 
 
     //   'form.search': throttle(function (val) {
-    //     this.$inertia.get(
+    //     router.get(
     //       this.route('home.images.gallery'),
     //       {
     //         slug: this.ocont?.slug,

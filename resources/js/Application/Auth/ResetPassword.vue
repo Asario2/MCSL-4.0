@@ -161,7 +161,7 @@ export default defineComponent({
                 this.form.token = pathParts[2] ?? null;
             }
 
-            this.$inertia.post(route('password.update'), this.form, {
+            router.post(route('password.update'), this.form, {
                 onFinish: () => {
                     this.loading = false;
                     this.form.password = "";

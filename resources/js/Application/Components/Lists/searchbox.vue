@@ -47,7 +47,7 @@
 
         //// this.loading = true;
         try {
-            Inertia.get(route('admin.tables.show'),
+            router.get(route('admin.tables.show'),
   { search: this.searchQuery, table: this.table },
   { preserveState: false, replace: true,skipLoading:true });
 

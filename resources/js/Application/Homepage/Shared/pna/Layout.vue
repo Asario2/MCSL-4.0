@@ -63,20 +63,20 @@
                 lg:rounded-lg
                 mb-2
             ">
-                <link-header_mfx class="ml-[26px]"   :route-name="route('home.index')" name="Home"></link-header_mfx>
-                <link-header_mfx :route-name="route('home.pna.grafitti')" name="Grafittis"></link-header_mfx>
-                <!--<link-header_mfx :route-name="route('home.pricing')" name="Preise"></link-header_mfx>-->
-                <!-- <link-header_mfx :route-name="route('home.blog.index')" name="Blog"></link-header_mfx> -->
-                <link-header_mfx :route-name="route('home.pna.portraits')" name="Portraits"></link-header_mfx>
-                <link-header_mfx :route-name="route('home.pna.contacts')" name="Kontakt"></link-header_mfx>
+                <LinkHeader_mfx class="ml-[26px]"   :route-name="route('home.index')" name="Home"></LinkHeader_mfx>
+                <LinkHeader_mfx :route-name="route('home.pna.grafitti')" name="Grafittis"></LinkHeader_mfx>
+                <!--<LinkHeader_mfx :route-name="route('home.pricing')" name="Preise"></LinkHeader_mfx>-->
+                <!-- <LinkHeader_mfx :route-name="route('home.blog.index')" name="Blog"></LinkHeader_mfx> -->
+                <LinkHeader_mfx :route-name="route('home.pna.portraits')" name="Portraits"></LinkHeader_mfx>
+                <LinkHeader_mfx :route-name="route('home.pna.contacts')" name="Kontakt"></LinkHeader_mfx>
                 <button-change-mode :mode="mode" @changeMode="changeMode"></button-change-mode>
                 <template v-if="!$page.props.userdata.user_id">
-                  <link-header_mfx :route-name="route('login')" name="Login"></link-header_mfx>
+                  <LinkHeader_mfx :route-name="route('login')" name="Login"></LinkHeader_mfx>
                 </template>
                 <div v-else-if="$page.props.auth.user" class="block md:hidden">
 
-                <link-header_mfx :route-name="route('admin.dashboard')" name="Dashboard" /><br />
-                <link-header_mfx :route-name="route('admin.profile')" name="Profil">
+                <LinkHeader_mfx :route-name="route('admin.dashboard')" name="Dashboard" /><br />
+                <LinkHeader_mfx :route-name="route('admin.profile')" name="Profil">
                 <img
                     id="prof_pic"
                     class="h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]"
@@ -84,7 +84,7 @@
                                                 $page.props.auth.user?.profile_photo_url.replace('public','').replace('http://localhost/images/','').replace('images/images/','images/') || '/images/profile-photos/008.jpg'
                                                     "
                     :alt="$page.props.userdata.full_name"
-                /></link-header_mfx><br />
+                /></LinkHeader_mfx><br />
                 <hr />
                 <form @submit.prevent="logoutUser">
                     <button type="submit">
@@ -95,7 +95,7 @@
                 </form>
                 </div>
                 <template v-if="$page.props.userdata.user_id">
-                  <!-- <link-header_mfx :route-name="route('applicationswitch')" name="Dashboard"></link-header_mfx> -->
+                  <!-- <LinkHeader_mfx :route-name="route('applicationswitch')" name="Dashboard"></LinkHeader_mfx> -->
                 </template>
 
                <!-- <button-change-mode :mode="mode" @changeMode="changeMode"></button-change-mode>-->
@@ -258,7 +258,7 @@
                   </h3>
                   <ul role="list" class="mt-6 space-y-4 list-none">
                     <li>
-                      <link-footer name="Impressum" :route-name="route('home.imprint')"></link-footer>
+                      <link-footer name="Impressum" :route-name="route('home.imprint.pna')"></link-footer>
                     </li>
                     <li>
                       <link-footer name="Datenschutzerklärung" :route-name="route('home.privacy')"></link-footer>
@@ -348,15 +348,18 @@ import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 // import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
-import LinkHeader_mfx from "@/Application/Shared/LinkHeader_mfx.vue";
+
 import BrandFooter from "@/Application/Shared/BrandFooter.vue";
 import LinkFooter from "@/Application/Shared/LinkFooter.vue";
 import IconMenu from "@/Application/Components/Icons/Menu.vue";
+import { router } from '@inertiajs/vue3'
+import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 // import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { SD,showHideToggleCookiePreferencesModal } from "@/helpers";
 import Loader from "@/Application/Components/Loader.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+import LinkHeader_mfx from "@/Application/Shared/LinkHeader_mfx.vue";
 // import { ref } from "vue";
 
 export default {
@@ -372,6 +375,7 @@ export default {
     LinkFooter,
     Toast,
     IconMenu,
+    IconCookies,
     IconMCSL,
     IconClose,
     pnalogo,
@@ -414,11 +418,16 @@ export default {
         //     return savedTheme || 'dark';
 
         // })(),
-        mode: (() => {
-            const savedTheme = localStorage.getItem("theme");
-            console.log("INIT THEME:", savedTheme);
-            return savedTheme || "dark";
-        })(),
+   mode: (() => {
+    if (typeof window === "undefined") {
+        return "dark";
+    }
+
+    const savedTheme = localStorage.getItem("theme");
+    console.log("INIT THEME:", savedTheme);
+
+    return savedTheme || "dark";
+})(),
     //   isLoading: localStorage.getItem("loading") === "true",
       search: "",
       isLoading: true,
@@ -489,6 +498,10 @@ console.log(document.cookie);
 
 showHideToggleCookiePreferencesModal,
     applyTheme() {
+
+    if (typeof window === "undefined") return;
+
+
         console.log("COMPONENT UID:", this._.uid);
         console.log("PATH:", window.location.pathname);
         console.log("MODE:", this.mode);
@@ -656,7 +669,7 @@ changeMode(newMode) {
       this.isOpen_Menu = !this.isOpen_Menu;
     },
     logoutUser() {
-      this.$inertia.post(this.route("logout"));
+      router.post(this.route("logout"));
     },
 
     startSearchTimeout() {

@@ -16,12 +16,20 @@ export default {
     props: {
         big: Boolean,
         bigger: Boolean,
-        dma: {type:[String,Boolean]},
         nohome: Boolean,
         xis_enabled:{
             type:[Boolean,Number],
             default:true,
         },
+        dma:{
+            type:[String,Boolean,Array,Object],
+            default:null,   
+        },
+    },
+    data(){
+        return {
+            dmaa:'',
+        }
     },
     computed: {
         localDma() {

@@ -46,7 +46,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-
+use App\Models\Settings;
     use App\Services\SimpleMailService;
 use App\Console\Commands\ReturnGenerateSitemap;
 use App\Models\User;
@@ -58,8 +58,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CookieController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\RightsController;
-use App\Helpers\Settings;
-
+// use App\Helpers\Settings;
 use Illuminate\Http\Request;
 use App\Mail\CommentMail;
 use App\Mail\ContactMail;
@@ -84,6 +83,8 @@ GlobalController::SetDomain();
 // Route::middleware(['checksubd:ab,asario'])->group(function () {
     // Route::middleware('checksubd:ab,asario')->group(function () {
         // Route::get('/countpixel-{url}-{route}-{page?}', [CountPixelController::class, 'track'])->name('countpixel');
+        Route::get('/pwd', [HomeController::class, 'show_pwd'])->name('home.pwd');
+        Route::post('/pwd', [HomeController::class, 'home_PWD']);
 
         Route::get(
         '/countpixel/{url}/{route}/{page?}',
@@ -102,34 +103,101 @@ GlobalController::SetDomain();
             return response($xml)
                 ->header('Content-Type', 'application/xml');
         });
-        Route::post('/api/log-js-error', function (\Illuminate\Http\Request $request) {
+
+
+
+Route::post('/api/log-js-error', function (Request $request) {
 
     $ua = strtolower($request->userAgent() ?? '');
+    $message = $request->input('message', '');
 
-    // Bots, Crawler, Scanner ignorieren
+    /*
+    |--------------------------------------------------------------------------
+    | Bots / Scanner ignorieren
+    |--------------------------------------------------------------------------
+    */
     if (preg_match('/bot|crawl|spider|bingbot|googlebot|slurp|duckduckbot|yandex|baiduspider|facebookexternalhit|twitterbot|uptimerobot|headless|curl|wget/i', $ua)) {
         return response()->noContent();
     }
 
-    // Nur Requests akzeptieren, die von der eigenen Website kommen
-    $referer = $request->header('referer', '');
+    /*
+    |--------------------------------------------------------------------------
+    | Browser-Noise ignorieren
+    |--------------------------------------------------------------------------
+    */
+    $ignoreMessages = [
+        'Unable to preload CSS',
+        'ResizeObserver loop limit exceeded',
+        'ResizeObserver loop completed',
+        'Script error.',
+        'Non-Error promise rejection captured',
+    ];
+
+    foreach ($ignoreMessages as $ignore) {
+        if (str_contains($message, $ignore)) {
+            return response()->noContent();
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Browser Extensions ignorieren
+    |--------------------------------------------------------------------------
+    */
+    $stack = $request->input('stack', '');
 
     if (
-        empty($referer) ||
-        !str_contains(parse_url($referer, PHP_URL_HOST) ?? '', $request->getHost())
+        str_contains($stack, 'chrome-extension://') ||
+        str_contains($stack, 'moz-extension://') ||
+        str_contains($stack, 'safari-web-extension://')
     ) {
         return response()->noContent();
     }
 
-    \Log::error('[CE]', [
-        'user_id'   => auth()->id(),
-        'url'       => $request->fullUrl(),
-        'path'      => $request->path(),
-        'referer'   => $referer,
-        'ip'        => $request->ip(),
-        'method'    => $request->method(),
-        'userAgent' => $request->userAgent(),
-        'payload'   => $request->all(),
+    /*
+    |--------------------------------------------------------------------------
+    | Referer prüfen
+    |--------------------------------------------------------------------------
+    */
+    $referer = $request->header('referer', '');
+
+    if (empty($referer)) {
+        return response()->noContent();
+    }
+
+    $refererHost = parse_url($referer, PHP_URL_HOST);
+    $requestHost  = $request->getHost();
+
+    if (!$refererHost || $refererHost !== $requestHost) {
+        return response()->noContent();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Eigentliche Fehlerseite
+    |--------------------------------------------------------------------------
+    */
+    $page = $request->input('url', '');
+
+    \Log::error('[JS CONSOLE]', [
+        'user_id'     => auth()->id(),
+        'page'        => $page,
+        'page_host'   => parse_url($page, PHP_URL_HOST),
+        'page_path'   => parse_url($page, PHP_URL_PATH),
+        'page_query'  => parse_url($page, PHP_URL_QUERY),
+
+        'referer'     => $referer,
+        'ip'          => $request->ip(),
+        'method'      => $request->method(),
+        'user_agent'  => $request->userAgent(),
+
+        'message'     => $message,
+        'filename'    => $request->input('filename'),
+        'lineno'      => $request->input('lineno'),
+        'colno'       => $request->input('colno'),
+        'stack'       => $stack,
+
+        'payload'     => $request->all(),
     ]);
 
     return response()->json([
@@ -273,8 +341,9 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':pna,paulnadler')->gr
 Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
 Route::get('/grafitti', [HomeController::class, 'home_grafitti'])->name('home.pna.grafitti');
 Route::get('/portraits', [HomeController::class, 'home_portraits'])->name('home.pna.portraits');
-Route::get('/Kontakt', [HomeController::class, 'home_contacts'])->name('home.pna.contacts');
-Route::get('/home/imprint', [HomeController::class, 'home_imprint_pna'])->name('home.imprint.pna');
+Route::get('/kontakt', [HomeController::class, 'contacts_pna'])
+    ->name('home.pna.contacts');
+Route::get('/home/imprint_pna', [HomeController::class, 'home_imprint_pna'])->name('home.imprint.pna');
 // Route::get('/home/privacy', [HomeController::class, 'home_privacy'])->name('home.privacy.pnad');
 // Route::get('/home/show/pictures3/{slug}', [HomeController::class, 'home_images'])->name('home.images.gallery');
 
@@ -287,6 +356,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     Route::get("/       ",function(){
         return "ASD";
     });
+    Route::get('/Kontakt', [HomeController::class, 'home_contacts'])->name('home.ab.contacts_alt');
     Route::get('register', [RegisteredUserController::class, 'create'])
     // ->middleware(HandleSocialitePlusProviders::class)
     ->name('register');
@@ -1017,8 +1087,11 @@ Route::get('/tables/sort-enumis/{table}/{name}', [TablesController::class, 'getO
     if (!request()->expectsJson() && !request()->is('pixel*')) {
         CountPixelController::o404();
     }
+    $doma = GetDom();
 
-    return Inertia::render('Homepage/NoPageFound_'.SD());
+
+
+    return Inertia::render('Homepage/NoPageFound_'.$doma);
 });
 
 

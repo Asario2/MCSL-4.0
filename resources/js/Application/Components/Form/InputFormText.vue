@@ -9,6 +9,7 @@
       </label>
       <input
         :type="type ?? 'text'"
+        :autocomplete="autocomplete ? 'on' : 'off'"
         :id="id"
         :name="name"
         :placeholder="placeholder"
@@ -38,13 +39,27 @@
       id: { type: String, required: true },
       name: { type: String, required: true },
       modelValue: { type: [String, Number], default: '' },
-      placeholder: { type: String, default: '' },
+    //   placeholder: { type: String, default: '' },
       required: { type: [String, Boolean], default: '' },
-      disabled: Boolean,
-          type: {
-        type: String,
-        default: 'text'
+      disabled: {
+        type:[String,Object,Array,Number,Boolean],
+        default: false,
+      },
+    type:{
+        type:[String,Object,Array,Number,Boolean],
+        required:false,
+
+    },
+     placeholder:{
+        type:[String,Object,Array,Number,Boolean],
+        required:false,
+
+    },
+    autocompletec:{
+        type:Boolean,
+        default:false,
     }
+
     },
   };
   </script>

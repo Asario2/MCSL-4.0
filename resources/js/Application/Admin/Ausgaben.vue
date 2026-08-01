@@ -165,7 +165,7 @@ export default {
   },
   watch: {
 //   'form.search': throttle(function () {
-//     this.$inertia.get(
+//     router.get(
 //       this.route('home.images.gallery', {
 //         slug: this.ocont?.slug,
 //     }),
@@ -180,7 +180,7 @@ export default {
 
 
 //   'form.search': throttle(function (val) {
-//     this.$inertia.get(
+//     router.get(
 //       this.route('home.images.gallery'),
 //       {
 //         slug: this.ocont.slug,

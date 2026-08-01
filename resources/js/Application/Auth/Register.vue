@@ -195,7 +195,7 @@ export default defineComponent({
             // this.loading = true;
             this.loadingText = "Die Registierung wird durchgeführt!";
             //
-            this.$inertia.post(this.route(routeRegister), this.form, {
+            router.post(this.route(routeRegister), this.form, {
                 onFinish: () => {
                     this.loading = false;
                     //

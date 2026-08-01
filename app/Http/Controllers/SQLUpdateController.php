@@ -365,7 +365,7 @@ class SQLUpdateController extends Controller
 
 public function diffTable(string $table, string $domain)
 {
-    \Log::info("RUNNED");
+    // \Log::info("RUNNED");
     $this->domset     = $this->GetDBCon(1, $domain);
     $this->domset_of  = $this->GetDBCon(0, $domain);
     $_SESSION['domain'] = $domain;

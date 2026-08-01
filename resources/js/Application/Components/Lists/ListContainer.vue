@@ -123,7 +123,7 @@
     import throttle from "lodash/throttle";
     // import { hasRight } from "@/utils/rights";
     import axios from "axios";
-    import { Inertia } from '@inertiajs/inertia'
+    import { router } from '@inertiajs/vue3'
     //import { safeInertiaGet,safeInertiaVisit } from '@/utils/inertia';
 
     export default {
@@ -155,12 +155,12 @@
             routeIndex: { type: String, default: null },
             routeParamName: { type: [Number, String], default: "table" },
             routeParamValue: { type: [Number, String], default: null },
-            searchFilter: { type: Boolean, default: true },
+            searchFilter: { type: [String,Boolean,Number,Array,Object], default: true },
             searchText: { type: String, default: "Hier kannst du den Suchbegriff eingeben" },
             searchValue: { type: String, default: null },
             showOn: { type: Boolean, default: false },
             routeShow: { type: String },
-            routeDelete: { type: String },
+            // routeDelete: { type: String },
             deleteOn: { type: Boolean, default: false },
             editOn: { type: Boolean, default: false },
             routeEdit: { type: String },
@@ -168,7 +168,7 @@
             deleteDescription: { type: String, default: "Datensatz löschen" },
             editDescription: { type: String, default: "Daten ändern" },
             errors: { type: Object, default: () => ({}) },
-            tableq: { type: String },
+            tableq: { type: String,default:'' },
 
         },
         async mounted() {
@@ -279,7 +279,7 @@
                 this.seaRoute = "admin.tables.show"
                 this.tab = CleanTable();
             }
-        this.$inertia.visit(
+        router.visit(
             this.route(this.seaRoute,this.tab),
             {
             method: "get",
@@ -442,7 +442,7 @@
                         window.toastBus.emit( response.data); // ← erwartet { status: "...", message: "..." }
                         this.$emit("deleted");
 
-                            this.$inertia.reload();
+                            router.relaod();
                         })
                         .catch(error => console.error("Fehler beim Löschen2:", error));
                 }
@@ -455,7 +455,7 @@
     };
     },
             editDataRow(id) {
-                Inertia.visit(`/admin/tables/edit/${id}/${this.tableq}`, {
+                router.visit(`/admin/tables/edit/${id}/${this.tableq}`, {
                 preserveScroll: true,
                 preserveState: false, // <- Wichtig: sorgt für kompletten reload
                 });

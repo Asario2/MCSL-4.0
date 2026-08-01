@@ -14,6 +14,7 @@
                         'hasyear',"hasryear"];
         public static array $excl_heads = ["date_begin"];
         public static array $excl_disabled = ['id'];
+        public static array $doms_avail = ["ab","chh","dag","mfx","pna"];
         public static array $excl_datefields  = []; //['birthday','created_at'];
         public static array $exl = [
         'text' => 'Text',
@@ -510,6 +511,7 @@ public static array $image_sizes =
     24 => 'ab_image_categories_updated_at',
     25 => 'pna_blog_authors_updated_at',
     26 => 'ab_contacts_updated_at',
+    27 => 'ab_blogs_updated_at',
 ];
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",

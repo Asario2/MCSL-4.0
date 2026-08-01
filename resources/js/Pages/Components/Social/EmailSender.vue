@@ -101,7 +101,7 @@
 <script>
 import { rumLaut, nl2br } from "@/helpers";
 // import { router } from '@inertiajs/vue3';
-import { Inertia } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3'
 
 import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import SelectRecipient from "@/Application/Components/Social/SelectRecipient.vue";
@@ -179,7 +179,7 @@ export default {
             signaturId: this.signaturId,
             signatureText: this.signatureText,
         };
-          Inertia.post('/email/preview/', formData);
+          router.post('/email/preview/', formData);
 
 //         console.log(formData);
     },

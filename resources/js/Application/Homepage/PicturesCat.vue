@@ -101,7 +101,7 @@ p    <template>
                         handler: throttle(function () {
                             const query = pickBy(this.form);
 
-                            this.$inertia.get(
+                            router.get(
                                 this.route('home.images.search.cat'),
                                 query,
                                 {

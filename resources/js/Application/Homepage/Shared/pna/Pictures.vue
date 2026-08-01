@@ -9,7 +9,7 @@
     </div>
             <div @click="handleBodyClick">
             <div v-if="ocont?.id" class="p-4 bg-layout-sun-200 dark:bg-layout-night-200">
-                
+
                 <hgroup>
 
                 <h1 class="text-2xl font-bold">{{ decodeEntities(ocont?.slug) }}</h1>
@@ -222,7 +222,7 @@
     },
     watch: {
     'form.search': throttle(function () {
-        this.$inertia.get(
+        router.get(
         this.route('home.pna.' + CleanTable(), {
             slug: this.ocont && this.ocont?.slug ? this.ocont?.slug : '',
         }),
@@ -237,7 +237,7 @@
 
 
     //   'form.search': throttle(function (val) {
-    //     this.$inertia.get(
+    //     router.get(
     //       this.route('home.images.gallery'),
     //       {
     //         slug: this.ocont?.slug,

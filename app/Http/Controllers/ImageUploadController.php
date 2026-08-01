@@ -207,12 +207,12 @@ class ImageUploadController extends Controller
         $fullPath = $fileName; //"/images/_{$subdomain}/{$table_ori}/{$column}/{$fileName}";
     }
 
-    \Log::info('Upload completed successfully', [
-        'fileName' => $fileName,
-        'fullPath' => $fullPath,
-        'Message' => $Message,
-        'final_fileName' => $fileName // Sollte MD5 sein
-    ]);
+    // \Log::info('Upload completed successfully', [
+    //     'fileName' => $fileName,
+    //     'fullPath' => $fullPath,
+    //     'Message' => $Message,
+    //     'final_fileName' => $fileName // Sollte MD5 sein
+    // ]);
     $rp3 = "http://".$_SERVER['HTTP_HOST'].$rp2;
     ActLog($request,"image_upload","<a href='".$rp3."' target='_blank'>$rp3</a><br /><img src='".$rp2."' />",$request->id,$table);
     return response()->json([

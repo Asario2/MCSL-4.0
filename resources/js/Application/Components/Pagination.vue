@@ -74,7 +74,7 @@ export default {
 
         const finalUrl = this.buildUrl(link);
 
-        this.$inertia.visit(finalUrl, {
+        router.visit(finalUrl, {
             preserveState: false,
             replace: false,
         });
@@ -92,7 +92,7 @@ export default {
 //   }
 // //   alert(this.basePath);
 // //   return "";
-//   this.$inertia.visit(this.basePath + url.pathname + url.search, {
+//   router.visit(this.basePath + url.pathname + url.search, {
 //     preserveState: false,
 //   });
 // }
@@ -116,7 +116,7 @@ export default {
 // }
 //         const url = this.basePath + link.url + this.searchString;
 
-//       this.$inertia.visit(url, {
+//       router.visit(url, {
 //         preserveState: false,
 //         replace: false,
 //       });

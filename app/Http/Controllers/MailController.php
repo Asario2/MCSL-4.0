@@ -424,7 +424,7 @@ $mailPassword = env('MAIL_PASSWORD');
 
             $res_alt = DB::table('contacts')->where('email_hash', hash('sha256', trim(strtolower($email))))->select("id","uhash","email")->first();
 
-            \Log::info("res: ", (array) $res_alt);
+            // \Log::info("res: ", (array) $res_alt);
 
             if (empty($res_alt->uhash) && !empty($res_alt->id))
             {

@@ -39,6 +39,7 @@
   import PageTitle from "@/Application/Components/Content/PageTitle.vue";
   import PageParagraph from "@/Application/Components/Content/PageParagraph.vue";
   import { CleanId } from '@/helpers';
+  import backBtn from "@/Application/Components/Form/BackBtn.vue";
   import emailview from "@/Application/Components/Form/email.vue";
   import editbtns from "@/Application/Components/Form/editbtns.vue";
 
@@ -46,6 +47,7 @@
     name: "Homepage_ImageShow",
     components: {
       Layout,
+      backBtn,
       PageContent,
       PageTitle,
       PageParagraph,

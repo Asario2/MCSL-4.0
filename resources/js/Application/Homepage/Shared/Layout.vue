@@ -365,7 +365,7 @@
         import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
         import LinkHeader from "@/Application/Shared/LinkHeader.vue";
         import BrandFooter from "@/Application/Shared/BrandFooter.vue";
-
+        import { router } from '@inertiajs/vue3'
         import LinkFooter from "@/Application/Shared/LinkFooter.vue";
         import IconMenu from "@/Application/Components/Icons/Menu.vue";
         import Toast from "@/Application/Components/Content/Toast.vue";
@@ -456,7 +456,7 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
             headerDescription: this.$page?.props?.description ?? "",
             // headerUrl: this.$page?.props?.url ?? null,
             headerImage: this.$page?.props?.image ?? null,
-            mode: typeof window !== "undefined" ? localStorage.theme : "dark",
+            mode: "dark",
             isOpen_Menu: false,
             year: new Date().getFullYear(),
             pendingRequests: 0,
@@ -475,7 +475,10 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
         },
 
         async mounted() {
-
+        if (typeof window !== "undefined") {
+                this.mode = localStorage.getItem("theme") || "dark";
+                this.applyTheme();
+            }
     // window.addEventListener("loader:show", () => {
     // // this.isLoading = true;
     // });
@@ -752,7 +755,7 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
             this.isOpen_Menu = !this.isOpen_Menu;
             },
  applyTheme() {
-
+  if (typeof window === "undefined") return;
         const html =
             document.documentElement;
 
@@ -860,7 +863,7 @@ changeMode(newMode) {
     },
 //ToggleCookieLink cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900
             logoutUser() {
-            this.$inertia.post(this.route("logout"));
+            router.post(this.route("logout"));
             },
 
             startSearchTimeout() {

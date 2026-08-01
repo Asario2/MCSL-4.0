@@ -52,20 +52,21 @@ export default {
     },
     data()
     {
-            this.mod = /\/(login|register)(\/|$)/i.test(window.location.pathname)
-    ? 'light'
-    : localStorage.theme;
-                  this.mode =  this.mod ??  "light";
-          return {
-            mode: localStorage.theme || "light",
-            ab2: this.GetLogin(),
+        return{
+            mode: "light",
+            ab2: "",
         }
-
-                },
+    },
 
     mounted() {
-        if (typeof window === "undefined") return;
+    if (typeof window === "undefined") return "dark";
 
+        this.mode =
+            /\/(login|register)(\/|$)/i.test(window.location.pathname)
+                ? "light"
+                : (localStorage.getItem("theme") || "light");
+
+        this.ab2 = this.GetLogin();
 
         import("gsap").then(({ gsap }) => {
             const bg = this.$refs.bg;
@@ -88,11 +89,13 @@ export default {
 
             timeline.to({}, { duration: 30 });
         });
-
     },
     methods:{
 GetLogin()
     {
+        if (typeof window === "undefined") {
+            return "";
+        }
         const url = location.href;
         if((!url.includes("/login") && !url.includes("/forgot-password") &&
         !url.includes("/register") && !url.includes("/email/verify") &&

@@ -177,10 +177,11 @@
   import daglogo from "@/Application/Shared/daglogo.vue";
   import Dropdown from "@/Application/Components/Content/Dropdown.vue";
   import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
-  import LinkHeader from "@/Application/Shared/LinkHeader_mfx.vue";
+  import LinkHeader from "@/Application/Shared/LinkHeader.vue";
   import BrandFooter from "@/Application/Shared/BrandFooter.vue";
   import LinkFooter from "@/Application/Shared/LinkFooter.vue";
   import IconMenu from "@/Application/Components/Icons/Menu.vue";
+  import { router } from '@inertiajs/vue3'
   import IconClose from "@/Application/Components/Icons/Close.vue";
   import Toast from "@/Application/Components/Content/Toast.vue";
   import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
@@ -361,7 +362,7 @@ setup() {
 
       async logoutUser() {
         try {
-          await this.$inertia.post(this.route('logout'));
+          await router.post(this.route('logout'));
         } catch (e) {
           console.error(e);
         }

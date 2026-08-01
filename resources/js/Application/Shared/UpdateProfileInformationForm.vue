@@ -248,7 +248,7 @@ export default {
                 onSuccess: () => {
                     this.clearPhotoFileInput();
                     this.photoPreview = null;
-                    this.$inertia.reload({ only: ["auth"] });
+                    router.relaod({ only: ["auth"] });
                 },
             });
         },
@@ -271,7 +271,7 @@ export default {
                 onSuccess: () => {
                     this.photoPreview = null;
                     this.clearPhotoFileInput();
-                    this.$inertia.reload({ only: ["auth"] });
+                    router.relaod({ only: ["auth"] });
                 },
             });
         },

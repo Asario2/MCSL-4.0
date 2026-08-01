@@ -36,13 +36,13 @@ const page = usePage()
 
   export default {
 
-    name: 'InputFormText',
+    name: 'InputFormAutoVersion',
 
     inheritAttrs: false, // <-- Damit $attrs.class manuell verarbeitet werden kann
     props: {
       id: { type: String, required: true },
       name: { type: String, required: true },
-       modelValue: {
+
     modelValue: {
       type: [String, Number],
       default: null
@@ -51,10 +51,14 @@ const page = usePage()
       placeholder: { type: String, default: '' },
       required: { type: [String, Boolean], default: '' },
       disabled: Boolean,
+
+    type:{
+        type:[String,Boolean,Number,Object,Array],
+        required:false
     },
     },
     mounted() {
-   const page = usePage()
+   const page = usePage();
 
     if (!this.modelValue) {
       this.$emit('update:modelValue', page.props.version.versionnr)

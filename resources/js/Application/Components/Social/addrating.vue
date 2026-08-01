@@ -97,8 +97,8 @@
       // Bewertung aus der DB abrufen
       async fetchRating() {
         try {
-            const table = CleanTable
-            ();
+            const table = CleanTable();
+
           const response = await axios.get(`/get-rating/${table}/${this.postId}`);
           this.rating = Math.round(response.data.rating); // Rundet auf die nächste ganze Zahl
         } catch (error) {

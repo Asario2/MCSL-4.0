@@ -5,13 +5,10 @@ import { createInertiaApp, Head, Link } from '@inertiajs/vue3'
 import createServer from '@inertiajs/vue3/server'
 
 import { route as ziggyRoute, ZiggyVue } from 'ziggy-js'
+import { createPinia } from 'pinia'
 
 import Toast from './Application/Components/Content/Toast.vue'
 import { Ziggy } from './ziggy'
-
-// =====================================
-// GLOBAL SSR SAFE ZIGGY
-// =====================================
 
 // =====================================
 // GLOBAL SSR SAFE ZIGGY
@@ -25,7 +22,6 @@ globalThis.route = (
     absolute = true
 ) => {
 
-    // route() ohne Parameter
     if (!name) {
         return {
             current: () => false,
@@ -34,7 +30,6 @@ globalThis.route = (
         }
     }
 
-    // route('xyz')
     try {
         return ziggyRoute(name, params, absolute, globalThis.Ziggy)
     } catch (e) {
@@ -69,6 +64,7 @@ createServer((page) => {
         render: renderToString,
 
         resolve: (name) => {
+
             const resolvedPage =
                 pages[`./Application/${name}.vue`]
 
@@ -97,15 +93,14 @@ createServer((page) => {
                 ),
             }
 
-            // GLOBAL UPDATE
             globalThis.Ziggy = ziggy
 
-            // GLOBAL ROUTE UPDATE
             globalThis.route = (
                 name,
                 params = {},
                 absolute = true
             ) => {
+
                 try {
                     return ziggyRoute(
                         name,
@@ -114,6 +109,7 @@ createServer((page) => {
                         ziggy
                     )
                 } catch (e) {
+
                     console.error(
                         'SSR route error:',
                         name,
@@ -133,11 +129,17 @@ createServer((page) => {
             })
 
             // =====================================
+            // PINIA
+            // =====================================
+
+            const pinia = createPinia()
+
+            // =====================================
             // PLUGINS
             // =====================================
 
             app.use(plugin)
-
+            app.use(pinia)
             app.use(ZiggyVue, ziggy)
 
             // =====================================

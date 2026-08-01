@@ -30,7 +30,7 @@
 
   <script>
   export default {
-    name: 'InputFormText',
+    name: 'InputFormNewsletter',
     inheritAttrs: false, // <-- Damit $attrs.class manuell verarbeitet werden kann
     props: {
       id: { type: String, required: true },

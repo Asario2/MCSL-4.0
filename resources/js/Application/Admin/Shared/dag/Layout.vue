@@ -397,7 +397,7 @@ export default {
             try {
                 const response = await axios.get('/api/GetLastAct');
                 if (response.data.includes("admin/dashboard")) {
-                    // this.$inertia.reload();
+                    // router.relaod();
                 }
             } catch (error) {
                 if(typeof window !== "undefined")
@@ -424,7 +424,7 @@ export default {
         },
 
         logoutUser() {
-    this.$inertia.post(this.route('logout'), {
+    router.post(this.route('logout'), {
         _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     });
 }

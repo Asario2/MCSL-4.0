@@ -129,7 +129,7 @@ export default defineComponent({
             handler: throttle(function () {
                 const query = pickBy(this.form);
 
-                this.$inertia.get(
+                router.get(
                     this.route(
                         "home.userlist",
                         Object.keys(query).length ? query : { remember: "forget" },

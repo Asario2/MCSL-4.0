@@ -102,7 +102,7 @@ export default {
                 window.toastBus.emit( response.data);
 
                 // Seite neu laden
-                this.$inertia.reload();
+                router.relaod();
 
             } catch (error) {
                 console.error("Fehler beim Löschen:", error);

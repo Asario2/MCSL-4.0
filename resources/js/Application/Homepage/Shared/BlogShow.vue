@@ -34,7 +34,7 @@
 
                 <div class="space-y-2" style="z-index:100 !important;">
 
-                    <div v-if="blog.blog_category.name" class="flex flex-col items-end z-20">
+                    <div v-if="blog.blog_category?.name" class="flex flex-col items-end z-20">
                         <!-- Kategorie-Name -->
                         <div
                             class="title2 text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-800 dark:bg-primary-night-500 dark:text-primary-night-800 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"
@@ -50,8 +50,8 @@
 
                     <div class="bg-layout-sun-100 w-full dark:bg-layout-night-100 p-4 title" style="min-width:300px;">
                     <h1 class="pb-12 block w-full text-[2.78em]">
-                            {{ blog.title }}
-                            <editbtns :id="blog.id" table="blogs"></editbtns>
+                        <span v-html=" rumLaut(blog.title) "></span>
+                        <editbtns :id="blog.id" table="blogs"></editbtns>
                         </h1>
                     </div>
 
@@ -66,7 +66,7 @@
                             />
                             von
                             <a href="#author_info" class="hover:underline">{{
-                                blog.blog_author.name
+                                blog.blog_author?.name
                             }}</a>
                         </div>
                         <div>
@@ -152,7 +152,7 @@
                         <!-- Profilbild -->
                          {{ author }}
                         <img
-                              :src="'/images/_ab/users/profile_photo_path/' + blog.blog_author.img_image"
+                              :src="'/images/_ab/users/profile_photo_path/' + blog.blog_author?.img_image"
                             alt="Profilbild"
                             class="border object-cover rounded-lg w-32 h-full max-h-[300px]"
                         />
@@ -160,7 +160,7 @@
                         <!-- Textblock -->
                         <div class="flex-1">
                             <h2 id="author_info" class="font-semibold text-lg mb-2">
-                                Informationen zu {{ blog.blog_author.name }}
+                                Informationen zu {{ blog.blog_author?.name }}
                             </h2>
 
                             <div
@@ -219,13 +219,21 @@ export default {
             type: String,
         },
         author:[Array,Object],
+        dmaa:{
+            type:[Array,Object,String,Number],
+            default:null,
+            },
+            dma:{
+            type:[Array,Object,String,Number],
+            default:null,
+            }
     },
 
     data() {
         return {
             currentTime: 0,
             seekValue: 0,
-            dmaa:'',
+
         };
     },
     computed: {

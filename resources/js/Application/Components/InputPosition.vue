@@ -28,7 +28,7 @@
     name: "InputPosition",
     props: {
       entries: { type: Array, required: true }, // [{id, title, position}, ...]
-      currentPosition: { type: Number, default: 1  },
+      currentPosition: { type: [String,Number], default: 1  },
       currentId: { type: Number, required: true },
       name: { type: String, default: "position" },
     },

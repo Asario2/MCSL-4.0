@@ -101,7 +101,7 @@
     import { defineComponent, defineAsyncComponent } from "vue";
     import {rumLaut,SD } from "@/helpers";
     const Layout = defineAsyncComponent(() =>
-        import(`@/Application/Homepage/Shared/${SD()}/Layout.vue`)
+        import(`@/Application/Homepage/Shared/pna/Layout.vue`)
     );
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import AiButton from "@/Application/Components/Content/AiButton.vue";
@@ -114,7 +114,7 @@
     import emailview from "@/Application/Components/Form/email.vue";
     import axios from "axios";
     export default defineComponent({
-        name: "Homepage_Home",
+        name: "Homepage_Contacts_pna",
 
         components: {
             Layout,
@@ -129,7 +129,11 @@
             news:[Array,Object],
             text: [Array,Object,String],
             contacts: [Array,Object,String],
-            dmaa:[Array,Object,String,Number]
+            dmaa:[Array,Object,String,Number],
+            dma:{
+            type:[Array,Object,String,Number],
+            default:null,
+            }
         },
         data() {
         return {

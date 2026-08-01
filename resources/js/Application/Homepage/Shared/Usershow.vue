@@ -6,22 +6,22 @@
         <!-- Das Bild des Blog-Posts -->
         <div class="blog-container mh_65 lg:col-span-7" style="">
             <Link
-        :href="route('home.blog.show', blog.autoslug)" class="block">
+        :href="route('home.blog?.show', blog?.autoslug)" class="block">
 
         <img
-            :src="`/images/blogs/${blog.url}`"
-            :alt="blog.name"
+            :src="`/images/blogs/${blog?.url}`"
+            :alt="blog?.name"
             width="480"
             height="360"
             style="max-height:390px"
-            :class="['object-cover w-full rounded lg:col-span-7 object-cover rounded bg-layout-sun-500 dark:bg-layout-night-500', blog.madewithai ? 'ai-image-corner' : '']"
+            :class="['object-cover w-full rounded lg:col-span-7 object-cover rounded bg-layout-sun-500 dark:bg-layout-night-500', blog?.madewithai ? 'ai-image-corner' : '']"
 
         />
 
         </Link>
         <div class="relative">
         <!-- Der AI-Button wird hier angezeigt -->
-        <div v-if="blog.madewithai">
+        <div v-if="blog?.madewithai">
             <AiButton :dma="dmaa" :big="true"></AiButton>
         </div>
     </div>
@@ -29,14 +29,14 @@
 
         <div id="teaser-img" class="p-6 space-y-2 lg:col-span-5 overfl" style="">
             <Link
-        :href="route('home.blog.show', blog.autoslug)">
+        :href="route('home.blog?.show', blog?.autoslug)">
             <!-- Blog-Kategorie -->
             <div class="flex justify-end items-start">
                 <div
-                    v-if="blog.category_name"
+                    v-if="blog?.category_name"
                     class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"
                 >
-                    {{ blog.category_name }}
+                    {{ blog?.category_name }}
                 </div>
             </div>
 
@@ -44,36 +44,36 @@
             <h2
                 class="text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline"
             >
-                {{ blog.title }}
+                {{ blog?.title }}
             </h2>
 
             <!-- Datum und Autor -->
             <div class="flex justify-between items-center">
                 <div class="text-xs text-layout-sun-600 dark:text-layout-night-600 py-2">
-                    <display-date :value="blog.blog_date" :time-on="false" />
+                    <display-date :value="blog?.blog_date" :time-on="false" />
                     von
-                    <span>{{ blog.author_name }}</span>
+                    <span>{{ blog?.author_name }}</span>
                 </div>
                 <div class="rl">
-                    <editbtns :id="blog.id" table="blogs"></editbtns>
+                    <editbtns :id="blog?.id" table="blogs"></editbtns>
                 </div>
             </div>
 
 
             <!-- Blog-Zusammenfassung -->
-            <div v-html="blog.summary" class="pb-6"></div>
+            <div v-html="blog?.summary" class="pb-6"></div>
 
             <!-- Lesezeit anzeigen -->
             <div>
                 <display-number
-                :value="blog.reading_time"
+                :value="blog?.reading_time"
                     :after-digits="0"
                     value-unit="Minuten Lesezeit"
                     value-single-unit="Minute Lesezeit"
                 ></display-number>
             </div>
         </Link>
-            <socialButtons  :name="blog?.title" :postId="blog.id" :title="'Benutzer '+blog.title" :slug="blog.autoslug" :nostars="true" />
+            <socialButtons  :name="blog?.title" :postId="blog?.id" :title="'Benutzer '+blog?.title" :slug="blog?.autoslug" :nostars="true" />
         </div>
     </div>
 </template>
@@ -114,6 +114,14 @@ export default {
         // deleteRights:{
         //     type: Number,
         // },
+        dmaa:{
+            type:[Array,Object,String,Number],
+            default:null,
+            },
+            dma:{
+            type:[Array,Object,String,Number],
+            default:null,
+            }
     },
     data(){
         return {

@@ -356,17 +356,17 @@ class PMController extends Controller
         $iid = DB::table("private_messages")->where("id",$id)->value("private_messages_text_id AS iid");
 
         $res2 = DB::table("private_messages")->where('private_messages_text_id',$iid)->count();
-        \Log::info([
-    'delete_id' => $id,
-    'pm' => DB::table('private_messages')
-        ->where('id',$id)
-        ->first()
-]);
-        \Log::info([
-    'remaining' => DB::table('private_messages')
-        ->where('private_messages_text_id',$iid)
-        ->get()
-]);
+//         \Log::info([
+//     'delete_id' => $id,
+//     'pm' => DB::table('private_messages')
+//         ->where('id',$id)
+//         ->first()
+// ]);
+//         \Log::info([
+//     'remaining' => DB::table('private_messages')
+//         ->where('private_messages_text_id',$iid)
+//         ->get()
+// ]);
         $res = DB::table("private_messages")->where('id', $id)->delete();
 
         if(@$res2 < 2){

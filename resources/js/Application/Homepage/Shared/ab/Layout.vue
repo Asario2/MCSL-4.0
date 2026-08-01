@@ -346,7 +346,7 @@
     </template>
     <script>
     import axios from "axios";
-    import { useLoadingStore } from '@/loading';
+    // import { useLoadingStore } from '@/loading';
     import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
     import IconClose from "@/Application/Components/Icons/Close.vue";
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
@@ -358,14 +358,13 @@
     import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
     import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
     import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
-    import { Inertia } from '@inertiajs/inertia'
+    import { router } from '@inertiajs/vue3'
     import IconPM from "@/Application/Components/Icons/IconPM.vue";
     import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
     import BrandFooter from "@/Application/Shared/BrandFooter.vue";
     import Loader from "@/Application/Components/Loader.vue";
     import LinkFooter from "@/Application/Shared/LinkFooter.vue";
-    import { router } from '@inertiajs/vue3'
-    import IconMenu from "@/Application/Components/Icons/Menu.vue"
+       import IconMenu from "@/Application/Components/Icons/Menu.vue"
     import Toast from "@/Application/Components/Content/Toast.vue";
     import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
     import { SD,GetProfileImagePath,CheckTRights } from '@/helpers';
@@ -520,7 +519,7 @@
     handler: throttle(function () {
       const query = pickBy(this.form); // Entfernt leere Felder
 
-      Inertia.get(
+      router.get(
         this.route(
           "home.index",
           Object.keys(query).length ? query : { search: null, table: this.table } // leere Suche zurücksetzen
@@ -729,7 +728,8 @@
         // },
 
         logoutUser() {
-        this.$inertia.post(this.route("logout"));
+            console.log("Logout geklickt");
+            router.post('/logout');
         },
 
         // Startet 3-Sekunden-Timeout, wenn der Nutzer mit Tippen aufhört

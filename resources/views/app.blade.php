@@ -80,8 +80,9 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
 @endphp
 
 <link rel="canonical" href="{{ $canonical }}">
-
-    <script>
+<script>
+globalThis.APP_URL = "{{ request()->getSchemeAndHttpHost() }}";
+    
 
         if (typeof global === 'undefined') {
             window.global = window;

@@ -128,7 +128,7 @@ watch: {
     form: {
       handler: throttle(function () {
         const query = pickBy(this.form, v => v != null && v !== '');
-        this.$inertia.get(
+        router.get(
         this.route("home.publication"),
         query,
         {

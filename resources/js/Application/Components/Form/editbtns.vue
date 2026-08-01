@@ -102,7 +102,7 @@
             );
     //         console.log(response.data);
             window.toastBus.emit(response.data);
-            this.$inertia.reload();
+            router.relaod();
         } catch (err) {
             console.error("Fehler beim Löschen:", err);
         }

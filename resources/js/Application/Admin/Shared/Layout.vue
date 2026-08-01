@@ -367,7 +367,7 @@ import Dropdown from "@/Application/Components/Content/Dropdown.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
 import NavLink from "@/Application/Components/Content/NavLink.vue";
 import ResponsiveNavLink from "@/Application/Components/Content/ResponsiveNavLink.vue";
-
+import { router } from '@inertiajs/vue3'
 import FooterGrid from "@/Application/Components/Content/FooterGrid.vue";
 
 export default {
@@ -424,7 +424,7 @@ export default {
         logoutUser() {
             let routeLogout = "logout";
             //
-            this.$inertia.post(this.route(routeLogout));
+            router.post(this.route(routeLogout));
         },
     },
 };
