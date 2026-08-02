@@ -363,3 +363,4 @@
 ![Version](https://img.shields.io/badge/version-6.17.4-orange) Hotifx - fixed SD Handling (#565)  
 ![Version](https://img.shields.io/badge/version-6.18.0-orange) Feature - Add New Page "pna" (#540)  
 ![Version](https://img.shields.io/badge/version-6.19.9-orange) Hotfix - Fixed bug in table sync (#567)  
+![Version](https://img.shields.io/badge/version-6.20.7-orange) Hotfix - fixed naming of Upoaded Files (#568)  
