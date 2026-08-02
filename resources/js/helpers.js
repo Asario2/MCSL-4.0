@@ -578,18 +578,19 @@ export function showHideToggleCookiePreferencesModal() {
 export function CheckOL() {
     return !window.location.host.includes("test.mcs");
 }
+import { usePage } from '@inertiajs/vue3';
+
 export function SD(pn = '') {
-    // Hostname ohne www.
-    // if (typeof window === 'undefined') return '';
 
-    let host = "";
-    host = globalThis.APP_HOST;
-    let subb = host;
+    const props =
+        globalThis?.page?.props ??
+        {};
 
+    let subb =
+        props.sd ??
+        props.subdomain ??
+        'ab';
 
-
-
-    // Mapping
     const pm = {
         ab: "Asarios Blog",
         dag: "Monika Dargies",
@@ -599,50 +600,77 @@ export function SD(pn = '') {
         pna: "Paul Nadler",
     };
 
-    // Switch-Mapping wie in PHP
-    switch (subb) {
-        case "asario":
-            subb = "ab";
-            break;
-        case "monikadargies":
-            subb = "dag";
-            break;
-        case "marblefx":
-            subb = "mfx";
-            break;
-        case "mjs":
-            subb = "mjs";
-            break;
-        case "ra-c-henning":
-            subb = "chh";
-            break;
-        case "paulnadler":
-            subb = "pna"
-        break;
-        case "localhost":
-		case "test.mcs":
-        case "241":
-        case "217":
-            subb = "ab";
-            break;
-        default:
-            // bleibt wie es ist
-            break;
-    }
-
-    // Falls leer → Standard
-    if (!subb) {
-        subb = "ab";
-    }
-
-    // Wenn kein Parameter: subdomain-key zurückgeben
-    if (!pn) {
-        return subb;
-    }
-
-    // Ansonsten den gemappten Namen zurückgeben
-    return pm[subb] || subb;
+    return pn
+        ? (pm[subb] || subb)
+        : subb;
 }
+// export function SD(pn = '') {
+//     // Hostname ohne www.
+//     // if (typeof window === 'undefined') return '';
+
+//     let host = "";
+//     host = globalThis.APP_HOST;
+//     let subb = host;
+
+
+
+
+//     // Mapping
+//     const pm = {
+//         ab: "Asarios Blog",
+//         dag: "Monika Dargies",
+//         mfx: "MarbleFX",
+//         mjs: "Mitja Schult",
+//         chh: "Rechtsanwalt Christian Henning",
+//         pna: "Paul Nadler",
+//     };
+
+//     // Switch-Mapping wie in PHP
+//     switch (subb) {
+//         case "asario":
+//             subb = "ab";
+//             break;
+//         case "monikadargies":
+//             subb = "dag";
+//             break;
+//         case "marblefx":
+//             subb = "mfx";
+//             break;
+//         case "mjs":
+//             subb = "mjs";
+//             break;
+//         case "ra-c-henning":
+//             subb = "chh";
+//             break;
+//         case "paulnadler":
+//             subb = "pna"
+//         break;
+//         case "localhost":
+// 		case "test.mcs":
+//         case "241":
+//         case "217":
+//             subb = "ab";
+//             break;
+//         default:
+//             // bleibt wie es ist
+//             break;
+//     }
+
+//     // Falls leer → Standard
+//     if (!subb) {
+//         subb = "ab";
+//     }
+//     console.log("APP_HOST:", globalThis.APP_HOST);
+//     console.log("subb:", subb);
+//     console.log("SD(1):", pm[subb] || subb);
+//     // Wenn kein Parameter: subdomain-key zurückgeben
+//     if (!pn) {
+//         return subb;
+//     }
+
+//     // Ansonsten den gemappten Namen zurückgeben
+//     return pm[subb] || subb;
+// }
 
 export function ucf(str) {
     // Teilt den String an den Unterstrichen
@@ -821,6 +849,7 @@ export function rumLaut(input, table = '') {
     if (str === null || str === undefined) return '';
     str = String(str);
   }
+    str = String(str).replace(/\\(.)/g, "$1");
     // 1. Regex: Entferne <br> nach </li> und vor <li>
     str = str.replace(/<\/li>\s*<br\s*\/?>/gi, '</li>');
     str = str.replace(/<li>\s*<br\s*\/?>/gi, '<li>');

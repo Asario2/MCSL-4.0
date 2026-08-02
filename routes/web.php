@@ -353,9 +353,7 @@ Route::get('/home/imprint_pna', [HomeController::class, 'home_imprint_pna'])->na
 //     AB- Asarios BLog
 //
 Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(function () {
-    Route::get("/       ",function(){
-        return "ASD";
-    });
+
     Route::get('/Kontakt', [HomeController::class, 'home_contacts'])->name('home.ab.contacts_alt');
     Route::get('register', [RegisteredUserController::class, 'create'])
     // ->middleware(HandleSocialitePlusProviders::class)

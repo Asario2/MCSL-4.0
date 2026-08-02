@@ -254,7 +254,7 @@ window.addEventListener(
 
 
 createInertiaApp({
-    title: title => `${title} - ${SD(1)}`,
+    title: title => title,
 
     resolve: async (name) => {
 
@@ -271,6 +271,13 @@ createInertiaApp({
 },
 
     setup({ el, App, props, plugin }) {
+
+        // SSR/browser helper context
+        globalThis.page = props;
+
+        if (typeof window !== 'undefined') {
+            window.page = props;
+        }
 
         if (!el) {
             console.error("Inertia mount Element fehlt!");

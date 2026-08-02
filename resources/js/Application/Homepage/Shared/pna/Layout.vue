@@ -286,9 +286,7 @@
                     <li>
                       <link-footer name="Login" :route-name="route('login')"></link-footer>
                     </li>
-                    <li v-if="SD() == 'ab'">
-                      <link-footer  name="Registrierung" :route-name="route('register')"></link-footer>
-                    </li>
+
                   </ul>
                 </div>
               </div>
@@ -700,10 +698,7 @@ changeMode(newMode) {
 border-color:#1f2937;
 }
 @media (min-width: 1023px){
-.trans{
-    /* background: linear-gradient(to right, #1a0a00, #1a0a00, #4d3213); */
 
-}
 }
 .trans2{
     background-color:rgba(0,0,0) !important;

@@ -8,7 +8,7 @@
             <div v-for="(quoteItem, index) in quotes"
                 :key="index"
                 class="p-2 font-bold rounded bg-layout-sun-1000 dark:bg-layout-night-200">
-                <span v-html="rumLaut(quoteItem.text)"></span>
+                <span v-html="rumLaut((quoteItem.text))"></span>
                 <p class="text-gray-400" v-html="rumLaut(quoteItem.author)"></p>
             </div>
         </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { rumLaut } from "@/helpers";
 export default {
     name: "poems",
     props: {
@@ -26,10 +27,10 @@ export default {
             type: Array,
             required: true
         },
-        rumLaut: {
-            type: Function,
-            required: true
-        }
+    },
+    methods:{
+        rumLaut,
+
     }
 };
 </script>

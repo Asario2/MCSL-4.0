@@ -262,9 +262,6 @@
                     <li>
                       <link-footer name="Login" :route-name="route('login')"></link-footer>
                     </li>
-                    <li v-if="SD() == 'ab'">
-                      <link-footer  name="Registrierung" :route-name="route('register')"></link-footer>
-                    </li>
                   </ul>
                 </div>
               </div>

@@ -135,7 +135,8 @@ class GlobalController extends Controller
                    "dag"=>"Monika Dargies",
                     "mfx"=>"MarbleFX",
                     "mjs"=>"Mitja Schult",
-                    "chh"=>"Rechtsanwalt Christian Henning"];
+                    "chh"=>"Rechtsanwalt Christian Henning",
+                    "pna" => "Paul Nadler"];
             switch($subb){
                 case "asario":
                     $subb = "ab";

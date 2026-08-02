@@ -36,7 +36,7 @@ export default {
 
   data() {
     return {
-      processedHtml: "" // finaler HTML-Text mit Placeholder
+     // processedHtml: "" // finaler HTML-Text mit Placeholder
     };
   },
 computed: {

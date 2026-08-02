@@ -86,7 +86,8 @@
                                         :route-name="route('login')"
                                     ></link-footer>
                                 </li>
-                                <li>
+                                <li v-if="SD() == 'ab'">
+
                                     <link-footer
                                         name="Register"
                                         :route-name="route('register')"
@@ -105,7 +106,7 @@ import { Head } from "@inertiajs/vue3";
 
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import LinkHeader from "@/Application/Shared/LinkHeader.vue";
-
+import { SD } from "@/helpers"
 import LinkFooter from "@/Application/Shared/LinkFooter.vue";
 
 export default {
@@ -125,6 +126,7 @@ export default {
         LinkFooter,
     },
     methods:{
+        SD,
         GetPageName()
         {
             if(typeof window === "undefined") return '';

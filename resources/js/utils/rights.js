@@ -5,7 +5,16 @@ let adminTablePositions = {};
 let rightsReady = false;
 let isAuthenticated = false;
 
-import { CleanTable,GetBatchRights } from '@/helpers';
+let CleanTable;
+let GetBatchRights;
+
+async function loadHelpers() {
+    if (!CleanTable) {
+        const helpers = await import('@/helpers');
+        CleanTable = helpers.CleanTable;
+        GetBatchRights = helpers.GetBatchRights;
+    }
+}
 
 /**
  * Einmaliger Ladevorgang aller Rechte und Tabellenpositionen
@@ -31,6 +40,7 @@ export async function loadAllRights() {
 }
 
 export function hasRightSync(right, table) {
+    await loadHelpers();
     const key = `${right}_${table}`;
 
     // if (!rightsLoaded) {
@@ -48,28 +58,31 @@ export function isRightsReady() {
 /**
  * Rechteprüfung für Templates (synchron, z. B. für v-if)
  */
-export function hasRight(right, table) {
-  if (!rightsReady || !isAuthenticated) {
-    // console.error(`⚠️ Rechteprüfung fehlgeschlagen – ready=${rightsReady}, auth=${isAuthenticated}`);
-    return false;
-  }
+export async function hasRight(right, table) {
 
-  table = table ?? CleanTable();
+    await loadHelpers();
+
+    if (!rightsReady || !isAuthenticated) {
+        console.error(`⚠️ Rechteprüfung fehlgeschlagen – ready=${rightsReady}, auth=${isAuthenticated}`);
+        return false;
+    }
+
+    table = table ?? CleanTable();
   const rightKey = `${right}_table`;
   const rightsString = userRights?.[rightKey];
   const position = adminTablePositions[table];
 
   if (typeof rightsString !== 'string') {
-   // console.error(`❌ Rechte-String für '${rightKey}' fehlt`);
+   console.error(`❌ Rechte-String für '${rightKey}' fehlt`);
     return false;
   }
 
   if (typeof position !== 'number' && typeof position !== 'string') {
-    // console.error(`❌ Position für Tabelle '${table}' fehlt`);
+    console.error(`❌ Position für Tabelle '${table}' fehlt`);
     return false;
   }
 
   const result = rightsString.charAt(position) === '1';
-//   console.log(`🔍 hasRight(${right}, ${table}) = ${result}`);
+  console.log(`🔍 hasRight(${right}, ${table}) = ${result}`);
   return result;
 }
