@@ -69,14 +69,13 @@ Welcome to the Laravel template **Starter Eleven**. A possible starting point fo
 - **Application family**:
     - Homepage
     - Authentication
-    - Application for administrators (intranet)
-    - Application for employees (intranet)
+    - Application for administrators (extranet)
     - Application for customers (extranet)
 
 ### Author
 
-Information about the author Oliver Reinking can be found at [ReinkingConsulting](https://reinkingconsulting.de)  
-Further information about the co-author can be found at [asario.de](https://www.asario.de)  
+Information about the author **Oliver Reinking** can be found at [ReinkingConsulting](https://reinkingconsulting.de)  
+Further information about the co-author **Asario** can be found at [asario.de](https://www.asario.de)  
 
 ### License
 
