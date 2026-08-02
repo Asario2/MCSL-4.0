@@ -377,7 +377,7 @@ class ImageUploadController extends Controller
             }
             if(!@$orifileName)
             {
-                $fileName = md5($file->getClientOriginalName() . "_" . Auth::id()) . "." . $file->getClientOriginalExtension();
+                $fileName = md5($file->getClientOriginalName() . "_" . Auth::id()) . "." . strtolower($file->getClientOriginalExtension());
             }
             else
             {

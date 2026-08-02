@@ -126,7 +126,7 @@ import InputError from "@/Application/Components/Form/InputError.vue";
 import { router } from "@inertiajs/vue3";
 import ButtonGroup from "@/Application/Components/Form/ButtonGroup.vue";
 import InputButton from "@/Application/Components/Form/InputButton.vue";
-console.log("router =", router);
+
 export default defineComponent({
     name: "Auth_Login",
 
