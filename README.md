@@ -75,7 +75,7 @@ Welcome to the Laravel template **Starter Eleven**. A possible starting point fo
 
 ### Author
 
-Information about the author Oliver Reinking can be found at [ReinkingConsulting](https://reinkingconsulting.de)
+Information about the author Oliver Reinking can be found at [ReinkingConsulting](https://reinkingconsulting.de)  
 Further information about the co-author can be found at [asario.de](https://www.asario.de)  
 
 ### License
