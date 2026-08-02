@@ -1,4 +1,19 @@
 
+## Datenschutz
+
+
+Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Personenbezogene Daten werden von uns ausschließlich im Rahmen der gesetzlichen Vorschriften verarbeitet. Welche Daten erhoben werden, zu welchem Zweck dies geschieht und welche Rechte Ihnen zustehen, erfahren Sie ausführlich in unserer Datenschutzerklärung.
+
+
+
+Bitte lesen Sie hierzu unsere
+<a href="/home/privacy">Datenschutzerklärung</a>.
+
+
+
+Sollten Sie Fragen zum Datenschutz oder zur Verarbeitung Ihrer personenbezogenen Daten haben, können Sie sich jederzeit über die im Impressum angegebenen Kontaktmöglichkeiten an uns wenden.
+
+
 ## 
 
 
