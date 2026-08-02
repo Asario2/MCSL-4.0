@@ -360,3 +360,5 @@
 ![Version](https://img.shields.io/badge/version-6.14.4-orange) Feature - Removed unnessasarie \Log::info (#556)  
 ![Version](https://img.shields.io/badge/version-6.15.1-orange) Hotfix - Fixed imprint Generator (#555)  
 ![Version](https://img.shields.io/badge/version-6.16.3-orange) Bug - Have to fix problems on Iphones (#552)  
+![Version](https://img.shields.io/badge/version-6.17.4-orange) Hotifx - fixed SD Handling (#565)  
+![Version](https://img.shields.io/badge/version-6.18.0-orange) Feature - Add New Page "pna" (#540)  
