@@ -39,7 +39,7 @@ export async function loadAllRights() {
     }
 }
 
-export function hasRightSync(right, table) {
+export async function hasRightSync(right, table) {
     await loadHelpers();
     const key = `${right}_${table}`;
 

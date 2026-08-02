@@ -3281,7 +3281,19 @@ return Inertia::render('Admin/Kontakte', [
 
             // $this->debugUpdateQuery($table,$id,$formData);
             // if ($updated) {
-            ActLog($request,"UpdateTable",$formData[Settings::$headline[$table]],$id,$table);
+            $headlineField = Settings::$headline[$table] ?? null;
+
+            $headline = $formData[$headlineField]
+                ?? $record->{$headlineField}
+                ?? '';
+
+            ActLog(
+                $request,
+                "UpdateTable",
+                $headline,
+                $id,
+                $table
+            );
                 return response()->json(['type' => 'success','message' => 'Daten erfolgreich aktualisiert!']);
             // } else {
 

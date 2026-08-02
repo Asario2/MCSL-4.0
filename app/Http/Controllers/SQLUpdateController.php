@@ -365,47 +365,67 @@ class SQLUpdateController extends Controller
 
 public function diffTable(string $table, string $domain)
 {
-    // \Log::info("RUNNED");
-    $this->domset     = $this->GetDBCon(1, $domain);
-    $this->domset_of  = $this->GetDBCon(0, $domain);
+    $this->domset    = $this->GetDBCon(1, $domain);
+    $this->domset_of = $this->GetDBCon(0, $domain);
+
     $_SESSION['domain'] = $domain;
 
-    $localRows  = DB::connection($this->domset_of)->table($table)->get()->toArray();
-    $onlineRows = DB::connection($this->domset)->table($table)->get()->toArray();
+    $local = DB::connection($this->domset_of)
+        ->table($table)
+        ->orderBy('id')
+        ->get()
+        ->keyBy('id')
+        ->map(fn($row) => (array)$row)
+        ->toArray();
 
-    $local  = json_decode(json_encode($localRows), true);
-    $online = json_decode(json_encode($onlineRows), true);
+    $online = DB::connection($this->domset)
+        ->table($table)
+        ->orderBy('id')
+        ->get()
+        ->keyBy('id')
+        ->map(fn($row) => (array)$row)
+        ->toArray();
 
-    // ✅ Headline-Spalte aus Settings
     $headlineColumn = Settings::$headline[$table] ?? null;
 
     $diff = [];
-    $max = max(count($local), count($online));
 
-    for ($i = 0; $i < $max; $i++) {
-        $localRow  = $local[$i]  ?? [];
-        $onlineRow = $online[$i] ?? [];
+    $ids = array_unique(array_merge(
+        array_keys($local),
+        array_keys($online)
+    ));
+
+    sort($ids);
+
+    foreach ($ids as $id) {
+
+        $localRow  = $local[$id] ?? [];
+        $onlineRow = $online[$id] ?? [];
 
         $rowDiff = [];
+
         $columns = array_unique(array_merge(
             array_keys($localRow),
             array_keys($onlineRow)
         ));
+
         foreach ($columns as $col) {
-            $localVal  = $localRow[$col]  ?? null;
+
+            $localVal  = $localRow[$col] ?? null;
             $onlineVal = $onlineRow[$col] ?? null;
 
-            if($table == "contacts")
-            {
-                // $localVal =
-                if (Auth::check()) {
-                    $localVal = decval_user($localVal, Auth::id());
-                    $onlineVal = decval_user($onlineVal, Auth::id());
+            if ($table === "contacts") {
 
+                if (Auth::check()) {
+                    $localVal  = decval_user($localVal, Auth::id());
+                    $onlineVal = decval_user($onlineVal, Auth::id());
                 }
-                // \Log::info($localVal);
             }
-            if ($localVal !== $onlineVal && !in_array($domain."_".$table."_".$col,Settings::$Ignored_Field)) {
+
+            if (
+                $localVal !== $onlineVal &&
+                !in_array($domain . "_" . $table . "_" . $col, Settings::$Ignored_Field)
+            ) {
                 $rowDiff[$col] = [
                     'local'  => $localVal,
                     'online' => $onlineVal,
@@ -414,14 +434,13 @@ public function diffTable(string $table, string $domain)
         }
 
         if (!empty($rowDiff)) {
+
             $diff[] = [
-                'row' => $i,
-                "id"=>$localRow['id'] ?? $onlineRow['id'],
-
-                // ⭐ genau das, was du willst
-                'name' =>  $localRow[$headlineColumn] ?? null,
-
-
+                'row' => $id,
+                'id'  => $id,
+                'name' => $localRow[$headlineColumn]
+                    ?? $onlineRow[$headlineColumn]
+                    ?? null,
                 'changes' => $rowDiff,
             ];
         }

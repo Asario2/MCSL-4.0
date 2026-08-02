@@ -1531,23 +1531,26 @@
 
                 // localFfo sicher verwenden
                 if (this.localFfo?.original) {
-                    Object.entries(this.localFfo.original).forEach(([field]) => {
-                        if (field && typeof field === 'object') {
-                            const element = document.getElementById(field.name);
-                            const element_alt = document.getElementById(field.name + "_alt");
-                            if (element_alt?.value) {
-                                this.formData[field.name] = element_alt.value
-                                    .replace(/\[/g, '%5B')
-                                    .replace(/\]/g, '%5D').replace(/\n/g,"<br />");
-                            } else if (element?.value) {
-                                this.formData[field.name] = element.value
-                                    .replace(/\[/g, '%5B')
-                                    .replace(/\]/g, '%5D').replace(/\n/g,"<br />");
-                            } else if (field.value) {
-                                this.formData[field.name] = field.value;
-                            }
-                        }
-                    });
+                    Object.entries(this.localFfo.original).forEach(([key, field]) => {
+
+                    const element = document.getElementById(field.name);
+                    const element_alt = document.getElementById(field.name + "_alt");
+
+                    if (element_alt?.value) {
+                        this.formData[field.name] = element_alt.value
+                            .replace(/\[/g, "%5B")
+                            .replace(/\]/g, "%5D")
+                            .replace(/\n/g, "<br />");
+                    } else if (element?.value) {
+                        this.formData[field.name] = element.value
+                            .replace(/\[/g, "%5B")
+                            .replace(/\]/g, "%5D")
+                            .replace(/\n/g, "<br />");
+                    } else {
+                        this.formData[field.name] = field.value;
+                    }
+
+                });
                 }
 
                 // Formular abschicken
