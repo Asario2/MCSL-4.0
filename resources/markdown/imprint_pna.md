@@ -1,19 +1,4 @@
 
-## Datenschutz
-
-
-Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Personenbezogene Daten werden von uns ausschließlich im Rahmen der gesetzlichen Vorschriften verarbeitet. Welche Daten erhoben werden, zu welchem Zweck dies geschieht und welche Rechte Ihnen zustehen, erfahren Sie ausführlich in unserer Datenschutzerklärung.
-
-
-
-Bitte lesen Sie hierzu unsere
-<a href="/home/privacy">Datenschutzerklärung</a>.
-
-
-
-Sollten Sie Fragen zum Datenschutz oder zur Verarbeitung Ihrer personenbezogenen Daten haben, können Sie sich jederzeit über die im Impressum angegebenen Kontaktmöglichkeiten an uns wenden.
-
-
 ## 
 
 
@@ -55,6 +40,21 @@ Unser Angebot enthÃ¤lt Links zu externen Webseiten Dritter, auf deren Inhalte 
 ## Urheberrecht
 
 Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die VervielfÃ¤ltigung, Bearbeitung, Verbreitung und jede Art der Verwertung auÃŸerhalb der Grenzen des Urheberrechtes bedÃ¼rfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur fÃ¼r den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+
+## Datenschutz
+
+
+Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Personenbezogene Daten werden von uns ausschließlich im Rahmen der gesetzlichen Vorschriften verarbeitet. Welche Daten erhoben werden, zu welchem Zweck dies geschieht und welche Rechte Ihnen zustehen, erfahren Sie ausführlich in unserer Datenschutzerklärung.
+
+
+
+Bitte lesen Sie hierzu unsere
+<a href="/home/privacy">Datenschutzerklärung</a>.
+
+
+
+Sollten Sie Fragen zum Datenschutz oder zur Verarbeitung Ihrer personenbezogenen Daten haben, können Sie sich jederzeit über die im Impressum angegebenen Kontaktmöglichkeiten an uns wenden.
+
 
 ## Verantwortlich f&uuml;r die Gestaltung der Website:
 
