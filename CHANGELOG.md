@@ -375,3 +375,6 @@
 ![Version](https://img.shields.io/badge/version-6.29.6-orange) Hotfix / Features - Changed several Vue Files (#576)  
 ![Version](https://img.shields.io/badge/version-6.30.9-orange) Hotfix - Router links (#575)  
 ![Version](https://img.shields.io/badge/version-6.31.3-orange) Hotfix - Fixed some bugs in .php files (#579)  
+![Version](https://img.shields.io/badge/version-6.32.8-orange) Hotfix - Removed Kurzinfos from templates (#583)  
+![Version](https://img.shields.io/badge/version-6.33.1-orange) Hotfix - Removed console.log from vues (#581)  
+![Version](https://img.shields.io/badge/version-6.34.8-orange) Feature - Changed Logos for PNA page (#582)  

@@ -1,5 +1,5 @@
 ![Why MCSL is Built on Laravel/Vue](public/MCSL.jpg)
-![Version](https://img.shields.io/badge/version-6.31.3-orange)  
+![Version](https://img.shields.io/badge/version-6.34.8-orange)  
 # Why MCSL is Built on Laravel/Vue – The Technology Behind This Blog 
 In the world of modern web development, there are countless frameworks and platforms, but only a few offer the **flexibility**, **scalability**, and **user-friendliness** of Laravel. Today, I want to talk about why **MCSL** is built on Laravel and how it, together with **Vue.js**, forms the **backbone** of our blog.
 
