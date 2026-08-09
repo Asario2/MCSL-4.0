@@ -99,7 +99,18 @@ class CountPixelController extends Controller
 
                 return $this->pixelResponse();
             }
+            $routeObject = Route::getRoutes()->getByName($routeName);
 
+            if ($routeObject) {
+
+                $action = $routeObject->getAction();
+
+                // Laravel-Fallbackroute?
+                if (!empty($action['fallback']) && $action['fallback'] === true) {
+                    return $this->pixelResponse();
+                }
+
+            }
             foreach ($this->excludeRoutes as $pattern) {
 
                 if (fnmatch($pattern, $routeName)) {
@@ -251,16 +262,18 @@ class CountPixelController extends Controller
                 $ip = implode(':', $parts);
             }
 
-
+            if (str_starts_with($rawUrl, '/countpixel')) {
+                return $this->pixelResponse();
+            }
 
             try {
 
-    PageView::create([
-        'dom'        => SD(),
-        'url'        => $rawUrl,
-        'ip'         => $ip,
-        'visited_at' => now(),
-    ]);
+            PageView::create([
+                'dom'        => SD(),
+                'url'        => $rawUrl,
+                'ip'         => $ip,
+                'visited_at' => now(),
+            ]);
 
 } catch (\Throwable $e) {
 

@@ -36,33 +36,24 @@ class ActivityPubController extends Controller
     }
     public function checkLogs()
     {
-        $userId = Auth::id();
-
-    if (!$userId) {
-        // throw new \Exception('User not authenticated');
-    }
-    if(!Schema::hasTable("xgen_activitylog")){
-        return;
-    }
-
-    // 2. Hole alle Kommentare
-    $logs = DB::table('xgen_activitylog')->select('id', 'xkis_checked')->get();
-
-    // 3. Für jeden Kommentar prüfen und ischecked aktualisieren
-    foreach ($logs as $log) {
-
-            $com[$log->id] = $log->xkis_checked;
-
-        // // Update, falls Wert sich geändert hat
-        DB::table('xgen_activitylog')
-                ->where('xkis_checked', '0')
-                ->update([
-                    'xkis_checked' =>"1",
-                    'checked_at' => now(),
-                ]);
-
+        if (!Schema::connection("mariadb")->hasTable('xgen_activitylog')) {
+            return response()->json(['success' => []]);
         }
-        return response()->json(["success"=>$com]);
+
+        $logs = DB::connection("mariadb")
+            ->table('xgen_activitylog')
+            ->select('id', 'xkis_checked')
+            ->get();
+
+        $com = [];
+
+        foreach ($logs as $log) {
+            $com[$log->id] = $log->xkis_checked;
+        }
+
+        return response()->json([
+            'success' => $com
+        ]);
     }
 
 
@@ -70,7 +61,7 @@ class ActivityPubController extends Controller
     {
 //         \Log::info("ActivityLog markAll triggered");
 
-        $updated = DB::table('xgen_activitylog')
+        $updated = DB::connection("mariadb")->table('xgen_activitylog')
             ->where('pub', 0)
             ->update([
                 'pub' => 1
@@ -81,31 +72,104 @@ class ActivityPubController extends Controller
             'updated_rows' => $updated
         ]);
     }
-public function check_alt(Request $request)
-{
-    return response()->json([
-        'raw' => $request->getContent()
-    ]);
-}
-    public function check(Request $request)
-{
-    $raw = $request->getContent();
+    public function mark_All(Request $request)
+    {
 
-//     \Log::info("RAW Beacon:", [$raw]);
 
-    $data = json_decode($raw, true);
+        $data = json_decode($request->getContent(), true);
 
-    $ids = $data['ids'] ?? [];
 
-    if ($ids) {
-        \DB::table('xgen_activitylog')
+
+        $ids = $data['ids'] ?? [];
+
+        if (empty($ids)) {
+            \Log::error("mark_All: Keine IDs");
+            return response()->json([
+                'success' => false,
+                'message' => 'Keine IDs empfangen'
+            ]);
+        }
+
+        $updated = DB::connection('mariadb')
+            ->table('xgen_activitylog')
             ->whereIn('id', $ids)
-            ->update(['pub' => 1]);
+            ->update([
+                'xkis_checked' => 1,
+                'checked_at'   => now(),
+            ]);
+
+
+        return response()->json([
+            'success' => true,
+            'updated_rows' => $updated,
+            'ids' => $ids,
+        ]);
     }
 
-    return response()->json([
-        'success' => true,
-        'ids' => $ids
-    ]);
-}
+    public function check_alt(Request $request)
+    {
+        \Log::info('check_alt');
+        \Log::info($request->getContent());
+        // \Log::info('check_alt aufgerufen');
+        $data = json_decode($request->getContent(), true);
+
+        $ids = $data['ids'] ?? [];
+        \Log::info("ids;",$ids);
+        if (empty($ids)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Keine IDs empfangen.',
+            ]);
+        }
+        // \Log::info(
+        //     DB::connection('mariadb')
+        //         ->table('xgen_activitylog')
+        //         ->whereIn('id', $ids)
+        //         ->pluck('id')
+        // );
+        // \Log::info(DB::connection('mariadb')->getDatabaseName());
+        $updated = DB::connection('mariadb')->table('xgen_activitylog')
+            ->whereIn('id', $ids)
+            ->update([
+                'xkis_checked' => 1,
+                'checked_at'   => now(),
+            ]);
+        \Log::info('updated=' . $updated);
+        return response()->json([
+            'success' => true,
+            'updated' => count($ids),
+            'ids' => $ids,
+        ]);
+    }
+    // public function check_alt(Request $request)
+    // {
+    //     $data = json_decode($request->getContent(), true);
+
+    //     return response()->json([
+    //         'raw' => $request->getContent(),
+    //         'data' => $data,
+    //         'ids' => $data['ids'] ?? [],
+    //     ]);
+    // }
+    public function check(Request $request)
+    {
+        $raw = $request->getContent();
+
+    //     \Log::info("RAW Beacon:", [$raw]);
+
+        $data = json_decode($raw, true);
+
+        $ids = $data['ids'] ?? [];
+
+        if ($ids) {
+            \DB::connection("mariadb")->table('xgen_activitylog')
+                ->whereIn('id', $ids)
+                ->update(['pub' => 1]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'ids' => $ids
+        ]);
+    }
 }

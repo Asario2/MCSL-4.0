@@ -1098,10 +1098,10 @@ public function imprint_dag()
     }
     public function imprint_gen()
     {
-        $imprintFile = Jetstream::localizedMarkdownPath('imprint.md');
-        $imprint = Str::markdown(file_get_contents($imprintFile));
+        $imprintFile = Jetstream::localizedMarkdownPath('imprint_pna.md');
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
         //
-        return Inertia::render('Homepage/Imprint', [
+        return Inertia::render('Homepage/'.SD().'/Imprint', [
             'imprint' => $imprint,
         ]);
     }
@@ -1291,8 +1291,8 @@ public function imprint_dag()
         ]);
     }
         public function contacts_pna(){
-        $text = DB::table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
-        $contacts = DB::table("texts")->where("autoslug", "ContactsInfos")->select('headline', 'text')->first();
+        $text = DB::connection("mariadb_pna")->table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
+        $contacts = DB::connection("mariadb_pna")->table("texts")->where("autoslug", "ContactsInfos")->select('headline', 'text')->first();
         // \Log::info("TT:".json_encode($text));
 
         return Inertia::render('Homepage/pna/contacts', [
@@ -1348,8 +1348,14 @@ public function imprint_dag()
     }
     public function imprint_mfx($id = '45')
     {
-        $data = DB::table("infos")->where("pub","1")->where("id",$id)->select("id","headline","message","img_big")->orderBy("position","DESC")->first();
-        return Inertia::render('Homepage/mfx/infos_show',compact('data'));
+        // $data = DB::table("infos")->where("pub","1")->where("id",$id)->select("id","headline","message","img_big")->orderBy("position","DESC")->first();
+        // return Inertia::render('Homepage/mfx/infos_show',compact('data'));
+         $imprintFile = Jetstream::localizedMarkdownPath('imprint_pna.md');
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
+        //
+        return Inertia::render('Homepage/mfx/Imprint', [
+            'imprint' => $imprint,
+        ]);
     }
     public function home_contacts(){
         $text = DB::table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
@@ -1386,20 +1392,21 @@ public function imprint_dag()
         {
             return redirect("/no-rights");
         }
-        foreach(Settings::$mariaDBs as $dom=>$db)
+        foreach(Settings::$mariaDBs as $dom=>$dom2)
         {
-        $dbExists = DB::select(
-            "SELECT SCHEMA_NAME
-            FROM INFORMATION_SCHEMA.SCHEMATA
-            WHERE SCHEMA_NAME = ?",
-            [$dom]
-        );
+        // $dbExists = DB::select(
+        //     "SELECT SCHEMA_NAME
+        //     FROM INFORMATION_SCHEMA.SCHEMATA
+        //     WHERE SCHEMA_NAME = ?",
+        //     [$dom2]
+        // );
 
-        if ($dbExists) {
+        // if ($dbExists) {
+            \Log::info("CALLLLLLLLLLED: ".$dom);
             Artisan::call('sitemap:generate', [
                 'SD' => $dom
             ]);
-        }
+        // }
         }
         file_put_contents(public_path("timespy/sitemaps.dat"),date("Y-m-d H:i:s"));
         return Inertia::render('Components/sitemap_gen');

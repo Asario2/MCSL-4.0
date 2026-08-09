@@ -363,7 +363,7 @@ class ImageUploadController extends Controller
 
             $host = $request->getHost();
             $subdomain = SD();
-            $folder = public_path("images/_{$subdomain}/users/profile_photo_path");
+            $folder = public_path("images/users/profile_photo_path");
 
             if (!File::exists($folder)) {
                 File::makeDirectory($folder, 0777, true);
@@ -403,7 +403,7 @@ class ImageUploadController extends Controller
         $user = $request->user();
         return response()->json([
             'path' => $user->profile_photo_path
-                ? asset("images/_" . SD() . "/users/profile_photo_path/" . $user->profile_photo_path)
+                ? asset("images/users/profile_photo_path/" . $user->profile_photo_path)
                 : asset('images/default_profile.png'),
         ]);
     }

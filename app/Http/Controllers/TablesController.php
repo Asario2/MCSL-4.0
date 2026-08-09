@@ -347,7 +347,7 @@ class TablesController extends Controller
         // Danach kannst du transform() auf der Collection anwenden
         // $tables->transform(function ($item) {
         //     if (!empty($item->profile_photo_path)) {
-        //         $item->profile_photo_path = "/images/_".SD()."/users/profile_photo_path/" . $item->profile_photo_path;
+        //         $item->profile_photo_path = "/images/users/profile_photo_path/" . $item->profile_photo_path;
         //     }
         //     return $item;
         // });
@@ -549,7 +549,7 @@ public function ShowTable(Request $request, $table_alt = null)
 
     $table = $table_alt ?? 'images';
 
-    $path = strtolower($request->path());
+    $path = ($request->path());
     $parts = explode("/", $path);
     foreach (gettables() as $ta) {
         if (in_array($ta, $parts)) {
@@ -1049,7 +1049,7 @@ public function ShowTable(Request $request, $table_alt = null)
 
             foreach ($files as $file) {
 
-                // $file z.B.: /images/_ab/users/profile_photo_path/thumbs/test.jpg
+                // $file z.B.: /images/users/profile_photo_path/thumbs/test.jpg
                 $realPath = public_path(ltrim($file, '/'));
 
                 if (!file_exists($realPath)) {
