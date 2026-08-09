@@ -82,7 +82,7 @@ if (isset($_GET['re']) && $_GET['re'] === '1') {
 <link rel="canonical" href="{{ $canonical }}">
 <script>
 globalThis.APP_URL = "{{ request()->getSchemeAndHttpHost() }}";
-    
+globalThis.SD = "{{ SD() }}";
 
         if (typeof global === 'undefined') {
             window.global = window;

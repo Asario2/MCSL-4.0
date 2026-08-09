@@ -20,6 +20,7 @@ class tablemodals extends Authenticatable implements MustVerifyEmail
 
     protected $fillable = [
         'first_name',
+        'last_name',
         'name',
         "pub",
         'birthday',
@@ -66,7 +67,7 @@ class tablemodals extends Authenticatable implements MustVerifyEmail
 
     public function getFullNameAttribute()
     {
-        $name = $this->first_name;
+        $name = $this->first_name ?? $this->last_name;
 
         if (!empty($this->name)) {
             if (!empty($name)) {

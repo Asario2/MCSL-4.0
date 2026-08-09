@@ -83,9 +83,23 @@ GlobalController::SetDomain();
 // Route::middleware(['checksubd:ab,asario'])->group(function () {
     // Route::middleware('checksubd:ab,asario')->group(function () {
         // Route::get('/countpixel-{url}-{route}-{page?}', [CountPixelController::class, 'track'])->name('countpixel');
-        Route::get('/pwd', [HomeController::class, 'show_pwd'])->name('home.pwd');
-        Route::post('/pwd', [HomeController::class, 'home_PWD']);
 
+// Route::post('/activity-log/mark_all', function () {
+//                 \Log::info('!!! MARK_ALL ROUTE ERREICHT !!!');
+
+//                 return response()->json([
+//                     'success' => true
+//                 ]);
+//             });
+// Route::post('/activity-log/mark_all', function (Request $request) {
+//     \Log::info('!!! MARK_ALL ROUTE ERREICHT !!!');
+//     \Log::info($request->getContent());
+
+//     return response()->json([
+//         'success' => true,
+//         'test' => 'route erreicht'
+//     ]);
+// });
         Route::get(
         '/countpixel/{url}/{route}/{page?}',
         [CountPixelController::class, 'track']
@@ -226,7 +240,9 @@ Route::post('/api/log-js-error', function (Request $request) {
         Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name("ggle.login")->middleware('web');
         Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']) ->middleware('web');
             Route::post('/api/activity-log/check', [ActivityPubController::class, 'check_alt']);
-            Route::post('/activity-log/mark-all', [ActivityPubController::class, 'markAll']);
+            // Route::post('/activity-log/mark-all', [ActivityPubController::class, 'markAll']);
+        Route::post('/activity-log/mark_all', [ActivityPubController::class, 'mark_All']);
+
 
         Route::get('/ri', function () {
             header("Location: /");
@@ -375,7 +391,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     Route::get('/home/imprint', [HomeController::class, 'home_imprint'])->name('home.imprint');
     // Privacy
     // Terms
-    Route::get('/home/terms', [HomeController::class, 'home_terms'])->name('home.terms');
+    // Route::get('/home/terms', [HomeController::class, 'home_terms'])->name('home.terms');
     // Ai Content
 
 
@@ -775,7 +791,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/api/activity-log',[HomeController::class,'ActivityLog'])->name("gen.actlog");
         Route::post('/api/activity-log',[TablesController::class,"Add_Actlog"])
             ->name("act.log.save");
-        Route::get('/api/chkcom_log/{id?}', [ActivityPubController::class,'checkLogs'])->name("logs.check");
+        Route::get('/pwd', [HomeController::class, 'show_pwd'])->name('home.pwd');
+        Route::post('/pwd', [HomeController::class, 'home_PWD']);
+
+        // Route::get('/api/chkcom_log/{id?}', [ActivityPubController::class,'checkLogs'])->name("logs.check");
+        Route::get('/api/chkcom_log', [ActivityPubController::class, 'checkLogs'])->name('logs.check');
         Route::get("admin/ActLog", [HomeController::class, "admin_actlog"])
             ->name("admin.actlog");
         Route::get("api/getGitDump/{dom?}/{usdis?}",[DumpgitdatabaseController::class,"GetFIrst"])->name("api.get.firstdump");

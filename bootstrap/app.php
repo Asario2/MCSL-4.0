@@ -75,6 +75,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             '/login-silent',
             '/comments/store/*/*',
+            '/activity-log/mark_all'
         ]);
     })
 
