@@ -34,7 +34,7 @@
         <a href="/"><mfxlogo :ab="'_mfx_alt' + GetLogin()"></mfxlogo></a>
     </div>
     <div v-if="SD() == 'pna'" class="dark:bg-layout-night-0 min-w-[100%]">
-        <a href="/"><pnalogo :small="true" :ab="'_pna_alt' + GetLogin()"></pnalogo></a>
+        <a href="/"><favicon :small="true" :ab="'_pna_alt' + GetLogin()"></favicon></a>
     </div>
 </template>
 
@@ -43,7 +43,6 @@ import { Link } from "@inertiajs/vue3";
 import {SD} from "@/helpers";
 import Favicon from "@/Application/Components/Logo/Favicon.vue";
 import mfxlogo from "@/Application/Shared/mfxlogo.vue";
-import pnalogo from "@/Application/Shared/pnalogo.vue";
 export default {
     name: "Shared_BrandFooter",
 
@@ -51,7 +50,7 @@ export default {
         Link,
         Favicon,
         mfxlogo,
-        pnalogo,
+
     },
 
     data() {
