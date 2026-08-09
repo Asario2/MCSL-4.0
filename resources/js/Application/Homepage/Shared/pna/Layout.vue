@@ -506,16 +506,6 @@ showHideToggleCookiePreferencesModal,
         const html =
             document.documentElement;
 
-        console.log(
-            "[applyTheme] mode:",
-            this.mode
-        );
-
-        console.log(
-            "[applyTheme] vorher:",
-            html.className
-        );
-
         /*
         |--------------------------------------------------------------------------
         | Force Light
@@ -528,9 +518,7 @@ showHideToggleCookiePreferencesModal,
 
         if (forceLight) {
 
-            console.log(
-                "[applyTheme] forceLight aktiv"
-            );
+
 
             html.classList.remove('dark');
 
@@ -545,25 +533,17 @@ showHideToggleCookiePreferencesModal,
 
         if (this.mode === 'dark') {
 
-            console.log(
-                "[applyTheme] ADD DARK"
-            );
+
 
             html.classList.add('dark');
 
         } else {
 
-            console.log(
-                "[applyTheme] REMOVE DARK"
-            );
 
             html.classList.remove('dark');
         }
 
-        console.log(
-            "[applyTheme] nachher:",
-            html.className
-        );
+
     },
 
 //    changeMode(newMode) {
