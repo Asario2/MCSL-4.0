@@ -74,7 +74,7 @@ class GenerateSitemap extends Command
             ->unique()
             ->values();
 
-        if(Schema::connection($conn)->hasTable("image_categories"))
+        if(Schema::connection($conn)->hasTable("image_categories") && $currentSD === "ab")
         {
         // === 2️⃣ Dynamische Picture-Seiten ergänzen ===
         $pictures = DB::connection($conn)->table('image_categories')
@@ -131,7 +131,7 @@ class GenerateSitemap extends Command
             $url->addChild('changefreq', 'weekly');
             $url->addChild('priority', '0.5');
         }
-        if(Schema::connection($conn)->hasTable("image_categories")){
+        if(Schema::connection($conn)->hasTable("image_categories") && $currentSD === "ab"){
         // Dynamische Picture-Seiten hinzufügen
         foreach ($pictureLinks as $entry) {
             $url = $xml->addChild('url');
