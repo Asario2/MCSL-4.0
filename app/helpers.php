@@ -1674,9 +1674,10 @@ if(!function_exists("CheckRights"))
         // dd($host);
         if(@$_SESSION['Devm'] && ($host != "tables" && $host != "admin"))
         {
-            return;
+          return;
         }
         GlobalController::SetDomain();
+
         // Hole die user_rights_id des Nutzers aus der Tabelle users
         $user = DB::table('users')
             ->where('id', $userId)
@@ -1710,23 +1711,31 @@ if(!function_exists("CheckRights"))
             return 0; // Ungültige tableId
         }
         // Bestimme das Recht, das wir überprüfen wollen
-        switch ($right) {
-            case 'view':
-                return @$userRights->view_table[$tableId] == '1' ? 1 : 0;
-            case 'add':
-                return @$userRights->add_table[$tableId] == '1' ? 1 : 0;
-            case 'edit':
-                return @$userRights->edit_table[$tableId] == '1' ? 1 : 0;
-            case 'publish':
-                return @$userRights->publish_table[$tableId] == '1' ? 1 : 0;
-            case 'delete':
-                return @$userRights->delete_table[$tableId] == '1' ? 1 : 0;
-            case 'date':
-                return @$userRights->date_table[$tableId] == '1' ? 1 : 0;
-            default:
-                return 0; // Ungültiger Rechtstyp
-        }
+        $viewTable = $userRights->view_table;
 
+
+switch ($right) {
+    case 'view':
+        return ($viewTable[$tableId] ?? '') === '1' ? 1 : 0;
+
+    case 'add':
+        return ($userRights->add_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+    case 'edit':
+        return ($userRights->edit_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+    case 'publish':
+        return ($userRights->publish_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+    case 'delete':
+        return ($userRights->delete_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+    case 'date':
+        return ($userRights->date_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+    default:
+        return 0;
+}
 }
 }
 if(!function_exists("AutoInc"))
@@ -2018,45 +2027,57 @@ if(!function_exists("nl2"))
 }
 if(!function_exists("getPositionOfTable"))
 {
+    // function getPositionOfTable($tableName)
+    // {
+    //     // Hole alle Einträge aus der admin_table (mit name und id)
+    //     $tables = DB::table('admin_table')
+    //                 ->select('id', 'position', 'name')
+    //                 ->get();
+
+    //     // Konvertiere zu einem Array, damit die Suche durchgeführt werden kann
+    //     $tableNames = $tables->pluck('name');
+
+    //     // Suche nach der Position des Tabellennamens
+    //     $position = $tableNames->search($tableName)-1;
+
+    //     // Wenn der Tabellenname gefunden wurde, gib die Position zurück
+    //     if ($position !== false) {
+    //         // Hole den Eintrag, der zu dieser Position gehört
+    //         $tableEntry = $tables->get($position);
+
+    //         // Falls die Position im Eintrag vorhanden ist, gib sie zurück
+    //         if (isset($tableEntry->position)) {
+    //             // \Log::info("Position gefunden: " . $tableEntry->position);
+    //             return $tableEntry->position; // Gib die Position zurück
+    //         }
+    //     }
+
+    //     // Wenn der Tabellenname nicht gefunden wurde, hole die ID des Tabelleneintrags
+    //     $tableEntry = $tables->firstWhere('name', $tableName);
+
+    //     if ($tableEntry) {
+    //         // Gib die ID zurück, wenn kein position-Feld existiert oder die Suche nach der Position fehlschlägt
+    //         // \Log::info("Tabellenname nicht gefunden, ID: " . $tableEntry->id);
+    //         return $tableEntry->position; // Gib die ID zurück
+    //     }
+
+    //     // Wenn die Tabelle weder in den Namen noch in den IDs existiert, gib null zurück
+    //     //\Log::info("Tabellenname wurde nicht gefunden.");
+    //     return null;
+    // }
     function getPositionOfTable($tableName)
     {
-        // Hole alle Einträge aus der admin_table (mit name und id)
-        $tables = DB::table('admin_table')
-                    ->select('id', 'position', 'name')
-                    ->get();
+        $table = DB::table('admin_table')
+            ->select('position')
+            ->where('name', $tableName)
+            ->first();
 
-        // Konvertiere zu einem Array, damit die Suche durchgeführt werden kann
-        $tableNames = $tables->pluck('name');
-
-        // Suche nach der Position des Tabellennamens
-        $position = $tableNames->search($tableName);
-
-        // Wenn der Tabellenname gefunden wurde, gib die Position zurück
-        if ($position !== false) {
-            // Hole den Eintrag, der zu dieser Position gehört
-            $tableEntry = $tables->get($position);
-
-            // Falls die Position im Eintrag vorhanden ist, gib sie zurück
-            if (isset($tableEntry->position)) {
-                // \Log::info("Position gefunden: " . $tableEntry->position);
-                return $tableEntry->position; // Gib die Position zurück
-            }
+        if (!$table) {
+            return null;
         }
 
-        // Wenn der Tabellenname nicht gefunden wurde, hole die ID des Tabelleneintrags
-        $tableEntry = $tables->firstWhere('name', $tableName);
-
-        if ($tableEntry) {
-            // Gib die ID zurück, wenn kein position-Feld existiert oder die Suche nach der Position fehlschlägt
-            // \Log::info("Tabellenname nicht gefunden, ID: " . $tableEntry->id);
-            return $tableEntry->position; // Gib die ID zurück
-        }
-
-        // Wenn die Tabelle weder in den Namen noch in den IDs existiert, gib null zurück
-        //\Log::info("Tabellenname wurde nicht gefunden.");
-        return null;
+        return (int) $table->position;
     }
-
     // function getPositionOfTable($tableName)
     // {
     //     // Hole alle Einträge aus der admin_table
