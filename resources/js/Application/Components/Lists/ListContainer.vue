@@ -442,7 +442,7 @@
                         window.toastBus.emit( response.data); // ← erwartet { status: "...", message: "..." }
                         this.$emit("deleted");
 
-                            router.relaod();
+                            router.reload();
                         })
                         .catch(error => console.error("Fehler beim Löschen2:", error));
                 }

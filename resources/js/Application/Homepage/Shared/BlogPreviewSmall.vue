@@ -259,7 +259,7 @@ return replaceSmilies(text);
                 .delete(this.routeDelete + id)
                 .then(() => {
                     this.$emit("deleted");
-                    router.relaod();
+                    router.reload();
                 })
                 .catch((error) => {
                     console.error("Fehler beim Löschen:", error);

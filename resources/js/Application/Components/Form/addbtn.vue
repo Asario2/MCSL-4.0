@@ -102,7 +102,7 @@ export default {
                 window.toastBus.emit( response.data);
 
                 // Seite neu laden
-                router.relaod();
+                router.reload();
 
             } catch (error) {
                 console.error("Fehler beim Löschen:", error);

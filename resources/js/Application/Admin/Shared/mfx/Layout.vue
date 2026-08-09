@@ -398,7 +398,7 @@ export default {
             try {
                 const response = await axios.get('/api/GetLastAct');
                 if (response.data.includes("admin/dashboard")) {
-                    // router.relaod();
+                    // router.reload();
                 }
             } catch (error) {
                 if(typeof window !== "undefined")

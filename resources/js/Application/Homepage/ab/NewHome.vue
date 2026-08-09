@@ -94,6 +94,7 @@
 
 <script>
 import Layout from "@/Application/Homepage/Shared/Layout.vue";
+import { router } from '@inertiajs/vue3'
 import JArrow from "@/Application/Components/Icons/JArrow.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 

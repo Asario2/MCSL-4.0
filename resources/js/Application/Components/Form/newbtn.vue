@@ -102,7 +102,7 @@
                 });
                 // console.log(response.data);
                 window.toastBus.emit( response.data); // ← erwartet { status: "...", message: "..." }
-                router.relaod();
+                router.reload();
                 // Optional: Seite neu laden oder Liste aktualisieren
             } catch (error) {
                 console.error("Fehler beim Löschen:", error);
