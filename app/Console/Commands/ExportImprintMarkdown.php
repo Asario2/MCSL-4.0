@@ -36,7 +36,7 @@ class ExportImprintMarkdown extends Command
         {
             continue;
         }
-        $entries = DB::connection("mariadb")->table('impressum')->where("pub", "1")->orderBy('id',"DESC")->get();
+        $entries = DB::connection("mariadb")->table('impressum')->where("pub", "1")->orderBy('position',"DESC")->get();
 
         if ($entries->isEmpty()) {
             $this->error('Keine Einträge in der Tabelle "privacy" gefunden.');

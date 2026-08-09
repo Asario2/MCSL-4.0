@@ -8,133 +8,231 @@ use Illuminate\Support\Facades\File;
 class FixHrefInJs extends Command
 {
     protected $signature = 'fix:href-js';
+
     protected $description = 'Fix JS files with hardcoded absolute paths + Vue SSR fix';
 
     public function handle(): int
     {
 
+        $this->info("===== FixHrefInJs =====");
 
-
-    // $this->info("===== START =====");
+        /*
+        |--------------------------------------------------------------------------
+        | Inertia Patch
+        |--------------------------------------------------------------------------
+        */
 
         $files = [
+
             base_path('node_modules/@inertiajs/core/dist/index.esm.js'),
+
             base_path('node_modules/@inertiajs/core/dist/index.js'),
+
             base_path('node_modules/.vite/deps/@inertiajs_vue3.js'),
+
         ];
 
         foreach ($files as $filePath) {
 
             $this->newLine();
+
             $this->info("Bearbeite:");
+
             $this->line($filePath);
 
             if (!File::exists($filePath)) {
+
                 $this->warn("Datei existiert nicht.");
+
                 continue;
             }
-
-            $this->info("✔ exists");
 
             $content = File::get($filePath);
 
-            $this->info("✔ gelesen");
+            if (
+                strpos(
+                    $content,
+                    "if(!href){\n  href = '';\n}"
+                ) !== false
+            ) {
 
-            if (strpos($content, "if(!href){\n  href = '';\n}") !== false) {
-                $this->info("✔ bereits gepatcht");
+                $this->info("✔ Bereits gepatcht");
+
                 continue;
             }
 
-            if (strpos($content, "const hasHost = urlHasProtocol(href.toString());") !== false) {
+            $search =
+'const hasHost = urlHasProtocol(href.toString());';
 
-                $this->info("✔ Pattern gefunden");
+            $replace =
+"if(!href){\n  href = '';\n}\nconst hasHost = urlHasProtocol(href.toString());";
 
-                $content = str_replace(
-                    "const hasHost = urlHasProtocol(href.toString());",
-                    "if(!href){\n  href = '';\n}\nconst hasHost = urlHasProtocol(href.toString());",
-                    $content
-                );
+            if (strpos($content, $search) === false) {
 
-                $this->info("→ schreibe Datei");
+                $this->warn("Pattern nicht gefunden.");
 
-                File::put($filePath, $content);
-
-                $this->info("✔ geschrieben");
-            } else {
-                $this->warn("Pattern nicht gefunden");
+                continue;
             }
+
+            $content = str_replace(
+                $search,
+                $replace,
+                $content
+            );
+
+            File::put($filePath, $content);
+
+            $this->info("✔ Inertia gepatcht.");
         }
 
-        $this->newLine();
+        /*
+        |--------------------------------------------------------------------------
+        | Part 2 beginnt hier...
+        |--------------------------------------------------------------------------
+        */
+                /*
+        |--------------------------------------------------------------------------
+        | Vue Shared Patch
+        |--------------------------------------------------------------------------
+        */
 
-        $vueFile = base_path('node_modules/@vue/shared/dist/shared.cjs.js');
+        $vueFiles = [
 
-        $this->line($vueFile);
+            base_path('node_modules/@vue/shared/dist/shared.cjs.js'),
 
-        if (!File::exists($vueFile)) {
+            base_path('node_modules/@vue/shared/dist/shared.esm-bundler.js'),
 
-            $this->warn("JS-Datei existiert nicht.");
+        ];
 
-        } else {
+        foreach ($vueFiles as $vueFile) {
 
-            $this->info("✔ exists");
+            $this->newLine();
+
+            $this->info("Bearbeite:");
+
+            $this->line($vueFile);
+
+            if (!File::exists($vueFile)) {
+
+                $this->warn("Datei existiert nicht.");
+
+                continue;
+            }
 
             $content = File::get($vueFile);
 
-            $this->info("✔ gelesen");
+            if (
+                strpos(
+                    $content,
+                    'if (typeof src !== "string" || src == null)'
+                ) !== false
+            ) {
 
-            if (strpos($content, 'if(typeof src !== "string")') !== false) {
+                $this->info("✔ Bereits gepatcht.");
 
-                $this->info("✔ bereits gepatcht");
+                continue;
+            }
 
-            } else {
+            $search = <<<'JS'
+return src.replace(commentStripRE, "");
+JS;
 
-                $search = 'return src.replace(commentStripRE, "");';
-
-                if (strpos($content, $search) !== false) {
-
-                    $this->info("✔ Pattern gefunden");
-
-$replace = <<<'JS'
-if (typeof src !== "string") {
-  console.error("================================");
-  console.error("TYPE:", typeof src);
-  console.dir(src, { depth: 10 });
-
-  if (src && typeof src === "object") {
-    console.error("keys:", Object.keys(src));
-    console.dir(src, { depth: 10 });
-  }
-
-//   console.trace("escapeHtmlComment");
-
-//   throw new Error(
-//     "escapeHtmlComment received: " +
-//     JSON.stringify(src)
-//   );
+            $replace = <<<'JS'
+if (typeof src !== "string" || src == null) {
+    return "";
 }
 
 return src.replace(commentStripRE, "");
 JS;
 
-                    $content = str_replace($search, $replace, $content);
+            if (strpos($content, $search) === false) {
 
-                    $this->info("→ schreibe JS-Datei");
+                $this->warn("Pattern nicht gefunden.");
 
-                    File::put($vueFile, $content);
-
-                    $this->info("✔ JS-Datei geschrieben");
-
-                } else {
-
-                    $this->warn("Pattern nicht gefunden.");
-                }
+                continue;
             }
+
+            $content = str_replace(
+                $search,
+                $replace,
+                $content
+            );
+
+            File::put($vueFile, $content);
+
+            $this->info("✔ Vue Shared gepatcht.");
         }
 
-        $this->newLine();
+        /*
+        |--------------------------------------------------------------------------
+        | Part 3 beginnt hier...
+        |--------------------------------------------------------------------------
+        */
+        /*
+|--------------------------------------------------------------------------
+| Server Renderer Patch entfernen
+|--------------------------------------------------------------------------
+*/
 
+$rendererFiles = [
+    base_path('node_modules/@vue/server-renderer/dist/server-renderer.cjs.js'),
+    base_path('node_modules/@vue/server-renderer/dist/server-renderer.esm-bundler.js'),
+];
+
+foreach ($rendererFiles as $rendererFile) {
+
+    $this->newLine();
+    $this->info("Bearbeite:");
+    $this->line($rendererFile);
+
+    if (!File::exists($rendererFile)) {
+        $this->warn("Datei existiert nicht.");
+        continue;
+    }
+
+    $content = File::get($rendererFile);
+    $content = str_replace("\r\n", "\n", $content);
+
+    $search = <<<'JS'
+	try {
+  const t = vnode?.type;
+
+  console.log("================================");
+  console.log("VNode type:", t);
+
+  if (typeof t === "object") {
+    console.dir(t, { depth: 2 });
+  }
+
+  if (typeof t === "symbol") {
+    console.log("Symbol:", t.toString());
+  }
+
+  if (typeof t === "function") {
+    console.log("Function:", t.name);
+  }
+
+} catch(e) {
+	console.error(e);
+}
+JS;
+
+    if (strpos($content, $search) === false) {
+
+        $this->info("✔ Kein renderVNode-Debug vorhanden.");
+
+        continue;
+    }
+
+    $content = str_replace($search, "", $content);
+
+    File::put($rendererFile, $content);
+
+    $this->info("✔ renderVNode-Debug entfernt.");
+        }
+        $this->newLine();
 
         return self::SUCCESS;
     }
+
 }

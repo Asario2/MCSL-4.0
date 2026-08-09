@@ -39,7 +39,7 @@ class ReturnGenerateSitemap extends Command
                 return false;
             }
 
-            if (str_starts_with($route->uri(), 'api/')) {
+         if (str_starts_with($route->uri(), 'api/') || $route->uri() === 'home/terms') {
                 return false;
             }
 
