@@ -1,4 +1,5 @@
 import axios from "@/lib/api";
+import { usePage } from "@inertiajs/vue3";
 import { cachen } from './cache';
 export async function GetColumns(table) {
     try {
@@ -38,8 +39,7 @@ export function GetProfileImagePath(path, sd = null) {
     }
 
     path = path.replace(/^\/+/, '');
-
-    return `/images/_${sd}/users/profile_photo_path/${path}`;
+    return `/images/users/profile_photo_path/${path}`;
 }
 export async function loadRightsOnce() {
   if (!cache.tables) {
@@ -578,18 +578,25 @@ export function showHideToggleCookiePreferencesModal() {
 export function CheckOL() {
     return !window.location.host.includes("test.mcs");
 }
-import { usePage } from '@inertiajs/vue3';
 
 export function SD(pn = '') {
 
-    const props =
-        globalThis?.page?.props ??
-        {};
+    let props = {};
 
-    let subb =
-        props.sd ??
-        props.subdomain ??
-        'ab';
+    try {
+
+        props = usePage().props;
+
+    } catch (e) {
+
+        props = globalThis.page?.props ?? {};
+
+    }
+
+    const subb =
+        props?.sd ??
+        props?.subdomain ??
+        "ab";
 
     const pm = {
         ab: "Asarios Blog",
@@ -812,16 +819,28 @@ export function GetDomUrl(dom) {
         mfx_lh: "http://mfx.test.mcs",
         chh_lh: "http://chh.test.mcs",
         dag_lh: "http://dag.test.mcs",
+        pna_lh: "http://pna.test.mcs",
 
         ab_ol: "https://www.asario.de",
         mfx_ol: "https://www.marblefx.de",
         chh_ol: "https://www.ra-c-henning.de",
         dag_ol: "https://www.monikadargies.de",
+        pna_ol: "https://www.paulnadler.marblefx.net",
     };
 
-    const type = window.location.hostname.includes("test.mcs")
-        ? "lh"
-        : "ol";
+    let type = "lh";
+
+    // Browser
+    if (typeof window !== "undefined") {
+        type = window.location.hostname.includes("test.mcs")
+            ? "lh"
+            : "ol";
+    }
+    // SSR
+    else {
+        // Standard für SSR
+        type = "lh";
+    }
 
     return doms[`${dom}_${type}`] ?? "";
 }

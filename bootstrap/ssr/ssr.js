@@ -1,4 +1,4 @@
-import { mergeProps, useSSRContext, resolveComponent, ref, shallowRef, defineComponent, markRaw, h as h$1, computed, onMounted, watch, onBeforeUnmount, provide, onUnmounted, Fragment, reactive, createSSRApp, withCtx, createVNode, toDisplayString, openBlock, createBlock, createCommentVNode, resolveDynamicComponent, renderSlot, createTextVNode, renderList, withModifiers, defineAsyncComponent, withDirectives, withKeys, vModelText, vModelCheckbox, createSlots, vShow, vModelSelect, nextTick, resolveDirective } from "vue";
+import { mergeProps, useSSRContext, resolveComponent, ref, shallowRef, defineComponent, markRaw, h as h$1, computed, onMounted, watch, onBeforeUnmount, provide, onUnmounted, Fragment, reactive, createSSRApp, withCtx, createVNode, toDisplayString, openBlock, createBlock, createCommentVNode, resolveDynamicComponent, renderSlot, createTextVNode, renderList, nextTick, withModifiers, defineAsyncComponent, withDirectives, withKeys, vModelText, vModelCheckbox, createSlots, vShow, vModelSelect, resolveDirective } from "vue";
 import { ssrRenderAttrs, ssrRenderComponent, ssrRenderAttr, ssrInterpolate, ssrRenderList, ssrRenderStyle, ssrRenderClass, ssrRenderSlot, ssrRenderVNode, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderTeleport, ssrGetDynamicModelProps, ssrGetDirectiveProps } from "vue/server-renderer";
 import axios$1 from "axios";
 import { createHeadManager, router as router$1, config as config$1, isUrlMethodPair, formDataToObject, mergeDataIntoQueryString, getScrollableParent, useInfiniteScroll, UseFormUtils, FormComponentResetSymbol, resetFormFields, shouldIntercept, shouldNavigate, getInitialPageFromDOM, setupProgress } from "@inertiajs/core";
@@ -2245,26 +2245,26 @@ function _sfc_ssrRender$5P(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   } else if ($options.GetSd() == "mfx") {
     _push(`<div${ssrRenderAttrs(_attrs)}><a href="/admin/dashboard">`);
     _push(ssrRenderComponent(_component_mfxlogo, {
-      ab: "_mfx" + this.GetLogin()
+      ab: "_mfx" + $options.GetLogin()
     }, null, _parent));
     _push(`</a></div>`);
   } else if ($options.GetSd() == "chh") {
     _push(`<div${ssrRenderAttrs(_attrs)}><a href="/admin/dashboard">`);
     _push(ssrRenderComponent(_component_chhlogo, {
-      ab: "_chh" + this.GetLogin()
+      ab: "_chh" + $options.GetLogin()
     }, null, _parent));
     _push(`</a></div>`);
   } else if ($options.GetSd() === "dag") {
     _push(`<div${ssrRenderAttrs(_attrs)}><a href="/admin/dashboard">`);
     _push(ssrRenderComponent(_component_daglogo, {
-      ab: "_dag" + this.GetLogin()
+      ab: "_dag" + $options.GetLogin()
     }, null, _parent));
     _push(`</a></div>`);
   } else if ($options.GetSd() == "pna") {
     _push(`<div${ssrRenderAttrs(_attrs)}><a href="/admin/dashboard">`);
     _push(ssrRenderComponent(_component_pnalogo, {
       small: true,
-      ab: this.GetLogin()
+      ab: $options.GetLogin()
     }, null, _parent));
     _push(`</a></div>`);
   } else {
@@ -3157,7 +3157,7 @@ function GetProfileImagePath(path, sd = null) {
     }
   }
   path = path.replace(/^\/+/, "");
-  return `/images/_${sd}/users/profile_photo_path/${path}`;
+  return `/images/users/profile_photo_path/${path}`;
 }
 function replaceSmilies(text) {
   const smilies = {
@@ -3349,8 +3349,13 @@ function CheckOL() {
   return !window.location.host.includes("test.mcs");
 }
 function SD(pn = "") {
-  const props = globalThis?.page?.props ?? {};
-  let subb = props.sd ?? props.subdomain ?? "ab";
+  let props = {};
+  try {
+    props = usePage().props;
+  } catch (e) {
+    props = globalThis.page?.props ?? {};
+  }
+  const subb = props?.sd ?? props?.subdomain ?? "ab";
   const pm = {
     ab: "Asarios Blog",
     dag: "Monika Dargies",
@@ -3426,12 +3431,19 @@ function GetDomUrl(dom) {
     mfx_lh: "http://mfx.test.mcs",
     chh_lh: "http://chh.test.mcs",
     dag_lh: "http://dag.test.mcs",
+    pna_lh: "http://pna.test.mcs",
     ab_ol: "https://www.asario.de",
     mfx_ol: "https://www.marblefx.de",
     chh_ol: "https://www.ra-c-henning.de",
-    dag_ol: "https://www.monikadargies.de"
+    dag_ol: "https://www.monikadargies.de",
+    pna_ol: "https://www.paulnadler.marblefx.net"
   };
-  const type = window.location.hostname.includes("test.mcs") ? "lh" : "ol";
+  let type = "lh";
+  if (typeof window !== "undefined") {
+    type = window.location.hostname.includes("test.mcs") ? "lh" : "ol";
+  } else {
+    type = "lh";
+  }
   return doms[`${dom}_${type}`] ?? "";
 }
 async function loadRights() {
@@ -4416,10 +4428,10 @@ _sfc_main$5u.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Shared/ab/Layout.vue");
   return _sfc_setup$5u ? _sfc_setup$5u(props, ctx) : void 0;
 };
-const Layout$e = /* @__PURE__ */ _export_sfc(_sfc_main$5u, [["ssrRender", _sfc_ssrRender$5s]]);
+const Layout$d = /* @__PURE__ */ _export_sfc(_sfc_main$5u, [["ssrRender", _sfc_ssrRender$5s]]);
 const __vite_glob_0_15 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$e
+  default: Layout$d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$5t = {
   name: "Homepage_Shared_MetaHeader",
@@ -4579,7 +4591,7 @@ const __vite_glob_0_238 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$5r = {
   name: "ActivityLogTable",
-  components: { Layout: Layout$e, Breadcrumb, MetaHeader, Pagination: Pagination$1, SearchFilter },
+  components: { Layout: Layout$d, Breadcrumb, MetaHeader, Pagination: Pagination$1, SearchFilter },
   props: {
     users: [Object, Array],
     pag: [Object, Array],
@@ -4658,7 +4670,19 @@ const _sfc_main$5r = {
       }
       const s = this.form.search.toLowerCase();
       return this.logs.filter((row) => {
-        return String(row.id || "").toLowerCase().includes(s) || String(row.action || "").toLowerCase().includes(s) || String(row.tablename || "").toLowerCase().includes(s) || String(row.URL || "").toLowerCase().includes(s) || String(row.info || "").toLowerCase().includes(s) || String(row.IP || "").toLowerCase().includes(s) || String(row.session_id || "").toLowerCase().includes(s) || String(row.dom || "").toLowerCase().includes(s) || String(row.user_name || "").toLowerCase().includes(s);
+        const id = String(row.id || "").toLowerCase();
+        const action = String(row.action || "").toLowerCase();
+        const tablename = String(row.tablename || "").toLowerCase();
+        const url = String(row.URL || "").toLowerCase();
+        const info = String(row.info || "").toLowerCase();
+        const ip = String(row.IP || "").toLowerCase();
+        const session = String(row.session_id || "").toLowerCase();
+        const dom = String(row.dom || "").toLowerCase();
+        const username = String(row.user_name || "").toLowerCase();
+        console.log("SEARCH:", s);
+        console.log("USERNAME:", row.user_name, "→", username);
+        console.log("MATCH USERNAME:", username.includes(s));
+        return id.includes(s) || action.includes(s) || tablename.includes(s) || url.includes(s) || info.includes(s) || ip.includes(s) || session.includes(s) || dom.includes(s) || username.includes(s);
       });
     },
     paginatedLogs() {
@@ -4671,10 +4695,13 @@ const _sfc_main$5r = {
     }
   },
   async mounted() {
-    this.loadLogs();
     if (typeof window !== "undefined") {
       window.addEventListener("beforeunload", this.markChecked);
     }
+    await this.loadLogs();
+    await this.fetchStatus();
+    await nextTick();
+    await this.markChecked();
   },
   beforeUnmount() {
     if (typeof window !== "undefined") {
@@ -4715,29 +4742,40 @@ const _sfc_main$5r = {
       const [year, month, day] = date.split("-");
       return `${day}.${month}.${year} ${time}`;
     },
-    loadLogs(url = null) {
-      url = url || "/api/activity-log" + window.location.search;
-      axios$1.get(url).then((res) => {
-        this.logs = res.data.tables;
-        this.pagination = res.data.pagination;
-        this.fetchStatus();
-      }).catch((err) => console.error("Fehler beim Laden:", err));
+    async loadLogs(url = "/api/activity-log") {
+      try {
+        const res = await axios$1.get(url);
+        this.logs = res.data.tables || [];
+        this.pagination = res.data.pagination || [];
+      } catch (error) {
+        console.error("Fehler beim Activity Log laden:", error);
+      }
+    },
+    reset() {
+      this.form.search = "";
     },
     markChecked() {
-      const unchecked = this.logs.filter((row) => row.pub === 0).map((row) => row.id);
-      if (!unchecked.length) return;
-      this.logs.forEach((row) => {
-        if (unchecked.includes(row.id)) row.pub = 1;
-      });
-      const blob = new Blob([JSON.stringify({ ids: unchecked })], { type: "application/json" });
-      navigator.sendBeacon("/api/activity-log/check", blob);
+      const unchecked = this.logs.filter((row) => Number(row.xkis_checked) === 0).map((row) => row.id);
+      if (!unchecked.length) {
+        return;
+      }
+      const blob = new Blob(
+        [JSON.stringify({ ids: unchecked })],
+        { type: "application/json" }
+      );
+      const ok = navigator.sendBeacon(
+        "/activity-log/mark_all",
+        blob
+      );
+      console.log("Beacon send:", ok, unchecked);
     },
     async fetchStatus() {
-      await this.$nextTick();
-      if (!this.logs || this.logs.length === 0) return;
+      if (!this.logs || this.logs.length === 0) {
+        return;
+      }
       try {
         const response = await axios$1.get("/api/chkcom_log/");
-        this.checkedStatus = response.data.success;
+        this.checkedStatus = response.data.success || {};
       } catch (error) {
         console.error("Fehler beim Batch-Status laden:", error);
       }
@@ -4780,7 +4818,7 @@ function _sfc_ssrRender$5p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           modelValue: $data.form.search,
           "onUpdate:modelValue": ($event) => $data.form.search = $event,
           class: "w-full",
-          onReset: _ctx.reset
+          onReset: $options.reset
         }, null, _parent2, _scopeId));
         _push2(`</div><div class="bg-layout-1 text-layout-1 p-6 rounded-lg shadow"${_scopeId}><h2 class="text-lg font-semibold mb-4"${_scopeId}>Activity Log</h2><div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700"${_scopeId}><table class="min-w-full text-sm text-left"${_scopeId}><thead class="bg-layout-2 text-layout-1 text-xs uppercase"${_scopeId}><tr${_scopeId}><th class="px-4 py-3"${_scopeId}>ID</th><th class="px-4 py-3"${_scopeId}>Pub</th><th class="px-4 py-3"${_scopeId}>Domain</th><th class="px-4 py-3"${_scopeId}>Datum</th><th class="px-4 py-3"${_scopeId}>Action</th><th class="px-4 py-3"${_scopeId}>Tabelle</th><th class="px-0 py-0" width="10"${_scopeId}>ID</th><th class="px-4 py-3"${_scopeId}>URL</th><th class="px-4 py-3"${_scopeId}>User</th><th class="px-4 py-3"${_scopeId}>Info</th><th class="px-4 py-3"${_scopeId}>IP</th><th class="px-4 py-3"${_scopeId}>Session</th></tr></thead><tbody class="divide-y divide-gray-200 dark:divide-gray-700"${_scopeId}><!--[-->`);
         ssrRenderList($options.paginatedLogs, (row) => {
@@ -4806,7 +4844,7 @@ function _sfc_ssrRender$5p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           if ($props.users?.[row?.users_id]) {
             _push2(`<div${_scopeId}><img${ssrRenderAttr("src", $options.GetProfileImagePath($props.users[row.users_id].img || "008.jpg"))} class="h-8 w-8 rounded-full object-cover"${ssrRenderAttr("title", $props.users[row.users_id].name)}${ssrRenderAttr("alt", $props.users[row.users_id].name)}${_scopeId}></div>`);
           } else {
-            _push2(`<div${_scopeId}><img${ssrRenderAttr("src", "/images/_ab/users/profile_photo_path/008.jpg")} class="h-8 w-8 rounded-full object-cover" alt="Unbekannt"${_scopeId}></div>`);
+            _push2(`<div${_scopeId}><img${ssrRenderAttr("src", "/images/users/profile_photo_path/008.jpg")} class="h-8 w-8 rounded-full object-cover" alt="Unbekannter Benutzer" title="Unbekannter Benutzer"${_scopeId}></div>`);
           }
           _push2(`</td><td class="px-4 py-3"${_scopeId}>`);
           if (row.info) {
@@ -4838,7 +4876,7 @@ function _sfc_ssrRender$5p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
               modelValue: $data.form.search,
               "onUpdate:modelValue": ($event) => $data.form.search = $event,
               class: "w-full",
-              onReset: _ctx.reset
+              onReset: $options.reset
             }, null, 8, ["modelValue", "onUpdate:modelValue", "onReset"])
           ]),
           createVNode("div", { class: "bg-layout-1 text-layout-1 p-6 rounded-lg shadow" }, [
@@ -4912,9 +4950,10 @@ function _sfc_ssrRender$5p(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                           }, null, 8, ["src", "title", "alt"])
                         ])) : (openBlock(), createBlock("div", { key: 1 }, [
                           createVNode("img", {
-                            src: "/images/_ab/users/profile_photo_path/008.jpg",
+                            src: "/images/users/profile_photo_path/008.jpg",
                             class: "h-8 w-8 rounded-full object-cover",
-                            alt: "Unbekannt"
+                            alt: "Unbekannter Benutzer",
+                            title: "Unbekannter Benutzer"
                           })
                         ]))
                       ]),
@@ -6248,7 +6287,7 @@ const _sfc_main$5o = {
           { params: { edit: "blogposts.index" } }
         );
         window.toastBus.emit(response.data);
-        router.relaod();
+        router.reload();
       } catch (err) {
         console.error("Fehler beim Löschen:", err);
       }
@@ -6258,16 +6297,16 @@ const _sfc_main$5o = {
 function _sfc_ssrRender$5m(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_IconPencil = resolveComponent("IconPencil");
   const _component_IconTrash = resolveComponent("IconTrash");
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "whitespace-nowrap editbtn-container" }, _attrs))} data-v-942efe8d>`);
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "whitespace-nowrap editbtn-container" }, _attrs))} data-v-634193cc>`);
   if ($options.CleanTable() !== "kontakte" && $data.rights.edit == 1 && !$props.noedit || $options.CleanTable() === "kontakte" && Number($options.currentUserId) === Number($props.users_id)) {
-    _push(`<span data-v-942efe8d><a${ssrRenderAttr("href", "/admin/tables/edit/" + $props.id + "/" + $props.table)} data-v-942efe8d>`);
+    _push(`<span data-v-634193cc><a${ssrRenderAttr("href", "/admin/tables/edit/" + $props.id + "/" + $props.table)} data-v-634193cc>`);
     _push(ssrRenderComponent(_component_IconPencil, { class: "sm-pencil cursor-pointer text-layout-sun-600 dark:text-layout-night-900" }, null, _parent));
     _push(`</a>    </span>`);
   } else {
     _push(`<!---->`);
   }
   if ($data.rights.delete == 1 && $options.CleanTable() !== "kontakte" || $options.CleanTable() === "kontakte" && Number($options.currentUserId) === Number($props.users_id)) {
-    _push(`<span data-v-942efe8d><form style="${ssrRenderStyle({ "display": "inline" })}" data-v-942efe8d><button type="button" data-v-942efe8d>`);
+    _push(`<span data-v-634193cc><form style="${ssrRenderStyle({ "display": "inline" })}" data-v-634193cc><button type="button" data-v-634193cc>`);
     _push(ssrRenderComponent(_component_IconTrash, { class: "sm-pencil cursor-pointer" }, null, _parent));
     _push(`</button></form></span>`);
   } else {
@@ -6281,7 +6320,7 @@ _sfc_main$5o.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/editbtns.vue");
   return _sfc_setup$5o ? _sfc_setup$5o(props, ctx) : void 0;
 };
-const editbtns = /* @__PURE__ */ _export_sfc(_sfc_main$5o, [["ssrRender", _sfc_ssrRender$5m], ["__scopeId", "data-v-942efe8d"]]);
+const editbtns = /* @__PURE__ */ _export_sfc(_sfc_main$5o, [["ssrRender", _sfc_ssrRender$5m], ["__scopeId", "data-v-634193cc"]]);
 const __vite_glob_0_112 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: editbtns
@@ -6504,7 +6543,7 @@ const _sfc_main$5k = {
           }
         });
         window.toastBus.emit(response.data);
-        router.relaod();
+        router.reload();
       } catch (error) {
         console.error("Fehler beim Löschen:", error);
       }
@@ -6516,7 +6555,7 @@ function _sfc_ssrRender$5i(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_input_icon_hyperlink = resolveComponent("input-icon-hyperlink");
   const _component_plus_circle = resolveComponent("plus-circle");
   if ($data.rights?.add == 1) {
-    _push(`<span${ssrRenderAttrs(mergeProps({ class: "tb" }, _attrs))} data-v-6bcdea23>`);
+    _push(`<span${ssrRenderAttrs(mergeProps({ class: "tb" }, _attrs))} data-v-677cb1c9>`);
     _push(ssrRenderComponent(_component_button_group, null, {
       default: withCtx((_, _push2, _parent2, _scopeId) => {
         if (_push2) {
@@ -6529,7 +6568,7 @@ function _sfc_ssrRender$5i(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           }, {
             icon: withCtx((_2, _push3, _parent3, _scopeId2) => {
               if (_push3) {
-                _push3(`<span class="flex items-center gap-2 tw" data-v-6bcdea23${_scopeId2}>`);
+                _push3(`<span class="flex items-center gap-2 tw" data-v-677cb1c9${_scopeId2}>`);
                 _push3(ssrRenderComponent(_component_plus_circle, { class: "w-5 h-5" }, null, _parent3, _scopeId2));
                 _push3(` Erstellen </span>`);
               } else {
@@ -6578,7 +6617,7 @@ _sfc_main$5k.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/newbtn.vue");
   return _sfc_setup$5k ? _sfc_setup$5k(props, ctx) : void 0;
 };
-const newbtn = /* @__PURE__ */ _export_sfc(_sfc_main$5k, [["ssrRender", _sfc_ssrRender$5i], ["__scopeId", "data-v-6bcdea23"]]);
+const newbtn = /* @__PURE__ */ _export_sfc(_sfc_main$5k, [["ssrRender", _sfc_ssrRender$5i], ["__scopeId", "data-v-677cb1c9"]]);
 const __vite_glob_0_114 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: newbtn
@@ -6735,7 +6774,7 @@ const __vite_glob_0_40 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$5g = {
   name: "Ein_Ausgaben",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     MetaHeader,
     editbtns,
     newbtn,
@@ -7610,7 +7649,7 @@ const _sfc_main$51 = {
 };
 function _sfc_ssrRender$4$(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_icon_exclamation_circle = resolveComponent("icon-exclamation-circle");
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "flex items-center h-6" }, _attrs))}><div class="flex items-center h-6"><input type="hidden"${ssrRenderAttr("name", $props.name)}${ssrRenderAttr("id", $props.name + "_alt")}${ssrRenderAttr("value", $props.modelValue)}><input${ssrRenderAttr("id", $props.name)}${ssrRenderAttr("name", $props.name)} type="checkbox" class="w-5 h-5 rounded border focus:ring-3 bg-primary-sun-50 text-primary-sun-500 border-primary-sun-300 focus:ring-primary-sun-300 ring-offset-primary-sun-800 checked:bg-primary-sun-500 dark:bg-primary-night-50 dark:text-primary-night-500 dark:border-primary-night-300 dark:focus:ring-primary-night-300 dark:ring-offset-primary-night-800 dark:checked:bg-primary-night-500 cursor-pointer"${ssrRenderAttr("exValue", $props.exValue)}${ssrIncludeBooleanAttr($props.modelValue == 1) ? " checked" : ""}></div><div class="ml-3 text-sm"><label${ssrRenderAttr("for", $props.name)} class="cursor-pointer"${ssrRenderAttr("title", $props.helptext)}>`);
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "flex items-center h-6" }, _attrs))}><div class="flex items-center h-6"><input type="hidden"${ssrRenderAttr("name", $props.name)}${ssrRenderAttr("id", $props.name + "_alt")}${ssrRenderAttr("value", $props.modelValue)}><input${ssrRenderAttr("id", $props.name)}${ssrRenderAttr("name", $props.name)} type="checkbox" class="w-5 h-5 rounded border focus:ring-3 bg-primary-sun-500 text-primary-sun-500 border-primary-sun-300 focus:ring-primary-sun-300 ring-offset-primary-sun-800 checked:bg-primary-sun-500 dark:bg-primary-night-50 dark:text-primary-night-500 dark:border-primary-night-300 dark:focus:ring-primary-night-300 dark:ring-offset-primary-night-800 dark:checked:bg-primary-night-500 cursor-pointer"${ssrRenderAttr("exValue", $props.exValue)}${ssrIncludeBooleanAttr($props.modelValue == 1) ? " checked" : ""}></div><div class="ml-3 text-sm"><label${ssrRenderAttr("for", $props.name)} class="cursor-pointer"${ssrRenderAttr("title", $props.helptext)}>`);
   if ($props.label) {
     _push(`<span>${ssrInterpolate($props.label)}</span>`);
   } else {
@@ -8565,7 +8604,10 @@ const _sfc_main$4R = {
     id: [String, Number],
     value: [String, Number],
     tablex: String,
-    table_x: String,
+    table_x: {
+      txpe: String,
+      default: ""
+    },
     placeholder: String,
     required: {
       type: [Number, Boolean, String],
@@ -8994,25 +9036,25 @@ function _sfc_ssrRender$4P(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_IconOrdList = resolveComponent("IconOrdList");
   const _component_smileys = resolveComponent("smileys");
   const _component_ImageUploadModal = resolveComponent("ImageUploadModal");
-  _push(`<div${ssrRenderAttrs(_attrs)} data-v-f0c3f9a0>`);
+  _push(`<div${ssrRenderAttrs(_attrs)} data-v-8c606d13>`);
   if (!$props.nohtml) {
-    _push(`<span data-v-f0c3f9a0><div class="mb-4 h-14 p-4 flex items-center bg-layout-sun-300 dark:bg-layout-night-300 rounded-lg edit0R" data-v-f0c3f9a0><p class="border rounded label p-3" data-v-f0c3f9a0><span class="whitespace-nowrap" data-v-f0c3f9a0>${ssrInterpolate($props.name ? $options.getLabel($props.name) : "")}</span></p>`);
+    _push(`<span data-v-8c606d13><div class="mb-4 h-14 p-4 flex items-center bg-layout-sun-300 dark:bg-layout-night-300 rounded-lg edit0R" data-v-8c606d13><p class="border rounded label p-3" data-v-8c606d13><span class="whitespace-nowrap" data-v-8c606d13>${ssrInterpolate($props.name ? $options.getLabel($props.name) : "")}</span></p>`);
     _push(ssrRenderComponent(_component_ClientOnly, null, {
       default: withCtx((_, _push2, _parent2, _scopeId) => {
         if (_push2) {
-          _push2(`<button type="button" class="icon-btn" title="Fett" aria-label="Fett" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}>B</b></button><button tabindex="-1" type="button" class="icon-btn" title="Kursiv" aria-label="Kursiv" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}><i data-v-f0c3f9a0${_scopeId}>I</i></b></button><!--[-->`);
+          _push2(`<button type="button" class="icon-btn" title="Fett" aria-label="Fett" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}>B</b></button><button tabindex="-1" type="button" class="icon-btn" title="Kursiv" aria-label="Kursiv" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}><i data-v-8c606d13${_scopeId}>I</i></b></button><!--[-->`);
           ssrRenderList(6, (i) => {
-            _push2(`<button tabindex="-1" type="button" class="icon-btn"${ssrRenderAttr("title", "Überschrift " + i)}${ssrRenderAttr("aria-label", "Überschrift " + i)} data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}>H${ssrInterpolate(i)}</b></button>`);
+            _push2(`<button tabindex="-1" type="button" class="icon-btn"${ssrRenderAttr("title", "Überschrift " + i)}${ssrRenderAttr("aria-label", "Überschrift " + i)} data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}>H${ssrInterpolate(i)}</b></button>`);
           });
-          _push2(`<!--]--><button tabindex="-1" type="button" class="icon-btn" title="Bildupload" aria-label="Bildupload" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}>`);
+          _push2(`<!--]--><button tabindex="-1" type="button" class="icon-btn" title="Bildupload" aria-label="Bildupload" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}>`);
           _push2(ssrRenderComponent(_component_IconPictures, { stroke: "currentColor" }, null, _parent2, _scopeId));
-          _push2(`</b></button><button tabindex="-1" type="button" class="icon-btn" title="Code" aria-label="Code" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}>`);
+          _push2(`</b></button><button tabindex="-1" type="button" class="icon-btn" title="Code" aria-label="Code" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}>`);
           _push2(ssrRenderComponent(_component_IconCode, null, null, _parent2, _scopeId));
-          _push2(`</b></button><button tabindex="-1" type="button" class="icon-btn" title="Trennlinie" aria-label="Trennlinie" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}><span class="whitespace-nowrap" data-v-f0c3f9a0${_scopeId}>---</span></b></button><button tabindex="-1" type="button" class="icon-btn" title="Email Link" aria-label="Email" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}>@</b></button><button tabindex="-1" type="button" class="icon-btn" title="Hyperlink" aria-label="Hyperlink" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}>`);
+          _push2(`</b></button><button tabindex="-1" type="button" class="icon-btn" title="Trennlinie" aria-label="Trennlinie" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}><span class="whitespace-nowrap" data-v-8c606d13${_scopeId}>---</span></b></button><button tabindex="-1" type="button" class="icon-btn" title="Email Link" aria-label="Email" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}>@</b></button><button tabindex="-1" type="button" class="icon-btn" title="Hyperlink" aria-label="Hyperlink" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}>`);
           _push2(ssrRenderComponent(_component_IconHyperLink, null, null, _parent2, _scopeId));
-          _push2(`</b></button><button tabindex="-1" type="button" class="icon-btn" title="Ungeordnete Liste" aria-label="Ungeordnete Liste" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}>`);
+          _push2(`</b></button><button tabindex="-1" type="button" class="icon-btn" title="Ungeordnete Liste" aria-label="Ungeordnete Liste" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}>`);
           _push2(ssrRenderComponent(_component_IconList, null, null, _parent2, _scopeId));
-          _push2(`</b></button><button tabindex="-1" type="button" class="icon-btn" title="Geordnete Liste" aria-label="Geordnete Liste" data-v-f0c3f9a0${_scopeId}><b data-v-f0c3f9a0${_scopeId}>`);
+          _push2(`</b></button><button tabindex="-1" type="button" class="icon-btn" title="Geordnete Liste" aria-label="Geordnete Liste" data-v-8c606d13${_scopeId}><b data-v-8c606d13${_scopeId}>`);
           _push2(ssrRenderComponent(_component_IconOrdList, null, null, _parent2, _scopeId));
           _push2(`</b></button>`);
         } else {
@@ -9138,7 +9180,7 @@ function _sfc_ssrRender$4P(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
       }),
       _: 1
     }, _parent));
-    _push(`</div><div data-v-f0c3f9a0>`);
+    _push(`</div><div data-v-8c606d13>`);
     if (!$props.nosmilies) {
       _push(ssrRenderComponent(_component_smileys, {
         editor: $props.name,
@@ -9149,7 +9191,7 @@ function _sfc_ssrRender$4P(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     }
     _push(`</div>`);
     if ($data.hasError && $props.required) {
-      _push(`<div class="text-red-500 text-sm mt-1" data-v-f0c3f9a0> Dieses Feld darf nicht leer sein. </div>`);
+      _push(`<div class="text-red-500 text-sm mt-1" data-v-8c606d13> Dieses Feld darf nicht leer sein. </div>`);
     } else {
       _push(`<!---->`);
     }
@@ -9157,7 +9199,7 @@ function _sfc_ssrRender$4P(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   } else {
     _push(`<!---->`);
   }
-  _push(`<div class="mb-4 p-4 bg-layout-sun-0 dark:bg-layout-night-0 rounded-lg edit0R editor" data-v-f0c3f9a0><div${ssrRenderAttr("id", "editor_" + $props.name)} contenteditable="true" dir="ltr" class="editor rounded min-h-[150px] max-h-[350px] focus:outline-none"${ssrIncludeBooleanAttr($props.required) ? " required" : ""}${ssrRenderAttr("placeholder", $props.placeholder)} data-v-f0c3f9a0></div><input type="hidden"${ssrRenderAttr("id", $props.name + "_alt")} data-v-f0c3f9a0></div>`);
+  _push(`<div class="mb-4 p-4 bg-layout-sun-0 dark:bg-layout-night-0 rounded-lg edit0R editor" data-v-8c606d13><div${ssrRenderAttr("id", "editor_" + $props.name)} contenteditable="true" dir="ltr" class="editor rounded min-h-[150px] max-h-[350px] focus:outline-none"${ssrIncludeBooleanAttr($props.required) ? " required" : ""}${ssrRenderAttr("placeholder", $props.placeholder)} data-v-8c606d13></div><input type="hidden"${ssrRenderAttr("id", $props.name + "_alt")} data-v-8c606d13></div>`);
   _push(ssrRenderComponent(_component_ImageUploadModal, {
     style: $data.isModalOpen ? null : { display: "none" },
     tablex: $props.table_x,
@@ -9182,7 +9224,7 @@ _sfc_main$4R.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputHtml.vue");
   return _sfc_setup$4R ? _sfc_setup$4R(props, ctx) : void 0;
 };
-const InputHtml = /* @__PURE__ */ _export_sfc(_sfc_main$4R, [["ssrRender", _sfc_ssrRender$4P], ["__scopeId", "data-v-f0c3f9a0"]]);
+const InputHtml = /* @__PURE__ */ _export_sfc(_sfc_main$4R, [["ssrRender", _sfc_ssrRender$4P], ["__scopeId", "data-v-8c606d13"]]);
 const __vite_glob_0_94 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputHtml
@@ -9371,7 +9413,7 @@ const __vite_glob_0_65 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$4N = defineComponent({
   name: "Admin_BlogForm",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     Breadcrumb,
     SmoothScroll,
     SectionForm,
@@ -11653,7 +11695,7 @@ const _sfc_main$4M = {
         }).then((response) => {
           window.toastBus.emit(response.data);
           this.$emit("deleted");
-          router$1.relaod();
+          router$1.reload();
         }).catch((error) => console.error("Fehler beim Löschen2:", error));
       }
     },
@@ -11868,7 +11910,7 @@ const __vite_glob_0_48 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$4J = defineComponent({
   name: "Admin_BlogList",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     Breadcrumb,
     ListContainer,
     DisplayDate,
@@ -12031,7 +12073,7 @@ const __vite_glob_0_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.def
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$4I = {
   name: "ContactTable",
-  components: { Layout: Layout$e, MetaHeader },
+  components: { Layout: Layout$d, MetaHeader },
   props: {
     contacts: {
       type: Array,
@@ -13108,7 +13150,9 @@ const _sfc_main$4f = defineComponent({
     },
     visibleTables() {
       return this.adminTables.filter((table) => {
-        if (!table.checkzrights) return true;
+        if (!table.checkzrights) {
+          return true;
+        }
         return !!this.modulRights?.[table.checkzrights];
       });
     }
@@ -13167,7 +13211,7 @@ function _sfc_ssrRender$4e(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
         _push2(ssrRenderComponent(_component_MetaHeader, { title: "Dashboard" }, null, _parent2, _scopeId));
-        _push2(`<div class="w-full bg-layout-sun-0 dark:bg-layout-night-0 grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-3 p-6 lg:p-4" data-v-f6bb0898${_scopeId}><!--[-->`);
+        _push2(`<div class="w-full bg-layout-sun-0 dark:bg-layout-night-0 grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-3 p-6 lg:p-4" data-v-e083e156${_scopeId}><!--[-->`);
         ssrRenderList(_ctx.visibleTables, (table) => {
           _push2(ssrRenderComponent(_component_navigation_card, {
             key: table.id,
@@ -13775,14 +13819,14 @@ _sfc_main$4f.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Dashboard.vue");
   return _sfc_setup$4f ? _sfc_setup$4f(props, ctx) : void 0;
 };
-const Dashboard$2 = /* @__PURE__ */ _export_sfc(_sfc_main$4f, [["ssrRender", _sfc_ssrRender$4e], ["__scopeId", "data-v-f6bb0898"]]);
+const Dashboard$2 = /* @__PURE__ */ _export_sfc(_sfc_main$4f, [["ssrRender", _sfc_ssrRender$4e], ["__scopeId", "data-v-e083e156"]]);
 const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Dashboard$2
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$4e = {
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     MetaHeader
   },
   data() {
@@ -14021,7 +14065,7 @@ const _sfc_main$4c = {
           `/api/remlog/${this.id}`
         );
         window.toastBus.emit(response.data);
-        router.relaod();
+        router.reload();
       } catch (err) {
         console.error("Fehler beim Löschen:", err);
       }
@@ -14030,7 +14074,7 @@ const _sfc_main$4c = {
 };
 function _sfc_ssrRender$4b(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_IconTrash = resolveComponent("IconTrash");
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "whitespace-nowrap editbtn-container" }, _attrs))} data-v-e831a0a5><span data-v-e831a0a5><form style="${ssrRenderStyle({ "display": "inline" })}" data-v-e831a0a5><button type="button" data-v-e831a0a5>`);
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "whitespace-nowrap editbtn-container" }, _attrs))} data-v-f9f6c68b><span data-v-f9f6c68b><form style="${ssrRenderStyle({ "display": "inline" })}" data-v-f9f6c68b><button type="button" data-v-f9f6c68b>`);
   _push(ssrRenderComponent(_component_IconTrash, { class: "sm-pencil cursor-pointer" }, null, _parent));
   _push(`</button></form></span></div>`);
 }
@@ -14040,7 +14084,7 @@ _sfc_main$4c.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Shared/delHackingLog.vue");
   return _sfc_setup$4c ? _sfc_setup$4c(props, ctx) : void 0;
 };
-const delhackinglog = /* @__PURE__ */ _export_sfc(_sfc_main$4c, [["ssrRender", _sfc_ssrRender$4b], ["__scopeId", "data-v-e831a0a5"]]);
+const delhackinglog = /* @__PURE__ */ _export_sfc(_sfc_main$4c, [["ssrRender", _sfc_ssrRender$4b], ["__scopeId", "data-v-f9f6c68b"]]);
 const __vite_glob_0_18 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: delhackinglog
@@ -14093,7 +14137,7 @@ const __vite_glob_0_229 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$4a = {
   name: "RequestLogTable",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     delhackinglog,
     MetaHeader,
     Breadcrumb,
@@ -14810,7 +14854,7 @@ const _sfc_main$47 = {
           }
         });
         window.toastBus.emit(response.data);
-        router.relaod();
+        router.reload();
       } catch (error) {
         console.error("Fehler beim Löschen:", error);
         window.toastBus.emit({
@@ -14825,7 +14869,7 @@ function _sfc_ssrRender$46(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_Link = resolveComponent("Link");
   const _component_PlusCircle = resolveComponent("PlusCircle");
   if ($data.rights?.add == 1 || $props.safe) {
-    _push(`<span${ssrRenderAttrs(_attrs)} data-v-fb731bf9>`);
+    _push(`<span${ssrRenderAttrs(_attrs)} data-v-549fdc2b>`);
     _push(ssrRenderComponent(_component_Link, {
       href: `/admin/tables/create/${$props.table}`,
       class: "tb nul inline-flex items-center px-1 py-1.5 md:px-2 md:py-2 h-6 md:h-8 rounded-md font-medium text-xs tracking-widest disabled:opacity-25 transition cursor-pointer focus:ring focus:outline-none button_bg button_text_case_bg"
@@ -14833,7 +14877,7 @@ function _sfc_ssrRender$46(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
       default: withCtx((_, _push2, _parent2, _scopeId) => {
         if (_push2) {
           _push2(ssrRenderComponent(_component_PlusCircle, { class: "cursor-pointer" }, null, _parent2, _scopeId));
-          _push2(` <span class="tb" data-v-fb731bf9${_scopeId}>${ssrInterpolate($props.text)}</span>`);
+          _push2(` <span class="tb" data-v-549fdc2b${_scopeId}>${ssrInterpolate($props.text)}</span>`);
         } else {
           return [
             createVNode(_component_PlusCircle, { class: "cursor-pointer" }),
@@ -14855,7 +14899,7 @@ _sfc_main$47.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/addbtn.vue");
   return _sfc_setup$47 ? _sfc_setup$47(props, ctx) : void 0;
 };
-const Addbtn = /* @__PURE__ */ _export_sfc(_sfc_main$47, [["ssrRender", _sfc_ssrRender$46], ["__scopeId", "data-v-fb731bf9"]]);
+const Addbtn = /* @__PURE__ */ _export_sfc(_sfc_main$47, [["ssrRender", _sfc_ssrRender$46], ["__scopeId", "data-v-549fdc2b"]]);
 const __vite_glob_0_110 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Addbtn
@@ -15151,7 +15195,7 @@ const __vite_glob_0_195 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$42 = {
   name: "ContactTable",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     editbtns,
     Addbtn,
     SearchFilter,
@@ -15193,13 +15237,16 @@ const _sfc_main$42 = {
       expandedRows: [],
       searchTimeout: null,
       isLoading: false,
+      tablex: "",
+      imageId: "",
       loading: false,
       modals: {},
       fileval: null,
       showImportModal: false,
       importContacts: [],
       showHelpModal: false,
-      info_type: null
+      info_type: null,
+      subdomain: globalThis.SD
       //   kontakteGrouped: {},  // nicht null oder undefined
     };
   },
@@ -15268,7 +15315,7 @@ const _sfc_main$42 = {
         await axios$1.put(`/admin/contacts/${contactId.id}/group`, {
           Gruppe: newGroup
         });
-        router.relaod({ only: ["contacts"] });
+        router.reload({ only: ["contacts"] });
         window.toastBus.emit({ type: "success", message: "Gruppe erfolgreich geändert!" });
         this.activeGroupPicker = null;
       } catch (error) {
@@ -15282,7 +15329,7 @@ const _sfc_main$42 = {
     handleSaved() {
       this.showImportModal = false;
       window.toastBus.emit({ type: "success", message: "Kontakte erfolgreich gespeichert" });
-      router.relaod({ only: ["contacts"] });
+      router.reload({ only: ["contacts"] });
     },
     openinfo(type) {
       this.info_type = type;
@@ -15323,6 +15370,7 @@ const _sfc_main$42 = {
     }
   },
   mounted() {
+    this.tablex = CleanTable$1();
     const params = new URLSearchParams(window.location.search);
     const search = params.get("search");
     document.addEventListener("click", this.closeGroupPicker);
@@ -15342,7 +15390,6 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_MetaHeader = resolveComponent("MetaHeader");
   const _component_FileUploadModal = resolveComponent("FileUploadModal");
   const _component_addbtn = resolveComponent("addbtn");
-  const _component_importBtn = resolveComponent("importBtn");
   const _component_IconIOS = resolveComponent("IconIOS");
   const _component_IconAndroid = resolveComponent("IconAndroid");
   const _component_IconUpload = resolveComponent("IconUpload");
@@ -15354,7 +15401,7 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
         _push2(ssrRenderComponent(_component_MetaHeader, { title: "Kontakte" }, null, _parent2, _scopeId));
-        _push2(`<div class="p-4 bg-gray-900 text-white min-h-screen" data-v-045ac754${_scopeId}>`);
+        _push2(`<div class="p-4 bg-gray-900 text-white min-h-screen" data-v-79646327${_scopeId}>`);
         _push2(ssrRenderComponent(_component_FileUploadModal, {
           isModalOpen: $data.modals.fileup,
           "onUpdate:isModalOpen": ($event) => $data.modals.fileup = $event,
@@ -15367,30 +15414,28 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           "onUpdate:modelValue": ($event) => $data.fileval = $event,
           namee: $data.fileval,
           alt_path: "_" + $options.SD() + "/" + $options.CleanTable_alt() + "/fileup",
-          domain: _ctx.subdomain,
-          tablex: _ctx.table_x,
-          path: _ctx.tablex,
+          domain: $data.subdomain,
+          tablex: $data.tablex,
+          path: $data.tablex,
           ref: "fileup",
-          value: _ctx.imageId,
+          value: $data.imageId,
           image: $data.fileval,
           namee2: "fileup",
           Message: false
         }, null, _parent2, _scopeId));
-        _push2(`<div class="flex items-center justify-between w-full" data-v-045ac754${_scopeId}><div data-v-045ac754${_scopeId}>`);
+        _push2(`<div class="flex items-center justify-between w-full" data-v-79646327${_scopeId}><div data-v-79646327${_scopeId}>`);
         _push2(ssrRenderComponent(_component_addbtn, {
           table: "contacts",
           text: "Neuer Kontakt",
           safe: true
         }, null, _parent2, _scopeId));
-        _push2(`</div><div class="flex items-center space-x-3" data-v-045ac754${_scopeId}>`);
-        _push2(ssrRenderComponent(_component_importBtn, null, null, _parent2, _scopeId));
-        _push2(`<button type="button" class="flex items-center" data-v-045ac754${_scopeId}>`);
+        _push2(`</div><div class="flex items-center space-x-3" data-v-79646327${_scopeId}><button type="button" class="flex items-center" data-v-79646327${_scopeId}>`);
         _push2(ssrRenderComponent(_component_IconIOS, { class: "w-6 h-6 mr-1" }, null, _parent2, _scopeId));
-        _push2(`<b data-v-045ac754${_scopeId}>IOS</b></button><button type="button" class="flex items-center" data-v-045ac754${_scopeId}>`);
+        _push2(`<b data-v-79646327${_scopeId}>IOS</b></button><button type="button" class="flex items-center" data-v-79646327${_scopeId}>`);
         _push2(ssrRenderComponent(_component_IconAndroid, { class: "w-6 h-6 mr-1" }, null, _parent2, _scopeId));
-        _push2(`<b data-v-045ac754${_scopeId}>Android</b></button><button type="button" class="flex items-center" data-v-045ac754${_scopeId}>`);
+        _push2(`<b data-v-79646327${_scopeId}>Android</b></button><button type="button" class="flex items-center" data-v-79646327${_scopeId}>`);
         _push2(ssrRenderComponent(_component_IconUpload, { class: "w-6 h-6 mr-2" }, null, _parent2, _scopeId));
-        _push2(` <b data-v-045ac754${_scopeId}>CSV Importieren</b></button></div><input type="hidden"${ssrRenderAttr("id", "fileup")}${ssrRenderAttr("name", "fileup")}${ssrRenderAttr("value", $data.fileval)} data-v-045ac754${_scopeId}>`);
+        _push2(` <b data-v-79646327${_scopeId}>CSV Importieren</b></button></div><input type="hidden"${ssrRenderAttr("id", "fileup")}${ssrRenderAttr("name", "fileup")}${ssrRenderAttr("value", $data.fileval)} data-v-79646327${_scopeId}>`);
         if ($data.showHelpModal) {
           _push2(ssrRenderComponent(_component_help, {
             info_type: $data.info_type,
@@ -15408,7 +15453,7 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
         } else {
           _push2(`<!---->`);
         }
-        _push2(`</div><div class="flex justify-between items-center" data-v-045ac754${_scopeId}>`);
+        _push2(`</div><div class="flex justify-between items-center" data-v-79646327${_scopeId}>`);
         if ($props.searchFilter) {
           _push2(ssrRenderComponent(_component_search_filter, {
             modelValue: $data.form.search,
@@ -15424,31 +15469,31 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
         if ($options.hasContacts) {
           _push2(`<!--[-->`);
           ssrRenderList($options.sortedLetters, (letter) => {
-            _push2(`<div class="mb-6 rounded-lg overflow-hidden border border-black" data-v-045ac754${_scopeId}><div class="px-4 py-2 font-bold text-gray-300 text-lg bg-gray-800" data-v-045ac754${_scopeId}>${ssrInterpolate(letter)}</div><div class="overflow-x-auto" data-v-045ac754${_scopeId}><table class="min-w-full table-auto border-collapse" data-v-045ac754${_scopeId}><thead data-v-045ac754${_scopeId}><tr class="bg-gray-700" data-v-045ac754${_scopeId}><th class="px-4 py-2 border-b border-r border-black text-left" width="1%" data-v-045ac754${_scopeId}>Mehr</th><th class="px-4 py-2 border-b border-r border-black text-left" width="1%" data-v-045ac754${_scopeId}>Gruppe</th><th class="px-4 py-2 border-b border-r border-black text-left" width="14%" data-v-045ac754${_scopeId}>Name</th><th class="px-4 py-2 border-b border-r border-black text-left" width="14%" data-v-045ac754${_scopeId}>Vorname</th><th class="px-4 py-2 border-b border-r border-black text-left" width="14%" data-v-045ac754${_scopeId}>Nachname</th><th class="px-4 py-2 border-b border-r border-black text-left" width="1%" data-v-045ac754${_scopeId}>Email</th><th class="px-4 py-2 border-b border-r border-black text-left" width="14%" data-v-045ac754${_scopeId}>Telefon</th><th class="px-4 py-2 border-b border-black text-left" width="14%" data-v-045ac754${_scopeId}>Handy</th><th class="px-4 py-2 border-b border-black text-left" width="1%" data-v-045ac754${_scopeId}>Aktionen</th></tr></thead><tbody data-v-045ac754${_scopeId}><!--[-->`);
+            _push2(`<div class="mb-6 rounded-lg overflow-hidden border border-black" data-v-79646327${_scopeId}><div class="px-4 py-2 font-bold text-gray-300 text-lg bg-gray-800" data-v-79646327${_scopeId}>${ssrInterpolate(letter)}</div><div class="overflow-x-auto" data-v-79646327${_scopeId}><table class="min-w-full table-auto border-collapse" data-v-79646327${_scopeId}><thead data-v-79646327${_scopeId}><tr class="bg-gray-700" data-v-79646327${_scopeId}><th class="px-4 py-2 border-b border-r border-black text-left" width="1%" data-v-79646327${_scopeId}>Mehr</th><th class="px-4 py-2 border-b border-r border-black text-left" width="1%" data-v-79646327${_scopeId}>Gruppe</th><th class="px-4 py-2 border-b border-r border-black text-left" width="14%" data-v-79646327${_scopeId}>Name</th><th class="px-4 py-2 border-b border-r border-black text-left" width="14%" data-v-79646327${_scopeId}>Vorname</th><th class="px-4 py-2 border-b border-r border-black text-left" width="14%" data-v-79646327${_scopeId}>Nachname</th><th class="px-4 py-2 border-b border-r border-black text-left" width="1%" data-v-79646327${_scopeId}>Email</th><th class="px-4 py-2 border-b border-r border-black text-left" width="14%" data-v-79646327${_scopeId}>Telefon</th><th class="px-4 py-2 border-b border-black text-left" width="14%" data-v-79646327${_scopeId}>Handy</th><th class="px-4 py-2 border-b border-black text-left" width="1%" data-v-79646327${_scopeId}>Aktionen</th></tr></thead><tbody data-v-79646327${_scopeId}><!--[-->`);
             ssrRenderList($options.groupedContacts[letter], (contact, index) => {
-              _push2(`<!--[--><tr class="${ssrRenderClass([{ "border-b border-black": index !== $options.groupedContacts[letter].length - 1 }, "hover:bg-gray-800"])}" data-v-045ac754${_scopeId}><td class="px-2 py-1 border-r border-black text-center" data-v-045ac754${_scopeId}>`);
+              _push2(`<!--[--><tr class="${ssrRenderClass([{ "border-b border-black": index !== $options.groupedContacts[letter].length - 1 }, "hover:bg-gray-800"])}" data-v-79646327${_scopeId}><td class="px-2 py-1 border-r border-black text-center" data-v-79646327${_scopeId}>`);
               if (contact.Kommentar || contact.Adresse || contact.Geburtsdatum) {
-                _push2(`<button class="text-blue-400 hover:text-blue-200 font-bold text-3xl" data-v-045ac754${_scopeId}> ⓘ </button>`);
+                _push2(`<button class="text-blue-400 hover:text-blue-200 font-bold text-3xl" data-v-79646327${_scopeId}> ⓘ </button>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</td><td class="px-2 py-1 border-r border-black text-center relative" data-v-045ac754${_scopeId}><div class="relative inline-block" data-v-045ac754${_scopeId}><div class="w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center cursor-pointer shadow hover:scale-110 transition mr-2"${ssrRenderAttr("title", contact.Gruppe)} data-v-045ac754${_scopeId}><img${ssrRenderAttr("src", `/images/icons/Con_Groups/${contact.Gruppe}.gif`)} class="w-5 h-5" data-v-045ac754${_scopeId}></div>`);
+              _push2(`</td><td class="px-2 py-1 border-r border-black text-center relative" data-v-79646327${_scopeId}><div class="relative inline-block" data-v-79646327${_scopeId}><div class="w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center cursor-pointer shadow hover:scale-110 transition mr-2"${ssrRenderAttr("title", contact.Gruppe)} data-v-79646327${_scopeId}><img${ssrRenderAttr("src", `/images/icons/Con_Groups/${contact.Gruppe}.gif`)} class="w-5 h-5" data-v-79646327${_scopeId}></div>`);
               if ($data.activeGroupPicker === contact.id) {
-                _push2(`<div class="absolute left-10 top-1/2 -translate-y-1/2 flex space-x-1 p-1 rounded shadow-lg z-50" data-v-045ac754${_scopeId}><!--[-->`);
+                _push2(`<div class="absolute left-10 top-1/2 -translate-y-1/2 flex space-x-1 p-1 rounded shadow-lg z-50" data-v-79646327${_scopeId}><!--[-->`);
                 ssrRenderList($data.groups.filter((g) => g !== contact.Gruppe), (group) => {
-                  _push2(`<div class="w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center cursor-pointer shadow hover:scale-110 transition"${ssrRenderAttr("title", group)} data-v-045ac754${_scopeId}><img${ssrRenderAttr("src", `/images/icons/Con_Groups/${group}.gif`)} class="w-5 h-5" data-v-045ac754${_scopeId}></div>`);
+                  _push2(`<div class="w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center cursor-pointer shadow hover:scale-110 transition"${ssrRenderAttr("title", group)} data-v-79646327${_scopeId}><img${ssrRenderAttr("src", `/images/icons/Con_Groups/${group}.gif`)} class="w-5 h-5" data-v-79646327${_scopeId}></div>`);
                 });
                 _push2(`<!--]--></div>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</div></td><td class="px-4 py-1 border-r border-black font-medium" data-v-045ac754${_scopeId}>${($options.rumLaut(contact.Name) || "-") ?? ""}</td><td class="px-4 py-1 border-r border-black" data-v-045ac754${_scopeId}>${($options.rumLaut(contact.Vorname) || "-") ?? ""}</td><td class="px-4 py-1 border-r border-black" data-v-045ac754${_scopeId}>${($options.rumLaut(contact.Nachname) || "-") ?? ""}</td><td class="px-4 py-1 border-r border-black" data-v-045ac754${_scopeId}>`);
+              _push2(`</div></td><td class="px-4 py-1 border-r border-black font-medium" data-v-79646327${_scopeId}>${($options.rumLaut(contact.Name) || "-") ?? ""}</td><td class="px-4 py-1 border-r border-black" data-v-79646327${_scopeId}>${($options.rumLaut(contact.Vorname) || "-") ?? ""}</td><td class="px-4 py-1 border-r border-black" data-v-79646327${_scopeId}>${($options.rumLaut(contact.Nachname) || "-") ?? ""}</td><td class="px-4 py-1 border-r border-black" data-v-79646327${_scopeId}>`);
               if (contact.Email) {
-                _push2(`<span data-v-045ac754${_scopeId}><a${ssrRenderAttr("href", "mailto:" + contact.Email)}${ssrRenderAttr("alt", contact.Email)}${ssrRenderAttr("title", contact.Email)} data-v-045ac754${_scopeId}><img${ssrRenderAttr("src", "/images/icons/mail.png")} data-v-045ac754${_scopeId}></a></span>`);
+                _push2(`<span data-v-79646327${_scopeId}><a${ssrRenderAttr("href", "mailto:" + contact.Email)}${ssrRenderAttr("alt", contact.Email)}${ssrRenderAttr("title", contact.Email)} data-v-79646327${_scopeId}><img${ssrRenderAttr("src", "/images/icons/mail.png")} data-v-79646327${_scopeId}></a></span>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</td><td class="px-4 py-1 border-r border-black" data-v-045ac754${_scopeId}>${ssrInterpolate(contact.Telefon || "-")}</td><td class="px-4 py-1 border-black" data-v-045ac754${_scopeId}>${ssrInterpolate(contact.Handy || "-")}</td><td class="px-4 py-1 border-black" data-v-045ac754${_scopeId}>`);
+              _push2(`</td><td class="px-4 py-1 border-r border-black" data-v-79646327${_scopeId}>${ssrInterpolate(contact.Telefon || "-")}</td><td class="px-4 py-1 border-black" data-v-79646327${_scopeId}>${ssrInterpolate(contact.Handy || "-")}</td><td class="px-4 py-1 border-black" data-v-79646327${_scopeId}>`);
               _push2(ssrRenderComponent(_component_editbtns, {
                 table: "contacts",
                 id: contact.id,
@@ -15458,7 +15503,7 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
               }, null, _parent2, _scopeId));
               _push2(`</td></tr>`);
               if ($options.isExpanded(contact.id)) {
-                _push2(`<tr data-v-045ac754${_scopeId}><td colspan="9" class="px-4 py-2 bg-gray-800 text-gray-200" data-v-045ac754${_scopeId}><span data-v-045ac754${_scopeId}>${`
+                _push2(`<tr data-v-79646327${_scopeId}><td colspan="9" class="px-4 py-2 bg-gray-800 text-gray-200" data-v-79646327${_scopeId}><span data-v-79646327${_scopeId}>${`
                             ${contact.Kommentar ? contact.Kommentar + "<br />" : ""}
                             ${contact.Adresse ? contact.Adresse + "<br />" : ""}
                             ${contact.Geburtsdatum ? "Geburtstag: " + contact.Geburtsdatum + "<br />" : ""}
@@ -15473,7 +15518,7 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           });
           _push2(`<!--]-->`);
         } else {
-          _push2(`<div class="text-center py-8 text-gray-400" data-v-045ac754${_scopeId}> Keine Kontakte gefunden </div>`);
+          _push2(`<div class="text-center py-8 text-gray-400" data-v-79646327${_scopeId}> Keine Kontakte gefunden </div>`);
         }
         _push2(`</div>`);
       } else {
@@ -15492,11 +15537,11 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
               "onUpdate:modelValue": ($event) => $data.fileval = $event,
               namee: $data.fileval,
               alt_path: "_" + $options.SD() + "/" + $options.CleanTable_alt() + "/fileup",
-              domain: _ctx.subdomain,
-              tablex: _ctx.table_x,
-              path: _ctx.tablex,
+              domain: $data.subdomain,
+              tablex: $data.tablex,
+              path: $data.tablex,
               ref: "fileup",
-              value: _ctx.imageId,
+              value: $data.imageId,
               image: $data.fileval,
               namee2: "fileup",
               Message: false
@@ -15510,7 +15555,6 @@ function _sfc_ssrRender$41(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 })
               ]),
               createVNode("div", { class: "flex items-center space-x-3" }, [
-                createVNode(_component_importBtn),
                 createVNode("button", {
                   type: "button",
                   onClick: ($event) => $options.openinfo("ios"),
@@ -15737,7 +15781,7 @@ _sfc_main$42.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Kontakte.vue");
   return _sfc_setup$42 ? _sfc_setup$42(props, ctx) : void 0;
 };
-const Kontakte = /* @__PURE__ */ _export_sfc(_sfc_main$42, [["ssrRender", _sfc_ssrRender$41], ["__scopeId", "data-v-045ac754"]]);
+const Kontakte = /* @__PURE__ */ _export_sfc(_sfc_main$42, [["ssrRender", _sfc_ssrRender$41], ["__scopeId", "data-v-79646327"]]);
 const __vite_glob_0_11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Kontakte
@@ -20066,8 +20110,8 @@ const _sfc_main$3S = {
   computed: {
     computedPhotoUrl() {
       if (this.user.profile_photo_path) {
-        const subdomain = SD();
-        return `/images/_${subdomain}/users/profile_photo_path/${this.user.profile_photo_path}`;
+        SD();
+        return `/images/users/profile_photo_path/${this.user.profile_photo_path}`;
       }
       return this.user.profile_photo_url;
     }
@@ -20095,7 +20139,7 @@ const _sfc_main$3S = {
         onSuccess: () => {
           this.clearPhotoFileInput();
           this.photoPreview = null;
-          router$1.relaod({ only: ["auth"] });
+          router$1.reload({ only: ["auth"] });
         }
       });
     },
@@ -20120,7 +20164,7 @@ const _sfc_main$3S = {
         onSuccess: () => {
           this.photoPreview = null;
           this.clearPhotoFileInput();
-          router$1.relaod({ only: ["auth"] });
+          router$1.reload({ only: ["auth"] });
         }
       });
     },
@@ -20386,35 +20430,35 @@ function _sfc_ssrRender$3R(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   if (_push4) {
                     _push4(ssrRenderComponent(_component_input_label, {
                       name: "first_name",
-                      label: "Vorname"
+                      label: "Nachname"
                     }, null, _parent4, _scopeId3));
                     _push4(ssrRenderComponent(_component_input_element, {
                       type: "text",
                       name: "first_name",
                       modelValue: $data.form.first_name,
                       "onUpdate:modelValue": ($event) => $data.form.first_name = $event,
-                      placeholder: "Vorname",
+                      placeholder: "Nachname",
                       ref: "first_name"
                     }, null, _parent4, _scopeId3));
                     _push4(ssrRenderComponent(_component_input_error, {
-                      message: $data.form.errors.first_name
+                      message: $data.form.errors.last_name
                     }, null, _parent4, _scopeId3));
                   } else {
                     return [
                       createVNode(_component_input_label, {
                         name: "first_name",
-                        label: "Vorname"
+                        label: "Nachname"
                       }),
                       createVNode(_component_input_element, {
                         type: "text",
                         name: "first_name",
                         modelValue: $data.form.first_name,
                         "onUpdate:modelValue": ($event) => $data.form.first_name = $event,
-                        placeholder: "Vorname",
+                        placeholder: "Nachname",
                         ref: "first_name"
                       }, null, 8, ["modelValue", "onUpdate:modelValue"]),
                       createVNode(_component_input_error, {
-                        message: $data.form.errors.first_name
+                        message: $data.form.errors.last_name
                       }, null, 8, ["message"])
                     ];
                   }
@@ -20576,18 +20620,18 @@ function _sfc_ssrRender$3R(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   default: withCtx(() => [
                     createVNode(_component_input_label, {
                       name: "first_name",
-                      label: "Vorname"
+                      label: "Nachname"
                     }),
                     createVNode(_component_input_element, {
                       type: "text",
                       name: "first_name",
                       modelValue: $data.form.first_name,
                       "onUpdate:modelValue": ($event) => $data.form.first_name = $event,
-                      placeholder: "Vorname",
+                      placeholder: "Nachname",
                       ref: "first_name"
                     }, null, 8, ["modelValue", "onUpdate:modelValue"]),
                     createVNode(_component_input_error, {
-                      message: $data.form.errors.first_name
+                      message: $data.form.errors.last_name
                     }, null, 8, ["message"])
                   ]),
                   _: 1
@@ -20757,18 +20801,18 @@ function _sfc_ssrRender$3R(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 default: withCtx(() => [
                   createVNode(_component_input_label, {
                     name: "first_name",
-                    label: "Vorname"
+                    label: "Nachname"
                   }),
                   createVNode(_component_input_element, {
                     type: "text",
                     name: "first_name",
                     modelValue: $data.form.first_name,
                     "onUpdate:modelValue": ($event) => $data.form.first_name = $event,
-                    placeholder: "Vorname",
+                    placeholder: "Nachname",
                     ref: "first_name"
                   }, null, 8, ["modelValue", "onUpdate:modelValue"]),
                   createVNode(_component_input_error, {
-                    message: $data.form.errors.first_name
+                    message: $data.form.errors.last_name
                   }, null, 8, ["message"])
                 ]),
                 _: 1
@@ -21029,7 +21073,7 @@ const __vite_glob_0_375 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
   __proto__: null,
   default: Profile$1
 }, Symbol.toStringTag, { value: "Module" }));
-const layouts = {
+const layouts$1 = {
   ab: () => Promise.resolve().then(() => __vite_glob_0_15),
   dag: () => Promise.resolve().then(() => __vite_glob_0_17),
   mfx: () => Promise.resolve().then(() => __vite_glob_0_19),
@@ -21043,7 +21087,7 @@ const _sfc_main$3P = defineComponent({
     MetaHeader,
     Layout: defineAsyncComponent(() => {
       const key2 = SD();
-      return (layouts[key2] || layouts.default)();
+      return (layouts$1[key2] || layouts$1.default)();
     })
   },
   props: {
@@ -21166,7 +21210,7 @@ const __vite_glob_0_126 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$3M = {
   name: "SQLSyncTables",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     Breadcrumb,
     IconMagni,
     ErrorSVG,
@@ -22048,10 +22092,10 @@ _sfc_main$3L.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Shared/Layout.vue");
   return _sfc_setup$3L ? _sfc_setup$3L(props, ctx) : void 0;
 };
-const Layout$d = /* @__PURE__ */ _export_sfc(_sfc_main$3L, [["ssrRender", _sfc_ssrRender$3K]]);
+const Layout$c = /* @__PURE__ */ _export_sfc(_sfc_main$3L, [["ssrRender", _sfc_ssrRender$3K]]);
 const __vite_glob_0_14 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$d
+  default: Layout$c
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$3K = {
   name: "Admin_Shared_Layout_chh",
@@ -22429,10 +22473,10 @@ _sfc_main$3K.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Shared/chh/Layout.vue");
   return _sfc_setup$3K ? _sfc_setup$3K(props, ctx) : void 0;
 };
-const Layout$c = /* @__PURE__ */ _export_sfc(_sfc_main$3K, [["ssrRender", _sfc_ssrRender$3J]]);
+const Layout$b = /* @__PURE__ */ _export_sfc(_sfc_main$3K, [["ssrRender", _sfc_ssrRender$3J]]);
 const __vite_glob_0_16 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$c
+  default: Layout$b
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$3J = {
   name: "Admin_Shared_Layout_dag",
@@ -22811,10 +22855,10 @@ _sfc_main$3J.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Shared/dag/Layout.vue");
   return _sfc_setup$3J ? _sfc_setup$3J(props, ctx) : void 0;
 };
-const Layout$b = /* @__PURE__ */ _export_sfc(_sfc_main$3J, [["ssrRender", _sfc_ssrRender$3I]]);
+const Layout$a = /* @__PURE__ */ _export_sfc(_sfc_main$3J, [["ssrRender", _sfc_ssrRender$3I]]);
 const __vite_glob_0_17 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$b
+  default: Layout$a
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$3I = {
   name: "Admin_Shared_Layout_mfx",
@@ -23196,10 +23240,10 @@ _sfc_main$3I.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Shared/mfx/Layout.vue");
   return _sfc_setup$3I ? _sfc_setup$3I(props, ctx) : void 0;
 };
-const Layout$a = /* @__PURE__ */ _export_sfc(_sfc_main$3I, [["ssrRender", _sfc_ssrRender$3H]]);
+const Layout$9 = /* @__PURE__ */ _export_sfc(_sfc_main$3I, [["ssrRender", _sfc_ssrRender$3H]]);
 const __vite_glob_0_19 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$a
+  default: Layout$9
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$3H = {
   name: "Admin_Shared_Layout_pna",
@@ -23574,10 +23618,10 @@ _sfc_main$3H.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Admin/Shared/pna/Layout.vue");
   return _sfc_setup$3H ? _sfc_setup$3H(props, ctx) : void 0;
 };
-const Layout$9 = /* @__PURE__ */ _export_sfc(_sfc_main$3H, [["ssrRender", _sfc_ssrRender$3G]]);
+const Layout$8 = /* @__PURE__ */ _export_sfc(_sfc_main$3H, [["ssrRender", _sfc_ssrRender$3G]]);
 const __vite_glob_0_20 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$9
+  default: Layout$8
 }, Symbol.toStringTag, { value: "Module" }));
 const emitter = mitt();
 const _sfc_main$3G = {
@@ -23762,8 +23806,8 @@ const _sfc_main$3D = {
       selectedCategory: null,
       selectedMedium: null,
       categories: [],
-      table: CleanTable$1(),
-      id: CleanId()
+      table: "",
+      id: ""
     };
   },
   props: {
@@ -23777,25 +23821,17 @@ const _sfc_main$3D = {
       this.form.type_id = newVal;
     }
   },
-  mounted() {
-  },
-  computed: {
-    sortedCategories() {
-      return [...this.categories].sort((a, b) => a.name.localeCompare(b.name));
-    },
-    formattedMediums() {
-      return (categoryId) => {
-        const catId = Number(categoryId);
-        const category = this.categories.find((cat) => Number(cat.id) === catId);
-        return category?.types?.length ? [...category.types].sort((a, b) => a.name.localeCompare(b.name)) : [];
-      };
-    }
-  },
-  async created() {
+  async mounted() {
     try {
-      const response = await axios$1.get(window.chost + "/act-category/" + this.table + "/" + this.id);
+      this.table = CleanTable$1();
+      this.id = CleanId();
+      const response = await axios$1.get(
+        window.chost + "/act-category/" + this.table + "/" + this.id
+      );
       this.categories = response.data.categories || [];
-      const defaultResponse = await axios$1.get(`/api/GetCat/${this.table}/${this.id}`);
+      const defaultResponse = await axios$1.get(
+        `/api/GetCat/${this.table}/${this.id}`
+      );
       const defaultData = defaultResponse.data;
       if (defaultData.categorie_id && defaultData.categorie_id !== "0") {
         this.selectedCategory = Number(defaultData.categorie_id);
@@ -23811,29 +23847,43 @@ const _sfc_main$3D = {
     } catch (error) {
       console.error("❌ Fehler beim Laden der Daten:", error);
     }
+  },
+  computed: {
+    sortedCategories() {
+      return [...this.categories].sort((a, b) => a.name.localeCompare(b.name));
+    },
+    formattedMediums() {
+      return (categoryId) => {
+        const catId = Number(categoryId);
+        const category = this.categories.find((cat) => Number(cat.id) === catId);
+        return category?.types?.length ? [...category.types].sort((a, b) => a.name.localeCompare(b.name)) : [];
+      };
+    }
+  },
+  async created() {
   }
 };
 function _sfc_ssrRender$3C(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  _push(`<!--[--><div data-v-3a0e3f73><label for="category" class="block text-sm font-medium text-layout-sun-900 dark:text-layout-night-900" data-v-3a0e3f73> Kategorie wählen: </label><select id="category_id" class="w-full wf_2 w-fully p-2.5 text-sm rounded-lg block border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 placeholder-layout-sun-400 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-3a0e3f73><option value="0" disabled data-v-3a0e3f73${ssrIncludeBooleanAttr(Array.isArray($data.selectedCategory) ? ssrLooseContain($data.selectedCategory, "0") : ssrLooseEqual($data.selectedCategory, "0")) ? " selected" : ""}>Bitte wählen</option><!--[-->`);
+  _push(`<!--[--><div data-v-385f785d><label for="category" class="block text-sm font-medium text-layout-sun-900 dark:text-layout-night-900" data-v-385f785d> Kategorie wählen: </label><select id="category_id" class="w-full wf_2 w-fully p-2.5 text-sm rounded-lg block border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 placeholder-layout-sun-400 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-385f785d><option value="0" disabled data-v-385f785d${ssrIncludeBooleanAttr(Array.isArray($data.selectedCategory) ? ssrLooseContain($data.selectedCategory, "0") : ssrLooseEqual($data.selectedCategory, "0")) ? " selected" : ""}>Bitte wählen</option><!--[-->`);
   ssrRenderList($options.sortedCategories, (category) => {
-    _push(`<option${ssrRenderAttr("value", category.id)} data-v-3a0e3f73${ssrIncludeBooleanAttr(Array.isArray($data.selectedCategory) ? ssrLooseContain($data.selectedCategory, category.id) : ssrLooseEqual($data.selectedCategory, category.id)) ? " selected" : ""}>${ssrInterpolate(category.name)}</option>`);
+    _push(`<option${ssrRenderAttr("value", category.id)} data-v-385f785d${ssrIncludeBooleanAttr(Array.isArray($data.selectedCategory) ? ssrLooseContain($data.selectedCategory, category.id) : ssrLooseEqual($data.selectedCategory, category.id)) ? " selected" : ""}>${ssrInterpolate(category.name)}</option>`);
   });
   _push(`<!--]--></select>`);
   if ($data.selectedCategory) {
-    _push(`<label for="medium" class="block text-sm font-medium text-layout-sun-900 dark:text-layout-night-900" data-v-3a0e3f73> Medium wählen: </label>`);
+    _push(`<label for="medium" class="block text-sm font-medium text-layout-sun-900 dark:text-layout-night-900" data-v-385f785d> Medium wählen: </label>`);
   } else {
     _push(`<!---->`);
   }
   if ($data.selectedCategory && $options.formattedMediums($data.selectedCategory).length > 0) {
-    _push(`<select id="type_id" class="w-full wf_2 w-fully p-2.5 text-sm rounded-lg block border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 placeholder-layout-sun-400 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-3a0e3f73><option value="0" disabled data-v-3a0e3f73${ssrIncludeBooleanAttr(Array.isArray($data.selectedMedium) ? ssrLooseContain($data.selectedMedium, "0") : ssrLooseEqual($data.selectedMedium, "0")) ? " selected" : ""}>Bitte wählen</option><!--[-->`);
+    _push(`<select id="type_id" class="w-full wf_2 w-fully p-2.5 text-sm rounded-lg block border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 placeholder-layout-sun-400 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-385f785d><option value="0" disabled data-v-385f785d${ssrIncludeBooleanAttr(Array.isArray($data.selectedMedium) ? ssrLooseContain($data.selectedMedium, "0") : ssrLooseEqual($data.selectedMedium, "0")) ? " selected" : ""}>Bitte wählen</option><!--[-->`);
     ssrRenderList($options.formattedMediums($data.selectedCategory), (medium) => {
-      _push(`<option${ssrRenderAttr("value", medium.id)} data-v-3a0e3f73${ssrIncludeBooleanAttr(Array.isArray($data.selectedMedium) ? ssrLooseContain($data.selectedMedium, medium.id) : ssrLooseEqual($data.selectedMedium, medium.id)) ? " selected" : ""}>${ssrInterpolate(medium.name)}</option>`);
+      _push(`<option${ssrRenderAttr("value", medium.id)} data-v-385f785d${ssrIncludeBooleanAttr(Array.isArray($data.selectedMedium) ? ssrLooseContain($data.selectedMedium, medium.id) : ssrLooseEqual($data.selectedMedium, medium.id)) ? " selected" : ""}>${ssrInterpolate(medium.name)}</option>`);
     });
     _push(`<!--]--></select>`);
   } else {
     _push(`<!---->`);
   }
-  _push(`</div><input type="hidden" name="categorie_id" id="categorie_id_alt"${ssrRenderAttr("value", $data.selectedCategory)} data-v-3a0e3f73><input type="hidden" name="type_id" id="type_id_alt"${ssrRenderAttr("value", $data.selectedMedium)} data-v-3a0e3f73><!--]-->`);
+  _push(`</div><input type="hidden" name="categorie_id" id="categorie_id_alt"${ssrRenderAttr("value", $data.selectedCategory)} data-v-385f785d><input type="hidden" name="type_id" id="type_id_alt"${ssrRenderAttr("value", $data.selectedMedium)} data-v-385f785d><!--]-->`);
 }
 const _sfc_setup$3D = _sfc_main$3D.setup;
 _sfc_main$3D.setup = (props, ctx) => {
@@ -23841,7 +23891,7 @@ _sfc_main$3D.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/ArtSelect.vue");
   return _sfc_setup$3D ? _sfc_setup$3D(props, ctx) : void 0;
 };
-const ArtSelect = /* @__PURE__ */ _export_sfc(_sfc_main$3D, [["ssrRender", _sfc_ssrRender$3C], ["__scopeId", "data-v-3a0e3f73"]]);
+const ArtSelect = /* @__PURE__ */ _export_sfc(_sfc_main$3D, [["ssrRender", _sfc_ssrRender$3C], ["__scopeId", "data-v-385f785d"]]);
 const __vite_glob_0_67 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ArtSelect
@@ -23869,7 +23919,7 @@ const _sfc_main$3C = {
       required: false
     },
     autocomplete: {
-      type: Boolean,
+      type: [String, Boolean, Number],
       required: false,
       default: false
     }
@@ -24277,7 +24327,7 @@ const _sfc_main$3t = {
     return {
       internalValue: this.modelValue ?? "",
       fetchedOptions: [],
-      UID: window?.Laravel?.userId || null
+      UID: null
     };
   },
   computed: {
@@ -24362,6 +24412,7 @@ const _sfc_main$3t = {
   },
   mounted() {
     const isCreatePage = window.location.pathname.includes("create");
+    this.UID = window?.Laravel?.userId;
     if (isCreatePage && !this.internalValue && this.currentUserId) {
       this.internalValue = this.currentUserId;
     }
@@ -24371,18 +24422,18 @@ const _sfc_main$3t = {
   }
 };
 function _sfc_ssrRender$3s(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  _push(`<!--[--><div data-v-5b05efe9><select${ssrRenderAttrs(mergeProps(_ctx.$attrs, {
+  _push(`<!--[--><div data-v-41f30c4f><select${ssrRenderAttrs(mergeProps(_ctx.$attrs, {
     class: "w-fully wf_2 wff p-2.5 text-sm rounded-lg block border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 placeholder-layout-sun-400 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500",
     value: $props.modelValue || $data.UID,
     name: $props.xname,
     id: $props.name,
     required: $props.required,
     disabled: $props.disabled
-  }))} data-v-5b05efe9><option disabled value="0" data-v-5b05efe9>Bitte wählen</option><!--[-->`);
+  }))} data-v-41f30c4f><option disabled value="0" data-v-41f30c4f>Bitte wählen</option><!--[-->`);
   ssrRenderList($options.optionsList, (option) => {
-    _push(`<option${ssrRenderAttr("value", option.id)} data-v-5b05efe9>${ssrInterpolate(option.name)}</option>`);
+    _push(`<option${ssrRenderAttr("value", option.id)} data-v-41f30c4f>${ssrInterpolate(option.name)}</option>`);
   });
-  _push(`<!--]--></select></div><input type="hidden"${ssrRenderAttr("name", $props.xname)}${ssrRenderAttr("id", $props.name + "_alt")}${ssrRenderAttr("value", $props.modelValue)} data-v-5b05efe9><!--]-->`);
+  _push(`<!--]--></select></div><input type="hidden"${ssrRenderAttr("name", $props.xname)}${ssrRenderAttr("id", $props.name + "_alt")}${ssrRenderAttr("value", $props.modelValue)} data-v-41f30c4f><!--]-->`);
 }
 const _sfc_setup$3t = _sfc_main$3t.setup;
 _sfc_main$3t.setup = (props, ctx) => {
@@ -24390,7 +24441,7 @@ _sfc_main$3t.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/InputSelectU.vue");
   return _sfc_setup$3t ? _sfc_setup$3t(props, ctx) : void 0;
 };
-const InputSelectU = /* @__PURE__ */ _export_sfc(_sfc_main$3t, [["ssrRender", _sfc_ssrRender$3s], ["__scopeId", "data-v-5b05efe9"]]);
+const InputSelectU = /* @__PURE__ */ _export_sfc(_sfc_main$3t, [["ssrRender", _sfc_ssrRender$3s], ["__scopeId", "data-v-41f30c4f"]]);
 const __vite_glob_0_102 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: InputSelectU
@@ -24917,7 +24968,7 @@ const routes = {
 const _sfc_main$3n = defineComponent({
   name: "Admin_TableForm",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     Addbtn,
     // KORREKTUR: Komponente registriert
     Breadcrumb,
@@ -25044,7 +25095,7 @@ const _sfc_main$3n = defineComponent({
       formDatas: {},
       oobj: {},
       formData: {},
-      localFfo: JSON.parse(JSON.stringify(this.ffo ?? {})),
+      localFfo: {},
       sanitizedContent: "",
       uploadedIid: null,
       ItemName: "Beitrag",
@@ -25053,7 +25104,7 @@ const _sfc_main$3n = defineComponent({
       nf2: "",
       previewImages: {},
       newPosition: null,
-      subdomain: SD() || "",
+      subdomain: "",
       fieldtype: "",
       readingTime: "",
       fileName: "",
@@ -25062,13 +25113,10 @@ const _sfc_main$3n = defineComponent({
       xsor_alt: {},
       isOpen: true,
       uploadedImageUrl: null,
-      // csrfToken: document.getElementById('token')?.value,
       preview_image: {},
-      // ffo: { ...this.entry },
       options: {},
       options_sel: {},
       sdata: {},
-      // loading: false,
       entries: [],
       loadingText: null,
       confirmingTableDeletion: false,
@@ -25180,7 +25228,12 @@ const _sfc_main$3n = defineComponent({
     },
     async getPreviewImagez() {
       const field = this.field;
-      const ppa = `/images/_${window.subdomain}/images/${field.name}/${field.value}/index.json`;
+      let ppa;
+      if (typeof window === "undefined") {
+        ppa = `/images/_ab/pages/${field.name}/${field.value}/index.json`;
+      } else {
+        ppa = `/images/_${window.subdomain}/images/${field.name}/${field.value}/index.json`;
+      }
       if (ppa.includes("undefined/")) {
         this.previewHtml = '<img src="/images/icons/upl.png" alt="Jetzt Bild Hochladen" width="122" title="Jetzt Bild Hochladen" style="float: left; margin-right: 12px;">';
         return;
@@ -25537,7 +25590,6 @@ const _sfc_main$3n = defineComponent({
     async submitForm() {
       const editorRef = this.$refs.editor;
       let isValid = true;
-      console.log(this.localFfo.original);
       if (!editorRef) {
         console.error("Kein Editor-Ref gefunden");
       } else if (Array.isArray(editorRef)) {
@@ -25581,7 +25633,10 @@ const _sfc_main$3n = defineComponent({
             }
           });
         }
-        const path = window.location.pathname;
+        let path;
+        if (typeof window !== "undefined") {
+          path = window.location.pathname;
+        }
         const segments = path.split("/");
         if (document?.getElementById("email_hash")) {
           this.formData["email_hash"] = document?.getElementById("email_hash").value;
@@ -25619,7 +25674,7 @@ const _sfc_main$3n = defineComponent({
           }
         });
         window.toastBus.emit(response.data);
-        router$1.relaod();
+        router$1.reload();
       } catch (error) {
         console.error("Fehler beim Löschen:", error);
       }
@@ -25706,6 +25761,10 @@ const _sfc_main$3n = defineComponent({
     });
   },
   async mounted() {
+    if (typeof window !== "undefined") {
+      this.subdomain = SD() || "";
+    }
+    this.localFfo = JSON.parse(JSON.stringify(this.ffo ?? {}));
     if (!this.ffo || this.ffo.length < 3 || this.ffo === "undefined") {
       router$1.visit("/no-rights");
       return;
@@ -26341,7 +26400,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   path: _ctx.tablex,
                                   ref_for: true,
                                   ref: field.name,
@@ -26369,7 +26428,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   path: _ctx.tablex,
                                   ref_for: true,
                                   ref: field.name,
@@ -26477,7 +26536,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   ref_for: true,
                                   ref: field.name,
                                   value: _ctx.imageId,
@@ -26507,7 +26566,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   value: _ctx.imageId,
                                   image: field.value,
                                   namee2: field.name,
@@ -26537,7 +26596,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   ref_for: true,
                                   ref: field.name,
                                   value: _ctx.imageId,
@@ -26564,7 +26623,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   value: _ctx.imageId,
                                   image: field.value,
                                   namee2: field.name,
@@ -26690,7 +26749,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                 namee: _ctx.fileval,
                                 alt_path: "_" + _ctx.SD() + "/_" + _ctx.CleanTable() + "/" + field.name + "/",
                                 domain: _ctx.subdomain,
-                                tablex: _ctx.table_x,
+                                tablex: _ctx.tablex,
                                 path: _ctx.tablex,
                                 ref_for: true,
                                 ref: "fileup",
@@ -26736,7 +26795,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: _ctx.fileval,
                                   alt_path: "_" + _ctx.SD() + "/_" + _ctx.CleanTable() + "/" + field.name + "/",
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   path: _ctx.tablex,
                                   ref_for: true,
                                   ref: "fileup",
@@ -26787,7 +26846,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                 alt_path: field.class === "profile" ? "profile_photos" : "",
                                 style: _ctx.modals[field.name] ? null : { display: "none" },
                                 isModalOpen: _ctx.modals[field.name],
-                                tablex: _ctx.table_x,
+                                tablex: _ctx.tablex,
                                 is_imgdir: false,
                                 column: field.name,
                                 path: _ctx.tablex,
@@ -26809,7 +26868,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                 withDirectives(createVNode(_component_ImageUploadModal, {
                                   alt_path: field.class === "profile" ? "profile_photos" : "",
                                   isModalOpen: _ctx.modals[field.name],
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   is_imgdir: false,
                                   column: field.name,
                                   path: _ctx.tablex,
@@ -27188,7 +27247,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                 "model-value": field.value,
                                 modelValue: field.name,
                                 "onUpdate:modelValue": ($event) => field.name = $event,
-                                options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                 ref_for: true,
                                 ref: "field.name",
                                 name: field.name,
@@ -27211,7 +27270,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   "model-value": field.value,
                                   modelValue: field.name,
                                   "onUpdate:modelValue": ($event) => field.name = $event,
-                                  options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                  options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                   ref_for: true,
                                   ref: "field.name",
                                   name: field.name,
@@ -27233,7 +27292,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                             if (_push5) {
                               _push5(ssrRenderComponent(_component_ArtSelect, {
                                 id: field.id,
-                                table: this.tablex,
+                                table: _ctx.tablex,
                                 form: field,
                                 "onUpdate:category": ($event) => _ctx.form.categorie_id = $event,
                                 "onUpdate:medium": ($event) => _ctx.form.type_id = $event
@@ -27242,7 +27301,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                               return [
                                 createVNode(_component_ArtSelect, {
                                   id: field.id,
-                                  table: this.tablex,
+                                  table: _ctx.tablex,
                                   form: field,
                                   "onUpdate:category": ($event) => _ctx.form.categorie_id = $event,
                                   "onUpdate:medium": ($event) => _ctx.form.type_id = $event
@@ -27367,7 +27426,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                 "model-value": field.name,
                                 modelValue: field.value,
                                 "onUpdate:modelValue": ($event) => field.value = $event,
-                                options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                 ref_for: true,
                                 ref: "field.name",
                                 name: field.name,
@@ -27389,7 +27448,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   "model-value": field.name,
                                   modelValue: field.value,
                                   "onUpdate:modelValue": ($event) => field.value = $event,
-                                  options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                  options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                   ref_for: true,
                                   ref: "field.name",
                                   name: field.name,
@@ -27636,7 +27695,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     namee: field.value,
                                     alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                     domain: _ctx.subdomain,
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     path: _ctx.tablex,
                                     ref_for: true,
                                     ref: field.name,
@@ -27708,7 +27767,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     namee: field.value,
                                     alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                     domain: _ctx.subdomain,
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     ref_for: true,
                                     ref: field.name,
                                     value: _ctx.imageId,
@@ -27735,7 +27794,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     namee: field.value,
                                     alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                     domain: _ctx.subdomain,
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     value: _ctx.imageId,
                                     image: field.value,
                                     namee2: field.name,
@@ -27814,7 +27873,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     namee: _ctx.fileval,
                                     alt_path: "_" + _ctx.SD() + "/_" + _ctx.CleanTable() + "/" + field.name + "/",
                                     domain: _ctx.subdomain,
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     path: _ctx.tablex,
                                     ref_for: true,
                                     ref: "fileup",
@@ -27859,7 +27918,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   withDirectives(createVNode(_component_ImageUploadModal, {
                                     alt_path: field.class === "profile" ? "profile_photos" : "",
                                     isModalOpen: _ctx.modals[field.name],
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     is_imgdir: false,
                                     column: field.name,
                                     path: _ctx.tablex,
@@ -28049,7 +28108,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     "model-value": field.value,
                                     modelValue: field.name,
                                     "onUpdate:modelValue": ($event) => field.name = $event,
-                                    options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                    options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                     ref_for: true,
                                     ref: "field.name",
                                     name: field.name,
@@ -28066,7 +28125,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                 default: withCtx(() => [
                                   createVNode(_component_ArtSelect, {
                                     id: field.id,
-                                    table: this.tablex,
+                                    table: _ctx.tablex,
                                     form: field,
                                     "onUpdate:category": ($event) => _ctx.form.categorie_id = $event,
                                     "onUpdate:medium": ($event) => _ctx.form.type_id = $event
@@ -28126,7 +28185,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     "model-value": field.name,
                                     modelValue: field.value,
                                     "onUpdate:modelValue": ($event) => field.value = $event,
-                                    options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                    options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                     ref_for: true,
                                     ref: "field.name",
                                     name: field.name,
@@ -28391,7 +28450,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     namee: field.value,
                                     alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                     domain: _ctx.subdomain,
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     path: _ctx.tablex,
                                     ref_for: true,
                                     ref: field.name,
@@ -28463,7 +28522,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     namee: field.value,
                                     alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                     domain: _ctx.subdomain,
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     ref_for: true,
                                     ref: field.name,
                                     value: _ctx.imageId,
@@ -28490,7 +28549,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     namee: field.value,
                                     alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                     domain: _ctx.subdomain,
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     value: _ctx.imageId,
                                     image: field.value,
                                     namee2: field.name,
@@ -28569,7 +28628,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     namee: _ctx.fileval,
                                     alt_path: "_" + _ctx.SD() + "/_" + _ctx.CleanTable() + "/" + field.name + "/",
                                     domain: _ctx.subdomain,
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     path: _ctx.tablex,
                                     ref_for: true,
                                     ref: "fileup",
@@ -28614,7 +28673,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   withDirectives(createVNode(_component_ImageUploadModal, {
                                     alt_path: field.class === "profile" ? "profile_photos" : "",
                                     isModalOpen: _ctx.modals[field.name],
-                                    tablex: _ctx.table_x,
+                                    tablex: _ctx.tablex,
                                     is_imgdir: false,
                                     column: field.name,
                                     path: _ctx.tablex,
@@ -28804,7 +28863,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     "model-value": field.value,
                                     modelValue: field.name,
                                     "onUpdate:modelValue": ($event) => field.name = $event,
-                                    options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                    options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                     ref_for: true,
                                     ref: "field.name",
                                     name: field.name,
@@ -28821,7 +28880,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                 default: withCtx(() => [
                                   createVNode(_component_ArtSelect, {
                                     id: field.id,
-                                    table: this.tablex,
+                                    table: _ctx.tablex,
                                     form: field,
                                     "onUpdate:category": ($event) => _ctx.form.categorie_id = $event,
                                     "onUpdate:medium": ($event) => _ctx.form.type_id = $event
@@ -28881,7 +28940,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                     "model-value": field.name,
                                     modelValue: field.value,
                                     "onUpdate:modelValue": ($event) => field.value = $event,
-                                    options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                    options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                     ref_for: true,
                                     ref: "field.name",
                                     name: field.name,
@@ -29457,7 +29516,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   path: _ctx.tablex,
                                   ref_for: true,
                                   ref: field.name,
@@ -29529,7 +29588,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   ref_for: true,
                                   ref: field.name,
                                   value: _ctx.imageId,
@@ -29556,7 +29615,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: field.value,
                                   alt_path: "_" + _ctx.subdomain + "/" + _ctx.CleanTable_alt() + "/" + field.name,
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   value: _ctx.imageId,
                                   image: field.value,
                                   namee2: field.name,
@@ -29635,7 +29694,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   namee: _ctx.fileval,
                                   alt_path: "_" + _ctx.SD() + "/_" + _ctx.CleanTable() + "/" + field.name + "/",
                                   domain: _ctx.subdomain,
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   path: _ctx.tablex,
                                   ref_for: true,
                                   ref: "fileup",
@@ -29680,7 +29739,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                 withDirectives(createVNode(_component_ImageUploadModal, {
                                   alt_path: field.class === "profile" ? "profile_photos" : "",
                                   isModalOpen: _ctx.modals[field.name],
-                                  tablex: _ctx.table_x,
+                                  tablex: _ctx.tablex,
                                   is_imgdir: false,
                                   column: field.name,
                                   path: _ctx.tablex,
@@ -29870,7 +29929,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   "model-value": field.value,
                                   modelValue: field.name,
                                   "onUpdate:modelValue": ($event) => field.name = $event,
-                                  options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                  options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                   ref_for: true,
                                   ref: "field.name",
                                   name: field.name,
@@ -29887,7 +29946,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                               default: withCtx(() => [
                                 createVNode(_component_ArtSelect, {
                                   id: field.id,
-                                  table: this.tablex,
+                                  table: _ctx.tablex,
                                   form: field,
                                   "onUpdate:category": ($event) => _ctx.form.categorie_id = $event,
                                   "onUpdate:medium": ($event) => _ctx.form.type_id = $event
@@ -29947,7 +30006,7 @@ function _sfc_ssrRender$3m(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                                   "model-value": field.name,
                                   modelValue: field.value,
                                   "onUpdate:modelValue": ($event) => field.value = $event,
-                                  options: `options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`,
+                                  options: field?.name ? _ctx.xsor_alt[field.name] ?? [] : [],
                                   ref_for: true,
                                   ref: "field.name",
                                   name: field.name,
@@ -30073,7 +30132,7 @@ const __vite_glob_0_21 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$3m = defineComponent({
   name: "Admin_TableList",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     Breadcrumb,
     MetaHeader,
     ListContainer,
@@ -30189,30 +30248,21 @@ function _sfc_ssrRender$3l(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           datarow: withCtx((data, _push3, _parent3, _scopeId2) => {
             if (_push3) {
               if (_ctx.rights.view[data.datarow.full_name] == "1") {
-                _push3(`<td class="np-dl-td-normal"${_scopeId2}><a${ssrRenderAttr("href", "/admin/tables/" + _ctx.lowercase(data.datarow.name) + "/show")} class="!text-blue-600 !dark:text-blue-600 hover:underline as"${_scopeId2}>${ssrInterpolate(data.datarow.name)}</a></td>`);
-              } else {
-                _push3(`<!---->`);
-              }
-              if (_ctx.rights.view[data.datarow.full_name] == "1") {
-                _push3(`<td class="np-dl-td-normal"${_scopeId2}>${ssrInterpolate(data.datarow.description)}</td>`);
+                _push3(`<!--[--><td class="np-dl-td-normal"${_scopeId2}><a${ssrRenderAttr("href", "/admin/tables/" + _ctx.lowercase(data.datarow.name) + "/show")} class="!text-blue-600 !dark:text-blue-600 hover:underline as"${_scopeId2}>${ssrInterpolate(data.datarow.name)}</a></td><td class="np-dl-td-normal"${_scopeId2}>${ssrInterpolate(data.datarow.description)}</td><!--]-->`);
               } else {
                 _push3(`<!---->`);
               }
             } else {
               return [
-                _ctx.rights.view[data.datarow.full_name] == "1" ? (openBlock(), createBlock("td", {
-                  key: 0,
-                  class: "np-dl-td-normal"
-                }, [
-                  createVNode("a", {
-                    href: "/admin/tables/" + _ctx.lowercase(data.datarow.name) + "/show",
-                    class: "!text-blue-600 !dark:text-blue-600 hover:underline as"
-                  }, toDisplayString(data.datarow.name), 9, ["href"])
-                ])) : createCommentVNode("", true),
-                _ctx.rights.view[data.datarow.full_name] == "1" ? (openBlock(), createBlock("td", {
-                  key: 1,
-                  class: "np-dl-td-normal"
-                }, toDisplayString(data.datarow.description), 1)) : createCommentVNode("", true)
+                _ctx.rights.view[data.datarow.full_name] == "1" ? (openBlock(), createBlock(Fragment, { key: 0 }, [
+                  createVNode("td", { class: "np-dl-td-normal" }, [
+                    createVNode("a", {
+                      href: "/admin/tables/" + _ctx.lowercase(data.datarow.name) + "/show",
+                      class: "!text-blue-600 !dark:text-blue-600 hover:underline as"
+                    }, toDisplayString(data.datarow.name), 9, ["href"])
+                  ]),
+                  createVNode("td", { class: "np-dl-td-normal" }, toDisplayString(data.datarow.description), 1)
+                ], 64)) : createCommentVNode("", true)
               ];
             }
           }),
@@ -30249,19 +30299,15 @@ function _sfc_ssrRender$3l(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 ])
               ]),
               datarow: withCtx((data) => [
-                _ctx.rights.view[data.datarow.full_name] == "1" ? (openBlock(), createBlock("td", {
-                  key: 0,
-                  class: "np-dl-td-normal"
-                }, [
-                  createVNode("a", {
-                    href: "/admin/tables/" + _ctx.lowercase(data.datarow.name) + "/show",
-                    class: "!text-blue-600 !dark:text-blue-600 hover:underline as"
-                  }, toDisplayString(data.datarow.name), 9, ["href"])
-                ])) : createCommentVNode("", true),
-                _ctx.rights.view[data.datarow.full_name] == "1" ? (openBlock(), createBlock("td", {
-                  key: 1,
-                  class: "np-dl-td-normal"
-                }, toDisplayString(data.datarow.description), 1)) : createCommentVNode("", true)
+                _ctx.rights.view[data.datarow.full_name] == "1" ? (openBlock(), createBlock(Fragment, { key: 0 }, [
+                  createVNode("td", { class: "np-dl-td-normal" }, [
+                    createVNode("a", {
+                      href: "/admin/tables/" + _ctx.lowercase(data.datarow.name) + "/show",
+                      class: "!text-blue-600 !dark:text-blue-600 hover:underline as"
+                    }, toDisplayString(data.datarow.name), 9, ["href"])
+                  ]),
+                  createVNode("td", { class: "np-dl-td-normal" }, toDisplayString(data.datarow.description), 1)
+                ], 64)) : createCommentVNode("", true)
               ]),
               _: 1
             }, 8, ["datarows", "filters", "route-create", "view"])
@@ -30468,7 +30514,7 @@ const _sfc_main$3j = defineComponent({
   name: "AdminTableShow",
   components: {
     MetaHeader,
-    Layout: Layout$e,
+    Layout: Layout$d,
     Breadcrumb,
     CreatedAt,
     ListContainer,
@@ -31101,7 +31147,7 @@ function _sfc_ssrRender$3i(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                 if (_ctx.users[data.datarow.users_id]?.img && _ctx.users[data.datarow.users_id].img !== "008.jpg") {
                   _push3(`<div${_scopeId2}><span class="whitespace-nowrap"${_scopeId2}><img${ssrRenderAttr("src", _ctx.GetProfileImagePath(_ctx.users[data.datarow.users_id].img))} class="w-[24px] h-[24px] object-cover rounded-full inline"${_scopeId2}>  ${ssrInterpolate(data.datarow.users)}</span></div>`);
                 } else {
-                  _push3(`<div${_scopeId2}><span class="whitespace-nowrap"${_scopeId2}><img${ssrRenderAttr("src", "/images/_" + _ctx.SD() + "/users/profile_photo_path/008.jpg")} class="max-w-[24px] max-h-[24px] object-cover rounded-full inline"${_scopeId2}><span class="inline"${_scopeId2}>  ${ssrInterpolate(data.datarow.nick || data.datarow.users)}</span></span></div>`);
+                  _push3(`<div${_scopeId2}><span class="whitespace-nowrap"${_scopeId2}><img${ssrRenderAttr("src", "/images/users/profile_photo_path/008.jpg")} class="max-w-[24px] max-h-[24px] object-cover rounded-full inline"${_scopeId2}><span class="inline"${_scopeId2}>  ${ssrInterpolate(data.datarow.nick || data.datarow.users)}</span></span></div>`);
                 }
                 _push3(`</td>`);
               } else {
@@ -31274,9 +31320,9 @@ function _sfc_ssrRender$3i(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   ])) : (openBlock(), createBlock("div", { key: 1 }, [
                     createVNode("span", { class: "whitespace-nowrap" }, [
                       createVNode("img", {
-                        src: "/images/_" + _ctx.SD() + "/users/profile_photo_path/008.jpg",
+                        src: "/images/users/profile_photo_path/008.jpg",
                         class: "max-w-[24px] max-h-[24px] object-cover rounded-full inline"
-                      }, null, 8, ["src"]),
+                      }),
                       createVNode("span", { class: "inline" }, "  " + toDisplayString(data.datarow.nick || data.datarow.users), 1)
                     ])
                   ]))
@@ -31549,9 +31595,9 @@ function _sfc_ssrRender$3i(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
                   ])) : (openBlock(), createBlock("div", { key: 1 }, [
                     createVNode("span", { class: "whitespace-nowrap" }, [
                       createVNode("img", {
-                        src: "/images/_" + _ctx.SD() + "/users/profile_photo_path/008.jpg",
+                        src: "/images/users/profile_photo_path/008.jpg",
                         class: "max-w-[24px] max-h-[24px] object-cover rounded-full inline"
-                      }, null, 8, ["src"]),
+                      }),
                       createVNode("span", { class: "inline" }, "  " + toDisplayString(data.datarow.nick || data.datarow.users), 1)
                     ])
                   ]))
@@ -32205,9 +32251,9 @@ function _sfc_ssrRender$3g(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     ssrRenderList($options.filteredUsers, (u) => {
       _push(`<tr class="hover:bg-layout-sun-200 dark:hover:bg-layout-night-200 transition duration-200 border-b border-gray-200 dark:border-gray-700"><td class="px-4 py-3">`);
       if (u.profile_photo_path) {
-        _push(`<img${ssrRenderAttr("src", `/images/_ab/users/profile_photo_path/${u.profile_photo_path}`)} class="w-8 h-8 rounded-full object-cover" alt="Profilbild">`);
+        _push(`<img${ssrRenderAttr("src", `/images/users/profile_photo_path/${u.profile_photo_path}`)} class="w-8 h-8 rounded-full object-cover" alt="Profilbild">`);
       } else {
-        _push(`<img${ssrRenderAttr("src", `/images/_ab/users/profile_photo_path/008.jpg`)} class="w-8 h-8 rounded-full object-cover" alt="Profilbild">`);
+        _push(`<img${ssrRenderAttr("src", `/images/users/profile_photo_path/008.jpg`)} class="w-8 h-8 rounded-full object-cover" alt="Profilbild">`);
       }
       _push(`</td><td class="px-4 py-3">${ssrInterpolate(u.name)}</td><td class="px-4 py-3"><div class="relative flex items-center"><img${ssrRenderAttr("src", u.hoverIcon || u.selectedRoleIcon || "/images/icons/ugr/default.gif")} alt="icon" class="w-5 h-5 mr-2"><button class="border rounded px-3 py-1 w-full text-left dark:bg-gray-800 dark:border-gray-600 flex items-center justify-between"><span>${ssrInterpolate(u.selectedRoleName || "Wähle Rolle")}</span><svg class="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>`);
       if (u.showDropdown) {
@@ -37062,7 +37108,7 @@ const __vite_glob_0_278 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$3d = {
   name: "OldGallery",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     Breadcrumb,
     MetaHeader,
     photoswipe_old
@@ -37338,11 +37384,6 @@ function _sfc_ssrRender$39(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   }, null, _parent));
   _push(`</li><li>`);
   _push(ssrRenderComponent(_component_link_footer, {
-    name: "Nutzungsbedingungen",
-    "route-name": _ctx.route("home.terms")
-  }, null, _parent));
-  _push(`</li><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
     name: "Login",
     "route-name": _ctx.route("login")
   }, null, _parent));
@@ -37365,16 +37406,16 @@ _sfc_main$3a.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Auth/Shared/Layout.vue");
   return _sfc_setup$3a ? _sfc_setup$3a(props, ctx) : void 0;
 };
-const Layout$8 = /* @__PURE__ */ _export_sfc(_sfc_main$3a, [["ssrRender", _sfc_ssrRender$39]]);
+const Layout$7 = /* @__PURE__ */ _export_sfc(_sfc_main$3a, [["ssrRender", _sfc_ssrRender$39]]);
 const __vite_glob_0_34 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$8
+  default: Layout$7
 }, Symbol.toStringTag, { value: "Module" }));
 const page = usePage();
 const _sfc_main$39 = {
   name: "AuthNickName",
   components: {
-    Layout: Layout$8,
+    Layout: Layout$7,
     PersonalProfile,
     MetaHeader
   },
@@ -37427,7 +37468,7 @@ const _sfc_main$38 = {
   name: "UserRightsPage",
   components: {
     RightsTable,
-    Layout: Layout$e,
+    Layout: Layout$d,
     Breadcrumb,
     MetaHeader
   },
@@ -37602,7 +37643,7 @@ const __vite_glob_0_47 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$35 = defineComponent({
   name: "Auth_ConfirmPassword",
   components: {
-    Layout: Layout$8,
+    Layout: Layout$7,
     PageContent,
     SectionForm,
     Favicon,
@@ -37963,7 +38004,7 @@ const __vite_glob_0_29 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$34 = defineComponent({
   name: "Auth_ForgotPassword",
   components: {
-    Layout: Layout$8,
+    Layout: Layout$7,
     PageContent,
     SectionForm,
     Favicon,
@@ -38581,7 +38622,7 @@ const __vite_glob_0_45 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$31 = defineComponent({
   name: "Auth_Login",
   components: {
-    Layout: Layout$8,
+    Layout: Layout$7,
     PageContent,
     SectionForm,
     Favicon,
@@ -39440,7 +39481,7 @@ const __vite_glob_0_31 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$30 = defineComponent({
   name: "Auth_Register",
   components: {
-    Layout: Layout$8,
+    Layout: Layout$7,
     PageContent,
     SectionForm,
     Favicon,
@@ -40330,7 +40371,7 @@ const __vite_glob_0_32 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$2$ = defineComponent({
   name: "Auth_ResetPassword",
   components: {
-    Layout: Layout$8,
+    Layout: Layout$7,
     PageContent,
     SectionForm,
     Favicon,
@@ -40881,7 +40922,7 @@ const __vite_glob_0_33 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$2_ = defineComponent({
   name: "Auth_TwoFactorChallenge",
   components: {
-    Layout: Layout$8,
+    Layout: Layout$7,
     PageContent,
     SectionForm,
     Favicon,
@@ -41427,7 +41468,7 @@ const __vite_glob_0_35 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const _sfc_main$2Z = defineComponent({
   name: "Auth_VerifyEmail",
   components: {
-    Layout: Layout$8,
+    Layout: Layout$7,
     SectionForm,
     Favicon,
     DisplayHyperlink,
@@ -42464,7 +42505,10 @@ const _sfc_main$2K = {
     id: [String, Number],
     value: [String, Number],
     tablex: String,
-    table_x: String,
+    table_x: {
+      txpe: String,
+      default: ""
+    },
     placeholder: String
   },
   data() {
@@ -42656,23 +42700,23 @@ function _sfc_ssrRender$2J(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_IconList = resolveComponent("IconList");
   const _component_IconOrdList = resolveComponent("IconOrdList");
   const _component_ImageUploadModal = resolveComponent("ImageUploadModal");
-  _push(`<div${ssrRenderAttrs(_attrs)} data-v-24d02811><div class="mb-4 h-14 p-4 flex items-center bg-layout-sun-300 dark:bg-layout-night-300 rounded-lg edit0R" data-v-24d02811><p class="border rounded label p-1" data-v-24d02811><span class="whitespace-nowrap" data-v-24d02811>${ssrInterpolate($options.getLabel($props.name))}</span></p>`);
+  _push(`<div${ssrRenderAttrs(_attrs)} data-v-2c5133e9><div class="mb-4 h-14 p-4 flex items-center bg-layout-sun-300 dark:bg-layout-night-300 rounded-lg edit0R" data-v-2c5133e9><p class="border rounded label p-1" data-v-2c5133e9><span class="whitespace-nowrap" data-v-2c5133e9>${ssrInterpolate($options.getLabel($props.name))}</span></p>`);
   _push(ssrRenderComponent(_component_ClientOnly, null, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
-        _push2(`<button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Fett" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}>B</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Kursiv" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}><i data-v-24d02811${_scopeId}>I</i></b></button><!--[-->`);
+        _push2(`<button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Fett" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}>B</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Kursiv" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}><i data-v-2c5133e9${_scopeId}>I</i></b></button><!--[-->`);
         ssrRenderList(6, (i) => {
-          _push2(`<button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"${ssrRenderAttr("title", "Überschrift " + i)} data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}>H${ssrInterpolate(i)}</b></button>`);
+          _push2(`<button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"${ssrRenderAttr("title", "Überschrift " + i)} data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}>H${ssrInterpolate(i)}</b></button>`);
         });
-        _push2(`<!--]--><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="BIldupload" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}>`);
+        _push2(`<!--]--><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="BIldupload" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}>`);
         _push2(ssrRenderComponent(_component_IconPictures, { stroke: "white" }, null, _parent2, _scopeId));
-        _push2(`</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Code" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}>`);
+        _push2(`</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Code" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}>`);
         _push2(ssrRenderComponent(_component_IconCode, null, null, _parent2, _scopeId));
-        _push2(`</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Trennlinie" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}><span class="whitespace-nowrap" data-v-24d02811${_scopeId}>---</span></b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Email Link" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}>@</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Hyperlink" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}>`);
+        _push2(`</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Trennlinie" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}><span class="whitespace-nowrap" data-v-2c5133e9${_scopeId}>---</span></b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Email Link" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}>@</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Hyperlink" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}>`);
         _push2(ssrRenderComponent(_component_IconHyperLink, null, null, _parent2, _scopeId));
-        _push2(`</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Ungeordnete Liste" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}>`);
+        _push2(`</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Ungeordnete Liste" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}>`);
         _push2(ssrRenderComponent(_component_IconList, null, null, _parent2, _scopeId));
-        _push2(`</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Geordnete Liste" data-v-24d02811${_scopeId}><b data-v-24d02811${_scopeId}>`);
+        _push2(`</b></button><button type="button" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer" title="Geordnete Liste" data-v-2c5133e9${_scopeId}><b data-v-2c5133e9${_scopeId}>`);
         _push2(ssrRenderComponent(_component_IconOrdList, null, null, _parent2, _scopeId));
         _push2(`</b></button>`);
       } else {
@@ -42799,7 +42843,7 @@ function _sfc_ssrRender$2J(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     }),
     _: 1
   }, _parent));
-  _push(`</div><div class="mb-4 p-4 bg-layout-sun-0 dark:bg-layout-night-0 rounded-lg edit0R" data-v-24d02811><div${ssrRenderAttr("id", $props.name)} contenteditable="true" class="editor rounded p-3 min-h-[150px] focus:outline-none"${ssrRenderAttr("placeholder", $props.placeholder)} data-v-24d02811></div> <input type="hidden"${ssrRenderAttr("id", $props.name + "_alt")} data-v-24d02811>`);
+  _push(`</div><div class="mb-4 p-4 bg-layout-sun-0 dark:bg-layout-night-0 rounded-lg edit0R" data-v-2c5133e9><div${ssrRenderAttr("id", $props.name)} contenteditable="true" class="editor rounded p-3 min-h-[150px] focus:outline-none"${ssrRenderAttr("placeholder", $props.placeholder)} data-v-2c5133e9></div> <input type="hidden"${ssrRenderAttr("id", $props.name + "_alt")} data-v-2c5133e9>`);
   _push(ssrRenderComponent(_component_ImageUploadModal, {
     style: $data.isModalOpen ? null : { display: "none" },
     tablex: $props.table_x,
@@ -42823,7 +42867,7 @@ _sfc_main$2K.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Form/aInputHtml.vue");
   return _sfc_setup$2K ? _sfc_setup$2K(props, ctx) : void 0;
 };
-const aInputHtml = /* @__PURE__ */ _export_sfc(_sfc_main$2K, [["ssrRender", _sfc_ssrRender$2J], ["__scopeId", "data-v-24d02811"]]);
+const aInputHtml = /* @__PURE__ */ _export_sfc(_sfc_main$2K, [["ssrRender", _sfc_ssrRender$2J], ["__scopeId", "data-v-2c5133e9"]]);
 const __vite_glob_0_109 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: aInputHtml
@@ -42905,7 +42949,8 @@ const _sfc_main$2H = {
   components: {
     Link: link_default,
     Favicon,
-    mfxlogo
+    mfxlogo,
+    pnalogo
   },
   data() {
     return {
@@ -42938,6 +42983,7 @@ const _sfc_main$2H = {
     }
   },
   methods: {
+    SD,
     calcLogin() {
       const url = window?.location?.href || "";
       if (!url.includes("/login") && !url.includes("/forgot-password") && !url.includes("/register") && !url.includes("/email/verify") && !url.includes("/reset-password") && !url.includes("/confirm-password") && !url.includes("/verify-email")) {
@@ -42946,6 +42992,9 @@ const _sfc_main$2H = {
       return "l";
     },
     GetLogin() {
+      if (typeof window === "undefined") {
+        return "l";
+      }
       const url = location.href;
       if (!url.includes("/login") && !url.includes("/forgot-password") && !url.includes("/register") && !url.includes("/email/verify") && !url.includes("reset-password") && !url.includes("/confirm-password") && !url.includes("/verify-email")) {
         return "";
@@ -42958,6 +43007,7 @@ function _sfc_ssrRender$2G(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_Link = resolveComponent("Link");
   const _component_favicon = resolveComponent("favicon");
   const _component_mfxlogo = resolveComponent("mfxlogo");
+  const _component_pnalogo = resolveComponent("pnalogo");
   _push(`<!--[-->`);
   if ($data.sd == "ab") {
     _push(`<div>`);
@@ -43019,10 +43069,20 @@ function _sfc_ssrRender$2G(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   } else {
     _push(`<!---->`);
   }
-  if ($data.sd == "mfx") {
+  if ($options.SD() == "mfx") {
     _push(`<div><a href="/">`);
     _push(ssrRenderComponent(_component_mfxlogo, {
-      ab: "_mfx_alt" + this.GetLogin()
+      ab: "_mfx_alt" + $options.GetLogin()
+    }, null, _parent));
+    _push(`</a></div>`);
+  } else {
+    _push(`<!---->`);
+  }
+  if ($options.SD() == "pna") {
+    _push(`<div class="dark:bg-layout-night-0 min-w-[100%]"><a href="/">`);
+    _push(ssrRenderComponent(_component_pnalogo, {
+      small: true,
+      ab: "_pna_alt" + $options.GetLogin()
     }, null, _parent));
     _push(`</a></div>`);
   } else {
@@ -43386,14 +43446,14 @@ function _sfc_ssrRender$2D(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
         if (_push2) {
           _push2(`<img id="prof_pic" class="h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]"${ssrRenderAttr(
             "src",
-            `/images/_${$options.SD()}/users/profile_photo_path/` + _ctx.$page.props.auth.user?.profile_photo_url.replace("public", "").replace("http://localhost/images/", "").replace("images/images/", "images/") || "/images/profile-photos/008.jpg"
+            `/images/users/profile_photo_path/` + _ctx.$page.props.auth.user?.profile_photo_url.replace("public", "").replace("http://localhost/images/", "").replace("images/images/", "images/") || "/images/profile-photos/008.jpg"
           )}${ssrRenderAttr("alt", _ctx.$page.props.userdata.full_name)}${_scopeId}>`);
         } else {
           return [
             createVNode("img", {
               id: "prof_pic",
               class: "h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]",
-              src: `/images/_${$options.SD()}/users/profile_photo_path/` + _ctx.$page.props.auth.user?.profile_photo_url.replace("public", "").replace("http://localhost/images/", "").replace("images/images/", "images/") || "/images/profile-photos/008.jpg",
+              src: `/images/users/profile_photo_path/` + _ctx.$page.props.auth.user?.profile_photo_url.replace("public", "").replace("http://localhost/images/", "").replace("images/images/", "images/") || "/images/profile-photos/008.jpg",
               alt: _ctx.$page.props.userdata.full_name
             }, null, 8, ["src", "alt"])
           ];
@@ -43435,7 +43495,7 @@ function _sfc_ssrRender$2D(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
           if (_ctx.$page.props.jetstream.managesProfilePhotos) {
             _push2(`<button class="flex text-sm !!border-[20px] border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"${_scopeId}><img id="prof_pic" class="h-8 w-8 rounded-full object-cover mr-6"${ssrRenderAttr(
               "src",
-              "/images/_" + $options.SD() + "/users/profile_photo_path/" + _ctx.$page.props.auth.user.profile_photo_url.replace("public", "")
+              "/images/users/profile_photo_path/" + _ctx.$page.props.auth.user.profile_photo_url.replace("public", "")
             )}${ssrRenderAttr(
               "alt",
               _ctx.$page.props.userdata.full_name
@@ -43452,7 +43512,7 @@ function _sfc_ssrRender$2D(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
               createVNode("img", {
                 id: "prof_pic",
                 class: "h-8 w-8 rounded-full object-cover mr-6",
-                src: "/images/_" + $options.SD() + "/users/profile_photo_path/" + _ctx.$page.props.auth.user.profile_photo_url.replace("public", ""),
+                src: "/images/users/profile_photo_path/" + _ctx.$page.props.auth.user.profile_photo_url.replace("public", ""),
                 alt: _ctx.$page.props.userdata.full_name
               }, null, 8, ["src", "alt"]),
               createTextVNode(" " + toDisplayString(), 1)
@@ -43608,10 +43668,10 @@ _sfc_main$2E.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/mfx/Layout.vue");
   return _sfc_setup$2E ? _sfc_setup$2E(props, ctx) : void 0;
 };
-const Layout$7 = /* @__PURE__ */ _export_sfc(_sfc_main$2E, [["ssrRender", _sfc_ssrRender$2D]]);
+const Layout$6 = /* @__PURE__ */ _export_sfc(_sfc_main$2E, [["ssrRender", _sfc_ssrRender$2D]]);
 const __vite_glob_0_317 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$7
+  default: Layout$6
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$2D = {
   name: "captcha",
@@ -43815,7 +43875,7 @@ const __vite_glob_0_113 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$2B = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -45729,7 +45789,7 @@ const __vite_glob_0_257 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$1N = {
   name: "EmailSender",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     Breadcrumb,
     MetaHeader,
     SelectRecipient,
@@ -47222,15 +47282,15 @@ _sfc_main$1L.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/Layout.vue");
   return _sfc_setup$1L ? _sfc_setup$1L(props, ctx) : void 0;
 };
-const Layout$6 = /* @__PURE__ */ _export_sfc(_sfc_main$1L, [["ssrRender", _sfc_ssrRender$1K]]);
+const Layout$5 = /* @__PURE__ */ _export_sfc(_sfc_main$1L, [["ssrRender", _sfc_ssrRender$1K]]);
 const __vite_glob_0_310 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Layout$6
+  default: Layout$5
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$1K = {
   components: {
     VerifySVG,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   },
   props: {
@@ -47276,7 +47336,7 @@ const _sfc_main$1J = {
   components: {
     VerifySVG,
     ErrorSVG,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   },
   props: {
@@ -47410,7 +47470,7 @@ const __vite_glob_0_245 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 Chart.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PieController, DoughnutController, BarController, BarElement);
 const _sfc_main$1I = {
   name: "McsStatsCharts",
-  components: { Layout: Layout$6, MetaHeader, Breadcrumb },
+  components: { Layout: Layout$5, MetaHeader, Breadcrumb },
   props: {
     mcslpoints: {
       type: Object,
@@ -47909,7 +47969,7 @@ const __vite_glob_0_246 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$1H = {
   components: {
     VerifySVG,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   },
   props: {
@@ -47953,7 +48013,7 @@ const __vite_glob_0_247 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$1G = {
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader,
     InputFormText: InputFormText$1
   },
@@ -48086,7 +48146,7 @@ const __vite_glob_0_248 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$1F = {
   components: {
     VerifySVG,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   },
   props: {
@@ -48134,7 +48194,7 @@ const __vite_glob_0_249 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$1E = {
   components: {
     ErrorSVG,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   },
   props: {
@@ -48333,7 +48393,7 @@ const __vite_glob_0_252 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$1C = {
   components: {
     VerifySVG,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   },
   props: {
@@ -48725,7 +48785,7 @@ const __vite_glob_0_255 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$1x = {
   name: "SelectPremiums",
-  components: { Layout: Layout$6, ZoomImage, MetaHeader },
+  components: { Layout: Layout$5, ZoomImage, MetaHeader },
   props: {
     images: {
       type: Array,
@@ -49432,24 +49492,24 @@ function _sfc_ssrRender$1r(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_SmiliesBox = resolveComponent("SmiliesBox");
   const _component_NoLogin = resolveComponent("NoLogin");
   if ($props.showComments) {
-    _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full zi relative" }, _attrs))} data-v-691e0b44>`);
+    _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full zi relative" }, _attrs))} data-v-9df5c2bd>`);
     if ($data.comments && $data.comments.length > 0) {
-      _push(`<div class="space-y-4" data-v-691e0b44><!--[-->`);
+      _push(`<div class="space-y-4" data-v-9df5c2bd><!--[-->`);
       ssrRenderList($data.comments, (comment) => {
-        _push(`<div class="flex items-start p-2 pra mt-4 rounded-lg bg-layout-sun-200 dark:bg-layout-night-200 border border-layout-sun-300 dark:border-layout-night-300" style="${ssrRenderStyle({ "word-wrap": "break-word" })}" data-v-691e0b44><div${ssrRenderAttr("id", "commentBox_" + comment?.id)} class="flex items-start space-x-4" data-v-691e0b44><img${ssrRenderAttr("src", comment?.profile_photo_path != null ? "/images/_" + $options.SD() + "/users/profile_photo_path/" + comment?.profile_photo_path : $data.defaultAvatar)} alt="Profilbild" class="w-[50px] h-[50px] object-cover mxy rounded-full bg-gray-300 dark:bg-gray-600" data-v-691e0b44><div class="flex-1 pr-14" data-v-691e0b44><p class="text-sm flex items-center gap-2 mxy" data-v-691e0b44>`);
+        _push(`<div class="flex items-start p-2 pra mt-4 rounded-lg bg-layout-sun-200 dark:bg-layout-night-200 border border-layout-sun-300 dark:border-layout-night-300" style="${ssrRenderStyle({ "word-wrap": "break-word" })}" data-v-9df5c2bd><div${ssrRenderAttr("id", "commentBox_" + comment?.id)} class="flex items-start space-x-4" data-v-9df5c2bd><img${ssrRenderAttr("src", comment?.profile_photo_path != null ? "/images/users/profile_photo_path/" + comment?.profile_photo_path : $data.defaultAvatar)} alt="Profilbild" class="w-[50px] h-[50px] object-cover mxy rounded-full bg-gray-300 dark:bg-gray-600" data-v-9df5c2bd><div class="flex-1 pr-14" data-v-9df5c2bd><p class="text-sm flex items-center gap-2 mxy" data-v-9df5c2bd>`);
         if (comment.users_id && comment.users_id != "0" && comment.users_id != "7") {
-          _push(`<span data-v-691e0b44><a class="twi"${ssrRenderAttr("href", "home/users/show/" + comment.author + "/" + comment.users_id)} data-v-691e0b44>${ssrInterpolate(comment.author)}</a></span>`);
+          _push(`<span data-v-9df5c2bd><a class="twi"${ssrRenderAttr("href", "home/users/show/" + comment.author + "/" + comment.users_id)} data-v-9df5c2bd>${ssrInterpolate(comment.author)}</a></span>`);
         } else {
-          _push(`<span data-v-691e0b44>${ssrInterpolate(comment?.nick)}</span>`);
+          _push(`<span data-v-9df5c2bd>${ssrInterpolate(comment?.nick)}</span>`);
         }
         if ($data.AID) {
-          _push(`<span class="text-red-500 cursor-pointer hover:text-red-700" data-v-691e0b44>`);
+          _push(`<span class="text-red-500 cursor-pointer hover:text-red-700" data-v-9df5c2bd>`);
           _push(ssrRenderComponent(_component_IconTrash, { class: "w-4 h-4" }, null, _parent));
           _push(`</span>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`</p><div class="text-layout-sun-700 dark:text-layout-night-600 w-[190px] max-w-[190px] mxy" data-v-691e0b44><div data-v-691e0b44>${$options.smilies(comment?.content) ?? ""}</div></div><small class="text-xs text-layout-sun-600 dark:text-layout-night-500" data-v-691e0b44>`);
+        _push(`</p><div class="text-layout-sun-700 dark:text-layout-night-600 w-[190px] max-w-[190px] mxy" data-v-9df5c2bd><div data-v-9df5c2bd>${$options.smilies(comment?.content) ?? ""}</div></div><small class="text-xs text-layout-sun-600 dark:text-layout-night-500" data-v-9df5c2bd>`);
         _push(ssrRenderComponent(_component_display_date, {
           value: comment?.created_at,
           "time-on": false
@@ -49461,7 +49521,7 @@ function _sfc_ssrRender$1r(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
       _push(`<!---->`);
     }
     if ($props.showComments) {
-      _push(`<div class="mb-4 p-4 rounded-lg bg-layout-sun-200 dark:bg-layout-night-200" data-v-691e0b44><textarea${ssrRenderAttr("id", "editor_" + this.postId)} name="editor" class="w-full p-2 rounded-lg dark:bg-gray-900 dark:text-white" placeholder="Schreibe einen Kommentar..." data-v-691e0b44>${ssrInterpolate($data.newComment)}</textarea>`);
+      _push(`<div class="mb-4 p-4 rounded-lg bg-layout-sun-200 dark:bg-layout-night-200" data-v-9df5c2bd><textarea${ssrRenderAttr("id", "editor_" + this.postId)} name="editor" class="w-full p-2 rounded-lg dark:bg-gray-900 dark:text-white" placeholder="Schreibe einen Kommentar..." data-v-9df5c2bd>${ssrInterpolate($data.newComment)}</textarea>`);
       _push(ssrRenderComponent(_component_SmiliesBox, {
         name: $props.postId,
         "onUpdate:comment": ($event) => $data.newComment = $event
@@ -49475,7 +49535,7 @@ function _sfc_ssrRender$1r(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
       } else {
         _push(`<!---->`);
       }
-      _push(`<button class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700" data-v-691e0b44> Kommentar senden </button></div>`);
+      _push(`<button class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700" data-v-9df5c2bd> Kommentar senden </button></div>`);
     } else {
       _push(`<!---->`);
     }
@@ -49490,14 +49550,14 @@ _sfc_main$1s.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Components/Social/comments.vue");
   return _sfc_setup$1s ? _sfc_setup$1s(props, ctx) : void 0;
 };
-const Comments = /* @__PURE__ */ _export_sfc(_sfc_main$1s, [["ssrRender", _sfc_ssrRender$1r], ["__scopeId", "data-v-691e0b44"]]);
+const Comments = /* @__PURE__ */ _export_sfc(_sfc_main$1s, [["ssrRender", _sfc_ssrRender$1r], ["__scopeId", "data-v-9df5c2bd"]]);
 const __vite_glob_0_266 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Comments
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$1r = {
   name: "McsStatsCharts",
-  components: { Layout: Layout$6, MetaHeader, Breadcrumb },
+  components: { Layout: Layout$5, MetaHeader, Breadcrumb },
   props: {
     mcslpoints: { type: Object, required: false },
     commentsStats: { type: Object, required: false },
@@ -49689,7 +49749,7 @@ const __vite_glob_0_267 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$1q = {
   name: "McsStatsCharts",
-  components: { Layout: Layout$6, MetaHeader, Breadcrumb },
+  components: { Layout: Layout$5, MetaHeader, Breadcrumb },
   props: {
     mcslpoints: { type: Object, required: false },
     commentsStats: { type: Object, required: false },
@@ -49882,7 +49942,7 @@ const __vite_glob_0_268 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$1p = {
   components: {
     VerifySVG,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   }
 };
@@ -50165,7 +50225,7 @@ const _sfc_main$1m = {
       if (confirm("Wollen Sie diesen Beitrag wirklich löschen?")) {
         axios$1.delete(this.routeDelete + id).then(() => {
           this.$emit("deleted");
-          router.relaod();
+          router.reload();
         }).catch((err) => console.error(err));
       }
     },
@@ -50393,7 +50453,7 @@ const __vite_glob_0_279 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$1i = {
   components: {
     VerifySVG,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   }
 };
@@ -50813,7 +50873,7 @@ const _sfc_main$1d = {
       if (confirm("Wollen Sie diesen Beitrag wirklich löschen?")) {
         axios.delete(this.routeDelete + id).then(() => {
           this.$emit("deleted");
-          router.relaod();
+          router.reload();
         }).catch((error) => {
           console.error("Fehler beim Löschen:", error);
         });
@@ -50833,43 +50893,43 @@ function _sfc_ssrRender$1d(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
   const _component_editbtns = resolveComponent("editbtns");
   const _component_display_number = resolveComponent("display-number");
   const _component_SocialButtons = resolveComponent("SocialButtons");
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "blog-container w-full max-w-sm mx-auto group rounded hover:no-underline focus:no-underline bg-layout-sun-100 dark:bg-layout-night-100" }, _attrs))} data-v-ace9c424><article data-v-ace9c424>`);
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "blog-container w-full max-w-sm mx-auto group rounded hover:no-underline focus:no-underline bg-layout-sun-100 dark:bg-layout-night-100" }, _attrs))} data-v-2556bb2f><article data-v-2556bb2f>`);
   _push(ssrRenderComponent(_component_Link, {
     href: _ctx.route("home.blog.show", $props.blog.autoslug),
     class: "block text-layout-sun-600 dark:text-layout-night-900 twi nul"
   }, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
-        _push2(`<div class="relative" data-v-ace9c424${_scopeId}><img role="presentation" class="${ssrRenderClass(["object-cover w-full rounded h-44 bg-layout-sun-100 dark:bg-layout-night-100", $props.blog.madewithai ? "ai-image-corner" : ""])}"${ssrRenderAttr("src", `/images/_ab/blogs/image_path/${$props.blog.url}` || "/images/blogs/008.jpg")}${ssrRenderAttr("alt", $props.blog.name)} width="480" height="360" data-v-ace9c424${_scopeId}>`);
+        _push2(`<div class="relative" data-v-2556bb2f${_scopeId}><img role="presentation" class="${ssrRenderClass(["object-cover w-full rounded h-44 bg-layout-sun-100 dark:bg-layout-night-100", $props.blog.madewithai ? "ai-image-corner" : ""])}"${ssrRenderAttr("src", `/images/_ab/blogs/image_path/${$props.blog.url}` || "/images/blogs/008.jpg")}${ssrRenderAttr("alt", $props.blog.name)} width="480" height="360" data-v-2556bb2f${_scopeId}>`);
         if ($props.blog.madewithai) {
-          _push2(`<div data-v-ace9c424${_scopeId}>`);
+          _push2(`<div data-v-2556bb2f${_scopeId}>`);
           _push2(ssrRenderComponent(_component_AiButton, { dma: $props.dmaa }, null, _parent2, _scopeId));
           _push2(`</div>`);
         } else {
           _push2(`<!---->`);
         }
-        _push2(`</div><div class="px-6 space-y-2" data-v-ace9c424${_scopeId}><div class="flex items-center justify-between w-full" data-v-ace9c424${_scopeId}><h2 class="text-2xl font-semibold font-title group-hover:underline group-focus:underline" data-v-ace9c424${_scopeId}>${ssrInterpolate($props.blog.title)}</h2>`);
+        _push2(`</div><div class="px-6 space-y-2" data-v-2556bb2f${_scopeId}><div class="flex items-center justify-between w-full" data-v-2556bb2f${_scopeId}><h2 class="text-2xl font-semibold font-title group-hover:underline group-focus:underline" data-v-2556bb2f${_scopeId}>${ssrInterpolate($props.blog.title)}</h2>`);
         if ($props.blog.category_name) {
-          _push2(`<div class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap ml-4 mt-3 mr-4" data-v-ace9c424${_scopeId}>${ssrInterpolate($props.blog.category_name)}</div>`);
+          _push2(`<div class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap ml-4 mt-3 mr-4" data-v-2556bb2f${_scopeId}>${ssrInterpolate($props.blog.category_name)}</div>`);
         } else {
           _push2(`<!---->`);
         }
         if ($props.blog.xis_anzeige) {
-          _push2(`<span class="mt-[5px] ml-[-72px]" data-v-ace9c424${_scopeId}><br data-v-ace9c424${_scopeId}><br data-v-ace9c424${_scopeId}><img${ssrRenderAttr("src", "/images/_ab/web/anzeige.png")} alt="Anzeige" class="minw-[70px]" data-v-ace9c424${_scopeId}></span>`);
+          _push2(`<span class="mt-[5px] ml-[-72px]" data-v-2556bb2f${_scopeId}><br data-v-2556bb2f${_scopeId}><br data-v-2556bb2f${_scopeId}><img${ssrRenderAttr("src", "/images/_ab/web/anzeige.png")} alt="Anzeige" class="minw-[70px]" data-v-2556bb2f${_scopeId}></span>`);
         } else {
           _push2(`<!---->`);
         }
-        _push2(`</div><div class="flex justify-between items-center" data-v-ace9c424${_scopeId}><div class="text-xs text-layout-sun-600 dark:text-layout-night-600 py-2" data-v-ace9c424${_scopeId}>`);
+        _push2(`</div><div class="flex justify-between items-center" data-v-2556bb2f${_scopeId}><div class="text-xs text-layout-sun-600 dark:text-layout-night-600 py-2" data-v-2556bb2f${_scopeId}>`);
         _push2(ssrRenderComponent(_component_display_date, {
           value: $props.blog.blog_date,
           "time-on": false
         }, null, _parent2, _scopeId));
-        _push2(` von <span data-v-ace9c424${_scopeId}>${ssrInterpolate($props.blog.author_name)}</span></div><div class="rl" data-v-ace9c424${_scopeId}>`);
+        _push2(` von <span data-v-2556bb2f${_scopeId}>${ssrInterpolate($props.blog.author_name)}</span></div><div class="rl" data-v-2556bb2f${_scopeId}>`);
         _push2(ssrRenderComponent(_component_editbtns, {
           id: $props.blog.id,
           table: "blogs"
         }, null, _parent2, _scopeId));
-        _push2(`</div></div><p data-v-ace9c424${_scopeId}>${$options.smilies($props.blog.summary) ?? ""}</p><div data-v-ace9c424${_scopeId}>`);
+        _push2(`</div></div><p data-v-2556bb2f${_scopeId}>${$options.smilies($props.blog.summary) ?? ""}</p><div data-v-2556bb2f${_scopeId}>`);
         _push2(ssrRenderComponent(_component_display_number, {
           class: "text-xs text-layout-sun-600 dark:text-layout-night-600 py-2",
           value: $props.blog.reading_time,
@@ -50963,13 +51023,13 @@ _sfc_main$1d.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/BlogPreviewSmall.vue");
   return _sfc_setup$1d ? _sfc_setup$1d(props, ctx) : void 0;
 };
-const BlogPreviewSmall = /* @__PURE__ */ _export_sfc(_sfc_main$1d, [["ssrRender", _sfc_ssrRender$1d], ["__scopeId", "data-v-ace9c424"]]);
+const BlogPreviewSmall = /* @__PURE__ */ _export_sfc(_sfc_main$1d, [["ssrRender", _sfc_ssrRender$1d], ["__scopeId", "data-v-2556bb2f"]]);
 const __vite_glob_0_308 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: BlogPreviewSmall
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$1c = defineComponent({
-  name: "Homepage_AiContent",
+  name: "Homepage_AiContent_gen",
   components: {
     MetaHeader,
     PageTitle,
@@ -51031,8 +51091,12 @@ const _sfc_main$1c = defineComponent({
       };
       const layoutName = this.SD();
       const loader = layouts2[layoutName] || layouts2.default;
-      const layout2 = await loader();
-      this.layoutComponent = markRaw(layout2.default);
+      try {
+        const layout2 = await loader();
+        this.layoutComponent = markRaw(layout2.default);
+      } catch (e) {
+        console.error("Import fehlgeschlagen", e);
+      }
     },
     async checkRight(right, table) {
       const cacheKey = `${right}_${table}`;
@@ -51061,6 +51125,7 @@ const _sfc_main$1c = defineComponent({
     }
   },
   async created() {
+    console.log("Created");
     await this.loadLayout();
   },
   async mounted() {
@@ -51184,7 +51249,7 @@ const __vite_glob_0_284 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$1b = defineComponent({
   name: "Homepage_BlogList",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageTitle,
     MetaHeader,
     newbtn,
@@ -51668,7 +51733,7 @@ function _sfc_ssrRender$1a(_ctx, _push, _parent, _attrs, $props, $setup, $data, 
     empty: true,
     nostars: true
   }, null, _parent));
-  _push(`</div><div class="flex items-start gap-4">${ssrInterpolate($props.author)} <img${ssrRenderAttr("src", "/images/_ab/users/profile_photo_path/" + $props.blog.blog_author?.img_image)} alt="Profilbild" class="border object-cover rounded-lg w-32 h-full max-h-[300px]"><div class="flex-1"><h2 id="author_info" class="font-semibold text-lg mb-2"> Informationen zu ${ssrInterpolate($props.blog.blog_author?.name)}</h2><div class="max-w-none min-h-full prose md:prose-md dark:prose-invert prose-headings:font-title prose-pre:bg-layout-sun-100 prose-pre:text-layout-sun-800 dark:prose-pre:bg-layout-night-100 dark:prose-pre:text-layout-night-800">${$options.rumLaut($props.blog.blog_author.info) ?? ""}</div></div></div></div></div></div></div><!--]-->`);
+  _push(`</div><div class="flex items-start gap-4">${ssrInterpolate($props.author)} <img${ssrRenderAttr("src", "/images/users/profile_photo_path/" + $props.blog.blog_author?.img_image)} alt="Profilbild" class="border object-cover rounded-lg w-32 h-full max-h-[300px]"><div class="flex-1"><h2 id="author_info" class="font-semibold text-lg mb-2"> Informationen zu ${ssrInterpolate($props.blog.blog_author?.name)}</h2><div class="max-w-none min-h-full prose md:prose-md dark:prose-invert prose-headings:font-title prose-pre:bg-layout-sun-100 prose-pre:text-layout-sun-800 dark:prose-pre:bg-layout-night-100 dark:prose-pre:text-layout-night-800">${$options.rumLaut($props.blog.blog_author.info) ?? ""}</div></div></div></div></div></div></div><!--]-->`);
 }
 const _sfc_setup$1a = _sfc_main$1a.setup;
 _sfc_main$1a.setup = (props, ctx) => {
@@ -51685,7 +51750,7 @@ const _sfc_main$19 = defineComponent({
   name: "Homepage_BlogShow",
   components: {
     // Link,
-    Layout: Layout$6,
+    Layout: Layout$5,
     BlogShow: BlogShow$1,
     MetaHeader
   },
@@ -51745,7 +51810,7 @@ const _sfc_main$18 = defineComponent({
   name: "Homepage_AiContent",
   components: {
     Markdown: defineAsyncComponent(() => import("vue3-markdown-it")),
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageTitle,
     BlogPreviewBig,
     BlogPreviewSmall,
@@ -51777,23 +51842,13 @@ const _sfc_main$18 = defineComponent({
   },
   watch: {},
   computed: {
-    darkMode() {
-    },
     isRightsReady() {
       return this.$isRightsReady;
-    },
-    hasRight() {
-      return this.$hasRight;
     }
   },
   methods: {
     // Asynchrone Methode, um die Rechte zu laden
-    async hasRight(right, table) {
-      if (!this.rightsData[`${right}_${table}`] && table) {
-        await this.checkRight(right, table);
-      }
-      return this.rightsData[`${right}_${table}`] === 1;
-    },
+    hasRight,
     async checkRight(right, table) {
       const value = await GetRights(right, table);
       this.$set(this.rightsData, `${right}_${table}`, value);
@@ -51893,7 +51948,7 @@ const _sfc_main$17 = defineComponent({
     }
   },
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     Markdown,
     MetaHeader
@@ -51949,7 +52004,7 @@ const __vite_glob_0_288 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$16 = defineComponent({
   name: "Homepage_AiContent",
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     MetaHeader,
     Breadcrumb
   },
@@ -52083,7 +52138,7 @@ const __vite_glob_0_289 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$15 = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -52201,7 +52256,7 @@ const _sfc_main$14 = defineComponent({
     }
   },
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     Markdown,
     MetaHeader
@@ -52257,7 +52312,7 @@ const __vite_glob_0_291 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$13 = defineComponent({
   name: "Homepage_InvalidSignature",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -52393,2836 +52448,6 @@ const __vite_glob_0_292 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
   default: InvalidSignature
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$12 = {
-  components: {
-    Layout: Layout$6,
-    MetaHeader
-  },
-  props: {
-    texts: {
-      type: [Array, Object],
-      required: true
-    }
-  }
-};
-function _sfc_ssrRender$12(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  _push(ssrRenderComponent(_component_layout, _attrs, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Zugriff nicht möglich" }, null, _parent2, _scopeId));
-        _push2(`<div${_scopeId}><img${ssrRenderAttr("src", "/images/web/mcsl_logo_only.png")} class="mx-auto" style="${ssrRenderStyle({ "max-width": "500px", "min-width": "300px", "width": "100%" })}"${_scopeId}><div class="mx-auto text-center" style="${ssrRenderStyle({ "max-width": "800px" })}"${_scopeId}><br${_scopeId}><br${_scopeId}><h2 class="text-4xl"${_scopeId}>${ssrInterpolate($props.texts.headline)}</h2><br${_scopeId}><br${_scopeId}><p${_scopeId}>${$props.texts.text ?? ""}</p></div></div>`);
-      } else {
-        return [
-          createVNode(_component_MetaHeader, { title: "Zugriff nicht möglich" }),
-          createVNode("div", null, [
-            createVNode("img", {
-              src: "/images/web/mcsl_logo_only.png",
-              class: "mx-auto",
-              style: { "max-width": "500px", "min-width": "300px", "width": "100%" }
-            }),
-            createVNode("div", {
-              class: "mx-auto text-center",
-              style: { "max-width": "800px" }
-            }, [
-              createVNode("br"),
-              createVNode("br"),
-              createVNode("h2", { class: "text-4xl" }, toDisplayString($props.texts.headline), 1),
-              createVNode("br"),
-              createVNode("br"),
-              createVNode("p", {
-                innerHTML: $props.texts.text
-              }, null, 8, ["innerHTML"])
-            ])
-          ])
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$12 = _sfc_main$12.setup;
-_sfc_main$12.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/No-Rights.vue");
-  return _sfc_setup$12 ? _sfc_setup$12(props, ctx) : void 0;
-};
-const NoRights = /* @__PURE__ */ _export_sfc(_sfc_main$12, [["ssrRender", _sfc_ssrRender$12]]);
-const __vite_glob_0_293 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoRights
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$11 = defineComponent({
-  name: "Homepage_NoApplicationFound",
-  components: {
-    Layout: Layout$6,
-    PageContent,
-    PageTitle,
-    PageParagraph,
-    MetaHeader
-  }
-});
-function _sfc_ssrRender$11(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  const _component_page_content = resolveComponent("page-content");
-  const _component_page_title = resolveComponent("page-title");
-  const _component_page_paragraph = resolveComponent("page-paragraph");
-  _push(ssrRenderComponent(_component_layout, mergeProps({
-    "header-url": _ctx.$page.props.saas_url + "/home/no_application_found"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Keine Anwendung" }, null, _parent2, _scopeId));
-        _push2(ssrRenderComponent(_component_page_content, null, {
-          content: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(ssrRenderComponent(_component_page_title, null, {
-                title: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                  if (_push4) {
-                    _push4(`Keine Anwendung`);
-                  } else {
-                    return [
-                      createTextVNode("Keine Anwendung")
-                    ];
-                  }
-                }),
-                _: 1
-              }, _parent3, _scopeId2));
-              _push3(ssrRenderComponent(_component_page_paragraph, null, {
-                paragraph: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                  if (_push4) {
-                    _push4(` Es konnte keine Anwendung gefunden werden. `);
-                  } else {
-                    return [
-                      createTextVNode(" Es konnte keine Anwendung gefunden werden. ")
-                    ];
-                  }
-                }),
-                _: 1
-              }, _parent3, _scopeId2));
-            } else {
-              return [
-                createVNode(_component_page_title, null, {
-                  title: withCtx(() => [
-                    createTextVNode("Keine Anwendung")
-                  ]),
-                  _: 1
-                }),
-                createVNode(_component_page_paragraph, null, {
-                  paragraph: withCtx(() => [
-                    createTextVNode(" Es konnte keine Anwendung gefunden werden. ")
-                  ]),
-                  _: 1
-                })
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_MetaHeader, { title: "Keine Anwendung" }),
-          createVNode(_component_page_content, null, {
-            content: withCtx(() => [
-              createVNode(_component_page_title, null, {
-                title: withCtx(() => [
-                  createTextVNode("Keine Anwendung")
-                ]),
-                _: 1
-              }),
-              createVNode(_component_page_paragraph, null, {
-                paragraph: withCtx(() => [
-                  createTextVNode(" Es konnte keine Anwendung gefunden werden. ")
-                ]),
-                _: 1
-              })
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$11 = _sfc_main$11.setup;
-_sfc_main$11.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoApplicationFound.vue");
-  return _sfc_setup$11 ? _sfc_setup$11(props, ctx) : void 0;
-};
-const NoApplicationFound = /* @__PURE__ */ _export_sfc(_sfc_main$11, [["ssrRender", _sfc_ssrRender$11]]);
-const __vite_glob_0_294 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoApplicationFound
-}, Symbol.toStringTag, { value: "Module" }));
-const layoutComponents$2 = {
-  mfx: () => Promise.resolve().then(() => __vite_glob_0_310),
-  // dag: () => import('@/Application/Homepage/Shared/dag/Layout.vue'),
-  default: () => Promise.resolve().then(() => __vite_glob_0_310)
-};
-function getDomKey$2(urlString) {
-  try {
-    const url = new URL(urlString);
-    const hostname = url.hostname;
-    const parts = hostname.split(".");
-    return urlString ? urlString : "default";
-  } catch (e) {
-    return "default";
-  }
-}
-const _sfc_main$10 = defineComponent({
-  name: "Homepage_NoPageFound",
-  components: {
-    Layout: defineAsyncComponent(
-      layoutComponents$2[getDomKey$2(SD())] || layoutComponents$2["default"]
-    ),
-    PageTitle,
-    MetaHeader
-  },
-  methods: {
-    SD
-  }
-});
-function _sfc_ssrRender$10(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  const _component_page_title = resolveComponent("page-title");
-  _push(ssrRenderComponent(_component_layout, mergeProps({
-    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Seite nicht gefunden" }, null, _parent2, _scopeId));
-        _push2(ssrRenderComponent(_component_page_title, null, {
-          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`Seite nicht gefunden!`);
-            } else {
-              return [
-                createTextVNode("Seite nicht gefunden!")
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_MetaHeader, { title: "Seite nicht gefunden" }),
-          createVNode(_component_page_title, null, {
-            title: withCtx(() => [
-              createTextVNode("Seite nicht gefunden!")
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$10 = _sfc_main$10.setup;
-_sfc_main$10.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound.vue");
-  return _sfc_setup$10 ? _sfc_setup$10(props, ctx) : void 0;
-};
-const NoPageFound = /* @__PURE__ */ _export_sfc(_sfc_main$10, [["ssrRender", _sfc_ssrRender$10]]);
-const __vite_glob_0_295 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoPageFound
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$$ = defineComponent({
-  name: "Homepage_NoPageFound",
-  components: {
-    Layout: Layout$6,
-    PageTitle
-  }
-});
-function _sfc_ssrRender$$(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_page_title = resolveComponent("page-title");
-  _push(ssrRenderComponent(_component_layout, mergeProps({
-    "header-title": "Seite nicht gefunden",
-    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_page_title, null, {
-          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`Seite nicht gefunden!`);
-            } else {
-              return [
-                createTextVNode("Seite nicht gefunden!")
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_page_title, null, {
-            title: withCtx(() => [
-              createTextVNode("Seite nicht gefunden!")
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$$ = _sfc_main$$.setup;
-_sfc_main$$.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_ab.vue");
-  return _sfc_setup$$ ? _sfc_setup$$(props, ctx) : void 0;
-};
-const NoPageFound_ab = /* @__PURE__ */ _export_sfc(_sfc_main$$, [["ssrRender", _sfc_ssrRender$$]]);
-const __vite_glob_0_296 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoPageFound_ab
-}, Symbol.toStringTag, { value: "Module" }));
-const layoutComponents$1 = {
-  chh: () => Promise.resolve().then(() => __vite_glob_0_315),
-  mfx: () => Promise.resolve().then(() => __vite_glob_0_317),
-  dag: () => Promise.resolve().then(() => __vite_glob_0_316),
-  default: () => Promise.resolve().then(() => __vite_glob_0_315)
-};
-function getDomKey$1(hostname) {
-  const parts = hostname.split(".");
-  return parts.length > 2 ? parts[0] : "default";
-}
-const _sfc_main$_ = {
-  name: "Homepage_NoPageFound_chh2",
-  components: {
-    MetaHeader,
-    PageTitle
-  },
-  data() {
-    return {
-      Layout: null
-    };
-  },
-  async created() {
-    const subdomain = this.$page?.props?.subdomain || "default";
-    const key2 = getDomKey$1(subdomain);
-    const loader = layoutComponents$1[key2] || layoutComponents$1.default;
-    const layout2 = await loader();
-    this.Layout = markRaw(layout2.default);
-  }
-};
-function _sfc_ssrRender$_(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  const _component_page_title = resolveComponent("page-title");
-  ssrRenderVNode(_push, createVNode(resolveDynamicComponent($data.Layout), mergeProps({
-    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Seite nicht gefunden" }, null, _parent2, _scopeId));
-        _push2(ssrRenderComponent(_component_page_title, null, {
-          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`Seite nicht gefunden!`);
-            } else {
-              return [
-                createTextVNode("Seite nicht gefunden!")
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_MetaHeader, { title: "Seite nicht gefunden" }),
-          createVNode(_component_page_title, null, {
-            title: withCtx(() => [
-              createTextVNode("Seite nicht gefunden!")
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }), _parent);
-}
-const _sfc_setup$_ = _sfc_main$_.setup;
-_sfc_main$_.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_chh.vue");
-  return _sfc_setup$_ ? _sfc_setup$_(props, ctx) : void 0;
-};
-const NoPageFound_chh = /* @__PURE__ */ _export_sfc(_sfc_main$_, [["ssrRender", _sfc_ssrRender$_]]);
-const __vite_glob_0_297 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoPageFound_chh
-}, Symbol.toStringTag, { value: "Module" }));
-const useLoadingStore = defineStore("loading", {
-  state: () => ({
-    isLoading: false
-  }),
-  actions: {
-    setLoading(value) {
-      this.isLoading = value;
-    }
-  }
-});
-const _sfc_main$Z = {
-  name: "Homepage_Shared_Layout_dag",
-  components: {
-    MetaHeader,
-    BrandHeader,
-    LinkHeader,
-    BrandFooter,
-    LinkFooter,
-    Toast,
-    IconMCSL,
-    daglogo,
-    IconMenu,
-    IconClose: IconClose$1,
-    Dropdown,
-    DropdownLink,
-    ButtonChangeMode
-  },
-  // setup() {
-  //   const loadingStore = useLoadingStore();
-  //   return { loadingStore };
-  // },
-  data() {
-    return {
-      headerTitle: this.$page?.props?.title ?? "",
-      headerDescription: this.$page?.props?.description ?? "",
-      headerUrl: this.$page?.props?.url ?? null,
-      headerImage: this.$page?.props?.image ?? null,
-      mode: "light",
-      // ❗ KEIN window hier
-      isOpen_Menu: false,
-      year: (/* @__PURE__ */ new Date()).getFullYear(),
-      isLoading: true,
-      pendingRequests: 0,
-      imagesLoaded: false,
-      search: "",
-      searchval: false,
-      searchTimeout: null,
-      isClient: false
-      // 👈 wichtig
-    };
-  },
-  mounted() {
-    this.isClient = true;
-    if (typeof window !== "undefined") {
-      this.mode = localStorage.theme ?? "light";
-    }
-    if (typeof window !== "undefined") {
-      const urlParams = new URLSearchParams(window.location.search);
-      const searchParam = urlParams.get("search");
-      this.search = searchParam ?? "";
-      if (!searchParam) {
-        this.setLoadingState(true);
-        this.searchval = true;
-        this.startSearchTimeout();
-      } else {
-        this.setLoadingState(false);
-        this.searchval = false;
-      }
-      axios$1.interceptors.request.use((config2) => {
-        this.pendingRequests++;
-        this.setLoadingState(this.searchval);
-        return config2;
-      });
-      axios$1.interceptors.response.use(
-        (response) => {
-          this.pendingRequests--;
-          this.checkLoadingState();
-          return response;
-        },
-        (error) => {
-          this.pendingRequests--;
-          this.checkLoadingState();
-          return Promise.reject(error);
-        }
-      );
-    }
-    this.waitForImagesToLoad();
-    if (this.$page.props.flash?.needsReload && this.isClient) {
-      if (!sessionStorage.getItem("needsReload")) {
-        sessionStorage.setItem("needsReload", "1");
-      } else {
-        sessionStorage.removeItem("needsReload");
-      }
-    }
-  },
-  setup() {
-    const loadingStore = useLoadingStore();
-    return { loadingStore };
-  },
-  methods: {
-    SD: SD$1,
-    showHideToggleCookiePreferencesModal,
-    reopenCookieBanner() {
-      if (window.LaravelCookieConsent && typeof window.LaravelCookieConsent.reset === "function") {
-        window.LaravelCookieConsent.reset();
-      }
-    },
-    setLoadingState(state) {
-      this.isLoading = state;
-      if (typeof window !== "undefined") {
-        localStorage.setItem("loading", state ? state.toString() : "");
-      }
-    },
-    checkLoadingState() {
-      if (this.pendingRequests === 0 && this.imagesLoaded) {
-        this.setLoadingState(false);
-        if (typeof window !== "undefined") {
-          localStorage.removeItem("loading");
-        }
-      }
-    },
-    waitForImagesToLoad() {
-      if (typeof document === "undefined") return;
-      const images = document.querySelectorAll("img");
-      const totalImages = images.length;
-      let imagesProcessedCount = 0;
-      if (totalImages === 0) {
-        this.imagesLoaded = true;
-        this.checkLoadingState();
-        return;
-      }
-      const imageProcessed = () => {
-        imagesProcessedCount++;
-        if (imagesProcessedCount === totalImages) {
-          this.imagesLoaded = true;
-          this.checkLoadingState();
-        }
-      };
-      images.forEach((img) => {
-        if (img.complete) {
-          imageProcessed();
-        } else {
-          img.addEventListener("load", imageProcessed, { once: true });
-          img.addEventListener("error", imageProcessed, { once: true });
-        }
-      });
-    },
-    toggleNavbar() {
-      this.isOpen_Menu = !this.isOpen_Menu;
-    },
-    changeMode() {
-      this.mode = this.mode === "dark" ? "light" : "dark";
-      if (typeof window !== "undefined") {
-        localStorage.theme = this.mode;
-      }
-    },
-    async logoutUser() {
-      try {
-        await router$1.post(this.route("logout"));
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    startSearchTimeout() {
-      clearTimeout(this.searchTimeout);
-      this.searchTimeout = setTimeout(() => {
-        if (this.search.trim() !== "") {
-          this.setLoadingState(true);
-        }
-      }, 3e3);
-    },
-    onSearchInput(event) {
-      this.search = event.target.value;
-      this.startSearchTimeout();
-    }
-  }
-};
-function _sfc_ssrRender$Z(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_meta_header = resolveComponent("meta-header");
-  const _component_daglogo = resolveComponent("daglogo");
-  const _component_icon_menu = resolveComponent("icon-menu");
-  const _component_icon_close = resolveComponent("icon-close");
-  const _component_toast = resolveComponent("toast");
-  const _component_link_footer = resolveComponent("link-footer");
-  const _component_brand_footer = resolveComponent("brand-footer");
-  const _component_IconMCSL = resolveComponent("IconMCSL");
-  _push(`<div${ssrRenderAttrs(_attrs)}>`);
-  _push(ssrRenderComponent(_component_meta_header, { title: $data.headerTitle }, {
-    robots: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<meta head-key="robots" name="robots" content="index, follow"${_scopeId}>`);
-      } else {
-        return [
-          createVNode("meta", {
-            "head-key": "robots",
-            name: "robots",
-            content: "index, follow"
-          })
-        ];
-      }
-    }),
-    description: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<meta head-key="description" name="description"${ssrRenderAttr("content", $data.headerDescription)}${_scopeId}>`);
-      } else {
-        return [
-          createVNode("meta", {
-            "head-key": "description",
-            name: "description",
-            content: $data.headerDescription
-          }, null, 8, ["content"])
-        ];
-      }
-    }),
-    opengraph: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<meta head-key="og:title" property="og:title"${ssrRenderAttr("content", $data.headerTitle)}${_scopeId}><meta property="og:description" head-key="og:description"${ssrRenderAttr("content", $data.headerDescription)}${_scopeId}>`);
-        if ($data.headerUrl) {
-          _push2(`<meta head-key="og:url" property="og:url"${ssrRenderAttr("content", $data.headerUrl)}${_scopeId}>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        if ($data.headerImage) {
-          _push2(`<meta head-key="og:image" property="og:image"${ssrRenderAttr("content", $data.headerImage)}${_scopeId}>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`<meta head-key="og:type" property="og:type" content="website"${_scopeId}>`);
-      } else {
-        return [
-          createVNode("meta", {
-            "head-key": "og:title",
-            property: "og:title",
-            content: $data.headerTitle
-          }, null, 8, ["content"]),
-          createVNode("meta", {
-            property: "og:description",
-            "head-key": "og:description",
-            content: $data.headerDescription
-          }, null, 8, ["content"]),
-          $data.headerUrl ? (openBlock(), createBlock("meta", {
-            key: 0,
-            "head-key": "og:url",
-            property: "og:url",
-            content: $data.headerUrl
-          }, null, 8, ["content"])) : createCommentVNode("", true),
-          $data.headerImage ? (openBlock(), createBlock("meta", {
-            key: 1,
-            "head-key": "og:image",
-            property: "og:image",
-            content: $data.headerImage
-          }, null, 8, ["content"])) : createCommentVNode("", true),
-          createVNode("meta", {
-            "head-key": "og:type",
-            property: "og:type",
-            content: "website"
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(`<main class="dark" id="app-layout-start"><section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-transparent dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000" style="${ssrRenderStyle({ "z-index": "50" })}"><nav class="fixed top-0 left-0 right-0 z-30 bg-layout-night-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900" style="${ssrRenderStyle({ "z-index": "50" })}"><div class="container mx-auto max-w-6xl p-6 pb-0 lg:flex lg:items-center lg:justify-between" style="${ssrRenderStyle({ "z-index": "50" })}"><div class="flex items-center justify-between w-full lg:w-auto"><a href="/" class="block lg:hidden">`);
-  _push(ssrRenderComponent(_component_daglogo, null, null, _parent));
-  _push(`</a><div class="flex lg:hidden"><button type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800" aria-label="toggle menu">`);
-  if (!$data.isOpen_Menu) {
-    _push(ssrRenderComponent(_component_icon_menu, { class: "w-6 h-6" }, null, _parent));
-  } else {
-    _push(ssrRenderComponent(_component_icon_close, { class: "w-6 h-6" }, null, _parent));
-  }
-  _push(`</button></div></div><div class="hidden lg:block"></div></div>`);
-  if ($data.isOpen_Menu) {
-    _push(`<div class="lg:hidden absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md bg-layout-trans dark:bg-primary-night-200" style="${ssrRenderStyle({ "z-index": "10000000" })}"><div class="m-4 mt-[-20px] bg-layout-sun-200 dark:bg-layout-night-200t lg:rounded-lg pt-10 border-2 border-black"><div class="flex flex-col items-center space-y-3"><a class="ddl" href="/"><div>Startseite</div></a><br><a class="ddl" href="/lostnfound"><div>Lost &amp; Found</div></a><br><a class="ddl" href="https://www.monikadargies.de/webtrees" target="_pgv"><div>Ahnenforschungstool</div></a><br>ysad <a class="ddl" href="https://www.ancestry.de/family-tree/tree/69588419/family/pedigree?cfpid=48202672474&amp;selnode=1" target="_anc"><div>Ancestry.de</div></a><br><a class="ddl" href="/links"><div>Links</div></a><br></div></div></div>`);
-  } else {
-    _push(`<!---->`);
-  }
-  _push(`<div class="toplog hidden lg:flex justify-center relative left-[34px]"><a href="/admin/dashboard" class="admin-hotspot"></a><nav><div class="navi"><ul class="navv flex space-x-6"><li><a href="/" class="clo cl1"><div class="hd">Startseite</div></a></li><li><a href="/lostnfound" class="clo cl2"><div class="hd">Lost &amp; Found</div></a></li><li><a href="https://www.monikadargies.de/webtrees" class="clo cl3" target="_pgv"><div class="hd">Ahnenforschungstool</div></a></li><li><a href="https://www.ancestry.de/family-tree/tree/69588419/family/pedigree?cfpid=48202672474&amp;selnode=1" class="clo cl4" target="_anc"><div class="hd">Ancestry.de</div></a></li><li><a href="/links" class="clo cl5"><div class="hd">Links</div></a></li></ul></div></nav></div></nav>`);
-  if ($data.isLoading || $setup.loadingStore.isLoading) {
-    _push(`<div id="loader" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-all" style="${ssrRenderStyle({ "z-index": "999999999" })}"><div class="text-center"><svg class="animate-spin h-10 w-10 text-primary-sun-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg><p class="mt-4 text-primary-sun-100 text-sm">Bitte warten...</p></div></div>`);
-  } else {
-    _push(`<!---->`);
-  }
-  _push(`<div class="container mx-auto max-w-6xl min-h-screen py-32 px-2"><div>`);
-  _push(ssrRenderComponent(_component_toast, null, null, _parent));
-  _push(`</div><div class="lg:mt-[165px] dark mwe" style="${ssrRenderStyle({ "max-width": "1024px" })}">`);
-  ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
-  _push(`</div></div></section><footer class="dark:bg-[rgb(218,83,14)] text-layout-sun-900 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" aria-labelledby="footer-heading"><div class="container mx-auto max-w-6xl"><h2 id="footer-heading" class="sr-only">Footer</h2><div class="px-1 md:px-4 lg:px-8 pb-8 pt-8"><div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 xl:col-span-2 xl:mt-0"><div class="md:grid md:grid-cols-2 md:gap-4"><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2">Webseite</h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
-    name: "Impressum",
-    "route-name": _ctx.route("home.imprint.gen")
-  }, null, _parent));
-  _push(`</li><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
-    name: "Datenschutzerklärung",
-    "route-name": _ctx.route("home.privacy")
-  }, null, _parent));
-  _push(`</li><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
-    name: "Kontakt",
-    "route-name": _ctx.route("home.contacts.dag")
-  }, null, _parent));
-  _push(`</li><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
-    name: "Cookie Einstellungen",
-    class: "ToggleCookieLink",
-    onclick: "showHideToggleCookiePreferencesModal()",
-    href: "#"
-  }, null, _parent));
-  _push(`</li></ul></div><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2">Authentifizierung</h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
-    name: "Login",
-    "route-name": _ctx.route("login")
-  }, null, _parent));
-  _push(`</li>`);
-  if ($options.SD() == "ab") {
-    _push(`<li>`);
-    _push(ssrRenderComponent(_component_link_footer, {
-      name: "Registrierung",
-      "route-name": _ctx.route("register")
-    }, null, _parent));
-    _push(`</li>`);
-  } else {
-    _push(`<!---->`);
-  }
-  _push(`</ul></div></div></div><div class="pt-8 text-layout-sun-700 dark:text-layout-night-700"><div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs">`);
-  _push(ssrRenderComponent(_component_brand_footer, null, null, _parent));
-  _push(`<div class="flex gap-2"></div></div><div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs mt-2"><div>© ${ssrInterpolate($data.year)} Starter Eleven/MCSL. Ein Template von <b>Oliver Reinking</b> / <b>Asario.</b></div><div>`);
-  _push(ssrRenderComponent(_component_IconMCSL, null, null, _parent));
-  _push(` Version: ${ssrInterpolate(_ctx.$page.props.version.versionnr)}</div></div></div></div></div></footer></main></div>`);
-}
-const _sfc_setup$Z = _sfc_main$Z.setup;
-_sfc_main$Z.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/dag/Layout.vue");
-  return _sfc_setup$Z ? _sfc_setup$Z(props, ctx) : void 0;
-};
-const Layout$5 = /* @__PURE__ */ _export_sfc(_sfc_main$Z, [["ssrRender", _sfc_ssrRender$Z]]);
-const __vite_glob_0_316 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: Layout$5
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$Y = defineComponent({
-  name: "Homepage_NoPageFound",
-  components: {
-    Layout: Layout$5,
-    PageTitle
-  }
-});
-function _sfc_ssrRender$Y(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_page_title = resolveComponent("page-title");
-  _push(ssrRenderComponent(_component_layout, mergeProps({
-    "header-title": "Seite nicht gefunden",
-    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_page_title, null, {
-          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`Seite nicht gefunden!`);
-            } else {
-              return [
-                createTextVNode("Seite nicht gefunden!")
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_page_title, null, {
-            title: withCtx(() => [
-              createTextVNode("Seite nicht gefunden!")
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$Y = _sfc_main$Y.setup;
-_sfc_main$Y.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_dag.vue");
-  return _sfc_setup$Y ? _sfc_setup$Y(props, ctx) : void 0;
-};
-const NoPageFound_dag = /* @__PURE__ */ _export_sfc(_sfc_main$Y, [["ssrRender", _sfc_ssrRender$Y]]);
-const __vite_glob_0_298 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoPageFound_dag
-}, Symbol.toStringTag, { value: "Module" }));
-const layoutComponents = {
-  mfx: () => Promise.resolve().then(() => __vite_glob_0_310),
-  // dag: () => import('@/Application/Homepage/Shared/dag/Layout.vue'),
-  default: () => Promise.resolve().then(() => __vite_glob_0_310)
-};
-function getDomKey(urlString) {
-  console.log(urlString);
-  return "default";
-}
-const _sfc_main$X = defineComponent({
-  name: "Homepage_NoPageFound",
-  components: {
-    Layout: defineAsyncComponent(
-      layoutComponents[getDomKey(SD())] || layoutComponents["default"]
-    ),
-    PageTitle,
-    MetaHeader
-  },
-  methods: {
-    SD
-  }
-});
-function _sfc_ssrRender$X(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  const _component_page_title = resolveComponent("page-title");
-  _push(ssrRenderComponent(_component_layout, mergeProps({
-    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Seite nicht gefunden" }, null, _parent2, _scopeId));
-        _push2(ssrRenderComponent(_component_page_title, null, {
-          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`Seite nicht gefunden!`);
-            } else {
-              return [
-                createTextVNode("Seite nicht gefunden!")
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_MetaHeader, { title: "Seite nicht gefunden" }),
-          createVNode(_component_page_title, null, {
-            title: withCtx(() => [
-              createTextVNode("Seite nicht gefunden!")
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$X = _sfc_main$X.setup;
-_sfc_main$X.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_default.vue");
-  return _sfc_setup$X ? _sfc_setup$X(props, ctx) : void 0;
-};
-const NoPageFound_default = /* @__PURE__ */ _export_sfc(_sfc_main$X, [["ssrRender", _sfc_ssrRender$X]]);
-const __vite_glob_0_299 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoPageFound_default
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$W = defineComponent({
-  name: "Homepage_NoPageFound_mfx",
-  components: {
-    Layout: Layout$7,
-    PageTitle
-  }
-});
-function _sfc_ssrRender$W(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_page_title = resolveComponent("page-title");
-  _push(ssrRenderComponent(_component_layout, mergeProps({
-    "header-title": "Seite nicht gefunden",
-    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_page_title, null, {
-          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`Seite nicht gefunden!`);
-            } else {
-              return [
-                createTextVNode("Seite nicht gefunden!")
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_page_title, null, {
-            title: withCtx(() => [
-              createTextVNode("Seite nicht gefunden!")
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$W = _sfc_main$W.setup;
-_sfc_main$W.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_mfx.vue");
-  return _sfc_setup$W ? _sfc_setup$W(props, ctx) : void 0;
-};
-const NoPageFound_mfx = /* @__PURE__ */ _export_sfc(_sfc_main$W, [["ssrRender", _sfc_ssrRender$W]]);
-const __vite_glob_0_300 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoPageFound_mfx
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$V = {
-  name: "Homepage_Shared_Layout_mfx",
-  components: {
-    MetaHeader,
-    // BrandHeader,
-    LinkHeader_mfx,
-    BrandFooter,
-    ButtonChangeMode,
-    Loader,
-    LinkFooter,
-    Toast,
-    IconMenu,
-    IconCookies,
-    IconMCSL,
-    IconClose: IconClose$1,
-    pnalogo,
-    Dropdown,
-    DropdownLink,
-    ClientOnly
-    // ButtonChangeMode,
-  },
-  props: {
-    sd: {
-      type: String,
-      required: false
-    }
-  },
-  //   setup() {
-  //     const loadingStore = useLoadingStore();
-  //     return { loadingStore };
-  //   },
-  data() {
-    return {
-      headerDescription: this.$page?.props?.description ?? "",
-      headerUrl: this.$page?.props?.url ?? null,
-      headerImage: this.$page?.props?.image ?? null,
-      isOpen_Menu: false,
-      year: (/* @__PURE__ */ new Date()).getFullYear(),
-      // mode: (() => {
-      //     if (typeof window === "undefined") {
-      //         return 'dark';
-      //     }
-      //     const savedTheme = localStorage.getItem('theme');
-      //     return savedTheme || 'dark';
-      // })(),
-      mode: (() => {
-        if (typeof window === "undefined") {
-          return "dark";
-        }
-        const savedTheme = localStorage.getItem("theme");
-        console.log("INIT THEME:", savedTheme);
-        return savedTheme || "dark";
-      })(),
-      //   isLoading: localStorage.getItem("loading") === "true",
-      search: "",
-      isLoading: true,
-      searchval: false,
-      imagesLoaded: false,
-      searchTimeout: null,
-      headerTitle: this.$page?.props?.title ?? ""
-    };
-  },
-  mounted() {
-    if (typeof window === "undefined") return;
-    console.log(window.LaravelCookieConsent);
-    console.log(document.cookie);
-    this.mode = localStorage.getItem("theme") || "dark";
-    if (localStorage.getItem("mreload") === "true") {
-      localStorage.setItem("mreload", "false");
-      this.$nextTick(() => location.reload());
-      return;
-    }
-    this.applyTheme();
-    if (typeof window === "undefined") return;
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchParam = urlParams.get("search");
-    this.search = searchParam ?? "";
-    if (searchParam === "" || searchParam === null) {
-      this.setLoadingState(true);
-      this.searchval = true;
-      this.startSearchTimeout();
-    } else {
-      this.setLoadingState(false);
-      this.searchval = false;
-    }
-    this.waitForImagesToLoad();
-    if (this.isLoading) {
-      localStorage.setItem("loading", "true");
-    }
-  },
-  methods: {
-    SD,
-    showHideToggleCookiePreferencesModal,
-    applyTheme() {
-      if (typeof window === "undefined") return;
-      console.log("COMPONENT UID:", this._.uid);
-      console.log("PATH:", window.location.pathname);
-      console.log("MODE:", this.mode);
-      const html = document.documentElement;
-      console.log(
-        "[applyTheme] mode:",
-        this.mode
-      );
-      console.log(
-        "[applyTheme] vorher:",
-        html.className
-      );
-      const forceLight = window.location.pathname === "/login" || window.location.pathname === "/register";
-      if (forceLight) {
-        console.log(
-          "[applyTheme] forceLight aktiv"
-        );
-        html.classList.remove("dark");
-        return;
-      }
-      if (this.mode === "dark") {
-        console.log(
-          "[applyTheme] ADD DARK"
-        );
-        html.classList.add("dark");
-      } else {
-        console.log(
-          "[applyTheme] REMOVE DARK"
-        );
-        html.classList.remove("dark");
-      }
-      console.log(
-        "[applyTheme] nachher:",
-        html.className
-      );
-    },
-    //    changeMode(newMode) {
-    //     this.mode = newMode;
-    //     if(typeof newMode === "undefined")
-    //     {
-    //         newMode = 'dark';
-    //     }
-    //     const forceLight =
-    //         window.location.pathname === '/login'
-    //         || window.location.pathname === '/register';
-    //     if (!forceLight) {
-    //         localStorage.setItem('theme', newMode);
-    //     }
-    //     this.applyTheme();
-    // },
-    changeMode(newMode) {
-      console.trace("changeMode", newMode);
-      this.mode = newMode ?? (this.mode === "dark" ? "light" : "dark");
-      localStorage.setItem("theme", this.mode);
-      this.applyTheme();
-    },
-    imagebasepath(str) {
-      if (str.includes("https://")) {
-        return "";
-      }
-      return `/images/_${SD()}/users/profile_photo_path/`;
-    },
-    setLoadingState(state) {
-      this.isLoading = state;
-      if (typeof window !== "undefined") {
-        localStorage.setItem("loading", state ? state.toString() : "");
-      }
-    },
-    reopenCookieBanner() {
-      if (typeof window !== "undefined" && window.LaravelCookieConsent) {
-        window.LaravelCookieConsent.reset();
-      }
-    },
-    checkLoadingState() {
-      if (this.imagesLoaded) {
-        this.setLoadingState(false);
-      }
-    },
-    waitForImagesToLoad() {
-      if (typeof document === "undefined") {
-        this.imagesLoaded = true;
-        return;
-      }
-      const images = document.querySelectorAll("img");
-      const totalImages = images.length;
-      if (totalImages === 0) {
-        this.imagesLoaded = true;
-        this.checkLoadingState();
-        return;
-      }
-      let loaded = 0;
-      const done = () => {
-        loaded++;
-        if (loaded === totalImages) {
-          this.imagesLoaded = true;
-          this.checkLoadingState();
-        }
-      };
-      images.forEach((img) => {
-        if (img.complete) {
-          done();
-        } else {
-          img.addEventListener("load", done);
-          img.addEventListener("error", done);
-        }
-      });
-    },
-    toggleNavbar() {
-      this.isOpen_Menu = !this.isOpen_Menu;
-    },
-    logoutUser() {
-      router$1.post(this.route("logout"));
-    },
-    startSearchTimeout() {
-      clearTimeout(this.searchTimeout);
-      this.searchTimeout = setTimeout(() => {
-        if (this.search.trim() !== "") {
-          this.setLoadingState(true);
-        }
-      }, 3e3);
-    },
-    onSearchInput(event) {
-      this.search = event.target.value;
-      this.startSearchTimeout();
-    }
-  }
-};
-function _sfc_ssrRender$V(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_meta_header = resolveComponent("meta-header");
-  const _component_ClientOnly = resolveComponent("ClientOnly");
-  const _component_pnalogo = resolveComponent("pnalogo");
-  const _component_IconMenu = resolveComponent("IconMenu");
-  const _component_IconClose = resolveComponent("IconClose");
-  const _component_LinkHeader_mfx = resolveComponent("LinkHeader_mfx");
-  const _component_button_change_mode = resolveComponent("button-change-mode");
-  const _component_dropdown_link = resolveComponent("dropdown-link");
-  const _component_Dropdown = resolveComponent("Dropdown");
-  const _component_Loader = resolveComponent("Loader");
-  const _component_Toast = resolveComponent("Toast");
-  const _component_link_footer = resolveComponent("link-footer");
-  const _component_IconCookies = resolveComponent("IconCookies");
-  const _component_brand_footer = resolveComponent("brand-footer");
-  const _component_IconMCSL = resolveComponent("IconMCSL");
-  _push(`<!--[-->`);
-  _push(ssrRenderComponent(_component_meta_header, { title: $data.headerTitle }, {
-    robots: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<meta head-key="robots" name="robots" content="index, follow"${_scopeId}>`);
-      } else {
-        return [
-          createVNode("meta", {
-            "head-key": "robots",
-            name: "robots",
-            content: "index, follow"
-          })
-        ];
-      }
-    }),
-    description: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<meta head-key="description" name="description"${ssrRenderAttr("content", $data.headerDescription)}${_scopeId}>`);
-      } else {
-        return [
-          createVNode("meta", {
-            "head-key": "description",
-            name: "description",
-            content: $data.headerDescription
-          }, null, 8, ["content"])
-        ];
-      }
-    }),
-    opengraph: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<meta head-key="og:title" property="og:title"${ssrRenderAttr("content", $data.headerTitle)}${_scopeId}><meta property="og:description" head-key="og:description"${ssrRenderAttr("content", $data.headerDescription)}${_scopeId}>`);
-        if ($data.headerUrl) {
-          _push2(`<meta head-key="og:url" property="og:url"${ssrRenderAttr("content", $data.headerUrl)}${_scopeId}>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        if ($data.headerImage) {
-          _push2(`<meta head-key="og:image" property="og:image"${ssrRenderAttr("content", $data.headerImage)}${_scopeId}>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`<meta head-key="og:type" property="og:type" content="website"${_scopeId}>`);
-      } else {
-        return [
-          createVNode("meta", {
-            "head-key": "og:title",
-            property: "og:title",
-            content: $data.headerTitle
-          }, null, 8, ["content"]),
-          createVNode("meta", {
-            property: "og:description",
-            "head-key": "og:description",
-            content: $data.headerDescription
-          }, null, 8, ["content"]),
-          $data.headerUrl ? (openBlock(), createBlock("meta", {
-            key: 0,
-            "head-key": "og:url",
-            property: "og:url",
-            content: $data.headerUrl
-          }, null, 8, ["content"])) : createCommentVNode("", true),
-          $data.headerImage ? (openBlock(), createBlock("meta", {
-            key: 1,
-            "head-key": "og:image",
-            property: "og:image",
-            content: $data.headerImage
-          }, null, 8, ["content"])) : createCommentVNode("", true),
-          createVNode("meta", {
-            "head-key": "og:type",
-            property: "og:type",
-            content: "website"
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(`<main id="app-layout-start"><section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000" style="${ssrRenderStyle({ "z-index": "50" })}"><nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 dark:bg-layout-night-00 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-b border-layout-sun-2000 dark:border-layout-night-1060 overflow-visible" style="${ssrRenderStyle({ "z-index": "50" })}"><div class="mx-auto w-fit px-6" style="${ssrRenderStyle({ "z-index": "50" })}"><div class="flex items-center justify-between py-4 lg:flex-col lg:justify-center lg:gap-4"><a href="/" class="">`);
-  _push(ssrRenderComponent(_component_ClientOnly, null, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_pnalogo, { mode: $data.mode }, null, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_pnalogo, { mode: $data.mode }, null, 8, ["mode"])
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(`</a><button type="button" class="lg:hidden p-2 focus:outline-none hover:text-primary-sun-800 dark:text-primary-night-1000 colored_white" aria-label="Menü öffnen">`);
-  if (!$data.isOpen_Menu) {
-    _push(ssrRenderComponent(_component_IconMenu, { class: "w-7 h-7" }, null, _parent));
-  } else {
-    _push(ssrRenderComponent(_component_IconClose, { class: "w-7 h-7" }, null, _parent));
-  }
-  _push(`</button></div><div class="${ssrRenderClass([[$data.isOpen_Menu ? "translate-x-0 opacity-100 " : "opacity-0 -translate-x-full"], "absolute inset-x-0 mt-[6] w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-layout-sun-00 dark:bg-layout-night-00 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent"])}" style="${ssrRenderStyle({ "z-index": "10000000" })}"><div class="flex flex-col items-center space-y-1 SDAA lg:mt-4 lg:flex-row lg:items-center lg:w-fit lg:mx-auto lg:justify-center lg:gap-2 lg:space-y-0 border-4 border-layout-sun-2000 dark:border-layout-night-2000 lg:rounded-lg mb-2">`);
-  _push(ssrRenderComponent(_component_LinkHeader_mfx, {
-    class: "ml-[26px]",
-    "route-name": _ctx.route("home.index"),
-    name: "Home"
-  }, null, _parent));
-  _push(ssrRenderComponent(_component_LinkHeader_mfx, {
-    "route-name": _ctx.route("home.pna.grafitti"),
-    name: "Grafittis"
-  }, null, _parent));
-  _push(ssrRenderComponent(_component_LinkHeader_mfx, {
-    "route-name": _ctx.route("home.pna.portraits"),
-    name: "Portraits"
-  }, null, _parent));
-  _push(ssrRenderComponent(_component_LinkHeader_mfx, {
-    "route-name": _ctx.route("home.pna.contacts"),
-    name: "Kontakt"
-  }, null, _parent));
-  _push(ssrRenderComponent(_component_button_change_mode, {
-    mode: $data.mode,
-    onChangeMode: $options.changeMode
-  }, null, _parent));
-  if (!_ctx.$page.props.userdata.user_id) {
-    _push(ssrRenderComponent(_component_LinkHeader_mfx, {
-      "route-name": _ctx.route("login"),
-      name: "Login"
-    }, null, _parent));
-  } else if (_ctx.$page.props.auth.user) {
-    _push(`<div class="block md:hidden">`);
-    _push(ssrRenderComponent(_component_LinkHeader_mfx, {
-      "route-name": _ctx.route("admin.dashboard"),
-      name: "Dashboard"
-    }, null, _parent));
-    _push(`<br>`);
-    _push(ssrRenderComponent(_component_LinkHeader_mfx, {
-      "route-name": _ctx.route("admin.profile"),
-      name: "Profil"
-    }, {
-      default: withCtx((_, _push2, _parent2, _scopeId) => {
-        if (_push2) {
-          _push2(`<img id="prof_pic" class="h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]"${ssrRenderAttr(
-            "src",
-            $options.imagebasepath(_ctx.$page.props.auth.user?.profile_photo_url) + _ctx.$page.props.auth.user?.profile_photo_url.replace("public", "").replace("http://localhost/images/", "").replace("images/images/", "images/") || "/images/profile-photos/008.jpg"
-          )}${ssrRenderAttr("alt", _ctx.$page.props.userdata.full_name)}${_scopeId}>`);
-        } else {
-          return [
-            createVNode("img", {
-              id: "prof_pic",
-              class: "h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]",
-              src: $options.imagebasepath(_ctx.$page.props.auth.user?.profile_photo_url) + _ctx.$page.props.auth.user?.profile_photo_url.replace("public", "").replace("http://localhost/images/", "").replace("images/images/", "images/") || "/images/profile-photos/008.jpg",
-              alt: _ctx.$page.props.userdata.full_name
-            }, null, 8, ["src", "alt"])
-          ];
-        }
-      }),
-      _: 1
-    }, _parent));
-    _push(`<br><hr><form><button type="submit">`);
-    _push(ssrRenderComponent(_component_dropdown_link, null, {
-      default: withCtx((_, _push2, _parent2, _scopeId) => {
-        if (_push2) {
-          _push2(`<b${_scopeId}>Abmelden</b>`);
-        } else {
-          return [
-            createVNode("b", null, "Abmelden")
-          ];
-        }
-      }),
-      _: 1
-    }, _parent));
-    _push(`</button></form></div>`);
-  } else {
-    _push(`<!---->`);
-  }
-  if (_ctx.$page.props.userdata.user_id) {
-    _push(`<!--[--><!--]-->`);
-  } else {
-    _push(`<!---->`);
-  }
-  _push(`<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path><div class="ms-3 relative flex hidden sm:flex">`);
-  if (_ctx.$page.props.auth.user) {
-    _push(ssrRenderComponent(_component_Dropdown, {
-      align: "right",
-      width: "72",
-      class: ""
-    }, {
-      trigger: withCtx((_, _push2, _parent2, _scopeId) => {
-        if (_push2) {
-          if (_ctx.$page.props.jetstream.managesProfilePhotos) {
-            _push2(`<button class="flex text-sm border-4 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"${_scopeId}><img id="prof_pic" class="h-8 w-8 rounded-full object-cover mr-6"${ssrRenderAttr(
-              "src",
-              $options.imagebasepath(_ctx.$page.props.auth.user.profile_photo_url) + _ctx.$page.props.auth.user.profile_photo_url.replace("public", "")
-            )}${ssrRenderAttr(
-              "alt",
-              _ctx.$page.props.userdata.full_name
-            )}${_scopeId}> ${ssrInterpolate()}</button>`);
-          } else {
-            _push2(`<span class="inline-flex rounded-md"${_scopeId}><button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"${_scopeId}>${ssrInterpolate(_ctx.$page.props.userdata.full_name)}</button></span>`);
-          }
-        } else {
-          return [
-            _ctx.$page.props.jetstream.managesProfilePhotos ? (openBlock(), createBlock("button", {
-              key: 0,
-              class: "flex text-sm border-4 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
-            }, [
-              createVNode("img", {
-                id: "prof_pic",
-                class: "h-8 w-8 rounded-full object-cover mr-6",
-                src: $options.imagebasepath(_ctx.$page.props.auth.user.profile_photo_url) + _ctx.$page.props.auth.user.profile_photo_url.replace("public", ""),
-                alt: _ctx.$page.props.userdata.full_name
-              }, null, 8, ["src", "alt"]),
-              createTextVNode(" " + toDisplayString(), 1)
-            ])) : (openBlock(), createBlock("span", {
-              key: 1,
-              class: "inline-flex rounded-md"
-            }, [
-              createVNode("button", {
-                type: "button",
-                class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
-              }, toDisplayString(_ctx.$page.props.userdata.full_name), 1)
-            ]))
-          ];
-        }
-      }),
-      content: withCtx((_, _push2, _parent2, _scopeId) => {
-        if (_push2) {
-          _push2(`<div class="block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500"${_scopeId}>`);
-          if (_ctx.$page.props.userdata.application_count > 100) {
-            _push2(`<span${_scopeId}>Anwendung wechseln</span>`);
-          } else {
-            _push2(`<span${_scopeId}>Startseite</span>`);
-          }
-          _push2(`</div>`);
-          _push2(ssrRenderComponent(_component_dropdown_link, {
-            "with-icon": false,
-            "with-route": true,
-            "route-name": _ctx.route("admin.dashboard")
-          }, {
-            default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                if (_ctx.$page.props.userdata.application_count > 100) {
-                  _push3(`<span${_scopeId2}>Anwendung wechseln</span>`);
-                } else {
-                  _push3(`<span${_scopeId2}>zum Dashboard</span>`);
-                }
-              } else {
-                return [
-                  _ctx.$page.props.userdata.application_count > 100 ? (openBlock(), createBlock("span", { key: 0 }, "Anwendung wechseln")) : (openBlock(), createBlock("span", { key: 1 }, "zum Dashboard"))
-                ];
-              }
-            }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`<div class="block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500"${_scopeId}> Dein Konto </div>`);
-          _push2(ssrRenderComponent(_component_dropdown_link, {
-            "with-icon": false,
-            "with-route": true,
-            "route-name": _ctx.route("admin.profile")
-          }, {
-            default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(` Profil `);
-              } else {
-                return [
-                  createTextVNode(" Profil ")
-                ];
-              }
-            }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`<div class="my-2 border-t border-layout-sun-200 dark:border-layout-night-1050"${_scopeId}></div><form${_scopeId}><button type="submit"${_scopeId}>`);
-          _push2(ssrRenderComponent(_component_dropdown_link, null, {
-            default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(`<b${_scopeId2}>Abmelden</b>`);
-              } else {
-                return [
-                  createVNode("b", null, "Abmelden")
-                ];
-              }
-            }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`</button></form>`);
-        } else {
-          return [
-            createVNode("div", { class: "block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500" }, [
-              _ctx.$page.props.userdata.application_count > 100 ? (openBlock(), createBlock("span", { key: 0 }, "Anwendung wechseln")) : (openBlock(), createBlock("span", { key: 1 }, "Startseite"))
-            ]),
-            createVNode(_component_dropdown_link, {
-              "with-icon": false,
-              "with-route": true,
-              "route-name": _ctx.route("admin.dashboard")
-            }, {
-              default: withCtx(() => [
-                _ctx.$page.props.userdata.application_count > 100 ? (openBlock(), createBlock("span", { key: 0 }, "Anwendung wechseln")) : (openBlock(), createBlock("span", { key: 1 }, "zum Dashboard"))
-              ]),
-              _: 1
-            }, 8, ["route-name"]),
-            createVNode("div", { class: "block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500" }, " Dein Konto "),
-            createVNode(_component_dropdown_link, {
-              "with-icon": false,
-              "with-route": true,
-              "route-name": _ctx.route("admin.profile")
-            }, {
-              default: withCtx(() => [
-                createTextVNode(" Profil ")
-              ]),
-              _: 1
-            }, 8, ["route-name"]),
-            createVNode("div", { class: "my-2 border-t border-layout-sun-200 dark:border-layout-night-1050" }),
-            createVNode("form", {
-              onSubmit: withModifiers($options.logoutUser, ["prevent"])
-            }, [
-              createVNode("button", { type: "submit" }, [
-                createVNode(_component_dropdown_link, null, {
-                  default: withCtx(() => [
-                    createVNode("b", null, "Abmelden")
-                  ]),
-                  _: 1
-                })
-              ])
-            ], 40, ["onSubmit"])
-          ];
-        }
-      }),
-      _: 1
-    }, _parent));
-  } else {
-    _push(`<!---->`);
-  }
-  _push(`</div></div></div></div></nav>`);
-  _push(ssrRenderComponent(_component_Loader, null, null, _parent));
-  _push(`<div class="container mx-auto max-w-6xl min-h-screen px-2 pm_top"><div>`);
-  _push(ssrRenderComponent(_component_Toast, null, null, _parent));
-  _push(`</div><div>`);
-  ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
-  _push(`</div></div></section><footer class="bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" aria-labelledby="footer-heading"><div class="container mx-auto max-w-6xl"><h2 id="footer-heading" class="sr-only">Footer</h2><div class="px-1 md:px-4 lg:px-8 pb-8 pt-8"><div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 xl:col-span-2 xl:mt-0"><div class="md:grid md:grid-cols-2 md:gap-4"><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2"><span> Webseite </span></h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
-    name: "Impressum",
-    "route-name": _ctx.route("home.imprint.pna")
-  }, null, _parent));
-  _push(`</li><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
-    name: "Datenschutzerklärung",
-    "route-name": _ctx.route("home.privacy")
-  }, null, _parent));
-  _push(`</li><li><a class="ToggleCookieLink cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900" onclick="showHideToggleCookiePreferencesModal()">`);
-  _push(ssrRenderComponent(_component_IconCookies, {
-    width: "18",
-    height: "18",
-    class: "mr-[-4px]",
-    color: "#e8c456"
-  }, null, _parent));
-  _push(`<span>Cookie Einstellungen</span></a></li></ul></div><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2"><span> Authentifizierung </span></h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
-  _push(ssrRenderComponent(_component_link_footer, {
-    name: "Login",
-    "route-name": _ctx.route("login")
-  }, null, _parent));
-  _push(`</li></ul></div></div></div><div class="pt-8 text-layout-sun-700 dark:text-layout-night-700"><div class="flex flex-col items-center justify-between text-xs leading-5 gap-4"><div class="w-full flex flex-col md:flex-row flex-1 items-center justify-between gap-4"><div>`);
-  _push(ssrRenderComponent(_component_brand_footer, null, null, _parent));
-  _push(`</div><div></div></div><div class="w-full flex flex-col md:flex-row flex-1 items-center justify-between gap-4"><div class="text-xs leading-6"> © ${ssrInterpolate($data.year)} Starter Eleven/MCSL. Ein Template von <b>Oliver Reinking</b> / <b>Asario</b>. </div><div class="text-xs leading-6"><span>`);
-  _push(ssrRenderComponent(_component_IconMCSL, null, null, _parent));
-  _push(` Version: </span> ${ssrInterpolate(_ctx.$page.props.version.versionnr)}</div></div></div></div></div></div></footer></main><!--]-->`);
-}
-const _sfc_setup$V = _sfc_main$V.setup;
-_sfc_main$V.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/pna/Layout.vue");
-  return _sfc_setup$V ? _sfc_setup$V(props, ctx) : void 0;
-};
-const Layout$4 = /* @__PURE__ */ _export_sfc(_sfc_main$V, [["ssrRender", _sfc_ssrRender$V]]);
-const __vite_glob_0_318 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: Layout$4
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$U = defineComponent({
-  name: "Homepage_NoPageFound_mfx",
-  components: {
-    Layout: Layout$4,
-    PageTitle
-  }
-});
-function _sfc_ssrRender$U(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_page_title = resolveComponent("page-title");
-  _push(ssrRenderComponent(_component_layout, mergeProps({
-    "header-title": "Seite nicht gefunden",
-    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_page_title, null, {
-          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`Seite nicht gefunden!`);
-            } else {
-              return [
-                createTextVNode("Seite nicht gefunden!")
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_page_title, null, {
-            title: withCtx(() => [
-              createTextVNode("Seite nicht gefunden!")
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$U = _sfc_main$U.setup;
-_sfc_main$U.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_pna.vue");
-  return _sfc_setup$U ? _sfc_setup$U(props, ctx) : void 0;
-};
-const NoPageFound_pna = /* @__PURE__ */ _export_sfc(_sfc_main$U, [["ssrRender", _sfc_ssrRender$U]]);
-const __vite_glob_0_301 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: NoPageFound_pna
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$T = {
-  components: {
-    InputFormText: InputFormText$1
-  },
-  data() {
-    return {
-      form: {
-        password: ""
-      },
-      hash: ""
-    };
-  },
-  methods: {
-    async generateHash() {
-      console.log("Button geklickt");
-      try {
-        const response = await axios$1.post("/pwd", this.form);
-        console.log("Status:", response.status);
-        console.log("Data:", response.data);
-        this.hash = response.data.hash;
-      } catch (e) {
-        console.error("FEHLER:");
-        console.log(e);
-        if (e.response) {
-          console.log("Status:", e.response.status);
-          console.log("Response:", e.response.data);
-        }
-      }
-    }
-  }
-};
-function _sfc_ssrRender$T(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_InputFormText = resolveComponent("InputFormText");
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "max-w-4xl mx-auto" }, _attrs))}><div class="rounded-lg border border-primary-sun-500 dark:border-primary-night-500 bg-layout-sun-0 dark:bg-layout-night-0 p-6"><h1 class="text-2xl font-bold mb-6 text-layout-sun-900 dark:text-layout-night-900"> Passwort Hash Generator </h1>`);
-  _push(ssrRenderComponent(_component_InputFormText, {
-    id: "password",
-    name: "password",
-    modelValue: $data.form.password,
-    "onUpdate:modelValue": ($event) => $data.form.password = $event,
-    type: "password",
-    autocomplete: "new-password"
-  }, {
-    label: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(` Passwort `);
-      } else {
-        return [
-          createTextVNode(" Passwort ")
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(`<button class="mt-4 px-5 py-2 rounded-lg bg-primary-sun-500 dark:bg-primary-night-500 text-white"> Hash erzeugen </button>`);
-  if ($data.hash) {
-    _push(`<div class="mt-6"><label class="block mb-2 text-sm font-medium text-layout-sun-900 dark:text-layout-night-900"> Laravel Passwort-Hash </label><textarea readonly rows="5" class="w-full rounded-lg border border-primary-sun-500 dark:border-primary-night-500 bg-layout-sun-100 dark:bg-layout-night-100 p-3 font-mono text-sm">${ssrInterpolate($data.hash)}</textarea></div>`);
-  } else {
-    _push(`<!---->`);
-  }
-  _push(`</div></div>`);
-}
-const _sfc_setup$T = _sfc_main$T.setup;
-_sfc_main$T.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/PWD.vue");
-  return _sfc_setup$T ? _sfc_setup$T(props, ctx) : void 0;
-};
-const PWD = /* @__PURE__ */ _export_sfc(_sfc_main$T, [["ssrRender", _sfc_ssrRender$T]]);
-const __vite_glob_0_302 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: PWD
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$S = {
-  name: "PictureGallery",
-  components: {
-    Layout: Layout$6,
-    MetaHeader,
-    Pagination: Pagination$1,
-    ZoomImage,
-    SocialButtons,
-    RatingWrapper,
-    editbtns,
-    newbtn,
-    DisplayDate,
-    IconCamera,
-    SearchFilter,
-    Alert,
-    BackBtn
-  },
-  props: {
-    entries: {
-      type: Object,
-      required: true
-    },
-    ocont: {
-      type: [Array, Object],
-      default: () => ({})
-    },
-    ratings: {
-      type: Object,
-      default: () => ({})
-    },
-    createOn: {
-      default: true
-    },
-    searchFilter: {
-      type: Boolean,
-      default: true
-    },
-    routeCreate: {
-      type: String,
-      default: ""
-    },
-    filters: {
-      type: Object,
-      default: () => ({ search: "" })
-    }
-  },
-  data() {
-    return {
-      lightbox: null,
-      openIndex: null,
-      form: {
-        search: this.filters?.search ?? ""
-      },
-      searchterm: this.filters?.search ?? "",
-      isClient: false,
-      onSearchInput: false
-    };
-  },
-  watch: {
-    "form.search": throttle(function() {
-      router.get(
-        this.route("home.images.gallery", {
-          slug: this.ocont && this.ocont?.slug ? this.ocont?.slug : ""
-        }),
-        { search: this.form.search },
-        {
-          preserveState: true,
-          replace: true,
-          skipLoading: true
-        }
-      );
-    }, 300),
-    //   'form.search': throttle(function (val) {
-    //     router.get(
-    //       this.route('home.images.gallery'),
-    //       {
-    //         slug: this.ocont?.slug,
-    //         search: val?.trim() || null,
-    //       },
-    //       {
-    //         preserveState: true,
-    //         replace: true,
-    //       }
-    //     );
-    //   }, 500),
-    entries: {
-      deep: true,
-      immediate: true,
-      handler() {
-        if (typeof window === "undefined") return;
-        if (!window.location.hash) return;
-        requestAnimationFrame(() => {
-          this.scrollToHashAnchor();
-        });
-      }
-    }
-  },
-  computed: {},
-  methods: {
-    SD,
-    getStatus(str) {
-      if (str == "lost") {
-        return "Verloren";
-      }
-      if (str == "sold") {
-        return "Verkauft";
-      }
-      if (str == "givenaway") {
-        return "Verschenkt";
-      }
-      return "";
-    },
-    CleanTable: CleanTable$1,
-    //     scrollToHashAnchor() {
-    //   const hash = window?.location.hash;
-    //   if (!hash) return;
-    //   const el = document.getElementById(hash.replace("#", ""));
-    //   if (!el) return;
-    //   const y = el.getBoundingClientRect().top + window.scrollY - 134;
-    //   window.scrollTo({ top: y, behavior: "smooth" });
-    // },
-    getHashElement() {
-      if (typeof window !== "undefined") {
-        const hash = window?.location.hash;
-        if (!hash) return null;
-        const raw = hash.replace("#", "");
-        const el = document.getElementById(raw) || document.getElementById(`st${raw}`);
-        return el;
-      }
-    },
-    scrollToHashAnchor() {
-      const el = this.getHashElement();
-      if (!el) return;
-      const scroll = () => {
-        const y = el.getBoundingClientRect().top + (typeof window !== "undefined" ? window.pageYOffset : 0) - 134;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      };
-      const imgs = el.closest("#gallery")?.querySelectorAll("img");
-      if (!imgs || imgs.length === 0) {
-        scroll();
-        return;
-      }
-      let loaded = 0;
-      imgs.forEach((img) => {
-        if (img.complete) loaded++;
-        else img.addEventListener("load", () => {
-          loaded++;
-          if (loaded === imgs.length) scroll();
-        });
-      });
-      if (loaded === imgs.length) scroll();
-    },
-    // OLDDDDDDDDDDDDD
-    // scrollToHashAnchor() {
-    //   const hash = window?.location.hash;
-    //   if (hash && hash.startsWith("#")) {
-    //     setTimeout(() => {
-    //       const el = document.getElementById(hash.substring(1));
-    //       if (el) {
-    //         const y = el.getBoundingClientRect().top + window.pageYOffset - 134;
-    //         window.scrollTo({ top: y, behavior: "smooth" });
-    //       }
-    //     }, 50);
-    //   }
-    // },
-    remBrackets,
-    reset() {
-      this.form = mapValues(this.form, () => null);
-    },
-    stripTagsCom(txt) {
-      txt = stripTags$1(txt, "br,i,a");
-      return txt.replace(/(<br\s*\/?>\s*){2,}/gi, "<br>");
-    },
-    decodeEntities(text) {
-      if (text) {
-        text = text.replace(/<br\s*\/?>/g, "\n");
-        return he.decode(text);
-      }
-      return "";
-    },
-    handleBodyClick() {
-    },
-    /**
-     * Prüft, ob der Link ein Admin/Tables-Link ist.
-     * @param {string} href
-     * @returns {boolean}
-     */
-    isAdminLink(href) {
-      return href.startsWith("/admin/tables");
-    }
-    // reset() {
-    //   this.form.search = "";
-    // },
-  },
-  mounted() {
-    this.isClient = true;
-    this.$nextTick(() => {
-      this.$refs.searchField?.focus();
-    });
-    this.lightbox = new PhotoSwipeLightbox$1({
-      gallery: "#gallery",
-      children: "a:not([href^='/admin/tables'])",
-      // Admin-Links ausschließen
-      pswpModule: () => Promise.resolve().then(() => photoswipe_esm),
-      zoom: true,
-      secondaryZoomLevel: 2,
-      maxZoomLevel: 4,
-      initialZoomLevel: "fit",
-      wheelToZoom: true,
-      barsSize: { top: 50, bottom: 50 },
-      padding: { top: 30, bottom: 30, left: 30, right: 30 },
-      showHideAnimationType: "zoom",
-      galleryUID: "photoswipe-gallery"
-    });
-    if (typeof window === "undefined") return;
-    this.lightbox.init();
-  }
-};
-function _sfc_ssrRender$S(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_Layout = resolveComponent("Layout");
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  const _component_back_btn = resolveComponent("back-btn");
-  const _component_newbtn = resolveComponent("newbtn");
-  const _component_editbtns = resolveComponent("editbtns");
-  const _component_search_filter = resolveComponent("search-filter");
-  const _component_alert = resolveComponent("alert");
-  const _component_ZoomImage = resolveComponent("ZoomImage");
-  const _component_SocialButtons = resolveComponent("SocialButtons");
-  const _component_RatingWrapper = resolveComponent("RatingWrapper");
-  const _component_display_date = resolveComponent("display-date");
-  const _component_IconCamera = resolveComponent("IconCamera");
-  const _component_Pagination = resolveComponent("Pagination");
-  _push(ssrRenderComponent(_component_Layout, _attrs, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        if ($props.ocont) {
-          _push2(ssrRenderComponent(_component_MetaHeader, {
-            title: "Bilder - " + $props.ocont?.slug
-          }, null, _parent2, _scopeId));
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`<div class="flex items-center justify-between px-4 py-3" data-v-37a1c636${_scopeId}>`);
-        _push2(ssrRenderComponent(_component_back_btn, {
-          url: "/home/pictures",
-          r: "r"
-        }, {
-          default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`Übersicht`);
-            } else {
-              return [
-                createTextVNode("Übersicht")
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-        _push2(ssrRenderComponent(_component_newbtn, { table: "images" }, null, _parent2, _scopeId));
-        _push2(`</div><div data-v-37a1c636${_scopeId}>`);
-        if ($props.ocont?.id) {
-          _push2(`<div class="p-4 bg-layout-sun-200 dark:bg-layout-night-200" data-v-37a1c636${_scopeId}><hgroup data-v-37a1c636${_scopeId}><h1 class="text-2xl font-bold" data-v-37a1c636${_scopeId}>${ssrInterpolate($options.decodeEntities($props.ocont?.slug))}</h1><div class="flex items-start gap-4" data-v-37a1c636${_scopeId}><h4 class="flex-1" data-v-37a1c636${_scopeId}>${$props.ocont?.description.replace("fx_year()", (/* @__PURE__ */ new Date()).getFullYear()).replace(/\n/g, "<br />") ?? ""}</h4>`);
-          if ($props.ocont?.id) {
-            _push2(ssrRenderComponent(_component_editbtns, {
-              id: $props.ocont?.id,
-              table: "image_categories"
-            }, null, _parent2, _scopeId));
-          } else {
-            _push2(`<!---->`);
-          }
-          _push2(`</div></hgroup></div>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`<div data-v-37a1c636${_scopeId}></div><div class="flex justify-between items-center" data-v-37a1c636${_scopeId}>`);
-        if ($props.searchFilter) {
-          _push2(ssrRenderComponent(_component_search_filter, {
-            modelValue: $data.form.search,
-            "onUpdate:modelValue": ($event) => $data.form.search = $event,
-            class: "w-full",
-            ref: "searchField",
-            onReset: $options.reset,
-            onInput: $data.onSearchInput
-          }, null, _parent2, _scopeId));
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`</div>`);
-        if (Array.isArray($props.entries.data) && $props.entries.data.length === 0 && $data.form.search) {
-          _push2(`<div class="p-2 md:p-4" data-v-37a1c636${_scopeId}>`);
-          _push2(ssrRenderComponent(_component_alert, { type: "warning" }, {
-            default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(` Für den vorgegebenen Suchbegriff wurden keine Bilder gefunden. `);
-              } else {
-                return [
-                  createTextVNode(" Für den vorgegebenen Suchbegriff wurden keine Bilder gefunden. ")
-                ];
-              }
-            }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`</div>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`<div id="gallery" data-v-37a1c636${_scopeId}><!--[-->`);
-        ssrRenderList($props.entries.data, (item) => {
-          _push2(`<article class="w-full block max-w-sm gap-3 mx-auto sm:max-w-full group mb-4 lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100 border-2 border-layout-sun-300 dark:border-layout-night-300 p-4" data-v-37a1c636${_scopeId}><div${ssrRenderAttr("id", "st" + item?.id)} class="relative lg:col-span-4" data-v-37a1c636${_scopeId}><a${ssrRenderAttr("href", "/images/_" + $options.SD() + "/images/image_path/big/" + item?.image_path.replace("/", ""))}${ssrRenderAttr("data-pswp-width", item?.img_x)}${ssrRenderAttr("data-pswp-height", item?.img_y)} data-v-37a1c636${_scopeId}>`);
-          _push2(ssrRenderComponent(_component_ZoomImage, {
-            src: "/images/_" + $options.SD() + "/images/image_path/thumbs/" + item?.image_path,
-            alt: item?.name,
-            title: item?.name,
-            width: 300,
-            height: 300,
-            class: "imgprev"
-          }, null, _parent2, _scopeId));
-          _push2(`</a></div><div class="py-6 space-y-2 lg:col-span-5" data-v-37a1c636${_scopeId}><h2 class="text-xl font-semibold sm:text-2xl font-title whitespace-pre-line" data-v-37a1c636${_scopeId}><p data-v-37a1c636${_scopeId}>${item?.name ?? ""}</p></h2><div class="text-layout-sun-700 dark:text-layout-night-700 whitespace-pre-line" data-v-37a1c636${_scopeId}><p data-v-37a1c636${_scopeId}>${$options.stripTagsCom($options.remBrackets(item?.message)) ?? ""}</p></div>`);
-          _push2(ssrRenderComponent(_component_SocialButtons, {
-            name: item?.name,
-            postId: item?.id,
-            slug: item.slug,
-            title: "Bild " + item?.name,
-            sslug: true
-          }, null, _parent2, _scopeId));
-          _push2(`</div><div class="p-6 space-y-2 lg:col-span-3" data-v-37a1c636${_scopeId}><div class="text-sm font-semibold text-layout-sun-800 dark:text-layout-night-800" data-v-37a1c636${_scopeId}><h3 data-v-37a1c636${_scopeId}>Kurzinfos</h3></div>`);
-          if ($options.getStatus(item.status)) {
-            _push2(`<span class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap" data-v-37a1c636${_scopeId}>${$options.getStatus(item.status) ?? ""}</span>`);
-          } else {
-            _push2(`<!---->`);
-          }
-          if (item?.Format) {
-            _push2(`<div data-v-37a1c636${_scopeId}><b data-v-37a1c636${_scopeId}>Format:</b> ${ssrInterpolate(item?.Format)}</div>`);
-          } else {
-            _push2(`<!---->`);
-          }
-          _push2(ssrRenderComponent(_component_RatingWrapper, {
-            "post-id": item.id,
-            table: "images"
-          }, null, _parent2, _scopeId));
-          _push2(ssrRenderComponent(_component_editbtns, {
-            id: item?.id,
-            table: "images"
-          }, null, _parent2, _scopeId));
-          _push2(`<div class="text-xs text-layout-sun-600 dark:text-layout-night-600" data-v-37a1c636${_scopeId}>`);
-          _push2(ssrRenderComponent(_component_display_date, {
-            value: item?.created_at,
-            "time-on": false
-          }, null, _parent2, _scopeId));
-          _push2(`</div>`);
-          if (item?.camera) {
-            _push2(`<div class="text-xs text-layout-sun-600 dark:text-layout-night-600" data-v-37a1c636${_scopeId}>`);
-            _push2(ssrRenderComponent(_component_IconCamera, null, null, _parent2, _scopeId));
-            _push2(`  ${ssrInterpolate(item?.camera)}</div>`);
-          } else {
-            _push2(`<!---->`);
-          }
-          _push2(`</div></article>`);
-        });
-        _push2(`<!--]--></div>`);
-        _push2(ssrRenderComponent(_component_Pagination, {
-          links: $props.entries.links,
-          basePath: "home/show/pictures/" + ($props.ocont && $props.ocont?.slug ? $props.ocont?.slug : "") + "/"
-        }, null, _parent2, _scopeId));
-        _push2(`</div>`);
-      } else {
-        return [
-          $props.ocont ? (openBlock(), createBlock(_component_MetaHeader, {
-            key: 0,
-            title: "Bilder - " + $props.ocont?.slug
-          }, null, 8, ["title"])) : createCommentVNode("", true),
-          createVNode("div", { class: "flex items-center justify-between px-4 py-3" }, [
-            createVNode(_component_back_btn, {
-              url: "/home/pictures",
-              r: "r"
-            }, {
-              default: withCtx(() => [
-                createTextVNode("Übersicht")
-              ]),
-              _: 1
-            }),
-            createVNode(_component_newbtn, { table: "images" })
-          ]),
-          createVNode("div", { onClick: $options.handleBodyClick }, [
-            $props.ocont?.id ? (openBlock(), createBlock("div", {
-              key: 0,
-              class: "p-4 bg-layout-sun-200 dark:bg-layout-night-200"
-            }, [
-              createVNode("hgroup", null, [
-                createVNode("h1", { class: "text-2xl font-bold" }, toDisplayString($options.decodeEntities($props.ocont?.slug)), 1),
-                createVNode("div", { class: "flex items-start gap-4" }, [
-                  createVNode("h4", {
-                    class: "flex-1",
-                    innerHTML: $props.ocont?.description.replace("fx_year()", (/* @__PURE__ */ new Date()).getFullYear()).replace(/\n/g, "<br />")
-                  }, null, 8, ["innerHTML"]),
-                  $props.ocont?.id ? (openBlock(), createBlock(_component_editbtns, {
-                    key: 0,
-                    id: $props.ocont?.id,
-                    table: "image_categories"
-                  }, null, 8, ["id"])) : createCommentVNode("", true)
-                ])
-              ])
-            ])) : createCommentVNode("", true),
-            createVNode("div"),
-            createVNode("div", { class: "flex justify-between items-center" }, [
-              $props.searchFilter ? (openBlock(), createBlock(_component_search_filter, {
-                key: 0,
-                modelValue: $data.form.search,
-                "onUpdate:modelValue": ($event) => $data.form.search = $event,
-                class: "w-full",
-                ref: "searchField",
-                onReset: $options.reset,
-                onInput: $data.onSearchInput
-              }, null, 8, ["modelValue", "onUpdate:modelValue", "onReset", "onInput"])) : createCommentVNode("", true)
-            ]),
-            Array.isArray($props.entries.data) && $props.entries.data.length === 0 && $data.form.search ? (openBlock(), createBlock("div", {
-              key: 1,
-              class: "p-2 md:p-4"
-            }, [
-              createVNode(_component_alert, { type: "warning" }, {
-                default: withCtx(() => [
-                  createTextVNode(" Für den vorgegebenen Suchbegriff wurden keine Bilder gefunden. ")
-                ]),
-                _: 1
-              })
-            ])) : createCommentVNode("", true),
-            createVNode("div", { id: "gallery" }, [
-              (openBlock(true), createBlock(Fragment, null, renderList($props.entries.data, (item) => {
-                return openBlock(), createBlock("article", {
-                  key: item?.id,
-                  class: "w-full block max-w-sm gap-3 mx-auto sm:max-w-full group mb-4 lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100 border-2 border-layout-sun-300 dark:border-layout-night-300 p-4"
-                }, [
-                  createVNode("div", {
-                    id: "st" + item?.id,
-                    class: "relative lg:col-span-4"
-                  }, [
-                    createVNode("a", {
-                      href: "/images/_" + $options.SD() + "/images/image_path/big/" + item?.image_path.replace("/", ""),
-                      "data-pswp-width": item?.img_x,
-                      "data-pswp-height": item?.img_y
-                    }, [
-                      createVNode(_component_ZoomImage, {
-                        src: "/images/_" + $options.SD() + "/images/image_path/thumbs/" + item?.image_path,
-                        alt: item?.name,
-                        title: item?.name,
-                        width: 300,
-                        height: 300,
-                        class: "imgprev"
-                      }, null, 8, ["src", "alt", "title"])
-                    ], 8, ["href", "data-pswp-width", "data-pswp-height"])
-                  ], 8, ["id"]),
-                  createVNode("div", { class: "py-6 space-y-2 lg:col-span-5" }, [
-                    createVNode("h2", { class: "text-xl font-semibold sm:text-2xl font-title whitespace-pre-line" }, [
-                      createVNode("p", {
-                        innerHTML: item?.name
-                      }, null, 8, ["innerHTML"])
-                    ]),
-                    createVNode("div", { class: "text-layout-sun-700 dark:text-layout-night-700 whitespace-pre-line" }, [
-                      createVNode("p", {
-                        innerHTML: $options.stripTagsCom($options.remBrackets(item?.message))
-                      }, null, 8, ["innerHTML"])
-                    ]),
-                    createVNode(_component_SocialButtons, {
-                      name: item?.name,
-                      postId: item?.id,
-                      slug: item.slug,
-                      title: "Bild " + item?.name,
-                      sslug: true
-                    }, null, 8, ["name", "postId", "slug", "title"])
-                  ]),
-                  createVNode("div", { class: "p-6 space-y-2 lg:col-span-3" }, [
-                    createVNode("div", { class: "text-sm font-semibold text-layout-sun-800 dark:text-layout-night-800" }, [
-                      createVNode("h3", null, "Kurzinfos")
-                    ]),
-                    $options.getStatus(item.status) ? (openBlock(), createBlock("span", {
-                      key: 0,
-                      class: "text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap",
-                      innerHTML: $options.getStatus(item.status)
-                    }, null, 8, ["innerHTML"])) : createCommentVNode("", true),
-                    item?.Format ? (openBlock(), createBlock("div", { key: 1 }, [
-                      createVNode("b", null, "Format:"),
-                      createTextVNode(" " + toDisplayString(item?.Format), 1)
-                    ])) : createCommentVNode("", true),
-                    createVNode(_component_RatingWrapper, {
-                      "post-id": item.id,
-                      table: "images"
-                    }, null, 8, ["post-id"]),
-                    createVNode(_component_editbtns, {
-                      id: item?.id,
-                      table: "images"
-                    }, null, 8, ["id"]),
-                    createVNode("div", { class: "text-xs text-layout-sun-600 dark:text-layout-night-600" }, [
-                      createVNode(_component_display_date, {
-                        value: item?.created_at,
-                        "time-on": false
-                      }, null, 8, ["value"])
-                    ]),
-                    item?.camera ? (openBlock(), createBlock("div", {
-                      key: 2,
-                      class: "text-xs text-layout-sun-600 dark:text-layout-night-600"
-                    }, [
-                      createVNode(_component_IconCamera),
-                      createTextVNode("  " + toDisplayString(item?.camera), 1)
-                    ])) : createCommentVNode("", true)
-                  ])
-                ]);
-              }), 128))
-            ]),
-            createVNode(_component_Pagination, {
-              links: $props.entries.links,
-              basePath: "home/show/pictures/" + ($props.ocont && $props.ocont?.slug ? $props.ocont?.slug : "") + "/"
-            }, null, 8, ["links", "basePath"])
-          ], 8, ["onClick"])
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$S = _sfc_main$S.setup;
-_sfc_main$S.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Pictures.vue");
-  return _sfc_setup$S ? _sfc_setup$S(props, ctx) : void 0;
-};
-const Pictures$1 = /* @__PURE__ */ _export_sfc(_sfc_main$S, [["ssrRender", _sfc_ssrRender$S], ["__scopeId", "data-v-37a1c636"]]);
-const __vite_glob_0_303 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: Pictures$1
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$R = {
-  components: { Layout: Layout$6, MetaHeader, SearchFilter, newbtn },
-  props: {
-    data: Array,
-    ima: Object,
-    filters: {
-      type: Object,
-      default: () => ({ search: "" })
-    }
-  },
-  created() {
-  },
-  methods: {
-    decodeEntities(text) {
-      return he.decode(text);
-    },
-    reset() {
-      this.form = mapValues(this.form, () => null);
-    }
-  },
-  watch: {
-    form: {
-      handler: throttle(function() {
-        const query = pickBy(this.form);
-        router.get(
-          this.route("home.images.search.cat"),
-          query,
-          {
-            preserveState: true,
-            replace: true
-          }
-        );
-      }, 150),
-      deep: true
-    }
-  },
-  data() {
-    return {
-      form: {
-        search: this.filters?.search ?? ""
-      }
-    };
-  }
-};
-function _sfc_ssrRender$R(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_Layout = resolveComponent("Layout");
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  const _component_newbtn = resolveComponent("newbtn");
-  _push(ssrRenderComponent(_component_Layout, _attrs, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Meine Bilder Übersicht" }, null, _parent2, _scopeId));
-        _push2(ssrRenderComponent(_component_newbtn, { table: "images" }, null, _parent2, _scopeId));
-        _push2(`<div class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100" data-v-48e6da85${_scopeId}><div class="container mx-auto py-8" data-v-48e6da85${_scopeId}><div class="flex justify-between items-center mb-4" data-v-48e6da85${_scopeId}><h1 class="text-2xl font-bold" data-v-48e6da85${_scopeId}>Bildergalerien</h1></div><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2" data-v-48e6da85${_scopeId}><!--[-->`);
-        ssrRenderList($props.data, (ima, index) => {
-          _push2(`<div class="bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md relative group overflow-hidden" data-v-48e6da85${_scopeId}><a${ssrRenderAttr("href", _ctx.route("home.images.gallery", [ima.slug]))} data-v-48e6da85${_scopeId}><div class="relative w-full overflow-hidden rounded-sm" data-v-48e6da85${_scopeId}><img${ssrRenderAttr("src", `/images/_ab/images/images_cat/${ima.name}.jpg`)}${ssrRenderAttr("alt", ima.shortname)}${ssrRenderAttr("title", "zur " + ima.shortname + "Galerie")} class="w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110" data-v-48e6da85${_scopeId}><div class="absolute top-0 left-0 w-full h-full bg-blue-500 opacity-40 transition-opacity duration-300 group-hover:opacity-0" data-v-48e6da85${_scopeId}></div></div><div class="absolute left-0 right-0 text-center text-white transition-all duration-300 bott title-top" data-v-48e6da85${_scopeId}><span class="text-lg font-semibold group-hover:text-shadow-md transition-all duration-300 capitalize font-euros" data-v-48e6da85${_scopeId}>${ssrInterpolate(ima.name)}</span></div><div class="absolute bott2 left-0 right-0 text-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" data-v-48e6da85${_scopeId}><span class="text-sm opacity-75 text-shadow ucfirst" data-v-48e6da85${_scopeId}>${ssrInterpolate($options.decodeEntities(ima.heading_alt))}</span></div></a></div>`);
-        });
-        _push2(`<!--]--></div></div></div>`);
-      } else {
-        return [
-          createVNode(_component_MetaHeader, { title: "Meine Bilder Übersicht" }),
-          createVNode(_component_newbtn, { table: "images" }),
-          createVNode("div", { class: "min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100" }, [
-            createVNode("div", { class: "container mx-auto py-8" }, [
-              createVNode("div", { class: "flex justify-between items-center mb-4" }, [
-                createVNode("h1", { class: "text-2xl font-bold" }, "Bildergalerien")
-              ]),
-              createVNode("div", { class: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2" }, [
-                (openBlock(true), createBlock(Fragment, null, renderList($props.data, (ima, index) => {
-                  return openBlock(), createBlock("div", {
-                    key: ima.id,
-                    class: "bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md relative group overflow-hidden"
-                  }, [
-                    createVNode("a", {
-                      href: _ctx.route("home.images.gallery", [ima.slug])
-                    }, [
-                      createVNode("div", { class: "relative w-full overflow-hidden rounded-sm" }, [
-                        createVNode("img", {
-                          src: `/images/_ab/images/images_cat/${ima.name}.jpg`,
-                          alt: ima.shortname,
-                          title: "zur " + ima.shortname + "Galerie",
-                          class: "w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
-                        }, null, 8, ["src", "alt", "title"]),
-                        createVNode("div", { class: "absolute top-0 left-0 w-full h-full bg-blue-500 opacity-40 transition-opacity duration-300 group-hover:opacity-0" })
-                      ]),
-                      createVNode("div", { class: "absolute left-0 right-0 text-center text-white transition-all duration-300 bott title-top" }, [
-                        createVNode("span", { class: "text-lg font-semibold group-hover:text-shadow-md transition-all duration-300 capitalize font-euros" }, toDisplayString(ima.name), 1)
-                      ]),
-                      createVNode("div", { class: "absolute bott2 left-0 right-0 text-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" }, [
-                        createVNode("span", { class: "text-sm opacity-75 text-shadow ucfirst" }, toDisplayString($options.decodeEntities(ima.heading_alt)), 1)
-                      ])
-                    ], 8, ["href"])
-                  ]);
-                }), 128))
-              ])
-            ])
-          ])
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$R = _sfc_main$R.setup;
-_sfc_main$R.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/PicturesCat.vue");
-  return _sfc_setup$R ? _sfc_setup$R(props, ctx) : void 0;
-};
-const PicturesCat = /* @__PURE__ */ _export_sfc(_sfc_main$R, [["ssrRender", _sfc_ssrRender$R], ["__scopeId", "data-v-48e6da85"]]);
-const __vite_glob_0_304 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: PicturesCat
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$Q = defineComponent({
-  name: "Homepage_Pricing",
-  components: {
-    Layout: Layout$6,
-    PageContent,
-    PageTitle,
-    PageParagraph,
-    MetaHeader
-  }
-});
-function _sfc_ssrRender$Q(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_layout = resolveComponent("layout");
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  const _component_page_content = resolveComponent("page-content");
-  const _component_page_title = resolveComponent("page-title");
-  const _component_page_paragraph = resolveComponent("page-paragraph");
-  _push(ssrRenderComponent(_component_layout, mergeProps({
-    "header-title": "Pricing",
-    "header-url": _ctx.$page.props.saas_url + "/home/pricing"
-  }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "EXAMPLE" }, null, _parent2, _scopeId));
-        _push2(ssrRenderComponent(_component_page_content, null, {
-          content: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(ssrRenderComponent(_component_page_title, null, {
-                title: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                  if (_push4) {
-                    _push4(`Pricing`);
-                  } else {
-                    return [
-                      createTextVNode("Pricing")
-                    ];
-                  }
-                }),
-                _: 1
-              }, _parent3, _scopeId2));
-              _push3(ssrRenderComponent(_component_page_paragraph, null, {
-                paragraph: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                  if (_push4) {
-                    _push4(` Text kommt noch. `);
-                  } else {
-                    return [
-                      createTextVNode(" Text kommt noch. ")
-                    ];
-                  }
-                }),
-                _: 1
-              }, _parent3, _scopeId2));
-            } else {
-              return [
-                createVNode(_component_page_title, null, {
-                  title: withCtx(() => [
-                    createTextVNode("Pricing")
-                  ]),
-                  _: 1
-                }),
-                createVNode(_component_page_paragraph, null, {
-                  paragraph: withCtx(() => [
-                    createTextVNode(" Text kommt noch. ")
-                  ]),
-                  _: 1
-                })
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(_component_MetaHeader, { title: "EXAMPLE" }),
-          createVNode(_component_page_content, null, {
-            content: withCtx(() => [
-              createVNode(_component_page_title, null, {
-                title: withCtx(() => [
-                  createTextVNode("Pricing")
-                ]),
-                _: 1
-              }),
-              createVNode(_component_page_paragraph, null, {
-                paragraph: withCtx(() => [
-                  createTextVNode(" Text kommt noch. ")
-                ]),
-                _: 1
-              })
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$Q = _sfc_main$Q.setup;
-_sfc_main$Q.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Pricing.vue");
-  return _sfc_setup$Q ? _sfc_setup$Q(props, ctx) : void 0;
-};
-const Pricing = /* @__PURE__ */ _export_sfc(_sfc_main$Q, [["ssrRender", _sfc_ssrRender$Q]]);
-const __vite_glob_0_305 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: Pricing
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$P = {
-  components: {
-    Layout: Layout$6,
-    MetaHeader
-  },
-  props: {
-    privacy: String
-  },
-  mounted() {
-    this.scrollToHashAnchor();
-    window.addEventListener("hashchange", this.scrollToHashAnchor);
-  },
-  beforeUnmount() {
-    window.removeEventListener("hashchange", this.scrollToHashAnchor);
-  },
-  methods: {
-    ch(txt) {
-      return txt.replace(/\n<li>/g, "<li>").replace(/\n/g, "<br />");
-    },
-    scrollToHashAnchor() {
-      const hash = window?.location.hash;
-      if (hash && hash.startsWith("#")) {
-        setTimeout(() => {
-          const el = document.getElementById(hash.substring(1));
-          if (el) {
-            const y = el.getBoundingClientRect().top + window.pageYOffset - 134;
-            window.scrollTo({ top: y, behavior: "smooth" });
-          }
-        }, 50);
-      }
-    }
-  }
-};
-function _sfc_ssrRender$P(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_Layout = resolveComponent("Layout");
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  _push(ssrRenderComponent(_component_Layout, _attrs, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Datenschutzerklärung" }, null, _parent2, _scopeId));
-        _push2(`<div class="prose prose-layout dark:prose-invert max-w-none block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100"${_scopeId}><div${_scopeId}>${$options.ch($props.privacy) ?? ""}</div></div>`);
-      } else {
-        return [
-          createVNode(_component_MetaHeader, { title: "Datenschutzerklärung" }),
-          createVNode("div", { class: "prose prose-layout dark:prose-invert max-w-none block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100" }, [
-            createVNode("div", {
-              innerHTML: $options.ch($props.privacy)
-            }, null, 8, ["innerHTML"])
-          ])
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
-const _sfc_setup$P = _sfc_main$P.setup;
-_sfc_main$P.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Privacy.vue");
-  return _sfc_setup$P ? _sfc_setup$P(props, ctx) : void 0;
-};
-const Privacy$5 = /* @__PURE__ */ _export_sfc(_sfc_main$P, [["ssrRender", _sfc_ssrRender$P]]);
-const __vite_glob_0_306 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: Privacy$5
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$O = {
-  name: "Shared_Homepage_UserPreviewSmall",
-  //
-  components: {
-    Link: link_default,
-    DisplayDate,
-    IconPencil,
-    IconPlusCircle,
-    editbtns,
-    IconTrash,
-    IconCamera,
-    SearchFilter,
-    Comments,
-    Share,
-    IconComment,
-    IconShare,
-    IconStar,
-    SocialButtons,
-    AiButton,
-    MetaHeader
-  },
-  props: {
-    blog: {
-      type: Object
-    },
-    blogs: {
-      type: Object
-    },
-    aiOverlayImage: {
-      type: String
-    },
-    user: {
-      type: Object,
-      required: true
-    }
-  },
-  data() {
-    return {
-      // dma: localStorage.getItem('theme'),
-      showShareBox: {},
-      showStarBox: {},
-      // Wert aus localStorage speichern
-      showComments: null
-      // Zustand für die Anzeige der Kommentarfunktion
-    };
-  },
-  methods: {
-    SD,
-    handleBodyClick(event) {
-      this.$nextTick(() => {
-        const box = document.getElementById("commentBox");
-        if (box && !box.contains(event.target)) {
-          this.showComments = null;
-        }
-      });
-    },
-    openComments(id) {
-      this.showComments = this.showComments === id ? null : id;
-    },
-    formatDate(dateStr) {
-      const date = new Date(dateStr);
-      return date.toLocaleDateString("de-DE");
-    },
-    closeComments() {
-      this.showComments = null;
-    },
-    reset() {
-      this.form = mapValues(this.form, () => null);
-    },
-    toggleStarBox(id) {
-      if (!this.showStarBox) {
-        this.showStarBox = {};
-      }
-      this.showStarBox[id] = !this.showStarBox[id];
-    },
-    toggleShareBox(id) {
-      if (!this.showShareBox) {
-        this.showShareBox = {};
-      }
-      this.showShareBox[id] = !this.showShareBox[id];
-      if (this.showShareBox[id]) {
-        this.$nextTick(() => {
-          const shariffRef = this.$refs["shariff_" + id];
-          if (!shariffRef) {
-            console.error(`Shariff-Element für ID ${id} nicht gefunden.`);
-            return;
-          }
-          this.initShariff(id);
-        });
-      } else {
-        this.$nextTick(() => {
-          const shariffRef = this.$refs["shariff_" + id];
-          if (shariffRef) {
-            shariffRef.innerHTML = "";
-          }
-        });
-      }
-    },
-    initShariff(id) {
-    },
-    toggleCommentBox(postId) {
-      this.showComments = this.showComments === postId ? null : postId;
-    },
-    decodeEntities(text) {
-      if (text) {
-        text = text?.replace(/<br\s*\/?>/g, "\n");
-        return he.decode(text);
-      } else {
-        return "";
-      }
-    },
-    deleteDataRow(id) {
-      if (confirm("Wollen Sie diesen Beitrag wirklich löschen?")) {
-        axios.delete(this.routeDelete + id).then(() => {
-          this.$emit("deleted");
-          router.relaod();
-        }).catch((error) => {
-          console.error("Fehler beim Löschen:", error);
-        });
-      }
-    },
-    editDataRow(id) {
-      CleanTable$1();
-      var rt = `/admin/tables/edit/${id}/images`;
-      location.href = rt;
-    }
-  }
-};
-function _sfc_ssrRender$O(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_Link = resolveComponent("Link");
-  const _component_editbtns = resolveComponent("editbtns");
-  const _component_SocialButtons = resolveComponent("SocialButtons");
-  _push(`<article${ssrRenderAttrs(_attrs)}><div class="blog-container w-full max-w-sm mx-auto group rounded hover:no-underline focus:no-underline bg-layout-sun-100 dark:bg-layout-night-100">`);
-  _push(ssrRenderComponent(_component_Link, {
-    href: "/home/users/show/" + $props.user.name + "/" + $props.user.id,
-    class: "block text-layout-sun-600 dark:text-layout-night-900 twi nul"
-  }, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<div class="relative flex justify-center divvy"${_scopeId}><img role="presentation" class="${ssrRenderClass(["object-cover w-full rounded h-60 w-60 bg-layout-sun-500 dark:bg-layout-night-500 teaser"])}"${ssrRenderAttr("src", $props.user.profile_photo_path != null ? "/images/_" + $options.SD() + "/users/profile_photo_path/" + $props.user.profile_photo_path.replace("/images/", "") : "/images/profile-photos/008.jpg")}${ssrRenderAttr("alt", $props.user.name)} width="480" height="360"${_scopeId}></div><div class="p-6 space-y-2 twi"${_scopeId}><h2 class="text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline"${_scopeId}>${ssrInterpolate($props.user.name)}</h2><p${_scopeId}> Vorname: ${ssrInterpolate($props.user.first_name)}<br${_scopeId}> Registriert seit ${ssrInterpolate($options.formatDate($props.user.created_at))}  `);
-        _push2(ssrRenderComponent(_component_editbtns, {
-          id: $props.user.id,
-          table: "users"
-        }, null, _parent2, _scopeId));
-        _push2(`</p><div class="flex justify-between items-center"${_scopeId}><div class="rl"${_scopeId}></div></div><p${_scopeId}></p></div>`);
-      } else {
-        return [
-          createVNode("div", { class: "relative flex justify-center divvy" }, [
-            createVNode("img", {
-              role: "presentation",
-              class: ["object-cover w-full rounded h-60 w-60 bg-layout-sun-500 dark:bg-layout-night-500 teaser"],
-              src: $props.user.profile_photo_path != null ? "/images/_" + $options.SD() + "/users/profile_photo_path/" + $props.user.profile_photo_path.replace("/images/", "") : "/images/profile-photos/008.jpg",
-              alt: $props.user.name,
-              width: "480",
-              height: "360"
-            }, null, 8, ["src", "alt"])
-          ]),
-          createVNode("div", { class: "p-6 space-y-2 twi" }, [
-            createVNode("h2", { class: "text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline" }, toDisplayString($props.user.name), 1),
-            createVNode("p", null, [
-              createTextVNode(" Vorname: " + toDisplayString($props.user.first_name), 1),
-              createVNode("br"),
-              createTextVNode(" Registriert seit " + toDisplayString($options.formatDate($props.user.created_at)) + "  ", 1),
-              createVNode(_component_editbtns, {
-                id: $props.user.id,
-                table: "users"
-              }, null, 8, ["id"])
-            ]),
-            createVNode("div", { class: "flex justify-between items-center" }, [
-              createVNode("div", { class: "rl" })
-            ]),
-            createVNode("p")
-          ])
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(ssrRenderComponent(_component_SocialButtons, {
-    name: $props.user?.name,
-    postId: $props.user.id,
-    title: "Benutzer " + $props.user.name,
-    sm: "Sm",
-    nostars: true,
-    ublock: $props.user.name
-  }, null, _parent));
-  _push(`</div></article>`);
-}
-const _sfc_setup$O = _sfc_main$O.setup;
-_sfc_main$O.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/UserPreviewSmall.vue");
-  return _sfc_setup$O ? _sfc_setup$O(props, ctx) : void 0;
-};
-const UserPreviewSmall = /* @__PURE__ */ _export_sfc(_sfc_main$O, [["ssrRender", _sfc_ssrRender$O]]);
-const __vite_glob_0_312 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: UserPreviewSmall
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$N = {
-  name: "Homepage_Shared_BlogPreviewBig",
-  components: {
-    Link: link_default,
-    BackBtn,
-    DisplayDate,
-    DisplayNumber,
-    AiButton,
-    editbtns,
-    SocialButtons,
-    MetaHeader
-  },
-  props: {
-    blog: {
-      type: Object
-    },
-    aiOverlayImage: {
-      type: String
-    },
-    tablename: {
-      type: String
-    },
-    // editRights:{
-    //     type: Number,
-    // },
-    // deleteRights:{
-    //     type: Number,
-    // },
-    dmaa: {
-      type: [Array, Object, String, Number],
-      default: null
-    },
-    dma: {
-      type: [Array, Object, String, Number],
-      default: null
-    }
-  },
-  data() {
-    return {
-      isCommentActive: false
-    };
-  }
-};
-function _sfc_ssrRender$N(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_MetaHeader = resolveComponent("MetaHeader");
-  const _component_back_btn = resolveComponent("back-btn");
-  const _component_Link = resolveComponent("Link");
-  const _component_AiButton = resolveComponent("AiButton");
-  const _component_display_date = resolveComponent("display-date");
-  const _component_editbtns = resolveComponent("editbtns");
-  const _component_display_number = resolveComponent("display-number");
-  const _component_socialButtons = resolveComponent("socialButtons");
-  _push(`<!--[-->`);
-  _push(ssrRenderComponent(_component_MetaHeader, {
-    title: "Benutzer:  " + _ctx.data.author_name2
-  }, null, _parent));
-  _push(ssrRenderComponent(_component_back_btn, { url: "/home/users" }, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`Benutzerliste`);
-      } else {
-        return [
-          createTextVNode("Benutzerliste")
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(`<div id="teaser-img2" style="${ssrRenderStyle({ "z-index": "0", "margin-bottom": "-0px" })}" class="${ssrRenderClass([{ "disable-link": $data.isCommentActive }, "block max-w-sm gap-3 mx-auto mh_65 sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100 overfl"])}" data-v-80dda306><div class="blog-container mh_65 lg:col-span-7" style="${ssrRenderStyle({})}" data-v-80dda306>`);
-  _push(ssrRenderComponent(_component_Link, {
-    href: _ctx.route("home.blog?.show", $props.blog?.autoslug),
-    class: "block"
-  }, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<img${ssrRenderAttr("src", `/images/blogs/${$props.blog?.url}`)}${ssrRenderAttr("alt", $props.blog?.name)} width="480" height="360" style="${ssrRenderStyle({ "max-height": "390px" })}" class="${ssrRenderClass(["object-cover w-full rounded lg:col-span-7 object-cover rounded bg-layout-sun-500 dark:bg-layout-night-500", $props.blog?.madewithai ? "ai-image-corner" : ""])}" data-v-80dda306${_scopeId}>`);
-      } else {
-        return [
-          createVNode("img", {
-            src: `/images/blogs/${$props.blog?.url}`,
-            alt: $props.blog?.name,
-            width: "480",
-            height: "360",
-            style: { "max-height": "390px" },
-            class: ["object-cover w-full rounded lg:col-span-7 object-cover rounded bg-layout-sun-500 dark:bg-layout-night-500", $props.blog?.madewithai ? "ai-image-corner" : ""]
-          }, null, 10, ["src", "alt"])
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(`<div class="relative" data-v-80dda306>`);
-  if ($props.blog?.madewithai) {
-    _push(`<div data-v-80dda306>`);
-    _push(ssrRenderComponent(_component_AiButton, {
-      dma: $props.dmaa,
-      big: true
-    }, null, _parent));
-    _push(`</div>`);
-  } else {
-    _push(`<!---->`);
-  }
-  _push(`</div></div><div id="teaser-img" class="p-6 space-y-2 lg:col-span-5 overfl" style="${ssrRenderStyle({})}" data-v-80dda306>`);
-  _push(ssrRenderComponent(_component_Link, {
-    href: _ctx.route("home.blog?.show", $props.blog?.autoslug)
-  }, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<div class="flex justify-end items-start" data-v-80dda306${_scopeId}>`);
-        if ($props.blog?.category_name) {
-          _push2(`<div class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap" data-v-80dda306${_scopeId}>${ssrInterpolate($props.blog?.category_name)}</div>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`</div><h2 class="text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline" data-v-80dda306${_scopeId}>${ssrInterpolate($props.blog?.title)}</h2><div class="flex justify-between items-center" data-v-80dda306${_scopeId}><div class="text-xs text-layout-sun-600 dark:text-layout-night-600 py-2" data-v-80dda306${_scopeId}>`);
-        _push2(ssrRenderComponent(_component_display_date, {
-          value: $props.blog?.blog_date,
-          "time-on": false
-        }, null, _parent2, _scopeId));
-        _push2(` von <span data-v-80dda306${_scopeId}>${ssrInterpolate($props.blog?.author_name)}</span></div><div class="rl" data-v-80dda306${_scopeId}>`);
-        _push2(ssrRenderComponent(_component_editbtns, {
-          id: $props.blog?.id,
-          table: "blogs"
-        }, null, _parent2, _scopeId));
-        _push2(`</div></div><div class="pb-6" data-v-80dda306${_scopeId}>${$props.blog?.summary ?? ""}</div><div data-v-80dda306${_scopeId}>`);
-        _push2(ssrRenderComponent(_component_display_number, {
-          value: $props.blog?.reading_time,
-          "after-digits": 0,
-          "value-unit": "Minuten Lesezeit",
-          "value-single-unit": "Minute Lesezeit"
-        }, null, _parent2, _scopeId));
-        _push2(`</div>`);
-      } else {
-        return [
-          createVNode("div", { class: "flex justify-end items-start" }, [
-            $props.blog?.category_name ? (openBlock(), createBlock("div", {
-              key: 0,
-              class: "text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"
-            }, toDisplayString($props.blog?.category_name), 1)) : createCommentVNode("", true)
-          ]),
-          createVNode("h2", { class: "text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline" }, toDisplayString($props.blog?.title), 1),
-          createVNode("div", { class: "flex justify-between items-center" }, [
-            createVNode("div", { class: "text-xs text-layout-sun-600 dark:text-layout-night-600 py-2" }, [
-              createVNode(_component_display_date, {
-                value: $props.blog?.blog_date,
-                "time-on": false
-              }, null, 8, ["value"]),
-              createTextVNode(" von "),
-              createVNode("span", null, toDisplayString($props.blog?.author_name), 1)
-            ]),
-            createVNode("div", { class: "rl" }, [
-              createVNode(_component_editbtns, {
-                id: $props.blog?.id,
-                table: "blogs"
-              }, null, 8, ["id"])
-            ])
-          ]),
-          createVNode("div", {
-            innerHTML: $props.blog?.summary,
-            class: "pb-6"
-          }, null, 8, ["innerHTML"]),
-          createVNode("div", null, [
-            createVNode(_component_display_number, {
-              value: $props.blog?.reading_time,
-              "after-digits": 0,
-              "value-unit": "Minuten Lesezeit",
-              "value-single-unit": "Minute Lesezeit"
-            }, null, 8, ["value"])
-          ])
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(ssrRenderComponent(_component_socialButtons, {
-    name: $props.blog?.title,
-    postId: $props.blog?.id,
-    title: "Benutzer " + $props.blog?.title,
-    slug: $props.blog?.autoslug,
-    nostars: true
-  }, null, _parent));
-  _push(`</div></div><!--]-->`);
-}
-const _sfc_setup$N = _sfc_main$N.setup;
-_sfc_main$N.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/Usershow.vue");
-  return _sfc_setup$N ? _sfc_setup$N(props, ctx) : void 0;
-};
-const Usershow$1 = /* @__PURE__ */ _export_sfc(_sfc_main$N, [["ssrRender", _sfc_ssrRender$N], ["__scopeId", "data-v-80dda306"]]);
-const __vite_glob_0_313 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: Usershow$1
-}, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$M = {
   name: "Homepage_Shared_Layout_ab",
   components: {
     MetaHeader,
@@ -55503,7 +52728,7 @@ const _sfc_main$M = {
     }
   }
 };
-function _sfc_ssrRender$M(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$12(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_meta_header = resolveComponent("meta-header");
   const _component_brand_header = resolveComponent("brand-header");
   const _component_icon_menu = resolveComponent("icon-menu");
@@ -56071,18 +53296,968 @@ function _sfc_ssrRender$M(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
   _push(ssrRenderComponent(_component_IconMCSL, null, null, _parent));
   _push(` Version: </span> ${ssrInterpolate(_ctx.$page.props.version.versionnr)}</div></div></div></div></div></div></footer></main><!--]-->`);
 }
-const _sfc_setup$M = _sfc_main$M.setup;
-_sfc_main$M.setup = (props, ctx) => {
+const _sfc_setup$12 = _sfc_main$12.setup;
+_sfc_main$12.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/ab/Layout.vue");
-  return _sfc_setup$M ? _sfc_setup$M(props, ctx) : void 0;
+  return _sfc_setup$12 ? _sfc_setup$12(props, ctx) : void 0;
 };
-const Layout$3 = /* @__PURE__ */ _export_sfc(_sfc_main$M, [["ssrRender", _sfc_ssrRender$M]]);
+const AbLayout = /* @__PURE__ */ _export_sfc(_sfc_main$12, [["ssrRender", _sfc_ssrRender$12]]);
 const __vite_glob_0_314 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: AbLayout
+}, Symbol.toStringTag, { value: "Module" }));
+const useLoadingStore = defineStore("loading", {
+  state: () => ({
+    isLoading: false
+  }),
+  actions: {
+    setLoading(value) {
+      this.isLoading = value;
+    }
+  }
+});
+const _sfc_main$11 = {
+  name: "Homepage_Shared_Layout_dag",
+  components: {
+    MetaHeader,
+    BrandHeader,
+    LinkHeader,
+    BrandFooter,
+    LinkFooter,
+    Toast,
+    IconMCSL,
+    daglogo,
+    IconMenu,
+    IconClose: IconClose$1,
+    Dropdown,
+    DropdownLink,
+    ButtonChangeMode
+  },
+  // setup() {
+  //   const loadingStore = useLoadingStore();
+  //   return { loadingStore };
+  // },
+  data() {
+    return {
+      headerTitle: this.$page?.props?.title ?? "",
+      headerDescription: this.$page?.props?.description ?? "",
+      headerUrl: this.$page?.props?.url ?? null,
+      headerImage: this.$page?.props?.image ?? null,
+      mode: "light",
+      // ❗ KEIN window hier
+      isOpen_Menu: false,
+      year: (/* @__PURE__ */ new Date()).getFullYear(),
+      isLoading: true,
+      pendingRequests: 0,
+      imagesLoaded: false,
+      search: "",
+      searchval: false,
+      searchTimeout: null,
+      isClient: false
+      // 👈 wichtig
+    };
+  },
+  mounted() {
+    this.isClient = true;
+    if (typeof window !== "undefined") {
+      this.mode = localStorage.theme ?? "light";
+    }
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchParam = urlParams.get("search");
+      this.search = searchParam ?? "";
+      if (!searchParam) {
+        this.setLoadingState(true);
+        this.searchval = true;
+        this.startSearchTimeout();
+      } else {
+        this.setLoadingState(false);
+        this.searchval = false;
+      }
+      axios$1.interceptors.request.use((config2) => {
+        this.pendingRequests++;
+        this.setLoadingState(this.searchval);
+        return config2;
+      });
+      axios$1.interceptors.response.use(
+        (response) => {
+          this.pendingRequests--;
+          this.checkLoadingState();
+          return response;
+        },
+        (error) => {
+          this.pendingRequests--;
+          this.checkLoadingState();
+          return Promise.reject(error);
+        }
+      );
+    }
+    this.waitForImagesToLoad();
+    if (this.$page.props.flash?.needsReload && this.isClient) {
+      if (!sessionStorage.getItem("needsReload")) {
+        sessionStorage.setItem("needsReload", "1");
+      } else {
+        sessionStorage.removeItem("needsReload");
+      }
+    }
+  },
+  setup() {
+    const loadingStore = useLoadingStore();
+    return { loadingStore };
+  },
+  methods: {
+    SD: SD$1,
+    showHideToggleCookiePreferencesModal,
+    reopenCookieBanner() {
+      if (window.LaravelCookieConsent && typeof window.LaravelCookieConsent.reset === "function") {
+        window.LaravelCookieConsent.reset();
+      }
+    },
+    setLoadingState(state) {
+      this.isLoading = state;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("loading", state ? state.toString() : "");
+      }
+    },
+    checkLoadingState() {
+      if (this.pendingRequests === 0 && this.imagesLoaded) {
+        this.setLoadingState(false);
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("loading");
+        }
+      }
+    },
+    waitForImagesToLoad() {
+      if (typeof document === "undefined") return;
+      const images = document.querySelectorAll("img");
+      const totalImages = images.length;
+      let imagesProcessedCount = 0;
+      if (totalImages === 0) {
+        this.imagesLoaded = true;
+        this.checkLoadingState();
+        return;
+      }
+      const imageProcessed = () => {
+        imagesProcessedCount++;
+        if (imagesProcessedCount === totalImages) {
+          this.imagesLoaded = true;
+          this.checkLoadingState();
+        }
+      };
+      images.forEach((img) => {
+        if (img.complete) {
+          imageProcessed();
+        } else {
+          img.addEventListener("load", imageProcessed, { once: true });
+          img.addEventListener("error", imageProcessed, { once: true });
+        }
+      });
+    },
+    toggleNavbar() {
+      this.isOpen_Menu = !this.isOpen_Menu;
+    },
+    changeMode() {
+      this.mode = this.mode === "dark" ? "light" : "dark";
+      if (typeof window !== "undefined") {
+        localStorage.theme = this.mode;
+      }
+    },
+    async logoutUser() {
+      try {
+        await router$1.post(this.route("logout"));
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    startSearchTimeout() {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        if (this.search.trim() !== "") {
+          this.setLoadingState(true);
+        }
+      }, 3e3);
+    },
+    onSearchInput(event) {
+      this.search = event.target.value;
+      this.startSearchTimeout();
+    }
+  }
+};
+function _sfc_ssrRender$11(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_meta_header = resolveComponent("meta-header");
+  const _component_daglogo = resolveComponent("daglogo");
+  const _component_icon_menu = resolveComponent("icon-menu");
+  const _component_icon_close = resolveComponent("icon-close");
+  const _component_toast = resolveComponent("toast");
+  const _component_link_footer = resolveComponent("link-footer");
+  const _component_brand_footer = resolveComponent("brand-footer");
+  const _component_IconMCSL = resolveComponent("IconMCSL");
+  _push(`<div${ssrRenderAttrs(_attrs)}>`);
+  _push(ssrRenderComponent(_component_meta_header, { title: $data.headerTitle }, {
+    robots: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<meta head-key="robots" name="robots" content="index, follow"${_scopeId}>`);
+      } else {
+        return [
+          createVNode("meta", {
+            "head-key": "robots",
+            name: "robots",
+            content: "index, follow"
+          })
+        ];
+      }
+    }),
+    description: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<meta head-key="description" name="description"${ssrRenderAttr("content", $data.headerDescription)}${_scopeId}>`);
+      } else {
+        return [
+          createVNode("meta", {
+            "head-key": "description",
+            name: "description",
+            content: $data.headerDescription
+          }, null, 8, ["content"])
+        ];
+      }
+    }),
+    opengraph: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<meta head-key="og:title" property="og:title"${ssrRenderAttr("content", $data.headerTitle)}${_scopeId}><meta property="og:description" head-key="og:description"${ssrRenderAttr("content", $data.headerDescription)}${_scopeId}>`);
+        if ($data.headerUrl) {
+          _push2(`<meta head-key="og:url" property="og:url"${ssrRenderAttr("content", $data.headerUrl)}${_scopeId}>`);
+        } else {
+          _push2(`<!---->`);
+        }
+        if ($data.headerImage) {
+          _push2(`<meta head-key="og:image" property="og:image"${ssrRenderAttr("content", $data.headerImage)}${_scopeId}>`);
+        } else {
+          _push2(`<!---->`);
+        }
+        _push2(`<meta head-key="og:type" property="og:type" content="website"${_scopeId}>`);
+      } else {
+        return [
+          createVNode("meta", {
+            "head-key": "og:title",
+            property: "og:title",
+            content: $data.headerTitle
+          }, null, 8, ["content"]),
+          createVNode("meta", {
+            property: "og:description",
+            "head-key": "og:description",
+            content: $data.headerDescription
+          }, null, 8, ["content"]),
+          $data.headerUrl ? (openBlock(), createBlock("meta", {
+            key: 0,
+            "head-key": "og:url",
+            property: "og:url",
+            content: $data.headerUrl
+          }, null, 8, ["content"])) : createCommentVNode("", true),
+          $data.headerImage ? (openBlock(), createBlock("meta", {
+            key: 1,
+            "head-key": "og:image",
+            property: "og:image",
+            content: $data.headerImage
+          }, null, 8, ["content"])) : createCommentVNode("", true),
+          createVNode("meta", {
+            "head-key": "og:type",
+            property: "og:type",
+            content: "website"
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`<main class="dark" id="app-layout-start"><section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-transparent dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000" style="${ssrRenderStyle({ "z-index": "50" })}"><nav class="fixed top-0 left-0 right-0 z-30 bg-layout-night-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900" style="${ssrRenderStyle({ "z-index": "50" })}"><div class="container mx-auto max-w-6xl p-6 pb-0 lg:flex lg:items-center lg:justify-between" style="${ssrRenderStyle({ "z-index": "50" })}"><div class="flex items-center justify-between w-full lg:w-auto"><a href="/" class="block lg:hidden">`);
+  _push(ssrRenderComponent(_component_daglogo, null, null, _parent));
+  _push(`</a><div class="flex lg:hidden"><button type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800" aria-label="toggle menu">`);
+  if (!$data.isOpen_Menu) {
+    _push(ssrRenderComponent(_component_icon_menu, { class: "w-6 h-6" }, null, _parent));
+  } else {
+    _push(ssrRenderComponent(_component_icon_close, { class: "w-6 h-6" }, null, _parent));
+  }
+  _push(`</button></div></div><div class="hidden lg:block"></div></div>`);
+  if ($data.isOpen_Menu) {
+    _push(`<div class="lg:hidden absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md bg-layout-trans dark:bg-primary-night-200" style="${ssrRenderStyle({ "z-index": "10000000" })}"><div class="m-4 mt-[-20px] bg-layout-sun-200 dark:bg-layout-night-200t lg:rounded-lg pt-10 border-2 border-black"><div class="flex flex-col items-center space-y-3"><a class="ddl" href="/"><div>Startseite</div></a><br><a class="ddl" href="/lostnfound"><div>Lost &amp; Found</div></a><br><a class="ddl" href="https://www.monikadargies.de/webtrees" target="_pgv"><div>Ahnenforschungstool</div></a><br>ysad <a class="ddl" href="https://www.ancestry.de/family-tree/tree/69588419/family/pedigree?cfpid=48202672474&amp;selnode=1" target="_anc"><div>Ancestry.de</div></a><br><a class="ddl" href="/links"><div>Links</div></a><br></div></div></div>`);
+  } else {
+    _push(`<!---->`);
+  }
+  _push(`<div class="toplog hidden lg:flex justify-center relative left-[34px]"><a href="/admin/dashboard" class="admin-hotspot"></a><nav><div class="navi"><ul class="navv flex space-x-6"><li><a href="/" class="clo cl1"><div class="hd">Startseite</div></a></li><li><a href="/lostnfound" class="clo cl2"><div class="hd">Lost &amp; Found</div></a></li><li><a href="https://www.monikadargies.de/webtrees" class="clo cl3" target="_pgv"><div class="hd">Ahnenforschungstool</div></a></li><li><a href="https://www.ancestry.de/family-tree/tree/69588419/family/pedigree?cfpid=48202672474&amp;selnode=1" class="clo cl4" target="_anc"><div class="hd">Ancestry.de</div></a></li><li><a href="/links" class="clo cl5"><div class="hd">Links</div></a></li></ul></div></nav></div></nav>`);
+  if ($data.isLoading || $setup.loadingStore.isLoading) {
+    _push(`<div id="loader" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-all" style="${ssrRenderStyle({ "z-index": "999999999" })}"><div class="text-center"><svg class="animate-spin h-10 w-10 text-primary-sun-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg><p class="mt-4 text-primary-sun-100 text-sm">Bitte warten...</p></div></div>`);
+  } else {
+    _push(`<!---->`);
+  }
+  _push(`<div class="container mx-auto max-w-6xl min-h-screen py-32 px-2"><div>`);
+  _push(ssrRenderComponent(_component_toast, null, null, _parent));
+  _push(`</div><div class="lg:mt-[165px] dark mwe" style="${ssrRenderStyle({ "max-width": "1024px" })}">`);
+  ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
+  _push(`</div></div></section><footer class="dark:bg-[rgb(218,83,14)] text-layout-sun-900 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" aria-labelledby="footer-heading"><div class="container mx-auto max-w-6xl"><h2 id="footer-heading" class="sr-only">Footer</h2><div class="px-1 md:px-4 lg:px-8 pb-8 pt-8"><div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 xl:col-span-2 xl:mt-0"><div class="md:grid md:grid-cols-2 md:gap-4"><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2">Webseite</h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
+  _push(ssrRenderComponent(_component_link_footer, {
+    name: "Impressum",
+    "route-name": _ctx.route("home.imprint.gen")
+  }, null, _parent));
+  _push(`</li><li>`);
+  _push(ssrRenderComponent(_component_link_footer, {
+    name: "Datenschutzerklärung",
+    "route-name": _ctx.route("home.privacy")
+  }, null, _parent));
+  _push(`</li><li>`);
+  _push(ssrRenderComponent(_component_link_footer, {
+    name: "Kontakt",
+    "route-name": _ctx.route("home.contacts.dag")
+  }, null, _parent));
+  _push(`</li><li>`);
+  _push(ssrRenderComponent(_component_link_footer, {
+    name: "Cookie Einstellungen",
+    class: "ToggleCookieLink",
+    onclick: "showHideToggleCookiePreferencesModal()",
+    href: "#"
+  }, null, _parent));
+  _push(`</li></ul></div><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2">Authentifizierung</h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
+  _push(ssrRenderComponent(_component_link_footer, {
+    name: "Login",
+    "route-name": _ctx.route("login")
+  }, null, _parent));
+  _push(`</li>`);
+  if ($options.SD() == "ab") {
+    _push(`<li>`);
+    _push(ssrRenderComponent(_component_link_footer, {
+      name: "Registrierung",
+      "route-name": _ctx.route("register")
+    }, null, _parent));
+    _push(`</li>`);
+  } else {
+    _push(`<!---->`);
+  }
+  _push(`</ul></div></div></div><div class="pt-8 text-layout-sun-700 dark:text-layout-night-700"><div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs">`);
+  _push(ssrRenderComponent(_component_brand_footer, null, null, _parent));
+  _push(`<div class="flex gap-2"></div></div><div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs mt-2"><div>© ${ssrInterpolate($data.year)} Starter Eleven/MCSL. Ein Template von <b>Oliver Reinking</b> / <b>Asario.</b></div><div>`);
+  _push(ssrRenderComponent(_component_IconMCSL, null, null, _parent));
+  _push(` Version: ${ssrInterpolate(_ctx.$page.props.version.versionnr)}</div></div></div></div></div></footer></main></div>`);
+}
+const _sfc_setup$11 = _sfc_main$11.setup;
+_sfc_main$11.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/dag/Layout.vue");
+  return _sfc_setup$11 ? _sfc_setup$11(props, ctx) : void 0;
+};
+const Layout$4 = /* @__PURE__ */ _export_sfc(_sfc_main$11, [["ssrRender", _sfc_ssrRender$11]]);
+const __vite_glob_0_316 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Layout$4
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$10 = {
+  name: "Homepage_Shared_Layout_mfx",
+  components: {
+    MetaHeader,
+    // BrandHeader,
+    LinkHeader_mfx,
+    BrandFooter,
+    ButtonChangeMode,
+    Loader,
+    LinkFooter,
+    Toast,
+    IconMenu,
+    IconCookies,
+    IconMCSL,
+    IconClose: IconClose$1,
+    pnalogo,
+    Dropdown,
+    DropdownLink,
+    ClientOnly
+    // ButtonChangeMode,
+  },
+  props: {
+    sd: {
+      type: String,
+      required: false
+    }
+  },
+  //   setup() {
+  //     const loadingStore = useLoadingStore();
+  //     return { loadingStore };
+  //   },
+  data() {
+    return {
+      headerDescription: this.$page?.props?.description ?? "",
+      headerUrl: this.$page?.props?.url ?? null,
+      headerImage: this.$page?.props?.image ?? null,
+      isOpen_Menu: false,
+      year: (/* @__PURE__ */ new Date()).getFullYear(),
+      // mode: (() => {
+      //     if (typeof window === "undefined") {
+      //         return 'dark';
+      //     }
+      //     const savedTheme = localStorage.getItem('theme');
+      //     return savedTheme || 'dark';
+      // })(),
+      mode: (() => {
+        if (typeof window === "undefined") {
+          return "dark";
+        }
+        const savedTheme = localStorage.getItem("theme");
+        console.log("INIT THEME:", savedTheme);
+        return savedTheme || "dark";
+      })(),
+      //   isLoading: localStorage.getItem("loading") === "true",
+      search: "",
+      isLoading: true,
+      searchval: false,
+      imagesLoaded: false,
+      searchTimeout: null,
+      headerTitle: this.$page?.props?.title ?? ""
+    };
+  },
+  mounted() {
+    if (typeof window === "undefined") return;
+    console.log(window.LaravelCookieConsent);
+    console.log(document.cookie);
+    this.mode = localStorage.getItem("theme") || "dark";
+    if (localStorage.getItem("mreload") === "true") {
+      localStorage.setItem("mreload", "false");
+      this.$nextTick(() => location.reload());
+      return;
+    }
+    this.applyTheme();
+    if (typeof window === "undefined") return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get("search");
+    this.search = searchParam ?? "";
+    if (searchParam === "" || searchParam === null) {
+      this.setLoadingState(true);
+      this.searchval = true;
+      this.startSearchTimeout();
+    } else {
+      this.setLoadingState(false);
+      this.searchval = false;
+    }
+    this.waitForImagesToLoad();
+    if (this.isLoading) {
+      localStorage.setItem("loading", "true");
+    }
+  },
+  methods: {
+    SD,
+    showHideToggleCookiePreferencesModal,
+    applyTheme() {
+      if (typeof window === "undefined") return;
+      console.log("COMPONENT UID:", this._.uid);
+      console.log("PATH:", window.location.pathname);
+      console.log("MODE:", this.mode);
+      const html = document.documentElement;
+      console.log(
+        "[applyTheme] mode:",
+        this.mode
+      );
+      console.log(
+        "[applyTheme] vorher:",
+        html.className
+      );
+      const forceLight = window.location.pathname === "/login" || window.location.pathname === "/register";
+      if (forceLight) {
+        console.log(
+          "[applyTheme] forceLight aktiv"
+        );
+        html.classList.remove("dark");
+        return;
+      }
+      if (this.mode === "dark") {
+        console.log(
+          "[applyTheme] ADD DARK"
+        );
+        html.classList.add("dark");
+      } else {
+        console.log(
+          "[applyTheme] REMOVE DARK"
+        );
+        html.classList.remove("dark");
+      }
+      console.log(
+        "[applyTheme] nachher:",
+        html.className
+      );
+    },
+    //    changeMode(newMode) {
+    //     this.mode = newMode;
+    //     if(typeof newMode === "undefined")
+    //     {
+    //         newMode = 'dark';
+    //     }
+    //     const forceLight =
+    //         window.location.pathname === '/login'
+    //         || window.location.pathname === '/register';
+    //     if (!forceLight) {
+    //         localStorage.setItem('theme', newMode);
+    //     }
+    //     this.applyTheme();
+    // },
+    changeMode(newMode) {
+      console.trace("changeMode", newMode);
+      this.mode = newMode ?? (this.mode === "dark" ? "light" : "dark");
+      localStorage.setItem("theme", this.mode);
+      this.applyTheme();
+    },
+    imagebasepath(str) {
+      if (str.includes("https://")) {
+        return "";
+      }
+      return `/images/users/profile_photo_path/`;
+    },
+    setLoadingState(state) {
+      this.isLoading = state;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("loading", state ? state.toString() : "");
+      }
+    },
+    reopenCookieBanner() {
+      if (typeof window !== "undefined" && window.LaravelCookieConsent) {
+        window.LaravelCookieConsent.reset();
+      }
+    },
+    checkLoadingState() {
+      if (this.imagesLoaded) {
+        this.setLoadingState(false);
+      }
+    },
+    waitForImagesToLoad() {
+      if (typeof document === "undefined") {
+        this.imagesLoaded = true;
+        return;
+      }
+      const images = document.querySelectorAll("img");
+      const totalImages = images.length;
+      if (totalImages === 0) {
+        this.imagesLoaded = true;
+        this.checkLoadingState();
+        return;
+      }
+      let loaded = 0;
+      const done = () => {
+        loaded++;
+        if (loaded === totalImages) {
+          this.imagesLoaded = true;
+          this.checkLoadingState();
+        }
+      };
+      images.forEach((img) => {
+        if (img.complete) {
+          done();
+        } else {
+          img.addEventListener("load", done);
+          img.addEventListener("error", done);
+        }
+      });
+    },
+    toggleNavbar() {
+      this.isOpen_Menu = !this.isOpen_Menu;
+    },
+    logoutUser() {
+      router$1.post(this.route("logout"));
+    },
+    startSearchTimeout() {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        if (this.search.trim() !== "") {
+          this.setLoadingState(true);
+        }
+      }, 3e3);
+    },
+    onSearchInput(event) {
+      this.search = event.target.value;
+      this.startSearchTimeout();
+    }
+  }
+};
+function _sfc_ssrRender$10(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_meta_header = resolveComponent("meta-header");
+  const _component_ClientOnly = resolveComponent("ClientOnly");
+  const _component_pnalogo = resolveComponent("pnalogo");
+  const _component_IconMenu = resolveComponent("IconMenu");
+  const _component_IconClose = resolveComponent("IconClose");
+  const _component_LinkHeader_mfx = resolveComponent("LinkHeader_mfx");
+  const _component_button_change_mode = resolveComponent("button-change-mode");
+  const _component_dropdown_link = resolveComponent("dropdown-link");
+  const _component_Dropdown = resolveComponent("Dropdown");
+  const _component_Loader = resolveComponent("Loader");
+  const _component_Toast = resolveComponent("Toast");
+  const _component_link_footer = resolveComponent("link-footer");
+  const _component_IconCookies = resolveComponent("IconCookies");
+  const _component_brand_footer = resolveComponent("brand-footer");
+  const _component_IconMCSL = resolveComponent("IconMCSL");
+  _push(`<!--[-->`);
+  _push(ssrRenderComponent(_component_meta_header, { title: $data.headerTitle }, {
+    robots: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<meta head-key="robots" name="robots" content="index, follow"${_scopeId}>`);
+      } else {
+        return [
+          createVNode("meta", {
+            "head-key": "robots",
+            name: "robots",
+            content: "index, follow"
+          })
+        ];
+      }
+    }),
+    description: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<meta head-key="description" name="description"${ssrRenderAttr("content", $data.headerDescription)}${_scopeId}>`);
+      } else {
+        return [
+          createVNode("meta", {
+            "head-key": "description",
+            name: "description",
+            content: $data.headerDescription
+          }, null, 8, ["content"])
+        ];
+      }
+    }),
+    opengraph: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<meta head-key="og:title" property="og:title"${ssrRenderAttr("content", $data.headerTitle)}${_scopeId}><meta property="og:description" head-key="og:description"${ssrRenderAttr("content", $data.headerDescription)}${_scopeId}>`);
+        if ($data.headerUrl) {
+          _push2(`<meta head-key="og:url" property="og:url"${ssrRenderAttr("content", $data.headerUrl)}${_scopeId}>`);
+        } else {
+          _push2(`<!---->`);
+        }
+        if ($data.headerImage) {
+          _push2(`<meta head-key="og:image" property="og:image"${ssrRenderAttr("content", $data.headerImage)}${_scopeId}>`);
+        } else {
+          _push2(`<!---->`);
+        }
+        _push2(`<meta head-key="og:type" property="og:type" content="website"${_scopeId}>`);
+      } else {
+        return [
+          createVNode("meta", {
+            "head-key": "og:title",
+            property: "og:title",
+            content: $data.headerTitle
+          }, null, 8, ["content"]),
+          createVNode("meta", {
+            property: "og:description",
+            "head-key": "og:description",
+            content: $data.headerDescription
+          }, null, 8, ["content"]),
+          $data.headerUrl ? (openBlock(), createBlock("meta", {
+            key: 0,
+            "head-key": "og:url",
+            property: "og:url",
+            content: $data.headerUrl
+          }, null, 8, ["content"])) : createCommentVNode("", true),
+          $data.headerImage ? (openBlock(), createBlock("meta", {
+            key: 1,
+            "head-key": "og:image",
+            property: "og:image",
+            content: $data.headerImage
+          }, null, 8, ["content"])) : createCommentVNode("", true),
+          createVNode("meta", {
+            "head-key": "og:type",
+            property: "og:type",
+            content: "website"
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`<main id="app-layout-start"><section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000" style="${ssrRenderStyle({ "z-index": "50" })}"><nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 dark:bg-layout-night-00 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-b border-layout-sun-2000 dark:border-layout-night-1060 overflow-visible" style="${ssrRenderStyle({ "z-index": "50" })}"><div class="mx-auto w-fit px-6" style="${ssrRenderStyle({ "z-index": "50" })}"><div class="flex items-center justify-between py-4 lg:flex-col lg:justify-center lg:gap-4"><a href="/" class="">`);
+  _push(ssrRenderComponent(_component_ClientOnly, null, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_pnalogo, { mode: $data.mode }, null, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_pnalogo, { mode: $data.mode }, null, 8, ["mode"])
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</a><button type="button" class="lg:hidden p-2 focus:outline-none hover:text-primary-sun-800 dark:text-primary-night-1000 colored_white" aria-label="Menü öffnen">`);
+  if (!$data.isOpen_Menu) {
+    _push(ssrRenderComponent(_component_IconMenu, { class: "w-7 h-7" }, null, _parent));
+  } else {
+    _push(ssrRenderComponent(_component_IconClose, { class: "w-7 h-7" }, null, _parent));
+  }
+  _push(`</button></div><div class="${ssrRenderClass([[$data.isOpen_Menu ? "translate-x-0 opacity-100 " : "opacity-0 -translate-x-full"], "absolute inset-x-0 mt-[6] w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-layout-sun-00 dark:bg-layout-night-00 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent"])}" style="${ssrRenderStyle({ "z-index": "10000000" })}"><div class="flex flex-col items-center space-y-1 SDAA lg:mt-4 lg:flex-row lg:items-center lg:w-fit lg:mx-auto lg:justify-center lg:gap-2 lg:space-y-0 border-4 border-layout-sun-2000 dark:border-layout-night-2000 lg:rounded-lg mb-2">`);
+  _push(ssrRenderComponent(_component_LinkHeader_mfx, {
+    class: "ml-[26px]",
+    "route-name": _ctx.route("home.index"),
+    name: "Home"
+  }, null, _parent));
+  _push(ssrRenderComponent(_component_LinkHeader_mfx, {
+    "route-name": _ctx.route("home.pna.grafitti"),
+    name: "Grafittis"
+  }, null, _parent));
+  _push(ssrRenderComponent(_component_LinkHeader_mfx, {
+    "route-name": _ctx.route("home.pna.portraits"),
+    name: "Portraits"
+  }, null, _parent));
+  _push(ssrRenderComponent(_component_LinkHeader_mfx, {
+    "route-name": _ctx.route("home.pna.contacts"),
+    name: "Kontakt"
+  }, null, _parent));
+  _push(ssrRenderComponent(_component_button_change_mode, {
+    mode: $data.mode,
+    onChangeMode: $options.changeMode
+  }, null, _parent));
+  if (!_ctx.$page.props.userdata.user_id) {
+    _push(ssrRenderComponent(_component_LinkHeader_mfx, {
+      "route-name": _ctx.route("login"),
+      name: "Login"
+    }, null, _parent));
+  } else if (_ctx.$page.props.auth.user) {
+    _push(`<div class="block md:hidden">`);
+    _push(ssrRenderComponent(_component_LinkHeader_mfx, {
+      "route-name": _ctx.route("admin.dashboard"),
+      name: "Dashboard"
+    }, null, _parent));
+    _push(`<br>`);
+    _push(ssrRenderComponent(_component_LinkHeader_mfx, {
+      "route-name": _ctx.route("admin.profile"),
+      name: "Profil"
+    }, {
+      default: withCtx((_, _push2, _parent2, _scopeId) => {
+        if (_push2) {
+          _push2(`<img id="prof_pic" class="h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]"${ssrRenderAttr(
+            "src",
+            $options.imagebasepath(_ctx.$page.props.auth.user?.profile_photo_url) + _ctx.$page.props.auth.user?.profile_photo_url.replace("public", "").replace("http://localhost/images/", "").replace("images/images/", "images/") || "/images/profile-photos/008.jpg"
+          )}${ssrRenderAttr("alt", _ctx.$page.props.userdata.full_name)}${_scopeId}>`);
+        } else {
+          return [
+            createVNode("img", {
+              id: "prof_pic",
+              class: "h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]",
+              src: $options.imagebasepath(_ctx.$page.props.auth.user?.profile_photo_url) + _ctx.$page.props.auth.user?.profile_photo_url.replace("public", "").replace("http://localhost/images/", "").replace("images/images/", "images/") || "/images/profile-photos/008.jpg",
+              alt: _ctx.$page.props.userdata.full_name
+            }, null, 8, ["src", "alt"])
+          ];
+        }
+      }),
+      _: 1
+    }, _parent));
+    _push(`<br><hr><form><button type="submit">`);
+    _push(ssrRenderComponent(_component_dropdown_link, null, {
+      default: withCtx((_, _push2, _parent2, _scopeId) => {
+        if (_push2) {
+          _push2(`<b${_scopeId}>Abmelden</b>`);
+        } else {
+          return [
+            createVNode("b", null, "Abmelden")
+          ];
+        }
+      }),
+      _: 1
+    }, _parent));
+    _push(`</button></form></div>`);
+  } else {
+    _push(`<!---->`);
+  }
+  if (_ctx.$page.props.userdata.user_id) {
+    _push(`<!--[--><!--]-->`);
+  } else {
+    _push(`<!---->`);
+  }
+  _push(`<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path><div class="ms-3 relative flex hidden sm:flex">`);
+  if (_ctx.$page.props.auth.user) {
+    _push(ssrRenderComponent(_component_Dropdown, {
+      align: "right",
+      width: "72",
+      class: ""
+    }, {
+      trigger: withCtx((_, _push2, _parent2, _scopeId) => {
+        if (_push2) {
+          if (_ctx.$page.props.jetstream.managesProfilePhotos) {
+            _push2(`<button class="flex text-sm border-4 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"${_scopeId}><img id="prof_pic" class="h-8 w-8 rounded-full object-cover mr-6"${ssrRenderAttr(
+              "src",
+              $options.imagebasepath(_ctx.$page.props.auth.user.profile_photo_url) + _ctx.$page.props.auth.user.profile_photo_url.replace("public", "")
+            )}${ssrRenderAttr(
+              "alt",
+              _ctx.$page.props.userdata.full_name
+            )}${_scopeId}> ${ssrInterpolate()}</button>`);
+          } else {
+            _push2(`<span class="inline-flex rounded-md"${_scopeId}><button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"${_scopeId}>${ssrInterpolate(_ctx.$page.props.userdata.full_name)}</button></span>`);
+          }
+        } else {
+          return [
+            _ctx.$page.props.jetstream.managesProfilePhotos ? (openBlock(), createBlock("button", {
+              key: 0,
+              class: "flex text-sm border-4 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
+            }, [
+              createVNode("img", {
+                id: "prof_pic",
+                class: "h-8 w-8 rounded-full object-cover mr-6",
+                src: $options.imagebasepath(_ctx.$page.props.auth.user.profile_photo_url) + _ctx.$page.props.auth.user.profile_photo_url.replace("public", ""),
+                alt: _ctx.$page.props.userdata.full_name
+              }, null, 8, ["src", "alt"]),
+              createTextVNode(" " + toDisplayString(), 1)
+            ])) : (openBlock(), createBlock("span", {
+              key: 1,
+              class: "inline-flex rounded-md"
+            }, [
+              createVNode("button", {
+                type: "button",
+                class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
+              }, toDisplayString(_ctx.$page.props.userdata.full_name), 1)
+            ]))
+          ];
+        }
+      }),
+      content: withCtx((_, _push2, _parent2, _scopeId) => {
+        if (_push2) {
+          _push2(`<div class="block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500"${_scopeId}>`);
+          if (_ctx.$page.props.userdata.application_count > 100) {
+            _push2(`<span${_scopeId}>Anwendung wechseln</span>`);
+          } else {
+            _push2(`<span${_scopeId}>Startseite</span>`);
+          }
+          _push2(`</div>`);
+          _push2(ssrRenderComponent(_component_dropdown_link, {
+            "with-icon": false,
+            "with-route": true,
+            "route-name": _ctx.route("admin.dashboard")
+          }, {
+            default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+              if (_push3) {
+                if (_ctx.$page.props.userdata.application_count > 100) {
+                  _push3(`<span${_scopeId2}>Anwendung wechseln</span>`);
+                } else {
+                  _push3(`<span${_scopeId2}>zum Dashboard</span>`);
+                }
+              } else {
+                return [
+                  _ctx.$page.props.userdata.application_count > 100 ? (openBlock(), createBlock("span", { key: 0 }, "Anwendung wechseln")) : (openBlock(), createBlock("span", { key: 1 }, "zum Dashboard"))
+                ];
+              }
+            }),
+            _: 1
+          }, _parent2, _scopeId));
+          _push2(`<div class="block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500"${_scopeId}> Dein Konto </div>`);
+          _push2(ssrRenderComponent(_component_dropdown_link, {
+            "with-icon": false,
+            "with-route": true,
+            "route-name": _ctx.route("admin.profile")
+          }, {
+            default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+              if (_push3) {
+                _push3(` Profil `);
+              } else {
+                return [
+                  createTextVNode(" Profil ")
+                ];
+              }
+            }),
+            _: 1
+          }, _parent2, _scopeId));
+          _push2(`<div class="my-2 border-t border-layout-sun-200 dark:border-layout-night-1050"${_scopeId}></div><form${_scopeId}><button type="submit"${_scopeId}>`);
+          _push2(ssrRenderComponent(_component_dropdown_link, null, {
+            default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+              if (_push3) {
+                _push3(`<b${_scopeId2}>Abmelden</b>`);
+              } else {
+                return [
+                  createVNode("b", null, "Abmelden")
+                ];
+              }
+            }),
+            _: 1
+          }, _parent2, _scopeId));
+          _push2(`</button></form>`);
+        } else {
+          return [
+            createVNode("div", { class: "block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500" }, [
+              _ctx.$page.props.userdata.application_count > 100 ? (openBlock(), createBlock("span", { key: 0 }, "Anwendung wechseln")) : (openBlock(), createBlock("span", { key: 1 }, "Startseite"))
+            ]),
+            createVNode(_component_dropdown_link, {
+              "with-icon": false,
+              "with-route": true,
+              "route-name": _ctx.route("admin.dashboard")
+            }, {
+              default: withCtx(() => [
+                _ctx.$page.props.userdata.application_count > 100 ? (openBlock(), createBlock("span", { key: 0 }, "Anwendung wechseln")) : (openBlock(), createBlock("span", { key: 1 }, "zum Dashboard"))
+              ]),
+              _: 1
+            }, 8, ["route-name"]),
+            createVNode("div", { class: "block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500" }, " Dein Konto "),
+            createVNode(_component_dropdown_link, {
+              "with-icon": false,
+              "with-route": true,
+              "route-name": _ctx.route("admin.profile")
+            }, {
+              default: withCtx(() => [
+                createTextVNode(" Profil ")
+              ]),
+              _: 1
+            }, 8, ["route-name"]),
+            createVNode("div", { class: "my-2 border-t border-layout-sun-200 dark:border-layout-night-1050" }),
+            createVNode("form", {
+              onSubmit: withModifiers($options.logoutUser, ["prevent"])
+            }, [
+              createVNode("button", { type: "submit" }, [
+                createVNode(_component_dropdown_link, null, {
+                  default: withCtx(() => [
+                    createVNode("b", null, "Abmelden")
+                  ]),
+                  _: 1
+                })
+              ])
+            ], 40, ["onSubmit"])
+          ];
+        }
+      }),
+      _: 1
+    }, _parent));
+  } else {
+    _push(`<!---->`);
+  }
+  _push(`</div></div></div></div></nav>`);
+  _push(ssrRenderComponent(_component_Loader, null, null, _parent));
+  _push(`<div class="container mx-auto max-w-6xl min-h-screen px-2 pm_top"><div>`);
+  _push(ssrRenderComponent(_component_Toast, null, null, _parent));
+  _push(`</div><div>`);
+  ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
+  _push(`</div></div></section><footer class="bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" aria-labelledby="footer-heading"><div class="container mx-auto max-w-6xl"><h2 id="footer-heading" class="sr-only">Footer</h2><div class="px-1 md:px-4 lg:px-8 pb-8 pt-8"><div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 xl:col-span-2 xl:mt-0"><div class="md:grid md:grid-cols-2 md:gap-4"><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2"><span> Webseite </span></h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
+  _push(ssrRenderComponent(_component_link_footer, {
+    name: "Impressum",
+    "route-name": _ctx.route("home.imprint.pna")
+  }, null, _parent));
+  _push(`</li><li>`);
+  _push(ssrRenderComponent(_component_link_footer, {
+    name: "Datenschutzerklärung",
+    "route-name": _ctx.route("home.privacy")
+  }, null, _parent));
+  _push(`</li><li><a class="ToggleCookieLink cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900" onclick="showHideToggleCookiePreferencesModal()">`);
+  _push(ssrRenderComponent(_component_IconCookies, {
+    width: "18",
+    height: "18",
+    class: "mr-[-4px]",
+    color: "#e8c456"
+  }, null, _parent));
+  _push(`<span>Cookie Einstellungen</span></a></li></ul></div><div class="text-center md:text-left"><h3 class="text-sm font-semibold leading-6 px-2"><span> Authentifizierung </span></h3><ul role="list" class="mt-6 space-y-4 list-none"><li>`);
+  _push(ssrRenderComponent(_component_link_footer, {
+    name: "Login",
+    "route-name": _ctx.route("login")
+  }, null, _parent));
+  _push(`</li></ul></div></div></div><div class="pt-8 text-layout-sun-700 dark:text-layout-night-700"><div class="flex flex-col items-center justify-between text-xs leading-5 gap-4"><div class="w-full flex flex-col md:flex-row flex-1 items-center justify-between gap-4"><div>`);
+  _push(ssrRenderComponent(_component_brand_footer, null, null, _parent));
+  _push(`</div><div></div></div><div class="w-full flex flex-col md:flex-row flex-1 items-center justify-between gap-4"><div class="text-xs leading-6"> © ${ssrInterpolate($data.year)} Starter Eleven/MCSL. Ein Template von <b>Oliver Reinking</b> / <b>Asario</b>. </div><div class="text-xs leading-6"><span>`);
+  _push(ssrRenderComponent(_component_IconMCSL, null, null, _parent));
+  _push(` Version: </span> ${ssrInterpolate(_ctx.$page.props.version.versionnr)}</div></div></div></div></div></div></footer></main><!--]-->`);
+}
+const _sfc_setup$10 = _sfc_main$10.setup;
+_sfc_main$10.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/pna/Layout.vue");
+  return _sfc_setup$10 ? _sfc_setup$10(props, ctx) : void 0;
+};
+const Layout$3 = /* @__PURE__ */ _export_sfc(_sfc_main$10, [["ssrRender", _sfc_ssrRender$10]]);
+const __vite_glob_0_318 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Layout$3
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$L = {
+const _sfc_main$$ = {
   name: "Admin_Shared_Layout_chh",
   data() {
     return {
@@ -56101,7 +54276,7 @@ const _sfc_main$L = {
     }
   }
 };
-function _sfc_ssrRender$L(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$$(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_Toast = resolveComponent("Toast");
   _push(`<!--[--><img${ssrRenderAttr("src", "/images/_chh/web/new-summer-2026.jpg")} class="mt-[-1px]" style="${ssrRenderStyle({ "min-width": "100%" })}"><nav class="bg-gray-300 border-b"><div class="max-w-7xl mx-auto"><div class="flex justify-between items-center"><div class="hidden md:flex"><a href="/visitcard" class="${ssrRenderClass([[
     "ml-[30px]",
@@ -56126,21 +54301,1922 @@ function _sfc_ssrRender$L(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</div></div></div><div class="w-full"><div class="max-w-7xl mx-auto sm:px-6 lg:px-8 whte_nopar notop"><div id="footer_ch" class="text-right pr-2"><div class="flex flex-wrap md:flex-nowrap justify-end items-center gap-2 pr-2"><div class="flex flex-wrap items-center gap-2 justify-end"> © <span itemprop="copyrightYear">${ssrInterpolate($data.year)}</span> by <a class="blk" href="http://www.asario.de/" target="_AsariosBlog">Asario</a> | <a href="javascript:void(0);" onclick="showHideToggleCookiePreferencesModal()">Cookieeinstellung</a></div> | <div class="w-full md:w-auto flex justify-end"><a href="https://www.marblefx.de/powered-by-mcsl" target="_blank" class="flex items-center gap-1"> Powered by <img class="h-5 mt-1"${ssrRenderAttr("src", "/images/icons/MCSL_sm.png")}></a></div></div></div></div></div></div></div><br></main><!--]-->`);
 }
-const _sfc_setup$L = _sfc_main$L.setup;
-_sfc_main$L.setup = (props, ctx) => {
+const _sfc_setup$$ = _sfc_main$$.setup;
+_sfc_main$$.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/chh/Layout.vue");
-  return _sfc_setup$L ? _sfc_setup$L(props, ctx) : void 0;
+  return _sfc_setup$$ ? _sfc_setup$$(props, ctx) : void 0;
 };
-const Layout$2 = /* @__PURE__ */ _export_sfc(_sfc_main$L, [["ssrRender", _sfc_ssrRender$L]]);
+const Layout$2 = /* @__PURE__ */ _export_sfc(_sfc_main$$, [["ssrRender", _sfc_ssrRender$$]]);
 const __vite_glob_0_315 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Layout$2
 }, Symbol.toStringTag, { value: "Module" }));
+const layouts = {
+  ab: AbLayout,
+  mfx: Layout$6,
+  dag: Layout$4,
+  pna: Layout$3,
+  chh: Layout$2
+};
+const _sfc_main$_ = {
+  components: {
+    Layout: AbLayout,
+    MetaHeader
+  },
+  props: {
+    texts: {
+      type: [Array, Object],
+      required: true
+    }
+  },
+  data() {
+    return {
+      currentLayout: AbLayout
+    };
+  },
+  mounted() {
+    const subdomain = SD();
+    this.currentLayout = layouts[subdomain] || AbLayout;
+  },
+  methods: {
+    SD
+  }
+};
+function _sfc_ssrRender$_(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "bg-layout-sun-0 dark:bg-layout-night-0" }, _attrs))}>`);
+  ssrRenderVNode(_push, createVNode(resolveDynamicComponent($data.currentLayout), null, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Zugriff nicht möglich" }, null, _parent2, _scopeId));
+        _push2(`<div${_scopeId}><img${ssrRenderAttr("src", "/images/web/mcsl_logo_only.png")} class="mx-auto" style="${ssrRenderStyle({ "max-width": "500px", "min-width": "300px", "width": "100%" })}"${_scopeId}><div class="mx-auto text-center" style="${ssrRenderStyle({ "max-width": "800px" })}"${_scopeId}><br${_scopeId}><br${_scopeId}><h2 class="text-4xl"${_scopeId}>${ssrInterpolate($props.texts.headline)}</h2><br${_scopeId}><br${_scopeId}><p${_scopeId}>${$props.texts.text ?? ""}</p></div></div>`);
+      } else {
+        return [
+          createVNode(_component_MetaHeader, { title: "Zugriff nicht möglich" }),
+          createVNode("div", null, [
+            createVNode("img", {
+              src: "/images/web/mcsl_logo_only.png",
+              class: "mx-auto",
+              style: { "max-width": "500px", "min-width": "300px", "width": "100%" }
+            }),
+            createVNode("div", {
+              class: "mx-auto text-center",
+              style: { "max-width": "800px" }
+            }, [
+              createVNode("br"),
+              createVNode("br"),
+              createVNode("h2", { class: "text-4xl" }, toDisplayString($props.texts.headline), 1),
+              createVNode("br"),
+              createVNode("br"),
+              createVNode("p", {
+                innerHTML: $props.texts.text
+              }, null, 8, ["innerHTML"])
+            ])
+          ])
+        ];
+      }
+    }),
+    _: 1
+  }), _parent);
+  _push(`</div>`);
+}
+const _sfc_setup$_ = _sfc_main$_.setup;
+_sfc_main$_.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/No-Rights.vue");
+  return _sfc_setup$_ ? _sfc_setup$_(props, ctx) : void 0;
+};
+const NoRights = /* @__PURE__ */ _export_sfc(_sfc_main$_, [["ssrRender", _sfc_ssrRender$_]]);
+const __vite_glob_0_293 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoRights
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$Z = defineComponent({
+  name: "Homepage_NoApplicationFound",
+  components: {
+    Layout: Layout$5,
+    PageContent,
+    PageTitle,
+    PageParagraph,
+    MetaHeader
+  }
+});
+function _sfc_ssrRender$Z(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_layout = resolveComponent("layout");
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_page_content = resolveComponent("page-content");
+  const _component_page_title = resolveComponent("page-title");
+  const _component_page_paragraph = resolveComponent("page-paragraph");
+  _push(ssrRenderComponent(_component_layout, mergeProps({
+    "header-url": _ctx.$page.props.saas_url + "/home/no_application_found"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Keine Anwendung" }, null, _parent2, _scopeId));
+        _push2(ssrRenderComponent(_component_page_content, null, {
+          content: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(ssrRenderComponent(_component_page_title, null, {
+                title: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                  if (_push4) {
+                    _push4(`Keine Anwendung`);
+                  } else {
+                    return [
+                      createTextVNode("Keine Anwendung")
+                    ];
+                  }
+                }),
+                _: 1
+              }, _parent3, _scopeId2));
+              _push3(ssrRenderComponent(_component_page_paragraph, null, {
+                paragraph: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                  if (_push4) {
+                    _push4(` Es konnte keine Anwendung gefunden werden. `);
+                  } else {
+                    return [
+                      createTextVNode(" Es konnte keine Anwendung gefunden werden. ")
+                    ];
+                  }
+                }),
+                _: 1
+              }, _parent3, _scopeId2));
+            } else {
+              return [
+                createVNode(_component_page_title, null, {
+                  title: withCtx(() => [
+                    createTextVNode("Keine Anwendung")
+                  ]),
+                  _: 1
+                }),
+                createVNode(_component_page_paragraph, null, {
+                  paragraph: withCtx(() => [
+                    createTextVNode(" Es konnte keine Anwendung gefunden werden. ")
+                  ]),
+                  _: 1
+                })
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_MetaHeader, { title: "Keine Anwendung" }),
+          createVNode(_component_page_content, null, {
+            content: withCtx(() => [
+              createVNode(_component_page_title, null, {
+                title: withCtx(() => [
+                  createTextVNode("Keine Anwendung")
+                ]),
+                _: 1
+              }),
+              createVNode(_component_page_paragraph, null, {
+                paragraph: withCtx(() => [
+                  createTextVNode(" Es konnte keine Anwendung gefunden werden. ")
+                ]),
+                _: 1
+              })
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$Z = _sfc_main$Z.setup;
+_sfc_main$Z.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoApplicationFound.vue");
+  return _sfc_setup$Z ? _sfc_setup$Z(props, ctx) : void 0;
+};
+const NoApplicationFound = /* @__PURE__ */ _export_sfc(_sfc_main$Z, [["ssrRender", _sfc_ssrRender$Z]]);
+const __vite_glob_0_294 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoApplicationFound
+}, Symbol.toStringTag, { value: "Module" }));
+const layoutComponents$2 = {
+  mfx: () => Promise.resolve().then(() => __vite_glob_0_310),
+  // dag: () => import('@/Application/Homepage/Shared/dag/Layout.vue'),
+  default: () => Promise.resolve().then(() => __vite_glob_0_310)
+};
+function getDomKey$2(urlString) {
+  try {
+    const url = new URL(urlString);
+    const hostname = url.hostname;
+    const parts = hostname.split(".");
+    return urlString ? urlString : "default";
+  } catch (e) {
+    return "default";
+  }
+}
+const _sfc_main$Y = defineComponent({
+  name: "Homepage_NoPageFound",
+  components: {
+    Layout: defineAsyncComponent(
+      layoutComponents$2[getDomKey$2(SD())] || layoutComponents$2["default"]
+    ),
+    PageTitle,
+    MetaHeader
+  },
+  methods: {
+    SD
+  }
+});
+function _sfc_ssrRender$Y(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_layout = resolveComponent("layout");
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_page_title = resolveComponent("page-title");
+  _push(ssrRenderComponent(_component_layout, mergeProps({
+    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Seite nicht gefunden" }, null, _parent2, _scopeId));
+        _push2(ssrRenderComponent(_component_page_title, null, {
+          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(`Seite nicht gefunden!`);
+            } else {
+              return [
+                createTextVNode("Seite nicht gefunden!")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_MetaHeader, { title: "Seite nicht gefunden" }),
+          createVNode(_component_page_title, null, {
+            title: withCtx(() => [
+              createTextVNode("Seite nicht gefunden!")
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$Y = _sfc_main$Y.setup;
+_sfc_main$Y.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound.vue");
+  return _sfc_setup$Y ? _sfc_setup$Y(props, ctx) : void 0;
+};
+const NoPageFound = /* @__PURE__ */ _export_sfc(_sfc_main$Y, [["ssrRender", _sfc_ssrRender$Y]]);
+const __vite_glob_0_295 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoPageFound
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$X = defineComponent({
+  name: "Homepage_NoPageFound",
+  components: {
+    Layout: Layout$5,
+    PageTitle
+  }
+});
+function _sfc_ssrRender$X(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_layout = resolveComponent("layout");
+  const _component_page_title = resolveComponent("page-title");
+  _push(ssrRenderComponent(_component_layout, mergeProps({
+    "header-title": "Seite nicht gefunden",
+    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_page_title, null, {
+          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(`Seite nicht gefunden!`);
+            } else {
+              return [
+                createTextVNode("Seite nicht gefunden!")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_page_title, null, {
+            title: withCtx(() => [
+              createTextVNode("Seite nicht gefunden!")
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$X = _sfc_main$X.setup;
+_sfc_main$X.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_ab.vue");
+  return _sfc_setup$X ? _sfc_setup$X(props, ctx) : void 0;
+};
+const NoPageFound_ab = /* @__PURE__ */ _export_sfc(_sfc_main$X, [["ssrRender", _sfc_ssrRender$X]]);
+const __vite_glob_0_296 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoPageFound_ab
+}, Symbol.toStringTag, { value: "Module" }));
+const layoutComponents$1 = {
+  chh: () => Promise.resolve().then(() => __vite_glob_0_315),
+  mfx: () => Promise.resolve().then(() => __vite_glob_0_317),
+  dag: () => Promise.resolve().then(() => __vite_glob_0_316),
+  default: () => Promise.resolve().then(() => __vite_glob_0_315)
+};
+function getDomKey$1(hostname) {
+  const parts = hostname.split(".");
+  return parts.length > 2 ? parts[0] : "default";
+}
+const _sfc_main$W = {
+  name: "Homepage_NoPageFound_chh2",
+  components: {
+    MetaHeader,
+    PageTitle
+  },
+  data() {
+    return {
+      Layout: null
+    };
+  },
+  async created() {
+    const subdomain = this.$page?.props?.subdomain || "default";
+    const key2 = getDomKey$1(subdomain);
+    const loader = layoutComponents$1[key2] || layoutComponents$1.default;
+    const layout2 = await loader();
+    this.Layout = markRaw(layout2.default);
+  }
+};
+function _sfc_ssrRender$W(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_page_title = resolveComponent("page-title");
+  ssrRenderVNode(_push, createVNode(resolveDynamicComponent($data.Layout), mergeProps({
+    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Seite nicht gefunden" }, null, _parent2, _scopeId));
+        _push2(ssrRenderComponent(_component_page_title, null, {
+          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(`Seite nicht gefunden!`);
+            } else {
+              return [
+                createTextVNode("Seite nicht gefunden!")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_MetaHeader, { title: "Seite nicht gefunden" }),
+          createVNode(_component_page_title, null, {
+            title: withCtx(() => [
+              createTextVNode("Seite nicht gefunden!")
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }), _parent);
+}
+const _sfc_setup$W = _sfc_main$W.setup;
+_sfc_main$W.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_chh.vue");
+  return _sfc_setup$W ? _sfc_setup$W(props, ctx) : void 0;
+};
+const NoPageFound_chh = /* @__PURE__ */ _export_sfc(_sfc_main$W, [["ssrRender", _sfc_ssrRender$W]]);
+const __vite_glob_0_297 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoPageFound_chh
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$V = defineComponent({
+  name: "Homepage_NoPageFound",
+  components: {
+    Layout: Layout$4,
+    PageTitle
+  }
+});
+function _sfc_ssrRender$V(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_layout = resolveComponent("layout");
+  const _component_page_title = resolveComponent("page-title");
+  _push(ssrRenderComponent(_component_layout, mergeProps({
+    "header-title": "Seite nicht gefunden",
+    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_page_title, null, {
+          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(`Seite nicht gefunden!`);
+            } else {
+              return [
+                createTextVNode("Seite nicht gefunden!")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_page_title, null, {
+            title: withCtx(() => [
+              createTextVNode("Seite nicht gefunden!")
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$V = _sfc_main$V.setup;
+_sfc_main$V.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_dag.vue");
+  return _sfc_setup$V ? _sfc_setup$V(props, ctx) : void 0;
+};
+const NoPageFound_dag = /* @__PURE__ */ _export_sfc(_sfc_main$V, [["ssrRender", _sfc_ssrRender$V]]);
+const __vite_glob_0_298 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoPageFound_dag
+}, Symbol.toStringTag, { value: "Module" }));
+const layoutComponents = {
+  mfx: () => Promise.resolve().then(() => __vite_glob_0_310),
+  // dag: () => import('@/Application/Homepage/Shared/dag/Layout.vue'),
+  default: () => Promise.resolve().then(() => __vite_glob_0_310)
+};
+function getDomKey(urlString) {
+  console.log(urlString);
+  return "default";
+}
+const _sfc_main$U = defineComponent({
+  name: "Homepage_NoPageFound",
+  components: {
+    Layout: defineAsyncComponent(
+      layoutComponents[getDomKey(SD())] || layoutComponents["default"]
+    ),
+    PageTitle,
+    MetaHeader
+  },
+  methods: {
+    SD
+  }
+});
+function _sfc_ssrRender$U(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_layout = resolveComponent("layout");
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_page_title = resolveComponent("page-title");
+  _push(ssrRenderComponent(_component_layout, mergeProps({
+    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Seite nicht gefunden" }, null, _parent2, _scopeId));
+        _push2(ssrRenderComponent(_component_page_title, null, {
+          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(`Seite nicht gefunden!`);
+            } else {
+              return [
+                createTextVNode("Seite nicht gefunden!")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_MetaHeader, { title: "Seite nicht gefunden" }),
+          createVNode(_component_page_title, null, {
+            title: withCtx(() => [
+              createTextVNode("Seite nicht gefunden!")
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$U = _sfc_main$U.setup;
+_sfc_main$U.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_default.vue");
+  return _sfc_setup$U ? _sfc_setup$U(props, ctx) : void 0;
+};
+const NoPageFound_default = /* @__PURE__ */ _export_sfc(_sfc_main$U, [["ssrRender", _sfc_ssrRender$U]]);
+const __vite_glob_0_299 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoPageFound_default
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$T = defineComponent({
+  name: "Homepage_NoPageFound_mfx",
+  components: {
+    Layout: Layout$6,
+    PageTitle
+  }
+});
+function _sfc_ssrRender$T(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_layout = resolveComponent("layout");
+  const _component_page_title = resolveComponent("page-title");
+  _push(ssrRenderComponent(_component_layout, mergeProps({
+    "header-title": "Seite nicht gefunden",
+    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_page_title, null, {
+          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(`Seite nicht gefunden!`);
+            } else {
+              return [
+                createTextVNode("Seite nicht gefunden!")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_page_title, null, {
+            title: withCtx(() => [
+              createTextVNode("Seite nicht gefunden!")
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$T = _sfc_main$T.setup;
+_sfc_main$T.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_mfx.vue");
+  return _sfc_setup$T ? _sfc_setup$T(props, ctx) : void 0;
+};
+const NoPageFound_mfx = /* @__PURE__ */ _export_sfc(_sfc_main$T, [["ssrRender", _sfc_ssrRender$T]]);
+const __vite_glob_0_300 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoPageFound_mfx
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$S = defineComponent({
+  name: "Homepage_NoPageFound_mfx",
+  components: {
+    Layout: Layout$3,
+    PageTitle
+  }
+});
+function _sfc_ssrRender$S(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_layout = resolveComponent("layout");
+  const _component_page_title = resolveComponent("page-title");
+  _push(ssrRenderComponent(_component_layout, mergeProps({
+    "header-title": "Seite nicht gefunden",
+    "header-url": _ctx.$page.props.saas_url + "/no_page_found"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_page_title, null, {
+          title: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(`Seite nicht gefunden!`);
+            } else {
+              return [
+                createTextVNode("Seite nicht gefunden!")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_page_title, null, {
+            title: withCtx(() => [
+              createTextVNode("Seite nicht gefunden!")
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$S = _sfc_main$S.setup;
+_sfc_main$S.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/NoPageFound_pna.vue");
+  return _sfc_setup$S ? _sfc_setup$S(props, ctx) : void 0;
+};
+const NoPageFound_pna = /* @__PURE__ */ _export_sfc(_sfc_main$S, [["ssrRender", _sfc_ssrRender$S]]);
+const __vite_glob_0_301 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: NoPageFound_pna
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$R = {
+  components: {
+    InputFormText: InputFormText$1
+  },
+  data() {
+    return {
+      form: {
+        password: ""
+      },
+      hash: ""
+    };
+  },
+  methods: {
+    async generateHash() {
+      console.log("Button geklickt");
+      try {
+        const response = await axios$1.post("/pwd", this.form);
+        console.log("Status:", response.status);
+        console.log("Data:", response.data);
+        this.hash = response.data.hash;
+      } catch (e) {
+        console.error("FEHLER:");
+        console.log(e);
+        if (e.response) {
+          console.log("Status:", e.response.status);
+          console.log("Response:", e.response.data);
+        }
+      }
+    }
+  }
+};
+function _sfc_ssrRender$R(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_InputFormText = resolveComponent("InputFormText");
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "max-w-4xl mx-auto" }, _attrs))}><div class="rounded-lg border border-primary-sun-500 dark:border-primary-night-500 bg-layout-sun-0 dark:bg-layout-night-0 p-6"><h1 class="text-2xl font-bold mb-6 text-layout-sun-900 dark:text-layout-night-900"> Passwort Hash Generator </h1>`);
+  _push(ssrRenderComponent(_component_InputFormText, {
+    id: "password",
+    name: "password",
+    placeholder: "",
+    modelValue: $data.form.password,
+    "onUpdate:modelValue": ($event) => $data.form.password = $event,
+    type: "text",
+    autocomplete: "new-password"
+  }, {
+    label: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(` Passwort `);
+      } else {
+        return [
+          createTextVNode(" Passwort ")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`<button class="mt-4 px-5 py-2 rounded-lg bg-primary-sun-500 dark:bg-primary-night-500 text-white"> Hash erzeugen </button>`);
+  if ($data.hash) {
+    _push(`<div class="mt-6"><label class="block mb-2 text-sm font-medium text-layout-sun-900 dark:text-layout-night-900"> Laravel Passwort-Hash </label><textarea readonly rows="5" class="w-full rounded-lg border border-primary-sun-500 dark:border-primary-night-500 bg-layout-sun-100 dark:bg-layout-night-100 p-3 font-mono text-sm text-layout-sun-800 dark:text-layout-night-800">${ssrInterpolate($data.hash)}</textarea></div>`);
+  } else {
+    _push(`<!---->`);
+  }
+  _push(`</div></div>`);
+}
+const _sfc_setup$R = _sfc_main$R.setup;
+_sfc_main$R.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/PWD.vue");
+  return _sfc_setup$R ? _sfc_setup$R(props, ctx) : void 0;
+};
+const PWD = /* @__PURE__ */ _export_sfc(_sfc_main$R, [["ssrRender", _sfc_ssrRender$R]]);
+const __vite_glob_0_302 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: PWD
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$Q = {
+  name: "PictureGallery",
+  components: {
+    Layout: Layout$5,
+    MetaHeader,
+    Pagination: Pagination$1,
+    ZoomImage,
+    SocialButtons,
+    RatingWrapper,
+    editbtns,
+    newbtn,
+    DisplayDate,
+    IconCamera,
+    SearchFilter,
+    Alert,
+    BackBtn
+  },
+  props: {
+    entries: {
+      type: Object,
+      required: true
+    },
+    ocont: {
+      type: [Array, Object],
+      default: () => ({})
+    },
+    ratings: {
+      type: Object,
+      default: () => ({})
+    },
+    createOn: {
+      default: true
+    },
+    searchFilter: {
+      type: Boolean,
+      default: true
+    },
+    routeCreate: {
+      type: String,
+      default: ""
+    },
+    filters: {
+      type: Object,
+      default: () => ({ search: "" })
+    }
+  },
+  data() {
+    return {
+      lightbox: null,
+      openIndex: null,
+      form: {
+        search: this.filters?.search ?? ""
+      },
+      searchterm: this.filters?.search ?? "",
+      isClient: false,
+      onSearchInput: false
+    };
+  },
+  watch: {
+    "form.search": throttle(function() {
+      router.get(
+        this.route("home.images.gallery", {
+          slug: this.ocont && this.ocont?.slug ? this.ocont?.slug : ""
+        }),
+        { search: this.form.search },
+        {
+          preserveState: true,
+          replace: true,
+          skipLoading: true
+        }
+      );
+    }, 300),
+    //   'form.search': throttle(function (val) {
+    //     router.get(
+    //       this.route('home.images.gallery'),
+    //       {
+    //         slug: this.ocont?.slug,
+    //         search: val?.trim() || null,
+    //       },
+    //       {
+    //         preserveState: true,
+    //         replace: true,
+    //       }
+    //     );
+    //   }, 500),
+    entries: {
+      deep: true,
+      immediate: true,
+      handler() {
+        if (typeof window === "undefined") return;
+        if (!window.location.hash) return;
+        requestAnimationFrame(() => {
+          this.scrollToHashAnchor();
+        });
+      }
+    }
+  },
+  computed: {},
+  methods: {
+    SD,
+    getStatus(str) {
+      if (str == "lost") {
+        return "Verloren";
+      }
+      if (str == "sold") {
+        return "Verkauft";
+      }
+      if (str == "givenaway") {
+        return "Verschenkt";
+      }
+      return "";
+    },
+    CleanTable: CleanTable$1,
+    //     scrollToHashAnchor() {
+    //   const hash = window?.location.hash;
+    //   if (!hash) return;
+    //   const el = document.getElementById(hash.replace("#", ""));
+    //   if (!el) return;
+    //   const y = el.getBoundingClientRect().top + window.scrollY - 134;
+    //   window.scrollTo({ top: y, behavior: "smooth" });
+    // },
+    getHashElement() {
+      if (typeof window !== "undefined") {
+        const hash = window?.location.hash;
+        if (!hash) return null;
+        const raw = hash.replace("#", "");
+        const el = document.getElementById(raw) || document.getElementById(`st${raw}`);
+        return el;
+      }
+    },
+    scrollToHashAnchor() {
+      const el = this.getHashElement();
+      if (!el) return;
+      const scroll = () => {
+        const y = el.getBoundingClientRect().top + (typeof window !== "undefined" ? window.pageYOffset : 0) - 134;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      };
+      const imgs = el.closest("#gallery")?.querySelectorAll("img");
+      if (!imgs || imgs.length === 0) {
+        scroll();
+        return;
+      }
+      let loaded = 0;
+      imgs.forEach((img) => {
+        if (img.complete) loaded++;
+        else img.addEventListener("load", () => {
+          loaded++;
+          if (loaded === imgs.length) scroll();
+        });
+      });
+      if (loaded === imgs.length) scroll();
+    },
+    // OLDDDDDDDDDDDDD
+    // scrollToHashAnchor() {
+    //   const hash = window?.location.hash;
+    //   if (hash && hash.startsWith("#")) {
+    //     setTimeout(() => {
+    //       const el = document.getElementById(hash.substring(1));
+    //       if (el) {
+    //         const y = el.getBoundingClientRect().top + window.pageYOffset - 134;
+    //         window.scrollTo({ top: y, behavior: "smooth" });
+    //       }
+    //     }, 50);
+    //   }
+    // },
+    remBrackets,
+    reset() {
+      this.form = mapValues(this.form, () => null);
+    },
+    stripTagsCom(txt) {
+      txt = stripTags$1(txt, "br,i,a");
+      return txt.replace(/(<br\s*\/?>\s*){2,}/gi, "<br>");
+    },
+    decodeEntities(text) {
+      if (text) {
+        text = text.replace(/<br\s*\/?>/g, "\n");
+        return he.decode(text);
+      }
+      return "";
+    },
+    handleBodyClick() {
+    },
+    /**
+     * Prüft, ob der Link ein Admin/Tables-Link ist.
+     * @param {string} href
+     * @returns {boolean}
+     */
+    isAdminLink(href) {
+      return href.startsWith("/admin/tables");
+    }
+    // reset() {
+    //   this.form.search = "";
+    // },
+  },
+  mounted() {
+    this.isClient = true;
+    this.$nextTick(() => {
+      this.$refs.searchField?.focus();
+    });
+    this.lightbox = new PhotoSwipeLightbox$1({
+      gallery: "#gallery",
+      children: "a:not([href^='/admin/tables'])",
+      // Admin-Links ausschließen
+      pswpModule: () => Promise.resolve().then(() => photoswipe_esm),
+      zoom: true,
+      secondaryZoomLevel: 2,
+      maxZoomLevel: 4,
+      initialZoomLevel: "fit",
+      wheelToZoom: true,
+      barsSize: { top: 50, bottom: 50 },
+      padding: { top: 30, bottom: 30, left: 30, right: 30 },
+      showHideAnimationType: "zoom",
+      galleryUID: "photoswipe-gallery"
+    });
+    if (typeof window === "undefined") return;
+    this.lightbox.init();
+  }
+};
+function _sfc_ssrRender$Q(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_Layout = resolveComponent("Layout");
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_back_btn = resolveComponent("back-btn");
+  const _component_newbtn = resolveComponent("newbtn");
+  const _component_editbtns = resolveComponent("editbtns");
+  const _component_search_filter = resolveComponent("search-filter");
+  const _component_alert = resolveComponent("alert");
+  const _component_ZoomImage = resolveComponent("ZoomImage");
+  const _component_SocialButtons = resolveComponent("SocialButtons");
+  const _component_RatingWrapper = resolveComponent("RatingWrapper");
+  const _component_display_date = resolveComponent("display-date");
+  const _component_IconCamera = resolveComponent("IconCamera");
+  const _component_Pagination = resolveComponent("Pagination");
+  _push(ssrRenderComponent(_component_Layout, _attrs, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        if ($props.ocont) {
+          _push2(ssrRenderComponent(_component_MetaHeader, {
+            title: "Bilder - " + $props.ocont?.slug
+          }, null, _parent2, _scopeId));
+        } else {
+          _push2(`<!---->`);
+        }
+        _push2(`<div class="flex items-center justify-between px-4 py-3" data-v-37a1c636${_scopeId}>`);
+        _push2(ssrRenderComponent(_component_back_btn, {
+          url: "/home/pictures",
+          r: "r"
+        }, {
+          default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(`Übersicht`);
+            } else {
+              return [
+                createTextVNode("Übersicht")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+        _push2(ssrRenderComponent(_component_newbtn, { table: "images" }, null, _parent2, _scopeId));
+        _push2(`</div><div data-v-37a1c636${_scopeId}>`);
+        if ($props.ocont?.id) {
+          _push2(`<div class="p-4 bg-layout-sun-200 dark:bg-layout-night-200" data-v-37a1c636${_scopeId}><hgroup data-v-37a1c636${_scopeId}><h1 class="text-2xl font-bold" data-v-37a1c636${_scopeId}>${ssrInterpolate($options.decodeEntities($props.ocont?.slug))}</h1><div class="flex items-start gap-4" data-v-37a1c636${_scopeId}><h4 class="flex-1" data-v-37a1c636${_scopeId}>${$props.ocont?.description.replace("fx_year()", (/* @__PURE__ */ new Date()).getFullYear()).replace(/\n/g, "<br />") ?? ""}</h4>`);
+          if ($props.ocont?.id) {
+            _push2(ssrRenderComponent(_component_editbtns, {
+              id: $props.ocont?.id,
+              table: "image_categories"
+            }, null, _parent2, _scopeId));
+          } else {
+            _push2(`<!---->`);
+          }
+          _push2(`</div></hgroup></div>`);
+        } else {
+          _push2(`<!---->`);
+        }
+        _push2(`<div data-v-37a1c636${_scopeId}></div><div class="flex justify-between items-center" data-v-37a1c636${_scopeId}>`);
+        if ($props.searchFilter) {
+          _push2(ssrRenderComponent(_component_search_filter, {
+            modelValue: $data.form.search,
+            "onUpdate:modelValue": ($event) => $data.form.search = $event,
+            class: "w-full",
+            ref: "searchField",
+            onReset: $options.reset,
+            onInput: $data.onSearchInput
+          }, null, _parent2, _scopeId));
+        } else {
+          _push2(`<!---->`);
+        }
+        _push2(`</div>`);
+        if (Array.isArray($props.entries.data) && $props.entries.data.length === 0 && $data.form.search) {
+          _push2(`<div class="p-2 md:p-4" data-v-37a1c636${_scopeId}>`);
+          _push2(ssrRenderComponent(_component_alert, { type: "warning" }, {
+            default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+              if (_push3) {
+                _push3(` Für den vorgegebenen Suchbegriff wurden keine Bilder gefunden. `);
+              } else {
+                return [
+                  createTextVNode(" Für den vorgegebenen Suchbegriff wurden keine Bilder gefunden. ")
+                ];
+              }
+            }),
+            _: 1
+          }, _parent2, _scopeId));
+          _push2(`</div>`);
+        } else {
+          _push2(`<!---->`);
+        }
+        _push2(`<div id="gallery" data-v-37a1c636${_scopeId}><!--[-->`);
+        ssrRenderList($props.entries.data, (item) => {
+          _push2(`<article class="w-full block max-w-sm gap-3 mx-auto sm:max-w-full group mb-4 lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100 border-2 border-layout-sun-300 dark:border-layout-night-300 p-4" data-v-37a1c636${_scopeId}><div${ssrRenderAttr("id", "st" + item?.id)} class="relative lg:col-span-4" data-v-37a1c636${_scopeId}><a${ssrRenderAttr("href", "/images/_" + $options.SD() + "/images/image_path/big/" + item?.image_path.replace("/", ""))}${ssrRenderAttr("data-pswp-width", item?.img_x)}${ssrRenderAttr("data-pswp-height", item?.img_y)} data-v-37a1c636${_scopeId}>`);
+          _push2(ssrRenderComponent(_component_ZoomImage, {
+            src: "/images/_" + $options.SD() + "/images/image_path/thumbs/" + item?.image_path,
+            alt: item?.name,
+            title: item?.name,
+            width: 300,
+            height: 300,
+            class: "imgprev"
+          }, null, _parent2, _scopeId));
+          _push2(`</a></div><div class="py-6 space-y-2 lg:col-span-5" data-v-37a1c636${_scopeId}><h2 class="text-xl font-semibold sm:text-2xl font-title whitespace-pre-line" data-v-37a1c636${_scopeId}><p data-v-37a1c636${_scopeId}>${item?.name ?? ""}</p></h2><div class="text-layout-sun-700 dark:text-layout-night-700 whitespace-pre-line" data-v-37a1c636${_scopeId}><p data-v-37a1c636${_scopeId}>${$options.stripTagsCom($options.remBrackets(item?.message)) ?? ""}</p></div>`);
+          _push2(ssrRenderComponent(_component_SocialButtons, {
+            name: item?.name,
+            postId: item?.id,
+            slug: item.slug,
+            title: "Bild " + item?.name,
+            sslug: true
+          }, null, _parent2, _scopeId));
+          _push2(`</div><div class="p-6 space-y-2 lg:col-span-3" data-v-37a1c636${_scopeId}><div class="text-sm font-semibold text-layout-sun-800 dark:text-layout-night-800" data-v-37a1c636${_scopeId}><h3 data-v-37a1c636${_scopeId}>Kurzinfos</h3></div>`);
+          if ($options.getStatus(item.status)) {
+            _push2(`<span class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap" data-v-37a1c636${_scopeId}>${$options.getStatus(item.status) ?? ""}</span>`);
+          } else {
+            _push2(`<!---->`);
+          }
+          if (item?.Format) {
+            _push2(`<div data-v-37a1c636${_scopeId}><b data-v-37a1c636${_scopeId}>Format:</b> ${ssrInterpolate(item?.Format)}</div>`);
+          } else {
+            _push2(`<!---->`);
+          }
+          _push2(ssrRenderComponent(_component_RatingWrapper, {
+            "post-id": item.id,
+            table: "images"
+          }, null, _parent2, _scopeId));
+          _push2(ssrRenderComponent(_component_editbtns, {
+            id: item?.id,
+            table: "images"
+          }, null, _parent2, _scopeId));
+          _push2(`<div class="text-xs text-layout-sun-600 dark:text-layout-night-600" data-v-37a1c636${_scopeId}>`);
+          _push2(ssrRenderComponent(_component_display_date, {
+            value: item?.created_at,
+            "time-on": false
+          }, null, _parent2, _scopeId));
+          _push2(`</div>`);
+          if (item?.camera) {
+            _push2(`<div class="text-xs text-layout-sun-600 dark:text-layout-night-600" data-v-37a1c636${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_IconCamera, null, null, _parent2, _scopeId));
+            _push2(`  ${ssrInterpolate(item?.camera)}</div>`);
+          } else {
+            _push2(`<!---->`);
+          }
+          _push2(`</div></article>`);
+        });
+        _push2(`<!--]--></div>`);
+        _push2(ssrRenderComponent(_component_Pagination, {
+          links: $props.entries.links,
+          basePath: "home/show/pictures/" + ($props.ocont && $props.ocont?.slug ? $props.ocont?.slug : "") + "/"
+        }, null, _parent2, _scopeId));
+        _push2(`</div>`);
+      } else {
+        return [
+          $props.ocont ? (openBlock(), createBlock(_component_MetaHeader, {
+            key: 0,
+            title: "Bilder - " + $props.ocont?.slug
+          }, null, 8, ["title"])) : createCommentVNode("", true),
+          createVNode("div", { class: "flex items-center justify-between px-4 py-3" }, [
+            createVNode(_component_back_btn, {
+              url: "/home/pictures",
+              r: "r"
+            }, {
+              default: withCtx(() => [
+                createTextVNode("Übersicht")
+              ]),
+              _: 1
+            }),
+            createVNode(_component_newbtn, { table: "images" })
+          ]),
+          createVNode("div", { onClick: $options.handleBodyClick }, [
+            $props.ocont?.id ? (openBlock(), createBlock("div", {
+              key: 0,
+              class: "p-4 bg-layout-sun-200 dark:bg-layout-night-200"
+            }, [
+              createVNode("hgroup", null, [
+                createVNode("h1", { class: "text-2xl font-bold" }, toDisplayString($options.decodeEntities($props.ocont?.slug)), 1),
+                createVNode("div", { class: "flex items-start gap-4" }, [
+                  createVNode("h4", {
+                    class: "flex-1",
+                    innerHTML: $props.ocont?.description.replace("fx_year()", (/* @__PURE__ */ new Date()).getFullYear()).replace(/\n/g, "<br />")
+                  }, null, 8, ["innerHTML"]),
+                  $props.ocont?.id ? (openBlock(), createBlock(_component_editbtns, {
+                    key: 0,
+                    id: $props.ocont?.id,
+                    table: "image_categories"
+                  }, null, 8, ["id"])) : createCommentVNode("", true)
+                ])
+              ])
+            ])) : createCommentVNode("", true),
+            createVNode("div"),
+            createVNode("div", { class: "flex justify-between items-center" }, [
+              $props.searchFilter ? (openBlock(), createBlock(_component_search_filter, {
+                key: 0,
+                modelValue: $data.form.search,
+                "onUpdate:modelValue": ($event) => $data.form.search = $event,
+                class: "w-full",
+                ref: "searchField",
+                onReset: $options.reset,
+                onInput: $data.onSearchInput
+              }, null, 8, ["modelValue", "onUpdate:modelValue", "onReset", "onInput"])) : createCommentVNode("", true)
+            ]),
+            Array.isArray($props.entries.data) && $props.entries.data.length === 0 && $data.form.search ? (openBlock(), createBlock("div", {
+              key: 1,
+              class: "p-2 md:p-4"
+            }, [
+              createVNode(_component_alert, { type: "warning" }, {
+                default: withCtx(() => [
+                  createTextVNode(" Für den vorgegebenen Suchbegriff wurden keine Bilder gefunden. ")
+                ]),
+                _: 1
+              })
+            ])) : createCommentVNode("", true),
+            createVNode("div", { id: "gallery" }, [
+              (openBlock(true), createBlock(Fragment, null, renderList($props.entries.data, (item) => {
+                return openBlock(), createBlock("article", {
+                  key: item?.id,
+                  class: "w-full block max-w-sm gap-3 mx-auto sm:max-w-full group mb-4 lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100 border-2 border-layout-sun-300 dark:border-layout-night-300 p-4"
+                }, [
+                  createVNode("div", {
+                    id: "st" + item?.id,
+                    class: "relative lg:col-span-4"
+                  }, [
+                    createVNode("a", {
+                      href: "/images/_" + $options.SD() + "/images/image_path/big/" + item?.image_path.replace("/", ""),
+                      "data-pswp-width": item?.img_x,
+                      "data-pswp-height": item?.img_y
+                    }, [
+                      createVNode(_component_ZoomImage, {
+                        src: "/images/_" + $options.SD() + "/images/image_path/thumbs/" + item?.image_path,
+                        alt: item?.name,
+                        title: item?.name,
+                        width: 300,
+                        height: 300,
+                        class: "imgprev"
+                      }, null, 8, ["src", "alt", "title"])
+                    ], 8, ["href", "data-pswp-width", "data-pswp-height"])
+                  ], 8, ["id"]),
+                  createVNode("div", { class: "py-6 space-y-2 lg:col-span-5" }, [
+                    createVNode("h2", { class: "text-xl font-semibold sm:text-2xl font-title whitespace-pre-line" }, [
+                      createVNode("p", {
+                        innerHTML: item?.name
+                      }, null, 8, ["innerHTML"])
+                    ]),
+                    createVNode("div", { class: "text-layout-sun-700 dark:text-layout-night-700 whitespace-pre-line" }, [
+                      createVNode("p", {
+                        innerHTML: $options.stripTagsCom($options.remBrackets(item?.message))
+                      }, null, 8, ["innerHTML"])
+                    ]),
+                    createVNode(_component_SocialButtons, {
+                      name: item?.name,
+                      postId: item?.id,
+                      slug: item.slug,
+                      title: "Bild " + item?.name,
+                      sslug: true
+                    }, null, 8, ["name", "postId", "slug", "title"])
+                  ]),
+                  createVNode("div", { class: "p-6 space-y-2 lg:col-span-3" }, [
+                    createVNode("div", { class: "text-sm font-semibold text-layout-sun-800 dark:text-layout-night-800" }, [
+                      createVNode("h3", null, "Kurzinfos")
+                    ]),
+                    $options.getStatus(item.status) ? (openBlock(), createBlock("span", {
+                      key: 0,
+                      class: "text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap",
+                      innerHTML: $options.getStatus(item.status)
+                    }, null, 8, ["innerHTML"])) : createCommentVNode("", true),
+                    item?.Format ? (openBlock(), createBlock("div", { key: 1 }, [
+                      createVNode("b", null, "Format:"),
+                      createTextVNode(" " + toDisplayString(item?.Format), 1)
+                    ])) : createCommentVNode("", true),
+                    createVNode(_component_RatingWrapper, {
+                      "post-id": item.id,
+                      table: "images"
+                    }, null, 8, ["post-id"]),
+                    createVNode(_component_editbtns, {
+                      id: item?.id,
+                      table: "images"
+                    }, null, 8, ["id"]),
+                    createVNode("div", { class: "text-xs text-layout-sun-600 dark:text-layout-night-600" }, [
+                      createVNode(_component_display_date, {
+                        value: item?.created_at,
+                        "time-on": false
+                      }, null, 8, ["value"])
+                    ]),
+                    item?.camera ? (openBlock(), createBlock("div", {
+                      key: 2,
+                      class: "text-xs text-layout-sun-600 dark:text-layout-night-600"
+                    }, [
+                      createVNode(_component_IconCamera),
+                      createTextVNode("  " + toDisplayString(item?.camera), 1)
+                    ])) : createCommentVNode("", true)
+                  ])
+                ]);
+              }), 128))
+            ]),
+            createVNode(_component_Pagination, {
+              links: $props.entries.links,
+              basePath: "home/show/pictures/" + ($props.ocont && $props.ocont?.slug ? $props.ocont?.slug : "") + "/"
+            }, null, 8, ["links", "basePath"])
+          ], 8, ["onClick"])
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$Q = _sfc_main$Q.setup;
+_sfc_main$Q.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Pictures.vue");
+  return _sfc_setup$Q ? _sfc_setup$Q(props, ctx) : void 0;
+};
+const Pictures$1 = /* @__PURE__ */ _export_sfc(_sfc_main$Q, [["ssrRender", _sfc_ssrRender$Q], ["__scopeId", "data-v-37a1c636"]]);
+const __vite_glob_0_303 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Pictures$1
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$P = {
+  components: { Layout: Layout$5, MetaHeader, SearchFilter, newbtn },
+  props: {
+    data: Array,
+    ima: Object,
+    filters: {
+      type: Object,
+      default: () => ({ search: "" })
+    }
+  },
+  created() {
+  },
+  methods: {
+    decodeEntities(text) {
+      return he.decode(text);
+    },
+    reset() {
+      this.form = mapValues(this.form, () => null);
+    }
+  },
+  watch: {
+    form: {
+      handler: throttle(function() {
+        const query = pickBy(this.form);
+        router.get(
+          this.route("home.images.search.cat"),
+          query,
+          {
+            preserveState: true,
+            replace: true
+          }
+        );
+      }, 150),
+      deep: true
+    }
+  },
+  data() {
+    return {
+      form: {
+        search: this.filters?.search ?? ""
+      }
+    };
+  }
+};
+function _sfc_ssrRender$P(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_Layout = resolveComponent("Layout");
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_newbtn = resolveComponent("newbtn");
+  _push(ssrRenderComponent(_component_Layout, _attrs, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Meine Bilder Übersicht" }, null, _parent2, _scopeId));
+        _push2(ssrRenderComponent(_component_newbtn, { table: "images" }, null, _parent2, _scopeId));
+        _push2(`<div class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100" data-v-48e6da85${_scopeId}><div class="container mx-auto py-8" data-v-48e6da85${_scopeId}><div class="flex justify-between items-center mb-4" data-v-48e6da85${_scopeId}><h1 class="text-2xl font-bold" data-v-48e6da85${_scopeId}>Bildergalerien</h1></div><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2" data-v-48e6da85${_scopeId}><!--[-->`);
+        ssrRenderList($props.data, (ima, index) => {
+          _push2(`<div class="bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md relative group overflow-hidden" data-v-48e6da85${_scopeId}><a${ssrRenderAttr("href", _ctx.route("home.images.gallery", [ima.slug]))} data-v-48e6da85${_scopeId}><div class="relative w-full overflow-hidden rounded-sm" data-v-48e6da85${_scopeId}><img${ssrRenderAttr("src", `/images/_ab/images/images_cat/${ima.name}.jpg`)}${ssrRenderAttr("alt", ima.shortname)}${ssrRenderAttr("title", "zur " + ima.shortname + "Galerie")} class="w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110" data-v-48e6da85${_scopeId}><div class="absolute top-0 left-0 w-full h-full bg-blue-500 opacity-40 transition-opacity duration-300 group-hover:opacity-0" data-v-48e6da85${_scopeId}></div></div><div class="absolute left-0 right-0 text-center text-white transition-all duration-300 bott title-top" data-v-48e6da85${_scopeId}><span class="text-lg font-semibold group-hover:text-shadow-md transition-all duration-300 capitalize font-euros" data-v-48e6da85${_scopeId}>${ssrInterpolate(ima.name)}</span></div><div class="absolute bott2 left-0 right-0 text-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" data-v-48e6da85${_scopeId}><span class="text-sm opacity-75 text-shadow ucfirst" data-v-48e6da85${_scopeId}>${ssrInterpolate($options.decodeEntities(ima.heading_alt))}</span></div></a></div>`);
+        });
+        _push2(`<!--]--></div></div></div>`);
+      } else {
+        return [
+          createVNode(_component_MetaHeader, { title: "Meine Bilder Übersicht" }),
+          createVNode(_component_newbtn, { table: "images" }),
+          createVNode("div", { class: "min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100" }, [
+            createVNode("div", { class: "container mx-auto py-8" }, [
+              createVNode("div", { class: "flex justify-between items-center mb-4" }, [
+                createVNode("h1", { class: "text-2xl font-bold" }, "Bildergalerien")
+              ]),
+              createVNode("div", { class: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2" }, [
+                (openBlock(true), createBlock(Fragment, null, renderList($props.data, (ima, index) => {
+                  return openBlock(), createBlock("div", {
+                    key: ima.id,
+                    class: "bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md relative group overflow-hidden"
+                  }, [
+                    createVNode("a", {
+                      href: _ctx.route("home.images.gallery", [ima.slug])
+                    }, [
+                      createVNode("div", { class: "relative w-full overflow-hidden rounded-sm" }, [
+                        createVNode("img", {
+                          src: `/images/_ab/images/images_cat/${ima.name}.jpg`,
+                          alt: ima.shortname,
+                          title: "zur " + ima.shortname + "Galerie",
+                          class: "w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
+                        }, null, 8, ["src", "alt", "title"]),
+                        createVNode("div", { class: "absolute top-0 left-0 w-full h-full bg-blue-500 opacity-40 transition-opacity duration-300 group-hover:opacity-0" })
+                      ]),
+                      createVNode("div", { class: "absolute left-0 right-0 text-center text-white transition-all duration-300 bott title-top" }, [
+                        createVNode("span", { class: "text-lg font-semibold group-hover:text-shadow-md transition-all duration-300 capitalize font-euros" }, toDisplayString(ima.name), 1)
+                      ]),
+                      createVNode("div", { class: "absolute bott2 left-0 right-0 text-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" }, [
+                        createVNode("span", { class: "text-sm opacity-75 text-shadow ucfirst" }, toDisplayString($options.decodeEntities(ima.heading_alt)), 1)
+                      ])
+                    ], 8, ["href"])
+                  ]);
+                }), 128))
+              ])
+            ])
+          ])
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$P = _sfc_main$P.setup;
+_sfc_main$P.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/PicturesCat.vue");
+  return _sfc_setup$P ? _sfc_setup$P(props, ctx) : void 0;
+};
+const PicturesCat = /* @__PURE__ */ _export_sfc(_sfc_main$P, [["ssrRender", _sfc_ssrRender$P], ["__scopeId", "data-v-48e6da85"]]);
+const __vite_glob_0_304 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: PicturesCat
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$O = defineComponent({
+  name: "Homepage_Pricing",
+  components: {
+    Layout: Layout$5,
+    PageContent,
+    PageTitle,
+    PageParagraph,
+    MetaHeader
+  }
+});
+function _sfc_ssrRender$O(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_layout = resolveComponent("layout");
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_page_content = resolveComponent("page-content");
+  const _component_page_title = resolveComponent("page-title");
+  const _component_page_paragraph = resolveComponent("page-paragraph");
+  _push(ssrRenderComponent(_component_layout, mergeProps({
+    "header-title": "Pricing",
+    "header-url": _ctx.$page.props.saas_url + "/home/pricing"
+  }, _attrs), {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "EXAMPLE" }, null, _parent2, _scopeId));
+        _push2(ssrRenderComponent(_component_page_content, null, {
+          content: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(ssrRenderComponent(_component_page_title, null, {
+                title: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                  if (_push4) {
+                    _push4(`Pricing`);
+                  } else {
+                    return [
+                      createTextVNode("Pricing")
+                    ];
+                  }
+                }),
+                _: 1
+              }, _parent3, _scopeId2));
+              _push3(ssrRenderComponent(_component_page_paragraph, null, {
+                paragraph: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                  if (_push4) {
+                    _push4(` Text kommt noch. `);
+                  } else {
+                    return [
+                      createTextVNode(" Text kommt noch. ")
+                    ];
+                  }
+                }),
+                _: 1
+              }, _parent3, _scopeId2));
+            } else {
+              return [
+                createVNode(_component_page_title, null, {
+                  title: withCtx(() => [
+                    createTextVNode("Pricing")
+                  ]),
+                  _: 1
+                }),
+                createVNode(_component_page_paragraph, null, {
+                  paragraph: withCtx(() => [
+                    createTextVNode(" Text kommt noch. ")
+                  ]),
+                  _: 1
+                })
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_MetaHeader, { title: "EXAMPLE" }),
+          createVNode(_component_page_content, null, {
+            content: withCtx(() => [
+              createVNode(_component_page_title, null, {
+                title: withCtx(() => [
+                  createTextVNode("Pricing")
+                ]),
+                _: 1
+              }),
+              createVNode(_component_page_paragraph, null, {
+                paragraph: withCtx(() => [
+                  createTextVNode(" Text kommt noch. ")
+                ]),
+                _: 1
+              })
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$O = _sfc_main$O.setup;
+_sfc_main$O.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Pricing.vue");
+  return _sfc_setup$O ? _sfc_setup$O(props, ctx) : void 0;
+};
+const Pricing = /* @__PURE__ */ _export_sfc(_sfc_main$O, [["ssrRender", _sfc_ssrRender$O]]);
+const __vite_glob_0_305 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Pricing
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$N = {
+  components: {
+    Layout: Layout$5,
+    MetaHeader
+  },
+  props: {
+    privacy: String
+  },
+  mounted() {
+    this.scrollToHashAnchor();
+    window.addEventListener("hashchange", this.scrollToHashAnchor);
+  },
+  beforeUnmount() {
+    window.removeEventListener("hashchange", this.scrollToHashAnchor);
+  },
+  methods: {
+    ch(txt) {
+      return txt.replace(/\n<li>/g, "<li>").replace(/\n/g, "<br />");
+    },
+    scrollToHashAnchor() {
+      const hash = window?.location.hash;
+      if (hash && hash.startsWith("#")) {
+        setTimeout(() => {
+          const el = document.getElementById(hash.substring(1));
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.pageYOffset - 134;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }, 50);
+      }
+    }
+  }
+};
+function _sfc_ssrRender$N(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_Layout = resolveComponent("Layout");
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  _push(ssrRenderComponent(_component_Layout, _attrs, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_MetaHeader, { title: "Datenschutzerklärung" }, null, _parent2, _scopeId));
+        _push2(`<div class="prose prose-layout dark:prose-invert max-w-none block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100"${_scopeId}><div${_scopeId}>${$options.ch($props.privacy) ?? ""}</div></div>`);
+      } else {
+        return [
+          createVNode(_component_MetaHeader, { title: "Datenschutzerklärung" }),
+          createVNode("div", { class: "prose prose-layout dark:prose-invert max-w-none block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100" }, [
+            createVNode("div", {
+              innerHTML: $options.ch($props.privacy)
+            }, null, 8, ["innerHTML"])
+          ])
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+}
+const _sfc_setup$N = _sfc_main$N.setup;
+_sfc_main$N.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Privacy.vue");
+  return _sfc_setup$N ? _sfc_setup$N(props, ctx) : void 0;
+};
+const Privacy$5 = /* @__PURE__ */ _export_sfc(_sfc_main$N, [["ssrRender", _sfc_ssrRender$N]]);
+const __vite_glob_0_306 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Privacy$5
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$M = {
+  name: "Shared_Homepage_UserPreviewSmall",
+  //
+  components: {
+    Link: link_default,
+    DisplayDate,
+    IconPencil,
+    IconPlusCircle,
+    editbtns,
+    IconTrash,
+    IconCamera,
+    SearchFilter,
+    Comments,
+    Share,
+    IconComment,
+    IconShare,
+    IconStar,
+    SocialButtons,
+    AiButton,
+    MetaHeader
+  },
+  props: {
+    blog: {
+      type: Object
+    },
+    blogs: {
+      type: Object
+    },
+    aiOverlayImage: {
+      type: String
+    },
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      // dma: localStorage.getItem('theme'),
+      showShareBox: {},
+      showStarBox: {},
+      // Wert aus localStorage speichern
+      showComments: null
+      // Zustand für die Anzeige der Kommentarfunktion
+    };
+  },
+  methods: {
+    SD,
+    handleBodyClick(event) {
+      this.$nextTick(() => {
+        const box = document.getElementById("commentBox");
+        if (box && !box.contains(event.target)) {
+          this.showComments = null;
+        }
+      });
+    },
+    openComments(id) {
+      this.showComments = this.showComments === id ? null : id;
+    },
+    formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString("de-DE");
+    },
+    closeComments() {
+      this.showComments = null;
+    },
+    reset() {
+      this.form = mapValues(this.form, () => null);
+    },
+    toggleStarBox(id) {
+      if (!this.showStarBox) {
+        this.showStarBox = {};
+      }
+      this.showStarBox[id] = !this.showStarBox[id];
+    },
+    toggleShareBox(id) {
+      if (!this.showShareBox) {
+        this.showShareBox = {};
+      }
+      this.showShareBox[id] = !this.showShareBox[id];
+      if (this.showShareBox[id]) {
+        this.$nextTick(() => {
+          const shariffRef = this.$refs["shariff_" + id];
+          if (!shariffRef) {
+            console.error(`Shariff-Element für ID ${id} nicht gefunden.`);
+            return;
+          }
+          this.initShariff(id);
+        });
+      } else {
+        this.$nextTick(() => {
+          const shariffRef = this.$refs["shariff_" + id];
+          if (shariffRef) {
+            shariffRef.innerHTML = "";
+          }
+        });
+      }
+    },
+    initShariff(id) {
+    },
+    toggleCommentBox(postId) {
+      this.showComments = this.showComments === postId ? null : postId;
+    },
+    decodeEntities(text) {
+      if (text) {
+        text = text?.replace(/<br\s*\/?>/g, "\n");
+        return he.decode(text);
+      } else {
+        return "";
+      }
+    },
+    deleteDataRow(id) {
+      if (confirm("Wollen Sie diesen Beitrag wirklich löschen?")) {
+        axios.delete(this.routeDelete + id).then(() => {
+          this.$emit("deleted");
+          router.reload();
+        }).catch((error) => {
+          console.error("Fehler beim Löschen:", error);
+        });
+      }
+    },
+    editDataRow(id) {
+      CleanTable$1();
+      var rt = `/admin/tables/edit/${id}/images`;
+      location.href = rt;
+    }
+  }
+};
+function _sfc_ssrRender$M(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_Link = resolveComponent("Link");
+  const _component_editbtns = resolveComponent("editbtns");
+  const _component_SocialButtons = resolveComponent("SocialButtons");
+  _push(`<article${ssrRenderAttrs(_attrs)}><div class="blog-container w-full max-w-sm mx-auto group rounded hover:no-underline focus:no-underline bg-layout-sun-100 dark:bg-layout-night-100">`);
+  _push(ssrRenderComponent(_component_Link, {
+    href: "/home/users/show/" + $props.user.name + "/" + $props.user.id,
+    class: "block text-layout-sun-600 dark:text-layout-night-900 twi nul"
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<div class="relative flex justify-center divvy"${_scopeId}><img role="presentation" class="${ssrRenderClass(["object-cover w-full rounded h-60 w-60 bg-layout-sun-500 dark:bg-layout-night-500 teaser"])}"${ssrRenderAttr("src", $props.user.profile_photo_path != null ? "/images/users/profile_photo_path/" + $props.user.profile_photo_path.replace("/images/", "") : "/images/profile-photos/008.jpg")}${ssrRenderAttr("alt", $props.user.name)} width="480" height="360"${_scopeId}></div><div class="p-6 space-y-2 twi"${_scopeId}><h2 class="text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline"${_scopeId}>${ssrInterpolate($props.user.name)}</h2><p${_scopeId}> Vorname: ${ssrInterpolate($props.user.first_name)}<br${_scopeId}> Registriert seit ${ssrInterpolate($options.formatDate($props.user.created_at))}  `);
+        _push2(ssrRenderComponent(_component_editbtns, {
+          id: $props.user.id,
+          table: "users"
+        }, null, _parent2, _scopeId));
+        _push2(`</p><div class="flex justify-between items-center"${_scopeId}><div class="rl"${_scopeId}></div></div><p${_scopeId}></p></div>`);
+      } else {
+        return [
+          createVNode("div", { class: "relative flex justify-center divvy" }, [
+            createVNode("img", {
+              role: "presentation",
+              class: ["object-cover w-full rounded h-60 w-60 bg-layout-sun-500 dark:bg-layout-night-500 teaser"],
+              src: $props.user.profile_photo_path != null ? "/images/users/profile_photo_path/" + $props.user.profile_photo_path.replace("/images/", "") : "/images/profile-photos/008.jpg",
+              alt: $props.user.name,
+              width: "480",
+              height: "360"
+            }, null, 8, ["src", "alt"])
+          ]),
+          createVNode("div", { class: "p-6 space-y-2 twi" }, [
+            createVNode("h2", { class: "text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline" }, toDisplayString($props.user.name), 1),
+            createVNode("p", null, [
+              createTextVNode(" Vorname: " + toDisplayString($props.user.first_name), 1),
+              createVNode("br"),
+              createTextVNode(" Registriert seit " + toDisplayString($options.formatDate($props.user.created_at)) + "  ", 1),
+              createVNode(_component_editbtns, {
+                id: $props.user.id,
+                table: "users"
+              }, null, 8, ["id"])
+            ]),
+            createVNode("div", { class: "flex justify-between items-center" }, [
+              createVNode("div", { class: "rl" })
+            ]),
+            createVNode("p")
+          ])
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(ssrRenderComponent(_component_SocialButtons, {
+    name: $props.user?.name,
+    postId: $props.user.id,
+    title: "Benutzer " + $props.user.name,
+    sm: "Sm",
+    nostars: true,
+    ublock: $props.user.name
+  }, null, _parent));
+  _push(`</div></article>`);
+}
+const _sfc_setup$M = _sfc_main$M.setup;
+_sfc_main$M.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/UserPreviewSmall.vue");
+  return _sfc_setup$M ? _sfc_setup$M(props, ctx) : void 0;
+};
+const UserPreviewSmall = /* @__PURE__ */ _export_sfc(_sfc_main$M, [["ssrRender", _sfc_ssrRender$M]]);
+const __vite_glob_0_312 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: UserPreviewSmall
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$L = {
+  name: "Homepage_Shared_BlogPreviewBig",
+  components: {
+    Link: link_default,
+    BackBtn,
+    DisplayDate,
+    DisplayNumber,
+    AiButton,
+    editbtns,
+    SocialButtons,
+    MetaHeader
+  },
+  props: {
+    blog: {
+      type: Object
+    },
+    aiOverlayImage: {
+      type: String
+    },
+    tablename: {
+      type: String
+    },
+    // editRights:{
+    //     type: Number,
+    // },
+    // deleteRights:{
+    //     type: Number,
+    // },
+    dmaa: {
+      type: [Array, Object, String, Number],
+      default: null
+    },
+    dma: {
+      type: [Array, Object, String, Number],
+      default: null
+    }
+  },
+  data() {
+    return {
+      isCommentActive: false
+    };
+  }
+};
+function _sfc_ssrRender$L(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_MetaHeader = resolveComponent("MetaHeader");
+  const _component_back_btn = resolveComponent("back-btn");
+  const _component_Link = resolveComponent("Link");
+  const _component_AiButton = resolveComponent("AiButton");
+  const _component_display_date = resolveComponent("display-date");
+  const _component_editbtns = resolveComponent("editbtns");
+  const _component_display_number = resolveComponent("display-number");
+  const _component_socialButtons = resolveComponent("socialButtons");
+  _push(`<!--[-->`);
+  _push(ssrRenderComponent(_component_MetaHeader, {
+    title: "Benutzer:  " + _ctx.data.author_name2
+  }, null, _parent));
+  _push(ssrRenderComponent(_component_back_btn, { url: "/home/users" }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`Benutzerliste`);
+      } else {
+        return [
+          createTextVNode("Benutzerliste")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`<div id="teaser-img2" style="${ssrRenderStyle({ "z-index": "0", "margin-bottom": "-0px" })}" class="${ssrRenderClass([{ "disable-link": $data.isCommentActive }, "block max-w-sm gap-3 mx-auto mh_65 sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100 overfl"])}" data-v-80dda306><div class="blog-container mh_65 lg:col-span-7" style="${ssrRenderStyle({})}" data-v-80dda306>`);
+  _push(ssrRenderComponent(_component_Link, {
+    href: _ctx.route("home.blog?.show", $props.blog?.autoslug),
+    class: "block"
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<img${ssrRenderAttr("src", `/images/blogs/${$props.blog?.url}`)}${ssrRenderAttr("alt", $props.blog?.name)} width="480" height="360" style="${ssrRenderStyle({ "max-height": "390px" })}" class="${ssrRenderClass(["object-cover w-full rounded lg:col-span-7 object-cover rounded bg-layout-sun-500 dark:bg-layout-night-500", $props.blog?.madewithai ? "ai-image-corner" : ""])}" data-v-80dda306${_scopeId}>`);
+      } else {
+        return [
+          createVNode("img", {
+            src: `/images/blogs/${$props.blog?.url}`,
+            alt: $props.blog?.name,
+            width: "480",
+            height: "360",
+            style: { "max-height": "390px" },
+            class: ["object-cover w-full rounded lg:col-span-7 object-cover rounded bg-layout-sun-500 dark:bg-layout-night-500", $props.blog?.madewithai ? "ai-image-corner" : ""]
+          }, null, 10, ["src", "alt"])
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`<div class="relative" data-v-80dda306>`);
+  if ($props.blog?.madewithai) {
+    _push(`<div data-v-80dda306>`);
+    _push(ssrRenderComponent(_component_AiButton, {
+      dma: $props.dmaa,
+      big: true
+    }, null, _parent));
+    _push(`</div>`);
+  } else {
+    _push(`<!---->`);
+  }
+  _push(`</div></div><div id="teaser-img" class="p-6 space-y-2 lg:col-span-5 overfl" style="${ssrRenderStyle({})}" data-v-80dda306>`);
+  _push(ssrRenderComponent(_component_Link, {
+    href: _ctx.route("home.blog?.show", $props.blog?.autoslug)
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<div class="flex justify-end items-start" data-v-80dda306${_scopeId}>`);
+        if ($props.blog?.category_name) {
+          _push2(`<div class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap" data-v-80dda306${_scopeId}>${ssrInterpolate($props.blog?.category_name)}</div>`);
+        } else {
+          _push2(`<!---->`);
+        }
+        _push2(`</div><h2 class="text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline" data-v-80dda306${_scopeId}>${ssrInterpolate($props.blog?.title)}</h2><div class="flex justify-between items-center" data-v-80dda306${_scopeId}><div class="text-xs text-layout-sun-600 dark:text-layout-night-600 py-2" data-v-80dda306${_scopeId}>`);
+        _push2(ssrRenderComponent(_component_display_date, {
+          value: $props.blog?.blog_date,
+          "time-on": false
+        }, null, _parent2, _scopeId));
+        _push2(` von <span data-v-80dda306${_scopeId}>${ssrInterpolate($props.blog?.author_name)}</span></div><div class="rl" data-v-80dda306${_scopeId}>`);
+        _push2(ssrRenderComponent(_component_editbtns, {
+          id: $props.blog?.id,
+          table: "blogs"
+        }, null, _parent2, _scopeId));
+        _push2(`</div></div><div class="pb-6" data-v-80dda306${_scopeId}>${$props.blog?.summary ?? ""}</div><div data-v-80dda306${_scopeId}>`);
+        _push2(ssrRenderComponent(_component_display_number, {
+          value: $props.blog?.reading_time,
+          "after-digits": 0,
+          "value-unit": "Minuten Lesezeit",
+          "value-single-unit": "Minute Lesezeit"
+        }, null, _parent2, _scopeId));
+        _push2(`</div>`);
+      } else {
+        return [
+          createVNode("div", { class: "flex justify-end items-start" }, [
+            $props.blog?.category_name ? (openBlock(), createBlock("div", {
+              key: 0,
+              class: "text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900 dark:bg-primary-night-500 dark:text-primary-night-900 font-semibold px-2.5 py-0.5 rounded-lg whitespace-nowrap"
+            }, toDisplayString($props.blog?.category_name), 1)) : createCommentVNode("", true)
+          ]),
+          createVNode("h2", { class: "text-xl font-semibold sm:text-2xl font-title group-hover:underline group-focus:underline" }, toDisplayString($props.blog?.title), 1),
+          createVNode("div", { class: "flex justify-between items-center" }, [
+            createVNode("div", { class: "text-xs text-layout-sun-600 dark:text-layout-night-600 py-2" }, [
+              createVNode(_component_display_date, {
+                value: $props.blog?.blog_date,
+                "time-on": false
+              }, null, 8, ["value"]),
+              createTextVNode(" von "),
+              createVNode("span", null, toDisplayString($props.blog?.author_name), 1)
+            ]),
+            createVNode("div", { class: "rl" }, [
+              createVNode(_component_editbtns, {
+                id: $props.blog?.id,
+                table: "blogs"
+              }, null, 8, ["id"])
+            ])
+          ]),
+          createVNode("div", {
+            innerHTML: $props.blog?.summary,
+            class: "pb-6"
+          }, null, 8, ["innerHTML"]),
+          createVNode("div", null, [
+            createVNode(_component_display_number, {
+              value: $props.blog?.reading_time,
+              "after-digits": 0,
+              "value-unit": "Minuten Lesezeit",
+              "value-single-unit": "Minute Lesezeit"
+            }, null, 8, ["value"])
+          ])
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(ssrRenderComponent(_component_socialButtons, {
+    name: $props.blog?.title,
+    postId: $props.blog?.id,
+    title: "Benutzer " + $props.blog?.title,
+    slug: $props.blog?.autoslug,
+    nostars: true
+  }, null, _parent));
+  _push(`</div></div><!--]-->`);
+}
+const _sfc_setup$L = _sfc_main$L.setup;
+_sfc_main$L.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Shared/Usershow.vue");
+  return _sfc_setup$L ? _sfc_setup$L(props, ctx) : void 0;
+};
+const Usershow$1 = /* @__PURE__ */ _export_sfc(_sfc_main$L, [["ssrRender", _sfc_ssrRender$L], ["__scopeId", "data-v-80dda306"]]);
+const __vite_glob_0_313 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Usershow$1
+}, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$K = {
   name: "PictureGallery",
   components: {
-    Layout: Layout$4,
+    Layout: Layout$3,
     MetaHeader,
     Pagination: Pagination$1,
     ZoomImage,
@@ -56641,7 +56717,7 @@ const __vite_glob_0_319 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 const _sfc_main$J = {
   name: "PageViewsChart",
-  components: { Layout: Layout$e, Breadcrumb, MetaHeader, favio },
+  components: { Layout: Layout$d, Breadcrumb, MetaHeader, favio },
   props: {},
   data() {
     return {
@@ -56779,19 +56855,19 @@ function _sfc_ssrRender$J(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
         _push2(ssrRenderComponent(_component_MetaHeader, { title: "Statistik" }, null, _parent2, _scopeId));
-        _push2(`<div class="flex justify-between items-center mb-4" data-v-91107829${_scopeId}><div class="flex items-center" data-v-91107829${_scopeId}><h2 class="text-xl font-bold" data-v-91107829${_scopeId}>Seitenaufrufe pro URL</h2></div><div class="flex items-center space-x-4" data-v-91107829${_scopeId}><div class="flex items-center space-x-2" data-v-91107829${_scopeId}><span data-v-91107829${_scopeId}>Zeitraum</span><select class="p-2.5 text-sm rounded-lg border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-91107829${_scopeId}><option value="1" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "1") : ssrLooseEqual($data.month, "1")) ? " selected" : ""}${_scopeId}>1 Monat</option><option value="2" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "2") : ssrLooseEqual($data.month, "2")) ? " selected" : ""}${_scopeId}>2 Monate     </option><option value="3" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "3") : ssrLooseEqual($data.month, "3")) ? " selected" : ""}${_scopeId}>3 Monate</option><option value="4" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "4") : ssrLooseEqual($data.month, "4")) ? " selected" : ""}${_scopeId}>4 Monate</option><option value="5" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "5") : ssrLooseEqual($data.month, "5")) ? " selected" : ""}${_scopeId}>5 Monate</option></select></div>`);
+        _push2(`<div class="flex justify-between items-center mb-4" data-v-ea7aab23${_scopeId}><div class="flex items-center" data-v-ea7aab23${_scopeId}><h2 class="text-xl font-bold" data-v-ea7aab23${_scopeId}>Seitenaufrufe pro URL</h2></div><div class="flex items-center space-x-4" data-v-ea7aab23${_scopeId}><div class="flex items-center space-x-2" data-v-ea7aab23${_scopeId}><span data-v-ea7aab23${_scopeId}>Zeitraum</span><select class="p-2.5 text-sm rounded-lg border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-ea7aab23${_scopeId}><option value="1" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "1") : ssrLooseEqual($data.month, "1")) ? " selected" : ""}${_scopeId}>1 Monat</option><option value="2" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "2") : ssrLooseEqual($data.month, "2")) ? " selected" : ""}${_scopeId}>2 Monate     </option><option value="3" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "3") : ssrLooseEqual($data.month, "3")) ? " selected" : ""}${_scopeId}>3 Monate</option><option value="4" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "4") : ssrLooseEqual($data.month, "4")) ? " selected" : ""}${_scopeId}>4 Monate</option><option value="5" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.month) ? ssrLooseContain($data.month, "5") : ssrLooseEqual($data.month, "5")) ? " selected" : ""}${_scopeId}>5 Monate</option></select></div>`);
         if ($data.modulRights?.StatisticsAll) {
-          _push2(`<div class="flex items-center space-x-2" data-v-91107829${_scopeId}><span data-v-91107829${_scopeId}>Domain(s)</span><select class="p-2.5 pr-6 text-sm rounded-lg border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-91107829${_scopeId}><option value="all" selected data-v-91107829${_scopeId}>Alle Domains</option><option value="ab" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "ab") : ssrLooseEqual($data.dom, "ab")) ? " selected" : ""}${_scopeId}>Asarios Blog</option><option value="chh" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "chh") : ssrLooseEqual($data.dom, "chh")) ? " selected" : ""}${_scopeId}>Christian Henning</option><option value="mfx" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "mfx") : ssrLooseEqual($data.dom, "mfx")) ? " selected" : ""}${_scopeId}>MarbleFX</option><option value="dag" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "dag") : ssrLooseEqual($data.dom, "dag")) ? " selected" : ""}${_scopeId}>Monika Dargies  </option><option value="dag" data-v-91107829${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "dag") : ssrLooseEqual($data.dom, "dag")) ? " selected" : ""}${_scopeId}>Paul Nadler  </option></select></div>`);
+          _push2(`<div class="flex items-center space-x-2" data-v-ea7aab23${_scopeId}><span data-v-ea7aab23${_scopeId}>Domain(s)</span><select class="p-2.5 pr-6 text-sm rounded-lg border border-layout-sun-300 text-layout-sun-900 bg-layout-sun-50 focus:ring-primary-sun-500 focus:border-primary-sun-500 dark:border-layout-night-300 dark:text-layout-night-900 dark:bg-layout-night-50 dark:placeholder-layout-night-400 dark:focus:ring-primary-night-500 dark:focus:border-primary-night-500" data-v-ea7aab23${_scopeId}><option value="all" selected data-v-ea7aab23${_scopeId}>Alle Domains</option><option value="ab" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "ab") : ssrLooseEqual($data.dom, "ab")) ? " selected" : ""}${_scopeId}>Asarios Blog</option><option value="chh" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "chh") : ssrLooseEqual($data.dom, "chh")) ? " selected" : ""}${_scopeId}>Christian Henning</option><option value="mfx" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "mfx") : ssrLooseEqual($data.dom, "mfx")) ? " selected" : ""}${_scopeId}>MarbleFX</option><option value="dag" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "dag") : ssrLooseEqual($data.dom, "dag")) ? " selected" : ""}${_scopeId}>Monika Dargies  </option><option value="pna" data-v-ea7aab23${ssrIncludeBooleanAttr(Array.isArray($data.dom) ? ssrLooseContain($data.dom, "pna") : ssrLooseEqual($data.dom, "pna")) ? " selected" : ""}${_scopeId}>Paul Nadler  </option></select></div>`);
         } else {
           _push2(`<!---->`);
         }
-        _push2(`</div></div><canvas style="${ssrRenderStyle({ "max-height": "500px" })}" data-v-91107829${_scopeId}></canvas><div class="mt-6" data-v-91107829${_scopeId}><h3 class="text-lg font-semibold mb-2" data-v-91107829${_scopeId}>URLs Übersicht</h3><div class="mt-6" data-v-91107829${_scopeId}><h3 class="text-lg font-semibold mb-3 text-layout-sun-900 dark:text-layout-night-900" data-v-91107829${_scopeId}> URLs (mit Löschfunktion) </h3><ul class="space-y-2 pr-1" data-v-91107829${_scopeId}><!--[-->`);
+        _push2(`</div></div><canvas style="${ssrRenderStyle({ "max-height": "500px" })}" data-v-ea7aab23${_scopeId}></canvas><div class="mt-6" data-v-ea7aab23${_scopeId}><h3 class="text-lg font-semibold mb-2" data-v-ea7aab23${_scopeId}>URLs Übersicht</h3><div class="mt-6" data-v-ea7aab23${_scopeId}><h3 class="text-lg font-semibold mb-3 text-layout-sun-900 dark:text-layout-night-900" data-v-ea7aab23${_scopeId}> URLs (mit Löschfunktion) </h3><ul class="space-y-2 pr-1" data-v-ea7aab23${_scopeId}><!--[-->`);
         ssrRenderList($data.rows, (row, idx) => {
-          _push2(`<li class="group flex items-center justify-between p-3 rounded-xl border border-layout-sun-200 dark:border-layout-night-300 bg-layout-sun-50 dark:bg-layout-night-50 hover:bg-layout-sun-100 dark:hover:bg-layout-night-100 transition" data-v-91107829${_scopeId}><div class="flex items-center space-x-3" data-v-91107829${_scopeId}><span class="text-xs px-2 py-1 rounded-md bg-layout-sun-200 text-layout-sun-800 dark:bg-layout-night-200 dark:text-layout-night-800" data-v-91107829${_scopeId}>${ssrInterpolate(idx + 1)}</span><a${ssrRenderAttr("href", $options.GetDomUrl(row.dom) + row.url)} target="_blank" class="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:underline" data-v-91107829${_scopeId}>`);
+          _push2(`<li class="group flex items-center justify-between p-3 rounded-xl border border-layout-sun-200 dark:border-layout-night-300 bg-layout-sun-50 dark:bg-layout-night-50 hover:bg-layout-sun-100 dark:hover:bg-layout-night-100 transition" data-v-ea7aab23${_scopeId}><div class="flex items-center space-x-3" data-v-ea7aab23${_scopeId}><span class="text-xs px-2 py-1 rounded-md bg-layout-sun-200 text-layout-sun-800 dark:bg-layout-night-200 dark:text-layout-night-800" data-v-ea7aab23${_scopeId}>${ssrInterpolate(idx + 1)}</span><a${ssrRenderAttr("href", $options.GetDomUrl(row.dom) + row.url)} target="_blank" class="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:underline" data-v-ea7aab23${_scopeId}>`);
           _push2(ssrRenderComponent(_component_favio, {
             dom: row.dom
           }, null, _parent2, _scopeId));
-          _push2(`<span data-v-91107829${_scopeId}>${ssrInterpolate(row.url)}</span></a> (${ssrInterpolate(row.cnt)}) </div><div class="flex items-center space-x-2" data-v-91107829${_scopeId}><a${ssrRenderAttr("href", $options.GetDomUrl(row.dom) + row.url)} target="_blank" class="opacity-0 group-hover:opacity-100 transition text-gray-400 hover:text-blue-500" title="Öffnen" data-v-91107829${_scopeId}> 🔗 </a><button class="opacity-0 group-hover:opacity-100 transition px-2 py-1 rounded-md text-red-600 hover:text-white hover:bg-red-600 dark:hover:bg-red-700" title="Löschen" data-v-91107829${_scopeId}> ✕ </button></div></li>`);
+          _push2(`<span data-v-ea7aab23${_scopeId}>${ssrInterpolate(row.url)}</span></a> (${ssrInterpolate(row.cnt)}) </div><div class="flex items-center space-x-2" data-v-ea7aab23${_scopeId}><a${ssrRenderAttr("href", $options.GetDomUrl(row.dom) + row.url)} target="_blank" class="opacity-0 group-hover:opacity-100 transition text-gray-400 hover:text-blue-500" title="Öffnen" data-v-ea7aab23${_scopeId}> 🔗 </a><button class="opacity-0 group-hover:opacity-100 transition px-2 py-1 rounded-md text-red-600 hover:text-white hover:bg-red-600 dark:hover:bg-red-700" title="Löschen" data-v-ea7aab23${_scopeId}> ✕ </button></div></li>`);
         });
         _push2(`<!--]--></ul></div></div>`);
       } else {
@@ -56836,7 +56912,7 @@ function _sfc_ssrRender$J(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                   createVNode("option", { value: "chh" }, "Christian Henning"),
                   createVNode("option", { value: "mfx" }, "MarbleFX"),
                   createVNode("option", { value: "dag" }, "Monika Dargies  "),
-                  createVNode("option", { value: "dag" }, "Paul Nadler  ")
+                  createVNode("option", { value: "pna" }, "Paul Nadler  ")
                 ], 40, ["onUpdate:modelValue", "onChange"]), [
                   [vModelSelect, $data.dom]
                 ])
@@ -56901,7 +56977,7 @@ _sfc_main$J.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Stats.vue");
   return _sfc_setup$J ? _sfc_setup$J(props, ctx) : void 0;
 };
-const Stats = /* @__PURE__ */ _export_sfc(_sfc_main$J, [["ssrRender", _sfc_ssrRender$J], ["__scopeId", "data-v-91107829"]]);
+const Stats = /* @__PURE__ */ _export_sfc(_sfc_main$J, [["ssrRender", _sfc_ssrRender$J], ["__scopeId", "data-v-ea7aab23"]]);
 const __vite_glob_0_320 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Stats
@@ -56915,7 +56991,7 @@ const _sfc_main$I = defineComponent({
     }
   },
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     Markdown,
     MetaHeader
@@ -56972,7 +57048,7 @@ const _sfc_main$H = defineComponent({
   name: "Homepage_AiContent",
   components: {
     Markdown: defineAsyncComponent(() => import("vue3-markdown-it")),
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageTitle,
     BlogPreviewBig,
     BlogPreviewSmall,
@@ -57137,7 +57213,7 @@ const __vite_glob_0_322 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$G = defineComponent({
   name: "Homepage_UserIsNoAdmin",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -57243,7 +57319,7 @@ const __vite_glob_0_323 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$F = defineComponent({
   name: "Homepage_UserIsNoCustomer",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -57349,7 +57425,7 @@ const __vite_glob_0_324 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$E = defineComponent({
   name: "Homepage_UserIsNoEmployee",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -57455,7 +57531,7 @@ const __vite_glob_0_325 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$D = defineComponent({
   name: "Homepage_BlogList",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageTitle,
     // BlogPreviewBig,
     Pagination: Pagination$1,
@@ -57747,7 +57823,7 @@ const _sfc_main$C = {
     AiButton,
     editbtns,
     SocialButtons,
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader
   },
   props: {
@@ -57839,28 +57915,28 @@ function _sfc_ssrRender$C(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
           _: 1
         }, _parent2, _scopeId));
         if ($props.users) {
-          _push2(`<div id="teaser-img2" style="${ssrRenderStyle({ "z-index": "10", "margin-bottom": "-0px" })}" class="${ssrRenderClass([{ "disable-link": $data.isCommentActive }, "block max-w-sm gap-3 mx-auto mh_65 sm:max-w-full focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100"])}" data-v-d9f2df72${_scopeId}><div class="blog-container mh_65 lg:col-span-4 bg-layout-sun-100 dark:bg-layout-night-100" style="${ssrRenderStyle({})}" data-v-d9f2df72${_scopeId}><img${ssrRenderAttr("src", $props.users?.profile_photo_path != null ? "/images/_" + $options.SD() + "/users/profile_photo_path/" + $props.users?.profile_photo_path.replace("/images/", "") : "/images/profile-photos/008.jpg")}${ssrRenderAttr("alt", $props.users?.name)} width="480" height="480" style="${ssrRenderStyle({ "max-height": "480px" })}" class="${ssrRenderClass(["object-cover w-full rounded lg:col-span-4 object-cover rounded bg-layout-sun-100 dark:bg-layout-night-100", $props.users?.madewithai ? "ai-image-corner" : ""])}" data-v-d9f2df72${_scopeId}><div class="relative" data-v-d9f2df72${_scopeId}>`);
+          _push2(`<div id="teaser-img2" style="${ssrRenderStyle({ "z-index": "10", "margin-bottom": "-0px" })}" class="${ssrRenderClass([{ "disable-link": $data.isCommentActive }, "block max-w-sm gap-3 mx-auto mh_65 sm:max-w-full focus:no-underline lg:grid lg:grid-cols-12 bg-layout-sun-100 dark:bg-layout-night-100"])}" data-v-00de5835${_scopeId}><div class="blog-container mh_65 lg:col-span-4 bg-layout-sun-100 dark:bg-layout-night-100" style="${ssrRenderStyle({})}" data-v-00de5835${_scopeId}><img${ssrRenderAttr("src", $props.users?.profile_photo_path != null ? "/images/users/profile_photo_path/" + $props.users?.profile_photo_path.replace("/images/", "") : "/images/profile-photos/008.jpg")}${ssrRenderAttr("alt", $props.users?.name)} width="480" height="480" style="${ssrRenderStyle({ "max-height": "480px" })}" class="${ssrRenderClass(["object-cover w-full rounded lg:col-span-4 object-cover rounded bg-layout-sun-100 dark:bg-layout-night-100", $props.users?.madewithai ? "ai-image-corner" : ""])}" data-v-00de5835${_scopeId}><div class="relative" data-v-00de5835${_scopeId}>`);
           _push2(ssrRenderComponent(_component_AiButton, {
             xis_enabled: $props.users?.madewithai
           }, null, _parent2, _scopeId));
-          _push2(`</div></div><div id="teaser-img" class="p-6 space-y-2 lg:col-span-8 pb-0" data-v-d9f2df72${_scopeId}><h2 class="text-xl font-semibold sm:text-2xl font-title" data-v-d9f2df72${_scopeId}>${ssrInterpolate($props.users?.name)}  `);
+          _push2(`</div></div><div id="teaser-img" class="p-6 space-y-2 lg:col-span-8 pb-0" data-v-00de5835${_scopeId}><h2 class="text-xl font-semibold sm:text-2xl font-title" data-v-00de5835${_scopeId}>${ssrInterpolate($props.users?.name)}  `);
           _push2(ssrRenderComponent(_component_editbtns, {
             id: $props.users?.id,
             table: "users"
           }, null, _parent2, _scopeId));
-          _push2(`</h2><table class="table-auto text-left" data-v-d9f2df72${_scopeId}><tbody data-v-d9f2df72${_scopeId}><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Vorname:</th><td data-v-d9f2df72${_scopeId}>${$props.users?.first_name ?? ""}</td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Registriert seit:</th><td data-v-d9f2df72${_scopeId}>${ssrInterpolate($options.formatDate($props.users?.created_at))}</td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Alter:</th><td data-v-d9f2df72${_scopeId}>${ssrInterpolate($options.get_age($props.users?.birthday))}</td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Musik:</th><td data-v-d9f2df72${_scopeId}>${$props.users?.music ?? ""}</td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Interessen:</th><td data-v-d9f2df72${_scopeId}>${$props.users?.interests ?? ""}</td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Beschäftigung:</th><td data-v-d9f2df72${_scopeId}>${$props.users?.occupation ?? ""}</td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Statistiken:</th><td data-v-d9f2df72${_scopeId}><a${ssrRenderAttr("href", "/admin/mcslpoints/" + $props.users.id + "#stats")} class="inline-flex items-center gap-2 mb-3" data-v-d9f2df72${_scopeId}><span class="lg:rounded" style="${ssrRenderStyle({ "background-color": "#3d983b", "padding": "3px 7px", "color": "#fff !important", "display": "inline-flex", "align-items": "center", "gap": "4px" })}" data-v-d9f2df72${_scopeId}><img${ssrRenderAttr("src", "/images/icons/chart.png")} class="w-[16px] h-[16px]" alt="Statistik" data-v-d9f2df72${_scopeId}>Zur Statistik </span></a></td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Facebook:</th><td data-v-d9f2df72${_scopeId}>`);
+          _push2(`</h2><table class="table-auto text-left" data-v-00de5835${_scopeId}><tbody data-v-00de5835${_scopeId}><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Vorname:</th><td data-v-00de5835${_scopeId}>${$props.users?.first_name ?? ""}</td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Registriert seit:</th><td data-v-00de5835${_scopeId}>${ssrInterpolate($options.formatDate($props.users?.created_at))}</td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Alter:</th><td data-v-00de5835${_scopeId}>${ssrInterpolate($options.get_age($props.users?.birthday))}</td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Musik:</th><td data-v-00de5835${_scopeId}>${$props.users?.music ?? ""}</td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Interessen:</th><td data-v-00de5835${_scopeId}>${$props.users?.interests ?? ""}</td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Beschäftigung:</th><td data-v-00de5835${_scopeId}>${$props.users?.occupation ?? ""}</td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Statistiken:</th><td data-v-00de5835${_scopeId}><a${ssrRenderAttr("href", "/admin/mcslpoints/" + $props.users.id + "#stats")} class="inline-flex items-center gap-2 mb-3" data-v-00de5835${_scopeId}><span class="lg:rounded" style="${ssrRenderStyle({ "background-color": "#3d983b", "padding": "3px 7px", "color": "#fff !important", "display": "inline-flex", "align-items": "center", "gap": "4px" })}" data-v-00de5835${_scopeId}><img${ssrRenderAttr("src", "/images/icons/chart.png")} class="w-[16px] h-[16px]" alt="Statistik" data-v-00de5835${_scopeId}>Zur Statistik </span></a></td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Facebook:</th><td data-v-00de5835${_scopeId}>`);
           if ($props.users?.fbd) {
-            _push2(`<a${ssrRenderAttr("href", $options.fbid($props.users?.fbd))} target="_blank" data-v-d9f2df72${_scopeId}><span style="${ssrRenderStyle({ "background-color": "#3b5998", "padding": "3px 7px", "color": "#fff !important" })}" class="lg:rounded" data-v-d9f2df72${_scopeId}>Zu <i class="w-[18px] h-[18px] mr-[-7px] fab fa-facebook-f" data-v-d9f2df72${_scopeId}></i>acebook</span></a>`);
+            _push2(`<a${ssrRenderAttr("href", $options.fbid($props.users?.fbd))} target="_blank" data-v-00de5835${_scopeId}><span style="${ssrRenderStyle({ "background-color": "#3b5998", "padding": "3px 7px", "color": "#fff !important" })}" class="lg:rounded" data-v-00de5835${_scopeId}>Zu <i class="w-[18px] h-[18px] mr-[-7px] fab fa-facebook-f" data-v-00de5835${_scopeId}></i>acebook</span></a>`);
           } else {
-            _push2(`<p data-v-d9f2df72${_scopeId}>keine Angabe</p>`);
+            _push2(`<p data-v-00de5835${_scopeId}>keine Angabe</p>`);
           }
-          _push2(`</td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>MCSL-Points:</th><td data-v-d9f2df72${_scopeId}>`);
+          _push2(`</td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>MCSL-Points:</th><td data-v-00de5835${_scopeId}>`);
           if ($props.points) {
-            _push2(`<p data-v-d9f2df72${_scopeId}>${ssrInterpolate($props.points)}</p>`);
+            _push2(`<p data-v-00de5835${_scopeId}>${ssrInterpolate($props.points)}</p>`);
           } else {
-            _push2(`<p data-v-d9f2df72${_scopeId}>0</p>`);
+            _push2(`<p data-v-00de5835${_scopeId}>0</p>`);
           }
-          _push2(`</td></tr><tr data-v-d9f2df72${_scopeId}><th class="pr-4" data-v-d9f2df72${_scopeId}>Letzter Login:</th><td data-v-d9f2df72${_scopeId}>${ssrInterpolate($options.formatDate($props.users?.last_login_at))}</td></tr></tbody></table>`);
+          _push2(`</td></tr><tr data-v-00de5835${_scopeId}><th class="pr-4" data-v-00de5835${_scopeId}>Letzter Login:</th><td data-v-00de5835${_scopeId}>${ssrInterpolate($options.formatDate($props.users?.last_login_at))}</td></tr></tbody></table>`);
           _push2(ssrRenderComponent(_component_socialButtons, {
             name: $props.users?.name,
             postId: $props.users?.id,
@@ -57872,14 +57948,14 @@ function _sfc_ssrRender$C(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
         } else {
           _push2(`<!---->`);
         }
-        _push2(`<br data-v-d9f2df72${_scopeId}><br data-v-d9f2df72${_scopeId}>`);
+        _push2(`<br data-v-00de5835${_scopeId}><br data-v-00de5835${_scopeId}>`);
         if ($props.users?.about) {
-          _push2(`<div class="pb-6 bg-layout-sun-100 dark:bg-layout-night-100 p-4" data-v-d9f2df72${_scopeId}><h1 data-v-d9f2df72${_scopeId}><b data-v-d9f2df72${_scopeId}>Über ${ssrInterpolate($props.users?.name)}</b></h1><div data-v-d9f2df72${_scopeId}>${$props.users?.about ?? ""}</div></div>`);
+          _push2(`<div class="pb-6 bg-layout-sun-100 dark:bg-layout-night-100 p-4" data-v-00de5835${_scopeId}><h1 data-v-00de5835${_scopeId}><b data-v-00de5835${_scopeId}>Über ${ssrInterpolate($props.users?.name)}</b></h1><div data-v-00de5835${_scopeId}>${$props.users?.about ?? ""}</div></div>`);
         } else {
           _push2(`<!---->`);
         }
         if (!$props.users) {
-          _push2(`<div data-v-d9f2df72${_scopeId}> Konnte den Benutzer nicht finden </div>`);
+          _push2(`<div data-v-00de5835${_scopeId}> Konnte den Benutzer nicht finden </div>`);
         } else {
           _push2(`<!---->`);
         }
@@ -57908,7 +57984,7 @@ function _sfc_ssrRender$C(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
               style: {}
             }, [
               createVNode("img", {
-                src: $props.users?.profile_photo_path != null ? "/images/_" + $options.SD() + "/users/profile_photo_path/" + $props.users?.profile_photo_path.replace("/images/", "") : "/images/profile-photos/008.jpg",
+                src: $props.users?.profile_photo_path != null ? "/images/users/profile_photo_path/" + $props.users?.profile_photo_path.replace("/images/", "") : "/images/profile-photos/008.jpg",
                 alt: $props.users?.name,
                 width: "480",
                 height: "480",
@@ -58053,7 +58129,7 @@ _sfc_main$C.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Application/Homepage/Usershow.vue");
   return _sfc_setup$C ? _sfc_setup$C(props, ctx) : void 0;
 };
-const Usershow = /* @__PURE__ */ _export_sfc(_sfc_main$C, [["ssrRender", _sfc_ssrRender$C], ["__scopeId", "data-v-d9f2df72"]]);
+const Usershow = /* @__PURE__ */ _export_sfc(_sfc_main$C, [["ssrRender", _sfc_ssrRender$C], ["__scopeId", "data-v-00de5835"]]);
 const __vite_glob_0_327 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Usershow
@@ -58061,7 +58137,7 @@ const __vite_glob_0_327 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$B = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -58179,7 +58255,7 @@ const _sfc_main$A = defineComponent({
     }
   },
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     Markdown,
     MetaHeader
@@ -58234,10 +58310,10 @@ const __vite_glob_0_329 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$z = {
   name: "NewHome",
-  components: { Layout: Layout$6, JArrow, MetaHeader },
+  components: { Layout: Layout$5, JArrow, MetaHeader },
   methods: {
     redirect() {
-      router.visit("/blogs");
+      router$1.visit("/blogs");
     }
     // andere Methoden hier...
   }
@@ -58469,7 +58545,7 @@ const __vite_glob_0_330 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$y = {
   components: {
-    Layout: Layout$e,
+    Layout: Layout$d,
     InputHtml,
     MetaHeader,
     editbtns,
@@ -59367,7 +59443,7 @@ _sfc_main$x.setup = (props, ctx) => {
 const ContactCard$1 = /* @__PURE__ */ _export_sfc(_sfc_main$x, [["ssrRender", _sfc_ssrRender$x], ["__scopeId", "data-v-98880455"]]);
 const _sfc_main$w = {
   name: "PrivacyPage",
-  components: { Layout: Layout$6, MetaHeader, ContactCard: ContactCard$1 },
+  components: { Layout: Layout$5, MetaHeader, ContactCard: ContactCard$1 },
   props: {
     privacy: String,
     // enthält DB-HTML MIT {{ vcard }}
@@ -60251,31 +60327,41 @@ const _sfc_main$q = defineComponent({
     },
     isRightsReady() {
       return this.$isRightsReady;
-    },
-    hasRight() {
-      return this.$hasRight;
     }
   },
   methods: {
     SD,
+    //         async loadLayout() {
+    //     const layoutName = this.SD();
+    //     console.log("SD():", layoutName);
+    //     try {
+    //       const layout = await import(`@/Application/Homepage/Shared/${layoutName}/Layout.vue`);
+    //       this.layoutComponent = layout.default;
+    //     } catch (error) {
+    //       console.warn(`Layout für Subdomain "${layoutName}" nicht gefunden, lade DefaultLayout.`, error);
+    //       const defaultLayout = await import(`@/Application/Homepage/Shared/Layout.vue`);
+    //       this.layoutComponent = defaultLayout.default;
+    //     }
+    //   },
     async loadLayout() {
-      const layoutName = this.SD();
       try {
+        const layoutName = this.SD();
+        const importPath = `@/Application/Homepage/Shared/${layoutName}/Layout.vue`;
         const layout2 = await __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "../Shared/ab/Layout.vue": () => Promise.resolve().then(() => __vite_glob_0_314), "../Shared/chh/Layout.vue": () => Promise.resolve().then(() => __vite_glob_0_315), "../Shared/dag/Layout.vue": () => Promise.resolve().then(() => __vite_glob_0_316), "../Shared/mfx/Layout.vue": () => Promise.resolve().then(() => __vite_glob_0_317), "../Shared/pna/Layout.vue": () => Promise.resolve().then(() => __vite_glob_0_318) }), `../Shared/${layoutName}/Layout.vue`, 4);
         this.layoutComponent = layout2.default;
       } catch (error) {
-        console.warn(`Layout für Subdomain "${layoutName}" nicht gefunden, lade DefaultLayout.`, error);
-        const defaultLayout = await Promise.resolve().then(() => __vite_glob_0_310);
-        this.layoutComponent = defaultLayout.default;
+        console.error("[loadLayout] IMPORT FEHLER");
+        console.error(error);
+        try {
+          const layout2 = await Promise.resolve().then(() => __vite_glob_0_310);
+          this.layoutComponent = layout2.default;
+        } catch (e) {
+          console.error("[loadLayout] Auch Fallback fehlgeschlagen");
+          console.error(e);
+        }
       }
     },
     // Asynchrone Methode, um die Rechte zu laden
-    async hasRight(right, table) {
-      if (!this.rightsData[`${right}_${table}`] && table) {
-        await this.checkRight(right, table);
-      }
-      return this.rightsData[`${right}_${table}`] === 1;
-    },
     async checkRight(right, table) {
       const value = await GetRights(right, table);
       this.$set(this.rightsData, `${right}_${table}`, value);
@@ -60386,7 +60472,7 @@ const __vite_glob_0_338 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$p = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$5,
+    Layout: Layout$4,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -60549,7 +60635,7 @@ const _sfc_main$o = defineComponent({
     }
   },
   components: {
-    Layout: Layout$5,
+    Layout: Layout$4,
     PageContent,
     Markdown,
     MetaHeader
@@ -60604,7 +60690,7 @@ const __vite_glob_0_340 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$n = {
   name: "PrivacyPage",
-  components: { Layout: Layout$5, MetaHeader, ContactCard: ContactCard$1 },
+  components: { Layout: Layout$4, MetaHeader, ContactCard: ContactCard$1 },
   props: {
     privacy: String,
     // enthält DB-HTML MIT {{ vcard }}
@@ -60707,7 +60793,7 @@ const __vite_glob_0_341 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$m = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -60948,7 +61034,7 @@ const __vite_glob_0_342 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$l = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$5,
+    Layout: Layout$4,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -61189,7 +61275,7 @@ const __vite_glob_0_343 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$k = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$5,
+    Layout: Layout$4,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -61392,7 +61478,7 @@ const __vite_glob_0_344 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$j = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -61673,7 +61759,7 @@ const __vite_glob_0_345 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$i = defineComponent({
   name: "Homepage_ImageShow",
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     backBtn: BackBtn,
     PageContent,
     PageTitle,
@@ -61853,7 +61939,7 @@ const _sfc_main$h = defineComponent({
     }
   },
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageContent,
     Markdown,
     MetaHeader
@@ -61908,7 +61994,7 @@ const __vite_glob_0_347 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$g = {
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     MetaHeader
   },
   mounted() {
@@ -62030,7 +62116,7 @@ const __vite_glob_0_349 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$e = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -62271,7 +62357,7 @@ const __vite_glob_0_350 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$d = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -62492,7 +62578,7 @@ const __vite_glob_0_351 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$c = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -62714,7 +62800,7 @@ const __vite_glob_0_352 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$b = defineComponent({
   name: "Homepage_Home",
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -63139,7 +63225,7 @@ const __vite_glob_0_353 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$a = defineComponent({
   name: "Homepage_Projects",
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageContent,
     PageTitle,
     // PageParagraph,
@@ -63424,7 +63510,7 @@ const __vite_glob_0_354 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$9 = defineComponent({
   name: "Homepage_Projects",
   components: {
-    Layout: Layout$7,
+    Layout: Layout$6,
     PageContent,
     PageTitle,
     PageParagraph,
@@ -63724,7 +63810,7 @@ const _sfc_main$8 = defineComponent({
     }
   },
   components: {
-    Layout: Layout$4,
+    Layout: Layout$3,
     PageContent,
     Markdown,
     MetaHeader
@@ -63779,7 +63865,7 @@ const __vite_glob_0_356 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$7 = {
   name: "PrivacyPage",
-  components: { Layout: Layout$4, MetaHeader, ContactCard: ContactCard$1 },
+  components: { Layout: Layout$3, MetaHeader, ContactCard: ContactCard$1 },
   props: {
     privacy: String,
     // enthält DB-HTML MIT {{ vcard }}
@@ -64145,7 +64231,7 @@ const __vite_glob_0_358 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$5 = {
   name: "PictureGallery",
   components: {
-    Layout: Layout$4,
+    Layout: Layout$3,
     MetaHeader,
     Pagination: Pagination$1,
     ZoomImage,
@@ -64662,7 +64748,7 @@ const __vite_glob_0_359 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$4 = {
   name: "Home_PNA",
   components: {
-    Layout: Layout$4,
+    Layout: Layout$3,
     MetaHeader
   },
   props: {
@@ -64678,13 +64764,22 @@ function _sfc_ssrRender$4(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
         _push2(ssrRenderComponent(_component_MetaHeader, { title: "Willkommen auf Paul Nadlers Homepage" }, null, _parent2, _scopeId));
-        _push2(`<span${_scopeId}>${$props.data[0]?.text ?? ""}</span>`);
+        _push2(`<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start"${_scopeId}><img${ssrRenderAttr("src", "/images/_pna/paulnadler.jpg")} alt="Paul Nadler" class="h-[630px] w-auto object-cover shrink-0 rounded-lg shadow-lg"${_scopeId}><div class="flex-1"${_scopeId}><span${_scopeId}>${$props.data[0]?.text ?? ""}</span></div></div>`);
       } else {
         return [
           createVNode(_component_MetaHeader, { title: "Willkommen auf Paul Nadlers Homepage" }),
-          createVNode("span", {
-            innerHTML: $props.data[0]?.text
-          }, null, 8, ["innerHTML"])
+          createVNode("div", { class: "max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start" }, [
+            createVNode("img", {
+              src: "/images/_pna/paulnadler.jpg",
+              alt: "Paul Nadler",
+              class: "h-[630px] w-auto object-cover shrink-0 rounded-lg shadow-lg"
+            }),
+            createVNode("div", { class: "flex-1" }, [
+              createVNode("span", {
+                innerHTML: $props.data[0]?.text
+              }, null, 8, ["innerHTML"])
+            ])
+          ])
         ];
       }
     }),
@@ -64705,7 +64800,7 @@ const __vite_glob_0_360 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 const _sfc_main$3 = {
   name: "ShortPoems",
   components: {
-    Layout: Layout$6,
+    Layout: Layout$5,
     MetaHeader,
     newbtn,
     SearchFilter,
@@ -65064,7 +65159,7 @@ const __vite_glob_0_361 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
 }, Symbol.toStringTag, { value: "Module" }));
 const _sfc_main$2 = {
   name: "DidYouKnow",
-  components: { Pagination: Pagination$1, Layout: Layout$6, MetaHeader, newbtn, SearchFilter, Alert, editbtns, SocialButtons },
+  components: { Pagination: Pagination$1, Layout: Layout$5, MetaHeader, newbtn, SearchFilter, Alert, editbtns, SocialButtons },
   props: {
     items: { type: Object, required: true },
     ratings: { type: [Array, Object], default: () => ({}) },
@@ -65675,7 +65770,7 @@ const __vite_glob_0_376 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.d
   __proto__: null,
   default: ProfileTextfield
 }, Symbol.toStringTag, { value: "Module" }));
-const Ziggy = { "url": "http://ab.test.mcs", "port": null, "defaults": {}, "routes": { "debugbar.openhandler": { "uri": "_debugbar/open", "methods": ["GET", "HEAD"] }, "debugbar.clockwork": { "uri": "_debugbar/clockwork/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "debugbar.assets.css": { "uri": "_debugbar/assets/stylesheets", "methods": ["GET", "HEAD"] }, "debugbar.assets.js": { "uri": "_debugbar/assets/javascript", "methods": ["GET", "HEAD"] }, "debugbar.cache.delete": { "uri": "_debugbar/cache/{key}/{tags?}", "methods": ["DELETE"], "parameters": ["key", "tags"] }, "debugbar.queries.explain": { "uri": "_debugbar/queries/explain", "methods": ["POST"] }, "laravel-cookie-consent.script-utils": { "uri": "laravel-cookie-consent/script-utils", "methods": ["GET", "HEAD"] }, "login": { "uri": "login", "methods": ["GET", "HEAD"] }, "logout": { "uri": "logout", "methods": ["POST"] }, "password.request": { "uri": "forgot-password", "methods": ["GET", "HEAD"] }, "password.reset": { "uri": "reset-password/{token}", "methods": ["GET", "HEAD"], "parameters": ["token"] }, "password.email": { "uri": "forgot-password", "methods": ["POST"] }, "password.update": { "uri": "reset-password", "methods": ["POST"] }, "register": { "uri": "register", "methods": ["GET", "HEAD"] }, "register.store": { "uri": "register", "methods": ["POST"] }, "verification.notice": { "uri": "email/verify", "methods": ["GET", "HEAD"] }, "verification.verify": { "uri": "email/verify/{id}/{hash}", "methods": ["GET", "HEAD"], "parameters": ["id", "hash"] }, "verification.send": { "uri": "email/verification-notification", "methods": ["POST"] }, "user-profile-information.update": { "uri": "user/profile-information", "methods": ["PUT"] }, "user-password.update": { "uri": "user/password", "methods": ["PUT"] }, "password.confirm": { "uri": "user/confirm-password", "methods": ["GET", "HEAD"] }, "password.confirmation": { "uri": "user/confirmed-password-status", "methods": ["GET", "HEAD"] }, "password.confirm.store": { "uri": "user/confirm-password", "methods": ["POST"] }, "two-factor.login": { "uri": "two-factor-challenge", "methods": ["GET", "HEAD"] }, "two-factor.login.post": { "uri": "two-factor-challenge", "methods": ["POST"] }, "two-factor.enable": { "uri": "user/two-factor-authentication", "methods": ["POST"] }, "two-factor.confirm": { "uri": "user/confirmed-two-factor-authentication", "methods": ["POST"] }, "two-factor.disable": { "uri": "user/two-factor-authentication", "methods": ["DELETE"] }, "two-factor.qr-code": { "uri": "user/two-factor-qr-code", "methods": ["GET", "HEAD"] }, "two-factor.secret-key": { "uri": "user/two-factor-secret-key", "methods": ["GET", "HEAD"] }, "two-factor.recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["GET", "HEAD"] }, "two-factor.regenerate-recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["POST"] }, "terms.show": { "uri": "terms-of-service", "methods": ["GET", "HEAD"] }, "policy.show": { "uri": "privacy-policy", "methods": ["GET", "HEAD"] }, "profile.show": { "uri": "user/profile", "methods": ["GET", "HEAD"] }, "other-browser-sessions.destroy": { "uri": "user/other-browser-sessions", "methods": ["DELETE"] }, "current-user-photo.destroy": { "uri": "user/profile-photo", "methods": ["DELETE"] }, "current-user.destroy": { "uri": "user", "methods": ["DELETE"] }, "api-tokens.index": { "uri": "user/api-tokens", "methods": ["GET", "HEAD"] }, "api-tokens.store": { "uri": "user/api-tokens", "methods": ["POST"] }, "api-tokens.update": { "uri": "user/api-tokens/{token}", "methods": ["PUT"], "parameters": ["token"] }, "api-tokens.destroy": { "uri": "user/api-tokens/{token}", "methods": ["DELETE"], "parameters": ["token"] }, "sanctum.csrf-cookie": { "uri": "sanctum/csrf-cookie", "methods": ["GET", "HEAD"] }, "ignition.healthCheck": { "uri": "_ignition/health-check", "methods": ["GET", "HEAD"] }, "ignition.executeSolution": { "uri": "_ignition/execute-solution", "methods": ["POST"] }, "ignition.updateConfig": { "uri": "_ignition/update-config", "methods": ["POST"] }, "cookieconsent.script": { "uri": "cookie-consent/script", "methods": ["GET", "HEAD"] }, "cookieconsent.accept.all": { "uri": "cookie-consent/accept-all", "methods": ["POST"] }, "cookieconsent.accept.essentials": { "uri": "cookie-consent/accept-essentials", "methods": ["POST"] }, "cookieconsent.accept.configuration": { "uri": "cookie-consent/configure", "methods": ["POST"] }, "cookieconsent.reset": { "uri": "cookie-consent/reset", "methods": ["POST"] }, "admin.add.func": { "uri": "api/AddFunc", "methods": ["POST"] }, "home.pwd": { "uri": "pwd", "methods": ["GET", "HEAD"] }, "countpixel": { "uri": "countpixel/{url}/{route}/{page?}", "methods": ["GET", "HEAD"], "wheres": { "url": ".*" }, "parameters": ["url", "route", "page"] }, "api.mcslpoints": { "uri": "api/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "remove.temp": { "uri": "api/delTempz/{path}", "methods": ["GET", "HEAD"], "parameters": ["path"] }, "ggle.login": { "uri": "auth/google", "methods": ["GET", "HEAD"] }, "ri": { "uri": "ri", "methods": ["GET", "HEAD"] }, "get.help": { "uri": "api/gethelp/{slug}/{table}", "methods": ["GET", "HEAD"], "parameters": ["slug", "table"] }, "auth.nickname": { "uri": "auth/nickname", "methods": ["GET", "HEAD"] }, "admin.mcslpoints": { "uri": "admin/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "GetRights_all": { "uri": "api/user/rights", "methods": ["GET", "HEAD"] }, "home.imprint.gen": { "uri": "home/impressum", "methods": ["GET", "HEAD"] }, "home.index": { "uri": "/", "methods": ["GET", "HEAD"] }, "home.spruch": { "uri": "api/spruch-des-monats", "methods": ["GET", "HEAD"] }, "home.lostnfound": { "uri": "lostnfound", "methods": ["GET", "HEAD"] }, "home.privacy.dag": { "uri": "privacy", "methods": ["GET", "HEAD"] }, "home.ai.dag": { "uri": "ai", "methods": ["GET", "HEAD"] }, "home.contacts.dag": { "uri": "contacts", "methods": ["GET", "HEAD"] }, "home.links": { "uri": "links", "methods": ["GET", "HEAD"] }, "home.visit": { "uri": "visitcard", "methods": ["GET", "HEAD"] }, "home.publication": { "uri": "publikationen", "methods": ["GET", "HEAD"] }, "home.imprint.chh": { "uri": "imprint", "methods": ["GET", "HEAD"] }, "user-profile-information.update_alt": { "uri": "user/profile", "methods": ["PUT"] }, "save.shp": { "uri": "save/shortpoems", "methods": ["POST"] }, "profile.photo.get": { "uri": "profile/photo", "methods": ["GET", "HEAD"] }, "mail.subscribe_newsl": { "uri": "newsl_subscribe", "methods": ["POST"] }, "mail.unsubscribe_newsl": { "uri": "unsubscribe/{uhash?}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "mail.unsubscribe": { "uri": "unsubscribe", "methods": ["POST"] }, "mail.unsubsc": { "uri": "unsubsc_mail", "methods": ["POST"] }, "mail.savenewsletter": { "uri": "mail/subscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "home.ai": { "uri": "home/ai", "methods": ["GET", "HEAD"] }, "home.pna.grafitti": { "uri": "grafitti", "methods": ["GET", "HEAD"] }, "home.pna.portraits": { "uri": "portraits", "methods": ["GET", "HEAD"] }, "home.pna.contacts": { "uri": "kontakt", "methods": ["GET", "HEAD"] }, "home.imprint.pna": { "uri": "home/imprint_pna", "methods": ["GET", "HEAD"] }, "home.ab.contacts_alt": { "uri": "Kontakt", "methods": ["GET", "HEAD"] }, "mcs.points": { "uri": "about/mcs-points", "methods": ["GET", "HEAD"] }, "dashboard": { "uri": "dashboard", "methods": ["GET", "HEAD"] }, "newsl.to.mcsp": { "uri": "newslToMCSLPoints/{uhash?}/{comphash?}/{email?}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "comphash", "email"] }, "personal.update": { "uri": "personal_update", "methods": ["POST"] }, "home.qrcodah": { "uri": "home/QRCodaH", "methods": ["GET", "HEAD"] }, "home.about": { "uri": "home/aboutme", "methods": ["GET", "HEAD"] }, "home.imprint": { "uri": "home/imprint", "methods": ["GET", "HEAD"] }, "home.terms": { "uri": "home/terms", "methods": ["GET", "HEAD"] }, "home.images.gallery": { "uri": "home/show/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.gallery.search": { "uri": "home/search/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.index": { "uri": "home/pictures", "methods": ["GET", "HEAD"] }, "home.shortpoems": { "uri": "home/shortpoems", "methods": ["GET", "HEAD"] }, "home.didyouknow": { "uri": "home/didyouknow", "methods": ["GET", "HEAD"] }, "home.blog.index": { "uri": "blogs", "methods": ["GET", "HEAD"] }, "home.blog.show": { "uri": "blogs/show/{autoslug}", "methods": ["GET", "HEAD"], "parameters": ["autoslug"] }, "home.no_application_found": { "uri": "home/no_application_found", "methods": ["GET", "HEAD"] }, "home.user_is_no_admin": { "uri": "home/user_is_no_admin", "methods": ["GET", "HEAD"] }, "home.user_is_no_employee": { "uri": "home/user_is_no_employee", "methods": ["GET", "HEAD"] }, "home.user_is_no_customer": { "uri": "home/user_is_no_customer", "methods": ["GET", "HEAD"] }, "home.invalid_signature": { "uri": "home/invalid_signature", "methods": ["GET", "HEAD"] }, "home.userlist": { "uri": "home/users", "methods": ["GET", "HEAD"] }, "home.user.show": { "uri": "home/users/show/{name}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["name", "id"] }, "home.privacy": { "uri": "home/privacy", "methods": ["GET", "HEAD"] }, "mfx.changelog": { "uri": "changelog", "methods": ["GET", "HEAD"] }, "mfx.changelog.old": { "uri": "changelog_old", "methods": ["GET", "HEAD"] }, "home.projects.mfx": { "uri": "home/projects", "methods": ["GET", "HEAD"] }, "home.images.cat.mfx": { "uri": "home/images", "methods": ["GET", "HEAD"] }, "home.images.mfx": { "uri": "home/images/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.people.mfx": { "uri": "home/people", "methods": ["GET", "HEAD"] }, "home.privacy.mfx": { "uri": "home/privacy_info", "methods": ["GET", "HEAD"] }, "home.infos.mfx": { "uri": "home/infos", "methods": ["GET", "HEAD"] }, "home.infos.show.mfx": { "uri": "home/infos/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.powered.show.mfx": { "uri": "powered-by-mcsl", "methods": ["GET", "HEAD"] }, "home.contacts.mfx": { "uri": "contacts_mfx", "methods": ["GET", "HEAD"] }, "api.table-columns": { "uri": "api/table-columns/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "home.contacts": { "uri": "home/contacts", "methods": ["GET", "HEAD"] }, "user.twofactor.enable": { "uri": "user/twofactor/enable", "methods": ["POST"] }, "user.twofactor.disable": { "uri": "user/twofactor/disable", "methods": ["POST"] }, "images.copyleft": { "uri": "copyleft/images", "methods": ["GET", "HEAD"] }, "mfx.getvotez": { "uri": "api/getVotez", "methods": ["GET", "HEAD"] }, "GetRights": { "uri": "api/user/rights/des/{table}/{right}", "methods": ["GET", "HEAD"], "parameters": ["table", "right"] }, "allRights": { "uri": "api/user/rights/des-all/{right}", "methods": ["GET", "HEAD"], "parameters": ["right"] }, "tables.noview": { "uri": "no-rights", "methods": ["GET", "HEAD"] }, "GetAuth": { "uri": "GetAuth", "methods": ["GET", "HEAD"] }, "api.getRating": { "uri": "api/GetRating/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "admin.users_rights.get": { "uri": "admin/user-rights/get", "methods": ["GET", "HEAD"] }, "two-factor.setup": { "uri": "two-factor/setup", "methods": ["POST"] }, "two-factor.confirm_alt": { "uri": "two-factor/confirm", "methods": ["POST"] }, "admin.users_rights": { "uri": "admin/User_Rights", "methods": ["GET", "HEAD"] }, "admin.GetSRights": { "uri": "api/GetSRights", "methods": ["GET", "HEAD"] }, "admin.users_rights.save": { "uri": "api/admin/user-rights/save", "methods": ["POST"] }, "getSlug": { "uri": "api/getSlug/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "ColumnFetcher": { "uri": "namebindings", "methods": ["GET", "HEAD"] }, "upload.image": { "uri": "upload-image/{table}/{isw?}", "methods": ["POST"], "parameters": ["table", "isw"] }, "upload.file": { "uri": "upload-file/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.ofile": { "uri": "upload-ofile/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.gen": { "uri": "upload-image_alt/{table}/{isw?}/{oripath?}", "methods": ["POST"], "parameters": ["table", "isw", "oripath"] }, "GetUserNull": { "uri": "GetUserNull", "methods": ["GET", "HEAD"] }, "save.image": { "uri": "save-image/{table}", "methods": ["POST"], "parameters": ["table"] }, "comments.fetch": { "uri": "comments/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "GetTableForm": { "uri": "tables/form-data/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "pb": { "uri": "pb", "methods": ["GET", "HEAD"] }, "devmod": { "uri": "devmod", "methods": ["GET", "HEAD"] }, "getnickfromcomments": { "uri": "get-nick-from-comments", "methods": ["GET", "HEAD"] }, "toggle.pub": { "uri": "toggle-pub", "methods": ["POST"] }, "tables.create-table": { "uri": "tables/{table}/create", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "comments.store": { "uri": "comments/store/{table}/{id}", "methods": ["POST"], "parameters": ["table", "id"] }, "GetTablesPosi": { "uri": "api/admin_table_positions", "methods": ["GET", "HEAD"] }, "applicationswitch": { "uri": "applicationswitch", "methods": ["GET", "HEAD"] }, "AddUserAI": { "uri": "api/AddUserAI/{val}", "methods": ["POST"], "parameters": ["val"] }, "admin.dashboard": { "uri": "admin/dashboard", "methods": ["GET", "HEAD"] }, "gen.sitemap": { "uri": "sitemap-generator", "methods": ["GET", "HEAD"] }, "admin.kontakte": { "uri": "admin/Kontakte", "methods": ["GET", "HEAD"] }, "admin.fonts": { "uri": "fonts", "methods": ["GET", "HEAD"] }, "del.uright.function": { "uri": "api/del/function/userrights/{xkis}", "methods": ["DELETE"], "parameters": ["xkis"] }, "gen.actlog": { "uri": "api/activity-log", "methods": ["GET", "HEAD"] }, "act.log.save": { "uri": "api/activity-log", "methods": ["POST"] }, "logs.check": { "uri": "api/chkcom_log/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.actlog": { "uri": "admin/ActLog", "methods": ["GET", "HEAD"] }, "api.get.firstdump": { "uri": "api/getGitDump/{dom?}/{usdis?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "usdis"] }, "api.get.after": { "uri": "api/saveAlt/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "api.showgit": { "uri": "admin/githubdb", "methods": ["GET", "HEAD"] }, "remlogg": { "uri": "api/remlog/{id}", "methods": ["DELETE"], "parameters": ["id"] }, "admin.getunused": { "uri": "admin/get_unused_imgz/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "admin.hackinglog": { "uri": "admin/HackingLog", "methods": ["GET", "HEAD"] }, "admin.CSVImport": { "uri": "api/contacts/import", "methods": ["POST"] }, "GetGenTables": { "uri": "api/getgentables/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "contacts.import.preview": { "uri": "contacts/import-preview", "methods": ["POST"] }, "admin.contacts.updateGroup": { "uri": "admin/contacts/{contact}/group", "methods": ["PUT"], "parameters": ["contact"], "bindings": { "contact": "id" } }, "GetTableOpt": { "uri": "tables/sort-data/{name}", "methods": ["GET", "HEAD"], "parameters": ["name"] }, "zip.images": { "uri": "admin/zip-images/{dom?}", "methods": ["POST"], "parameters": ["dom"] }, "rem.images": { "uri": "admin/removeFiles", "methods": ["POST"] }, "SQL.index": { "uri": "admin/SQLUpdate", "methods": ["GET", "HEAD"] }, "get.db.tables": { "uri": "api/admin-tables", "methods": ["GET", "HEAD"] }, "admin.ausgaben": { "uri": "admin/Ausgaben", "methods": ["GET", "HEAD"] }, "usconfi": { "uri": "userx/update-config/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "dboard.data": { "uri": "dboard/data/{dom?}/{month?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "month"] }, "stats": { "uri": "admin/Statistics", "methods": ["GET", "HEAD"] }, "store.mcslpoints": { "uri": "get_MCSL_Points_Preniums", "methods": ["GET", "HEAD"] }, "send.mcslpoints": { "uri": "SubmitPremiums/{users_id}/{img_id}", "methods": ["GET", "HEAD"], "parameters": ["users_id", "img_id"] }, "get.bash.rights": { "uri": "api/user/batch-rights", "methods": ["POST"] }, "comments.check": { "uri": "api/chkcom/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.contacts": { "uri": "api/contacts", "methods": ["GET", "HEAD"] }, "created.at": { "uri": "api/created-at", "methods": ["GET", "HEAD"] }, "GetCats": { "uri": "api/GetCat/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "save-order": { "uri": "api/save-order/{table}", "methods": ["POST"], "parameters": ["table"] }, "pm.index": { "uri": "pm/index/{tab}", "methods": ["GET", "HEAD"], "parameters": ["tab"] }, "pm.save": { "uri": "pm/save", "methods": ["POST"] }, "admin.pm.check": { "uri": "admin/pm/check/{id}", "methods": ["POST"], "parameters": ["id"] }, "admin.pm.mark": { "uri": "admin/pm/mark", "methods": ["POST"] }, "admin.pm.delete": { "uri": "admin/pm/delmore", "methods": ["DELETE"] }, "admin.pm.delmore": { "uri": "admin/pm/delmore", "methods": ["POST"] }, "admin.usconf.save": { "uri": "admin/UsConf/save", "methods": ["PUT"] }, "/api-get-image-url": { "uri": "api/images/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "destroy.comments": { "uri": "comments/delete/{comment_id}", "methods": ["DELETE"], "parameters": ["comment_id"] }, "save-json-gallery": { "uri": "api/save-json", "methods": ["POST"] }, "save-dirsave": { "uri": "api/saveFolder", "methods": ["POST"] }, "remove.img": { "uri": "api/del_image/{column}/{folder}/{posi}", "methods": ["POST"], "parameters": ["column", "folder", "posi"] }, "mfx.getstyles": { "uri": "api/tailwind-colors/{subdomain}", "methods": ["GET", "HEAD"], "parameters": ["subdomain"] }, "comments.check.done": { "uri": "api/getCheckedBatch", "methods": ["POST"] }, "admin.laravel_log": { "uri": "admin/laravel_log", "methods": ["GET", "HEAD"] }, "admin.handbook": { "uri": "admin/handbook", "methods": ["GET", "HEAD"] }, "admin.blog.index": { "uri": "admin/blogs/index", "methods": ["GET", "HEAD"] }, "admin.blog.create": { "uri": "admin/blogs/create", "methods": ["GET", "HEAD"] }, "admin.blog.store": { "uri": "admin/blogs/store", "methods": ["POST"] }, "admin.blog.edit": { "uri": "admin/blogs/{blog}/edit", "methods": ["GET", "HEAD"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.blog.update": { "uri": "admin/blogs/{blog}", "methods": ["PUT"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.tables.store": { "uri": "admin/tables/store/{table}", "methods": ["POST"], "parameters": ["table"] }, "admin.tables.copy": { "uri": "admin/tables/copy/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "admin.tables.create": { "uri": "admin/tables/create/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.tables.index": { "uri": "admin/tables", "methods": ["GET", "HEAD"] }, "admin.tables.show": { "uri": "admin/tables/{table}/show", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "pw.form": { "uri": "tables/pwform", "methods": ["GET", "HEAD"] }, "pw.print": { "uri": "tables/pwprint", "methods": ["POST"] }, "admin.tables.edit": { "uri": "admin/tables/edit/{id}/{table}", "methods": ["GET", "HEAD"], "parameters": ["id", "table"] }, "admin.tables.delete": { "uri": "admin/tables/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.table.update": { "uri": "admin/tables/update/{table}/{id?}", "methods": ["POST"], "parameters": ["table", "id"] }, "admin.mailcenter": { "uri": "admin/email", "methods": ["GET", "HEAD"] }, "admin.mailprev": { "uri": "email/preview", "methods": ["POST"] }, "admin.mail.save": { "uri": "email/save", "methods": ["POST"] }, "admin.email.signatur.save": { "uri": "email/signatur/save", "methods": ["POST"] }, "admin.mail.send": { "uri": "email/send", "methods": ["POST"] }, "admin.mail.sended": { "uri": "email/sended", "methods": ["GET", "HEAD"] }, "admin.blog.delete": { "uri": "admin/blogs/{blog}", "methods": ["DELETE"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.redirect.route": { "uri": "admin", "methods": ["GET", "HEAD"] }, "hasCreated": { "uri": "hasCreated/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.profile": { "uri": "admin/profile", "methods": ["GET", "HEAD"] }, "admin.api_tokens.index": { "uri": "admin/api_tokens", "methods": ["GET", "HEAD"] }, "employee.dashboard": { "uri": "employee/dashboard", "methods": ["GET", "HEAD"] }, "customer.dashboard": { "uri": "home/dashboard", "methods": ["GET", "HEAD"] }, "GetTableEnum": { "uri": "tables/sort-enum/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "ArtAct": { "uri": "act-category/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "toggle.darkmode": { "uri": "toggle-dark-mode", "methods": ["POST"] }, "GetTableItemScope": { "uri": "tables/sort-enumis/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "home": { "uri": "home", "methods": ["GET", "HEAD"] } } };
+const Ziggy = { "url": "http://ab.test.mcs", "port": null, "defaults": {}, "routes": { "debugbar.openhandler": { "uri": "_debugbar/open", "methods": ["GET", "HEAD"] }, "debugbar.clockwork": { "uri": "_debugbar/clockwork/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "debugbar.assets.css": { "uri": "_debugbar/assets/stylesheets", "methods": ["GET", "HEAD"] }, "debugbar.assets.js": { "uri": "_debugbar/assets/javascript", "methods": ["GET", "HEAD"] }, "debugbar.cache.delete": { "uri": "_debugbar/cache/{key}/{tags?}", "methods": ["DELETE"], "parameters": ["key", "tags"] }, "debugbar.queries.explain": { "uri": "_debugbar/queries/explain", "methods": ["POST"] }, "laravel-cookie-consent.script-utils": { "uri": "laravel-cookie-consent/script-utils", "methods": ["GET", "HEAD"] }, "login": { "uri": "login", "methods": ["GET", "HEAD"] }, "logout": { "uri": "logout", "methods": ["POST"] }, "password.request": { "uri": "forgot-password", "methods": ["GET", "HEAD"] }, "password.reset": { "uri": "reset-password/{token}", "methods": ["GET", "HEAD"], "parameters": ["token"] }, "password.email": { "uri": "forgot-password", "methods": ["POST"] }, "password.update": { "uri": "reset-password", "methods": ["POST"] }, "register": { "uri": "register", "methods": ["GET", "HEAD"] }, "register.store": { "uri": "register", "methods": ["POST"] }, "verification.notice": { "uri": "email/verify", "methods": ["GET", "HEAD"] }, "verification.verify": { "uri": "email/verify/{id}/{hash}", "methods": ["GET", "HEAD"], "parameters": ["id", "hash"] }, "verification.send": { "uri": "email/verification-notification", "methods": ["POST"] }, "user-profile-information.update": { "uri": "user/profile-information", "methods": ["PUT"] }, "user-password.update": { "uri": "user/password", "methods": ["PUT"] }, "password.confirm": { "uri": "user/confirm-password", "methods": ["GET", "HEAD"] }, "password.confirmation": { "uri": "user/confirmed-password-status", "methods": ["GET", "HEAD"] }, "password.confirm.store": { "uri": "user/confirm-password", "methods": ["POST"] }, "two-factor.login": { "uri": "two-factor-challenge", "methods": ["GET", "HEAD"] }, "two-factor.login.post": { "uri": "two-factor-challenge", "methods": ["POST"] }, "two-factor.enable": { "uri": "user/two-factor-authentication", "methods": ["POST"] }, "two-factor.confirm": { "uri": "user/confirmed-two-factor-authentication", "methods": ["POST"] }, "two-factor.disable": { "uri": "user/two-factor-authentication", "methods": ["DELETE"] }, "two-factor.qr-code": { "uri": "user/two-factor-qr-code", "methods": ["GET", "HEAD"] }, "two-factor.secret-key": { "uri": "user/two-factor-secret-key", "methods": ["GET", "HEAD"] }, "two-factor.recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["GET", "HEAD"] }, "two-factor.regenerate-recovery-codes": { "uri": "user/two-factor-recovery-codes", "methods": ["POST"] }, "terms.show": { "uri": "terms-of-service", "methods": ["GET", "HEAD"] }, "policy.show": { "uri": "privacy-policy", "methods": ["GET", "HEAD"] }, "profile.show": { "uri": "user/profile", "methods": ["GET", "HEAD"] }, "other-browser-sessions.destroy": { "uri": "user/other-browser-sessions", "methods": ["DELETE"] }, "current-user-photo.destroy": { "uri": "user/profile-photo", "methods": ["DELETE"] }, "current-user.destroy": { "uri": "user", "methods": ["DELETE"] }, "api-tokens.index": { "uri": "user/api-tokens", "methods": ["GET", "HEAD"] }, "api-tokens.store": { "uri": "user/api-tokens", "methods": ["POST"] }, "api-tokens.update": { "uri": "user/api-tokens/{token}", "methods": ["PUT"], "parameters": ["token"] }, "api-tokens.destroy": { "uri": "user/api-tokens/{token}", "methods": ["DELETE"], "parameters": ["token"] }, "sanctum.csrf-cookie": { "uri": "sanctum/csrf-cookie", "methods": ["GET", "HEAD"] }, "ignition.healthCheck": { "uri": "_ignition/health-check", "methods": ["GET", "HEAD"] }, "ignition.executeSolution": { "uri": "_ignition/execute-solution", "methods": ["POST"] }, "ignition.updateConfig": { "uri": "_ignition/update-config", "methods": ["POST"] }, "cookieconsent.script": { "uri": "cookie-consent/script", "methods": ["GET", "HEAD"] }, "cookieconsent.accept.all": { "uri": "cookie-consent/accept-all", "methods": ["POST"] }, "cookieconsent.accept.essentials": { "uri": "cookie-consent/accept-essentials", "methods": ["POST"] }, "cookieconsent.accept.configuration": { "uri": "cookie-consent/configure", "methods": ["POST"] }, "cookieconsent.reset": { "uri": "cookie-consent/reset", "methods": ["POST"] }, "admin.add.func": { "uri": "api/AddFunc", "methods": ["POST"] }, "countpixel": { "uri": "countpixel/{url}/{route}/{page?}", "methods": ["GET", "HEAD"], "wheres": { "url": ".*" }, "parameters": ["url", "route", "page"] }, "api.mcslpoints": { "uri": "api/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "remove.temp": { "uri": "api/delTempz/{path}", "methods": ["GET", "HEAD"], "parameters": ["path"] }, "ggle.login": { "uri": "auth/google", "methods": ["GET", "HEAD"] }, "ri": { "uri": "ri", "methods": ["GET", "HEAD"] }, "get.help": { "uri": "api/gethelp/{slug}/{table}", "methods": ["GET", "HEAD"], "parameters": ["slug", "table"] }, "auth.nickname": { "uri": "auth/nickname", "methods": ["GET", "HEAD"] }, "admin.mcslpoints": { "uri": "admin/mcslpoints/{users_id?}", "methods": ["GET", "HEAD"], "parameters": ["users_id"] }, "GetRights_all": { "uri": "api/user/rights", "methods": ["GET", "HEAD"] }, "home.imprint.gen": { "uri": "home/impressum", "methods": ["GET", "HEAD"] }, "home.index": { "uri": "/", "methods": ["GET", "HEAD"] }, "home.spruch": { "uri": "api/spruch-des-monats", "methods": ["GET", "HEAD"] }, "home.lostnfound": { "uri": "lostnfound", "methods": ["GET", "HEAD"] }, "home.privacy.dag": { "uri": "privacy", "methods": ["GET", "HEAD"] }, "home.ai.dag": { "uri": "ai", "methods": ["GET", "HEAD"] }, "home.contacts.dag": { "uri": "contacts", "methods": ["GET", "HEAD"] }, "home.links": { "uri": "links", "methods": ["GET", "HEAD"] }, "home.visit": { "uri": "visitcard", "methods": ["GET", "HEAD"] }, "home.publication": { "uri": "publikationen", "methods": ["GET", "HEAD"] }, "home.imprint.chh": { "uri": "imprint", "methods": ["GET", "HEAD"] }, "user-profile-information.update_alt": { "uri": "user/profile", "methods": ["PUT"] }, "save.shp": { "uri": "save/shortpoems", "methods": ["POST"] }, "profile.photo.get": { "uri": "profile/photo", "methods": ["GET", "HEAD"] }, "mail.subscribe_newsl": { "uri": "newsl_subscribe", "methods": ["POST"] }, "mail.unsubscribe_newsl": { "uri": "unsubscribe/{uhash?}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "mail.unsubscribe": { "uri": "unsubscribe", "methods": ["POST"] }, "mail.unsubsc": { "uri": "unsubsc_mail", "methods": ["POST"] }, "mail.savenewsletter": { "uri": "mail/subscribe/{uhash}/{email}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "email"] }, "home.ai": { "uri": "home/ai", "methods": ["GET", "HEAD"] }, "home.pna.grafitti": { "uri": "grafitti", "methods": ["GET", "HEAD"] }, "home.pna.portraits": { "uri": "portraits", "methods": ["GET", "HEAD"] }, "home.pna.contacts": { "uri": "kontakt", "methods": ["GET", "HEAD"] }, "home.imprint.pna": { "uri": "home/imprint_pna", "methods": ["GET", "HEAD"] }, "home.ab.contacts_alt": { "uri": "Kontakt", "methods": ["GET", "HEAD"] }, "mcs.points": { "uri": "about/mcs-points", "methods": ["GET", "HEAD"] }, "dashboard": { "uri": "dashboard", "methods": ["GET", "HEAD"] }, "newsl.to.mcsp": { "uri": "newslToMCSLPoints/{uhash?}/{comphash?}/{email?}", "methods": ["GET", "HEAD"], "parameters": ["uhash", "comphash", "email"] }, "personal.update": { "uri": "personal_update", "methods": ["POST"] }, "home.qrcodah": { "uri": "home/QRCodaH", "methods": ["GET", "HEAD"] }, "home.about": { "uri": "home/aboutme", "methods": ["GET", "HEAD"] }, "home.imprint": { "uri": "home/imprint", "methods": ["GET", "HEAD"] }, "home.terms": { "uri": "home/terms", "methods": ["GET", "HEAD"] }, "home.images.gallery": { "uri": "home/show/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.gallery.search": { "uri": "home/search/pictures/{slug}", "methods": ["GET", "HEAD"], "parameters": ["slug"] }, "home.images.index": { "uri": "home/pictures", "methods": ["GET", "HEAD"] }, "home.shortpoems": { "uri": "home/shortpoems", "methods": ["GET", "HEAD"] }, "home.didyouknow": { "uri": "home/didyouknow", "methods": ["GET", "HEAD"] }, "home.blog.index": { "uri": "blogs", "methods": ["GET", "HEAD"] }, "home.blog.show": { "uri": "blogs/show/{autoslug}", "methods": ["GET", "HEAD"], "parameters": ["autoslug"] }, "home.no_application_found": { "uri": "home/no_application_found", "methods": ["GET", "HEAD"] }, "home.user_is_no_admin": { "uri": "home/user_is_no_admin", "methods": ["GET", "HEAD"] }, "home.user_is_no_employee": { "uri": "home/user_is_no_employee", "methods": ["GET", "HEAD"] }, "home.user_is_no_customer": { "uri": "home/user_is_no_customer", "methods": ["GET", "HEAD"] }, "home.invalid_signature": { "uri": "home/invalid_signature", "methods": ["GET", "HEAD"] }, "home.userlist": { "uri": "home/users", "methods": ["GET", "HEAD"] }, "home.user.show": { "uri": "home/users/show/{name}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["name", "id"] }, "home.privacy": { "uri": "home/privacy", "methods": ["GET", "HEAD"] }, "mfx.changelog": { "uri": "changelog", "methods": ["GET", "HEAD"] }, "mfx.changelog.old": { "uri": "changelog_old", "methods": ["GET", "HEAD"] }, "home.projects.mfx": { "uri": "home/projects", "methods": ["GET", "HEAD"] }, "home.images.cat.mfx": { "uri": "home/images", "methods": ["GET", "HEAD"] }, "home.images.mfx": { "uri": "home/images/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.people.mfx": { "uri": "home/people", "methods": ["GET", "HEAD"] }, "home.privacy.mfx": { "uri": "home/privacy_info", "methods": ["GET", "HEAD"] }, "home.infos.mfx": { "uri": "home/infos", "methods": ["GET", "HEAD"] }, "home.infos.show.mfx": { "uri": "home/infos/show/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "home.powered.show.mfx": { "uri": "powered-by-mcsl", "methods": ["GET", "HEAD"] }, "home.contacts.mfx": { "uri": "contacts_mfx", "methods": ["GET", "HEAD"] }, "api.table-columns": { "uri": "api/table-columns/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "home.contacts": { "uri": "home/contacts", "methods": ["GET", "HEAD"] }, "user.twofactor.enable": { "uri": "user/twofactor/enable", "methods": ["POST"] }, "user.twofactor.disable": { "uri": "user/twofactor/disable", "methods": ["POST"] }, "images.copyleft": { "uri": "copyleft/images", "methods": ["GET", "HEAD"] }, "mfx.getvotez": { "uri": "api/getVotez", "methods": ["GET", "HEAD"] }, "GetRights": { "uri": "api/user/rights/des/{table}/{right}", "methods": ["GET", "HEAD"], "parameters": ["table", "right"] }, "allRights": { "uri": "api/user/rights/des-all/{right}", "methods": ["GET", "HEAD"], "parameters": ["right"] }, "tables.noview": { "uri": "no-rights", "methods": ["GET", "HEAD"] }, "GetAuth": { "uri": "GetAuth", "methods": ["GET", "HEAD"] }, "api.getRating": { "uri": "api/GetRating/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "admin.users_rights.get": { "uri": "admin/user-rights/get", "methods": ["GET", "HEAD"] }, "two-factor.setup": { "uri": "two-factor/setup", "methods": ["POST"] }, "two-factor.confirm_alt": { "uri": "two-factor/confirm", "methods": ["POST"] }, "admin.users_rights": { "uri": "admin/User_Rights", "methods": ["GET", "HEAD"] }, "admin.GetSRights": { "uri": "api/GetSRights", "methods": ["GET", "HEAD"] }, "admin.users_rights.save": { "uri": "api/admin/user-rights/save", "methods": ["POST"] }, "getSlug": { "uri": "api/getSlug/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "ColumnFetcher": { "uri": "namebindings", "methods": ["GET", "HEAD"] }, "upload.image": { "uri": "upload-image/{table}/{isw?}", "methods": ["POST"], "parameters": ["table", "isw"] }, "upload.file": { "uri": "upload-file/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.ofile": { "uri": "upload-ofile/{table}", "methods": ["POST"], "parameters": ["table"] }, "upload.gen": { "uri": "upload-image_alt/{table}/{isw?}/{oripath?}", "methods": ["POST"], "parameters": ["table", "isw", "oripath"] }, "GetUserNull": { "uri": "GetUserNull", "methods": ["GET", "HEAD"] }, "save.image": { "uri": "save-image/{table}", "methods": ["POST"], "parameters": ["table"] }, "comments.fetch": { "uri": "comments/{table}/{postId}", "methods": ["GET", "HEAD"], "parameters": ["table", "postId"] }, "GetTableForm": { "uri": "tables/form-data/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "pb": { "uri": "pb", "methods": ["GET", "HEAD"] }, "devmod": { "uri": "devmod", "methods": ["GET", "HEAD"] }, "getnickfromcomments": { "uri": "get-nick-from-comments", "methods": ["GET", "HEAD"] }, "toggle.pub": { "uri": "toggle-pub", "methods": ["POST"] }, "tables.create-table": { "uri": "tables/{table}/create", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "comments.store": { "uri": "comments/store/{table}/{id}", "methods": ["POST"], "parameters": ["table", "id"] }, "GetTablesPosi": { "uri": "api/admin_table_positions", "methods": ["GET", "HEAD"] }, "applicationswitch": { "uri": "applicationswitch", "methods": ["GET", "HEAD"] }, "AddUserAI": { "uri": "api/AddUserAI/{val}", "methods": ["POST"], "parameters": ["val"] }, "admin.dashboard": { "uri": "admin/dashboard", "methods": ["GET", "HEAD"] }, "gen.sitemap": { "uri": "sitemap-generator", "methods": ["GET", "HEAD"] }, "admin.kontakte": { "uri": "admin/Kontakte", "methods": ["GET", "HEAD"] }, "admin.fonts": { "uri": "fonts", "methods": ["GET", "HEAD"] }, "del.uright.function": { "uri": "api/del/function/userrights/{xkis}", "methods": ["DELETE"], "parameters": ["xkis"] }, "gen.actlog": { "uri": "api/activity-log", "methods": ["GET", "HEAD"] }, "act.log.save": { "uri": "api/activity-log", "methods": ["POST"] }, "home.pwd": { "uri": "pwd", "methods": ["GET", "HEAD"] }, "logs.check": { "uri": "api/chkcom_log", "methods": ["GET", "HEAD"] }, "admin.actlog": { "uri": "admin/ActLog", "methods": ["GET", "HEAD"] }, "api.get.firstdump": { "uri": "api/getGitDump/{dom?}/{usdis?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "usdis"] }, "api.get.after": { "uri": "api/saveAlt/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "api.showgit": { "uri": "admin/githubdb", "methods": ["GET", "HEAD"] }, "remlogg": { "uri": "api/remlog/{id}", "methods": ["DELETE"], "parameters": ["id"] }, "admin.getunused": { "uri": "admin/get_unused_imgz/{dom?}", "methods": ["GET", "HEAD"], "parameters": ["dom"] }, "admin.hackinglog": { "uri": "admin/HackingLog", "methods": ["GET", "HEAD"] }, "admin.CSVImport": { "uri": "api/contacts/import", "methods": ["POST"] }, "GetGenTables": { "uri": "api/getgentables/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "contacts.import.preview": { "uri": "contacts/import-preview", "methods": ["POST"] }, "admin.contacts.updateGroup": { "uri": "admin/contacts/{contact}/group", "methods": ["PUT"], "parameters": ["contact"], "bindings": { "contact": "id" } }, "GetTableOpt": { "uri": "tables/sort-data/{name}", "methods": ["GET", "HEAD"], "parameters": ["name"] }, "zip.images": { "uri": "admin/zip-images/{dom?}", "methods": ["POST"], "parameters": ["dom"] }, "rem.images": { "uri": "admin/removeFiles", "methods": ["POST"] }, "SQL.index": { "uri": "admin/SQLUpdate", "methods": ["GET", "HEAD"] }, "get.db.tables": { "uri": "api/admin-tables", "methods": ["GET", "HEAD"] }, "admin.ausgaben": { "uri": "admin/Ausgaben", "methods": ["GET", "HEAD"] }, "usconfi": { "uri": "userx/update-config/{id}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "dboard.data": { "uri": "dboard/data/{dom?}/{month?}", "methods": ["GET", "HEAD"], "parameters": ["dom", "month"] }, "stats": { "uri": "admin/Statistics", "methods": ["GET", "HEAD"] }, "store.mcslpoints": { "uri": "get_MCSL_Points_Preniums", "methods": ["GET", "HEAD"] }, "send.mcslpoints": { "uri": "SubmitPremiums/{users_id}/{img_id}", "methods": ["GET", "HEAD"], "parameters": ["users_id", "img_id"] }, "get.bash.rights": { "uri": "api/user/batch-rights", "methods": ["POST"] }, "comments.check": { "uri": "api/chkcom/{id?}", "methods": ["GET", "HEAD"], "parameters": ["id"] }, "admin.contacts": { "uri": "api/contacts", "methods": ["GET", "HEAD"] }, "created.at": { "uri": "api/created-at", "methods": ["GET", "HEAD"] }, "GetCats": { "uri": "api/GetCat/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "save-order": { "uri": "api/save-order/{table}", "methods": ["POST"], "parameters": ["table"] }, "pm.index": { "uri": "pm/index/{tab}", "methods": ["GET", "HEAD"], "parameters": ["tab"] }, "pm.save": { "uri": "pm/save", "methods": ["POST"] }, "admin.pm.check": { "uri": "admin/pm/check/{id}", "methods": ["POST"], "parameters": ["id"] }, "admin.pm.mark": { "uri": "admin/pm/mark", "methods": ["POST"] }, "admin.pm.delete": { "uri": "admin/pm/delmore", "methods": ["DELETE"] }, "admin.pm.delmore": { "uri": "admin/pm/delmore", "methods": ["POST"] }, "admin.usconf.save": { "uri": "admin/UsConf/save", "methods": ["PUT"] }, "/api-get-image-url": { "uri": "api/images/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "destroy.comments": { "uri": "comments/delete/{comment_id}", "methods": ["DELETE"], "parameters": ["comment_id"] }, "save-json-gallery": { "uri": "api/save-json", "methods": ["POST"] }, "save-dirsave": { "uri": "api/saveFolder", "methods": ["POST"] }, "remove.img": { "uri": "api/del_image/{column}/{folder}/{posi}", "methods": ["POST"], "parameters": ["column", "folder", "posi"] }, "mfx.getstyles": { "uri": "api/tailwind-colors/{subdomain}", "methods": ["GET", "HEAD"], "parameters": ["subdomain"] }, "comments.check.done": { "uri": "api/getCheckedBatch", "methods": ["POST"] }, "admin.laravel_log": { "uri": "admin/laravel_log", "methods": ["GET", "HEAD"] }, "admin.handbook": { "uri": "admin/handbook", "methods": ["GET", "HEAD"] }, "admin.blog.index": { "uri": "admin/blogs/index", "methods": ["GET", "HEAD"] }, "admin.blog.create": { "uri": "admin/blogs/create", "methods": ["GET", "HEAD"] }, "admin.blog.store": { "uri": "admin/blogs/store", "methods": ["POST"] }, "admin.blog.edit": { "uri": "admin/blogs/{blog}/edit", "methods": ["GET", "HEAD"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.blog.update": { "uri": "admin/blogs/{blog}", "methods": ["PUT"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.tables.store": { "uri": "admin/tables/store/{table}", "methods": ["POST"], "parameters": ["table"] }, "admin.tables.copy": { "uri": "admin/tables/copy/{table}/{id}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "admin.tables.create": { "uri": "admin/tables/create/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.tables.index": { "uri": "admin/tables", "methods": ["GET", "HEAD"] }, "admin.tables.show": { "uri": "admin/tables/{table}/show", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "pw.form": { "uri": "tables/pwform", "methods": ["GET", "HEAD"] }, "pw.print": { "uri": "tables/pwprint", "methods": ["POST"] }, "admin.tables.edit": { "uri": "admin/tables/edit/{id}/{table}", "methods": ["GET", "HEAD"], "parameters": ["id", "table"] }, "admin.tables.delete": { "uri": "admin/tables/delete/{table}/{id}", "methods": ["DELETE"], "parameters": ["table", "id"] }, "admin.table.update": { "uri": "admin/tables/update/{table}/{id?}", "methods": ["POST"], "parameters": ["table", "id"] }, "admin.mailcenter": { "uri": "admin/email", "methods": ["GET", "HEAD"] }, "admin.mailprev": { "uri": "email/preview", "methods": ["POST"] }, "admin.mail.save": { "uri": "email/save", "methods": ["POST"] }, "admin.email.signatur.save": { "uri": "email/signatur/save", "methods": ["POST"] }, "admin.mail.send": { "uri": "email/send", "methods": ["POST"] }, "admin.mail.sended": { "uri": "email/sended", "methods": ["GET", "HEAD"] }, "admin.blog.delete": { "uri": "admin/blogs/{blog}", "methods": ["DELETE"], "parameters": ["blog"], "bindings": { "blog": "id" } }, "admin.redirect.route": { "uri": "admin", "methods": ["GET", "HEAD"] }, "hasCreated": { "uri": "hasCreated/{table}", "methods": ["GET", "HEAD"], "parameters": ["table"] }, "admin.profile": { "uri": "admin/profile", "methods": ["GET", "HEAD"] }, "admin.api_tokens.index": { "uri": "admin/api_tokens", "methods": ["GET", "HEAD"] }, "employee.dashboard": { "uri": "employee/dashboard", "methods": ["GET", "HEAD"] }, "customer.dashboard": { "uri": "home/dashboard", "methods": ["GET", "HEAD"] }, "GetTableEnum": { "uri": "tables/sort-enum/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "ArtAct": { "uri": "act-category/{table}/{id?}", "methods": ["GET", "HEAD"], "parameters": ["table", "id"] }, "toggle.darkmode": { "uri": "toggle-dark-mode", "methods": ["POST"] }, "GetTableItemScope": { "uri": "tables/sort-enumis/{table}/{name}", "methods": ["GET", "HEAD"], "parameters": ["table", "name"] }, "home": { "uri": "home", "methods": ["GET", "HEAD"] } } };
 if (typeof window !== "undefined" && typeof window.Ziggy !== "undefined") {
   Object.assign(Ziggy.routes, window.Ziggy.routes);
 }
