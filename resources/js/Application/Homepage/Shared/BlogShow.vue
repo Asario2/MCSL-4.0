@@ -152,7 +152,7 @@
                         <!-- Profilbild -->
                          {{ author }}
                         <img
-                              :src="'/images/_ab/users/profile_photo_path/' + blog.blog_author?.img_image"
+                              :src="'/images/users/profile_photo_path/' + blog.blog_author?.img_image"
                             alt="Profilbild"
                             class="border object-cover rounded-lg w-32 h-full max-h-[300px]"
                         />

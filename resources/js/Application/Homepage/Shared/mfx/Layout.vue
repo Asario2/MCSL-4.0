@@ -65,7 +65,7 @@
                 <img
                     id="prof_pic"
                     class="h-8 w-8 rounded-full object-cover mr-[4px] pr-[4px]"
-                    :src="`/images/_${SD()}/users/profile_photo_path/` +
+                    :src="`/images/users/profile_photo_path/` +
                                                 $page.props.auth.user?.profile_photo_url.replace('public','').replace('http://localhost/images/','').replace('images/images/','images/') || '/images/profile-photos/008.jpg'
                                                     "
                     :alt="$page.props.userdata.full_name"
@@ -105,7 +105,7 @@
                                             id="prof_pic"
                                             class="h-8 w-8 rounded-full object-cover mr-6"
 
-                                               :src="'/images/_' + SD() + '/users/profile_photo_path/'+ $page.props.auth.user.profile_photo_url.replace('public','')
+                                               :src="'/images/users/profile_photo_path/'+ $page.props.auth.user.profile_photo_url.replace('public','')
                                                 "
                                                 :alt="
                                                     $page.props.userdata

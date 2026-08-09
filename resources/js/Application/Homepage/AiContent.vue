@@ -107,7 +107,7 @@
     } from "@/utils/rights";
 
     export default defineComponent({
-        name: "Homepage_AiContent",
+        name: "Homepage_AiContent_gen",
 
         components: {
             MetaHeader,
@@ -181,32 +181,42 @@
 
             async loadLayout() {
 
+
+
                 const layouts = {
 
-                    ab: () =>
-                        import("@/Application/Homepage/Shared/ab/Layout.vue"),
+                    ab: () => import("@/Application/Homepage/Shared/ab/Layout.vue"),
 
-                    dag: () =>
-                        import("@/Application/Homepage/Shared/dag/Layout.vue"),
+                    dag: () => import("@/Application/Homepage/Shared/dag/Layout.vue"),
 
-                    pna: () =>
-                        import("@/Application/Homepage/Shared/pna/Layout.vue"),
+                    pna: () => import("@/Application/Homepage/Shared/pna/Layout.vue"),
 
-                    mfx: () =>
-                        import("@/Application/Homepage/Shared/mfx/Layout.vue"),
+                    mfx: () => import("@/Application/Homepage/Shared/mfx/Layout.vue"),
 
-                    default: () =>
-                        import("@/Application/Homepage/Shared/ab/Layout.vue"),
+                    default: () => import("@/Application/Homepage/Shared/ab/Layout.vue"),
                 };
 
                 const layoutName = this.SD();
+                const loader = layouts[layoutName] || layouts.default;
 
-                const loader =
-                    layouts[layoutName] || layouts.default;
 
-                const layout = await loader();
 
-                this.layoutComponent = markRaw(layout.default);
+                try {
+
+                    const layout = await loader();
+
+
+
+                    this.layoutComponent = markRaw(layout.default);
+
+
+
+                } catch (e) {
+
+                    console.error("Import fehlgeschlagen", e);
+
+                }
+
             },
 
             async checkRight(right, table) {
@@ -252,7 +262,7 @@
         },
 
         async created() {
-
+            console.log("Created");
             await this.loadLayout();
 
         },

@@ -18,7 +18,7 @@
                         :namee="fileval"
                         :alt_path="'_' + SD() + '/' + CleanTable_alt() + '/' + 'fileup'"
                         :domain="subdomain"
-                        :tablex="table_x"
+                        :tablex="tablex"
                         :path="tablex"
                         :ref="'fileup'"
                         :value="imageId"
@@ -36,7 +36,7 @@
     <!-- 🔵 RECHTS -->
     <div class="flex items-center space-x-3">
 
-        <importBtn />
+        <!-- <importBtn /> -->
 
         <button type="button" @click="openinfo('ios')" class="flex items-center">
             <IconIOS class="w-6 h-6 mr-1" />
@@ -228,6 +228,8 @@ import IconAndroid from "@/Application/Components/Icons/IconAndroid.vue";
 import IconUpload from "@/Application/Components/Icons/IconUpload.vue";
 
 
+
+
 export default {
   name: 'ContactTable',
   components: {
@@ -242,6 +244,7 @@ export default {
     IconAndroid,
     IconUpload,
     Help,
+
   },
   props: {
     contacts: {
@@ -272,6 +275,8 @@ export default {
       expandedRows: [],
       searchTimeout: null,
       isLoading: false,
+      tablex:'',
+      imageId:'',
       loading: false,
       modals: {},
       fileval: null,
@@ -279,6 +284,7 @@ export default {
     importContacts: [],
     showHelpModal: false,
      info_type: null,
+     subdomain: globalThis.SD,
 
     //   kontakteGrouped: {},  // nicht null oder undefined
 
@@ -377,7 +383,7 @@ closeGroupPicker() {
                 Gruppe: newGroup
             });
             // optional: UI aktualisieren, z.B. reload der Kontakte
-            router.relaod({ only: ['contacts'] });
+            router.reload({ only: ['contacts'] });
             window.toastBus.emit({ type: 'success', message: 'Gruppe erfolgreich geändert!' });
              this.activeGroupPicker = null;
         } catch (error) {
@@ -395,7 +401,7 @@ closeGroupPicker() {
 
             window.toastBus.emit({type:"success",message:"Kontakte erfolgreich gespeichert"});
 
-            router.relaod({ only: ['contacts'] });
+            router.reload({ only: ['contacts'] });
         },
         openinfo(type){
             this.info_type = type;
@@ -457,6 +463,7 @@ closeGroupPicker() {
     }
   },
   mounted() {
+    this.tablex = CleanTable();
     const params = new URLSearchParams(window.location.search);
     const search = params.get("search");
     document.addEventListener('click', this.closeGroupPicker);

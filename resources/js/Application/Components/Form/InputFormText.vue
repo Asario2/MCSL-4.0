@@ -56,7 +56,7 @@
 
     },
     autocomplete:{
-        type:Boolean,
+        type:[String,Boolean,Number],
         required:false,
         default:false,
     }

@@ -76,12 +76,6 @@
                                 </li>
                                 <li>
                                     <link-footer
-                                        name="Nutzungsbedingungen"
-                                        :route-name="route('home.terms')"
-                                    ></link-footer>
-                                </li>
-                                <li>
-                                    <link-footer
                                         name="Login"
                                         :route-name="route('login')"
                                     ></link-footer>

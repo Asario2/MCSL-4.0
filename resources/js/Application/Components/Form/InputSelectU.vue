@@ -60,7 +60,7 @@
       return {
         internalValue: this.modelValue ?? "",
         fetchedOptions: [],
-        UID: window?.Laravel?.userId || null,
+        UID:null,
       };
     },
 
@@ -162,7 +162,7 @@
 //         this.$emit('update:modelValue', this.UID);
 //     }
        const isCreatePage = window.location.pathname.includes("create");
-
+        this.UID = window?.Laravel?.userId
 if (isCreatePage && !this.internalValue && this.currentUserId) {
   this.internalValue = this.currentUserId;
 }

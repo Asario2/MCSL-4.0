@@ -140,7 +140,11 @@ export default {
         id: [String, Number],
         value: [String, Number],
         tablex: String,
-        table_x: String,
+        table_x: {
+            txpe:String,
+            default:'',
+
+        },
         placeholder: String,
         required: {
             type: [Number, Boolean, String],

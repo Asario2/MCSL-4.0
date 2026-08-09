@@ -68,7 +68,7 @@ import mapValues from "lodash/mapValues";
 import pickBy from "lodash/pickBy";
 import throttle from "lodash/throttle";
 import { GetRights,SD } from "@/helpers";
-import { hasRight,loadAllRights,isRightsReady } from '@/utils/rights';
+import { loadAllRights,isRightsReady } from '@/utils/rights';
 
 
 
@@ -144,38 +144,86 @@ export default defineComponent({
         isRightsReady() {
       return this.$isRightsReady; // Zugriff auf globale Methode
     },
-    hasRight() {
-      return this.$hasRight; // Zugriff auf globale Methode
-    },
+
 
     },
     methods: {
         SD,
-        async loadLayout() {
-    const layoutName = this.SD();
-    try {
-      const layout = await import(`@/Application/Homepage/Shared/${layoutName}/Layout.vue`);
-      this.layoutComponent = layout.default;
-    } catch (error) {
-      console.warn(`Layout für Subdomain "${layoutName}" nicht gefunden, lade DefaultLayout.`, error);
-      const defaultLayout = await import(`@/Application/Homepage/Shared/Layout.vue`);
-      this.layoutComponent = defaultLayout.default;
-    }
-  },
+//         async loadLayout() {
+//     const layoutName = this.SD();
+//     console.log("SD():", layoutName);
 
+//     try {
+//       const layout = await import(`@/Application/Homepage/Shared/${layoutName}/Layout.vue`);
+//       this.layoutComponent = layout.default;
+
+//     } catch (error) {
+//       console.warn(`Layout für Subdomain "${layoutName}" nicht gefunden, lade DefaultLayout.`, error);
+//       const defaultLayout = await import(`@/Application/Homepage/Shared/Layout.vue`);
+//       this.layoutComponent = defaultLayout.default;
+//     }
+//   },
+async loadLayout() {
+
+
+
+    try {
+
+
+        const layoutName = this.SD();
+
+
+
+        const importPath =
+            `@/Application/Homepage/Shared/${layoutName}/Layout.vue`;
+
+
+
+        const layout = await import(
+            `@/Application/Homepage/Shared/${layoutName}/Layout.vue`
+        );
+
+
+
+
+
+        this.layoutComponent = layout.default;
+
+
+
+    } catch (error) {
+
+        console.error("[loadLayout] IMPORT FEHLER");
+
+        console.error(error);
+
+        try {
+
+
+
+            const layout = await import(
+                "@/Application/Homepage/Shared/Layout.vue"
+            );
+
+            this.layoutComponent = layout.default;
+
+
+
+        } catch (e) {
+
+            console.error("[loadLayout] Auch Fallback fehlgeschlagen");
+
+            console.error(e);
+
+        }
+
+    }
+
+
+},
 
 
     // Asynchrone Methode, um die Rechte zu laden
-    async hasRight(right, table) {
-    // Überprüfe, ob die Rechte bereits geladen wurden
-    if (!this.rightsData[`${right}_${table}`] && table) {
-      // Wenn die Rechte noch nicht geladen wurden, lade sie
-      await this.checkRight(right, table);
-    }
-    // Wenn die Rechte nach dem Laden vorhanden sind, gib den Wert zurück
-    return this.rightsData[`${right}_${table}`] === 1; // Beispiel: Wenn das Recht '1' ist, erlauben wir den Zugriff
-  },
-
   async checkRight(right, table) {
     // Lade die Rechte für den User
     const value = await GetRights(right, table);

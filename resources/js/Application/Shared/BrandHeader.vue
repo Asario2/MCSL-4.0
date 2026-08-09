@@ -31,16 +31,16 @@
         </Link>
     </div>
     <div v-else-if="GetSd() == 'mfx'">
-    <a href="/admin/dashboard"><mfxlogo :ab="'_mfx' + this.GetLogin()"></mfxlogo></a>
+    <a href="/admin/dashboard"><mfxlogo :ab="'_mfx' + GetLogin()"></mfxlogo></a>
     </div>
     <div v-else-if="GetSd() == 'chh'">
-    <a href="/admin/dashboard"><chhlogo :ab="'_chh' + this.GetLogin()"></chhlogo></a>
+    <a href="/admin/dashboard"><chhlogo :ab="'_chh' + GetLogin()"></chhlogo></a>
     </div>
     <div v-else-if="GetSd() === 'dag'">
-    <a href="/admin/dashboard"><daglogo :ab="'_dag' + this.GetLogin()"></daglogo></a>
+    <a href="/admin/dashboard"><daglogo :ab="'_dag' + GetLogin()"></daglogo></a>
     </div>
     <div v-else-if="GetSd() == 'pna'">
-    <a href="/admin/dashboard"><pnalogo :small="true" :ab="this.GetLogin()"></pnalogo></a>
+    <a href="/admin/dashboard"><pnalogo :small="true" :ab="GetLogin()"></pnalogo></a>
     </div>
 </template>
 

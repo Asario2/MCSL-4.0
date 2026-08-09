@@ -116,29 +116,15 @@ export default defineComponent({
 
     },
     computed:{
-        darkMode(){
-            //this.darkMode = localStorage.getItem("theme");
-        },
         isRightsReady() {
       return this.$isRightsReady; // Zugriff auf globale Methode
     },
-    hasRight() {
-      return this.$hasRight; // Zugriff auf globale Methode
-    },
+
 
     },
     methods: {
     // Asynchrone Methode, um die Rechte zu laden
-    async hasRight(right, table) {
-    // Überprüfe, ob die Rechte bereits geladen wurden
-    if (!this.rightsData[`${right}_${table}`] && table) {
-      // Wenn die Rechte noch nicht geladen wurden, lade sie
-      await this.checkRight(right, table);
-    }
-    // Wenn die Rechte nach dem Laden vorhanden sind, gib den Wert zurück
-    return this.rightsData[`${right}_${table}`] === 1; // Beispiel: Wenn das Recht '1' ist, erlauben wir den Zugriff
-  },
-
+    hasRight,
   async checkRight(right, table) {
     // Lade die Rechte für den User
     const value = await GetRights(right, table);

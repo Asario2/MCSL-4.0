@@ -43,8 +43,8 @@ export default {
       selectedCategory: null,
       selectedMedium: null,
       categories: [],
-      table: CleanTable(),
-      id: CleanId(),
+      table:'',
+      id: '',
     };
   },
   props: {
@@ -58,9 +58,50 @@ export default {
       this.form.type_id = newVal;
     }
   },
-  mounted(){
-    
-  },
+  async mounted() {
+    try {
+            this.table = CleanTable();
+            this.id = CleanId();
+
+
+        // 1. Kategorien laden
+        const response = await axios.get(
+            window.chost + '/act-category/' + this.table + "/" + this.id
+        );
+
+        this.categories = response.data.categories || [];
+
+        // 2. Gespeicherte Werte laden
+        const defaultResponse = await axios.get(
+            `/api/GetCat/${this.table}/${this.id}`
+        );
+
+        const defaultData = defaultResponse.data;
+
+        // 3. Kategorie setzen
+        if (defaultData.categorie_id && defaultData.categorie_id !== "0") {
+            this.selectedCategory = Number(defaultData.categorie_id);
+        } else if (this.categories.length > 0) {
+            this.selectedCategory = Number(this.categories[0].id);
+        }
+
+        // 4. Medien bestimmen
+        const availableMediums = this.formattedMediums(this.selectedCategory);
+
+        // 5. Medium setzen
+        if (
+            defaultData.type_id &&
+            availableMediums.find(m => m.id == defaultData.type_id)
+        ) {
+            this.selectedMedium = Number(defaultData.type_id);
+        } else if (availableMediums.length > 0) {
+            this.selectedMedium = Number(availableMediums[0].id);
+        }
+
+    } catch (error) {
+        console.error("❌ Fehler beim Laden der Daten:", error);
+    }
+},
   computed: {
     sortedCategories() {
       return [...this.categories].sort((a, b) => a.name.localeCompare(b.name));
@@ -76,34 +117,38 @@ export default {
     }
   },
   async created() {
-  try {
-    // 1. Kategorien laden
+//   try {
+//     // 1. Kategorien laden
+//     if(typeof window === "undefined")
+//     {
+//         return "";
+//     }
 
-    const response = await axios.get(window.chost + '/act-category/' + this.table + "/" +this.id);
-    this.categories = response.data.categories || [];
+//     const response = await axios.get(window.chost + '/act-category/' + this.table + "/" +this.id);
+//     this.categories = response.data.categories || [];
 
-    // 2. Gespeicherte Werte laden
-    const defaultResponse = await axios.get(`/api/GetCat/${this.table}/${this.id}`);
-    const defaultData = defaultResponse.data;
+//     // 2. Gespeicherte Werte laden
+//     const defaultResponse = await axios.get(`/api/GetCat/${this.table}/${this.id}`);
+//     const defaultData = defaultResponse.data;
 
-    // 3. Defaults setzen – hier Number() verwenden!
-    if (defaultData.categorie_id && defaultData.categorie_id !== "0") {
-      this.selectedCategory = Number(defaultData.categorie_id);
-    } else if (this.categories.length > 0) {
-      this.selectedCategory = Number(this.categories[0].id);
-    }
+//     // 3. Defaults setzen – hier Number() verwenden!
+//     if (defaultData.categorie_id && defaultData.categorie_id !== "0") {
+//       this.selectedCategory = Number(defaultData.categorie_id);
+//     } else if (this.categories.length > 0) {
+//       this.selectedCategory = Number(this.categories[0].id);
+//     }
 
-    const availableMediums = this.formattedMediums(this.selectedCategory);
+//     const availableMediums = this.formattedMediums(this.selectedCategory);
 
-    if (defaultData.type_id && availableMediums.find(m => m.id == defaultData.type_id)) {
-      this.selectedMedium = Number(defaultData.type_id);
-    } else if (availableMediums.length > 0) {
-      this.selectedMedium = Number(availableMediums[0].id);
-    }
+//     if (defaultData.type_id && availableMediums.find(m => m.id == defaultData.type_id)) {
+//       this.selectedMedium = Number(defaultData.type_id);
+//     } else if (availableMediums.length > 0) {
+//       this.selectedMedium = Number(availableMediums[0].id);
+//     }
 
-  } catch (error) {
-    console.error("❌ Fehler beim Laden der Daten:", error);
-  }
+//   } catch (error) {
+//     console.error("❌ Fehler beim Laden der Daten:", error);
+//   }
 }
 
 };

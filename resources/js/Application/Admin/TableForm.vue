@@ -191,7 +191,7 @@
                             :namee="field.value"
                             :alt_path="'_' + subdomain + '/' + CleanTable_alt() + '/' + field.name"
                             :domain="subdomain"
-                            :tablex="table_x"
+                            :tablex="tablex"
                             :path="tablex"
                             :ref="field.name"
                             :value="imageId"
@@ -244,7 +244,7 @@
                             :namee="field.value"
                             :alt_path="'_' + subdomain + '/' + CleanTable_alt() + '/' + field.name"
                             :domain="subdomain"
-                            :tablex="table_x"
+                            :tablex="tablex"
                             :ref="field.name"
                             :value="imageId"
                             :image="field.value"
@@ -269,7 +269,7 @@
                             :namee="field.value"
                             :alt_path="'_' + subdomain + '/' + CleanTable_alt() + '/' + field.name"
                             :domain="subdomain"
-                            :tablex="table_x"
+                            :tablex="tablex"
                             :value="imageId"
                             :image="field.value"
                             :namee2="field.name"
@@ -311,7 +311,7 @@
                             :namee="fileval"
                             :alt_path="'_' + SD() + '/_' + CleanTable()  + '/' + field.name + '/'"
                             :domain="subdomain"
-                            :tablex="table_x"
+                            :tablex="tablex"
                             :path="tablex"
                             :ref="'fileup'"
                             :value="imageId"
@@ -338,7 +338,7 @@
                             :alt_path="field.class === 'profile' ? 'profile_photos' : ''"
                             v-show="modals[field.name]"
                             :isModalOpen="modals[field.name]"
-                            :tablex="table_x"
+                            :tablex="tablex"
                             :is_imgdir = "false"
                             :column="field.name"
                             :path="tablex"
@@ -481,7 +481,7 @@
                             :id="field.name"
                             :model-value="field.value"
                             v-model="field.name"
-                            :options="`options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`"
+                            :options="field?.name ? (xsor_alt[field.name] ?? []) : []"
                             ref="field.name"
                             :name="field.name"
                             :xval="field.value"
@@ -494,7 +494,7 @@
                     </input-container>
 
                     <input-container v-else-if="field.type === 'artselect'">
-                        <ArtSelect :id="field.id" :table="this.tablex" :form="field"
+                        <ArtSelect :id="field.id" :table="tablex" :form="field"
                             @update:category="form.categorie_id = $event"
                             @update:medium="form.type_id = $event" />
                     </input-container>
@@ -538,7 +538,7 @@
                             :id="field.name"
                             :model-value="field.name"
                             v-model="field.value"
-                            :options="`options: ${this.xsor_alt[field.name]?.length > 0 ? this.xsor_alt[field.name] : []}`"
+                            :options="field?.name ? (xsor_alt[field.name] ?? []) : []"
                             ref="field.name"
                             :name="field.name"
                             :xval="field.value"
@@ -815,53 +815,60 @@
         // DZ
         data() {
             return {
-                gals:[],
+                gals: [],
                 isModalOpen: false,
                 ulpath: '',
-                GalOpen:false,
+                GalOpen: false,
+
                 rights: {
-                        add:null,
-                        view:null,
-                        pub:null,
-                        edit: null,
-                        delete: null,
-                    },
+                    add: null,
+                    view: null,
+                    pub: null,
+                    edit: null,
+                    delete: null,
+                },
+
                 previewHtml: '',
                 table: reactive({ id: "1" }),
                 formDatas: {},
-                oobj:{},
+                oobj: {},
                 formData: {},
-                localFfo: JSON.parse(JSON.stringify(this.ffo ?? {})),
+
+                localFfo: {},
+
                 sanitizedContent: '',
                 uploadedIid: null,
                 ItemName: "Beitrag",
+
                 table_x: '',
+
                 aslug: '',
-                nf2:'',
+                nf2: '',
                 previewImages: {},
                 newPosition: null,
-                subdomain: SD() || '',
+                subdomain: '',
+
                 fieldtype: "",
                 readingTime: "",
                 fileName: '',
                 sortedOptions: "",
                 so: [],
                 xsor_alt: {},
+
                 isOpen: true,
                 uploadedImageUrl: null,
-                // csrfToken: document.getElementById('token')?.value,
                 preview_image: {},
-                // ffo: { ...this.entry },
+
                 options: {},
                 options_sel: {},
                 sdata: {},
-                // loading: false,
                 entries: [],
+
                 loadingText: null,
                 confirmingTableDeletion: false,
-                table_alter:'',
+                table_alter: '',
                 modals: {},
-                field:{},
+                field: {},
                 fieldErrors: {},
                 isFocused: false,
             };
@@ -993,8 +1000,15 @@
     },
             async getPreviewImagez() {
                 const field = this.field;
-                const ppa = `/images/_${window.subdomain}/images/${field.name}/${field.value}/index.json`;
+                let ppa;
+                if(typeof window === "undefined")
+                {
+                    ppa = `/images/_ab/pages/${field.name}/${field.value}/index.json`;
 
+                }
+                else{
+                    ppa = `/images/_${window.subdomain}/images/${field.name}/${field.value}/index.json`;
+                }
                 if(ppa.includes("undefined/")){
                     this.previewHtml = '<img src="/images/icons/upl.png" alt="Jetzt Bild Hochladen" width="122" title="Jetzt Bild Hochladen" style="float: left; margin-right: 12px;">';
                     return;
@@ -1554,7 +1568,11 @@
                 }
 
                 // Formular abschicken
-                const path = window.location.pathname;
+                let path;
+                if(typeof window !== "undefined"){
+                    path = window.location.pathname;
+                }
+
                 const segments = path.split("/");
 
                 if(document?.getElementById("email_hash"))
@@ -1601,7 +1619,7 @@
                 });
                 // console.log(response.data);
                window.toastBus.emit( response.data); // ← erwartet { status: "...", message: "..." }
-                router.relaod();
+                router.reload();
                 // Optional: Seite neu laden oder Liste aktualisieren
             } catch (error) {
                 console.error("Fehler beim Löschen:", error);
@@ -1712,8 +1730,10 @@
         },
 
         async mounted() {
-
-
+            if (typeof window !== 'undefined') {
+                    this.subdomain = SD() || '';
+                }
+                this.localFfo = JSON.parse(JSON.stringify(this.ffo ?? {}));
             if(!this.ffo || this.ffo.length < 3 || this.ffo === "undefined"){
                 router.visit('/no-rights');
                 return;

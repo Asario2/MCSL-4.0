@@ -52,7 +52,7 @@
             <option value="chh">Christian Henning</option>
             <option value="mfx">MarbleFX</option>
             <option value="dag">Monika Dargies&nbsp;&nbsp;</option>
-            <option value="dag">Paul Nadler&nbsp;&nbsp;</option>
+            <option value="pna">Paul Nadler&nbsp;&nbsp;</option>
           </select>
         </div>
       </div>

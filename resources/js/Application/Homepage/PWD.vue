@@ -10,8 +10,9 @@
         <InputFormText
             id="password"
             name="password"
+            placeholder=""
             v-model="form.password"
-            type="password"
+            type="text"
             autocomplete="new-password"
         >
             <template #label>
@@ -36,7 +37,7 @@
                 readonly
                 rows="5"
                 :value="hash"
-                class="w-full rounded-lg border border-primary-sun-500 dark:border-primary-night-500 bg-layout-sun-100 dark:bg-layout-night-100 p-3 font-mono text-sm"
+                class="w-full rounded-lg border border-primary-sun-500 dark:border-primary-night-500 bg-layout-sun-100 dark:bg-layout-night-100 p-3 font-mono text-sm text-layout-sun-800 dark:text-layout-night-800"
             ></textarea>
 
         </div>
@@ -49,7 +50,7 @@
 <script>
 import axios from "axios";
 import InputFormText from "@/Application/Components/Form/InputFormText.vue";
-import { route } from 'ziggy-js';
+// import { route } from 'ziggy-js';
 export default {
 
     components:{

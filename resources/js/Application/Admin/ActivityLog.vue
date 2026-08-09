@@ -85,9 +85,10 @@
 
                 <div v-else>
                     <img
-                    :src="'/images/_ab/users/profile_photo_path/008.jpg'"
+                    :src="'/images/users/profile_photo_path/008.jpg'"
                     class="h-8 w-8 rounded-full object-cover"
-                    alt="Unbekannt"
+                    alt="Unbekannter Benutzer"
+                    title="Unbekannter Benutzer"
                     />
                 </div>
                 </td>
@@ -183,6 +184,8 @@ import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import { CleanTable, ucf, SD, rumLaut, GetProfileImagePath,CheckOL } from "@/helpers";
 import MetaHeader from '@/Application/Homepage/Shared/MetaHeader.vue';
 import Pagination from "@/Application/Components/Pagination.vue";
+import { nextTick } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 export default {
   name: "ActivityLogTable",
@@ -297,21 +300,33 @@ export default {
         }
 
         const s = this.form.search.toLowerCase();
-
         return this.logs.filter(row => {
 
-            return (
-                String(row.id || '').toLowerCase().includes(s) ||
-                String(row.action || '').toLowerCase().includes(s) ||
-                String(row.tablename || '').toLowerCase().includes(s) ||
-                String(row.URL || '').toLowerCase().includes(s) ||
-                String(row.info || '').toLowerCase().includes(s) ||
-                String(row.IP || '').toLowerCase().includes(s) ||
-                String(row.session_id || '').toLowerCase().includes(s) ||
-                String(row.dom || '').toLowerCase().includes(s) ||
-                String(row.user_name || '').toLowerCase().includes(s)
-            );
+            const id        = String(row.id || '').toLowerCase();
+            const action    = String(row.action || '').toLowerCase();
+            const tablename = String(row.tablename || '').toLowerCase();
+            const url       = String(row.URL || '').toLowerCase();
+            const info      = String(row.info || '').toLowerCase();
+            const ip        = String(row.IP || '').toLowerCase();
+            const session   = String(row.session_id || '').toLowerCase();
+            const dom       = String(row.dom || '').toLowerCase();
+            const username  = String(row.user_name || '').toLowerCase();
 
+            console.log('SEARCH:', s);
+            console.log('USERNAME:', row.user_name, '→', username);
+            console.log('MATCH USERNAME:', username.includes(s));
+
+            return (
+                id.includes(s) ||
+                action.includes(s) ||
+                tablename.includes(s) ||
+                url.includes(s) ||
+                info.includes(s) ||
+                ip.includes(s) ||
+                session.includes(s) ||
+                dom.includes(s) ||
+                username.includes(s)
+            );
         });
 
     },
@@ -330,21 +345,20 @@ export default {
     }
 },
 
-  async mounted() {
-//     console.log("ActivityLogTable mounted");
-    this.loadLogs();
-    if(typeof window !== 'undefined')
-    {
+async mounted() {
+    if (typeof window !== "undefined") {
         window.addEventListener("beforeunload", this.markChecked);
     }
-    // Beim verlassen der Seite
 
-  },
+    await this.loadLogs();
+    await this.fetchStatus();
 
+    await nextTick();
+    await this.markChecked();
+},
   beforeUnmount() {
-    if(typeof window !== 'undefined')
-    {
-        window.removeEventListener("beforeunload", this.markChecked);
+    if (typeof window !== "undefined") {
+      window.removeEventListener("beforeunload", this.markChecked);
     }
   },
     watch: {
@@ -384,46 +398,52 @@ export default {
 
     return `${day}.${month}.${year} ${time}`;
 },
-    loadLogs(url = null) {
-        url = url || (
-            "/api/activity-log" + window.location.search
-        );
+    async loadLogs(url = "/api/activity-log") {
+        try {
+            const res = await axios.get(url);
 
-        axios.get(url)
-            .then(res => {
-
-                this.logs = res.data.tables;
-                this.pagination = res.data.pagination;
-
-                this.fetchStatus();
-            })
-            .catch(err => console.error("Fehler beim Laden:", err));
+            this.logs = res.data.tables || [];
+            this.pagination = res.data.pagination || [];
+        } catch (error) {
+            console.error("Fehler beim Activity Log laden:", error);
+        }
     },
-    markChecked() {
-      const unchecked = this.logs
-        .filter(row => row.pub === 0)
+
+
+    reset() {
+      this.form.search = "";
+    },
+markChecked() {
+
+    const unchecked = this.logs
+        .filter(row => Number(row.xkis_checked) === 0)
         .map(row => row.id);
 
-      if (!unchecked.length) return;
+    if (!unchecked.length) {
+        return;
+    }
 
-//       console.log("Setze pub=1 für IDs:", unchecked);
+    const blob = new Blob(
+        [JSON.stringify({ ids: unchecked })],
+        { type: "application/json" }
+    );
 
-      // Frontend sofort updaten
-      this.logs.forEach(row => {
-        if (unchecked.includes(row.id)) row.pub = 1;
-      });
+    const ok = navigator.sendBeacon(
+        "/activity-log/mark_all",
+        blob
+    );
 
-      // sendBeacon an Backend
-      const blob = new Blob([JSON.stringify({ ids: unchecked })], { type: "application/json" });
-      navigator.sendBeacon("/api/activity-log/check", blob);
-    },
+    console.log("Beacon send:", ok, unchecked);
+},
 
     async fetchStatus() {
-      await this.$nextTick();
-      if (!this.logs || this.logs.length === 0) return;
+      if (!this.logs || this.logs.length === 0) {
+        return;
+      }
+
       try {
         const response = await axios.get("/api/chkcom_log/");
-        this.checkedStatus = response.data.success;
+        this.checkedStatus = response.data.success || {};
       } catch (error) {
         console.error("Fehler beim Batch-Status laden:", error);
       }

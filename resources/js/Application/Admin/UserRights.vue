@@ -221,13 +221,13 @@
         <td class="px-4 py-3">
           <img
             v-if="u.profile_photo_path"
-            :src="`/images/_ab/users/profile_photo_path/${u.profile_photo_path}`"
+            :src="`/images/users/profile_photo_path/${u.profile_photo_path}`"
             class="w-8 h-8 rounded-full object-cover"
             alt="Profilbild"
           />
           <img
             v-else
-            :src="`/images/_ab/users/profile_photo_path/008.jpg`"
+            :src="`/images/users/profile_photo_path/008.jpg`"
             class="w-8 h-8 rounded-full object-cover"
             alt="Profilbild"
           />

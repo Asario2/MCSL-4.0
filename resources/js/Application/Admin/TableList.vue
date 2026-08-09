@@ -36,19 +36,26 @@
         </template>
 
         <!-- Tabellen Zeilen -->
-        <template #datarow="data" >
-          <td class="np-dl-td-normal" v-if="rights.view[data.datarow.full_name] == '1'">
-            <a :href="'/admin/tables/' + lowercase(data.datarow.name) + '/show'"
-                          class="!text-blue-600 !dark:text-blue-600 hover:underline as">
-              {{ data.datarow.name }}
+<template #datarow="data">
+
+    <template v-if="rights.view[data.datarow.full_name] == '1'">
+
+        <td class="np-dl-td-normal">
+            <a
+                :href="'/admin/tables/' + lowercase(data.datarow.name) + '/show'"
+                class="!text-blue-600 !dark:text-blue-600 hover:underline as"
+            >
+                {{ data.datarow.name }}
             </a>
-          </td>
+        </td>
 
-          <td class="np-dl-td-normal" v-if="rights.view[data.datarow.full_name] == '1'">
+        <td class="np-dl-td-normal">
             {{ data.datarow.description }}
-          </td>
+        </td>
 
-        </template>
+    </template>
+
+</template>
 
       </list-container>
 

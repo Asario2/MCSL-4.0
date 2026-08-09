@@ -30,7 +30,7 @@
                 <!-- Logo -->
                 <a href="/" class="">
                     <ClientOnly>
-                        <pnalogo :mode="mode"/>
+                        <pnalogo :mode="mode" />
                     </ClientOnly>
                 </a>
 
@@ -598,7 +598,7 @@ changeMode(newMode) {
             return ''
         }
 
-        return `/images/_${SD()}/users/profile_photo_path/`
+        return `/images/users/profile_photo_path/`
     },
     setLoadingState(state) {
 //       console.log("🔄 setLoadingState:", state);

@@ -88,15 +88,15 @@
                 </input-container>
 
                 <input-container :full-width="true">
-                    <input-label name="first_name" label="Vorname" />
+                    <input-label name="first_name" label="Nachname" />
                     <input-element
                         type="text"
                         name="first_name"
                         v-model="form.first_name"
-                        placeholder="Vorname"
+                        placeholder="Nachname"
                         ref="first_name"
                     />
-                    <input-error :message="form.errors.first_name" />
+                    <input-error :message="form.errors.last_name" />
                 </input-container>
 
                 <input-container :full-width="true">
@@ -218,7 +218,7 @@ export default {
             if (this.user.profile_photo_path) {
                 // Benutzerpfad im Subdomain-Verzeichnis
                 const subdomain = SD();
-                return `/images/_${subdomain}/users/profile_photo_path/${this.user.profile_photo_path}`;
+                return `/images/users/profile_photo_path/${this.user.profile_photo_path}`;
             }
             return this.user.profile_photo_url; // fallback jetstream
         },
@@ -248,7 +248,7 @@ export default {
                 onSuccess: () => {
                     this.clearPhotoFileInput();
                     this.photoPreview = null;
-                    router.relaod({ only: ["auth"] });
+                    router.reload({ only: ["auth"] });
                 },
             });
         },
@@ -271,7 +271,7 @@ export default {
                 onSuccess: () => {
                     this.photoPreview = null;
                     this.clearPhotoFileInput();
-                    router.relaod({ only: ["auth"] });
+                    router.reload({ only: ["auth"] });
                 },
             });
         },

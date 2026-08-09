@@ -293,8 +293,14 @@ Layout: defineAsyncComponent(() => {
             },
 
   visibleTables() {
-    return this.adminTables.filter(table => {
-      if (!table.checkzrights) return true;
+        return this.adminTables.filter(table => {
+        if (!table.checkzrights)
+        {
+            // alert("asdddddddddddddd");
+            return true;
+        }
+
+
       return !!this.modulRights?.[table.checkzrights];
     });
   }
