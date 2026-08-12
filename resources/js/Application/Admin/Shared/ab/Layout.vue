@@ -9,8 +9,8 @@
             <nav
                 class="py-2 bg-layout-sun-0 text-layout-sun-800 dark:bg-layout-night-0 dark:text-layout-night-800 border-b border-layout-sun-200 dark:border-layout-night-200"
             >
-                <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Primary Navigation Menu ab -->
+                <div class="max-w-7xl mx-auto">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->

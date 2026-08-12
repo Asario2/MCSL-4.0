@@ -5,7 +5,7 @@
 
       <div ref="content" v-html="ch(processedHtml)"></div>
 
-      <!-- ContactCard wird versteckt gerendert und später eingefügt -->
+      <!-- ContactCard wird versteckt gerendert und später eingefügt chh -->
       <ContactCard
         v-if="vcardData"
         ref="vcard"
