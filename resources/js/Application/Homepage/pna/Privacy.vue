@@ -76,7 +76,7 @@ export default {
 
                     alert("big");
 
-                    this.summarum = 243;
+                    this.summarum = 250;
 
                 } else {
 
