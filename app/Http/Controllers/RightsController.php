@@ -111,37 +111,120 @@ public function remLog($id)
 }
 public function GetRights($table, $right)
 {
-    if (!Auth::check()) {
+    if (!Auth::check() || !Schema::hasTable($table)) {
+        return response()->json(0);
+    }
+
+    // Recht normalisieren:
+    // "view"      -> "view_table"
+    // "view_table" -> "view_table"
+    $rightColumn = str_ends_with($right, '_table')
+        ? $right
+        : $right . '_table';
+
+    // Prüfen, ob die gewünschte Rechte-Spalte überhaupt existiert
+    if (!Schema::hasColumn('users_rights', $rightColumn)) {
         return response()->json(0);
     }
 
     $userId = Auth::id();
 
-    $rightfe = DB::table("users")
-        ->where("users.id", $userId)
+    $rightfe = DB::table('users')
+        ->where('users.id', $userId)
         ->leftJoin(
-            "users_rights",
-            "users.users_rights_id",
-            "=",
-            "users_rights.id"
+            'users_rights',
+            'users.users_rights_id',
+            '=',
+            'users_rights.id'
         )
-        ->select("users_rights.".$right."_table as posi")
+        ->select('users_rights.' . $rightColumn . ' as posi')
         ->first();
 
-    $pos = DB::table("admin_table")
-        ->where("name", $table)
-        ->value("position");
-
-    if ($pos === null || !isset($rightfe->posi)) {
+    if (!$rightfe || $rightfe->posi === null) {
         return response()->json(0);
     }
 
-    // Binärrecht auslesen
-    $rf = substr($rightfe->posi, $pos, 1);
+    // Position der Tabelle aus admin_table
+    $pos = DB::table('admin_table')
+        ->where('name', $table)
+        ->value('position');
 
-    return response()->json((int) $rf);
+    if ($pos === null) {
+        return response()->json(0);
+    }
+
+    // Bit an der Position auslesen
+    $rf = substr((string) $rightfe->posi, (int) $pos, 1);
+
+    return response()->json($rf === '1' ? 1 : 0);
 }
 
+
+public function allTableRights($right)
+{
+    if (!Auth::check()) {
+        return response()->json([]);
+    }
+
+    // "view"     -> "view_table"
+    // "view_table" -> "view_table"
+    $rightColumn = str_ends_with($right, '_table')
+        ? $right
+        : $right . '_table';
+
+    // Rechte-Spalte prüfen
+    if (!Schema::hasColumn('users_rights', $rightColumn)) {
+        return response()->json([]);
+    }
+
+    $userId = Auth::id();
+
+    // Benutzer-Rechte holen
+    $rightfe = DB::table('users')
+        ->where('users.id', $userId)
+        ->leftJoin(
+            'users_rights',
+            'users.users_rights_id',
+            '=',
+            'users_rights.id'
+        )
+        ->select('users_rights.' . $rightColumn . ' as posi')
+        ->first();
+
+    if (!$rightfe || $rightfe->posi === null) {
+        return response()->json([]);
+    }
+
+    $bin = (string) $rightfe->posi;
+
+    // Tabellen + Position holen
+    $tables = DB::table('admin_table')
+        ->orderBy('name', 'ASC')
+        ->get([
+            'name',
+            'position'
+        ]);
+
+    $rights = [];
+
+    foreach ($tables as $table) {
+
+        if ($table->position === null) {
+            $rights[$table->name] = 0;
+            continue;
+        }
+
+        $bit = substr(
+            $bin,
+            (int) $table->position,
+            1
+        );
+
+        $rights[$table->name] = ($bit === '1') ? 1 : 0;
+    }
+
+    return response()->json($rights);
+}
 // public function AddFunction(Request $request)
 // {
 
@@ -277,22 +360,22 @@ public function addColumn(Request $request)
 }
 
 
-public function allTableRights($right)
-{
-    // Beispiel: $right = "view_table"
-    $bin = auth()->user()->rights->$right; // z.B. "1011"
+// public function allTableRights($right)
+// {
+//     // Beispiel: $right = "view_table"
+//     $bin = auth()->user()->rights->$right; // z.B. "1011"
 
-    // Hole alle Tabellen aus admin_tables
-    $tables = DB::table('admin_table')->orderBy("name","ASC")->pluck('name')->toArray();
+//     // Hole alle Tabellen aus admin_tables
+//     $tables = DB::table('admin_table')->orderBy("name","ASC")->pluck('name')->toArray();
 
-    $array = [];
+//     $array = [];
 
-    foreach ($tables as $i => $name) {
-        $array[$name] = substr($bin, $i, 1) ?: "0";
-    }
+//     foreach ($tables as $i => $name) {
+//         $array[$name] = substr($bin, $i, 1) ?: "0";
+//     }
 
-    return $array;
-}
+//     return $array;
+// }
 public function GetRights_old()
 {
     // Angenommen, der eingeloggte User hat eine `users_rights_id` oder ähnliches

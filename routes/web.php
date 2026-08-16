@@ -844,7 +844,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/api/created-at', [TablesController::class, 'getCreatedAt'])->name("created.at");
         Route::get("/api/GetCat/{table}/{id}", [TablesController::class, 'GetCats'])->name("GetCats");
         Route::post("/api/save-order/{table}", [TablesController::class, 'save_order'])->name("save-order");
-        Route::get("/pm/index/{tab}", [PMController::class, 'pm_index'])->name("pm.index");
+    Route::get("/pm/index/{tab?}", [PMController::class, 'pm_index'])->name("pm.index");
         Route::post("/pm/save", [PMController::class, 'store'])->name("pm.save");
         Route::post("/admin/pm/check/{id}",[PMController::class,"update"])
             ->name("admin.pm.check");

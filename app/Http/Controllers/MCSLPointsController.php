@@ -265,6 +265,7 @@ class MCSLPointsController extends Controller
             return (array) $u;
         })->toArray();;
        // dd($users);
+       $nickz = [];
         foreach($users as $user)
         {
             $request = new Request();
@@ -400,8 +401,15 @@ foreach ($commentsStatsRaw as $stat) {
         $stars = DB::table("ratings")->where("users_id",$users_id)->count();
         $comms = DB::table("comments")->where("users_id",$users_id)->count();
         $newsl = DB::table("points")->where("users_id",$users_id)->sum('points') ?? 0;
+        if (Schema::hasTable('shortpoems')) {
+
 
         $shopo  = DB::table("shortpoems")->where("users_id",$users_id)->count();
+        }
+        else
+        {
+            $shopo = 0;
+        }
         $res = [
             'comments'    => $comms*$this->ccnt,
             'newsletter'  => $newsl,
@@ -447,8 +455,11 @@ foreach ($commentsStatsRaw as $stat) {
         {
             $users_id = Auth::id();
         }
-        $cnt = DB::table("shortpoems")->where("users_id",$users_id)->count();
-        if ($users_id === null) {
+        if(Schema::hasTable('shortpoems')) {
+            $cnt = DB::table("shortpoems")->where("users_id",$users_id)->count();
+        }
+
+        if ($users_id === null || !@$cnt) {
             $cnt = 0;
         }
         return $cnt;
