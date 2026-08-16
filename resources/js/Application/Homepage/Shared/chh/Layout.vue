@@ -130,6 +130,7 @@
 
 </template>
 <script>
+import {showHideToggleCookiePreferencesModal} from "@/helpers"
 export default {
     name: "Admin_Shared_Layout_chh",
 data(){
@@ -141,6 +142,7 @@ return {
 }
 },
 methods: {
+showHideToggleCookiePreferencesModal,
  isActive(path) {
     // Wenn gerade ein anderer Link gehovert wird → kein active anzeigen
     if (this.hovered && this.hovered !== path) {

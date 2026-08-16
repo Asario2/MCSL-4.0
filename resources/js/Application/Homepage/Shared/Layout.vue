@@ -389,7 +389,7 @@
         import IconClose from "@/Application/Components/Icons/Close.vue";
 import IconRegister from "@/Application/Components/Icons/IconRegister.vue";
 import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
-
+import {showHideToggleCookiePreferencesModal} from "@/helpers"
 
         export default {
         name: "Homepage_Shared_Layout",
@@ -560,6 +560,7 @@ import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
         },
         methods: {
             GetProfileImagePath,
+            showHideToggleCookiePreferencesModal,
             SD,
             mupper(text) {
 

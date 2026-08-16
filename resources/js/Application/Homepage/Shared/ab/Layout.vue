@@ -277,7 +277,23 @@
                         <link-footer name="Kontakt" :route-name="route('home.contacts')"></link-footer>
                         </li>
                         <li>
-                                <a class="ToggleCookieLink text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900" onclick="showHideToggleCookiePreferencesModal()"><span>Cookie Einstellungen</span></a>
+                                        <a
+                                            class="ToggleCookieLink cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900"
+                                            onclick="showHideToggleCookiePreferencesModal()"
+                                        >
+
+                                            <IconCookies
+                                                width="18"
+                                                height="18"
+                                                class="mr-[-4px]"
+                                                color="#e8c456"
+                                            />
+
+                                            <span>
+                                                Cookie Einstellungen
+                                            </span>
+
+                                        </a>
 <!--
                             <LinkFooter @click="reopenCookieBanner">
                             <b>Cookie-Einstellungen</b>
@@ -370,6 +386,7 @@
     import { SD,GetProfileImagePath,CheckTRights } from '@/helpers';
     import throttle from 'lodash/throttle';
     import pickBy from "lodash/pickBy";
+    import {showHideToggleCookiePreferencesModal} from "@/helpers"
 
     export default {
         name: "Homepage_Shared_Layout_ab",
@@ -542,6 +559,7 @@
     methods: {
         GetProfileImagePath,
         SD,
+        showHideToggleCookiePreferencesModal,
         CheckTRights,
             mupper(text) {
                return text;

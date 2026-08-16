@@ -7,7 +7,7 @@
         </div>
     </Layout>
   </template>
-
+<!-- ContactCard wird versteckt gerendert und später eingefügt homepage -->
   <script>
   import Layout from "@/Application/Homepage/Shared/Layout.vue";
   import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
