@@ -378,3 +378,8 @@
 ![Version](https://img.shields.io/badge/version-6.32.8-orange) Hotfix - Removed Kurzinfos from templates (#583)  
 ![Version](https://img.shields.io/badge/version-6.33.1-orange) Hotfix - Removed console.log from vues (#581)  
 ![Version](https://img.shields.io/badge/version-6.34.8-orange) Feature - Changed Logos for PNA page (#582)  
+![Version](https://img.shields.io/badge/version-6.35.3-orange) Hotfix - fixed bug in scrolling and nav (#584)  
+![Version](https://img.shields.io/badge/version-6.36.8-orange) Feature - Added comments in layout (#585)  
+![Version](https://img.shields.io/badge/version-6.37.6-orange) Hotfix - Smaller Bugs in different Files (#589)  
+![Version](https://img.shields.io/badge/version-6.38.0-orange) Hotfix - Changed PNA Logo (#587)  
+![Version](https://img.shields.io/badge/version-6.39.4-orange) Hotfix - Reinstall Cookie Consent (#588)  
