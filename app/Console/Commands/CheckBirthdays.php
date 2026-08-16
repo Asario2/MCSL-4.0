@@ -91,7 +91,7 @@ EOT;
                         Mail::html($text, function ($message) use ($vorname, $nachname,$actMail) {
                             $message->to($actMail)
                                     ->from('no-reply@marblefx.net', 'MCSL Geburtstage')
-                                    ->subject("🎉 Geburtstag: {$vorname} {$nachname}");
+                                    ->subject("😎 Geburtstag: {$vorname} {$nachname}");
                         });
                     }
                         // Jahr aktualisieren, um Doppel-Mails zu vermeiden

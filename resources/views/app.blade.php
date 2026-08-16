@@ -117,7 +117,7 @@ globalThis.SD = "{{ SD() }}";
     <script src="/js/jquery-3.6.0.min.js"></script>
 
     <script src="/js/users.js"></script>
-
+<link rel="stylesheet" href="/packages/devrabiul/laravel-cookie-consent/css/style.css">
 <script>
 (function () {
 
