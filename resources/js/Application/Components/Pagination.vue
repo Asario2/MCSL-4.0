@@ -1,26 +1,40 @@
 <template>
-
-  <div v-if="links?.length > 3" class="flex justify-center gap-2">
-
-    <a
-      v-for="(link, i) in links"
-      :key="i"
-      :href="buildUrl(link)"
-      :disabled="!link.url"
-      @click.prevent="go(link)"
-      class="px-3 py-1 border rounded lolink"
-      :class="{
-            'flex items-center font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-500': link.active,
-            'opacity-50 cursor-not-allowed': !link.url
-      }"
+    <div
+        v-if="links?.length > 3"
+        class="flex w-full justify-start md:justify-center gap-2 overflow-x-auto overflow-y-hidden ml-[10px] px-1"
     >
-      <span class="text-primary-sun-900 dark:text-primary-night-500" v-if="link.label === 'pagination.previous'">« Zurück</span>
-      <span class="text-primary-sun-900 dark:text-primary-night-900" v-else-if="link.label === 'pagination.next'">Weiter »</span>
-      <span class="text-primary-sun-900 dark:text-primary-night-900" v-else v-html="link.label"></span>
-    </a>
+        <a
+            v-for="(link, i) in links"
+            :key="i"
+            :href="buildUrl(link)"
+            @click.prevent="go(link)"
+            class="shrink-0 whitespace-nowrap px-3 py-1 border rounded lolink"
+            :class="{
+                'flex items-center font-bold border-primary-sun-500 text-primary-sun-900 dark:border-primary-night-500 dark:text-primary-night-500': link.active,
+                'opacity-50 cursor-not-allowed': !link.url
+            }"
+        >
+            <span
+                v-if="link.label === 'pagination.previous'"
+                class="text-primary-sun-900 dark:text-primary-night-500"
+            >
+                « Zurück
+            </span>
 
-  </div>
+            <span
+                v-else-if="link.label === 'pagination.next'"
+                class="text-primary-sun-900 dark:text-primary-night-900"
+            >
+                Weiter »
+            </span>
 
+            <span
+                v-else
+                class="text-primary-sun-900 dark:text-primary-night-900"
+                v-html="link.label"
+            ></span>
+        </a>
+    </div>
 </template>
 
 <script>

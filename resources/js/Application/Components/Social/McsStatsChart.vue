@@ -1,21 +1,22 @@
 <template>
 <layout>
-  <meta-header title="MCSL Points" />
+
+    <meta-header title="MCSL Points" />
 <template #header>
-      <Breadcrumb :breadcrumbs="breadcrumbs" />
+    <Breadcrumb :breadcrumbs="breadcrumbs" />
     </template>
     <div class="block max-w-sm mx-auto sm:max-w-full p-4 bg-layout-sun-100 dark:bg-layout-night-100">
-
+<!-- MCSStastChart -->
     <h1>MCSL Points</h1>
 
-  <div class="bg-layout-sun-100 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6">
+<div class="bg-layout-sun-100 dark:bg-layout-night-50 dark:text-layout-night-900 text-layout-sun-900 lg:rounded-lg p-2 mb-6">
     <div v-if="text" class="text-layout-sun-1000 dark:text-layout-night-1000">
-      <div v-html="text.text"></div>
+    <div v-html="text.text"></div>
     </div>
     <div v-else>
-      <p class="text-gray-500 italic">Kein Willkommenstext vorhanden.</p>
+    <p class="text-gray-500 italic">Kein Willkommenstext vorhanden.</p>
     </div>
-  </div>
+</div>
     <h3>Übersicht</h3>
     <table class="w-half">
     <tbody>
@@ -99,39 +100,39 @@
         </tr>
     </tbody>
 </table>
-  <h3 class='ora'>Du hast aktuell {{MCSL_GLOB_PTS}} Punkte</h3>
-  <div v-if="MCSL_GLOB_PTS > 45"><br /><a class="button-primary" href='/get_MCSL_Points_Preniums'>Jetzt Prämie Einlösen</a></div>
-  <div v-else-if="!AID">Bitte <a href="/login">einloggen</a> oder <a href='/register'>Registrieren</a></div>
-  <div v-else>Du hast leider noch nicht genug Punkte gesammelt um eine Prämie einzulösen</div>
-  <h2>Statistiken für <span class='ncol'>{{ nick }}</span></h2>
+<h3 class='ora'>Du hast aktuell {{MCSL_GLOB_PTS}} Punkte</h3>
+<div v-if="MCSL_GLOB_PTS > 45"><br /><a class="button-primary" href='/get_MCSL_Points_Preniums'>Jetzt Prämie Einlösen</a></div>
+<div v-else-if="!AID">Bitte <a href="/login">einloggen</a> oder <a href='/register'>Registrieren</a></div>
+<div v-else>Du hast leider noch nicht genug Punkte gesammelt um eine Prämie einzulösen</div>
+<h2>Statistiken für <span class='ncol'>{{ nick }}</span></h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
     <!-- MCSL Points -->
     <div class="bg-layout-sun-100 dark:bg-layout-night-100 border border-layout-sun-300 dark:border-layout-night-300 p-4 rounded-xl shadow-sm">
-      <h3 class="text-lg font-semibold mb-3">MCSL    Points ({{ count_mcs }})</h3>
-      <div class="relative h-64">
+    <h3 class="text-lg font-semibold mb-3">MCSL    Points ({{ count_mcs }})</h3>
+    <div class="relative h-64">
         <canvas ref="pointsChart" v-if="Object.values(mcslpoints).some(v => v > 0)"></canvas>
         <i v-else>Keine MCSL Points gefunden</i>
-      </div>
+    </div>
     </div>
 
     <!-- Kommentare -->
     <div class="bg-layout-sun-100 dark:bg-layout-night-100 border border-layout-sun-300 dark:border-layout-night-300 p-4 rounded-xl shadow-sm">
-      <h3 class="text-lg font-semibold mb-3">Kommentare ({{ count_com }})</h3>
-      <div class="relative h-64">
+    <h3 class="text-lg font-semibold mb-3">Kommentare ({{ count_com }})</h3>
+    <div class="relative h-64">
         <canvas ref="commentsChart" v-if="Object.values(commentsStats).some(v => v > 0)"></canvas>
         <i v-else>Keine Kommentare gefunden</i>
-      </div>
+    </div>
     </div>
 
     <!-- Bewertungen -->
     <div class="bg-layout-sun-100 dark:bg-layout-night-100 border border-layout-sun-300 dark:border-layout-night-300 p-4 rounded-xl shadow-sm" >
-      <h3 class="text-lg font-semibold mb-3">Bewertungen nach Typ</h3>
-      <div class="relative h-64" >
+    <h3 class="text-lg font-semibold mb-3">Bewertungen nach Typ</h3>
+    <div class="relative h-64" >
         <canvas ref="ratingsChart" v-if="ratingsStats.labels?.length > 0"></canvas>
         <i v-else>Keine Bewertungen gefunden</i>
-      </div>
+    </div>
     </div>
     </div>
     <br />
@@ -153,16 +154,34 @@
 <script>
 import { Chart,  CategoryScale, ArcElement, Tooltip, Legend, PieController, LinearScale,    BarController,  DoughnutController,BarElement } from "chart.js";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-import Layout from "@/Application/Homepage/Shared/Layout.vue";
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
-import { CleanId } from "@/helpers"
+import { CleanId,SD } from "@/helpers"
 Chart.register(ArcElement, Tooltip, Legend,  CategoryScale, LinearScale, PieController, DoughnutController, BarController,  BarElement);
+import LayoutAB from "@/Application/Homepage/Shared/ab/Layout.vue";
+import LayoutMFX from "@/Application/Homepage/Shared/mfx/Layout.vue";
+import LayoutDAG from "@/Application/Homepage/Shared/dag/Layout.vue";
+import LayoutCHH from "@/Application/Homepage/Shared/chh/Layout.vue";
+import LayoutPNA from "@/Application/Homepage/Shared/pna/Layout.vue";
 
+const layouts = {
+    ab: LayoutAB,
+    mfx: LayoutMFX,
+    dag: LayoutDAG,
+    chh: LayoutCHH,
+    pna: LayoutPNA,
+};
+
+const currentSD = globalThis.SD;
+
+console.log("SD():", currentSD);
+console.log("layouts:", layouts);
+console.log("CurrentLayout:", layouts[currentSD]);
+const CurrentLayout = layouts[currentSD];
 export default {
-  name: "McsStatsCharts",
-  components: { Layout, MetaHeader,Breadcrumb, },
+name: "McsStatsCharts",
+components: { Layout: CurrentLayout, MetaHeader,Breadcrumb, },
 
-  props: {
+props: {
     mcslpoints: {
     type: Object,
     default: () => ({
@@ -178,56 +197,56 @@ export default {
     text: [Array, Object,String],
     count_mcs: Number,
     count_com: Number,
-     stackedUserStats: {
+    stackedUserStats: {
     type: Object,
     required: true,
-  },
-  MCSL_GLOB_PTS:[Number,String],
-  nick:String,
-  MCS_POINTS_TOTAL:Number,
-  breadcrumbs: {
-  type: [Array, String, Object],
-  default: () => [],
 },
-  },
+MCSL_GLOB_PTS:[Number,String],
+nick:String,
+MCS_POINTS_TOTAL:Number,
+breadcrumbs: {
+type: [Array, String, Object],
+default: () => [],
+},
+},
 
-  data() {
+data() {
     return {
-      pointsChartInstance: null,
-      commentsChartInstance: null,
-      ratingsChartInstance: null,
-      COLORS_13: [
+    pointsChartInstance: null,
+    commentsChartInstance: null,
+    ratingsChartInstance: null,
+    COLORS_13: [
         "#3b82f6", "#10b981", "#ffc900", "#ef4444",
         "#8b5cf6", "#22c55e", "#eab308", "#ec4899",
         "#14b8a6", "#f97316", "#0ea5e9", "#a855f7", "#64748b"
-      ],
+    ],
     };
-  },
+},
 watch: {
-  stackedUserStats: {
+stackedUserStats: {
     immediate: true,
     async handler(val) {
-      if (!val || !val.labels || !val.labels.length) return;
+    if (!val || !val.labels || !val.labels.length) return;
 
-      await this.$nextTick();
+    await this.$nextTick();
 
-      if (!this.$refs.usersStackedChart) return;
+    if (!this.$refs.usersStackedChart) return;
 
-      this.renderUsersStackedChart();
+    this.renderUsersStackedChart();
     },
-  },
-  text: {
+},
+text: {
     deep: true,
     immediate: true,
     handler() {
         if(typeof window === "undefined")return;
-      if (!window.location.hash) return;
+    if (!window.location.hash) return;
 
-      requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
         this.scrollToHashAnchor();
-      });
+    });
     },
-  },
+},
 },
 computed:{
     AID()
@@ -236,34 +255,36 @@ computed:{
     }
 
 },
-  mounted() {
+mounted() {
+    this.sd = SD();
     this.renderPointsChart();
     this.renderCommentsChart();
     this.renderRatingsChart();
     // this.renderUsersStackedChart();
 
     this.darkObserver = new MutationObserver(() => {
-      if (this.$refs.pointsChart) this.renderPointsChart();
-      if (this.$refs.commentsChart) this.renderCommentsChart();
-      if (this.$refs.ratingsChart) this.renderRatingsChart();
+    if (this.$refs.pointsChart) this.renderPointsChart();
+    if (this.$refs.commentsChart) this.renderCommentsChart();
+    if (this.$refs.ratingsChart) this.renderRatingsChart();
     });
 
     this.darkObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
+    attributes: true,
+    attributeFilter: ["class"],
     });
-  },
+},
 
-  beforeUnmount() {
+beforeUnmount() {
     if (this.pointsChartInstance) this.pointsChartInstance.destroy();
     if (this.commentsChartInstance) this.commentsChartInstance.destroy();
     if (this.ratingsChartInstance) this.ratingsChartInstance.destroy();
     if (this.darkObserver) this.darkObserver.disconnect();
-  },
+},
 
-  methods: {
+methods: {
     CleanId,
-      getHashElement() {
+    SD,
+    getHashElement() {
         const hash = window?.location.hash;
 //         console.log('DEBUG: window.location.hash =', hash);
 
@@ -308,8 +329,12 @@ computed:{
     if (loaded === imgs.length) scroll();
     },
     isDark() {
+        if(typeof window !== "undefined"){
 
-        return document.querySelector('main')?.classList.contains('dark');
+
+       return localStorage.getItem("theme") === "dark";
+       }
+       return true;
     },
     renderUsersStackedChart() {
     if (this.usersStackedChartInstance) {
@@ -373,101 +398,101 @@ computed:{
     },
 
     getChartColors() {
-      const dark = this.isDark();
-      return {
+    const dark = this.isDark();
+    return {
         text: dark ? "#ddd" : "#000",
         tooltipBg: dark ? "#ccc" : "#eee",
         tooltipText: dark ? "#111827" : "#222",
-      };
+    };
     },
 
     baseOptions() {
-      const c = this.getChartColors();
-      return {
+    const c = this.getChartColors();
+    return {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: {
+        legend: {
             position: "right",
             labels: {
-              color: c.text,
-              boxWidth: 16,
-              boxHeight: 16,
-              padding: 3,
-              usePointStyle: false, // kein weißer
+            color: c.text,
+            boxWidth: 16,
+            boxHeight: 16,
+            padding: 3,
+            usePointStyle: false, // kein weißer
 
             },
-          },
-          tooltip: {
+        },
+        tooltip: {
             backgroundColor: c.tooltipBg,
             titleColor: c.tooltipText,
             bodyColor: c.tooltipText,
-          },
         },
-      };
+        },
+    };
     },
 
     renderPointsChart() {
-      if (this.pointsChartInstance) this.pointsChartInstance.destroy();
+    if (this.pointsChartInstance) this.pointsChartInstance.destroy();
 
-      this.pointsChartInstance = new Chart(this.$refs.pointsChart, {
+    this.pointsChartInstance = new Chart(this.$refs.pointsChart, {
         type: "doughnut",
         data: {
-          labels: ["Bilderbewertungen", "Kommentare", "Newsletter", "Shortpoems"],
-          datasets: [{
+        labels: ["Bilderbewertungen", "Kommentare", "Newsletter", "Shortpoems"],
+        datasets: [{
             data: [
             this.mcslpoints?.ratings,
             this.mcslpoints?.comments,
 
-              this.mcslpoints?.newsletter,
+            this.mcslpoints?.newsletter,
 
-              this.mcslpoints?.shortpoems
+            this.mcslpoints?.shortpoems
             ],
             backgroundColor: this.COLORS_13.slice(0, 4),
-          }],
+        }],
         },
         options: this.baseOptions(),
-      });
+    });
     },
 
     renderCommentsChart() {
-      if (this.commentsChartInstance) this.commentsChartInstance.destroy();
+    if (this.commentsChartInstance) this.commentsChartInstance.destroy();
 
-      this.commentsChartInstance = new Chart(this.$refs.commentsChart, {
+    this.commentsChartInstance = new Chart(this.$refs.commentsChart, {
         type: "doughnut",
         data: {
-          labels: ["Blog", "Did you know", "Images", "Shortpoems"],
-          datasets: [{
+        labels: ["Blog", "Did you know", "Images", "Shortpoems"],
+        datasets: [{
             data: [
-              this.commentsStats?.blogs,
-              this.commentsStats?.didyouknow,
-              this.commentsStats?.images,
-              this.commentsStats?.shortpoems
+            this.commentsStats?.blogs,
+            this.commentsStats?.didyouknow,
+            this.commentsStats?.images,
+            this.commentsStats?.shortpoems
             ],
             backgroundColor: this.COLORS_13.slice(0, 4),
-          }],
+        }],
         },
         options: { ...this.baseOptions(), cutout: "55%" },
-      });
+    });
     },
 
     renderRatingsChart() {
-      if (!this.$refs.ratingsChart) return;
-      if (this.ratingsChartInstance) this.ratingsChartInstance.destroy();
+    if (!this.$refs.ratingsChart) return;
+    if (this.ratingsChartInstance) this.ratingsChartInstance.destroy();
 
-      this.ratingsChartInstance = new Chart(this.$refs.ratingsChart, {
+    this.ratingsChartInstance = new Chart(this.$refs.ratingsChart, {
         type: "doughnut",
         data: {
-          labels: this.ratingsStats.labels,
-          datasets: [{
+        labels: this.ratingsStats.labels,
+        datasets: [{
             data: this.ratingsStats.values,
             backgroundColor: this.COLORS_13.slice(0, this.ratingsStats.values.length),
-          }],
+        }],
         },
         options: { ...this.baseOptions(), cutout: "55%" },
-      });
+    });
     },
-  },
+},
 };
 </script>
 <style>

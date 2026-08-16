@@ -313,7 +313,7 @@ import InputSelectU from "@/Application/Components/Form/InputSelectU.vue";
 import InputHtml from "@/Application/Components/Form/InputHtml.vue";
 import InputCheckbox from "@/Application/Components/Form/InputCheckbox.vue";
 import axios from "axios";
-// import { router } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
 import InputFormText from "@/Application/Components/Form/InputFormText.vue";
 import Pagination from "@/Application/Components/Pagination.vue";
 import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";

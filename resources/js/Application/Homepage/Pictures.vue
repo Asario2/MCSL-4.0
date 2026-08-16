@@ -154,7 +154,7 @@
     import throttle from "lodash/throttle";
     // import PhotoSwipeLightbox from "photoswipe/lightbox";
     // import 'photoswipe/dist/phot oswipe.css';
-
+    import { router } from '@inertiajs/vue3';
     // import { onMounted } from "vue";
     // import PhotoSwipeLightbox from "photoswipe/lightbox";
     // import "photoswipe/style.css";

@@ -27,7 +27,7 @@
     import IconTrash from "@/Application/Components/Icons/Trash.vue";
     import { toastBus } from "@/utils/toastBus";
     import { CheckTRights, CleanTable } from "@/helpers";
-    import { usePage } from "@inertiajs/vue3";
+    import { usePage,router } from "@inertiajs/vue3";
     export default {
     name: "EditBtns",
 

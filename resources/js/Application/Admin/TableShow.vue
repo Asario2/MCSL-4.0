@@ -38,7 +38,7 @@
             <!-- Header-Spalten -->
             <template #header>
                 <tr>
-                    <th class="np-dl-th-normal lg:hidden">Aktionen</th>
+
                     <th class="np-dl-th-normal"  v-if="rows?.data?.length && !rows.data[0]?.isNAN && CleanTable()?.trim() !== ''">Drop</th>
 
 
@@ -54,7 +54,7 @@
                 <th class="np-dl-th-normal" v-if="table === 'comments'">Check</th>
                 <th class="np-dl-th-normal" v-if="table === 'images'">Beschreibung</th>
                 <th class="np-dl-th-normal" v-if="hasCreated">Datum</th>
-                <th class="np-dl-th-normal" colspan="2"></th>
+                <th class="np-dl-th-normal lg:hidden">Aktionen</th>
                 </tr>
             </template>
 
@@ -805,7 +805,7 @@ export default defineComponent({
         |--------------------------------------------------------------------------
         */
 
-        onCheckedStatusUpdate(status) {
+        onCheckedStatusUpdate() {
 
             // this.checkedStatus = status;
         },

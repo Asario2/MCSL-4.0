@@ -6,9 +6,9 @@
       <Breadcrumb :breadcrumbs="breadcrumbs" />
     </template>
     <div class="block max-w-sm mx-auto sm:max-w-full p-4 bg-layout-sun-100 dark:bg-layout-night-100">
-
+ <!-- mcs-points-ov -->
     <h1>MCSL Points</h1>
-<!-- mcsl-points-ov -->
+
   <div class="bg-layout-sun-100 dark:bg-layout-night-50 lg:rounded-lg p-2 mb-6">
     <div v-if="text" class="text-layout-sun-1000 dark:text-layout-night-1000">
       <div v-html="text"></div>

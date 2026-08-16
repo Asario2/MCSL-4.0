@@ -74,13 +74,13 @@ export default {
 
                 if (height > 160) {
 
-                    alert("big");
+
 
                     this.summarum = 250;
 
                 } else {
 
-                    alert("sm");
+
 
                     this.summarum = 85;
                 }

@@ -139,7 +139,7 @@ export default defineComponent({
         },
     async getAllRights(right) {
         const response = await axios.get(`/api/user/rights/des-all/${right}`);
-//         console.log("RD" + response.data);
+        console.log("RD" + response.data);
         return response.data;
     }
   },

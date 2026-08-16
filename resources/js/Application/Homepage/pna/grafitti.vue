@@ -45,7 +45,7 @@
                                 class="w-full"
                                 ref="searchField"
                                 @reset="reset"
-                                @input="onSearchInput"
+
                                 />
 
                     </div>
@@ -162,6 +162,8 @@
     import BackBtn from "@/Application/Components/Form/BackBtn.vue";
     import Alert from "@/Application/Components/Content/Alert.vue";
     import { CleanTable } from '@/helpers';
+    import { router } from '@inertiajs/vue3';
+    import { route } from 'ziggy-js';
     export default {
         name:"PictureGallery",
     components: {
@@ -223,24 +225,31 @@
 
     },
     watch: {
-    'form.search': throttle(function () {
-        router.get(
-        this.route('home.images.gallery', {
-            slug: this.ocont && this.ocont?.slug ? this.ocont?.slug : '',
-        }),
-        { search: this.form.search },
+    'form.search': throttle(function (value) {
+
+
+    console.log('GRAFITTI SEARCH:', value);
+    console.log('GRAFITTI URL:', route('home.pna.grafitti'));
+
+    router.get(
+        route('home.pna.grafitti'),
+        {
+            search: value || '',
+        },
         {
             preserveState: true,
+            preserveScroll: true,
             replace: true,
-            skipLoading:true,
+            skipLoading: true,
         }
-        );
-    }, 300),
+    );
+
+}, 300),
 
 
     //   'form.search': throttle(function (val) {
     //     router.get(
-    //       this.route('home.images.gallery'),
+    //       route('home.images.gallery'),
     //       {
     //         slug: this.ocont?.slug,
     //         search: val?.trim() || null,
@@ -372,8 +381,9 @@
         //   }
         // },
         remBrackets,
+
         reset() {
-            this.form = mapValues(this.form, () => null);
+            this.form.search = '';
         },
         stripTagsCom(txt)
         {
