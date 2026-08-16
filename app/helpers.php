@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Settings;
+use App\Http\Controllers\RightsController;
 use Carbon\Carbon;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request; // oben in der Datei
@@ -1665,77 +1666,83 @@ if(!function_exists("CheckRights"))
 {
     function CheckRights($userId, $table, $right)
     {
-        $fullUri = @$_SERVER['REQUEST_URI'];
-
-        // Entfernt den Query-String, um nur den Pfad zu erhalten
-        $path = parse_url($fullUri, PHP_URL_PATH);
-        $ps = explode("/",$path);
-        $host = $ps[1];
-        // dd($host);
-        if(@$_SESSION['Devm'] && ($host != "tables" && $host != "admin"))
-        {
-          return;
-        }
-        GlobalController::SetDomain();
-
-        // Hole die user_rights_id des Nutzers aus der Tabelle users
-        $user = DB::table('users')
-            ->where('id', $userId)
-            ->select('users_rights_id')
-            ->first();
-        $tableId = getPositionOfTable($table);
+    $r = NEW RightsController();
+    return $r->GetRights($table,$right);
 
 
-        // Überprüfe, ob der Benutzer existiert
-        if (!$user) {
-
-            return 0; // Benutzer nicht gefunden
-        }
-        if(!Auth::check())
-        {
-            return 0;
-        }
-        // Hole die Rechte des Nutzers aus der Tabelle users_rights
-        $userRights = DB::table('users_rights')
-            ->where('id', $user->users_rights_id)
-            ->select('view_table',"add_table", 'edit_table', 'publish_table', 'delete_table',"date_table")
-            ->first();
-
-        // Überprüfe, ob die Rechte gefunden wurden
-        if (!$userRights) {
-            return 0; // Rechte nicht gefunden
-        }
-
-        // Überprüfe, ob die tableId innerhalb des Bit-Strings liegt
-        if ($tableId < 0     || $tableId >= strlen($userRights->view_table)) {
-            return 0; // Ungültige tableId
-        }
-        // Bestimme das Recht, das wir überprüfen wollen
-        $viewTable = $userRights->view_table;
 
 
-switch ($right) {
-    case 'view':
-        return ($viewTable[$tableId] ?? '') === '1' ? 1 : 0;
+    //         $fullUri = @$_SERVER['REQUEST_URI'];
 
-    case 'add':
-        return ($userRights->add_table[$tableId] ?? '') === '1' ? 1 : 0;
+//         // Entfernt den Query-String, um nur den Pfad zu erhalten
+//         $path = parse_url($fullUri, PHP_URL_PATH);
+//         $ps = explode("/",$path);
+//         $host = $ps[1];
+//         // dd($host);
+//         if(@$_SESSION['Devm'] && ($host != "tables" && $host != "admin"))
+//         {
+//           return;
+//         }
+//         GlobalController::SetDomain();
 
-    case 'edit':
-        return ($userRights->edit_table[$tableId] ?? '') === '1' ? 1 : 0;
+//         // Hole die user_rights_id des Nutzers aus der Tabelle users
+//         $user = DB::table('users')
+//             ->where('id', $userId)
+//             ->select('users_rights_id')
+//             ->first();
+//         $tableId = getPositionOfTable($table);
 
-    case 'publish':
-        return ($userRights->publish_table[$tableId] ?? '') === '1' ? 1 : 0;
 
-    case 'delete':
-        return ($userRights->delete_table[$tableId] ?? '') === '1' ? 1 : 0;
+//         // Überprüfe, ob der Benutzer existiert
+//         if (!$user) {
 
-    case 'date':
-        return ($userRights->date_table[$tableId] ?? '') === '1' ? 1 : 0;
+//             return 0; // Benutzer nicht gefunden
+//         }
+//         if(!Auth::check())
+//         {
+//             return 0;
+//         }
+//         // Hole die Rechte des Nutzers aus der Tabelle users_rights
+//         $userRights = DB::table('users_rights')
+//             ->where('id', $user->users_rights_id)
+//             ->select('view_table',"add_table", 'edit_table', 'publish_table', 'delete_table',"date_table")
+//             ->first();
 
-    default:
-        return 0;
-}
+//         // Überprüfe, ob die Rechte gefunden wurden
+//         if (!$userRights) {
+//             return 0; // Rechte nicht gefunden
+//         }
+
+//         // Überprüfe, ob die tableId innerhalb des Bit-Strings liegt
+//         if ($tableId < 0     || $tableId >= strlen($userRights->view_table)) {
+//             return 0; // Ungültige tableId
+//         }
+//         // Bestimme das Recht, das wir überprüfen wollen
+//         $viewTable = $userRights->view_table;
+
+
+// switch ($right) {
+//     case 'view':
+//         return ($viewTable[$tableId] ?? '') === '1' ? 1 : 0;
+
+//     case 'add':
+//         return ($userRights->add_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+//     case 'edit':
+//         return ($userRights->edit_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+//     case 'publish':
+//         return ($userRights->publish_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+//     case 'delete':
+//         return ($userRights->delete_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+//     case 'date':
+//         return ($userRights->date_table[$tableId] ?? '') === '1' ? 1 : 0;
+
+//     default:
+//         return 0;
+// }
 }
 }
 if(!function_exists("AutoInc"))

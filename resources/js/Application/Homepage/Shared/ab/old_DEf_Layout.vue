@@ -31,47 +31,39 @@
 
                 <!-- Mobile menu button -->
                 <div class="flex lg:hidden">
-                    <button type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 focus:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800 dark:focus:text-primary-night-800"
-                    @click="toggleNavbar" aria-label="toggle menu">
+                    <button v-on:click="toggleNavbar()" type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 focus:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800 dark:focus:text-primary-night-800" aria-label="toggle menu">
                     <icon-menu class="w-6 h-6" v-if="!isOpen_Menu"></icon-menu>
                     <icon-close class="w-6 h-6" v-if="isOpen_Menu"></icon-close>
                     </button>
                 </div>
                 </div>
-<!-- Mobile Menu -->
-<div
-    :class="isOpen_Menu ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full'"
-    class="absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-primary-sun-0 dark:bg-primary-night-0 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent z-[10000000]"
->
-    <div
-        class="flex flex-col items-center w-full space-y-4 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-3 z-[10000000]"
-    >
-    <link-header :route-name="route('home.index')" name="Home"></link-header>
-    <link-header :route-name="route('home.blog.index')" name="Mein Blog"></link-header>
-    <link-header :route-name="route('home.about')" name="About Me"></link-header>
-    <link-header :route-name="route('home.images.index')" name="Bilder"></link-header>
-    <link-header :route-name="route('home.shortpoems')" name="Shortpoems"></link-header>
-    <link-header :route-name="route('home.didyouknow')" name="DidYouKnow"></link-header>
 
-    <template v-if="!$page.props.userdata.user_id">
-        <link-header :route-name="route('login')" name="Login"></link-header>
-        <link-header :route-name="route('register')" name="Registrieren"></link-header>
-    </template>
+                <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
+                <div :class="[isOpen_Menu ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" style='z-index:10000000;' class="absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-primary-sun-0 dark:bg-primary-night-0 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent">
+                <div class="flex flex-col items-center w-full space-y-4 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-3" style='z-index:10000000;'>
+                    <link-header :route-name="route('home.index')" name="Home"></link-header>
+                    <link-header :route-name="route('home.blog.index')" name="Mein Blog"></link-header>
+                    <link-header :route-name="route('home.about')" name="About Me"></link-header>
+                    <link-header :route-name="route('home.images.index')" name="Bilder"></link-header>
+                    <!--<link-header :route-name="route('home.pricing')" name="Preise"></link-header>-->
+                    <!-- <link-header :route-name="route('home.blog.index')" name="Blog"></link-header> -->
+                    <link-header :route-name="route('home.shortpoems')" name="Shortpoems"></link-header>
+                    <link-header :route-name="route('home.didyouknow')" name="DidYouKnow"></link-header>
 
-    <template v-if="$page.props.userdata.user_id && $page.props.userdata.is_admin">
-        <link-header :route-name="route('applicationswitch')" name="Dashboard"></link-header>
-    </template>
-    <ButtonChangeMode
-        :mode="mode"
-        @change-mode="changeMode"
-    />
-    <!-- PROFIL / DROPDOWN -->
-<div class="relative flex w-full justify-center lg:w-auto lg:ml-auto">
-        <Dropdown
-            align="right"
-            width="72"
-            v-if="$page.props.auth.user"
-        >
+                    <template v-if="!$page.props.userdata.user_id">
+                    <link-header :route-name="route('login')" name="Login"></link-header>
+                    <link-header :route-name="route('register')" name="Registrieren"></link-header>
+                    </template>
+
+                    <template v-if="$page.props.userdata.user_id && $page.props.userdata.is_admin">
+                    <link-header :route-name="route('applicationswitch')" name="Dashboard"></link-header>
+                    </template>
+
+                    <button-change-mode :mode="mode" @changeMode="changeMode"></button-change-mode>
+                    <div class="ms-3 lg:relative">
+
+
+                          <Dropdown align="right" width="72"  v-if="$page.props.auth.user"  >
                                     <template #trigger>
                                         <button
                                             v-if="
@@ -173,13 +165,13 @@
                                                 <span>Profil</span>
                                             </span>
                                         </dropdown-link>
-                                        <dropdown-link v-if="SD() == 'ab' || SD() == 'pna'"
+                                        <dropdown-link v-if="SD() == 'ab'"
                                             :with-icon="false"
                                             :with-route="true"
                                             :route-name="route('admin.mcslpoints')"
                                         >
                                             <span class="flex items-center justify-center gap-1 w-full">
-                                                <IconStarThin class="w-4 h-4" color="#ffa500" />
+                                                <IconStar_thin class="w-4 h-4" color="#ffa500" />
                                                 <span>{{ mcslpoints }} MCSL Points</span>
                                             </span>
                                         </dropdown-link>
@@ -195,7 +187,7 @@
                                             </span>
 
                                             </dropdown-link>
-                                        <dropdown-link v-if="CheckTRights('view','contacts')"
+                                        <dropdown-link
                                                 :with-icon="false"
                                                 :with-route="true"
                                                 :route-name="
@@ -214,15 +206,16 @@
                                         />
 
                                         <!-- Authentication -->
-                                        <form @submit.prevent="logoutUser" class="w-full">
-                            <button
-                                type="submit"
-                                class="flex items-center justify-center gap-1 w-full px-4 py-2 text-sm leading-4 font-medium text-layout-sun-700 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:text-layout-night-900 hover:underline"
-                            >
-                                <IconLogout class="w-4 h-4" color="#ffa500" />
-                                <span>Abmelden</span>
-                            </button>
-                        </form>
+                                        <form @submit.prevent="logoutUser">
+                                            <button type="submit">
+                                                <dropdown-link>
+                                            <span class="flex items-center justify-center gap-1 w-full">
+                                                <IconLogout class="w-4 h-4" color="#ffa500" />
+                                                <span>Abmelden</span>
+                                            </span>
+                                                </dropdown-link>
+                                            </button>
+                                        </form>
                                     </template>
                                 </Dropdown>
                                     </div>
@@ -260,7 +253,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="foot bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" style="z-index:35" aria-labelledby="footer-heading">
+        <footer class="foot bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" style="z-index:1001" aria-labelledby="footer-heading">
             <div class="container mx-auto max-w-6xl">
             <h2 id="footer-heading" class="sr-only">Footer</h2>
             <div class="px-1 md:px-4 lg:px-8 pb-8 pt-8">
@@ -287,7 +280,7 @@
                         <li>
                                         <a
                                             class="ToggleCookieLink cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900"
-                                            @click="showHideToggleCookiePreferencesModal"
+                                            onclick="showHideToggleCookiePreferencesModal()"
                                         >
 
                                             <IconCookies
@@ -378,7 +371,7 @@
     import Dropdown from "@/Application/Components/Content/Dropdown.vue";
     import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
     import LinkHeader from "@/Application/Shared/LinkHeader.vue";
-    import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
+    import IconStar_thin from "@/Application/Components/Icons/IconStar_thin.vue";
     import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
     import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
     import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
@@ -387,7 +380,6 @@
     import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
     import BrandFooter from "@/Application/Shared/BrandFooter.vue";
     import Loader from "@/Application/Components/Loader.vue";
-    import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
     import LinkFooter from "@/Application/Shared/LinkFooter.vue";
        import IconMenu from "@/Application/Components/Icons/Menu.vue"
     import Toast from "@/Application/Components/Content/Toast.vue";
@@ -412,8 +404,7 @@
         IconProfile,
         IconPM,
         IconContacts_alt,
-        IconStarThin,
-        IconCookies,
+        IconStar_thin,
         IconDashboard,
         IconMenu,
         IconMCSL,
@@ -458,7 +449,7 @@
         pendingRequests: 0,
         rights: {
             edit: null,
-            delete:null,        },
+                    },
 
         // isLoading: localStorage.getItem('loading') === 'true',
         search: '',
@@ -479,7 +470,7 @@
     // Wenn search gesetzt ist, verstecke das Loading-Div
     if (search && search.trim() !== "") {
 
-        this.setLoadingState(false);
+        this.setLoading(false);
     }
     else{
         //this.setLoading(true);
@@ -584,11 +575,11 @@
 
 
 
-        /*/\\*
+        /*
         |--------------------------------------------------------------------------
         | Force Light
         |--------------------------------------------------------------------------
-        \*/
+        */
 
         const forceLight =
             window.location.pathname === '/login'
@@ -602,11 +593,11 @@
             return;
         }
 
-        /*/\\*
+        /*
         |--------------------------------------------------------------------------
         | Theme anwenden
         |--------------------------------------------------------------------------
-        \*/
+        */
 
         if (this.mode === 'dark') {
 
@@ -648,7 +639,7 @@
         this.isLoading = state;
         if(typeof window !== "undefined")
         {
-            localStorage.setItem('loading', state ? state.toString() : '');
+            localStorage.setItem('loading', state ? state.toString():'');
         }
     },
 
@@ -673,7 +664,7 @@
             if (img.complete) {
             imagesLoadedCount++;
             } else {
-           img.addEventListener('load', () => {
+            img.addEventListener('load', () => {
                 imagesLoadedCount++;
                 if (imagesLoadedCount === totalImages) {
                 this.imagesLoaded = true;
@@ -762,7 +753,7 @@
     };
     </script>
 
-    <style>
+    <style  >
     #prof_pic{
         width:32px !important;
         height:32px !important;
@@ -773,11 +764,6 @@
     position: relative;
     z-index: 100000;
     }
-   /* /\\* Deine Styles hier */
+    /* Deine Styles hier */
     </style>
-
-
-
-
-
 

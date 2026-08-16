@@ -163,7 +163,7 @@
                                         <form @submit.prevent="logoutUser">
                                             <button type="submit">
                                                 <dropdown-link>
-                                                    Abmelden
+                                                    Abmelden 5
                                                 </dropdown-link>
                                             </button>
                                         </form>
@@ -284,7 +284,7 @@
                             <form method="POST" @submit.prevent="logoutUser">
 
                                 <ResponsiveNavLink as="button">
-                                    Abmelden
+                                    Abmelden 6
                                 </ResponsiveNavLink>
                             </form>
                         </div>
@@ -432,5 +432,7 @@ export default {
     },
 };
 </script>
+
+
 
 

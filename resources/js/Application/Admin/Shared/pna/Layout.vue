@@ -5,7 +5,7 @@
         <div
             class="min-h-screen bg-layout-sun-100 text-layout-sun-800 dark:bg-layout-night-100 dark:text-layout-night-800 transition duration-2000 ease-in-out"
         >
-            <!-- Header Content -->
+            <!-- Header Content admin_pna_layout -->
             <nav
                 class="py-2 bg-layout-sun-0 text-layout-sun-800 dark:bg-layout-night-0 dark:text-layout-night-800 border-b border-layout-sun-200 dark:border-layout-night-200"
             >
@@ -33,6 +33,7 @@
                                         :active="route().current('admin.dashboard')"
                                         label="Dashboard"
                                     />
+
                                 </div>
                             </div>
 
@@ -56,9 +57,13 @@
                             </div> -->
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
-                                <Dropdown align="right" width="72">
+                                <Dropdown
+            align="right"
+            width="72"
+            v-if="$page.props.auth.user"
+        >
                                     <template #trigger>
-                                        <button
+                                        <button type="button"
                                             v-if="
                                                 $page.props.jetstream
                                                     .managesProfilePhotos
@@ -68,13 +73,15 @@
                                             <img
                                                 class="h-8 w-8 rounded-full object-cover"
                                                 :src="
-                                                GetProfileImagePath($page.props.auth.user.profile_photo_url)"
+                                                GetProfileImagePath($page.props.auth.user?.profile_photo_url)"
                                                 :alt="
                                                     $page.props.userdata
                                                         .full_name
                                                 "
                                             />
+
                                         </button>
+
 
                                         <span
                                             v-else
@@ -134,7 +141,10 @@
                                                 "
                                                 >Anwendung wechseln</span
                                             >
-                                            <span v-else>zum Dashboard</span>
+                                            <span v-else><span class="flex items-center justify-start gap-1 w-full">
+                                                <IconDashboard class="w-4 h-4" color="#ffa500" />
+                                                <span>Zum Dashboard</span>
+                                            </span></span>
                                         </dropdown-link>
 
                                         <!-- Account Management -->
@@ -149,23 +159,66 @@
                                             :with-route="true"
                                             :route-name="route('admin.profile')"
                                         >
-                                            Profil
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconProfile class="w-4 h-4" color="#ffa500" />
+                                                <span>Profil</span>
+                                            </span>
                                         </dropdown-link>
+                                        <dropdown-link v-if="SD() == 'ab' || SD() == 'pna'"
+                                            :with-icon="false"
+                                            :with-route="true"
+                                            :route-name="route('admin.mcslpoints')"
+                                        >
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconStarThin class="w-4 h-4" color="#ffa500" />
+                                                <span>{{ mcslpoints }} MCSL Points</span>
+                                            </span>
+                                        </dropdown-link>
+
+                                             <dropdown-link v-if="rights.delete == 1"
+                                                :with-icon="false"
+                                                :with-route="true"
+                                                :route-name="route('pm.index', { tab: 'inbox' })"
+                                                >
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconPM class="w-4 h-4" color="#ffa500" />
+                                                <span>Private Nachrichten</span>
+                                            </span>
+
+                                            </dropdown-link>
+                                        <dropdown-link v-if="CheckTRights('view','contacts')"
+                                                :with-icon="false"
+                                                :with-route="true"
+                                                :route-name="
+                                                    route('admin.kontakte')
+                                                ">
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconContacts_alt class="w-4 h-4" color="#ffa500" />
+                                                <span>Kontakte</span>
+                                            </span>
+
+                                            </dropdown-link>
+
 
                                         <div
                                             class="my-2 border-t border-layout-sun-200 dark:border-layout-night-200"
                                         />
 
                                         <!-- Authentication -->
-                                        <form @submit.prevent="logoutUser">
-                                            <button type="submit">
-                                                <dropdown-link>
-                                                    Abmelden
-                                                </dropdown-link>
-                                            </button>
-                                        </form>
+                                        <form @submit.prevent="logoutUser" class="w-full">
+                                        <button  @click="logoutUser"
+                                            type="submit"
+                                            class="w-full text-left px-4 py-2"
+                                        >
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconLogout class="w-4 h-4" color="#ffa500" />
+                                                <span>Abmelden</span>
+                                            </span>
+                                        </button>
+                                    </form>
                                     </template>
                                 </Dropdown>
+
                             </div>
                         </div>
 
@@ -186,21 +239,22 @@
                             :href="route('home.index')"
                             target="_self"
                         >
-                            Home
+                               <span class="flex items-center gap-2">
+                                    <IconHome class="w-4 h-4" color="#ffa500" />
+                                    <span>Home</span>
+                                </span>
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('admin.dashboard')"
                             :active="route().current('admin.dashboard')"
                         >
-                            Dashboard
+                           <span class="flex items-center gap-2">
+                                    <IconDashboard class="w-4 h-4" color="#ffa500" />
+                                    <span>Dashboard</span>
+                                </span>
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink as="button">
-                            <button-change-mode
-                                :mode="mode"
-                                @changeMode="changeMode"
-                            ></button-change-mode>
-                        </ResponsiveNavLink>
+
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -240,17 +294,51 @@
                                 :href="route('admin.profile')"
                                 :active="route().current('admin.profile')"
                             >
-                                Profil
+                                <span class="flex items-center gap-2">
+                                    <IconProfile class="w-4 h-4" color="#ffa500" />
+                                    <span>Profil</span>
+                                </span>
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink v-if="CheckTRights('delete','private_messages')"
+                                :href="route('pm.index', { tab: 'inbox' })"
+                                :active="route().current('pm.index',{ tab: 'inbox' })"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <IconPM class="w-4 h-4" color="#ffa500" />
+                                    <span>Private Nachrichten</span>
+                                </span>
+                            </ResponsiveNavLink>
+                              <ResponsiveNavLink v-if="SD() == 'ab' || SD() == 'pna'"
+                                :href="route('admin.kontakte')"
+                                :active="route().current('admin.kontakte')"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <IconContacts_alt class="w-4 h-4" color="#ffa500" />
+                                    <span>Kontakte </span>
+                                </span>
                             </ResponsiveNavLink>
 
 
-
+                            <ResponsiveNavLink v-if="SD() == 'ab' || SD() == 'pna'"
+                                :href="route('admin.mcslpoints')"
+                                :active="route().current('admin.mcslpoints')"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <IconStarThin class="w-4 h-4" color="#ffa500" />
+                                    <span>{{ mcslpoints }} MCSL Points</span>
+                                </span>
+                            </ResponsiveNavLink>
                             <!-- Authentication -->
                             <form @submit.prevent="logoutUser">
-
-                                <ResponsiveNavLink as="submit">
-                                    Abmelden
-                                </ResponsiveNavLink>
+                                    <button @click="logoutUser"
+                                    type="submit"
+                                    class="w-full text-left px-4 py-2"
+                                >
+                                    <span class="flex items-center justify-start gap-1 w-full">
+                                        <IconLogout class="w-4 h-4" color="#ffa500" />
+                                        <span>Abmelden</span>
+                                    </span>
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -301,7 +389,7 @@
 
 <script>
 import { Head } from "@inertiajs/vue3";
-
+import axios from "axios";
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
@@ -310,11 +398,19 @@ import Loader from "@/Application/Components/Loader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
 import IconClose from "@/Application/Components/Icons/Close.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
-import { SD,GetProfileImagePath } from "@/helpers";
+import { SD,GetProfileImagePath,CheckTRights } from "@/helpers";
 import NavLink from "@/Application/Components/Content/NavLink.vue";
 import ResponsiveNavLink from "@/Application/Components/Content/ResponsiveNavLink.vue";
-import { router } from '@inertiajs/vue3';
+    import { router } from '@inertiajs/vue3';
 import FooterGrid from "@/Application/Components/Content/FooterGrid.vue";
+import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
+import IconPM from "@/Application/Components/Icons/IconPM.vue";
+import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
+import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
+import IconHome from "@/Application/Components/Icons/Home.vue";
+import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
+import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
+import { route } from "ziggy-js";
 
 export default {
     name: "Admin_Shared_Layout_pna",
@@ -325,12 +421,18 @@ export default {
         Toast,
         ButtonChangeMode,
         Dropdown,
-        IconClose,
+        IconStarThin,
+        IconDashboard,
+        IconContacts_alt,
+        IconPM,
         DropdownLink,
+        IconHome,
         NavLink,
         ResponsiveNavLink,
         FooterGrid,
+        IconProfile,
         Loader,
+        IconLogout,
     },
 
     props: {
@@ -343,7 +445,9 @@ export default {
     data() {
         return {
             mode: "dark",
-            isOpen: false,   // ✅ jetzt im data statt props
+            isOpen: false,
+            rights: {},
+            mcslpoints: 0,   // ✅ jetzt im data statt props
             year: new Date().getFullYear(),
         };
     },
@@ -360,6 +464,7 @@ export default {
     methods: {
         GetProfileImagePath,
         SD,
+        CheckTRights,
         async getServer() {
             try {
                 const response = await axios.get('/api/GetLastAct');
@@ -392,10 +497,28 @@ export default {
         },
 
         logoutUser() {
-    router.post(this.route('logout'), {
-        _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    console.log("=== LOGOUT START ===");
+
+    router.post('/logout', {}, {
+        onStart: () => {
+            console.log("=== LOGOUT REQUEST START ===");
+        },
+
+        onSuccess: (page) => {
+            console.log("=== LOGOUT SUCCESS ===", page);
+
+            window.location.href = '/';
+        },
+
+        onError: (errors) => {
+            console.error("=== LOGOUT ERROR ===", errors);
+        },
+
+        onFinish: () => {
+            console.log("=== LOGOUT FINISH ===");
+        },
     });
-}
+},
 
     },
 };
@@ -405,4 +528,9 @@ export default {
     color:#F00 !important;
 }
 </style>
+
+
+
+
+
 

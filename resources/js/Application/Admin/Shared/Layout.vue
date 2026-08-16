@@ -5,7 +5,7 @@
         <div
             class="min-h-screen bg-layout-sun-100 text-layout-sun-800 dark:bg-layout-night-100 dark:text-layout-night-800 transition duration-2000 ease-in-out"
         >
-            <!-- Header Content -->
+            <!-- Header Content admin_shared_layout -->
             <nav
                 class="py-2 bg-layout-sun-0 text-layout-sun-800 dark:bg-layout-night-0 dark:text-layout-night-800 border-b border-layout-sun-200 dark:border-layout-night-200"
             >
@@ -57,7 +57,11 @@
                             </div>
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
-                                <Dropdown align="right" width="72">
+                                 <Dropdown
+            align="right"
+            width="72"
+            v-if="$page.props.auth.user"
+        >
                                     <template #trigger>
                                         <button
                                             v-if="
@@ -69,14 +73,13 @@
                                             <img
                                                 class="h-8 w-8 rounded-full object-cover"
                                                 :src="
-                                                    $page.props.userdata
-                                                        .profile_photo_url
-                                                "
+                                                GetProfileImagePath($page.props.auth.user?.profile_photo_url)"
                                                 :alt="
                                                     $page.props.userdata
                                                         .full_name
                                                 "
                                             />
+
                                         </button>
 
                                         <span
@@ -85,7 +88,7 @@
                                         >
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300  focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
                                             >
                                                 {{
                                                     $page.props.userdata
@@ -95,10 +98,9 @@
                                                 <svg
                                                     class="ms-2 -me-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke-width="1.5"
-                                                    stroke="currentColor"
+                                                    stroke="currentColor" fill="none"
                                                 >
                                                     <path
                                                         stroke-linecap="round"
@@ -118,7 +120,7 @@
                                             <span
                                                 v-if="
                                                     $page.props.userdata
-                                                        .application_count > 1
+                                                        .application_count > 100
                                                 "
                                                 >Anwendung wechseln</span
                                             >
@@ -128,17 +130,20 @@
                                             :with-icon="false"
                                             :with-route="true"
                                             :route-name="
-                                                route('central.dashboard')
+                                                route('admin.dashboard')
                                             "
                                         >
                                             <span
                                                 v-if="
                                                     $page.props.userdata
-                                                        .application_count > 1
+                                                        .application_count > 100
                                                 "
                                                 >Anwendung wechseln</span
                                             >
-                                            <span v-else>zur Startseite</span>
+                                            <span v-else><span class="flex items-center justify-start gap-1 w-full">
+                                                <IconDashboard class="w-4 h-4" color="#ffa500" />
+                                                <span>Zum Dashboard</span>
+                                            </span></span>
                                         </dropdown-link>
 
                                         <!-- Account Management -->
@@ -153,22 +158,46 @@
                                             :with-route="true"
                                             :route-name="route('admin.profile')"
                                         >
-                                            Profil
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconProfile class="w-4 h-4" color="#ffa500" />
+                                                <span>Profil</span>
+                                            </span>
                                         </dropdown-link>
-
-                                        <dropdown-link
-                                            v-if="
-                                                $page.props.jetstream
-                                                    .hasApiFeatures
-                                            "
+                                        <dropdown-link v-if="SD() == 'ab' || SD() == 'pna'"
                                             :with-icon="false"
                                             :with-route="true"
-                                            :route-name="
-                                                route('admin.api_tokens.index')
-                                            "
+                                            :route-name="route('admin.mcslpoints')"
                                         >
-                                            API-Token
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconStar_thin class="w-4 h-4" color="#ffa500" />
+                                                <span>{{ mcslpoints }} MCSL Points</span>
+                                            </span>
                                         </dropdown-link>
+
+                                             <dropdown-link v-if="rights.delete == 1"
+                                                :with-icon="false"
+                                                :with-route="true"
+                                                :route-name="route('pm.index', { tab: 'inbox' })"
+                                                >
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconPM class="w-4 h-4" color="#ffa500" />
+                                                <span>Private Nachrichten</span>
+                                            </span>
+
+                                            </dropdown-link>
+                                        <dropdown-link v-if="CheckTRights('view','contacts')"
+                                                :with-icon="false"
+                                                :with-route="true"
+                                                :route-name="
+                                                    route('admin.kontakte')
+                                                ">
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconContacts_alt class="w-4 h-4" color="#ffa500" />
+                                                <span>Kontakte</span>
+                                            </span>
+
+                                            </dropdown-link>
+
 
                                         <div
                                             class="my-2 border-t border-layout-sun-200 dark:border-layout-night-200"
@@ -178,7 +207,10 @@
                                         <form @submit.prevent="logoutUser">
                                             <button type="submit">
                                                 <dropdown-link>
-                                                    Abmelden
+                                            <span class="flex items-center justify-start gap-1 w-full ml-[35px]">
+                                                <IconLogout class="w-4 h-4" color="#ffa500" />
+                                                <span>Abmelden</span>
+                                            </span>
                                                 </dropdown-link>
                                             </button>
                                         </form>
@@ -305,7 +337,7 @@
                             <!-- Authentication -->
                             <form method="POST" @submit.prevent="logoutUser">
                                 <ResponsiveNavLink as="button">
-                                    Abmelden
+                                    Abmelden 8
                                 </ResponsiveNavLink>
                             </form>
                         </div>
@@ -429,3 +461,8 @@ export default {
     },
 };
 </script>
+
+
+
+
+

@@ -1,60 +1,54 @@
 <template>
     <div class="dark" data-theme="dark" id="app-layout-start">
-        <Head :title="title">Admin Dashboard</Head>
+        <Head :title="title"></Head>
 
         <div
             class="min-h-screen bg-layout-sun-100 text-layout-sun-800 dark:bg-layout-night-100 dark:text-layout-night-800 transition duration-2000 ease-in-out"
         >
-            <!-- Header Content -->
+<!-- Header Content admin_ab_layout -->
             <nav
                 class="py-2 bg-layout-sun-0 text-layout-sun-800 dark:bg-layout-night-0 dark:text-layout-night-800 border-b border-layout-sun-200 dark:border-layout-night-200"
             >
-                <!-- Primary Navigation Menu ab -->
-                <div class="max-w-7xl mx-auto">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <div class="shrink-0 flex items-center justify-start w-full sm:w-auto sm:justify-center">
-                                <brand-header
+                <!-- Primary Navigation Menu  pna -->
+                <div class="max-w-7xl mx-auto ">
+                    <div class="flex justify-between items-center h-16">
+
+                        <div class="flex items-center justify-between w-full">
+                            <div class="shrink-0 flex items-center">
+                                <brand-header class="!sm:ml-[-10px]"
                                     :route-name="route('admin.dashboard')"
-                                    :brand_1="
-                                        $page.props.applications.brand_name_1
-                                    "
-                                    :brand_2="
-                                        $page.props.applications.brand_name_2
-                                    "
-                                    :app-name="
-                                        $page.props.applications.app_admin_name
-                                    "
-                                ></brand-header>
+                                    :brand_1="$page.props.applications.brand_name_1"
+                                    :brand_2="$page.props.applications.brand_name_2"
+                                    :app-name="$page.props.applications.app_admin_name"
+                                />
+
+                                <div class="hidden sm:flex space-x-8 ms-10">
+                                    <NavLink
+                                        :routeName="route('home.index')"
+                                        :active="route().current('home.index')"
+                                        label="Home"
+                                    />
+                                    <NavLink
+                                        :routeName="route('admin.dashboard')"
+                                        :active="route().current('admin.dashboard')"
+                                        label="Dashboard"
+                                    />
+
+                                </div>
                             </div>
 
-                            <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            <button
+                                class="button_menu colored_white flex items-center justify-center sm:hidden"
+                                @click="toggleNavbar"
+                                type="button"
                             >
-                            <NavLink
-                                    :routeName="route('home.index')"
-                                    :active="route().current('home.index')"
-                                    label="Home"
-                                >
-                                </NavLink>
-                            <NavLink
-                                    :routeName="route('admin.dashboard')"
-                                    :active="route().current('admin.dashboard')"
-                                    label="Dashboard"
-                                >
-                                </NavLink>
-                                <!-- <NavLink v-if="SD() == 'ab'" icon="IconStar"
-                                    :routeName="route('admin.mcslpoints')"
-                                    :active="route().current('admin.mcslpoints')"
-                                    :label="mcslpoints"
-                                >
-                                </NavLink> -->
-                              </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path :class="{ hidden: isOpen, 'inline-flex': !isOpen }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                    <path :class="{ hidden: !isOpen, 'inline-flex': isOpen }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                            </div>
+                            <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <!-- <div class="mr-1">
                                 <button-change-mode
                                     :mode="mode"
@@ -63,9 +57,13 @@
                             </div> -->
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
-                                <Dropdown align="right" width="72">
+                                <Dropdown
+            align="right"
+            width="72"
+            v-if="$page.props.auth.user"
+        >
                                     <template #trigger>
-                                        <button
+                                        <button type="button"
                                             v-if="
                                                 $page.props.jetstream
                                                     .managesProfilePhotos
@@ -81,7 +79,9 @@
                                                         .full_name
                                                 "
                                             />
+
                                         </button>
+
 
                                         <span
                                             v-else
@@ -141,7 +141,7 @@
                                                 "
                                                 >Anwendung wechseln</span
                                             >
-                                            <span v-else><span class="inline-flex items-center gap-1">
+                                            <span v-else><span class="flex items-center justify-start gap-1 w-full">
                                                 <IconDashboard class="w-4 h-4" color="#ffa500" />
                                                 <span>Zum Dashboard</span>
                                             </span></span>
@@ -159,18 +159,18 @@
                                             :with-route="true"
                                             :route-name="route('admin.profile')"
                                         >
-                                            <span class="inline-flex items-center gap-1">
+                                            <span class="flex items-center justify-start gap-1 w-full">
                                                 <IconProfile class="w-4 h-4" color="#ffa500" />
                                                 <span>Profil</span>
                                             </span>
                                         </dropdown-link>
-                                        <dropdown-link v-if="SD() == 'ab'"
+                                        <dropdown-link v-if="SD() == 'ab' || SD() == 'pna'"
                                             :with-icon="false"
                                             :with-route="true"
                                             :route-name="route('admin.mcslpoints')"
                                         >
-                                            <span class="inline-flex items-center gap-1">
-                                                <IconStar_thin class="w-4 h-4" color="#ffa500" />
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconStarThin class="w-4 h-4" color="#ffa500" />
                                                 <span>{{ mcslpoints }} MCSL Points</span>
                                             </span>
                                         </dropdown-link>
@@ -180,46 +180,35 @@
                                                 :with-route="true"
                                                 :route-name="route('pm.index', { tab: 'inbox' })"
                                                 >
-                                            <span class="inline-flex items-center gap-1">
+                                            <span class="flex items-center justify-start gap-1 w-full">
                                                 <IconPM class="w-4 h-4" color="#ffa500" />
                                                 <span>Private Nachrichten</span>
                                             </span>
 
                                             </dropdown-link>
-                                        <dropdown-link
+                                        <dropdown-link v-if="CheckTRights('view','contacts')"
                                                 :with-icon="false"
                                                 :with-route="true"
                                                 :route-name="
                                                     route('admin.kontakte')
                                                 ">
-                                            <span class="inline-flex items-center gap-1">
+                                            <span class="flex items-center justify-start gap-1 w-full">
                                                 <IconContacts_alt class="w-4 h-4" color="#ffa500" />
                                                 <span>Kontakte</span>
                                             </span>
 
                                             </dropdown-link>
 
-                                            <dropdown-link
-                                                :with-icon="false"
-                                                :with-route="true"
-                                                :route-name="
-                                                    route('admin.ausgaben')
-                                                ">
-                                            <span class="inline-flex items-center gap-1">
-                                                <IconMoney class="w-4 h-4" color="#ffa500" />
-                                                <span>Ein / Ausgaben</span>
-                                            </span>
 
-                                            </dropdown-link>
                                         <div
                                             class="my-2 border-t border-layout-sun-200 dark:border-layout-night-200"
                                         />
 
                                         <!-- Authentication -->
-                                        <form @click="logout">
-                                            <button type="submit">
+                                        <form @submit.prevent="logoutUser" class="w-full">
+                                            <button type="submit" class="w-full text-left p-0 m-0">
                                                 <dropdown-link>
-                                            <span class="inline-flex items-center gap-1">
+                                            <span class="flex items-center justify-start gap-1 w-full">
                                                 <IconLogout class="w-4 h-4" color="#ffa500" />
                                                 <span>Abmelden</span>
                                             </span>
@@ -228,44 +217,11 @@
                                         </form>
                                     </template>
                                 </Dropdown>
+
                             </div>
                         </div>
 
-                        <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
-                            <button
-                                class="button_menu"
-                                v-on:click="toggleNavbar()"
-                            >
-                                <svg
-                                    class="h-6 w-6"
-                                    stroke="currentColor" fill="none"
 
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        :class="{
-                                            hidden: isOpen,
-                                            'inline-flex': !isOpen,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !isOpen,
-                                            'inline-flex': isOpen,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -282,21 +238,22 @@
                             :href="route('home.index')"
                             target="_self"
                         >
-                            Home
+                               <span class="flex items-center gap-2">
+                                    <IconHome class="w-4 h-4" color="#ffa500" />
+                                    <span>Home</span>
+                                </span>
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('admin.dashboard')"
                             :active="route().current('admin.dashboard')"
                         >
-                            Dashboard
+                           <span class="flex items-center gap-2">
+                                    <IconDashboard class="w-4 h-4" color="#ffa500" />
+                                    <span>Dashboard</span>
+                                </span>
                         </ResponsiveNavLink>
 
-                        <!-- <ResponsiveNavLink as="button">
-                            <button-change-mode
-                                :mode="mode"
-                                @changeMode="changeMode"
-                            ></button-change-mode>
-                        </ResponsiveNavLink> -->
+
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -312,7 +269,8 @@
                             >
                                 <img
                                     class="h-10 w-10 rounded-full object-cover"
-                                    :src="GetProfileImagePath($page.props.auth.user?.profile_photo_url)"
+                                    :src="GetProfileImagePath($page.props.auth.user.profile_photo_url)
+                                    "
                                     :alt="$page.props.userdata.full_name"
                                 />
                             </div>
@@ -321,11 +279,11 @@
                                 <div
                                     class="font-medium text-base text-gray-800 dark:text-gray-200"
                                 >
-                                    {{ $page.props.auth.user?.first_name }}
-                                    {{ $page.props.auth.user?.name }}
+                                    {{ $page.props.auth.user.first_name }}
+                                    {{ $page.props.auth.user.name }}
                                 </div>
                                 <div class="font-medium text-sm text-gray-500">
-                                    {{ $page.props.auth.user?.email }}
+                                    {{ $page.props.auth.user.email }}
                                 </div>
                             </div>
                         </div>
@@ -335,16 +293,49 @@
                                 :href="route('admin.profile')"
                                 :active="route().current('admin.profile')"
                             >
-                                Profil
+                                <span class="flex items-center gap-2">
+                                    <IconProfile class="w-4 h-4" color="#ffa500" />
+                                    <span>Profil</span>
+                                </span>
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink v-if="CheckTRights('delete','private_messages')"
+                                :href="route('pm.index', { tab: 'inbox' })"
+                                :active="route().current('pm.index',{ tab: 'inbox' })"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <IconPM class="w-4 h-4" color="#ffa500" />
+                                    <span>Private Nachrichten</span>
+                                </span>
+                            </ResponsiveNavLink>
+                              <ResponsiveNavLink v-if="SD() == 'ab' || SD() == 'pna'"
+                                :href="route('admin.kontakte')"
+                                :active="route().current('admin.kontakte')"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <IconContacts_alt class="w-4 h-4" color="#ffa500" />
+                                    <span>Kontakte </span>
+                                </span>
                             </ResponsiveNavLink>
 
 
+                            <ResponsiveNavLink v-if="SD() == 'ab' || SD() == 'pna'"
+                                :href="route('admin.mcslpoints')"
+                                :active="route().current('admin.mcslpoints')"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <IconStarThin class="w-4 h-4" color="#ffa500" />
+                                    <span>{{ mcslpoints }} MCSL Points</span>
+                                </span>
+                            </ResponsiveNavLink>
                             <!-- Authentication -->
-                            <form method="POST" @click="logout">
+                            <form @submit.prevent="logoutUser">
+                                <Button type="submit" @click="logoutUser()">
+                                    <span class="flex items-center gap-2">
+                                    <IconLogout class="w-4 h-4" color="#ffa500" />
+                                    <span>Abmelden</span>
+                                </span>
 
-                                <ResponsiveNavLink as="button">
-                                    Abmelden
-                                </ResponsiveNavLink>
+                            </Button>
                             </form>
                         </div>
                     </div>
@@ -395,31 +386,30 @@
 
 <script>
 import { Head } from "@inertiajs/vue3";
-import axios from "axios";
+
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
-import { router } from '@inertiajs/vue3'
-import IconMoney from "@/Application/Components/Icons/IconMoney.vue";
-import IconStar_thin from "@/Application/Components/Icons/IconStar_thin.vue";
-import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
-import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
-import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
-import IconPM from "@/Application/Components/Icons/IconPM.vue";
-import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
+import { toastBus } from '@/utils/toastBus';
 import Loader from "@/Application/Components/Loader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
+import IconClose from "@/Application/Components/Icons/Close.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
-import { SD,GetProfileImagePath,CheckTRights,GetRights,CleanTable } from "@/helpers";
+import { SD,GetProfileImagePath,CheckTRights } from "@/helpers";
 import NavLink from "@/Application/Components/Content/NavLink.vue";
 import ResponsiveNavLink from "@/Application/Components/Content/ResponsiveNavLink.vue";
-// import { throttle } from 'lodash';
-
+import { router } from '@inertiajs/vue3';
 import FooterGrid from "@/Application/Components/Content/FooterGrid.vue";
-
+import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
+import IconPM from "@/Application/Components/Icons/IconPM.vue";
+import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
+import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
+import IconHome from "@/Application/Components/Icons/Home.vue";
+import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
+import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
 
 export default {
-    name: "Admin_Shared_Layout_ab",
+    name: "Admin_Shared_Layout_pna",
 
     components: {
         Head,
@@ -427,18 +417,18 @@ export default {
         Toast,
         ButtonChangeMode,
         Dropdown,
+        IconStarThin,
+        IconDashboard,
+        IconContacts_alt,
+        IconPM,
         DropdownLink,
+        IconHome,
         NavLink,
         ResponsiveNavLink,
         FooterGrid,
+        IconProfile,
         Loader,
         IconLogout,
-        IconProfile,
-        IconMoney,
-        IconPM,
-        IconContacts_alt,
-        IconStar_thin,
-        IconDashboard,
     },
 
     props: {
@@ -446,58 +436,31 @@ export default {
             type: String,
             default: "Administrator-Anwendung",
         },
-        // breadcrumbs:{
-        //     type:[String,Object,Array],
-        //     required:false,
-        // }
     },
 
     data() {
         return {
             mode: "dark",
-            isOpen: false,   // ✅ jetzt im data statt props
+            isOpen: false,
+            rights: {},
+            mcslpoints: 0,   // ✅ jetzt im data statt props
             year: new Date().getFullYear(),
-            rights: {
-            edit: null,
-            delete: null,
-            },
-            mcslpoints: null,
         };
     },
-async mounted() {
-        this.rights.edit = await CheckTRights("edit", 'private_messages');
-    this.rights.delete = await CheckTRights("delete", 'private_messages');
+
+    mounted() {
+        localStorage.theme = this.mode ?? "dark";
         // let shouldReload = localStorage.getItem('reload_dashboard');
         // if (shouldReload) {
         //     localStorage.removeItem('reload_dashboard');
         //     window.location.reload();
         // }
-        this.loadmcslpoints(); // initial
-       // setInterval(this.loadmcslpoints, 5000);
     },
 
     methods: {
-        SD,
         GetProfileImagePath,
-        GetRights,
-        CleanTable,
-        logout() {
-        axios.post('/logout').then(() => {
-        location.href = '/ri'; // garantiert vollständiger Seitenwechsel
-        }).catch(err => {
-        console.error(err);
-        alert('Logout fehlgeschlagen');
-        });
-        },
-  async loadmcslpoints() {
-        try {
-                const { data } = await axios.get('/api/mcslpoints/');
-                this.mcslpoints = data; // automatisch reaktiv
-            } catch (err) {
-                console.error('Fehler beim Laden der MCSL Points:', err);
-            }
-            },
-
+        SD,
+        CheckTRights,
         async getServer() {
             try {
                 const response = await axios.get('/api/GetLastAct');
@@ -512,18 +475,17 @@ async mounted() {
                     message: error.response?.data?.message || 'Fehler beim Laden.',
                 });
                 }
-
             }
         },
 
         changeMode(value) {
             this.mode = value;
-
             this.isOpen = false;
-            if(typeof window !== "undefined")
+           if(typeof window !== "undefined")
             {
-            localStorage.theme = this.mode;
+                //localStorage.theme = this.mode ?? "dark";
             }
+
         },
 
         toggleNavbar() {
@@ -531,16 +493,22 @@ async mounted() {
         },
 
         logoutUser() {
+            alert("Logged out");
     router.post(this.route('logout'), {
         _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     });
 }
 
     },
-
 };
 </script>
 <style>
-
+.pna .colored_white{
+    color:#F00 !important;
+}
 </style>
+
+
+
+
 

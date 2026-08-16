@@ -22,214 +22,183 @@
         <main id="app-layout-start">
 
         <section class="relative bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 transition-colors duration-1000"  style='z-index:50;'>
-            <!-- Header -->
+        <!-- AB LAYOUT -->
 
-            <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-b border-layout-sun-200 dark:border-layout-night-200"  style='z-index:50;'>
-            <div class="container mx-auto max-w-6xl p-6 lg:flex lg:items-center lg:justify-between" style='z-index:50;'>
-                <div class="flex items-center justify-between">
-                <brand-header :route-name="route('home.index')" :brand_1="mupper($page.props.applications.brand_name_1)" :brand_2="mupper($page.props.applications.brand_name_2)" :app-name="$page.props.applications.app_name"></brand-header>
-
-                <!-- Mobile menu button -->
-                <div class="flex lg:hidden">
-                    <button type="button" class="focus:outline-none text-primary-sun-1000 hover:text-primary-sun-800 focus:text-primary-sun-800 dark:text-primary-night-1000 dark:hover:text-primary-night-800 dark:focus:text-primary-night-800"
-                    @click="toggleNavbar" aria-label="toggle menu">
-                    <icon-menu class="w-6 h-6" v-if="!isOpen_Menu"></icon-menu>
-                    <icon-close class="w-6 h-6" v-if="isOpen_Menu"></icon-close>
-                    </button>
-                </div>
-                </div>
-<!-- Mobile Menu -->
-<div
-    :class="isOpen_Menu ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full'"
-    class="absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-primary-sun-0 dark:bg-primary-night-0 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent z-[10000000]"
+            <nav
+    class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-0 dark:text-layout-night-900"
+    style="z-index:50;"
 >
-    <div
-        class="flex flex-col items-center w-full space-y-4 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-3 z-[10000000]"
-    >
-    <link-header :route-name="route('home.index')" name="Home"></link-header>
-    <link-header :route-name="route('home.blog.index')" name="Mein Blog"></link-header>
-    <link-header :route-name="route('home.about')" name="About Me"></link-header>
-    <link-header :route-name="route('home.images.index')" name="Bilder"></link-header>
-    <link-header :route-name="route('home.shortpoems')" name="Shortpoems"></link-header>
-    <link-header :route-name="route('home.didyouknow')" name="DidYouKnow"></link-header>
+    <!-- LOGO + HAMBURGER -->
+    <div class="container mx-auto max-w-6xl">
+        <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+                <BrandHeader
+                    :route-name="route('home.index')"
+                    :brand_1="mupper($page.props.applications.brand_name_1)"
+                    :brand_2="mupper($page.props.applications.brand_name_2)"
+                    :app-name="$page.props.applications.app_name"
+                />
+            </div>
 
-    <template v-if="!$page.props.userdata.user_id">
-        <link-header :route-name="route('login')" name="Login"></link-header>
-        <link-header :route-name="route('register')" name="Registrieren"></link-header>
-    </template>
+            <!-- HAMBURGER - nur Mobile -->
+            <div class="flex lg:hidden shrink-0 ml-3 px-4">
+                <button
+                    @click="toggleNavbar()"
+                    type="button"
+                    class="focus:outline-none text-primary-sun-1000 dark:text-primary-night-1000"
+                    aria-label="toggle menu"
+                >
+                    <IconMenu class="w-6 h-6" color="#f00" v-if="!isOpen_Menu" />
+                    <IconClose class="w-6 h-6" v-if="isOpen_Menu" />
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <template v-if="$page.props.userdata.user_id && $page.props.userdata.is_admin">
-        <link-header :route-name="route('applicationswitch')" name="Dashboard"></link-header>
-    </template>
-    <ButtonChangeMode
-        :mode="mode"
-        @change-mode="changeMode"
-    />
-    <!-- PROFIL / DROPDOWN -->
-<div class="relative flex w-full justify-center lg:w-auto lg:ml-auto">
-        <Dropdown
-            align="right"
-            width="72"
-            v-if="$page.props.auth.user"
-        >
-                                    <template #trigger>
-                                        <button
-                                            v-if="
-                                                $page.props.jetstream
-                                                    .managesProfilePhotos
-                                            "
-                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
-                                        >
-                                            <img
-                                                class="h-8 w-8 rounded-full object-cover"
-                                                :src="
-                                                GetProfileImagePath($page.props.auth.user?.profile_photo_url)"
-                                                :alt="
-                                                    $page.props.userdata
-                                                        .full_name
-                                                "
-                                            />
+    <!-- NAVIGATION -->
+    <div class="container mx-auto max-w-6xl border-t-2 border-red-600">
+        <div class="relative flex items-center justify-between">
 
-                                        </button>
+            <!-- MOBILE / DESKTOP NAVIGATION -->
+            <div
+                :class="[
+                    isOpen_Menu
+                        ? 'translate-x-0 opacity-100'
+                        : 'opacity-0 -translate-x-full'
+                ]"
+                class="absolute left-0 right-0 top-full w-full px-6 py-4 bg-primary-sun-0 dark:bg-primary-night-0 shadow-md transition-all duration-300 ease-in-out lg:relative lg:top-0 lg:flex lg:w-full lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none"
+                style="z-index:10000000;"
+            >
+                <div
+                    class="flex flex-col items-center w-full space-y-4 lg:flex-row lg:space-y-0 lg:space-x-3"
+                    style="z-index:10000000;"
+                >
+                    <LinkHeader :route-name="route('home.index')" name="Home" />
+                    <LinkHeader :route-name="route('home.blog.index')" name="Mein Blog" />
+                    <LinkHeader :route-name="route('home.about')" name="About Me" />
+                    <LinkHeader :route-name="route('home.images.index')" name="Bilder" />
+                    <LinkHeader :route-name="route('home.shortpoems')" name="Shortpoems" />
+                    <LinkHeader :route-name="route('home.didyouknow')" name="DidYouKnow" />
 
-                                        <span
-                                            v-else
-                                            class="inline-flex rounded-md"
-                                        >
-                                            <button
-                                                type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-layout-sun-500 dark:text-layout-night-500 bg-layout-sun-0 dark:bg-layout-night-0 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
-                                            >
-                                                {{
-                                                    $page.props.userdata
-                                                        .full_name
-                                                }}
+                    <template v-if="!$page.props.userdata.user_id">
+                        <LinkHeader :route-name="route('login')" name="Login" />
+                        <LinkHeader :route-name="route('register')" name="Registrieren" />
+                    </template>
 
-                                                <svg
-                                                    class="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="currentColor" fill="none"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </template>
+                    <template v-if="$page.props.userdata.user_id && $page.props.userdata.is_admin">
+                        <LinkHeader :route-name="route('applicationswitch')" name="Dashboard" />
+                    </template>
 
-                                    <template #content>
-                                        <!-- Anwendung wechseln bzw. zur Startseite -->
-                                        <div
-                                            class="block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500"
-                                        >
-                                            <span
-                                                v-if="
-                                                    $page.props.userdata
-                                                        .application_count > 100
-                                                "
-                                                >Anwendung wechseln</span
-                                            >
-                                            <span v-else>Startseite</span>
-                                        </div>
-                                        <dropdown-link
-                                            :with-icon="false"
-                                            :with-route="true"
-                                            :route-name="
-                                                route('admin.dashboard')
-                                            "
-                                        >
-                                            <span
-                                                v-if="
-                                                    $page.props.userdata
-                                                        .application_count > 100
-                                                "
-                                                >Anwendung wechseln</span
-                                            >
-                                            <span v-else><span class="flex items-center justify-center gap-1 w-full">
-                                                <IconDashboard class="w-4 h-4" color="#ffa500" />
-                                                <span>Zum Dashboard</span>
-                                            </span></span>
-                                        </dropdown-link>
+                    <ButtonChangeMode :mode="mode" @changeMode="changeMode" />
 
-                                        <!-- Account Management -->
-                                        <div
-                                            class="block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500"
-                                        >
-                                            Dein Konto
-                                        </div>
+                    <!-- USER DROPDOWN -->
+                    <div
+                        v-if="$page.props.auth.user"
+                        class="relative flex w-full justify-center lg:w-auto lg:ml-auto"
+                    >
+                        <Dropdown align="right" width="72">
+                            <template #trigger>
+                                <button
+                                    v-if="$page.props.jetstream?.managesProfilePhotos"
+                                    class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
+                                >
+                                    <img
+                                        class="h-8 w-8 rounded-full object-cover"
+                                        :src="GetProfileImagePath($page.props.auth.user?.profile_photo_url)"
+                                        :alt="$page.props.userdata.full_name"
+                                    />
+                                </button>
+                            </template>
 
-                                        <dropdown-link
-                                            :with-icon="false"
-                                            :with-route="true"
-                                            :route-name="route('admin.profile')"
-                                        >
-                                            <span class="flex items-center justify-center gap-1 w-full">
-                                                <IconProfile class="w-4 h-4" color="#ffa500" />
-                                                <span>Profil</span>
-                                            </span>
-                                        </dropdown-link>
-                                        <dropdown-link v-if="SD() == 'ab' || SD() == 'pna'"
-                                            :with-icon="false"
-                                            :with-route="true"
-                                            :route-name="route('admin.mcslpoints')"
-                                        >
-                                            <span class="flex items-center justify-center gap-1 w-full">
-                                                <IconStarThin class="w-4 h-4" color="#ffa500" />
-                                                <span>{{ mcslpoints }} MCSL Points</span>
-                                            </span>
-                                        </dropdown-link>
-
-                                             <dropdown-link v-if="rights.delete == 1"
-                                                :with-icon="false"
-                                                :with-route="true"
-                                                :route-name="route('pm.index', { tab: 'inbox' })"
-                                                >
-                                            <span class="flex items-center justify-center gap-1 w-full">
-                                                <IconPM class="w-4 h-4" color="#ffa500" />
-                                                <span>Private Nachrichten</span>
-                                            </span>
-
-                                            </dropdown-link>
-                                        <dropdown-link v-if="CheckTRights('view','contacts')"
-                                                :with-icon="false"
-                                                :with-route="true"
-                                                :route-name="
-                                                    route('admin.kontakte')
-                                                ">
-                                            <span class="flex items-center justify-center gap-1 w-full">
-                                                <IconContacts_alt class="w-4 h-4" color="#ffa500" />
-                                                <span>Kontakte</span>
-                                            </span>
-
-                                            </dropdown-link>
-
-
-                                        <div
-                                            class="my-2 border-t border-layout-sun-200 dark:border-layout-night-200"
-                                        />
-
-                                        <!-- Authentication -->
-                                        <form @submit.prevent="logoutUser" class="w-full">
-                            <button
-                                type="submit"
-                                class="flex items-center justify-center gap-1 w-full px-4 py-2 text-sm leading-4 font-medium text-layout-sun-700 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:text-layout-night-900 hover:underline"
-                            >
-                                <IconLogout class="w-4 h-4" color="#ffa500" />
-                                <span>Abmelden</span>
-                            </button>
-                        </form>
-                                    </template>
-                                </Dropdown>
+                            <template #content>
+                                <div class="w-full text-center">
+                                    <div class="block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500">
+                                        <span v-if="$page.props.userdata.application_count > 100">Anwendung wechseln</span>
+                                        <span v-else>Startseite</span>
                                     </div>
-                </div>
+
+                                    <DropdownLink
+                                        :with-icon="false"
+                                        :with-route="true"
+                                        :route-name="route('admin.dashboard')"
+                                    >
+                                        <span class="flex items-center justify-center gap-1 w-full">
+                                            <IconDashboard class="w-4 h-4" color="#ffa500" />
+                                            <span>Zum Dashboard</span>
+                                        </span>
+                                    </DropdownLink>
+
+                                    <div class="block px-4 py-2 text-xs text-layout-sun-500 dark:text-layout-night-500">
+                                        Dein Konto
+                                    </div>
+
+                                    <DropdownLink
+                                        :with-icon="false"
+                                        :with-route="true"
+                                        :route-name="route('admin.profile')"
+                                    >
+                                        <span class="flex items-center justify-center gap-1 w-full">
+                                            <IconProfile class="w-4 h-4" color="#ffa500" />
+                                            <span>Profil</span>
+                                        </span>
+                                    </DropdownLink>
+
+                                    <DropdownLink
+                                        v-if="SD() == 'ab' || SD() == 'pna'"
+                                        :with-icon="false"
+                                        :with-route="true"
+                                        :route-name="route('admin.mcslpoints')"
+                                    >
+                                        <span class="flex items-center justify-center gap-1 w-full">
+                                            <IconStarthin class="w-4 h-4" color="#ffa500" />
+                                            <span>{{ mcslpoints }} MCSL Points</span>
+                                        </span>
+                                    </DropdownLink>
+
+                                    <DropdownLink
+                                        v-if="rights.delete == 1"
+                                        :with-icon="false"
+                                        :with-route="true"
+                                        :route-name="route('pm.index', { tab: 'inbox' })"
+                                    >
+                                        <span class="flex items-center justify-center gap-1 w-full">
+                                            <IconPM class="w-4 h-4" color="#ffa500" />
+                                            <span>Private Nachrichten</span>
+                                        </span>
+                                    </DropdownLink>
+
+                                    <DropdownLink
+                                        v-if="CheckTRights('view','contacts')"
+                                        :with-icon="false"
+                                        :with-route="true"
+                                        :route-name="route('admin.kontakte')"
+                                    >
+                                        <span class="flex items-center justify-center gap-1 w-full">
+                                            <IconContacts_alt class="w-4 h-4" color="#ffa500" />
+                                            <span>Kontakte</span>
+                                        </span>
+                                    </DropdownLink>
+
+                                    <div class="my-2 border-t border-layout-sun-200 dark:border-layout-night-200"></div>
+
+                                    <form @submit.prevent="logoutUser" class="w-full">
+                                        <button
+                                            type="submit"
+                                            class="flex items-center justify-center gap-1 w-full px-4 py-2 text-sm font-medium font-bold text-layout-sun-700 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:text-layout-night-900 hover:underline cursor-pointer"
+                                        >
+                                            <IconLogout class="w-4 h-4" color="#ffa500" />
+                                            <span>Abmelden</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </template>
+                        </Dropdown>
+                    </div>
                 </div>
             </div>
-            </nav>
+        </div>
+    </div>
+</nav>
 
             <!-- Loading -->
             <!-- <div v-if="isLoading || loadingStore.isLoading" id="loader" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-all" style='z-index:999999999'>
@@ -260,7 +229,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="foot bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" style="z-index:35" aria-labelledby="footer-heading">
+        <footer class="foot bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-t border-layout-sun-200 dark:border-layout-night-200" style="z-index:1001" aria-labelledby="footer-heading">
             <div class="container mx-auto max-w-6xl">
             <h2 id="footer-heading" class="sr-only">Footer</h2>
             <div class="px-1 md:px-4 lg:px-8 pb-8 pt-8">
@@ -287,7 +256,7 @@
                         <li>
                                         <a
                                             class="ToggleCookieLink cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900"
-                                            @click="showHideToggleCookiePreferencesModal"
+                                            onclick="showHideToggleCookiePreferencesModal()"
                                         >
 
                                             <IconCookies
@@ -378,7 +347,7 @@
     import Dropdown from "@/Application/Components/Content/Dropdown.vue";
     import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
     import LinkHeader from "@/Application/Shared/LinkHeader.vue";
-    import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
+    import IconStarthin from "@/Application/Components/Icons/IconStar_thin.vue";
     import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
     import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
     import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
@@ -412,7 +381,7 @@
         IconProfile,
         IconPM,
         IconContacts_alt,
-        IconStarThin,
+        IconStarthin,
         IconCookies,
         IconDashboard,
         IconMenu,
@@ -479,7 +448,7 @@
     // Wenn search gesetzt ist, verstecke das Loading-Div
     if (search && search.trim() !== "") {
 
-        this.setLoadingState(false);
+        this.setLoading(false);
     }
     else{
         //this.setLoading(true);
@@ -584,11 +553,11 @@
 
 
 
-        /*/\\*
+        /*
         |--------------------------------------------------------------------------
         | Force Light
         |--------------------------------------------------------------------------
-        \*/
+        */
 
         const forceLight =
             window.location.pathname === '/login'
@@ -602,11 +571,11 @@
             return;
         }
 
-        /*/\\*
+        /*
         |--------------------------------------------------------------------------
         | Theme anwenden
         |--------------------------------------------------------------------------
-        \*/
+        */
 
         if (this.mode === 'dark') {
 
@@ -648,7 +617,7 @@
         this.isLoading = state;
         if(typeof window !== "undefined")
         {
-            localStorage.setItem('loading', state ? state.toString() : '');
+            localStorage.setItem('loading', state ? state.toString():'');
         }
     },
 
@@ -673,7 +642,7 @@
             if (img.complete) {
             imagesLoadedCount++;
             } else {
-           img.addEventListener('load', () => {
+            img.addEventListener('load', () => {
                 imagesLoadedCount++;
                 if (imagesLoadedCount === totalImages) {
                 this.imagesLoaded = true;
@@ -762,7 +731,7 @@
     };
     </script>
 
-    <style>
+    <style  >
     #prof_pic{
         width:32px !important;
         height:32px !important;
@@ -773,11 +742,6 @@
     position: relative;
     z-index: 100000;
     }
-   /* /\\* Deine Styles hier */
+    /* Deine Styles hier */
     </style>
-
-
-
-
-
 

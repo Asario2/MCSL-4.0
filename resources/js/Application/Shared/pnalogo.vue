@@ -1,6 +1,6 @@
 <template>
     <div
-        class="relative overflow-hidden w-[348px] md:w-full"
+        class="relative overflow-hidden w-[348px] lg:w-full"
     >
 
         <!-- Hintergrund -->
@@ -20,15 +20,14 @@
         <img
             id="pna_logo"
             :class="[
-                small ? 'max-w-[348px] !h-[60px]' : '',
-                'relative z-10 block w-[348px] max-w-none h-auto md:w-full md:h-[180px]'
-            ]""
+                small
+                    ? 'max-w-[348px] !h-[60px] w-[348px]'
+                    : 'w-[348px] h-auto lg:w-full lg:h-[180px] lg:max-w-none',
+                'relative z-10 block'
+            ]"
             :src="'/images/logos/pna_logo' + GetLogin() + '.png'"
             alt="Paul Nadler Logo"
         >
-
-
-
 
     </div>
 </template>
@@ -53,23 +52,23 @@ export default {
         return {
             mode: "light",
             ab2: "",
-            LL:'',
+            LL: '',
         };
     },
 
     mounted() {
         if (typeof window === "undefined") return;
-        if(localStorage.getItem('theme') == 'light')
-        {
+
+        if (localStorage.getItem('theme') == 'light') {
             this.LL = "l";
         }
+
         this.mode =
             /\/(login|register)(\/|$)/i.test(window.location.pathname)
                 ? "light"
                 : (localStorage.getItem("theme") || "light");
 
         this.ab2 = this.GetLogin();
-
 
         import("gsap").then(({ gsap }) => {
 

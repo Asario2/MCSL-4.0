@@ -1,5 +1,5 @@
 <template>
-    <div class="light" id="app-layout-start">
+    <div class="dark" data-theme="dark" id="app-layout-start">
         <Head :title="title"></Head>
 
         <div
@@ -9,46 +9,50 @@
             <nav
                 class="py-2 bg-layout-sun-0 text-layout-sun-800 dark:bg-layout-night-0 dark:text-layout-night-800 border-b border-layout-sun-200 dark:border-layout-night-200"
             >
-                <!-- Primary Navigation Menu chh -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
+                <!-- Primary Navigation Menu  pna -->
+                <div class="max-w-7xl mx-auto ">
+                    <div class="flex justify-between items-center h-16">
+
+                        <div class="flex items-center justify-between w-full">
                             <div class="shrink-0 flex items-center">
-                                <brand-header
+                                <brand-header class="!sm:ml-[-10px]"
                                     :route-name="route('admin.dashboard')"
-                                    :brand_1="
-                                        $page.props.applications.brand_name_1
-                                    "
-                                    :brand_2="
-                                        $page.props.applications.brand_name_2
-                                    "
-                                    :app-name="
-                                        $page.props.applications.app_admin_name
-                                    "
-                                ></brand-header>
+                                    :brand_1="$page.props.applications.brand_name_1"
+                                    :brand_2="$page.props.applications.brand_name_2"
+                                    :app-name="$page.props.applications.app_admin_name"
+                                />
+
+                                <div class="hidden sm:flex space-x-8 ms-10">
+                                    <NavLink
+                                        :routeName="route('home.index')"
+                                        :active="route().current('home.index')"
+                                        label="Home"
+                                    />
+                                    <NavLink
+                                        :routeName="route('admin.dashboard')"
+                                        :active="route().current('admin.dashboard')"
+                                        label="Dashboard"
+                                    />
+                                    <NavLink
+                                        :routeName="route('admin.dashboard')"
+                                        :active="route().current('admin.dashboard')"
+                                        label="Dashboard"
+                                    />
+                                </div>
                             </div>
 
-                            <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            <button
+                                class="button_menu colored_white flex items-center justify-center sm:hidden"
+                                @click="toggleNavbar"
+                                type="button"
                             >
-                            <NavLink
-                                    :routeName="route('home.visit')"
-                                    :active="route().current('home.visit')"
-                                    label="Home"
-                                >
-                                </NavLink>
-                            <NavLink
-                                    :routeName="route('admin.dashboard')"
-                                    :active="route().current('admin.dashboard')"
-                                    label="Dashboard"
-                                >
-                                </NavLink>
+                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path :class="{ hidden: isOpen, 'inline-flex': !isOpen }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                    <path :class="{ hidden: !isOpen, 'inline-flex': isOpen }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
                             </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                            <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <!-- <div class="mr-1">
                                 <button-change-mode
                                     :mode="mode"
@@ -57,7 +61,11 @@
                             </div> -->
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
-                                <Dropdown align="right" width="72">
+                                <Dropdown
+            align="right"
+            width="72"
+            v-if="$page.props.auth.user"
+        >
                                     <template #trigger>
                                         <button
                                             v-if="
@@ -69,12 +77,13 @@
                                             <img
                                                 class="h-8 w-8 rounded-full object-cover"
                                                 :src="
-                                                GetProfileImagePath($page.props.auth.user.profile_photo_url)"
+                                                GetProfileImagePath($page.props.auth.user?.profile_photo_url)"
                                                 :alt="
                                                     $page.props.userdata
                                                         .full_name
                                                 "
                                             />
+
                                         </button>
 
                                         <span
@@ -135,7 +144,10 @@
                                                 "
                                                 >Anwendung wechseln</span
                                             >
-                                            <span v-else>zum Dashboard</span>
+                                            <span v-else><span class="flex items-center justify-start gap-1 w-full">
+                                                <IconDashboard class="w-4 h-4" color="#ffa500" />
+                                                <span>Zum Dashboard</span>
+                                            </span></span>
                                         </dropdown-link>
 
                                         <!-- Account Management -->
@@ -150,9 +162,45 @@
                                             :with-route="true"
                                             :route-name="route('admin.profile')"
                                         >
-                                            Profil
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconProfile class="w-4 h-4" color="#ffa500" />
+                                                <span>Profil</span>
+                                            </span>
+                                        </dropdown-link>
+                                        <dropdown-link v-if="SD() == 'ab' || SD() == 'pna'"
+                                            :with-icon="false"
+                                            :with-route="true"
+                                            :route-name="route('admin.mcslpoints')"
+                                        >
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconStar_thin class="w-4 h-4" color="#ffa500" />
+                                                <span>{{ mcslpoints }} MCSL Points</span>
+                                            </span>
                                         </dropdown-link>
 
+                                             <dropdown-link v-if="rights.delete == 1"
+                                                :with-icon="false"
+                                                :with-route="true"
+                                                :route-name="route('pm.index', { tab: 'inbox' })"
+                                                >
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconPM class="w-4 h-4" color="#ffa500" />
+                                                <span>Private Nachrichten</span>
+                                            </span>
+
+                                            </dropdown-link>
+                                        <dropdown-link v-if="CheckTRights('view','contacts')"
+                                                :with-icon="false"
+                                                :with-route="true"
+                                                :route-name="
+                                                    route('admin.kontakte')
+                                                ">
+                                            <span class="flex items-center justify-start gap-1 w-full">
+                                                <IconContacts_alt class="w-4 h-4" color="#ffa500" />
+                                                <span>Kontakte</span>
+                                            </span>
+
+                                            </dropdown-link>
 
 
                                         <div
@@ -163,50 +211,20 @@
                                         <form @submit.prevent="logoutUser">
                                             <button type="submit">
                                                 <dropdown-link>
-                                                    Abmelden 3
+                                            <span class="flex items-center justify-start gap-1 w-full ml-[35px]">
+                                                <IconLogout class="w-4 h-4" color="#ffa500" />
+                                                <span>Abmelden</span>
+                                            </span>
                                                 </dropdown-link>
                                             </button>
                                         </form>
                                     </template>
                                 </Dropdown>
+
                             </div>
                         </div>
 
-                        <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
-                            <button
-                                class="button_menu"
-                                v-on:click="toggleNavbar()"
-                            >
-                                <svg
-                                    class="h-6 w-6"
-                                    stroke="currentColor" fill="none"
 
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        :class="{
-                                            hidden: isOpen,
-                                            'inline-flex': !isOpen,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !isOpen,
-                                            'inline-flex': isOpen,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -220,7 +238,7 @@
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            :href="route('home.visit')"
+                            :href="route('home.index')"
                             target="_self"
                         >
                             Home
@@ -232,12 +250,12 @@
                             Dashboard
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink as="button">
+                        <!-- <ResponsiveNavLink as="button">
                             <button-change-mode
                                 :mode="mode"
                                 @changeMode="changeMode"
                             ></button-change-mode>
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -253,7 +271,8 @@
                             >
                                 <img
                                     class="h-10 w-10 rounded-full object-cover"
-                                    :src="GetProfileImagePath($page.props.auth.user.profile_photo_url)"
+                                    :src="GetProfileImagePath($page.props.auth.user.profile_photo_url)
+                                    "
                                     :alt="$page.props.userdata.full_name"
                                 />
                             </div>
@@ -282,10 +301,10 @@
 
 
                             <!-- Authentication -->
-                            <form method="POST" @submit.prevent="logoutUser">
+                            <form @submit.prevent="logoutUser">
 
-                                <ResponsiveNavLink as="button">
-                                    Abmelden 4
+                                <ResponsiveNavLink as="submit">
+                                    Abmelden
                                 </ResponsiveNavLink>
                             </form>
                         </div>
@@ -337,13 +356,14 @@
 
 <script>
 import { Head } from "@inertiajs/vue3";
-import ChhLogo from "@/Application/Shared/ChhLogo.vue";
+
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { toastBus } from '@/utils/toastBus';
 import Loader from "@/Application/Components/Loader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
+import IconClose from "@/Application/Components/Icons/Close.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
 import { SD,GetProfileImagePath } from "@/helpers";
 import NavLink from "@/Application/Components/Content/NavLink.vue";
@@ -352,15 +372,15 @@ import { router } from '@inertiajs/vue3';
 import FooterGrid from "@/Application/Components/Content/FooterGrid.vue";
 
 export default {
-    name: "Admin_Shared_Layout_chh",
+    name: "Admin_Shared_Layout_pna",
 
     components: {
         Head,
-        ChhLogo,
         BrandHeader,
         Toast,
         ButtonChangeMode,
         Dropdown,
+        IconClose,
         DropdownLink,
         NavLink,
         ResponsiveNavLink,
@@ -380,10 +400,15 @@ export default {
             mode: "dark",
             isOpen: false,   // ✅ jetzt im data statt props
             year: new Date().getFullYear(),
+            rights:{
+                edit:null,
+                delete:null,
+            },
         };
     },
 
     mounted() {
+        localStorage.theme = this.mode ?? "dark";
         // let shouldReload = localStorage.getItem('reload_dashboard');
         // if (shouldReload) {
         //     localStorage.removeItem('reload_dashboard');
@@ -392,8 +417,8 @@ export default {
     },
 
     methods: {
-        SD,
         GetProfileImagePath,
+        SD,
         async getServer() {
             try {
                 const response = await axios.get('/api/GetLastAct');
@@ -414,10 +439,11 @@ export default {
         changeMode(value) {
             this.mode = value;
             this.isOpen = false;
-            if(typeof window !== "undefined")
+           if(typeof window !== "undefined")
             {
-                localStorage.theme = this.mode;
+                //localStorage.theme = this.mode ?? "dark";
             }
+
         },
 
         toggleNavbar() {
@@ -433,7 +459,9 @@ export default {
     },
 };
 </script>
-
-
-
+<style>
+.pna .colored_white{
+    color:#F00 !important;
+}
+</style>
 
