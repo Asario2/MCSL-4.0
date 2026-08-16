@@ -288,38 +288,58 @@ if (!cachen.pending) cachen.pending = {};
  * @returns {Promise<number>} 0 oder 1
  */
 export async function CheckTRights(right, table) {
-  const cacheKey = `${right}_${table}`;
 
-  // 1. Cache vorhanden?
-  if (cachen.batchRights[cacheKey] !== undefined) {
-    return Promise.resolve(cachen.batchRights[cacheKey]);
-  }
+    // SSR: relative Axios-URLs funktionieren in Node nicht
+    if (typeof window === 'undefined') {
+        return 0;
+    }
 
-  // 2. Pending Request prüfen
-  if (cachen.pending[cacheKey]) {
-    return cachen.pending[cacheKey];
-  }
+    if (!right || !table) {
+        return 0;
+    }
 
-  // 3. Neuen Request starten
-  const request = axios.get(`/api/user/rights/des/${table}/${right}`)
-    .then(({ data }) => {
-      cachen.batchRights[cacheKey] = data; // Cache setzen
-      delete cachen.pending[cacheKey];     // Pending entfernen
-      return data;
-    })
-    .catch(err => {
-      delete cachen.pending[cacheKey];     // Pending entfernen
-      console.error('CheckTRights Error:', err);
-      return 0;                             // Default bei Fehler
-    });
+    const cacheKey = `${right}_${table}`;
 
-  // Pending speichern
-  cachen.pending[cacheKey] = request;
+    if (cachen.batchRights[cacheKey] !== undefined) {
+        return cachen.batchRights[cacheKey];
+    }
 
-  // Promise zurückgeben
-  return request;
+    if (cachen.pending[cacheKey]) {
+        return cachen.pending[cacheKey];
+    }
+
+    const request = axios
+        .get(
+            `/api/user/rights/des/${encodeURIComponent(table)}/${encodeURIComponent(right)}`
+        )
+        .then(({ data }) => {
+
+            const value = Number(data) === 1 ? 1 : 0;
+
+            cachen.batchRights[cacheKey] = value;
+
+            delete cachen.pending[cacheKey];
+
+            return value;
+        })
+        .catch(error => {
+
+            delete cachen.pending[cacheKey];
+
+            console.error(
+                `CheckTRights Error (${right}, ${table}):`,
+                error
+            );
+
+            cachen.batchRights[cacheKey] = 0;
+
+            return 0;
+        });
+
+    cachen.pending[cacheKey] = request;
+
+    return request;
 }
-
 
 
 
