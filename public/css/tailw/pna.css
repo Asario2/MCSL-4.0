@@ -1,4 +1,4 @@
-/* AUTO GENERATED - DO NOT EDIT */
+w/* AUTO GENERATED - DO NOT EDIT */
 
 
 .bg-layout-night-0{
@@ -48,7 +48,7 @@
     --tw-ring-color:rgb(10 10 10) !important;
 }
 .dark .dark\:bg-layout-night-0{
-    background-color:rgb(10 10 10) !important;
+    background-color:rgb(0 0 0) !important;
 }
 .dark .dark\:text-layout-night-0{
     color:rgb(10 10 10) !important;
@@ -2313,7 +2313,7 @@
 
 .bg-layout-night-50{
     --tw-bg-opacity:1;
-    background-color:rgb(18 13 14 / var(--tw-bg-opacity,1)) !important;
+    background-color:rgb(0 0 0 / var(--tw-bg-opacity,1)) !important;
 }
 .text-layout-night-50{
     --tw-text-opacity:1;
@@ -2464,3 +2464,12 @@ BODY,.text-sm,p,span,#app-layout-start{
 /* LI a:link SPAN, LI a:visited SPAN{
     color:#222 !important;
 } */
+.text-layout-sun-1000{
+color:#000 !important;
+}
+
+.dark .text-layout-sun-1000{
+    color:#fff !important;
+    border:2px solid Gray;
+    padding:10px;
+}
