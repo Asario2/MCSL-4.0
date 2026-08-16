@@ -1,10 +1,11 @@
 <?php
 
 /**
- * Cookie Consent Configuration
+ * Cookie-Einwilligungs-Konfiguration
  *
- * This file contains all the configuration options for the cookie consent system.
- * It allows customization of the cookie banner appearance, behavior, and compliance settings.
+ * Diese Datei enthält alle Konfigurationsoptionen für das Cookie-Einwilligungssystem.
+ * Sie ermöglicht die Anpassung des Erscheinungsbilds, des Verhaltens und
+ * der datenschutzbezogenen Einstellungen des Cookie-Banners.
  *
  * @package Config
  * @author Muhammad Rabiul
@@ -13,28 +14,44 @@
 
 return [
 
-    /*
+    /**
     |--------------------------------------------------------------------------
-    | Cookie Consent Prefix
+    | Präfix für die Cookie-Einwilligung
     |--------------------------------------------------------------------------
-    | This setting determines whether the cookie consent banner should be displayed.
-    | Set this value to 'true' to show the banner or 'false' to disable it.
-    | You can control this via the .env file using APP_NAME.
+    | Diese Einstellung bestimmt das Präfix, das für die Cookie-Einwilligung
+    | verwendet wird.
+    | Der Wert kann über die .env-Datei mit APP_NAME gesteuert werden.
     */
     'cookie_prefix' => env('APP_NAME', 'Laravel_App'),
 
     /**
-     * Enable or disable the cookie consent banner
+     * Cookie-Einwilligungsbanner aktivieren oder deaktivieren
      *
      * @default true
      * @env COOKIE_CONSENT_ENABLED
      */
     'enabled' => env('COOKIE_CONSENT_ENABLED', true),
 
+
     /**
-     * Cookie lifetime in days
+    |--------------------------------------------------------------------------
+    | Benutzerdefinierte Asset-URL
+    |--------------------------------------------------------------------------
+    | Optional kann hier eine eigene Basis-URL für die Assets des Pakets
+    | angegeben werden.
+    | Wenn der Wert null oder leer ist, wird Laravels native asset()-Funktion
+    | verwendet.
+    |
+    | Beispiel:
+    | https://ihre-domain.de
+    */
+    'asset_url' => env('COOKIE_CONSENT_ASSET_URL', null),
+
+    /**
+     * Gültigkeitsdauer des Cookie-Einwilligungs-Cookies in Tagen
      *
-     * Defines how long the consent cookie should persist in the user's browser.
+     * Legt fest, wie lange das Einwilligungs-Cookie im Browser
+     * des Benutzers gespeichert wird.
      *
      * @default 365
      * @env COOKIE_CONSENT_LIFETIME
@@ -42,36 +59,39 @@ return [
     'cookie_lifetime' => env('COOKIE_CONSENT_LIFETIME', 365),
 
     /**
-     * Rejection cookie lifetime in days
+     * Gültigkeitsdauer des Ablehnungs-Cookies in Tagen
      *
-     * Specifies how long the rejection cookie should persist when users decline cookies.
+     * Legt fest, wie lange das Ablehnungs-Cookie gespeichert wird,
+     * wenn der Benutzer Cookies ablehnt.
      *
      * @default 7
      * @env COOKIE_REJECT_LIFETIME
      */
-    'reject_lifetime' => env('COOKIE_REJECT_LIFETIME', 365),
+    'reject_lifetime' => env('COOKIE_REJECT_LIFETIME', 7),
 
     /**
-     * Consent modal layout style
+     * Layout des Cookie-Einwilligungsbanners
      *
-     * Determines the visual presentation of the consent modal.
+     * Legt fest, wie das Cookie-Banner visuell dargestellt wird.
      *
      * @default 'bar-inline'
      * @env COOKIE_CONSENT_MODAL_LAYOUT
-     * @option box - Small floating box
-     * @option box-inline - Small floating box positioned inline
-     * @option box-wide - Larger floating box
-     * @option cloud - Cloud-like floating consent box
-     * @option cloud-inline - Compact cloud-style box
-     * @option bar - Simple bar at top or bottom
-     * @option bar-inline - Compact inline bar
+     *
+     * @option box        - Kleine schwebende Box
+     * @option box-inline - Kleine schwebende Box innerhalb des Layouts
+     * @option box-wide   - Größere schwebende Box
+     * @option cloud      - Wolkenähnliche schwebende Box
+     * @option cloud-inline - Kompakte Box im Cloud-Stil
+     * @option bar         - Einfacher Balken oben oder unten
+     * @option bar-inline  - Kompakter Balken innerhalb des Layouts
      */
     'consent_modal_layout' => env('COOKIE_CONSENT_MODAL_LAYOUT', 'bar'),
 
     /**
-     * Enable preferences modal
+     * Einstellungsfenster aktivieren
      *
-     * Determines if users can access detailed cookie preferences.
+     * Legt fest, ob Benutzer detaillierte Cookie-Einstellungen
+     * aufrufen können.
      *
      * @default false
      * @env COOKIE_CONSENT_PREFERENCES_ENABLED
@@ -79,21 +99,23 @@ return [
     'preferences_modal_enabled' => env('COOKIE_CONSENT_PREFERENCES_ENABLED', true),
 
     /**
-     * Preferences modal layout style
+     * Layout des Einstellungsfensters
      *
-     * Defines the visual presentation of the preferences modal.
+     * Legt fest, wie das Fenster für die Cookie-Einstellungen
+     * dargestellt wird.
      *
      * @default 'bar'
      * @env COOKIE_CONSENT_PREFERENCES_LAYOUT
-     * @option bar - Bar-style modal
-     * @option box - Popup-style box
+     *
+     * @option bar - Fenster im Balken-Stil
+     * @option box - Fenster im Popup-Stil
      */
     'preferences_modal_layout' => env('COOKIE_CONSENT_PREFERENCES_LAYOUT', 'bar'),
 
     /**
-     * Enable flip button animation
+     * Flip-Animation der Schaltflächen aktivieren
      *
-     * Adds a flip animation effect to consent buttons.
+     * Fügt den Einwilligungsschaltflächen einen Flip-Animationseffekt hinzu.
      *
      * @default true
      * @env COOKIE_CONSENT_FLIP_BUTTON
@@ -101,9 +123,10 @@ return [
     'flip_button' => env('COOKIE_CONSENT_FLIP_BUTTON', true),
 
     /**
-     * Disable page interaction until consent
+     * Seiteninteraktion bis zur Einwilligung deaktivieren
      *
-     * When enabled, users must interact with the cookie banner before accessing content.
+     * Wenn aktiviert, muss der Benutzer mit dem Cookie-Banner interagieren,
+     * bevor er auf den Seiteninhalt zugreifen kann.
      *
      * @default true
      * @env COOKIE_CONSENT_DISABLE_INTERACTION
@@ -111,48 +134,99 @@ return [
     'disable_page_interaction' => env('COOKIE_CONSENT_DISABLE_INTERACTION', true),
 
     /**
-     * Color theme for the cookie banner
+     * Farbschema des Cookie-Banners
      *
      * @default 'default'
      * @env COOKIE_CONSENT_THEME
-     * @option default - Standard theme
-     * @option dark - Dark mode theme
-     * @option light - Light mode theme
-     * @option custom - Custom styles (requires additional CSS)
+     *
+     * @option default - Standarddesign
+     * @option dark    - Dunkles Design
+     * @option light   - Helles Design
+     * @option custom  - Benutzerdefiniertes Design
+     *                  (zusätzliches CSS erforderlich)
      */
     'theme' => env('COOKIE_CONSENT_THEME', 'default'),
 
     /**
-     * Cookie banner title text
-     *
-     * @default "Cookie Disclaimer"
-     */
-'cookie_title' => 'Cookie-Hinweis',
+    |--------------------------------------------------------------------------
+    | Design-Voreinstellung
+    |--------------------------------------------------------------------------
+    | basic        - Standardmäßiges neutrales Design
+    | modern-blue  - Professionelles blaues Design
+    | trust-green  - Datenschutzfreundliches grünes Design
+    | soft-neutral - Dezentes hellgraues Design
+    | dark         - Dunkles Design
+    */
+    'theme_preset' => env('COOKIE_CONSENT_THEME_PRESET', 'basic'),
 
-'cookie_description' =>
-    'Diese Website verwendet Cookies, um Ihr Nutzungserlebnis zu verbessern, den Datenverkehr zu analysieren und Inhalte zu personalisieren. Durch die weitere Nutzung dieser Website stimmen Sie der Verwendung von Cookies zu.',
-
-'cookie_accept_btn_text' => 'Alle akzeptieren',
-
-'cookie_reject_btn_text' => 'Alle ablehnen',
-
-'cookie_preferences_btn_text' => 'Einstellungen verwalten',
-
-'cookie_preferences_save_text' => 'Einstellungen speichern',
-
-'cookie_modal_title' => 'Cookie-Einstellungen',
-
-'cookie_modal_intro' =>
-    'Hier können Sie festlegen, welche Cookies auf dieser Website verwendet werden dürfen.',
     /**
-     * Cookie categories configuration
+     * Titel des Cookie-Banners
      *
-     * Defines the different types of cookies users can manage.
+     * @default "Cookie-Hinweis"
+     */
+    'cookie_title' => 'Cookie-Hinweis',
+
+    /**
+     * Beschreibung des Cookie-Banners
      *
-     * @category necessary - Essential cookies that cannot be disabled
-     * @category analytics - Cookies used for tracking and analytics
-     * @category marketing - Cookies used for advertising
-     * @category preferences - Cookies for user preference storage
+     * @default "Diese Website verwendet Cookies, um Ihr Nutzungserlebnis
+     * zu verbessern, den Datenverkehr zu analysieren und Inhalte zu
+     * personalisieren. Durch die weitere Nutzung dieser Website stimmen
+     * Sie der Verwendung von Cookies zu."
+     */
+    'cookie_description' => 'Diese Website verwendet Cookies, um Ihr Nutzungserlebnis zu verbessern, den Datenverkehr zu analysieren und Inhalte zu personalisieren. Durch die weitere Nutzung dieser Website stimmen Sie der Verwendung von Cookies zu.',
+
+    /**
+     * Text der Schaltfläche zum Akzeptieren aller Cookies
+     *
+     * @default 'Alle akzeptieren'
+     */
+    'cookie_accept_btn_text' => 'Alle akzeptieren',
+
+    /**
+     * Text der Schaltfläche zum Ablehnen aller Cookies
+     *
+     * @default 'Alle ablehnen'
+     */
+    'cookie_reject_btn_text' => 'Alle ablehnen',
+
+    /**
+     * Text der Schaltfläche zum Verwalten der Cookie-Einstellungen
+     *
+     * @default 'Einstellungen verwalten'
+     */
+    'cookie_preferences_btn_text' => 'Einstellungen verwalten',
+
+    /**
+     * Text der Schaltfläche zum Speichern der Cookie-Einstellungen
+     *
+     * @default 'Einstellungen speichern'
+     */
+    'cookie_preferences_save_text' => 'Einstellungen speichern',
+
+    /**
+     * Titel des Fensters für die Cookie-Einstellungen
+     *
+     * @default 'Cookie-Einstellungen'
+     */
+    'cookie_modal_title' => 'Cookie-Einstellungen',
+
+    /**
+     * Einleitungstext des Fensters für die Cookie-Einstellungen
+     *
+     * @default 'Sie können Ihre Cookie-Einstellungen unten anpassen.'
+     */
+    'cookie_modal_intro' => 'Sie können Ihre Cookie-Einstellungen unten anpassen.',
+
+    /**
+     * Konfiguration der Cookie-Kategorien
+     *
+     * Definiert die verschiedenen Cookie-Arten, die Benutzer verwalten können.
+     *
+     * @category necessary   - Essenzielle Cookies, die nicht deaktiviert werden können
+     * @category analytics   - Cookies für Analyse und Statistik
+     * @category marketing   - Cookies für Werbung
+     * @category preferences - Cookies zum Speichern von Benutzereinstellungen
      */
     'cookie_categories' => [
 
@@ -160,16 +234,7 @@ return [
             'enabled' => true,
             'locked' => true,
             'title' => 'Essenzielle Cookies',
-            'description' =>
-                'Diese Cookies sind für den Betrieb der Website erforderlich und können nicht deaktiviert werden.',
-        ],
-
-        'preferences' => [
-            'enabled' => env('COOKIE_CONSENT_PREFERENCES', false),
-            'locked' => false,
-            'title' => 'Präferenz-Cookies',
-            'description' =>
-                'Diese Cookies speichern Ihre Einstellungen und verbessern die Benutzerfreundlichkeit.',
+            'description' => 'Diese Cookies sind für die einwandfreie Funktion der Website erforderlich.',
         ],
 
         'analytics' => [
@@ -177,8 +242,7 @@ return [
             'locked' => false,
             'js_action' => 'loadGoogleAnalytics',
             'title' => 'Analyse-Cookies',
-            'description' =>
-                'Diese Cookies helfen uns zu verstehen, wie Besucher unsere Website nutzen, damit wir sie verbessern können.',
+            'description' => 'Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren.',
         ],
 
         'marketing' => [
@@ -186,30 +250,35 @@ return [
             'locked' => false,
             'js_action' => 'loadFacebookPixel',
             'title' => 'Marketing-Cookies',
-            'description' =>
-                'Diese Cookies werden verwendet, um Inhalte und Werbung besser auf Ihre Interessen abzustimmen.',
+            'description' => 'Diese Cookies werden für Werbe- und Trackingzwecke verwendet.',
         ],
 
+        'preferences' => [
+            'enabled' => env('COOKIE_CONSENT_PREFERENCES', false),
+            'locked' => false,
+            'title' => 'Einstellungs-Cookies',
+            'description' => 'Diese Cookies ermöglichen es der Website, sich an Benutzereinstellungen zu erinnern.',
+        ],
     ],
 
-
     /**
-     * Policy links configuration
+     * Konfiguration der Links zu rechtlichen Dokumenten
      *
-     * Links to legal documents displayed in the cookie banner.
+     * Links zu rechtlichen Dokumenten, die im Cookie-Banner angezeigt werden.
      *
-     * @item text - Display text for the link
-     * @item link - URL to the policy document
+     * @item text - Angezeigter Text des Links
+     * @item link - URL zum jeweiligen Dokument
      */
     'policy_links' => [
         [
             'text' => 'Datenschutzerklärung',
-            'link' => env('COOKIE_CONSENT_PRIVACY_POLICY_URL', '') ?? url('/home/privacy')
+            'link' => env('COOKIE_CONSENT_PRIVACY_POLICY_URL', '') ?? url('privacy-policy')
         ],
+
         // [
-        //     'text' => 'Terms and Conditions',
+        //     'text' => 'Allgemeine Geschäftsbedingungen',
         //     'link' => env('COOKIE_CONSENT_TERMS_URL', '') ?? url('terms-and-conditions')
         // ],
     ],
-];
 
+];
