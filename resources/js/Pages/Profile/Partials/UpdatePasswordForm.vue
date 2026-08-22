@@ -5,7 +5,7 @@ import ActionMessage from "@/Components/ActionMessage.vue";
 import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import Primarybutton from "@/Components/Primarybutton.vue";
 import TextInput from "@/Components/TextInput.vue";
 
 const passwordInput = ref(null);
@@ -99,12 +99,12 @@ const updatePassword = () => {
                 Saved.
             </ActionMessage>
 
-            <PrimaryButton
+            <Primarybutton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
             >
                 Save
-            </PrimaryButton>
+            </Primarybutton>
         </template>
     </FormSection>
 </template>

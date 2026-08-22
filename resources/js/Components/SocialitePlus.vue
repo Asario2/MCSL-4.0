@@ -1,5 +1,5 @@
     <script setup lang="ts">
-    import { Button } from "@/components/ui/button";
+    import { button } from "@/components/ui/button";
     import FacebookIcon from "./Icons/FacebookIcon.vue";
     import GitHubIcon from "./Icons/GitHubIcon.vue";
     import GoogleIcon from "./Icons/GoogleIcon.vue";
@@ -58,7 +58,7 @@
         v-for="provider in providersConfig.providers"
         :key="provider.name"
         >
-        <Button
+        <button
             type="button"
             variant="outline"
             :class="providerClasses(provider)"
@@ -71,7 +71,7 @@
             v-if="icons[provider.icon]"
             />
             {{ providersConfig.button_text.replace("{provider}", provider.name) }}
-        </Button>
+        </button>
         </template>
     </div>
     </template>

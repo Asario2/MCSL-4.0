@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InputError from "@/components/InputError.vue";
 import TextLink from "@/components/TextLink.vue";
-import { Button } from "@/components/ui/button";
+import { button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -98,7 +98,7 @@ const submit = () => {
           </Label>
         </div>
 
-        <Button
+        <button
           type="submit"
           class="mt-4 w-full"
           :tabindex="4"
@@ -106,7 +106,7 @@ const submit = () => {
         >
           <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
           Log in
-        </Button>
+        </button>
       </div>
 
       <SocialitePlus :providers-config="providersConfig" />

@@ -168,7 +168,7 @@ import InputError from "@/Application/Components/Form/InputError.vue";
 import InputActionMessage from "@/Application/Components/Form/InputActionMessage.vue";
 import ButtonGroup from "@/Application/Components/Form/ButtonGroup.vue";
 import InputButton from "@/Application/Components/Form/InputButton.vue";
-import InputWhiteButton from "@/Application/Components/Form/InputWhiteButton.vue";
+import InputWhitebutton from "@/Application/Components/Form/InputWhiteButton.vue";
 import Alert from "@/Application/Components/Content/Alert.vue";
 import InputCheckbox_alt from "@/Application/Components/Form/InputCheckbox_alt.vue";
 
@@ -187,7 +187,7 @@ export default {
         InputActionMessage,
         ButtonGroup,
         InputButton,
-        InputWhiteButton,
+        InputWhitebutton,
         Alert,
     },
 

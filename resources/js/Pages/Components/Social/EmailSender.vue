@@ -12,7 +12,7 @@
     >
       <h1 class="text-3xl font-bold mb-6 text-layout-title">Email Center</h1>
 
-      <!-- Label + Button in einer Zeile -->
+      <!-- Label + button in einer Zeile -->
       <div class="flex items-center justify-between mb-3">
         <label
           for="mail_body"
@@ -87,7 +87,7 @@
           v-model="signatureText"
         />
       </div>
-<!-- Buttons -->
+<!-- buttons -->
     <button type="submit" class="px-3 py-2 mr-2 ml-2 mt-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">Vorschau</button>
     <button class="px-3 py-2 mt-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">Mail Speichern</button>
     <button class="px-3 py-2 ml-2 rounded-lg mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">Signatur Speichern</button>

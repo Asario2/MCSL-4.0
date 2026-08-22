@@ -3,11 +3,11 @@ import { ref, computed, watch } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import ActionSection from "@/Components/ActionSection.vue";
 import ConfirmsPassword from "@/Components/ConfirmsPassword.vue";
-import DangerButton from "@/Components/DangerButton.vue";
+import Dangerbutton from "@/Components/Dangerbutton.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Primarybutton from "@/Components/Primarybutton.vue";
+import Secondarybutton from "@/Components/Secondarybutton.vue";
 import TextInput from "@/Components/TextInput.vue";
 
 const props = defineProps({
@@ -231,13 +231,13 @@ const disableTwoFactorAuthentication = () => {
                     <ConfirmsPassword
                         @confirmed="enableTwoFactorAuthentication"
                     >
-                        <PrimaryButton
+                        <Primarybutton
                             type="button"
                             :class="{ 'opacity-25': enabling }"
                             :disabled="enabling"
                         >
                             Enable
-                        </PrimaryButton>
+                        </Primarybutton>
                     </ConfirmsPassword>
                 </div>
 
@@ -245,7 +245,7 @@ const disableTwoFactorAuthentication = () => {
                     <ConfirmsPassword
                         @confirmed="confirmTwoFactorAuthentication"
                     >
-                        <PrimaryButton
+                        <Primarybutton
                             v-if="confirming"
                             type="button"
                             class="me-3"
@@ -253,49 +253,49 @@ const disableTwoFactorAuthentication = () => {
                             :disabled="enabling"
                         >
                             Confirm
-                        </PrimaryButton>
+                        </Primarybutton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="regenerateRecoveryCodes">
-                        <SecondaryButton
+                        <Secondarybutton
                             v-if="recoveryCodes.length > 0 && !confirming"
                             class="me-3"
                         >
                             Regenerate Recovery Codes
-                        </SecondaryButton>
+                        </Secondarybutton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="showRecoveryCodes">
-                        <SecondaryButton
+                        <Secondarybutton
                             v-if="recoveryCodes.length === 0 && !confirming"
                             class="me-3"
                         >
                             Show Recovery Codes
-                        </SecondaryButton>
+                        </Secondarybutton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword
                         @confirmed="disableTwoFactorAuthentication"
                     >
-                        <SecondaryButton
+                        <Secondarybutton
                             v-if="confirming"
                             :class="{ 'opacity-25': disabling }"
                             :disabled="disabling"
                         >
                             Cancel
-                        </SecondaryButton>
+                        </Secondarybutton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword
                         @confirmed="disableTwoFactorAuthentication"
                     >
-                        <DangerButton
+                        <Dangerbutton
                             v-if="!confirming"
                             :class="{ 'opacity-25': disabling }"
                             :disabled="disabling"
                         >
                             Disable
-                        </DangerButton>
+                        </Dangerbutton>
                     </ConfirmsPassword>
                 </div>
             </div>

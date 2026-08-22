@@ -288,54 +288,40 @@ if (!cachen.pending) cachen.pending = {};
  * @returns {Promise<number>} 0 oder 1
  */
 export async function CheckTRights(right, table) {
-
-    // SSR: relative Axios-URLs funktionieren in Node nicht
-    if (typeof window === 'undefined') {
-        return 0;
-    }
-
-    if (!right || !table) {
-        return 0;
-    }
-
     const cacheKey = `${right}_${table}`;
 
+    // 1. Cache vorhanden?
     if (cachen.batchRights[cacheKey] !== undefined) {
-        return cachen.batchRights[cacheKey];
+        return Promise.resolve(cachen.batchRights[cacheKey]);
     }
 
+    // 2. Pending Request prüfen
     if (cachen.pending[cacheKey]) {
         return cachen.pending[cacheKey];
     }
 
-    const request = axios
-        .get(
-            `/api/user/rights/des/${encodeURIComponent(table)}/${encodeURIComponent(right)}`
-        )
+    // 3. URL für Browser / SSR
+    const baseURL =
+        typeof window !== 'undefined'
+            ? window.location.origin
+            : (process.env.APP_URL || 'http://localhost');
+
+    const url = `${baseURL}/api/user/rights/des/${table}/${right}`;
+
+    // 4. Request starten
+    const request = axios.get(url)
         .then(({ data }) => {
-
-            const value = Number(data) === 1 ? 1 : 0;
-
-            cachen.batchRights[cacheKey] = value;
-
+            cachen.batchRights[cacheKey] = data;
             delete cachen.pending[cacheKey];
-
-            return value;
+            return data;
         })
-        .catch(error => {
-
+        .catch(err => {
             delete cachen.pending[cacheKey];
-
-            console.error(
-                `CheckTRights Error (${right}, ${table}):`,
-                error
-            );
-
-            cachen.batchRights[cacheKey] = 0;
-
+            console.error('CheckTRights Error:', err);
             return 0;
         });
 
+    // 5. Pending speichern
     cachen.pending[cacheKey] = request;
 
     return request;
@@ -746,7 +732,6 @@ segments = segments.join('').replace(/[[\]']/g, '');
 export async function Authy(){
     GetAuth().then(authenticated => {
         if (authenticated === "false") {
-            alert("TO LOGIN");
             location.href = "/login";
             return false;
         }
