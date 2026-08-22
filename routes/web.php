@@ -356,6 +356,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':pna,paulnadler')->gr
 
 Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
 Route::get('/grafitti', [HomeController::class, 'home_grafitti'])->name('home.pna.grafitti');
+Route::get('/landschaft', [HomeController::class, 'home_landschaft'])->name('home.pna.landschaft');
 Route::get('/portraits', [HomeController::class, 'home_portraits'])->name('home.pna.portraits');
 Route::get('/kontakt', [HomeController::class, 'contacts_pna'])
     ->name('home.pna.contacts');
@@ -825,6 +826,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/admin/removeFiles', [TablesController::class, 'remImages'])->name("rem.images");
         Route::get("/admin/SQLUpdate", [SQLUpdateController::class,"index"])->name("SQL.index");
         Route::get('/api/admin-tables', [TablesController::class, 'GetDBTables'])->name("get.db.tables");
+        Route::get('/api/admin-tables-rights',[TablesController::class, 'GetAdminTablesForRights'])->name("urights.new");
         Route::get('/admin/Ausgaben', [HomeController::class, 'home_ausgaben'])->name("admin.ausgaben");
         Route::get('/userx/update-config/{id}', [UserConfigController::class, 'updateConfig'])->name('usconfi');
         Route::get('/dboard/data/{dom?}/{month?}', [CountPixelController::class, 'dboard'])->name('dboard.data');

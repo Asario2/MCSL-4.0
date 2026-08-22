@@ -400,15 +400,15 @@
     public static array $descalias = [
         "comments"=>"Autor",
         "blog_authors"=>"Benutzer",
-        "ratings"=>"Benutzer",
+        "ratings"=>"Name des Bildes",
         "users"=>"E-Mail",
         'impressum'=>'Text',
         "shortpoems"=>"Autor",
         "didyouknow"=>"Autor",
-        "texts"=>"Autor",
+        "texts"=>"Beschreibung",
         "blogs"=>"Zusammenfassung",
         "categories"=>"Kategorie Englsich",
-        "images"=>"Autor",
+        "images"=>"Beschreibung",
         "projects_sheets"=>"Aufgabe",
         "kontakt"=>"Email",
         "lostnfound"=>"Text",
@@ -513,6 +513,7 @@ public static array $image_sizes =
     26 => 'ab_contacts_updated_at',
     27 => 'pna_users_remember_token',
     28 => 'pna_users_config_updated_at',
+    29 => 'pna_users_birthday',
 ];
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",
