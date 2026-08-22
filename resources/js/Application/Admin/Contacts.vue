@@ -36,7 +36,7 @@
                       class="hover:bg-gray-800"
                       :class="{ 'border-b border-black': index !== groupedContacts[letter].length - 1 }"
                     >
-                      <!-- Info-Button -->
+                      <!-- Info-button -->
                       <td class="px-2 py-1 border-r border-black text-center">
                         <button
                           v-if="contact.Kommentar || contact.Adresse || contact.Geburtsdatum"

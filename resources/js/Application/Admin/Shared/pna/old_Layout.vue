@@ -146,7 +146,7 @@
                                             >
                                             <span v-else><span class="flex items-center justify-start gap-1 w-full">
                                                 <IconDashboard class="w-4 h-4" color="#ffa500" />
-                                                <span>Zum Dashboard</span>
+                                                <span>Dashboard</span>
                                             </span></span>
                                         </dropdown-link>
 
@@ -359,7 +359,7 @@ import { Head } from "@inertiajs/vue3";
 
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
-import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { toastBus } from '@/utils/toastBus';
 import Loader from "@/Application/Components/Loader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
@@ -378,7 +378,7 @@ export default {
         Head,
         BrandHeader,
         Toast,
-        ButtonChangeMode,
+        buttonChangeMode,
         Dropdown,
         IconClose,
         DropdownLink,
@@ -414,10 +414,20 @@ export default {
         //     localStorage.removeItem('reload_dashboard');
         //     window.location.reload();
         // }
+        this.loadmcslpoints();
     },
 
     methods: {
         GetProfileImagePath,
+        async loadmcslpoints() {
+            try {
+                    const { data } = await axios.get('/api/mcslpoints/');
+                    this.mcslpoints = data; // automatisch reaktiv
+                  
+                } catch (err) {
+                    console.error('Fehler beim Laden der MCSL Points:', err);
+                }
+            },
         SD,
         async getServer() {
             try {

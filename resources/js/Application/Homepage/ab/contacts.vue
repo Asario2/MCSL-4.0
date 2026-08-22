@@ -65,7 +65,7 @@
                                             class="mt-[12px] ai-image-corner"
                                         />
 
-                                        <AiButton :dma="dmaa" />
+                                        <Aibutton :dma="dmaa" />
                                     </div>
                                 </section>
 
@@ -103,7 +103,7 @@
         import(`@/Application/Homepage/Shared/${SD()}/Layout.vue`)
     );
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-    import AiButton from "@/Application/Components/Content/AiButton.vue";
+    import Aibutton from "@/Application/Components/Content/AiButton.vue";
 
 
     import editbtns from "@/Application/Components/Form/editbtns.vue";
@@ -122,7 +122,7 @@
             PageParagraph,
             emailview,
             editbtns,
-            AiButton,
+            Aibutton,
             MetaHeader},
         props:{
             news:[Array,Object],

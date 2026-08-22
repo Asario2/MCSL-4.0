@@ -43,7 +43,7 @@ import axios from "axios";
 
 export default {
 
-    name: "PublishButton",
+    name: "Publishbutton",
 
     emits: ['update:modelValue'],
 

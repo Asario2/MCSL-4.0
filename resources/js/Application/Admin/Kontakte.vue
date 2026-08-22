@@ -115,7 +115,7 @@
                       class="hover:bg-gray-800"
                       :class="{ 'border-b border-black': index !== groupedContacts[letter].length - 1 }"
                     >
-                      <!-- Info-Button -->
+                      <!-- Info-button -->
                       <td class="px-2 py-1 border-r border-black text-center">
                         <button
                           v-if="contact.Kommentar || contact.Adresse || contact.Geburtsdatum"
@@ -131,7 +131,7 @@
 
                     <div class="relative inline-block">
 
-                        <!-- Aktuelles Icon als Button im weißen Kreis -->
+                        <!-- Aktuelles Icon als button im weißen Kreis -->
                         <div
                         class="w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center cursor-pointer shadow hover:scale-110 transition mr-2"
                         @click.stop="toggleGroupPicker(contact.id)"

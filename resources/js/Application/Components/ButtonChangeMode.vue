@@ -11,7 +11,7 @@ import IconNight from "@/Application/Components/Icons/Night.vue";
 import IconSun from "@/Application/Components/Icons/Sun.vue";
 
 export default {
-    name:"ButtonChangeMode",
+    name:"buttonChangeMode",
 
     components:{IconNight,IconSun},
 

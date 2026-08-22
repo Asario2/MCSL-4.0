@@ -135,7 +135,7 @@
                                                 "
                                                 >Anwendung wechseln</span
                                             >
-                                            <span v-else>zum Dashboard</span>
+                                            <span v-else>Dashboard</span>
                                         </dropdown-link>
 
                                         <!-- Account Management -->
@@ -340,7 +340,7 @@ import { Head } from "@inertiajs/vue3";
 import ChhLogo from "@/Application/Shared/ChhLogo.vue";
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
-import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { toastBus } from '@/utils/toastBus';
 import Loader from "@/Application/Components/Loader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
@@ -359,7 +359,7 @@ export default {
         ChhLogo,
         BrandHeader,
         Toast,
-        ButtonChangeMode,
+        buttonChangeMode,
         Dropdown,
         DropdownLink,
         NavLink,

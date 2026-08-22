@@ -49,7 +49,7 @@
                     aria-label="toggle menu"
                 >
                     <IconMenu class="w-6 h-6" color="#f00" v-if="!isOpen_Menu" />
-                    <IconClose class="w-6 h-6" v-if="isOpen_Menu" />
+                    <IconClose class="w-6 h-6"  color="#f00" v-if="isOpen_Menu" />
                 </button>
             </div>
         </div>
@@ -89,7 +89,7 @@
                         <LinkHeader :route-name="route('applicationswitch')" name="Dashboard" />
                     </template>
 
-                    <ButtonChangeMode :mode="mode" @changeMode="changeMode" />
+                    <buttonChangeMode :mode="mode" @changeMode="changeMode" />
 
                     <!-- USER DROPDOWN -->
                     <div
@@ -124,7 +124,7 @@
                                     >
                                         <span class="flex items-center justify-center gap-1 w-full">
                                             <IconDashboard class="w-4 h-4" color="#ffa500" />
-                                            <span>Zum Dashboard</span>
+                                            <span>Dashboard</span>
                                         </span>
                                     </DropdownLink>
 
@@ -360,7 +360,7 @@
     import LinkFooter from "@/Application/Shared/LinkFooter.vue";
        import IconMenu from "@/Application/Components/Icons/Menu.vue"
     import Toast from "@/Application/Components/Content/Toast.vue";
-    import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+    import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
     import { SD,GetProfileImagePath,CheckTRights } from '@/helpers';
     import throttle from 'lodash/throttle';
     import pickBy from "lodash/pickBy";
@@ -388,7 +388,7 @@
         IconMCSL,
         Dropdown,
         DropdownLink,
-        ButtonChangeMode,
+        buttonChangeMode,
         IconClose,
     },
 

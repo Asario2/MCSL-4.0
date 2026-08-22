@@ -67,7 +67,7 @@ import InputContainer from "@/Application/Components/Form/InputContainer.vue";
 
 import ButtonGroup from "@/Application/Components/Form/ButtonGroup.vue";
 import InputButton from "@/Application/Components/Form/InputButton.vue";
-import InputWhiteButton from "@/Application/Components/Form/InputWhiteButton.vue";
+import InputWhitebutton from "@/Application/Components/Form/InputWhiteButton.vue";
 
 export default defineComponent({
     name: "Auth_VerifyEmail",
@@ -82,7 +82,7 @@ export default defineComponent({
         InputContainer,
         ButtonGroup,
         InputButton,
-        InputWhiteButton,
+        InputWhitebutton,
     },
 
     props: {

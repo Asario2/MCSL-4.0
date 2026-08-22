@@ -69,7 +69,7 @@
                 />
                 </td>
                   <td class="border border-gray-300 dark:border-gray-700 text-center">
-                    <PublishButton
+                    <Publishbutton
                     :key="'pub-' + msg.id + '-' + msg.checked"
                     table="private_messages"
                     :id="msg.id"
@@ -99,7 +99,7 @@
 
         </div>
 
-          <!-- Buttons Inbox -->
+          <!-- buttons Inbox -->
           <div class="mt-4 flex gap-2">
             <button
               type="button"
@@ -181,7 +181,7 @@
             </table>
           </div>
 
-          <!-- Buttons Outbox -->
+          <!-- buttons Outbox -->
           <div class="mt-4 flex gap-2">
             <button
               class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
@@ -307,7 +307,7 @@ import editbtns from '@/Application/Components/Form/editbtns.vue';
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import MessageSettings from "@/Application/Shared/MessageSettings.vue";
-import PublishButton from "@/Application/Components/Form/PublishButton.vue";
+import Publishbutton from "@/Application/Components/Form/PublishButton.vue";
 import { SD, GetProfileImagePath,rumLaut,nl2br, CleanTab, GetSettings } from "@/helpers";
 import InputSelectU from "@/Application/Components/Form/InputSelectU.vue";
 import InputHtml from "@/Application/Components/Form/InputHtml.vue";
@@ -327,7 +327,7 @@ export default {
     Breadcrumb,
     InputSelectU,
     InputFormText,
-    PublishButton,
+    Publishbutton,
     InputCheckbox,
     MessageSettings,
     Pagination,
@@ -423,7 +423,7 @@ export default {
   methods: {
     testClick() {
 
-        alert("CLICK");
+        // alert("CLICK");
     },
 
     SD, GetProfileImagePath, rumLaut, nl2br, GetSettings, CleanTab,

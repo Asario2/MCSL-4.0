@@ -8,7 +8,7 @@
             class="mb-4 h-14 p-4 flex items-center bg-layout-sun-300 dark:bg-layout-night-300 rounded-lg edit0R"
 
         ><p class='border rounded label p-1'><span class="whitespace-nowrap">{{getLabel(name)}}</span></p>
-            <!-- Bold Button -->
+            <!-- Bold button -->
             <ClientOnly>
             <button type="button" @mousedown.prevent @click="toggleFormat('bold')" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
             title="Fett">
@@ -16,7 +16,7 @@
 
             </button>
 
-            <!-- Italic Button -->
+            <!-- Italic button -->
             <button type="button"
                 @mousedown.prevent
                 @click="toggleFormat('italic')"
@@ -27,7 +27,7 @@
             </button>
 
 
-            <!-- Heading Buttons H1 - H6 -->
+            <!-- Heading buttons H1 - H6 -->
             <template v-for="i in 6" :key="i">
             <button
             type="button"
@@ -58,14 +58,14 @@
 <!-- @update:fileName="handleFileNameUpdate"
                     @imageUploaded="handleImageUpload"
                     @insertImage="handleImageUpload"-->
-            <!-- Image Button -->
+            <!-- Image button -->
             <button type="button" @mousedown.prevent
             @click="openModal_alt2" class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
            title="BIldupload">
                 <b><IconPictures stroke="white"/></b>
             </button>
 
-            <!-- Code Button -->
+            <!-- Code button -->
             <button type="button" @mousedown.prevent
                 @click="toggleFormat('code')"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
@@ -73,7 +73,7 @@
                 <b><IconCode /></b>
             </button>
 
-            <!-- HR Button -->
+            <!-- HR button -->
             <button type="button" @mousedown.prevent
                 @click="AddHr"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"
@@ -81,7 +81,7 @@
                 <b><span class="whitespace-nowrap">---</span></b>
             </button>
 
-            <!-- HR Button -->
+            <!-- HR button -->
             <button type="button" @mousedown.prevent
                 @click="toggleFormat('email')"
                 class="px-2.5 py-1 rounded-full hover:bg-layout-sun-0 hover:dark:bg-layout-night-0 cursor-pointer"

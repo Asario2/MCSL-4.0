@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: "AiButton",
+    name: "Aibutton",
     props: {
         big: Boolean,
         bigger: Boolean,

@@ -36,7 +36,7 @@
             <p class="text-center mt-2">{{ progress }}%</p>
           </div>
 
-          <!-- Buttons -->
+          <!-- buttons -->
           <div class="mt-6 flex justify-between">
             <button type="button" @click="closeModal" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
               Schliessen

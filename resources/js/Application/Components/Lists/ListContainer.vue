@@ -2,7 +2,7 @@
         <div>
             <div :class="[withinAccordion ? 'mx-1' : 'np-dl-outer-container']">
                 <div class="np-dl-data-container">
-                    <!-- Titel und Button-Gruppe -->
+                    <!-- Titel und button-Gruppe -->
                     <div class="np-dl-title">
                         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                             <div>{{ title }}</div>
@@ -48,7 +48,7 @@
 >
     <td
         class="np-dl-td-edit text-center"
-        v-if="rows?.length && !rows?.isNAN && CleanTable()?.trim() !== ''"
+        v-if="rows?.length && !rows?.isNAN && CleanTable()?.trim() !== '' && row?.position"
     >
         <button
             class="drag-handle-btn cursor-move"
@@ -62,7 +62,7 @@
     <slot name="datarow" :datarow="row" :draggable="false"></slot>
 
         <!-- Created At -->
-        <td  v-if="row.created_at && view" class="np-dl-td-normal"  draggable="false" @dragstart.prevent>
+        <td  v-if="row.created_at" class="np-dl-td-normal"  draggable="false" @dragstart.prevent>
             {{ new Date(row.created_at).toLocaleString('de-DE', {
                 day: '2-digit', month: '2-digit', year: 'numeric',
                 hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -70,14 +70,14 @@
         </td>
         <!-- <td v-else-if="hasRight('view', row.full_name)" class="np-dl-td-edit"></td> -->
 
-        <!-- Edit Button -->
+        <!-- Edit button -->
         <td class="np-dl-td-edit" v-if="CleanTable() != ''" draggable="false" @dragstart.prevent>
 
     <editbtns :table="CleanTable()" :id="row.id"></editbtns>
         </td>
         <!-- <td v-else-if="hasRight('view', row.full_name)" class="np-dl-td-edit"></td>
 
-        //Delete Button
+        //Delete button
         <td v-if="hasRight('delete', row.full_name) && hasRight('view', row.full_name && tableClean)"
             class="np-dl-td-edit"
             @click="deleteDataRow(row['id'])">

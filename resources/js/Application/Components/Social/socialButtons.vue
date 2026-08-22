@@ -33,7 +33,7 @@
 
                 <!-- Kommentarbox -->
                 <tr v-if="showComments === postId">
-                    <td colspan="3" class="p-4 h-auto align-top" style="z-index:1000 !important;" :id="'commentBox_' + postId">
+                    <td colspan="3" class="p-4 h-auto align-top" style="z-index:32 !important;" :id="'commentBox_' + postId">
                         <div class="w300 zi relative border border-gray-300 p-4 rounded-lg shadow-sm bg-layout-sun-100 dark:bg-layout-night-100">
                             <button
                                 @click.stop.prevent="closeComments()"
@@ -93,7 +93,7 @@ import he from "he";
 // import Shariff from 'shariff';
 
 export default {
-    name: "SocialButtons",
+    name: "Socialbuttons",
     components: {
         Link,
         Comments,
@@ -140,16 +140,41 @@ export default {
             return location.href + this.urlAdded;
         }
     },
-   async mounted() {
-        this.urlAdded = this.urlAdder(this.postId);
-//         this.imageRemove(this.postId);
-//     if (typeof window === 'undefined') return;
+    async mounted() {
+    this.urlAdded = this.urlAdder(this.postId);
 
-//   import('shariff').then(({ default: Shariff }) => {
-//     new Shariff(document.querySelector('.shariff'), {});
-//   });
-    },
-    methods: {
+    if (typeof window === "undefined") return;
+
+    const url = new URL(window.location.href);
+    const commentId = url.searchParams.get("commentid");
+
+    if (commentId && Number(commentId) === Number(this.postId)) {
+        this.showComments = this.postId;
+
+        await this.$nextTick();
+
+        const commentBox = document.getElementById(
+            "commentBox_" + this.postId
+        );
+
+        if (commentBox) {
+            commentBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            url.searchParams.delete("commentid");
+
+            window.history.replaceState(
+                {},
+                "",
+                url.toString()
+            );
+        }
+    }
+},
+
+methods: {
         CleanTable,
         closeAllModals() {
             this.showComments = null;
@@ -306,19 +331,19 @@ export default {
     color: #fff !important;
 }
         .zi{
-            z-index:1000;
+            z-index:32;
         }
         .zi2{
         overflow:auto;height:auto;
         }
         .bg-button {
-            background-color: rgb(37 99 235);
+            background-color:#d00 !important;
         }
         .bg-button-600{
-            background-color: rgb(37 99 235);
+            background-color:#a00 !important;
         }
         .dark .dark\:hover\:bg-button-700:hover{
-            background-color: rgb(17 59 235);
+            background-color:#F00 !important;
         }
         .pna .bg-button{
                 background-color:darkred;
@@ -328,7 +353,7 @@ export default {
             background-color: darkred;
         }
         .pna .dark .dark\:hover\:bg-button-700:hover{
-            background-color: #DD2222;
+            background-color: #DD2222 !important;
         }
 
         </style>

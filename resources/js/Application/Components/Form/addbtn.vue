@@ -16,7 +16,7 @@ import { CleanTable, CleanId, CheckTRights} from '@/helpers';
 import axios from 'axios'; // WICHTIG: axios importieren
 
 export default {
-    name: "EditButtons",
+    name: "Editbuttons",
     components: {
         PlusCircle,
         Link,
@@ -60,7 +60,7 @@ export default {
         await loadAllRights();
         this.rightsReady = true;
         this.rights.add = await CheckTRights("add", this.table);
-//         console.log('EditButtons mounted - ID:', this.id, 'Table:', this.table);
+//         console.log('Editbuttons mounted - ID:', this.id, 'Table:', this.table);
     },
     methods: {
         async loadAllUsers()

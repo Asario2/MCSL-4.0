@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <!-- Sync-To-All Button -->
+      <!-- Sync-To-All button -->
       <div>
         <div class="p-4 border-2 rounded-lg radius border-gray-300 w-full bg-gray-200 text-black dark:bg-gray-800 dark:text-white">
           <div class="flex justify-between items-center py-2 px-4">
@@ -221,7 +221,7 @@
             <td class="px-3 py-2"><ErrorSVG @click="Ignore_Field(col,selectedTable)" class="w-4 h-4 cursor-pointer"/></td>
           </tr>
 
-          <!-- Buttons (NUR EINMAL) -->
+          <!-- buttons (NUR EINMAL) -->
 
 
         </tbody>

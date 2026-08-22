@@ -61,7 +61,7 @@
     </label>
   </div>
 
-  <!-- Buttons rechts -->
+  <!-- buttons rechts -->
   <div class="flex items-center gap-2">
     <button
       type="button"

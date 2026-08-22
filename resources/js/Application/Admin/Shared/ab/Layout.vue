@@ -143,7 +143,7 @@
                                             >
                                             <span v-else><span class="flex items-center justify-start gap-1 w-full">
                                                 <IconDashboard class="w-4 h-4" color="#ffa500" />
-                                                <span>Zum Dashboard</span>
+                                                <span>Dashboard</span>
                                             </span></span>
                                         </dropdown-link>
 
@@ -329,13 +329,13 @@
                             </ResponsiveNavLink>
                             <!-- Authentication -->
                             <form @submit.prevent="logoutUser">
-                                <Button type="submit" @click="logoutUser()">
+                                <button type="submit" @click="logoutUser()" class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out">
                                     <span class="flex items-center gap-2">
                                     <IconLogout class="w-4 h-4" color="#ffa500" />
                                     <span>Abmelden</span>
                                 </span>
 
-                            </Button>
+                            </button>
                             </form>
                         </div>
                     </div>
@@ -389,10 +389,11 @@ import { Head } from "@inertiajs/vue3";
 
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
-import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import { toastBus } from '@/utils/toastBus';
 import Loader from "@/Application/Components/Loader.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
+import axios from "axios";
 import IconClose from "@/Application/Components/Icons/Close.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
 import { SD,GetProfileImagePath,CheckTRights } from "@/helpers";
@@ -415,7 +416,7 @@ export default {
         Head,
         BrandHeader,
         Toast,
-        ButtonChangeMode,
+        buttonChangeMode,
         Dropdown,
         IconStarThin,
         IconDashboard,
@@ -450,6 +451,8 @@ export default {
 
     mounted() {
         localStorage.theme = this.mode ?? "dark";
+        this.loadmcslpoints(); // initial
+
         // let shouldReload = localStorage.getItem('reload_dashboard');
         // if (shouldReload) {
         //     localStorage.removeItem('reload_dashboard');
@@ -461,6 +464,15 @@ export default {
         GetProfileImagePath,
         SD,
         CheckTRights,
+        async loadmcslpoints() {
+            try {
+                    const { data } = await axios.get('/api/mcslpoints/');
+                    this.mcslpoints = data; // automatisch reaktiv
+
+                } catch (err) {
+                    console.error('Fehler beim Laden der MCSL Points:', err);
+                }
+            },
         async getServer() {
             try {
                 const response = await axios.get('/api/GetLastAct');
@@ -493,7 +505,7 @@ export default {
         },
 
         logoutUser() {
-            alert("Logged out");
+
     router.post(this.route('logout'), {
         _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     });

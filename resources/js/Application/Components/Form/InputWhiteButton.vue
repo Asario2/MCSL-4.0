@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: "Contents_Form_InputWhiteButton",
+    name: "Contents_Form_InputWhitebutton",
 
     props: {
         type: {
