@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="links?.length > 3"
-        class="flex w-full justify-start md:justify-center gap-2 overflow-x-auto overflow-y-hidden ml-[10px] px-1"
+        class="flex w-full max-w-[98%] justify-start md:justify-center gap-2 overflow-x-auto overflow-y-hidden ml-[10px] px-1"
     >
         <a
             v-for="(link, i) in links"

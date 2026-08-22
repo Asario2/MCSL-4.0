@@ -1,9 +1,10 @@
 <template>
-  <Layout>
+<Layout>
     <MetaHeader :title="'Activity Log'" />
     <template #header>
             <breadcrumb :breadcrumbs="breadcrumbs" />
         </template>
+
                         <div class="flex justify-between items-center">
                     <search-filter
                         v-model="form.search"
@@ -13,67 +14,80 @@
                     />
                 </div>
     <div class="bg-layout-1 text-layout-1 p-6 rounded-lg shadow">
+<div class="flex justify-between items-center mb-4">
+    <h2 class="text-lg font-semibold">Activity Log</h2>
 
-      <h2 class="text-lg font-semibold mb-4">Activity Log</h2>
-      <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+    <select
+        v-model="form.dom"
+        name="dom"
+        class="rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-1.5 text-sm"
+    >
+        <option value="">Alle Domains</option>
+        <option value="ab">Asarios Blog</option>
+        <option value="mfx">Marble FX</option>
+        <option value="dag">Monika Dargies</option>
+        <option value="pna">Paul Nadler</option>
+    </select>
+</div>
+    <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
         <table class="min-w-full text-sm text-left">
-          <thead class="bg-layout-2 text-layout-1 text-xs uppercase">
+        <thead class="bg-layout-2 text-layout-1 text-xs uppercase">
             <tr>
-              <th class="px-4 py-3">ID</th>
-              <th class="px-4 py-3">Pub</th>
-              <th class="px-4 py-3">Domain</th>
-              <th class="px-4 py-3">Datum</th>
-              <th class="px-4 py-3">Action</th>
-              <th class="px-4 py-3">Tabelle</th>
-              <th class="px-0 py-0" width="10">ID</th>
-              <th class="px-4 py-3">URL</th>
-              <th class="px-4 py-3">User</th>
-              <th class="px-4 py-3">Info</th>
-              <th class="px-4 py-3">IP</th>
-              <th class="px-4 py-3">Session</th>
+            <th class="px-4 py-3">ID</th>
+            <th class="px-4 py-3">Pub</th>
+            <th class="px-4 py-3">Domain</th>
+            <th class="px-4 py-3">Datum</th>
+            <th class="px-4 py-3">Action</th>
+            <th class="px-4 py-3">Tabelle</th>
+            <th class="px-0 py-0" width="10">ID</th>
+            <th class="px-4 py-3">URL</th>
+            <th class="px-4 py-3">User</th>
+            <th class="px-4 py-3">Info</th>
+            <th class="px-4 py-3">IP</th>
+            <th class="px-4 py-3">Session</th>
             </tr>
-          </thead>
+        </thead>
 
-          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
             <tr
-              v-for="row in paginatedLogs"
-              :key="row.id"
-              class="transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800/60"
+            v-for="row in paginatedLogs"
+            :key="row.id"
+            class="transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800/60"
             >
-              <td class="px-4 py-3 font-bold" :style="`background-color: ${bgcol(row.session_id)}; color: #000`">
+            <td class="px-4 py-3 font-bold" :style="`background-color: ${bgcol(row.session_id)}; color: #000`">
                 {{ row.id }}
-              </td>
+            </td>
 
-              <td class="p-0 pl-3">
+            <td class="p-0 pl-3">
                 <span v-if="Number(checkedStatus?.[row.id]) === 1" style="font-size:24px;">✅</span>
                 <span v-else>[]</span>
-              </td>
-              <td class="pl-3"><img :src="'/images/_' + row.dom + '/web/alogo.png'" class='w-5 h-5'/></td>
-              <td class="p-0 pr-3">
+            </td>
+            <td class="pl-3"><img :src="'/images/_' + row.dom + '/web/alogo.png'" class='w-5 h-5'/></td>
+            <td class="p-0 pr-3">
                 {{ getDate(row.created_at) }}
-              </td>
-              <td class="px-4 py-3">{{ row.action }}</td>
-              <td class="px-4 py-3">{{ row.tablename }}</td>
-              <td class="px-0 py-0">{{ row.excl_id }}</td>
+            </td>
+            <td class="px-4 py-3">{{ row.action }}</td>
+            <td class="px-4 py-3">{{ row.tablename }}</td>
+            <td class="px-0 py-0">{{ row.excl_id }}</td>
 
-              <td class="px-4 py-3">
+            <td class="px-4 py-3">
                 <button
-                  v-if="row.URL"
-                  @click="openModal('URL', row.URL)"
-                  class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                v-if="row.URL"
+                @click="openModal('URL', row.URL)"
+                class="text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
                 <span v-if="CheckOL()">
-                  {{ row.URL.substr(22,35).replace("/admin/tables",'') }}
+                {{ row.URL.substr(22,35).replace("/admin/tables",'') }}
                 </span>
                 <span v-else>
                     {{ row.URL.substr(18,34).replace("/admin/tables",'') }}
                 </span>
                 </button>
                 <span v-else class="text-gray-400">–</span>
-              </td>
+            </td>
 
 
-              <td class="px-4 py-3">
+            <td class="px-4 py-3">
                 <div v-if="users?.[row?.users_id]">
                     <img
                     :src="GetProfileImagePath(users[row.users_id].img || '008.jpg')"
@@ -94,43 +108,43 @@
                 </td>
                 <!-- <img :src="GetProfileImagePath(users[row?.users_id]?.img)" class="h-8 w-8 rounded-full object-cover" :title="users[row?.users_id].name" :alt="users[row?.users_id].name"/></td> -->
 
-              <td class="px-4 py-3">
+            <td class="px-4 py-3">
                 <button
-                  v-if="row.info"
-                  @click="openModal('Info', row.info)"
-                  class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                v-if="row.info"
+                @click="openModal('Info', row.info)"
+                class="text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
-                  anzeigen
+                anzeigen
                 </button>
                 <span v-else class="text-gray-400">–</span>
-              </td>
+            </td>
 
-              <td class="px-4 py-3">{{ row.IP }}</td>
-              <td class="px-4 py-3 max-w-[200px] truncate"><img :src="'/images/icons/session.png'" class='w-8 h-8' :alt="'SessionID: ' + row.session_id" :title="'SessionID: ' + row.session_id"></td>
+            <td class="px-4 py-3">{{ row.IP }}</td>
+            <td class="px-4 py-3 max-w-[200px] truncate"><img :src="'/images/icons/session.png'" class='w-8 h-8' :alt="'SessionID: ' + row.session_id" :title="'SessionID: ' + row.session_id"></td>
             </tr>
-          </tbody>
+        </tbody>
         </table>
-      </div>
+    </div>
 
-      <!-- Modal -->
-      <div
+    <!-- Modal -->
+    <div
         v-if="showModal"
         class="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-      >
+    >
         <div class="bg-white dark:bg-gray-900 w-full max-w-3xl rounded-xl shadow-xl">
-          <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
             <h3 class="font-semibold">{{ modalTitle }}</h3>
             <button
-              @click="showModal = false"
-              class="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
+            @click="showModal = false"
+            class="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
             >
-              ✕
+            ✕
             </button>
-          </div>
-
-          <pre class="p-4 text-xs overflow-auto max-h-[70vh] bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100"  v-html="modalContent"></pre>
         </div>
-      </div>
+
+        <pre class="p-4 text-xs overflow-auto max-h-[70vh] bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100"  v-html="modalContent"></pre>
+        </div>
+    </div>
         <!-- <pagination class="dark:bg-black"
             :links="pagination.links"
             basePath="admin/ActLog"
@@ -168,12 +182,12 @@
         :disabled="currentPage >= totalPages"
         @click="currentPage++"
     >
-       Weiter →
+    Weiter →
     </button>
 
 </div>
     </div>
-  </Layout>
+</Layout>
 </template>
 
 <script>
@@ -188,10 +202,10 @@ import { nextTick } from 'vue';
 import { router } from '@inertiajs/vue3';
 
 export default {
-  name: "ActivityLogTable",
-  components: { Layout, Breadcrumb,MetaHeader,Pagination,SearchFilter },
+name: "ActivityLogTable",
+components: { Layout, Breadcrumb,MetaHeader,Pagination,SearchFilter },
 
-  props: {
+props: {
     users: [Object,Array],
     pag: [Object, Array],
     table_alt: String,
@@ -205,28 +219,29 @@ export default {
 
     },
     // tables:[String,Object,Array],
-  },
+},
 
-  data() {
+data() {
     return {
-      logs: [],
-      pagination: [],
-      currentPage: 1,
-      perPage: 20,
-      showModal: false,
-      modalTitle: '',
-      modalContent: '',
-      checkedStatus: {},
-      sortable: null,
-      settings: {},
-         form: {
-            search: ''
+    logs: [],
+    pagination: [],
+    currentPage: 1,
+    perPage: 20,
+    showModal: false,
+    modalTitle: '',
+    modalContent: '',
+    checkedStatus: {},
+    sortable: null,
+    settings: {},
+        form: {
+            search: '',
+            dom:'',
         },
 
     };
-  },
+},
 
-  computed: {
+computed: {
 
     pageNumbers() {
 
@@ -291,16 +306,23 @@ export default {
         return pages;
     },
     tableHead() {
-      return (this.logs[0]?.admin_table_id) ? "Tabelle" : "";
+    return (this.logs[0]?.admin_table_id) ? "Tabelle" : "";
     },
     filteredLogs() {
+    let rows = this.logs;
 
-        if (!this.form.search) {
-            return this.logs;
-        }
+    // Domainfilter
+    if (this.form.dom) {
+        rows = rows.filter(row =>
+            String(row.dom || '').toLowerCase() === this.form.dom.toLowerCase()
+        );
+    }
 
+    // Suche
+    if (this.form.search) {
         const s = this.form.search.toLowerCase();
-        return this.logs.filter(row => {
+
+        rows = rows.filter(row => {
 
             const id        = String(row.id || '').toLowerCase();
             const action    = String(row.action || '').toLowerCase();
@@ -311,10 +333,6 @@ export default {
             const session   = String(row.session_id || '').toLowerCase();
             const dom       = String(row.dom || '').toLowerCase();
             const username  = String(row.user_name || '').toLowerCase();
-
-            console.log('SEARCH:', s);
-            console.log('USERNAME:', row.user_name, '→', username);
-            console.log('MATCH USERNAME:', username.includes(s));
 
             return (
                 id.includes(s) ||
@@ -328,8 +346,10 @@ export default {
                 username.includes(s)
             );
         });
+    }
 
-    },
+    return rows;
+},
 
     paginatedLogs() {
 
@@ -356,11 +376,11 @@ async mounted() {
     await nextTick();
     await this.markChecked();
 },
-  beforeUnmount() {
+beforeUnmount() {
     if (typeof window !== "undefined") {
-      window.removeEventListener("beforeunload", this.markChecked);
+    window.removeEventListener("beforeunload", this.markChecked);
     }
-  },
+},
     watch: {
         // 'form.search': {
         //     handler(value) {
@@ -373,11 +393,14 @@ async mounted() {
         //     deep: true
         // }
 
-           'form.search'() {
+        'form.search'() {
         this.currentPage = 1;
-    }
     },
-  methods: {
+     'form.dom'() {
+        this.currentPage = 1;
+    },
+    },
+methods: {
 
     CleanTable, ucf, SD, rumLaut, GetProfileImagePath,CheckOL,
     bgcol(SID) {
@@ -411,7 +434,7 @@ async mounted() {
 
 
     reset() {
-      this.form.search = "";
+    this.form.search = "";
     },
 markChecked() {
 
@@ -437,29 +460,29 @@ markChecked() {
 },
 
     async fetchStatus() {
-      if (!this.logs || this.logs.length === 0) {
+    if (!this.logs || this.logs.length === 0) {
         return;
-      }
+    }
 
-      try {
+    try {
         const response = await axios.get("/api/chkcom_log/");
         this.checkedStatus = response.data.success || {};
-      } catch (error) {
+    } catch (error) {
         console.error("Fehler beim Batch-Status laden:", error);
-      }
+    }
     },
 
     openModal(title, content) {
-      this.modalTitle = title;
-      if (title === "Matches") {
+    this.modalTitle = title;
+    if (title === "Matches") {
         try { content = typeof content === "string" ? JSON.parse(content) : content } catch(e){}
         this.modalContent = JSON.stringify(content,null,2);
-      } else {
+    } else {
         this.modalContent = content;
-      }
-      this.showModal = true;
+    }
+    this.showModal = true;
     },
-  }
+}
 }
 </script>
 

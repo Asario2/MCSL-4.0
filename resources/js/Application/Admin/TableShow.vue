@@ -39,7 +39,7 @@
             <template #header>
                 <tr>
 
-                    <th class="np-dl-th-normal"  v-if="rows?.data?.length && !rows.data[0]?.isNAN && CleanTable()?.trim() !== ''">Drop</th>
+                    <th class="np-dl-th-normal"  v-if="rows?.data?.length && !rows.data[0]?.isNAN && CleanTable()?.trim() !== '' && rows.data[0]?.position">Drop</th>
 
 
                 <th class="np-dl-th-normal">ID</th>
@@ -47,24 +47,28 @@
                 <th v-if="cat_on_head" class="np-dl-ht-normal">{{ cat_on_head }}</th>
                 <th v-if="table_head" class="np-dl-ht-normal">{{ table_head }}</th>
                 <th class="np-dl-th-normal">{{ prename }}</th>
+                <th class="np-dl-th-normal" v-if="hasUserColumn && table != 'comments'">Autor</th>
                 <th class="np-dl-th-normal">{{ predesc }}</th>
+
                 <th v-if="tpart" class="np-dl-th-normal">{{ tpart }}</th>
                 <th v-if="table == 'ratings'">{{ imagedesc }}</th>
-                <th v-if="aftsetting" class="np-dl-ht-normal">{{ aftsetting }}</th>
+
+                <!-- <th v-if="aftsetting" class="np-dl-ht-normal">{{ aftsetting }}</th> -->
                 <th class="np-dl-th-normal" v-if="table === 'comments'">Check</th>
-                <th class="np-dl-th-normal" v-if="table === 'images'">Beschreibung</th>
+
+                <!-- <th class="np-dl-th-normal" v-if="table === 'images'">Beschreibung</th> -->
                 <th class="np-dl-th-normal" v-if="hasCreated">Datum</th>
-                <th class="np-dl-th-normal lg:hidden">Aktionen</th>
+                <th class="np-dl-th-normal">Aktionen</th>
                 </tr>
             </template>
 
             <!-- Datenzeilen -->
             <template v-slot:datarow="data">
-                <td class="np-dl-td-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>{{ getMixId(data.datarow) }}</td>
+                <td class="np-dl-td-normal p-2" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>{{ getMixId(data.datarow) }}</td>
 
                 <!-- Pub -->
-                <td class="np-dl-td-normal" :draggable="false" v-if="data.datarow.pub !== 'undefined'">
-                <PublishButton
+                <td class="np-dl-td-normal p-2" :draggable="false" v-if="data.datarow.pub !== 'undefined'">
+                <Publishbutton
                     :table="CleanTable()"
                     :id="data.datarow.id"
                    v-model="data.datarow.pub"
@@ -72,10 +76,10 @@
                 </td>
 
                 <!-- Kategorie -->
-                <td v-if="data.datarow.image_categories" class="np-dl-td-normal"  :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-if="data.datarow.image_categories" class="np-dl-td-normal p-2"  :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <img :src="'/images/_ab/images_categories/sm/' + data.datarow.image_categories + '.jpg'" :title="ucf(data.datarow.image_categories)" :alt="ucf(data.datarow.image_categories)"/>
                 </td>
-                <td v-if="data.datarow.blog_categories" class="np-dl-td-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-if="data.datarow.blog_categories" class="np-dl-td-normal p-2" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <span
                     class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900
                         dark:bg-primary-night-500 dark:text-primary-night-900
@@ -91,8 +95,8 @@
                 </td>
 
                 <!-- comments Tabelle -->
-                <td v-if="table == 'comments'" class="np-dl-td-normal"  :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
-                <CreatedAt :post_id="data.datarow.post_id" :table="data.datarow.admin_table">
+                <td v-if="table == 'comments'" class="np-dl-td-normal p-2"  :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <!-- <CreatedAt :post_id="data.datarow.post_id" :table="data.datarow.admin_table"> -->
                     <span
                     class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900
                             dark:bg-primary-night-500 dark:text-primary-night-900
@@ -101,11 +105,11 @@
                     {{ ucf(data.datarow.admin_table) }}
 
                     </span>
-                </CreatedAt>
+                <!-- </CreatedAt> -->
                 </td>
 
                 <!-- Admin Table -->
-                <td v-else-if="table != 'comments' && table_head" class="np-dl-td-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
+                <td v-else-if="table != 'comments' && table_head" class="np-dl-td-normal p-2" :draggable="false" @dragstart.prevent @dragstart.prevent.stop>
                 <span
                     class="text-sm min-w-fit min-h-fit bg-primary-sun-500 text-primary-sun-900
                         dark:bg-primary-night-500 dark:text-primary-night-900
@@ -122,7 +126,7 @@
 
                 <!-- User bei Kommentaren -->
                 <td
-                class="np-dl-td-normal" :draggable="false" @dragstart.prevent @dragstart.prevent.stop
+                class="np-dl-td-normal p-2" :draggable="false" @dragstart.prevent @dragstart.prevent.stop
                 v-if="table != 'people' && (users[data.datarow.users_id]?.img || data.datarow.nick || data.datarow.users)"
                 >
                 <div v-if="users[data.datarow.users_id]?.img && users[data.datarow.users_id].img !== '008.jpg'">
@@ -170,7 +174,7 @@
                 </td>
 
                 <!-- Check -->
-                <td class="np-dl-td-normal" v-if="table === 'comments'">
+                <td class="np-dl-td-normal p-2" v-if="table === 'comments'">
                 <span
                     v-if="checkedStatus[String(data.datarow.id)] == 1"
                     style="font-size:24px;">
@@ -199,7 +203,7 @@ import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import ListContainer from "@/Application/Components/Lists/ListContainer.vue";
 
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-import PublishButton from "@/Application/Components/Form/PublishButton.vue";
+import Publishbutton from "@/Application/Components/Form/PublishButton.vue";
 import IconStar from "@/Application/Components/Icons/IconStar.vue";
 
 import {
@@ -241,7 +245,7 @@ export default defineComponent({
 
         ListContainer,
 
-        PublishButton,
+        Publishbutton,
 
         IconStar,
     },
@@ -401,20 +405,27 @@ export default defineComponent({
     },
 
     computed: {
+            hasUserColumn() {
+                const rows = Array.isArray(this.localRows)
+                    ? this.localRows
+                    : [];
 
-        tpart() {
+                return this.table !== 'people' &&
+                    rows.some(row =>
+                        row?.users_id ||
+                        row?.nick ||
+                        row?.users
+                    );
+            },
 
-            if (this.thirdparty) {
+            tpart() {
+                if (this.thirdparty) {
+                    return this.thirdparty[this.table];
+                }
 
-                return this.thirdparty[
-                    this.table
-                ];
-            }
-
-            return false;
-        },
-
-        prename() {
+                return false;
+            },
+            prename() {
 
             return this.namealias[
                 this.table
@@ -1020,10 +1031,12 @@ export default defineComponent({
 });
 </script>
     <style>
-    td {
-        white-space: normal;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+
+td {
+
+        padding:4px !important;
+        margin:3px !important;
+
     }
     .wwr {
         word-wrap: break-word;
@@ -1038,8 +1051,10 @@ export default defineComponent({
         padding: 0px 3px;
         color: #fff;
     }
-    .np-dl-th-normal {
-        margin-left: 8px;
+    TD.np-dl-td-normal div span {
+       padding: 8px !important;
+       padding-right: 12px !important;
     }
+
     </style>
 

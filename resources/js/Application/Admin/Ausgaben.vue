@@ -78,7 +78,7 @@ import PhotoSwipeLightbox from 'photoswipe/dist/photoswipe-lightbox.esm.js';
 import 'photoswipe/dist/photoswipe.css'
 import {stripTags} from "@/helpers";
 // import ZoomImage from "@/Application/Components/Content/ZoomImage.vue";
-// import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
+// import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
 // import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import newbtn from "@/Application/Components/Form/newbtn.vue";

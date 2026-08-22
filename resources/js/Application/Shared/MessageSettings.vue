@@ -28,7 +28,7 @@
                         name="newsletter"
                         :options="[
                             { label: 'Nein', value: '0' },
-                            { label: 'Per Email', value: '      ' },
+                            { label: 'Per Email', value: 'to_mail' },
                             { label: 'Per Privater Nachricht', value: 'to_pm' },
                             { label: 'Per Email & Private Nachrichten', value: 'to_pm_and_mail' },
                         ]"
@@ -112,7 +112,7 @@ export default {
     methods: {
         updateConfig()
         {
-             this.form.put(route("admin.usconf.save"), {
+            this.form.put("/admin/UsConf/save/", {
                 errorBag: "updatePassword",
                 preserveScroll: true,
 

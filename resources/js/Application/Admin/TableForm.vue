@@ -24,7 +24,7 @@
                         <!-- Linker Teil: Subtitle -->
                         <InputSubtitle>Daten</InputSubtitle>
 
-                        <!-- Rechter Teil: Add Button -->
+                        <!-- Rechter Teil: Add button -->
                         <Addbtn :table="CleanTable_alt()" class="mt-5"/>
                     </div>
                     <template style="display: inline-block">
@@ -494,7 +494,8 @@
                     </input-container>
 
                     <input-container v-else-if="field.type === 'artselect'">
-                        <ArtSelect :id="field.id" :table="tablex" :form="field"
+
+                    <ArtSelect :recordId="field.id" :table="CleanTable()" :form="field"
                             @update:category="form.categorie_id = $event"
                             @update:medium="form.type_id = $event" />
                     </input-container>
@@ -1698,7 +1699,7 @@
 
             emptyChecker(){
                 if(this.formData.length < 1) {
-                    alert("empty");
+                    // alert("empty");
                 }
             },
 

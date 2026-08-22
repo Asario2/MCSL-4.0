@@ -251,7 +251,7 @@ export default {
   },
   data() {
     return {
-        isform: {},
+        isForm: {},
         inputBirthday: this.initialForm?.birthday
       ? dayjs(this.initialForm.birthday).format('DD.MM.YYYY')
       : '',
