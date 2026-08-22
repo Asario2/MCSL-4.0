@@ -25,6 +25,7 @@ vendor/
 **/tmp/**
 *.bat
 *.cmd
+tables.sql
 repo-backup*
 First_Commmit_dag_No_User.sql
 First_Commmit_mfx_No_User.sql
@@ -114,3 +115,7 @@ node_modules/
 !node_modules/@vue/shared/dist/shared.cjs.js
 ri.vue
 public/images/_pna/graf_logo_prev.jpg
+database/dumps/First_Commmit_ab_No_User.sql
+database/dumps/asd/First_Commmit_ab_No_User.sql
+database/dumps/First_Commmit_ab_No_User.sql
+public/images/web/arrow_remote.png
