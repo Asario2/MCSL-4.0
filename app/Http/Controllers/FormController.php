@@ -433,6 +433,9 @@ public static function getOptions($name)
             case "categorie_id":
                 return "artselect";
             break;
+            case "category_id":
+                return "artselect";
+            break;
             case "content":
                 if($table == "comments")
                 {
@@ -882,11 +885,11 @@ public static function getOptions($name)
 
             <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="uploadButton_'.$id.'" class="uploadButton"
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="uploadbutton_'.$id.'" class="uploadbutton"
     data-id="'.$id.'"
     data-action="'.$action.'"
     data-ad="'.@$ad.'">Close</button>
-                <button type="button" class="btn btn-primary" id="submitButton_'.$id.'" onClick="submitForm('.$id.')">Submit</button>
+                <button type="button" class="btn btn-primary" id="submitbutton_'.$id.'" onClick="submitForm('.$id.')">Submit</button>
             </div>
             </div>
         </div>
@@ -908,7 +911,7 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
          $j("#uploadModal_'.$id.'").modal("hide");  // Modal schliessen
     });
 });
-//         $k(document).on("click", ".uploadButton", function () {
+//         $k(document).on("click", ".uploadbutton", function () {
 //     alert("clicked");
 //     const id = $k(this).data("id");
 //     const action = $k(this).data("action");
@@ -1378,7 +1381,7 @@ var $j = jQuery.noConflict(); // Weist jQuery einer anderen Variable zu, um Konf
         <i class='fa-regular fa-calendar datetime-icon2'></i>
     </div>
         <br />
-    <!-- Unendlich Button -->
+    <!-- Unendlich button -->
     <input type='button' class='btn btn-default btn-light2 btn-sm' id='unlimitedBtn".$id."' style='display: ".$disp2."; margin-top: 10px;' value='Unendlich'>
 </div>
         <script>

@@ -117,7 +117,15 @@ class CommentController extends Controller
         $table_alt = $table;
 
             $now = now();
-        $adtabid = DB::table("admin_table")->where("name",$table)->pluck("id")->first();
+        $adtabid = DB::table('admin_table')
+    ->whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($table))])
+    ->value('id');
+
+\Log::debug('COMMENT ADMIN TABLE', [
+    'request_table' => $request->input('table'),
+    'table'         => $table,
+    'admin_table_id'=> $adtabid,
+]);
         $comment = new Comment();
         $comment->content = $request->input('comment2') ?? $request->comment;
         $comment->content = strip_tags($comment->content, '<br>');
@@ -282,6 +290,12 @@ public function sendmc(Request $request)
         {
             $table = "blogs";
         }
+        if($table == "grafitti" || $table == "portraits")
+        {
+            $xtable = $table;
+            $table = "images";
+        }
+
         $user = DB::table("users")->where("id",Auth()->id())->select("email",'name')->first();
         $nick_exists = DB::table("users")->where('name',$request->name)->exists();
         if(!$user && $nick_exists)
@@ -291,7 +305,15 @@ public function sendmc(Request $request)
                 'message' => 'Nickname bereits vorhanden, bitte Passwort ausfüllen oder einloggen',
             ]);
         }
-        $adtabid = DB::table("admin_table")->where("name",$table)->pluck("id")->first();
+        $adtabid = DB::table('admin_table')
+    ->whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($table))])
+    ->value('id');
+
+\Log::debug('COMMENT ADMIN TABLE', [
+    'request_table' => $request->input('table'),
+    'table'         => $table,
+    'admin_table_id'=> $adtabid,
+]);
         // Kommentar erstellen und in der Datenbank speichern
         $comment = new Comment();
         $comment->content = $request->input('comment2') ?? $request->comment;
@@ -303,7 +325,7 @@ public function sendmc(Request $request)
         $comment->created_at = $now;
         $comment->updated_at = $now;
         $comment->email = $user->email ?? $request->email;
-        $comment->admin_table_id = DB::table("admin_table")->where("name",$table)->value("id");
+        // $comment->admin_table_id = DB::table("admin_table")->where("name",$table)->value("id");
         $comment->post_id = $request->post_id;
         $comment->save();
         $nick = $user->name ?? $request->name;
@@ -316,7 +338,7 @@ public function sendmc(Request $request)
         Mail::to('parie@gmx.de')->send(
             (new CommentMail(
                 '[MCSL] - Neuer Kommentar auf ' . request()->getHost(),
-                'https://' . request()->getHost() . '/' . $table . '/?search=' . $now,
+                'https://' . request()->getHost() . '/admin/tables/comments/show?search=' . $now,
                 $nick,
                 $content
             ))->from('no-reply@marblefx.net', 'MCSL Kommentare')
@@ -603,6 +625,10 @@ return response()->json([
                 {
                     $table = "images";
                 }
+                if($table == "grafitti" || $table == "portraits")
+                {
+                    $table = "images";
+                }
                 $table_alt = $table;
                 // $sa = Settings::$searchable;
                 // \Log::info($parts);
@@ -621,7 +647,15 @@ return response()->json([
                 //     }
 
                 // }
-        $adtabid = DB::table("admin_table")->where("name",$table)->pluck("id")->first();
+        $adtabid = DB::table('admin_table')
+    ->whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($table))])
+    ->value('id');
+
+\Log::debug('COMMENT ADMIN TABLE', [
+    'request_table' => $request->input('table'),
+    'table'         => $table,
+    'admin_table_id'=> $adtabid,
+]);
         DB::enableQueryLog();
             $comments = Comment::where('post_id', $postId)
             ->leftJoin('users', 'comments.users_id', '=', 'users.id')
@@ -637,7 +671,10 @@ return response()->json([
     }
     public function GetTid($tab)
     {
-        return DB::table("admin_table")->where("name",strtolower($tab))->pluck("id")->first();
+    $id = DB::table("admin_table")->where("name",($tab))->pluck("id")->first();
+    \Log::info("tab: ".$tab." id: ".$id);
+
+        return $id;
     }
     public static function ComForm($table,$comments,$post)
     {
@@ -862,7 +899,8 @@ public function com_loadMore(Request $request,$tid='')
         // $post = DB::table('comments')->where("id",$id)->first();
         // $post->delete();
         $post = Comment::find($id);
-
+        // @$formData[Settings::$headline[$table]]
+        ActLog($request,"DeleteTable","test",$id,$table);
         if ($post) {
             $post->delete();
         }
@@ -890,7 +928,7 @@ public function com_loadMore(Request $request,$tid='')
         ]) . "#cmtbtn-$postid");
 
     }
-    public function destroy_comments($comments_id)
+    public function destroy_comments(Request $request,$comments_id)
     {
         if(!CheckRights(Auth::id(),"comments","delete"))
         {
@@ -899,7 +937,8 @@ public function com_loadMore(Request $request,$tid='')
 
         // $post = DB::table('comments')->where("id",$id)->first();
         // $post->delete();
-        $post = Comment::find($comments_id);
+            $post = Comment::find($comments_id);
+        ActLog($request,"DeleteTable",$post->content,$post->id,"comments");
 
         if ($post) {
             $post->delete();

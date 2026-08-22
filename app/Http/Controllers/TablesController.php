@@ -776,7 +776,7 @@ public function ShowTable(Request $request, $table_alt = null)
         'rows' => $pagination,
         "pag"=>$pagination,         // kompletter Paginator inkl. Links
         'datarows' => $tables->items(), // nur die Items
-        'table' => ucf($table),
+        'table' => ($table),
         'table_alt' => $table,
         'ItemName' => 'Beiträge',
         'itemName_des' => 'Beitrags',
@@ -1443,7 +1443,7 @@ public function ShowTable(Request $request, $table_alt = null)
             ],
             'datarows' => $result,
             'rows' => $tables,
-            'table' => ucf($table),
+            'table' => ($table),
             'table_alt' => $table,
             'ItemName' => 'Beiträge',
             'itemName_des' => 'Beitrags',
@@ -1455,19 +1455,41 @@ public function ShowTable(Request $request, $table_alt = null)
         ]);
     }
 
-    public function GetDBTables()
-    {
-        return DB::table('admin_table')
-            ->whereNotNull('db_name')
-            ->where('db_name', '!=', '')
-            ->select('id','name','db_name','db_icon','db_new','db_desc','db_link','checkzrights')
-            ->orderBy('position')
-            ->get()
-            ->filter(function ($item) {
-                return CheckRights(Auth::id(), $item->name, 'view');
-            })
-            ->values();   // <- wichtig!
-    }
+public function GetDBTables()
+{
+    return DB::table('admin_table')
+        ->whereNotNull('db_name')
+        ->where('db_name', '!=', '')
+        ->select(
+            'id',
+            'position',
+            'name',
+            'db_name',
+            'db_icon',
+            'db_new',
+            'db_desc',
+            'db_link',
+            'checkzrights'
+        )
+        ->orderBy('position', 'ASC')
+        ->get()
+        ->filter(function ($item) {
+            return CheckRights(Auth::id(), $item->name, 'view_table');
+        })
+        ->values();
+}
+public function GetAdminTablesForRights()
+{
+    return response()->json(
+        DB::table('admin_table')
+            ->orderBy('position', 'ASC')
+            ->get([
+                'id',
+                'position',
+                'name',
+            ])
+    );
+}
     public function getHeadlines($table){
         if(!Schema::hasColumn($table,"position"))
         {
@@ -3598,7 +3620,7 @@ return response()->json($user);
             header("Location: /no-rights");
             exit;
         }
-        $tables = AdminTable::orderBy("position","ASC")->select('name')->get(); // oder dein gewünschtes Sortierfeld
+        $tables = AdminTable::orderBy("position","ASC")->select('name','position')->get(); // oder dein gewünschtes Sortierfeld
 
         // Beispiel: Aktuell eingeloggter Nutzer mit Rolle z. B. Moderator-ID = 1
         $urid  = $request->urid ? $request->urid : "1";
@@ -3627,18 +3649,37 @@ return response()->json($user);
             "roles"=>$this->GetAdmins($urid),
         ]);
     }
-    public function GetURights(Request $request)
-    {
-        $urid  = $_GET['urid'];
-        // \Log::info($request->all());
-        $userRights = UsersRight::find($urid);
-        //\Log::info("UR: ".$userRights);
-        $data = [
-            'rights' => $userRights,
-            'labels' => Settings::$exl   // ⬅️ NEU!
-        ];
-        return response()->json($data);
+   public function GetURights(Request $request)
+{
+    $urid = $request->input('urid');
+
+    if (!$urid) {
+        return response()->json([
+            'rights' => []
+        ]);
     }
+
+    $rights = DB::table('users_rights')
+        ->where('id', $urid)
+        ->first();
+
+    if (!$rights) {
+        return response()->json([
+            'rights' => []
+        ]);
+    }
+
+    return response()->json([
+        'rights' => [
+            'view_table'    => (string) ($rights->view_table ?? ''),
+            'add_table'     => (string) ($rights->add_table ?? ''),
+            'edit_table'    => (string) ($rights->edit_table ?? ''),
+            'publish_table' => (string) ($rights->publish_table ?? ''),
+            'date_table'    => (string) ($rights->date_table ?? ''),
+            'delete_table'  => (string) ($rights->delete_table ?? ''),
+        ]
+    ]);
+}
     public function getRoles(Request $request)
     {
         $urid  = $request->urid ? $request->urid : "0";
@@ -3659,12 +3700,10 @@ return response()->json($user);
 
 
 
-    public function SaveURights(Request $request)
-    {
+  public function SaveURights(Request $request)
+{
+    $urid = $request->input('urid');
 
-        $urid = $request->input('urid');
-
-    // Nur die *_table Felder extrahieren
     $fields = [
         'view_table',
         'add_table',
@@ -3673,33 +3712,47 @@ return response()->json($user);
         'date_table',
         'delete_table',
     ];
+
     foreach ($request->input() as $key => $value) {
         if (str_starts_with($key, 'xkis_')) {
             $fields[] = $key;
         }
     }
-    // Hole das passende Model anhand der ID
+
     $userRight = UsersRight::find($urid);
 
     if (!$userRight) {
-        return response()->json(['type' => 'error','message' => 'Benutzerrechte nicht gefunden.'], 404);
+        return response()->json([
+            'type' => 'error',
+            'message' => 'Benutzerrechte nicht gefunden.'
+        ], 404);
     }
 
-    // Werte setzen
     foreach ($fields as $field) {
         if ($request->has($field)) {
-            $userRight->$field = $request->input($field);
-        }
-        else
-        {
-            // \Log::info($field);
+            $userRight->$field = (string) $request->input($field);
         }
     }
 
     $userRight->save();
 
-    return response()->json(['type' => 'success','message' => 'Rechte erfolgreich gespeichert.']);
-    }
+    // DIREKT AUS DER DB NACHLESEN
+    $check = DB::table('users_rights')
+        ->where('id', $urid)
+        ->first();
+
+    \Log::debug('USER RIGHTS SAVE CHECK', [
+        'urid' => $urid,
+        'edit_table_sent' => $request->input('edit_table'),
+        'edit_table_db' => $check->edit_table ?? null,
+    ]);
+
+    return response()->json([
+        'type' => 'success',
+        'message' => 'Rechte erfolgreich gespeichert.',
+        'edit_table' => $check->edit_table ?? null,
+    ]);
+}
     public function GetAdmins($urid)
     {
         $res = DB::table("users_rights")->select("id","name","position")->orderBy("position","ASC")->get();

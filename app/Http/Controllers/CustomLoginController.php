@@ -58,35 +58,79 @@ public function resetPassword(Request $request)
     /**
      * Silent Login für AJAX / API
      */
-    public function loginSilent(Request $request)
-    {
-//         \Log::info('LOGIN-SILENT HIT');
+//     public function loginSilent(Request $request)
+//     {
+// //         \Log::info('LOGIN-SILENT HIT');
 
-        if(empty($request->password)) {
-            return response()->json([
-                'type'=>'info',
-                'message' => 'Kein Login möglich',
-                'user_id' => 7,
-                "full_name"=>"Gast",
-                "profile_photo_url"=>"008.jpg"
-            ]);
-        }
+//         if(empty($request->password)) {
+//             return response()->json([
+//                 'type'=>'info',
+//                 'message' => 'Kein Login möglich',
+//                 'user_id' => 7,
+//                 "full_name"=>"Gast",
+//                 "profile_photo_url"=>"008.jpg"
+//             ]);
+//         }
 
-        if (!$this->login($request,true)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
-        }
-
-        if(Auth::id() && Auth::id() != 7) {
-            return response()->json([
-                'type'=>'success',
-                'message' => 'Sie wurden erfolgreich eingeloggt',
-                'user_id' => Auth::id(),
-                "full_name"=>Auth::user()->first_name ?? "Gast",
-                "profile_photo_url"=>Auth::user()->profile_photo_path ?? "008.jpg",
-            ]);
-        }
+//         if (!$this->login($request,true)) {
+//             return response()->json(['message' => 'Invalid credentials'], 401);
+//         }
+//         if(Auth::id() && Auth::id() != 7) {
+//             return response()->json([
+//                 'type'=>'success',
+//                 'message' => 'Sie wurden erfolgreich eingeloggt',
+//                 'user_id' => Auth::id(),
+//                 "full_name"=>Auth::user()->first_name ?? "Gast",
+//                 "profile_photo_url"=>Auth::user()->profile_photo_path ?? "008.jpg",
+//             ]);
+//         }
+//     }
+    /**
+     * Silent Login für AJAX / API
+     */
+public function loginSilent(Request $request)
+{
+    if (empty($request->password)) {
+        return response()->json([
+            'type' => 'info',
+            'message' => 'Kein Login möglich',
+            'user_id' => 7,
+            'full_name' => 'Gast',
+            'profile_photo_url' => '008.jpg',
+        ]);
     }
 
+    if (!$this->login($request, true)) {
+        return response()->json([
+            'message' => 'Invalid credentials'
+        ], 401);
+    }
+
+    if (Auth::id() && Auth::id() != 7) {
+
+        $url = $request->input('current_url', url('/'));
+
+        $separator = str_contains($url, '?') ? '&' : '?';
+
+        $url .= $separator . 'commentid=' .
+            $request->input('current_id');
+
+        return response()->json([
+            'type' => 'success',
+            'message' => 'Sie wurden erfolgreich eingeloggt',
+            'user_id' => Auth::id(),
+            'full_name' => Auth::user()->first_name ?? 'Gast',
+            'profile_photo_url' =>
+                Auth::user()->profile_photo_path ?? '008.jpg',
+            'reload_url' => $url,
+        ]);
+    }
+
+    return response()->json([
+        'type' => 'error',
+        'message' => 'Kein Login möglich',
+    ], 401);
+}
     /**
      * Login Logik (normal und silent)
      */
@@ -144,10 +188,6 @@ public function resetPassword(Request $request)
         if ($redirect && !$silent) {
             session()->forget('url.intended');
             return Inertia::location($redirect . '?re=1');
-        }
-
-        if($silent) {
-            return true;
         }
 
         return app(LoginResponse::class);

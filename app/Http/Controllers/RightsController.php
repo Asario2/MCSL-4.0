@@ -115,14 +115,10 @@ public function GetRights($table, $right)
         return response()->json(0);
     }
 
-    // Recht normalisieren:
-    // "view"      -> "view_table"
-    // "view_table" -> "view_table"
     $rightColumn = str_ends_with($right, '_table')
         ? $right
         : $right . '_table';
 
-    // Prüfen, ob die gewünschte Rechte-Spalte überhaupt existiert
     if (!Schema::hasColumn('users_rights', $rightColumn)) {
         return response()->json(0);
     }
@@ -144,7 +140,6 @@ public function GetRights($table, $right)
         return response()->json(0);
     }
 
-    // Position der Tabelle aus admin_table
     $pos = DB::table('admin_table')
         ->where('name', $table)
         ->value('position');
@@ -153,8 +148,10 @@ public function GetRights($table, $right)
         return response()->json(0);
     }
 
-    // Bit an der Position auslesen
-    $rf = substr((string) $rightfe->posi, (int) $pos, 1);
+    // DB position = 1-basiert
+    $index = (int) $pos - 1;
+
+    $rf = substr((string) $rightfe->posi, $index, 1);
 
     return response()->json($rf === '1' ? 1 : 0);
 }
@@ -166,20 +163,16 @@ public function allTableRights($right)
         return response()->json([]);
     }
 
-    // "view"     -> "view_table"
-    // "view_table" -> "view_table"
     $rightColumn = str_ends_with($right, '_table')
         ? $right
         : $right . '_table';
 
-    // Rechte-Spalte prüfen
     if (!Schema::hasColumn('users_rights', $rightColumn)) {
         return response()->json([]);
     }
 
     $userId = Auth::id();
 
-    // Benutzer-Rechte holen
     $rightfe = DB::table('users')
         ->where('users.id', $userId)
         ->leftJoin(
@@ -188,7 +181,11 @@ public function allTableRights($right)
             '=',
             'users_rights.id'
         )
-        ->select('users_rights.' . $rightColumn . ' as posi')
+        ->select(
+            'users.users_rights_id',
+            'users_rights.id as rights_id',
+            'users_rights.' . $rightColumn . ' as posi'
+        )
         ->first();
 
     if (!$rightfe || $rightfe->posi === null) {
@@ -197,10 +194,10 @@ public function allTableRights($right)
 
     $bin = (string) $rightfe->posi;
 
-    // Tabellen + Position holen
     $tables = DB::table('admin_table')
-        ->orderBy('name', 'ASC')
+        ->orderBy('position', 'ASC')
         ->get([
+            'id',
             'name',
             'position'
         ]);
@@ -209,20 +206,27 @@ public function allTableRights($right)
 
     foreach ($tables as $table) {
 
-        if ($table->position === null) {
+        $position = (int) $table->position;
+
+        if ($position < 1) {
             $rights[$table->name] = 0;
             continue;
         }
 
-        $bit = substr(
-            $bin,
-            (int) $table->position,
-            1
-        );
+        $index = $position - 1;
+
+        $bit = substr($bin, $index, 1);
 
         $rights[$table->name] = ($bit === '1') ? 1 : 0;
     }
-
+    \Log::debug('ALL TABLE RIGHTS', [
+        'user_id'       => $userId,
+        'users_rights_id' => $rightfe->users_rights_id,
+        'rights_id'     => $rightfe->rights_id,
+        'column'        => $rightColumn,
+        'binary'        => $bin,
+        'images'        => $rights['images'] ?? null,
+    ]);
     return response()->json($rights);
 }
 // public function AddFunction(Request $request)
