@@ -121,11 +121,11 @@ class CommentController extends Controller
     ->whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($table))])
     ->value('id');
 
-\Log::debug('COMMENT ADMIN TABLE', [
-    'request_table' => $request->input('table'),
-    'table'         => $table,
-    'admin_table_id'=> $adtabid,
-]);
+// \Log::debug('COMMENT ADMIN TABLE', [
+//     'request_table' => $request->input('table'),
+//     'table'         => $table,
+//     'admin_table_id'=> $adtabid,
+// ]);
         $comment = new Comment();
         $comment->content = $request->input('comment2') ?? $request->comment;
         $comment->content = strip_tags($comment->content, '<br>');
@@ -309,11 +309,11 @@ public function sendmc(Request $request)
     ->whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($table))])
     ->value('id');
 
-\Log::debug('COMMENT ADMIN TABLE', [
-    'request_table' => $request->input('table'),
-    'table'         => $table,
-    'admin_table_id'=> $adtabid,
-]);
+// \Log::debug('COMMENT ADMIN TABLE', [
+//     'request_table' => $request->input('table'),
+//     'table'         => $table,
+//     'admin_table_id'=> $adtabid,
+// ]);
         // Kommentar erstellen und in der Datenbank speichern
         $comment = new Comment();
         $comment->content = $request->input('comment2') ?? $request->comment;
@@ -651,11 +651,11 @@ return response()->json([
     ->whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($table))])
     ->value('id');
 
-\Log::debug('COMMENT ADMIN TABLE', [
-    'request_table' => $request->input('table'),
-    'table'         => $table,
-    'admin_table_id'=> $adtabid,
-]);
+// \Log::debug('COMMENT ADMIN TABLE', [
+//     'request_table' => $request->input('table'),
+//     'table'         => $table,
+//     'admin_table_id'=> $adtabid,
+// ]);
         DB::enableQueryLog();
             $comments = Comment::where('post_id', $postId)
             ->leftJoin('users', 'comments.users_id', '=', 'users.id')
@@ -672,7 +672,7 @@ return response()->json([
     public function GetTid($tab)
     {
     $id = DB::table("admin_table")->where("name",($tab))->pluck("id")->first();
-    \Log::info("tab: ".$tab." id: ".$id);
+    // \Log::info("tab: ".$tab." id: ".$id);
 
         return $id;
     }

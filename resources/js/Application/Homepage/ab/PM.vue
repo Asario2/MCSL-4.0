@@ -388,7 +388,7 @@ export default {
   },
 
   mounted() {
-    console.log("TAB:", this.tab);
+    // console.log("TAB:", this.tab);
         this.localInbox = [...this.inboxArr.data];
 
     this.UID = window?.Laravel?.userId;

@@ -81,6 +81,7 @@
 import { nextTick } from "vue";
 import axios from "axios";
 import ShareButtons from "@/Application/Components/Social/ShareButtons.vue";
+import { router } from '@inertiajs/vue3';
 import { Link } from "@inertiajs/vue3";
 import Comments from "@/Application/Components/Social/comments.vue";
 import RatingInput from "@/Application/Components/Social/RatingInput.vue";
