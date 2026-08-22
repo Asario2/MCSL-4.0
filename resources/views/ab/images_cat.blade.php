@@ -85,10 +85,10 @@
                 }
             });
 
-            const openImageButtons = document.getElementsByClassName('openImage');
+            const openImagebuttons = document.getElementsByClassName('openImage');
 
-            // Füge Event Listener zu jedem Button hinzu
-            for (let button of openImageButtons) {
+            // Füge Event Listener zu jedem button hinzu
+            for (let button of openImagebuttons) {
                 button.addEventListener('click', () => {
                     const images = document.querySelectorAll('.gallery div a.psl');
 

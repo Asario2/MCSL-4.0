@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!button) {
 
         console.error(
-            'ScrollTop Button nicht gefunden'
+            'ScrollTop button nicht gefunden'
         );
 
         return;
@@ -456,11 +456,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Toggle Button Visibility
+    | Toggle button Visibility
     |--------------------------------------------------------------------------
     */
 
-    function toggleButton() {
+    function togglebutton() {
 
         if (window.scrollY > 200) {
 
@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', function () {
     |--------------------------------------------------------------------------
     */
 
-    toggleButton();
+    togglebutton();
 
     /*
     |--------------------------------------------------------------------------
@@ -500,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener(
         'scroll',
-        toggleButton
+        togglebutton
     );
 
     /*

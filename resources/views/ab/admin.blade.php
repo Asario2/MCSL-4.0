@@ -1,6 +1,6 @@
 @php
     if (!CheckZrights('AdminPanel') && !Auth::check()) {
-        return redirect('login')->send();
+        //return redirect('login')->send();
     } elseif (!CheckZRights('AdminPanel') && Request::path() != 'no-rights') {
         return redirect('/no-rights')->send();
         // echo Request::path();
@@ -486,14 +486,14 @@
         // Scroll UP BUTTON
         $y(document).ready(function() {
 
-            // Der Button wird mit JavaScript erzeugt und vor dem Ende des body eingebunden.
+            // Der button wird mit JavaScript erzeugt und vor dem Ende des body eingebunden.
             var back_to_top_button = [
                     '<a href="#top" class="back-to-top"><i class="fas fa-scroll-up"></i></a>'
                 ]
                 .join("");
             $y("body").append(back_to_top_button)
 
-            // Der Button wird ausgeblendet
+            // Der button wird ausgeblendet
             $y(".back-to-top").hide();
 
             // Funktion für das Scroll-Verhalten
@@ -507,7 +507,7 @@
                     }
                 });
 
-                $y('.back-to-top').click(function() { // Klick auf den Button
+                $y('.back-to-top').click(function() { // Klick auf den button
                     $y('body,html').animate({
                         scrollTop: 0
                     }, 900, 'swing');
