@@ -19,7 +19,7 @@
 
 
         <div class="relative">
-<AiButton :xis_enabled="users?.madewithai"> </AiButton>
+<Aibutton :xis_enabled="users?.madewithai"> </AiButton>
 
 
 
@@ -99,7 +99,7 @@
 
 
             <!-- Lesezeit anzeigen -->
-            <socialButtons :name="users?.name" :postId="users?.id" :title="'Benutzer: '+users.name" :empty="true" :nostars="true" />
+            <socialbuttons :name="users?.name" :postId="users?.id" :title="'Benutzer: '+users.name" :empty="true" :nostars="true" />
         </div>
 
     </div>
@@ -122,8 +122,8 @@ import Layout from "@/Application/Homepage/Shared/Layout.vue";
 import DisplayDate from "@/Application/Components/Content/DisplayDate.vue";
 import DisplayNumber from "@/Application/Components/Content/DisplayNumber.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
-import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
-import AiButton from "@/Application/Components/Content/AiButton.vue";
+import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
+import Aibutton from "@/Application/Components/Content/AiButton.vue";
 import BackBtn from "@/Application/Components/Form/BackBtn.vue";
 import { SD } from '@/helpers';
 export default {
@@ -133,9 +133,9 @@ export default {
         BackBtn,
         DisplayDate,
         DisplayNumber,
-        AiButton,
+        Aibutton,
         editbtns,
-        SocialButtons,
+        Socialbuttons,
         Layout,
         MetaHeader,
     },

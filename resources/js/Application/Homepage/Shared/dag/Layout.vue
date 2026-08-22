@@ -184,7 +184,7 @@
   import { router } from '@inertiajs/vue3'
   import IconClose from "@/Application/Components/Icons/Close.vue";
   import Toast from "@/Application/Components/Content/Toast.vue";
-  import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+  import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
   import {SD} from "@/helpers/dom.js"
   import {showHideToggleCookiePreferencesModal} from "@/helpers"
 
@@ -204,7 +204,7 @@
       IconClose,
       Dropdown,
       DropdownLink,
-      ButtonChangeMode
+      buttonChangeMode
     },
 
     // setup() {

@@ -54,7 +54,7 @@ import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import Layout from "@/Application/Homepage/Shared/mfx/Layout.vue";
 
 import PageTitle from "@/Application/Components/Content/PageTitle.vue";
-import AiButton from "@/Application/Components/Content/AiButton.vue";
+import Aibutton from "@/Application/Components/Content/AiButton.vue";
 import BlogPreviewBig from "@/Application/Homepage/Shared/BlogPreviewBig.vue";
 import BlogPreviewSmall from "@/Application/Homepage/Shared/BlogPreviewSmall.vue";
 
@@ -88,7 +88,7 @@ export default defineComponent({
         BlogPreviewSmall,
         SearchFilter,
         Alert,
-        AiButton,
+        Aibutton,
         Markdown,
         MetaHeader
     },

@@ -30,7 +30,7 @@
                                     >
 
                                     <div class="absolute bottom-0 right-0">
-                                        <AiButton
+                                        <Aibutton
                                             :nohome="nohomee"
                                             :dma="dmaa"
                                         />
@@ -92,7 +92,7 @@
 
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import PageTitle from "@/Application/Components/Content/PageTitle.vue";
-    import AiButton from "@/Application/Components/Content/AiButton.vue";
+    import Aibutton from "@/Application/Components/Content/AiButton.vue";
     import BlogPreviewBig from "@/Application/Homepage/Shared/BlogPreviewBig.vue";
     import BlogPreviewSmall from "@/Application/Homepage/Shared/BlogPreviewSmall.vue";
     import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
@@ -116,7 +116,7 @@
             BlogPreviewSmall,
             SearchFilter,
             Alert,
-            AiButton,
+            Aibutton,
 
             Markdown: defineAsyncComponent(() =>
                 import("vue3-markdown-it")

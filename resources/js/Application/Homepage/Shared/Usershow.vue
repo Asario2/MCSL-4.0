@@ -20,9 +20,9 @@
 
         </Link>
         <div class="relative">
-        <!-- Der AI-Button wird hier angezeigt -->
+        <!-- Der AI-button wird hier angezeigt -->
         <div v-if="blog?.madewithai">
-            <AiButton :dma="dmaa" :big="true"></AiButton>
+            <Aibutton :dma="dmaa" :big="true"></AiButton>
         </div>
     </div>
         </div>
@@ -73,7 +73,7 @@
                 ></display-number>
             </div>
         </Link>
-            <socialButtons  :name="blog?.title" :postId="blog?.id" :title="'Benutzer '+blog?.title" :slug="blog?.autoslug" :nostars="true" />
+            <socialbuttons  :name="blog?.title" :postId="blog?.id" :title="'Benutzer '+blog?.title" :slug="blog?.autoslug" :nostars="true" />
         </div>
     </div>
 </template>
@@ -84,9 +84,9 @@ import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 
 import DisplayDate from "@/Application/Components/Content/DisplayDate.vue";
 import DisplayNumber from "@/Application/Components/Content/DisplayNumber.vue";
-import AiButton from "@/Application/Components/Content/AiButton.vue";
+import Aibutton from "@/Application/Components/Content/AiButton.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
-import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
+import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
 import BackBtn from "@/Application/Components/Form/BackBtn.vue";
 export default {
     name: "Homepage_Shared_BlogPreviewBig",
@@ -95,9 +95,9 @@ export default {
         BackBtn,
         DisplayDate,
         DisplayNumber,
-        AiButton,
+        Aibutton,
         editbtns,
-        SocialButtons, MetaHeader},
+        Socialbuttons, MetaHeader},
     props: {
         blog: {
             type: Object,

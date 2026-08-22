@@ -12,7 +12,7 @@
 
                 <hgroup>
 
-                <h1 class="text-2xl font-bold">{{ decodeEntities(ocont?.slug) }}</h1>
+                <h1 class="text-2xl font-bold">{{ decodeEntities(ucf(ocont?.slug)) }}</h1>
             <div class="flex items-start gap-4">
                 <h4
                     class="flex-1"
@@ -90,7 +90,7 @@
                 <p v-html="stripTagsCom(remBrackets(item?.message))"></p>
             </div>
 
-                <SocialButtons :name="item?.name" :postId="item?.id" :slug="item.slug" :title="'Bild '+item?.name" :sslug="true"/>
+                <Socialbuttons :name="item?.name" :postId="item?.id" :slug="item.slug" :title="'Bild '+item?.name" :sslug="true"/>
     </div>
 
 
@@ -139,9 +139,9 @@
     import PhotoSwipeLightbox from 'photoswipe/dist/photoswipe-lightbox.esm.js';
     import Pagination from "@/Application/Components/Pagination.vue";
     import 'photoswipe/dist/photoswipe.css'
-    import {stripTags,remBrackets} from "@/helpers";
+    import {stripTags,remBrackets,ucf} from "@/helpers";
     import ZoomImage from "@/Application/Components/Content/ZoomImage.vue";
-    import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
+    import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
     import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
     import editbtns from "@/Application/Components/Form/editbtns.vue";
     import newbtn from "@/Application/Components/Form/newbtn.vue";
@@ -167,7 +167,7 @@
         MetaHeader,
         Pagination,
         ZoomImage,
-        SocialButtons,
+        Socialbuttons,
         RatingWrapper,
         editbtns,
         newbtn,
@@ -271,6 +271,7 @@
     computed: {
     },
     methods: {
+        ucf,
         getStatus(str)
     {
         if(str == 'lost')

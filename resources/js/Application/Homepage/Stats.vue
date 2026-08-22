@@ -116,7 +116,7 @@
         🔗
     </a>
 
-        <!-- Delete Button -->
+        <!-- Delete button -->
         <button
             @click="deleteLabel(row, idx,row.dom)"
             class="opacity-0 group-hover:opacity-100 transition

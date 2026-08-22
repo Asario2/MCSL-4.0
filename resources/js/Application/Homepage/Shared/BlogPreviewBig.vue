@@ -25,9 +25,9 @@
 
         </Link>
         <div class="relative my7">
-        <!-- Der AI-Button wird hier angezeigt -->
+        <!-- Der AI-button wird hier angezeigt -->
         <div v-if="blog.madewithai" class="ai-icon-wrapper">
-            <AiButton :dma="dmaa" :big="true"></AiButton>
+            <Aibutton :dma="dmaa" :big="true"></AiButton>
         </div>
     </div>
         </div>
@@ -85,7 +85,7 @@
             </div>
         </Link>
         <div class="mt-4">
-            <socialButtons  :name="blog?.title" :postId="blog.id" :slug="blog.autoslug" :title="'Blog: '+blog.title" :nostars="true" :big="true"/>
+            <socialbuttons  :name="blog?.title" :postId="blog.id" :slug="blog.autoslug" :title="'Blog: '+blog.title" :nostars="true" :big="true"/>
         </div>
         </div>
 
@@ -97,9 +97,9 @@
 import { Link } from "@inertiajs/vue3";
 import DisplayDate from "@/Application/Components/Content/DisplayDate.vue";
 import DisplayNumber from "@/Application/Components/Content/DisplayNumber.vue";
-import AiButton from "@/Application/Components/Content/AiButton.vue";
+import Aibutton from "@/Application/Components/Content/AiButton.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
-import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
+import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
 import { replaceSmilies } from '@/helpers';
 export default {
     name: "Homepage_Shared_BlogPreviewBig",
@@ -107,9 +107,9 @@ export default {
         Link,
         DisplayDate,
         DisplayNumber,
-        AiButton,
+        Aibutton,
         editbtns,
-        SocialButtons,
+        Socialbuttons,
     },
     props: {
         blog: {

@@ -19,8 +19,8 @@
 
                                 class="object-cover w-full object-cover h-64 sm:h-96 rounded bg-layout-sun-500 dark:bg-layout-night-500 ai-icon"
                             />
-                            <!-- AI-Button -->
-                            <AiButton :dma="dmaa"></AiButton>
+                            <!-- AI-button -->
+                            <Aibutton :dma="dmaa"></AiButton>
                         </div>
 
                         <!-- Text-Bereich -->
@@ -70,7 +70,7 @@ import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import Layout from "@/Application/Homepage/Shared/Layout.vue";
 
 import PageTitle from "@/Application/Components/Content/PageTitle.vue";
-import AiButton from "@/Application/Components/Content/AiButton.vue";
+import Aibutton from "@/Application/Components/Content/AiButton.vue";
 import BlogPreviewBig from "@/Application/Homepage/Shared/BlogPreviewBig.vue";
 import BlogPreviewSmall from "@/Application/Homepage/Shared/BlogPreviewSmall.vue";
 
@@ -104,7 +104,7 @@ export default defineComponent({
         BlogPreviewSmall,
         SearchFilter,
         Alert,
-        AiButton,
+        Aibutton,
         Markdown, MetaHeader},
     data() {
     return {

@@ -178,7 +178,7 @@
                                             >
                                             <span v-else><span class="flex items-center justify-start gap-1 w-full">
                                                 <IconDashboard class="w-4 h-4" color="#ffa500" />
-                                                <span>Zum Dashboard</span>
+                                                <span>Dashboard</span>
                                             </span></span>
                                         </dropdown-link>
 
@@ -395,7 +395,7 @@ import BrandFooter from "@/Application/Shared/BrandFooter.vue";
 import LinkFooter from "@/Application/Shared/LinkFooter.vue";
 import IconMenu from "@/Application/Components/Icons/Menu.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
-// import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+// import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 
 import { SD,showHideToggleCookiePreferencesModal } from "@/helpers";
 import Loader from "@/Application/Components/Loader.vue";
@@ -421,7 +421,7 @@ export default {
     Dropdown,
     DropdownLink,
     ClientOnly,
-    // ButtonChangeMode,
+    // buttonChangeMode,
   },
 
   props: {

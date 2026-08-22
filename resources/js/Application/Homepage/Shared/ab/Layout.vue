@@ -61,7 +61,7 @@
     <template v-if="$page.props.userdata.user_id && $page.props.userdata.is_admin">
         <link-header :route-name="route('applicationswitch')" name="Dashboard"></link-header>
     </template>
-    <ButtonChangeMode
+    <buttonChangeMode
         :mode="mode"
         @change-mode="changeMode"
     />
@@ -152,7 +152,7 @@
                                             >
                                             <span v-else><span class="flex items-center justify-center gap-1 w-full">
                                                 <IconDashboard class="w-4 h-4" color="#ffa500" />
-                                                <span>Zum Dashboard</span>
+                                                <span>Dashboard</span>
                                             </span></span>
                                         </dropdown-link>
 
@@ -391,7 +391,7 @@
     import LinkFooter from "@/Application/Shared/LinkFooter.vue";
        import IconMenu from "@/Application/Components/Icons/Menu.vue"
     import Toast from "@/Application/Components/Content/Toast.vue";
-    import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+    import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
     import { SD,GetProfileImagePath,CheckTRights } from '@/helpers';
     import throttle from 'lodash/throttle';
     import pickBy from "lodash/pickBy";
@@ -419,7 +419,7 @@
         IconMCSL,
         Dropdown,
         DropdownLink,
-        ButtonChangeMode,
+        buttonChangeMode,
         IconClose,
     },
 
@@ -452,6 +452,7 @@
             return savedTheme || 'dark';
 
         })(),
+        mcslpoints:0,
         isLoading:false,
         isOpen_Menu: false,
         year: new Date().getFullYear(),
@@ -471,7 +472,8 @@
 
     async mounted() {
            this.applyTheme();
-
+this.loadmcslpoints(); // initial
+        
 
         if(typeof window !== "undefined"){
     const params = new URLSearchParams(window.location.search);
@@ -571,7 +573,17 @@
         SD,
         showHideToggleCookiePreferencesModal,
         CheckTRights,
-            mupper(text) {
+        async loadmcslpoints() {
+            try {
+                    const { data } = await axios.get('/api/mcslpoints/');
+                    this.mcslpoints = data; // automatisch reaktiv
+                  
+                } catch (err) {
+                    console.error('Fehler beim Laden der MCSL Points:', err);
+                }
+            },    
+        
+        mupper(text) {
                return text;
             },
 

@@ -331,7 +331,7 @@
                                             </span>
 
                                             <span v-else>
-                                                zum Dashboard
+                                                Dashboard
                                             </span>
 
                                         </dropdown-link>
@@ -690,7 +690,7 @@ import { router } from "@inertiajs/vue3";
 import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 
-// import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+// import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 
 import {
     SD,
@@ -698,7 +698,7 @@ import {
 } from "@/helpers";
 
 import Loader from "@/Application/Components/Loader.vue";
-import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 import LinkHeader_mfx from "@/Application/Shared/LinkHeader_mfx.vue";
 
 // import { ref } from "vue";
@@ -719,7 +719,7 @@ export default {
 
         BrandFooter,
 
-        ButtonChangeMode,
+        buttonChangeMode,
 
         Loader,
 
@@ -743,7 +743,7 @@ export default {
 
         ClientOnly,
 
-        // ButtonChangeMode,
+        // buttonChangeMode,
 
     },
 

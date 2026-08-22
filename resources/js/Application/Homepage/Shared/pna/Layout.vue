@@ -57,7 +57,7 @@
                     />
 
                     <icon-close
-                        class="w-6 h-6"
+                        class="w-6 h-6" color="#f00"
                         v-if="isOpen_Menu"
                     />
 
@@ -153,7 +153,10 @@
                         :route-name="route('home.pna.grafitti')"
                         name="Grafittis"
                     />
-
+                    <LinkHeader_mfx
+                        :route-name="route('home.pna.landschaft')"
+                        name="Landschaften"
+                    />
                     <!-- PORTRAITS -->
                     <LinkHeader_mfx
                         :route-name="route('home.pna.portraits')"
@@ -179,7 +182,7 @@
 
 
                     <!-- DARK / LIGHT MODE -->
-                    <ButtonChangeMode
+                    <buttonChangeMode
                         :mode="mode"
                         @changeMode="changeMode"
                     />
@@ -257,7 +260,7 @@
                                             />
 
                                             <span>
-                                                Zum Dashboard
+                                                Dashboard
                                             </span>
                                         </span>
                                     </DropdownLink>
@@ -443,7 +446,7 @@
             </div> -->
             <Loader />
             <!-- Content -->
-            <div class="container mx-auto max-w-6xl mt-[-120px] md:mt-[100px] min-h-screen py-32 px-2">
+            <div class="container mx-auto max-w-6xl mt-[-80px] md:mt-[99px] min-h-screen py-32 px-2">
             <!-- Toast -->
             <div>
                 <Toast></Toast>
@@ -451,7 +454,7 @@
 
 
             <!-- Slot für Content -->
-            <div class="mt-4">
+            <div>
                 <slot></slot>
             </div>
 
@@ -590,7 +593,7 @@
     import LinkFooter from "@/Application/Shared/LinkFooter.vue";
        import IconMenu from "@/Application/Components/Icons/Menu.vue"
     import Toast from "@/Application/Components/Content/Toast.vue";
-    import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+    import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
     import { SD,GetProfileImagePath,CheckTRights } from '@/helpers';
     import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
     import throttle from 'lodash/throttle';
@@ -621,7 +624,7 @@ import PnaLogo from "@/Application/Shared/pnalogo.vue";
         IconMCSL,
         Dropdown,
         DropdownLink,
-        ButtonChangeMode,
+        buttonChangeMode,
         IconClose,
     },
 

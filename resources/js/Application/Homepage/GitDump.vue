@@ -44,7 +44,7 @@
     import Layout from "@/Application/Admin/Shared/ab/Layout.vue"
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import PageTitle from "@/Application/Components/Content/PageTitle.vue";
-    import AiButton from "@/Application/Components/Content/AiButton.vue";
+    import Aibutton from "@/Application/Components/Content/AiButton.vue";
     import BlogPreviewBig from "@/Application/Homepage/Shared/BlogPreviewBig.vue";
     import BlogPreviewSmall from "@/Application/Homepage/Shared/BlogPreviewSmall.vue";
     import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";

@@ -79,7 +79,7 @@ import InputActionMessage from "@/Application/Components/Form/InputActionMessage
 
 import ButtonGroup from "@/Application/Components/Form/ButtonGroup.vue";
 import InputDangerButton from "@/Application/Components/Form/InputDangerButton.vue";
-import InputWhiteButton from "@/Application/Components/Form/InputWhiteButton.vue";
+import InputWhitebutton from "@/Application/Components/Form/InputWhiteButton.vue";
 
 import DialogModal from "@/Application/Components/DialogModal.vue";
 
@@ -96,7 +96,7 @@ export default {
         InputError,
         InputActionMessage,
         InputDangerButton,
-        InputWhiteButton,
+        InputWhitebutton,
         DialogModal,
     },
 

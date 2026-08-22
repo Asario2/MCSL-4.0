@@ -59,7 +59,7 @@
           <p v-html="item.answer || 'Kein Text vorhanden.'">
           </p>
           <editbtns :id="item.id" table="didyouknow" /><br />
-          <SocialButtons :name="item?.headline" :postId="item.id"  :title="'Wussten Sie schon, '+item.headline" :xslug="true" :nostars="true" :sse="item.headline"/>
+          <Socialbuttons :name="item?.headline" :postId="item.id"  :title="'Wussten Sie schon, '+item.headline" :xslug="true" :nostars="true" :sse="item.headline"/>
         </div>
       </article>
     </section>
@@ -76,7 +76,7 @@ import SearchFilter from '@/Application/Components/Lists/SearchFilter.vue';
 import Alert from '@/Application/Components/Content/Alert.vue';
 import {stripTags} from "@/helpers";
 import editbtns from '@/Application/Components/Form/editbtns.vue';
-import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
+import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
 // import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
 import pickBy from "lodash/pickBy";
 import throttle from "lodash/throttle";
@@ -84,7 +84,7 @@ import Pagination from "@/Application/Components/Pagination.vue";
 
 export default {
   name:"DidYouKnow",
-  components: { Pagination, Layout, MetaHeader, newbtn, SearchFilter, Alert, editbtns, SocialButtons },
+  components: { Pagination, Layout, MetaHeader, newbtn, SearchFilter, Alert, editbtns, Socialbuttons },
   props: {
     items: { type: Object, required: true },
     ratings: { type: [Array, Object], default: () => ({}) },

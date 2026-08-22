@@ -18,7 +18,7 @@
                     height="360"
                 />
                 <div v-if="blog.madewithai">
-                    <AiButton :dma="dmaa"></AiButton>
+                    <Aibutton :dma="dmaa"></AiButton>
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
         </Link>
 
         <!-- **Tabelle direkt unterhalb des Blog-Containers (fixiert)** -->
-        <SocialButtons :name="blog?.title" :postId="blog.id" sm="Sm" :slug="blog.autoslug"  :title="'Blog: '+blog.title"  :nostars="true"       />
+        <Socialbuttons :name="blog?.title" :postId="blog.id" sm="Sm" :slug="blog.autoslug"  :title="'Blog: '+blog.title"  :nostars="true"       />
     </article>
     </div>
 
@@ -84,7 +84,7 @@ import averageRating from "@/Application/Components/Social/averageratings.vue";
 import IconPencil from "@/Application/Components/Icons/Pencil.vue";
 import Comments from "@/Application/Components/Social/comments.vue";
 import Share from "@/Application/Components/Social/share.vue";
-import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
+import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
 import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
 import IconCamera from "@/Application/Components/Icons/Camera.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
@@ -98,7 +98,7 @@ import IconTrash from "@/Application/Components/Icons/Trash.vue";
 import DisplayDate from "@/Application/Components/Content/DisplayDate.vue";
 import DisplayNumber from "@/Application/Components/Content/DisplayNumber.vue";
 import he from "he";
-import AiButton from "@/Application/Components/Content/AiButton.vue";
+import Aibutton from "@/Application/Components/Content/AiButton.vue";
 import { nextTick } from "vue";
 import { route } from "ziggy-js";
 import IconShare from "@/Application/Components/Icons/IconShare.vue";
@@ -121,8 +121,8 @@ export default {
     IconComment,
     IconShare,
     IconStar,
-    SocialButtons,
-    AiButton, MetaHeader},
+    Socialbuttons,
+    Aibutton, MetaHeader},
 
     props: {
         blog: {

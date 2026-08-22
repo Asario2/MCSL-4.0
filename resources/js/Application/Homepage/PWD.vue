@@ -70,7 +70,7 @@ export default {
 
         async generateHash() {
 
-                console.log("Button geklickt");
+                console.log("button geklickt");
             try {
 
                 const response = await axios.post('/pwd', this.form);

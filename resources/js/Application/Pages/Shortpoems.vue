@@ -35,7 +35,7 @@
         <InputFormText v-model="inputs[n - 1]" :placeholder="'Wort ' + n " :name="'word[' + n +  ']'" :required="true"/>
       </div>
 
-      <!-- Button -->
+      <!-- button -->
       <div class="col-span-1">
         <button
           @click="submit"
@@ -85,10 +85,10 @@
             table="shortpoems"
             />
 
-          <SocialButtons  :name="item?.headline" :postId="item.id" :title="'Shortpoem ' + item.headline" :xslug="true" :sse="item.headline"/>
+          <Socialbuttons  :name="item?.headline" :postId="item.id" :title="'Shortpoem ' + item.headline" :xslug="true" :sse="item.headline"/>
         </div>
 
-        <!-- Accordion Button -->
+        <!-- Accordion button -->
         </article>
 
     </section>
@@ -109,7 +109,7 @@ import SearchFilter from '@/Application/Components/Lists/SearchFilter.vue';
 import InputFormText from '@/Application/Components/Form/InputFormText_sm.vue';
 import Alert from '@/Application/Components/Content/Alert.vue';
 import editbtns from '@/Application/Components/Form/editbtns.vue';
-import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
+import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
 import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
 import pickBy from "lodash/pickBy";
 // import Toast from "@/Application/Components/Content/Toast.vue";
@@ -119,7 +119,7 @@ import throttle from "lodash/throttle";
 export default {
     name:"ShortPoems",
   components: {
-    Layout, MetaHeader, newbtn, SearchFilter, Alert, editbtns, SocialButtons, RatingWrapper,InputFormText,Pagination,
+    Layout, MetaHeader, newbtn, SearchFilter, Alert, editbtns, Socialbuttons, RatingWrapper,InputFormText,Pagination,
   },
   props: {
     items: { type: Object, required: true },

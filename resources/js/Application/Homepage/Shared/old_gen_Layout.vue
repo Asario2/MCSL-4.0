@@ -147,7 +147,7 @@
                                                 >
                                                 <span v-else><span class="flex items-center justify-center gap-1 w-full">
                                                     <IconDashboard class="w-4 h-4" color="#ffa500" />
-                                                    <span>Zum Dashboard</span>
+                                                    <span>Dashboard</span>
                                                 </span></span>
                                             </dropdown-link>
 
@@ -375,7 +375,7 @@
         import LinkFooter from "@/Application/Shared/LinkFooter.vue";
         import IconMenu from "@/Application/Components/Icons/Menu.vue";
         import Toast from "@/Application/Components/Content/Toast.vue";
-        import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+        import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
         import { SD,GetProfileImagePath,CheckTRights } from "@/helpers";
         import IconUsers from "@/Application/Components/Icons/IconUsers.vue";
         import IconContactsPublic from "@/Application/Components/Icons/IconContactsPublic.vue";
@@ -425,7 +425,7 @@ import {showHideToggleCookiePreferencesModal} from "@/helpers"
             IconClose,
             Dropdown,
             DropdownLink,
-            ButtonChangeMode,
+            buttonChangeMode,
             NewsletterSubscribe,
             IconRegister,
             IconLogin,

@@ -21,9 +21,9 @@
             :class="['object-cover w-full rounded lg:col-span-7 object-cover object-center mx-auto rounded bg-layout-sun-100 dark:bg-layout-night-100', blog.madewithai ? 'ai-image-corner    ' : '']"
             />
 
-        <!-- AI-Button in der rechten unteren Ecke des Bildes -->
+        <!-- AI-button in der rechten unteren Ecke des Bildes -->
         <div v-if="blog.madewithai" class="ai-overlay">
-            <AiButton :big="true" :dma="dmaa" :bigger="true"></AiButton>
+            <Aibutton :big="true" :dma="dmaa" :bigger="true"></AiButton>
         </div>
     </div>
 
@@ -146,7 +146,7 @@
 
                     <div v-else v-html="decodedContent"></div>
                     <div>
-                        <socialButtons  :name="blog?.title" :postId="blog.id" :title="'Blog: '+blog.title" :empty="true" :nostars="true" />
+                        <socialbuttons  :name="blog?.title" :postId="blog.id" :title="'Blog: '+blog.title" :empty="true" :nostars="true" />
                     </div>
                     <div class="flex items-start gap-4">
                         <!-- Profilbild -->
@@ -184,20 +184,20 @@ import IconSpeakerWave from "@/Application/Components/Icons/SpeakerWave.vue";
 import IconStop from "@/Application/Components/Icons/Stop.vue";
 import newbtn from "@/Application/Components/Form/newbtn.vue";
 import BackBtn from "@/Application/Components/Form/BackBtn.vue";
-import AiButton from "@/Application/Components/Content/AiButton.vue";
+import Aibutton from "@/Application/Components/Content/AiButton.vue";
 import DisplayDate from "@/Application/Components/Content/DisplayDate.vue";
 import DisplayNumber from "@/Application/Components/Content/DisplayNumber.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import Markdown from "@/Application/Components/Content/Markdown.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-import SocialButtons from "@/Application/Components/Social/socialButtons.vue";
+import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
 import {  rumLaut , replaceSmilies } from '@/helpers';
 export default {
     name: "Shared_BlogShow",
     //
     components: {
-        AiButton,
-        SocialButtons,
+        Aibutton,
+        Socialbuttons,
         BackBtn,
         IconPause,
         IconPlay,

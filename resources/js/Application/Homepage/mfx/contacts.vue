@@ -60,7 +60,7 @@
                                         class="mt-[12px] ai-image-corner"
                                     />
 
-                                    <AiButton :dma="dmaa"></AiButton>
+                                    <Aibutton :dma="dmaa"></AiButton>
                                 </div>
                             </section>
 
@@ -90,7 +90,7 @@
     import { defineComponent } from "vue";
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
     import Layout from "@/Application/Homepage/Shared//Layout.vue";
-    import AiButton from "@/Application/Components/Content/AiButton.vue";
+    import Aibutton from "@/Application/Components/Content/AiButton.vue";
     import {rumLaut } from "@/helpers";
     import editbtns from "@/Application/Components/Form/editbtns.vue";
     import PageContent from "@/Application/Components/Content/PageContent.vue";
@@ -108,7 +108,7 @@
             PageParagraph,
             emailview,
             editbtns,
-            AiButton,
+            Aibutton,
             MetaHeader},
         props:{
             news:[Array,Object],

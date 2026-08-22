@@ -167,7 +167,7 @@ Baustein zur Anzeige eines Datums.
 
 ## DisplayHyperlink.vue
 
-Diese Vue-Komponente ermöglicht die dynamische Darstellung von Links in verschiedenen Stilen (wie Buttons oder Inline-Text), um sich den jeweiligen Kontexten und Designanforderungen der Benutzeroberfläche anzupassen.
+Diese Vue-Komponente ermöglicht die dynamische Darstellung von Links in verschiedenen Stilen (wie buttons oder Inline-Text), um sich den jeweiligen Kontexten und Designanforderungen der Benutzeroberfläche anzupassen.
 
 ### props
 
@@ -284,7 +284,7 @@ Diese Vue-Komponente dient als wiederverwendbarer Container für Überschriften,
 
 ## ResponsiveNavLink.vue
 
-Diese Vue-Komponente ermöglicht es, einen wiederverwendbaren und ansprechbaren Navigationslink oder eine Schaltfläche zu erstellen, der/die je nach Eigenschaft (as) entweder als HTML-Button oder als Link dargestellt wird, wobei beide Elemente durch angepasste Klassen stilisiert sind und auf Interaktionen mit Fokus- und Hover-Effekten reagieren.
+Diese Vue-Komponente ermöglicht es, einen wiederverwendbaren und ansprechbaren Navigationslink oder eine Schaltfläche zu erstellen, der/die je nach Eigenschaft (as) entweder als HTML-button oder als Link dargestellt wird, wobei beide Elemente durch angepasste Klassen stilisiert sind und auf Interaktionen mit Fokus- und Hover-Effekten reagieren.
 
 ### props
 
@@ -366,7 +366,7 @@ Seitenvorlage für alle Vue-Seiten der Anwendung Homepage.
 
 ## ButtonGroup.vue
 
-Container für Buttons.
+Container für buttons.
 
 ### props
 
@@ -390,7 +390,7 @@ Diese Vue-Komponente ist darauf ausgelegt, eine Aktion-Nachricht neben Formulare
 
 ## InputButton.vue
 
-Diese Vue-Komponente ist ein wiederverwendbarer Button für Formulare, der gestaltet ist, um verschiedene Aktionen auszulösen, wie das Absenden von Daten. Er bietet Anpassbarkeit durch Slots für Inhalte und Reaktivität durch verschiedene Zustände wie "disabled", und ist auf Barrierefreiheit durch Funktionen wie "focus:ring" ausgerichtet. Die Anpassung der Größe, der Rundung, der Schriftgröße und des Tracking ist ebenso enthalten, um eine konsistente Benutzeroberfläche zu gewährleisten.
+Diese Vue-Komponente ist ein wiederverwendbarer button für Formulare, der gestaltet ist, um verschiedene Aktionen auszulösen, wie das Absenden von Daten. Er bietet Anpassbarkeit durch Slots für Inhalte und Reaktivität durch verschiedene Zustände wie "disabled", und ist auf Barrierefreiheit durch Funktionen wie "focus:ring" ausgerichtet. Die Anpassung der Größe, der Rundung, der Schriftgröße und des Tracking ist ebenso enthalten, um eine konsistente Benutzeroberfläche zu gewährleisten.
 
 ### props
 
@@ -430,7 +430,7 @@ Diese Vue-Komponente fungiert als Container für Formulareingaben, bietet einen 
 
 ## InputDangerButton.vue
 
-Diese Vue-Komponente repräsentiert einen speziell gestalteten Gefahren-Button, der typischerweise für Aktionen wie Löschen oder Abbrechen verwendet wird. Der Button nutzt anpassbare Klassen für das Hervorheben im Gefahrenkontext und bietet umfangreiche Stiloptionen wie abgerundete Kanten, mittlere Schriftgröße und engen Textabstand. Zudem ist er für barrierefreie Bedienung optimiert mit Fokus-Ringen und einer nicht aktivierbaren Opazität, wenn er deaktiviert ist.
+Diese Vue-Komponente repräsentiert einen speziell gestalteten Gefahren-button, der typischerweise für Aktionen wie Löschen oder Abbrechen verwendet wird. Der button nutzt anpassbare Klassen für das Hervorheben im Gefahrenkontext und bietet umfangreiche Stiloptionen wie abgerundete Kanten, mittlere Schriftgröße und engen Textabstand. Zudem ist er für barrierefreie Bedienung optimiert mit Fokus-Ringen und einer nicht aktivierbaren Opazität, wenn er deaktiviert ist.
 
 ### props
 
@@ -481,7 +481,7 @@ Diese Vue-Komponente dient als Layout-Container, der Formularelemente in einem r
 
 ## InputHTML.vue
 
-Diese Vue-Komponente dient als benutzerdefinierter HTML-Texteditor, der es ermöglicht, Texte direkt im Browser zu formatieren. Die Komponente bietet Funktionalitäten, um Text fett, kursiv zu setzen oder als Überschriften verschiedener Ebenen zu formatieren, indem sie auf einfache Button-Klicks reagiert. Zusätzlich passt sie das Formatieren des Inhalts an und ermöglicht es dem Nutzer, diese Änderungen durch die ContentEditable-Funktion direkt in einem bearbeitbaren Div zu sehen und zu manipulieren. Die Komponente reagiert auf Fokusereignisse, um das Bearbeitungsmenü anzuzeigen, und aktualisiert den `modelValue` des Elternelements mittels eines Vue-Ereignisses (`update:modelValue`), wenn der Inhalt des Editors sich ändert.
+Diese Vue-Komponente dient als benutzerdefinierter HTML-Texteditor, der es ermöglicht, Texte direkt im Browser zu formatieren. Die Komponente bietet Funktionalitäten, um Text fett, kursiv zu setzen oder als Überschriften verschiedener Ebenen zu formatieren, indem sie auf einfache button-Klicks reagiert. Zusätzlich passt sie das Formatieren des Inhalts an und ermöglicht es dem Nutzer, diese Änderungen durch die ContentEditable-Funktion direkt in einem bearbeitbaren Div zu sehen und zu manipulieren. Die Komponente reagiert auf Fokusereignisse, um das Bearbeitungsmenü anzuzeigen, und aktualisiert den `modelValue` des Elternelements mittels eines Vue-Ereignisses (`update:modelValue`), wenn der Inhalt des Editors sich ändert.
 
 ### props
 
@@ -564,7 +564,7 @@ Diese Vue-Komponente ist ein vielseitiges, mehrzeiliges Texteingabefeld (textare
 
 ## InputWhiteButton.vue
 
-Diese Vue-Komponente ist ein anpassbarer, stilvoller Weiß-Hintergrund-Button für Formulare oder andere UI-Interaktionen, der verschiedene Inhalte über Slots aufnehmen kann und grundlegende Zustände wie Fokus und Deaktivierung unterstützt.
+Diese Vue-Komponente ist ein anpassbarer, stilvoller Weiß-Hintergrund-button für Formulare oder andere UI-Interaktionen, der verschiedene Inhalte über Slots aufnehmen kann und grundlegende Zustände wie Fokus und Deaktivierung unterstützt.
 
 ### props
 
@@ -581,7 +581,7 @@ Diese Vue-Komponente ist ein anpassbarer, stilvoller Weiß-Hintergrund-Button f�
 
 ## ListContainer.vue
 
-Diese Vue-Komponente ist ein umfangreiches interaktives Listen-Display, das Optionen zur Suche, Pagination, und Bearbeitung von Datenzeilen bietet und zudem Funktionen wie Erstellung, Anzeige und Änderung von Datensätzen durch eingebettete Buttons unterstützt, komplett mit eingebauten Fehleranzeigen und dynamischen Inertia.js-Routen zur Handhabung der Navigation.
+Diese Vue-Komponente ist ein umfangreiches interaktives Listen-Display, das Optionen zur Suche, Pagination, und Bearbeitung von Datenzeilen bietet und zudem Funktionen wie Erstellung, Anzeige und Änderung von Datensätzen durch eingebettete buttons unterstützt, komplett mit eingebauten Fehleranzeigen und dynamischen Inertia.js-Routen zur Handhabung der Navigation.
 
 ### props
 
@@ -626,7 +626,7 @@ Diese Vue-Komponente implementiert eine anpassbare Paginationsleiste für Listen
 
 ## SearchFilter.vue
 
-Diese Vue-Komponente ist ein Suchfilter-Widget, das eine benutzerfreundliche Suchleiste mit integriertem Suchsymbol und einer Schaltfläche zum Zurücksetzen der Suche bietet. Die Suchleiste ermöglicht es Benutzern, Eingaben zu machen, die über das Event `update:modelValue` an die übergeordnete Komponente weitergeleitet werden, um reaktive Suchfunktionalitäten zu ermöglichen. Der "Suche zurücksetzen"-Button löst das `reset`-Event aus, um die Suche zu löschen und die Eingaben zurückzusetzen, wobei auch visuelle Rückmeldungen über den aktuellen Suchstatus angezeigt werden. Die Komponente ist sowohl für helle als auch dunkle Modi gestaltet und bietet eine klare und effektive Benutzeroberfläche für Suchoperationen.
+Diese Vue-Komponente ist ein Suchfilter-Widget, das eine benutzerfreundliche Suchleiste mit integriertem Suchsymbol und einer Schaltfläche zum Zurücksetzen der Suche bietet. Die Suchleiste ermöglicht es Benutzern, Eingaben zu machen, die über das Event `update:modelValue` an die übergeordnete Komponente weitergeleitet werden, um reaktive Suchfunktionalitäten zu ermöglichen. Der "Suche zurücksetzen"-button löst das `reset`-Event aus, um die Suche zu löschen und die Eingaben zurückzusetzen, wobei auch visuelle Rückmeldungen über den aktuellen Suchstatus angezeigt werden. Die Komponente ist sowohl für helle als auch dunkle Modi gestaltet und bietet eine klare und effektive Benutzeroberfläche für Suchoperationen.
 
 ### props
 
@@ -680,7 +680,7 @@ Diese Vue-Komponente ist eine kompakte Darstellung für Blog-Beiträge, entworfe
 
 ## Layout.vue
 
-Diese Vue-Komponente repräsentiert ein umfassendes Webseiten-Layout für eine Homepage, das Meta-Tags für SEO, eine navigierbare Kopfzeile, ein Inhaltsbereich, und einen Fußbereich integriert. Es enthält dynamische Elemente wie ein schaltbares Menü für mobile Ansichten, Meta-Informationen für verbesserte Suchmaschinenoptimierung, Links für soziale Medien und einen Mechanismus zum Umschalten zwischen verschiedenen Betriebsmodi (z.B. dunkel und hell). Zusätzlich bietet es interaktive Features wie eine dynamische Jahresangabe und Versionsinformation im Footer, sowie einen Button zum Zurücksetzen von Cookie-Einstellungen.
+Diese Vue-Komponente repräsentiert ein umfassendes Webseiten-Layout für eine Homepage, das Meta-Tags für SEO, eine navigierbare Kopfzeile, ein Inhaltsbereich, und einen Fußbereich integriert. Es enthält dynamische Elemente wie ein schaltbares Menü für mobile Ansichten, Meta-Informationen für verbesserte Suchmaschinenoptimierung, Links für soziale Medien und einen Mechanismus zum Umschalten zwischen verschiedenen Betriebsmodi (z.B. dunkel und hell). Zusätzlich bietet es interaktive Features wie eine dynamische Jahresangabe und Versionsinformation im Footer, sowie einen button zum Zurücksetzen von Cookie-Einstellungen.
 
 ### props
 
