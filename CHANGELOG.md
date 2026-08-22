@@ -399,3 +399,5 @@
 ![Version](https://img.shields.io/badge/version-6.53.5-orange) Hotfix / Feature - Changed vue Files (#602)  
 ![Version](https://img.shields.io/badge/version-6.54.0-orange) Hotfix / Feature - Changed .js Files (#601)  
 ![Version](https://img.shields.io/badge/version-6.55.1-orange) Hotfix / Feature - Changed CSS Files (#605)  
+![Version](https://img.shields.io/badge/version-6.56.6-orange) Hotfix - Update Social Vues (#607)  
+![Version](https://img.shields.io/badge/version-6.57.6-orange) Feature - New Version of images (#606)  
