@@ -229,38 +229,39 @@ import { cachen } from './cache';
 if (!cachen.pending) cachen.pending = {};
 
 export async function CheckTRights(right, table) {
-  const cacheKey = `${right}_${table}`;
 
-  // 1. Cache vorhanden? -> OK
-  if (cachen.batchRights[cacheKey] !== undefined) {
-    return cachen.batchRights[cacheKey];
-  }
+    // SSR darf keinen relativen Axios-Request ausführen
+    if (import.meta.env.SSR) {
+        return 0;
+    }
 
-  // 2. Läuft gerade ein Request für dieselbe Sache?
-  if (cachen.pending[cacheKey]) {
-    return cachen.pending[cacheKey];
-  }
+    const cacheKey = `${right}_${table}`;
 
-  // 3. Neuen Request starten
-  const request = axios.get(`/api/user/rights/des/${table}/${right}`)
-    .then(({ data }) => {
-      cachen.batchRights[cacheKey] = data; // Cache setzen
-      delete cachen.pending[cacheKey];
-//       console.log("data" + data);    // Pending entfernen
-      return data;
-    })
-    .catch(err => {
-      delete cachen.pending[cacheKey];
-      console.error(err);
-      return 0;
-    });
+    if (cachen.batchRights[cacheKey] !== undefined) {
+        return cachen.batchRights[cacheKey];
+    }
 
-  // Als "pending" speichern
-  cachen.pending[cacheKey] = request;
+    if (cachen.pending[cacheKey]) {
+        return cachen.pending[cacheKey];
+    }
 
-  // Ergebnis zurückgeben
-  return request;
-}
+    const request = axios
+        .get(`/api/user/rights/des/${table}/${right}`)
+        .then(({ data }) => {
+            cachen.batchRights[cacheKey] = data;
+            delete cachen.pending[cacheKey];
+            return data;
+        })
+        .catch(err => {
+            delete cachen.pending[cacheKey];
+            console.error('CheckTRights Error:', err);
+            return 0;
+        });
+
+    cachen.pending[cacheKey] = request;
+
+    return request;
+}   
 
 
 
@@ -592,7 +593,6 @@ segments = segments.join('').replace(/[[\]']/g, '');
 export async function Authy(){
     GetAuth().then(authenticated => {
         if (authenticated === "false") {
-            alert("TO LOGIN");
             location.href = "/login";
             return false;
         }

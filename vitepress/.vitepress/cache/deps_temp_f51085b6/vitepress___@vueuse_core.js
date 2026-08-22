@@ -7172,9 +7172,9 @@ function usePointerSwipe(target, options = {}) {
   });
   const eventIsAllowed = (e) => {
     var _a, _b, _c;
-    const isReleasingButton = e.buttons === 0;
-    const isPrimaryButton = e.buttons === 1;
-    return (_c = (_b = (_a = options.pointerTypes) == null ? void 0 : _a.includes(e.pointerType)) != null ? _b : isReleasingButton || isPrimaryButton) != null ? _c : true;
+    const isReleasingbutton = e.buttons === 0;
+    const isPrimarybutton = e.buttons === 1;
+    return (_c = (_b = (_a = options.pointerTypes) == null ? void 0 : _a.includes(e.pointerType)) != null ? _b : isReleasingbutton || isPrimarybutton) != null ? _c : true;
   };
   const listenerOptions = { passive: true };
   const stops = [

@@ -2057,7 +2057,7 @@ html:not(.dark) .vp-code span {
 .VPDoc.has-aside .content-container[data-v-39a288b8] {
     max-width: 688px;
 }
-.VPButton[data-v-cad61b99] {
+.VPbutton[data-v-cad61b99] {
     display: inline-block;
     border: 1px solid transparent;
     text-align: center;
@@ -2068,65 +2068,65 @@ html:not(.dark) .vp-code span {
         border-color 0.25s,
         background-color 0.25s;
 }
-.VPButton[data-v-cad61b99]:active {
+.VPbutton[data-v-cad61b99]:active {
     transition:
         color 0.1s,
         border-color 0.1s,
         background-color 0.1s;
 }
-.VPButton.medium[data-v-cad61b99] {
+.VPbutton.medium[data-v-cad61b99] {
     border-radius: 20px;
     padding: 0 20px;
     line-height: 38px;
     font-size: 14px;
 }
-.VPButton.big[data-v-cad61b99] {
+.VPbutton.big[data-v-cad61b99] {
     border-radius: 24px;
     padding: 0 24px;
     line-height: 46px;
     font-size: 16px;
 }
-.VPButton.brand[data-v-cad61b99] {
+.VPbutton.brand[data-v-cad61b99] {
     border-color: var(--vp-button-brand-border);
     color: var(--vp-button-brand-text);
     background-color: var(--vp-button-brand-bg);
 }
-.VPButton.brand[data-v-cad61b99]:hover {
+.VPbutton.brand[data-v-cad61b99]:hover {
     border-color: var(--vp-button-brand-hover-border);
     color: var(--vp-button-brand-hover-text);
     background-color: var(--vp-button-brand-hover-bg);
 }
-.VPButton.brand[data-v-cad61b99]:active {
+.VPbutton.brand[data-v-cad61b99]:active {
     border-color: var(--vp-button-brand-active-border);
     color: var(--vp-button-brand-active-text);
     background-color: var(--vp-button-brand-active-bg);
 }
-.VPButton.alt[data-v-cad61b99] {
+.VPbutton.alt[data-v-cad61b99] {
     border-color: var(--vp-button-alt-border);
     color: var(--vp-button-alt-text);
     background-color: var(--vp-button-alt-bg);
 }
-.VPButton.alt[data-v-cad61b99]:hover {
+.VPbutton.alt[data-v-cad61b99]:hover {
     border-color: var(--vp-button-alt-hover-border);
     color: var(--vp-button-alt-hover-text);
     background-color: var(--vp-button-alt-hover-bg);
 }
-.VPButton.alt[data-v-cad61b99]:active {
+.VPbutton.alt[data-v-cad61b99]:active {
     border-color: var(--vp-button-alt-active-border);
     color: var(--vp-button-alt-active-text);
     background-color: var(--vp-button-alt-active-bg);
 }
-.VPButton.sponsor[data-v-cad61b99] {
+.VPbutton.sponsor[data-v-cad61b99] {
     border-color: var(--vp-button-sponsor-border);
     color: var(--vp-button-sponsor-text);
     background-color: var(--vp-button-sponsor-bg);
 }
-.VPButton.sponsor[data-v-cad61b99]:hover {
+.VPbutton.sponsor[data-v-cad61b99]:hover {
     border-color: var(--vp-button-sponsor-hover-border);
     color: var(--vp-button-sponsor-hover-text);
     background-color: var(--vp-button-sponsor-hover-bg);
 }
-.VPButton.sponsor[data-v-cad61b99]:active {
+.VPbutton.sponsor[data-v-cad61b99]:active {
     border-color: var(--vp-button-sponsor-active-border);
     color: var(--vp-button-sponsor-active-text);
     background-color: var(--vp-button-sponsor-active-bg);
@@ -3192,7 +3192,7 @@ html[data-theme="dark"] {
     --docsearch-logo-color: #fff;
     --docsearch-muted-color: #7f8497;
 }
-.DocSearch-Button {
+.DocSearch-button {
     align-items: center;
     background: var(--docsearch-searchbox-background);
     border: 0;
@@ -3209,33 +3209,33 @@ html[data-theme="dark"] {
     -moz-user-select: none;
     user-select: none;
 }
-.DocSearch-Button:active,
-.DocSearch-Button:focus,
-.DocSearch-Button:hover {
+.DocSearch-button:active,
+.DocSearch-button:focus,
+.DocSearch-button:hover {
     background: var(--docsearch-searchbox-focus-background);
     box-shadow: var(--docsearch-searchbox-shadow);
     color: var(--docsearch-text-color);
     outline: none;
 }
-.DocSearch-Button-Container {
+.DocSearch-button-Container {
     align-items: center;
     display: flex;
 }
 .DocSearch-Search-Icon {
     stroke-width: 1.6;
 }
-.DocSearch-Button .DocSearch-Search-Icon {
+.DocSearch-button .DocSearch-Search-Icon {
     color: var(--docsearch-text-color);
 }
-.DocSearch-Button-Placeholder {
+.DocSearch-button-Placeholder {
     font-size: 1rem;
     padding: 0 12px 0 6px;
 }
-.DocSearch-Button-Keys {
+.DocSearch-button-Keys {
     display: flex;
     min-width: calc(40px + 0.8em);
 }
-.DocSearch-Button-Key {
+.DocSearch-button-Key {
     align-items: center;
     background: var(--docsearch-key-gradient);
     border-radius: 3px;
@@ -3251,13 +3251,13 @@ html[data-theme="dark"] {
     top: -1px;
     width: 20px;
 }
-.DocSearch-Button-Key--pressed {
+.DocSearch-button-Key--pressed {
     transform: translate3d(0, 1px, 0);
     box-shadow: var(--docsearch-key-pressed-shadow);
 }
 @media (max-width: 768px) {
-    .DocSearch-Button-Keys,
-    .DocSearch-Button-Placeholder {
+    .DocSearch-button-Keys,
+    .DocSearch-button-Placeholder {
         display: none;
     }
 }
@@ -3841,7 +3841,7 @@ svg.DocSearch-Hit-Select-Icon {
     --docsearch-hit-color: var(--vp-c-text-2);
     --docsearch-hit-shadow: none;
 }
-.DocSearch-Button {
+.DocSearch-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3852,22 +3852,22 @@ svg.DocSearch-Hit-Select-Icon {
     background: transparent;
     transition: border-color 0.25s;
 }
-.DocSearch-Button:hover {
+.DocSearch-button:hover {
     background: transparent;
 }
-.DocSearch-Button:focus {
+.DocSearch-button:focus {
     outline: 1px dotted;
     outline: 5px auto -webkit-focus-ring-color;
 }
-.DocSearch-Button-Key--pressed {
+.DocSearch-button-Key--pressed {
     transform: none;
     box-shadow: none;
 }
-.DocSearch-Button:focus:not(:focus-visible) {
+.DocSearch-button:focus:not(:focus-visible) {
     outline: none !important;
 }
 @media (min-width: 768px) {
-    .DocSearch-Button {
+    .DocSearch-button {
         justify-content: flex-start;
         border: 1px solid transparent;
         border-radius: 8px;
@@ -3876,16 +3876,16 @@ svg.DocSearch-Hit-Select-Icon {
         height: 40px;
         background-color: var(--vp-c-bg-alt);
     }
-    .DocSearch-Button:hover {
+    .DocSearch-button:hover {
         border-color: var(--vp-c-brand-1);
         background: var(--vp-c-bg-alt);
     }
 }
-.DocSearch-Button .DocSearch-Button-Container {
+.DocSearch-button .DocSearch-button-Container {
     display: flex;
     align-items: center;
 }
-.DocSearch-Button .DocSearch-Search-Icon {
+.DocSearch-button .DocSearch-Search-Icon {
     position: relative;
     width: 16px;
     height: 16px;
@@ -3893,11 +3893,11 @@ svg.DocSearch-Hit-Select-Icon {
     fill: currentColor;
     transition: color 0.5s;
 }
-.DocSearch-Button:hover .DocSearch-Search-Icon {
+.DocSearch-button:hover .DocSearch-Search-Icon {
     color: var(--vp-c-text-1);
 }
 @media (min-width: 768px) {
-    .DocSearch-Button .DocSearch-Search-Icon {
+    .DocSearch-button .DocSearch-Search-Icon {
         top: 1px;
         margin-right: 8px;
         width: 14px;
@@ -3905,7 +3905,7 @@ svg.DocSearch-Hit-Select-Icon {
         color: var(--vp-c-text-2);
     }
 }
-.DocSearch-Button .DocSearch-Button-Placeholder {
+.DocSearch-button .DocSearch-button-Placeholder {
     display: none;
     margin-top: 2px;
     padding: 0 16px 0 0;
@@ -3914,26 +3914,26 @@ svg.DocSearch-Hit-Select-Icon {
     color: var(--vp-c-text-2);
     transition: color 0.5s;
 }
-.DocSearch-Button:hover .DocSearch-Button-Placeholder {
+.DocSearch-button:hover .DocSearch-button-Placeholder {
     color: var(--vp-c-text-1);
 }
 @media (min-width: 768px) {
-    .DocSearch-Button .DocSearch-Button-Placeholder {
+    .DocSearch-button .DocSearch-button-Placeholder {
         display: inline-block;
     }
 }
-/* .DocSearch-Button .DocSearch-Button-Keys {
+/* .DocSearch-button .DocSearch-button-Keys {
     direction: ltr;
     display: none;
     min-width: auto;
 } */
 @media (min-width: 768px) {
-    .DocSearch-Button .DocSearch-Button-Keys {
+    .DocSearch-button .DocSearch-button-Keys {
         display: flex;
         align-items: center;
     }
 }
-.DocSearch-Button .DocSearch-Button-Key {
+.DocSearch-button .DocSearch-button-Key {
     display: block;
     margin: 2px 0 0;
     border: 1px solid var(--vp-c-divider);
@@ -3951,26 +3951,26 @@ svg.DocSearch-Hit-Select-Icon {
         color 0.5s,
         border-color 0.5s;
 }
-.DocSearch-Button .DocSearch-Button-Key + .DocSearch-Button-Key {
+.DocSearch-button .DocSearch-button-Key + .DocSearch-button-Key {
     border-right: 1px solid var(--vp-c-divider);
     border-left: none;
     border-radius: 0 4px 4px 0;
     padding-left: 2px;
     padding-right: 6px;
 }
-.DocSearch-Button .DocSearch-Button-Key:first-child {
+.DocSearch-button .DocSearch-button-Key:first-child {
     font-size: 0 !important;
 }
-.DocSearch-Button .DocSearch-Button-Key:first-child:after {
+.DocSearch-button .DocSearch-button-Key:first-child:after {
     content: "Ctrl";
     font-size: 12px;
     letter-spacing: normal;
     color: var(--docsearch-muted-color);
 }
-.mac .DocSearch-Button .DocSearch-Button-Key:first-child:after {
+.mac .DocSearch-button .DocSearch-button-Key:first-child:after {
     content: "⌘";
 }
-.DocSearch-Button .DocSearch-Button-Key:first-child > * {
+.DocSearch-button .DocSearch-button-Key:first-child > * {
     display: none;
 }
 .DocSearch-Search-Icon {

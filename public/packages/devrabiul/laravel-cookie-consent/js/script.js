@@ -3,8 +3,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     // DOM Elements
     const consentRoot = document.querySelector('.cookie-consent-root');
-    const acceptButtons = document.querySelectorAll('.cookie-consent-accept');
-    const rejectButtons = document.querySelectorAll('.cookie-consent-reject');
+    const acceptbuttons = document.querySelectorAll('.cookie-consent-accept');
+    const rejectbuttons = document.querySelectorAll('.cookie-consent-reject');
     const cookieConsentPrefix = consentRoot?.getAttribute('data-cookie-prefix') || 'cookie_consent';
     const preferencesCookieName = `${cookieConsentPrefix}_preferences`;
 
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Accept handler
-    acceptButtons.forEach(button => {
+    acceptbuttons.forEach(button => {
         button.addEventListener('click', () => {
             setCookie(cookieConsentPrefix, 'accepted', consentRoot?.getAttribute('data-cookie-lifetime') || 7);
             setAllPreferences(true);
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Reject handler
-    rejectButtons.forEach(button => {
+    rejectbuttons.forEach(button => {
         button.addEventListener('click', () => {
             setCookie(cookieConsentPrefix, 'rejected', consentRoot?.getAttribute('data-reject-lifetime') || 1);
             setAllPreferences(false);

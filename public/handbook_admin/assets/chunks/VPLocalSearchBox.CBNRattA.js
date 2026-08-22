@@ -4245,7 +4245,7 @@ const Y = (o) => (Qt("data-v-43c4f204"), (o = o()), Ht(), o),
             Ee("Enter", (m) => {
                 if (
                     m.isComposing ||
-                    (m.target instanceof HTMLButtonElement &&
+                    (m.target instanceof HTMLbuttonElement &&
                         m.target.type !== "submit")
                 )
                     return;
@@ -4262,8 +4262,8 @@ const Y = (o) => (Qt("data-v-43c4f204"), (o = o()), Ht(), o),
             const p = ar({
                 modal: {
                     displayDetails: "Display detailed list",
-                    resetButtonTitle: "Reset search",
-                    backButtonTitle: "Close search",
+                    resetbuttonTitle: "Reset search",
+                    backbuttonTitle: "Close search",
                     noResultsText: "No results for",
                     footer: {
                         selectText: "to select",
@@ -4361,7 +4361,7 @@ const Y = (o) => (Qt("data-v-43c4f204"), (o = o()), Ht(), o),
                                                     {
                                                         class: "back-button",
                                                         title: j(p)(
-                                                            "modal.backButtonTitle",
+                                                            "modal.backbuttonTitle",
                                                         ),
                                                         onClick:
                                                             x[1] ||
@@ -4440,7 +4440,7 @@ const Y = (o) => (Qt("data-v-43c4f204"), (o = o()), Ht(), o),
                                                         type: "reset",
                                                         disabled: V.value,
                                                         title: j(p)(
-                                                            "modal.resetButtonTitle",
+                                                            "modal.resetbuttonTitle",
                                                         ),
                                                         onClick: I,
                                                     },

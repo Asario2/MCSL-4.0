@@ -1262,7 +1262,7 @@ const D = _({
     }),
     _o = b(fo, [["__scopeId", "data-v-39a288b8"]]),
     mo = _({
-        __name: "VPButton",
+        __name: "VPbutton",
         props: {
             tag: {},
             size: { default: "medium" },
@@ -1281,7 +1281,7 @@ const D = _({
                 $(
                     W(s.value),
                     {
-                        class: N(["VPButton", [n.size, n.theme]]),
+                        class: N(["VPbutton", [n.size, n.theme]]),
                         href: n.href ? i(fe)(n.href) : void 0,
                         target: e.target ?? (t.value ? "_blank" : void 0),
                         rel: e.rel ?? (t.value ? "noreferrer" : void 0),
@@ -3226,20 +3226,20 @@ function Un(o) {
     return s;
 }
 const Gn = ["aria-label"],
-    jn = { class: "DocSearch-Button-Container" },
+    jn = { class: "DocSearch-button-Container" },
     zn = v("span", { class: "vp-icon DocSearch-Search-Icon" }, null, -1),
-    qn = { class: "DocSearch-Button-Placeholder" },
+    qn = { class: "DocSearch-button-Placeholder" },
     Kn = v(
         "span",
-        { class: "DocSearch-Button-Keys" },
+        { class: "DocSearch-button-Keys" },
         [
-            v("kbd", { class: "DocSearch-Button-Key" }),
-            v("kbd", { class: "DocSearch-Button-Key" }, "K"),
+            v("kbd", { class: "DocSearch-button-Key" }),
+            v("kbd", { class: "DocSearch-button-Key" }, "K"),
         ],
         -1,
     ),
     ge = _({
-        __name: "VPNavBarSearchButton",
+        __name: "VPNavBarSearchbutton",
         setup(o) {
             const t = Un({
                 button: { buttonText: "Search", buttonAriaLabel: "Search" },
@@ -3250,7 +3250,7 @@ const Gn = ["aria-label"],
                     "button",
                     {
                         type: "button",
-                        class: "DocSearch DocSearch-Button",
+                        class: "DocSearch DocSearch-button",
                         "aria-label": i(t)("button.buttonAriaLabel"),
                     },
                     [

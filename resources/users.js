@@ -1,7 +1,7 @@
 function JumpMenu() {
     var l = document.getElementById("jmenu").value;
     if (document.getElementById("Loading_Layer")) {
-        // document.getElementById("Loading_Layer").style.display = "block";
+        document.getElementById("Loading_Layer").style.display = "block";
     }
     location.href = l;
 }
@@ -290,8 +290,8 @@ function scrollComments(postId2) {
         //console.log("Lade Kommentare f�r Post-ID:", postId); // Debugging
 
         if (isLoading) return; // Verhindert parallele Ladevorg�nge
-        isLoading = false;
-        // document.getElementById("loading-" + postId).style.display = "block"; // Ladeanzeige sichtbar machen
+        isLoading = true;
+        document.getElementById("loading-" + postId).style.display = "block"; // Ladeanzeige sichtbar machen
         try {
             take[postId] = take[postId] ?? 0;
             // Anfrage an den Server, um Kommentare zu laden
@@ -348,7 +348,7 @@ function scrollComments(postId2) {
             console.error("Fehler beim Laden der Kommentare:", error);
         } finally {
             // Ladeanzeige ausblenden und den Ladezustand zur�cksetzen
-            // document.getElementById("loading-" + postId).style.display = "none";
+            document.getElementById("loading-" + postId).style.display = "none";
             isLoading = false;
         }
     }
@@ -396,7 +396,7 @@ function DelLink(postId, commentId) {
         return " ";
     }
     const isConditionTrue = configElement.value == "true";
-    const csrfToken = document.getElementById("token").value;
+    const csrfToken = document.getElementById("csrf-token").value;
     if (!isConditionTrue) {
         return "";
     } else {
@@ -576,7 +576,7 @@ function initi_date() {
 }
 function createDeleteForm(postId, commentId) {
     // CSRF-Token aus dem HTML-Dokument holen
-    const csrfToken = document.getElementById("token").dataset.token;
+    const csrfToken = document.getElementById("csrf-token").dataset.token;
     const path = window.location.pathname; // Holt den Pfad der URL
     const segments = path.split("/").filter((segment) => segment); // Teilt den Pfad und entfernt leere Segmente
     table = segments[0] || "blog_posts";
@@ -736,15 +736,15 @@ function age_form(id, n, v, t) {
         // Verlasse das Feld (Blur) nach dem Speichern
         dateInput.addEventListener("blur", function () {
             const newValue = dateInput.value;
-//             console.log(document.getElementById("token")); // sollte <input ...> zeigen
-//             console.log(document.getElementById("token").value); // sollte den CSRF Token zeigen
 
             // AJAX-Anfrage senden
             fetch("/update-age", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": document.getElementById("token").value,
+                    "X-CSRF-TOKEN": document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content"),
                 },
                 body: JSON.stringify({
                     value: newValue,

@@ -113,7 +113,7 @@ class Shariff {
       })
       .map((serviceName) => services[serviceName](this))
 
-    this._addButtonList()
+    this._addbuttonList()
 
     if (
       this.options.backendUrl !== null &&
@@ -237,7 +237,7 @@ class Shariff {
   }
 
   // add html for button-container
-  _addButtonList() {
+  _addbuttonList() {
     var $buttonList = $('<ul/>').addClass(
       [
         'theme-' + this.options.theme,

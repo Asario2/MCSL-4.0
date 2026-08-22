@@ -428,14 +428,14 @@ function initializeDatePicker() {
     $k(".datetimepicker").datetimepicker({
         dateFormat: "dd.mm.yy", // Deutsches Datumsformat: Tag.Monat.Jahr
         timeFormat: "HH:mm:ss", // Deutsches Zeitformat: Stunden:Minuten
-        currentText: "Jetzt", // Button für aktuelle Uhrzeit
-        closeText: "Schließen", // Schließen-Button
+        currentText: "Jetzt", // button für aktuelle Uhrzeit
+        closeText: "Schließen", // Schließen-button
         timeOnlyTitle: "Zeit auswählen",
         timeText: "Zeit",
         hourText: "Stunde",
         minuteText: "Minute",
         secondText: "Sekunde",
-        showButtonPanel: true,
+        showbuttonPanel: true,
         separator: " ",
     });
 }
@@ -444,14 +444,14 @@ function initializeDatePicker() {
     // $k(".datetimepicker").datetimepicker({
     //     dateFormat: "dd.mm.yy", // Deutsches Datumsformat: Tag.Monat.Jahr
     //     timeFormat: "HH:mm:ss", // Deutsches Zeitformat: Stunden:Minuten
-    //     currentText: "Jetzt", // Button für aktuelle Uhrzeit
-    //     closeText: "Schließen", // Schließen-Button
+    //     currentText: "Jetzt", // button für aktuelle Uhrzeit
+    //     closeText: "Schließen", // Schließen-button
     //     timeOnlyTitle: "Zeit auswählen",
     //     timeText: "Zeit",
     //     hourText: "Stunde",
     //     inuteText: "Minute",
     //     secondText: "Sekunde",
-    //     showButtonPanel: true,
+    //     showbuttonPanel: true,
     //     separator: " ",
     // });
 }
@@ -902,7 +902,7 @@ function senddata(table, column, id, value) {
 function updateViews(id) {
     const $datetimeInput = $("#datetimes_" + id + "");
     const $infinityText = $("#infinityTexts_" + id + "");
-    const $toggleButton = $("#toggleDatetimes_" + id + "");
+    const $togglebutton = $("#toggleDatetimes_" + id + "");
     const $ini_btn = $("#ini_btn_" + id + "_");
     const value = $datetimeInput.val();
     if (!value) {
@@ -917,12 +917,12 @@ function inf(id) {
     // Initial überprüfen
     const $datetimeInput = $("#datetimes_" + id + "");
     const $infinityText = $("#infinityTexts_" + id + "");
-    const $toggleButton = $("#toggleDatetimes_" + id + "");
+    const $togglebutton = $("#toggleDatetimes_" + id + "");
     const $ini_btn = $("#ini_btn_" + id + "_inf2");
     updateViews(id);
 
     // Event: Beim Klick auf das Icon den Datepicker öffnen
-    $toggleButton.on("click", function (e) {
+    $togglebutton.on("click", function (e) {
         e.preventDefault();
         $datetimeInput.show().focus(); // Zeige den Datetime-Picker und öffne ihn
         $infinityText.hide();
@@ -955,19 +955,19 @@ function inf(id) {
     });
 }
 function BTNRESET(id) {
-    // Definiere den HTML-Code des Buttons
+    // Definiere den HTML-Code des buttons
     const inf2 = "inf2"; // Beispielwert
     const disp = "block"; // Sichtbarkeit (z. B. "block" oder "none")
     const $datetimeInput = $("#datetimepicker_" + id + inf2 + "");
     const $infinityText = $("#infinityTexts_" + id + "");
-    const $toggleButton = $("#toggleDatetimes_" + id + "");
+    const $togglebutton = $("#toggleDatetimes_" + id + "");
     const $ini_btn = $("#ini_btn_" + id + "_inf2");
     const added = `<button style="display:block;" class="btn btn-default infinit" id="ini_btn_${id}_${inf2}">Unendlich ${id}</button>`;
     $licon = $("#licon_" + id + "_" + inf2);
-    // Füge den Button an ein Ziel-Element an
+    // Füge den button an ein Ziel-Element an
     // $("#datetimepicker_" + id).append(added);
 
-    // Optional: Event an den neuen Button anhängen
+    // Optional: Event an den neuen button anhängen
     $(document).on("click", "#ini_btn_" + id + "_" + inf2 + "", function () {
         $infinityText.show();
         // $datetimeInput.val("tt.mm.jjjj --:--");
@@ -1065,7 +1065,7 @@ function upload_filez(id, action, ad) {
         }
     }
     // Submit-Funktion
-    $k(`#submitButton_${id}`).on("click", function (e) {
+    $k(`#submitbutton_${id}`).on("click", function (e) {
         e.preventDefault();
         // console.log("uploadForm" + ad);
         const form = document.getElementById("uploadForm" + ad);
