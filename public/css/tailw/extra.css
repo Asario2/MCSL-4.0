@@ -363,7 +363,7 @@ background: unset;
 border-radius: 0;
 font-size: unset;
 [type='file']:focus {
-outline: 1px solid ButtonText;
+outline: 1px solid buttonText;
 outline: 1px auto -webkit-focus-ring-color;
 .container {
 width: 100%;
