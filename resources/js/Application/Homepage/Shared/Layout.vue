@@ -25,7 +25,7 @@
             <!-- Header -->
 
 <nav class="fixed top-0 left-0 right-0 z-30 bg-layout-sun-50 text-layout-sun-900 dark:bg-layout-night-50 dark:text-layout-night-900 border-b border-layout-sun-200 dark:border-layout-night-200" style="z-index:50;">
-    <div class="container mx-auto max-w-6xl p-6 lg:flex lg:items-center lg:justify-between" style="z-index:50;">
+    <div class="container mx-auto max-w-6xl p-4 lg:flex lg:items-center lg:justify-between" style="z-index:50;">
 
         <div class="flex items-center justify-between">
 
@@ -68,7 +68,7 @@
             style="z-index:10000000;"
         >
 
-            <div class="flex flex-col items-center w-full space-y-4 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-3">
+            <div class="flex flex-col items-center w-full space-y-4 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-3 lg:flex-nowrap">
 
                 <LinkHeader :route-name="route('home.index')" name="Home" />
                 <LinkHeader :route-name="route('home.blog.index')" name="Mein Blog" />
@@ -591,7 +591,7 @@
             try {
                     const { data } = await axios.get('/api/mcslpoints/');
                     this.mcslpoints = data; // automatisch reaktiv
-                  
+
                 } catch (err) {
                     console.error('Fehler beim Laden der MCSL Points:', err);
                 }

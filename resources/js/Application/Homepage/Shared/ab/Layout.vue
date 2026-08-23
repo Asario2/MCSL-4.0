@@ -41,10 +41,10 @@
 <!-- Mobile Menu -->
 <div
     :class="isOpen_Menu ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full'"
-    class="absolute inset-x-0 mt-6 w-full px-6 py-4 shadow-md transition-all duration-300 ease-in-out bg-primary-sun-0 dark:bg-primary-night-0 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent z-[10000000]"
+    class="absolute inset-x-0 mt-6 w-full px-0  py-0 shadow-md transition-all duration-300 ease-in-out bg-primary-sun-0 dark:bg-primary-night-0 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent z-[10000000]"
 >
     <div
-        class="flex flex-col items-center w-full space-y-4 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-3 z-[10000000]"
+        class="flex flex-col items-center w-full space-y-2 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-1 z-[10000000]"
     >
     <link-header :route-name="route('home.index')" name="Home"></link-header>
     <link-header :route-name="route('home.blog.index')" name="Mein Blog"></link-header>
@@ -473,7 +473,7 @@
     async mounted() {
            this.applyTheme();
 this.loadmcslpoints(); // initial
-        
+
 
         if(typeof window !== "undefined"){
     const params = new URLSearchParams(window.location.search);
@@ -577,12 +577,12 @@ this.loadmcslpoints(); // initial
             try {
                     const { data } = await axios.get('/api/mcslpoints/');
                     this.mcslpoints = data; // automatisch reaktiv
-                  
+
                 } catch (err) {
                     console.error('Fehler beim Laden der MCSL Points:', err);
                 }
-            },    
-        
+            },
+
         mupper(text) {
                return text;
             },
