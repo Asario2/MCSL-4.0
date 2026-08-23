@@ -288,6 +288,7 @@ if (!cachen.pending) cachen.pending = {};
  * @returns {Promise<number>} 0 oder 1
  */
 export async function CheckTRights(right, table) {
+
     const cacheKey = `${right}_${table}`;
 
     // 1. Cache vorhanden?
@@ -300,13 +301,20 @@ export async function CheckTRights(right, table) {
         return cachen.pending[cacheKey];
     }
 
-    // 3. URL für Browser / SSR
+    // 3. Host ermitteln
     const baseURL =
         typeof window !== 'undefined'
             ? window.location.origin
-            : (process.env.APP_URL || 'http://localhost');
+            : process.env.APP_URL;
+
+    if (!baseURL) {
+        console.error('CheckTRights: Kein Host verfügbar!');
+        return Promise.resolve(0);
+    }
 
     const url = `${baseURL}/api/user/rights/des/${table}/${right}`;
+
+    console.log('CheckTRights URL:', url);
 
     // 4. Request starten
     const request = axios.get(url)
@@ -317,7 +325,10 @@ export async function CheckTRights(right, table) {
         })
         .catch(err => {
             delete cachen.pending[cacheKey];
+
             console.error('CheckTRights Error:', err);
+            console.error('CheckTRights URL:', url);
+
             return 0;
         });
 
@@ -895,6 +906,8 @@ export function rumLaut(input, table = '') {
     str = str.replace(/â€“/g, '-');
     str = str.replace(/Ãâ/gi,"Ä");
     str = str.replace(/ÃÅ/gi,"Ü");
+    str = str.replace(/Â§Â§/gi,"§");
+
     // 5. HTML Entities dekodieren (basic)
     // const txt = document?.createElement("textarea");
     // txt.innerHTML = str;

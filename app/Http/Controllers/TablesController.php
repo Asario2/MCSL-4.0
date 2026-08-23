@@ -3649,37 +3649,46 @@ return response()->json($user);
             "roles"=>$this->GetAdmins($urid),
         ]);
     }
-   public function GetURights(Request $request)
-{
-    $urid = $request->input('urid');
+    public function GetURights(Request $request)
+    {
+        $urid = $request->input('urid');
 
-    if (!$urid) {
+        if (!$urid) {
+            return response()->json(['rights' => []]);
+        }
+
+        $rights = DB::table('users_rights')
+            ->where('id', $urid)
+            ->first();
+
+        if (!$rights) {
+            return response()->json(['rights' => []]);
+        }
+
+        $data = (array) $rights;
+
+        $result = [];
+
+        foreach ($data as $key => $value) {
+            if (
+                in_array($key, [
+                    'view_table',
+                    'add_table',
+                    'edit_table',
+                    'publish_table',
+                    'date_table',
+                    'delete_table',
+                ]) ||
+                str_starts_with($key, 'xkis_')
+            ) {
+                $result[$key] = (string) ($value ?? '');
+            }
+        }
+
         return response()->json([
-            'rights' => []
+            'rights' => $result
         ]);
     }
-
-    $rights = DB::table('users_rights')
-        ->where('id', $urid)
-        ->first();
-
-    if (!$rights) {
-        return response()->json([
-            'rights' => []
-        ]);
-    }
-
-    return response()->json([
-        'rights' => [
-            'view_table'    => (string) ($rights->view_table ?? ''),
-            'add_table'     => (string) ($rights->add_table ?? ''),
-            'edit_table'    => (string) ($rights->edit_table ?? ''),
-            'publish_table' => (string) ($rights->publish_table ?? ''),
-            'date_table'    => (string) ($rights->date_table ?? ''),
-            'delete_table'  => (string) ($rights->delete_table ?? ''),
-        ]
-    ]);
-}
     public function getRoles(Request $request)
     {
         $urid  = $request->urid ? $request->urid : "0";
