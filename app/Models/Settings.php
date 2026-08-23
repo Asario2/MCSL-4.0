@@ -144,7 +144,7 @@
         'about_en' => 'Über dich Englisch',
         'website' => 'Website',
         'fbd' => 'facebook ID',
-        'typus'=> "Status",
+        'typus' => 'Status',
         'xis_disabled' => 'Benutzer deaktivieren',
         'CommentsEdit' => 'Alle Felder bearbeiten',
         'wohnort' => 'Wohnort',
@@ -165,7 +165,7 @@
         'StatisticsAll' => 'Statistiken alle Domains',
         'UserDisable' => 'Benutzer deaktivieren',
         'SQLUpdate' => 'Datenbank Synchronisieren',
-            'UnusedImages' => 'Unbenutzte Bilder Galerie',
+        'UnusedImages' => 'Unbenutzte Bilder Galerie',
         'hackinglog' => 'Hacking Log',
         'DumpDB' => 'Datenbank Sicherung',
         'Ausgaben' => 'Ein / Ausgaben',
@@ -173,6 +173,7 @@
         'ActivityLog' => 'All actions in one List',
         'FontographerToolz' => 'Schriftartentool',
         'SitemapGenerator' => 'Generate Sitemap for Google',
+        'GoogleSitemap' => 'Sitemaps für Google',
     ];
     public static array $regdom =   ['ab'=>true];
     public static array $domss =   ['ab',"mfx","dag","chh","pna"];
@@ -534,7 +535,6 @@ public static array $mariaDBs = [
     "ab"=>"mariadb",
     "dag"=>"mariadb_dag",
     "mfx"=>"mariadb_mfx",
-    "chh"=>"mariadb_chh",
     "pna"=>"mariadb_pna"
 ];
     public static array $nostats = [

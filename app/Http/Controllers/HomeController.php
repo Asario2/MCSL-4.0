@@ -1344,7 +1344,7 @@ public function imprint_dag()
     }
         public function contacts_pna(){
         $text = DB::connection("mariadb_pna")->table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
-        $contacts = DB::connection("mariadb_pna")->table("texts")->where("autoslug", "ContactsInfos")->select('headline', 'text')->first();
+        $contacts = DB::connection("mariadb")->table("kontaktdaten")->where("dom", "pna")->first();
         // \Log::info("TT:".json_encode($text));
 
         return Inertia::render('Homepage/pna/contacts', [
