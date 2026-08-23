@@ -9,18 +9,18 @@
 <address>
 <br />
 <div class='subheader'>
-<span class="fn">Paul Rieser</span><br />
-<span class="adr">Dorfplatz 10<br />
-<span class='postalCode'>24576</span> <span class="locality">Bimöhlen</span><br /><br />
+<span class="fn">Paul Nadler</span><br />
+<span class="adr">In der Pampa 2<br />
+<span class='postalCode'>54321</span> <span class="locality">Brandenburg</span><br /><br />
 <h6 class='suu'>Vertreten Durch:</h6><br />
-<span class="fn">Paul Rieser</span><br /><br />
+<span class="fn">Paul Nadler</span><br /><br />
 <h6 class='suu'>Kontakt:</h6><br />
-Tel: +49 1627716325<br />
-Email: <a class='l' href='mailto:paul.rieser@marblefx.net'>paul.rieser[at]marblefx.net</a><br /><br />
+Tel: +49 174 5364378<br />
+Email: <a class='l' href='mailto:p.nadler@marblefx.net'>p.nadler[at]marblefx.net</a><br /><br />
 <h6 class='suu'>Verantwortlich für:</h6><br />
-<span class="fn">Paul Rieser</span><br />
-<span class="adr">Dorfplatz 10<br />
-<span class='postalCode'>24576</span> <span class="locality">Bimöhlen</span><br />
+<span class="fn">Paul Nadler</span><br />
+<span class="adr">In der Pampa 2<br />
+<span class='postalCode'>54321</span> <span class="locality">Brandenburg</span><br />
 </div>
 </address>
 </div>
@@ -61,11 +61,11 @@ Sollten Sie Fragen zum Datenschutz oder zur Verarbeitung Ihrer personenbezogenen
 <span style='font-size:1.2em;'><a style='font-size:1.2em;' href='https://www.marblefx.de'>MarbleFX</a> - Webdesign von Morgen schon Heute</span><br /><br />
 <div class="vcard">
 <address>
-<span class="fn">Paul Rieser</span><br />
-<span class="adr">Dorfplatz 10<br />
-<span class='postalCode'>24576</span> <span class="locality">Bimöhlen</span><br /><br />
-Email: <a class='l' href='mailto:paul.rieser@marblefx.net'>paul.rieser[at]marblefx.net</a><br />
-Tel. +49 1627716325<br /><br />
+<span class="fn">Paul Nadler</span><br />
+<span class="adr">In der Pampa 2<br />
+<span class='postalCode'>54321</span> <span class="locality">Brandenburg</span><br /><br />
+Email: <a class='l' href='mailto:p.nadler@marblefx.net'>p.nadler[at]marblefx.net</a><br />
+Tel. +49 174 5364378<br /><br />
 <div class="flex items-center gap-2">
 <span>Diese Seite ist</span>
 <a href="https://www.marblefx.net/powered-by-mcs" class="inline-flex items-center gap-2">
