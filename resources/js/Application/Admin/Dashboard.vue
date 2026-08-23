@@ -136,7 +136,20 @@
 
                 <template #description> Datenbanken Synchronisieren </template>
             </navigation-card>
-            <navigation-card v-if="modulRights?.FontographerToolz"
+            <navigation-card v-if="modulRights?.ActivityLog"
+                class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
+                title="Activity Log"
+                :routeName="route('admin.actlog')"
+                linkName="zum ActivityLog"
+                target="_self"
+                :withIcon="true"
+                icon="IconActLog"
+            >
+                <template #description>
+                    Activity Log
+                </template>
+            </navigation-card>
+            <navigation-card v-if="modulRights?.GoogleSitemap"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
                 title="Google Sitemap"
                 linkName="Aktualisiere Sitemaps"
@@ -188,20 +201,6 @@
 
                 <template #description> MCSL Intrusion Detection System</template>
             </navigation-card>
-            <navigation-card v-if="modulRights?.ActivityLog"
-                class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"
-                title="Activity Log"
-                :routeName="route('admin.actlog')"
-                linkName="zum ActivityLog"
-                target="_self"
-                :withIcon="true"
-                icon="IconActLog"
-            >
-                <template #description>
-                    Activity Log
-                </template>
-            </navigation-card>
-
             <!-- User Rights -->
             <navigation-card v-if="modulRights?.UserRights"
                 class="navigation_card p-4 rounded-md bg-layout-sun-100 dark:bg-layout-night-100"

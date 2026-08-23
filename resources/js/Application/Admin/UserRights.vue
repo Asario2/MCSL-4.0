@@ -805,49 +805,57 @@ async saveRights() {
             type: 'error'
         });
     }
-},  
+},
     // --- Funktionen ---
     async loadFunctions(urid) {
+    try {
+        console.log('=== LOAD FUNCTIONS START ===');
+        console.log('URID:', urid);
 
-try {
-    const res = await axios.get(`/admin/user-rights/get?urid=${urid}`);
+        const res = await axios.get(`/admin/user-rights/get?urid=${urid}`);
 
-    // 🛡️ Safety fallback
-    const data = res.data || {};
+        console.log('API RESPONSE:', res.data);
 
-    // 🔑 Rechte-Root
-    const rights = data.rights ?? data ?? {};
+        const data = res.data || {};
+        const rights = data.rights ?? data ?? {};
 
-    // 🎯 NUR Funktionsrechte
-    const functions = Object.entries(rights)
-    .filter(([key]) => key.startsWith("xkis_"))
-    .sort((a, b) => a[0].localeCompare(b[0]));
+        console.log('RIGHTS:', rights);
+        console.log('RIGHT KEYS:', Object.keys(rights));
 
-    // 📦 reine Anzeige-Map (nicht editierbar)
-    this.lf = Object.fromEntries(functions);
+        const functions = Object.entries(rights)
+            .filter(([key]) => key.startsWith('xkis_'))
+            .sort(([a], [b]) => a.localeCompare(b));
 
-    // 🏷️ Labels (nur wenn vorhanden)
-    if (data.labels) {
-    this.labels = data.labels;
+        console.log('XKIS FUNCTIONS:', functions);
+        console.log('FUNCTION COUNT:', functions.length);
+
+        this.lf = Object.fromEntries(functions);
+
+        if (data.labels) {
+            this.labels = data.labels;
+        }
+
+        const local = {};
+
+        for (const [key, value] of functions) {
+            local[key] = Number(value);
+        }
+
+        this.localFunc = local;
+
+        console.log('LF:', this.lf);
+        console.log('LOCALFUNC:', this.localFunc);
+        console.log('LABELS:', this.labels);
+        console.log('SETTINGS EXL:', this.settings?.exl);
+        console.log('=== LOAD FUNCTIONS END ===');
+
+    } catch (e) {
+        console.error('=== LOAD FUNCTIONS ERROR ===');
+        console.error('ERROR:', e);
+        console.error('STATUS:', e.response?.status);
+        console.error('DATA:', e.response?.data);
     }
-
-    // ✏️ EDITIERBARE Kopie (deep + reaktiv)
-    const local = {};
-    for (const [key, value] of functions) {
-    local[key] = Number(value); // wichtig: 0 / 1 erzwingen
-    }
-
-    this.localFunc = local;
-
-    // 🧠 optional: Debug
-    // console.log("LF", this.lf);
-    // console.log("LOCALFUNC", this.localFunc);
-
-} catch (e) {
-    console.error("loadFunctions failed", e);
-}
-}
-,
+},
 
     handleClickOutside(event) {
     this.users.forEach(u => {
