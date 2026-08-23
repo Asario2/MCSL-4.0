@@ -7,7 +7,7 @@
                 <div>
                     <page-title>
                         <template #title>
-                            <span class="dark:text-layout-night-900 text-layout-sun-1000 ">
+                            <span class="!border-0 dark:text-layout-night-900 text-layout-sun-1000 ">
                                 {{ text?.headline }}
                             </span>
                             &nbsp;
@@ -22,8 +22,7 @@
                             class="bg-layout-sun-100 dark:bg-layout-night-50
                                     text-layout-sun-1000 dark:text-layout-night-1000
                                    lg:rounded-lg p-2 mb-6
-                                   border border-layout-sun-1000
-                                   dark:border-layout-night-1000 em_bg">
+                                   !border-0">
                             <div
                                 v-if="text"
                                 class="text-layout-sun-1000 dark:text-layout-night-900 p-3"
@@ -43,22 +42,37 @@
 
                             <!-- LINKS -->
                             <div class="col-span-12 md:col-span-6">
-
-                                <h2
-                                    v-html="contacts.headline"
-                                    class="text-xl font-semibold mb-2 mt-0"
-                                ></h2>
-
                                 <section
                                     class="bg-layout-sun-100 dark:bg-layout-night-50
                                            border border-layout-sun-1000
                                            dark:border-layout-night-1050
                                            rounded-lg p-3"
                                 >
-                                    <p
-                                        v-html="rumLaut(contacts.text)"
+                                    <span
                                         class="text-layout-sun-900 dark:text-layout-night-900"
-                                    ></p>
+                                    >
+                                    <h2 class="text-xl font-semibold mb-2 mt-0">Kontaktdaten</h2>
+                                    <span>
+                                        {{ contacts.name }}<br />
+                                        {{ contacts.an }}:<br />
+                                        {{ contacts.strasse }}<br />
+                                        {{ contacts.plz }} {{ contacts.ort }}<br />
+                                        Email:
+                                        <a :href="`mailto:${contacts.email}`">
+                                            {{ hideEmail(contacts.email) }}
+                                        </a>
+                                        <br />
+                                        <span v-if="contacts.festnetz">
+                                            Festnetz: {{contacts.festnetz}}<br />
+                                        </span>
+                                        <span v-if="contacts.mobil">
+                                            Mobil: {{ contacts.mobil }}<br />
+                                        </span>
+                                        <span v-if="contacts.fax">
+                                            Fax: {{ contacts.fax }}<br />
+                                        </span>
+                                    </span>
+                                    </span>
 
                                     <div class="relative">
                                         <img
@@ -152,6 +166,10 @@
             mupper(text) {
                return text;
             },
+            hideEmail(email) {
+      if (!email) return "";
+      return email.replace(/@/, " [at] ");
+    },
     cleanHtml(html) {
         const result = rumLaut(html);
         const resu = stripTags(result);
