@@ -86,7 +86,7 @@ class ExportPrivacyMarkdown extends Command
     }
     function vcard($dom)
     {
-        $data = DB::table("genxlo.kontaktdaten")->where("dom",$dom)->first();
+        $data = DB::connection('mariadb')->table("kontaktdaten")->where("dom",$dom)->first();
         $xx = VCardHelper::buildVCard((array) $data);
 
 

@@ -9,11 +9,10 @@ use App\Models\Settings;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 
-
 class GenerateSitemap extends Command
 {
     protected $signature = 'sitemap:generate {SD}';
-    protected $description = 'Generate sitemap.xml from all public GET routes and dynamic picture subpages (filtered by subdomain middleware)';
+    protected $description = 'Generate sitemap.xml from all public GET routes and dynamic pages';
 
     public function handle()
     {
@@ -21,155 +20,258 @@ class GenerateSitemap extends Command
 
         $currentSD = $this->argument('SD');
         $conn = Settings::$mariaDBs[$currentSD];
+        $globalRoutes = ['home/privacy'];
 
-        $globalRoutes = [
-            'home/privacy',
-        ];
-
-
-        // === 1️⃣ Statische Laravel-Routen erfassen ===
         $routes = collect(Route::getRoutes())
-           ->filter(function ($route) use ($currentSD, $globalRoutes) {
-            if (!in_array('GET', $route->methods()) || str_contains($route->uri(), '{')) {
-                return false;
-            }
-
-            if (str_starts_with($route->uri(), 'api/') || $route->uri() == "/home/terms") {
-                return false;
-            }
-
-            // ❌ Admin / Auth etc. raus
-            $middlewares = $route->gatherMiddleware();
-            $excluded = ['is_admin', 'auth', 'verified'];
-            foreach ($excluded as $mw) {
-                if (in_array($mw, $middlewares)) {
+            ->filter(function ($route) use ($currentSD, $globalRoutes) {
+                if (!in_array('GET', $route->methods()) || str_contains($route->uri(), '{')) {
                     return false;
                 }
-            }
 
-            // ✅ 1. GLOBAL ROUTES explizit erlauben
-            if (in_array($route->uri(), $globalRoutes)) {
-                return true;
-            }
+                if (str_starts_with($route->uri(), 'api/') || $route->uri() == 'home/terms') {
+                    return false;
+                }
 
-            // ✅ 2. CheckSubd Middleware prüfen
-            foreach ($middlewares as $mw) {
-                if (is_string($mw) && str_starts_with($mw, \App\Http\Middleware\CheckSubd::class)) {
+                $middlewares = $route->gatherMiddleware();
 
-                    $parts = explode(':', $mw, 2);
-
-                    if (count($parts) === 2) {
-                        $allowed = explode(',', $parts[1]);
-                        return in_array($currentSD, $allowed);
+                foreach (['is_admin', 'auth', 'verified'] as $mw) {
+                    if (in_array($mw, $middlewares)) {
+                        return false;
                     }
-
-                    return false;
                 }
-            }
 
-            // ❌ Alles andere fliegt raus
-            return false;
-        })
+                if (in_array($route->uri(), $globalRoutes)) {
+                    return true;
+                }
+
+                foreach ($middlewares as $mw) {
+                    if (is_string($mw) && str_starts_with($mw, \App\Http\Middleware\CheckSubd::class)) {
+                        $parts = explode(':', $mw, 2);
+
+                        if (count($parts) === 2) {
+                            return in_array($currentSD, explode(',', $parts[1]));
+                        }
+
+                        return false;
+                    }
+                }
+
+                return false;
+            })
             ->map(fn($route) => url($route->uri()))
             ->unique()
             ->values();
 
-        if(Schema::connection($conn)->hasTable("image_categories") && $currentSD === "ab")
-        {
-        // === 2️⃣ Dynamische Picture-Seiten ergänzen ===
-        $pictures = DB::connection($conn)->table('image_categories')
-            ->where("pub","1")
-            ->select('name as slug', 'updated_at')
-            ->get(); // Erst get() liefert Collection
+        $pictureLinks = collect();
+        $blogsLinks = collect();
+        $infosLinks = collect();
 
-        $pictureLinks = $pictures->map(function ($p) use ($currentSD) {
-            return [
-                'loc' => $this->EXTR_LNK(url('/home/show/pictures/' . $p->slug), $currentSD),
-                'lastmod' => $p->updated_at ?? now(),
-            ];
-        });
+        // === PICTURE-SEITEN ===
+        if (
+            ($currentSD === 'ab' || $currentSD === 'pna') &&
+            Schema::connection($conn)->hasTable('image_categories') &&
+            Schema::connection($conn)->hasTable('images')
+        ) {
+            $pictures = DB::connection($conn)
+                ->table('image_categories')
+                ->where('pub', 1)
+                ->select('id', 'name as slug', 'updated_at')
+                ->get();
+
+            $perPage = (int)(Settings::$image_pages[$currentSD] ?? 10);
+
+            foreach ($pictures as $p) {
+
+                $slug = $currentSD === 'ab'
+                    ? $p->slug
+                    : strtolower($p->slug);
+
+                $baseUrl = $currentSD === 'ab'
+                    ? url('/home/show/pictures/' . $slug)
+                    : url('/' . $slug);
+
+                $baseUrl = $this->EXTR_LNK($baseUrl, $currentSD);
+
+                $imcount = DB::connection($conn)
+                    ->table('images')
+                    ->where('pub', 1)
+                    ->where('image_categories_id', $p->id)
+                    ->count();
+
+                $this->info(
+                    "Kategorie: {$slug} | ID: {$p->id} | Bilder: {$imcount} | pro Seite: {$perPage}"
+                );
+
+                $pictureLinks->push([
+                    'loc' => $baseUrl,
+                    'lastmod' => $p->updated_at ?? now(),
+                ]);
+
+                if ($perPage > 0 && $imcount > $perPage) {
+
+                    $pages = (int)ceil($imcount / $perPage);
+
+                    $this->info("  -> {$pages} Seiten");
+
+                    for ($page = 2; $page <= $pages; $page++) {
+
+                        $pageUrl = $baseUrl . '?page=' . $page;
+
+                        $this->info("  -> {$pageUrl}");
+
+                        $pictureLinks->push([
+                            'loc' => $pageUrl,
+                            'lastmod' => $p->updated_at ?? now(),
+                        ]);
+                    }
+                }
+            }
+
+            $pictureLinks = $pictureLinks
+                ->unique('loc')
+                ->values();
         }
-        if($currentSD == "mfx")
-        {
-        // === 2️⃣ Dynamische Picture-Seiten ergänzen ===
-        $infos = DB::connection($conn)->table('infos')
-            ->where("pub","1")
-            ->select('id as slug', 'updated_at')
-            ->get(); // Erst get() liefert Collection
 
-        $infosLinks = $infos->map(function ($p) use ($currentSD) {
-            return [
-                'loc' => $this->EXTR_LNK(url('/home/infos/show/' . $p->slug), $currentSD),
-                'lastmod' => $p->updated_at ?? now(),
-            ];
-        });
+        // === INFOS ===
+        if ($currentSD === 'mfx' && Schema::connection($conn)->hasTable('infos')) {
+            $infos = DB::connection($conn)
+                ->table('infos')
+                ->where('pub', '1')
+                ->select('id as slug', 'updated_at')
+                ->get();
+
+            $infosLinks = $infos->map(function ($p) use ($currentSD) {
+                return [
+                    'loc' => $this->EXTR_LNK(
+                        url('/home/infos/show/' . $p->slug),
+                        $currentSD
+                    ),
+                    'lastmod' => $p->updated_at ?? now(),
+                ];
+            });
         }
-        if($currentSD == "ab")
-        {
-        // === 2️⃣ Dynamische Picture-Seiten ergänzen ===
-        $blogs = DB::connection($conn)->table('blogs')
-            ->where("pub","1")
-            ->select('autoslug as slug', 'updated_at')
-            ->get(); // Erst get() liefert Collection
 
-        $blogsLinks = $blogs->map(function ($p) use ($currentSD) {
-            return [
-                'loc' => $this->EXTR_LNK(url('/blogs/show/' . $p->slug), $currentSD),
-                'lastmod' => $p->updated_at ?? now(),
-            ];
-        });
+        // === BLOGS ===
+        if ($currentSD === 'ab' && Schema::connection($conn)->hasTable('blogs')) {
+            $blogs = DB::connection($conn)
+                ->table('blogs')
+                ->where('pub', '1')
+                ->select('autoslug as slug', 'updated_at')
+                ->get();
+
+            $blogsLinks = $blogs->map(function ($p) use ($currentSD) {
+                return [
+                    'loc' => $this->EXTR_LNK(
+                        url('/blogs/show/' . $p->slug),
+                        $currentSD
+                    ),
+                    'lastmod' => $p->updated_at ?? now(),
+                ];
+            });
         }
-        // === 3️⃣ XML zusammenbauen ===
-        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset/>');
-        $xml->addAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
-        // Statische Routen hinzufügen
-        foreach ($routes as $link) {
+        // === XML ===
+        $xml = new \SimpleXMLElement(
+            '<?xml version="1.0" encoding="UTF-8"?><urlset/>'
+        );
+
+        $xml->addAttribute(
+            'xmlns',
+            'http://www.sitemaps.org/schemas/sitemap/0.9'
+        );
+
+        $usedUrls = [];
+
+        foreach ($routes->unique() as $link) {
+            $link = $this->EXTR_LNK($link, $currentSD);
+
+            if (in_array($link, $usedUrls)) {
+                continue;
+            }
+
+            $usedUrls[] = $link;
+
             $url = $xml->addChild('url');
-            $url->addChild('loc', htmlspecialchars($this->EXTR_LNK($link, $currentSD), ENT_XML1));
+            $url->addChild('loc', htmlspecialchars($link, ENT_XML1));
             $url->addChild('lastmod', now()->toAtomString());
             $url->addChild('changefreq', 'weekly');
             $url->addChild('priority', '0.5');
         }
-        if(Schema::connection($conn)->hasTable("image_categories") && $currentSD === "ab"){
-        // Dynamische Picture-Seiten hinzufügen
+
         foreach ($pictureLinks as $entry) {
+            if (in_array($entry['loc'], $usedUrls)) {
+                continue;
+            }
+
+            $usedUrls[] = $entry['loc'];
+
             $url = $xml->addChild('url');
             $url->addChild('loc', htmlspecialchars($entry['loc'], ENT_XML1));
-            $url->addChild('lastmod', Carbon::parse($entry['lastmod'])->toAtomString());
+            $url->addChild(
+                'lastmod',
+                Carbon::parse($entry['lastmod'])->toAtomString()
+            );
             $url->addChild('changefreq', 'weekly');
             $url->addChild('priority', '0.7');
         }
-        }
-        if(Schema::connection($conn)->hasTable("blogs")){
-        // Dynamische Picture-Seiten hinzufügen
+
         foreach ($blogsLinks as $entry) {
+            if (in_array($entry['loc'], $usedUrls)) {
+                continue;
+            }
+
+            $usedUrls[] = $entry['loc'];
+
             $url = $xml->addChild('url');
             $url->addChild('loc', htmlspecialchars($entry['loc'], ENT_XML1));
-            $url->addChild('lastmod', Carbon::parse($entry['lastmod'])->toAtomString());
+            $url->addChild(
+                'lastmod',
+                Carbon::parse($entry['lastmod'])->toAtomString()
+            );
             $url->addChild('changefreq', 'weekly');
             $url->addChild('priority', '0.6');
         }
-        }
-         if($currentSD == "mfx"){
-        // Dynamische Picture-Seiten hinzufügen
+
         foreach ($infosLinks as $entry) {
+            if (in_array($entry['loc'], $usedUrls)) {
+                continue;
+            }
+
+            $usedUrls[] = $entry['loc'];
+
             $url = $xml->addChild('url');
             $url->addChild('loc', htmlspecialchars($entry['loc'], ENT_XML1));
-            $url->addChild('lastmod', Carbon::parse($entry['lastmod'])->toAtomString());
+            $url->addChild(
+                'lastmod',
+                Carbon::parse($entry['lastmod'])->toAtomString()
+            );
             $url->addChild('changefreq', 'monthly');
             $url->addChild('priority', '0.7');
         }
-        }
-        // === 4️⃣ Datei speichern ===
-        $path = public_path("sitemap." . $currentSD . "_v2.xml");
+
+        $path = public_path('sitemap.' . $currentSD . '_v2.xml');
+
         $xml->asXML($path);
 
-        $this->info("✅ Sitemap für Subdomain {$currentSD} erstellt: {$path}");
+        $this->info(
+            "✅ Sitemap für Subdomain {$currentSD} erstellt: {$path}"
+        );
     }
 
-    function EXTR_LNK($url, $sd)
+    private function EXTR_LNK($url, $sd)
     {
-        return str_replace(["http://localhost/","http://test.mcs/","http://chh.test.mcs","http://mfx.test.mcs","http://dag.test.mcs","http://ab.test.mcs"], "https://" . Settings::$dom[$sd], $url);
+        return str_replace(
+            [
+                'http://localhost/',
+                'http://test.mcs/',
+                'http://chh.test.mcs',
+                'http://mfx.test.mcs',
+                'http://dag.test.mcs',
+                'http://ab.test.mcs',
+                'http://pna.test.mcs'
+            ],
+            'https://' . Settings::$dom[$sd],
+            $url
+        );
     }
 }
