@@ -1,16 +1,20 @@
     <template>
         <template v-if="routeName">
+            <!-- <span v-if="isFirst">&nbsp;&nbsp;</span> -->
             <Link
             :href="routeName"
             class="text-layout-sun-600 dark:text-layout-night-900 cursor-pointer inline-block
                 rounded-lg px-2 py-1 text-sm text-layout-sun-700 hover:bg-layout-sun-200
                 hover:text-layout-sun-900 dark:text-layout-night-1050 dark:hover:bg-layout-night-200
-                 dark:hover:text-layout-night-1000 nul nul_bla dark:nul_wh whitespace-nowrap"
+                 dark:hover:text-layout-night-1000 nul nul_bla dark:nul_wh whitespace-nowrap ml-[16px]"
             :preserve-state="false"
             :preserve-scroll="false"
             replace
             >
-            <span>{{ name }}</span>
+
+            <span>
+                {{ name }}
+            </span>
             </Link>
         </template>
         <template v-else>
@@ -50,8 +54,14 @@
             ialt:{
                 type:String,
                 default:'',
-            }
+            },
+            isFirst: {
+                type: Boolean,
+            },
         },
+        mounted() {
+
+        }
     };
     </script>
 
