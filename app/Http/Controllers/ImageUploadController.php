@@ -33,20 +33,20 @@ class ImageUploadController extends Controller
 
     public function upload(Request $request, string $table, string $iswatermark = '1', string|int $oripath = '0',    $orifileName=false): JsonResponse
 {
-    \Log::debug('UPLOAD DEBUG', [
-        'table'   => $request->table,
-        'column'  => $request->column,
-        'is_imgdir' => $request->is_imgdir,
-        'ulpath'  => $request->ulpath,
-        'hasFile' => $request->hasFile('image'),
-        'Message' => $request->Message,
-    ]);
-    \Log::debug('FILES', [
-    'files' => $request->files->all(),
-    'content_length' => $request->server('CONTENT_LENGTH'),
-    'post_max_size' => ini_get('post_max_size'),
-    'upload_max_filesize' => ini_get('upload_max_filesize'),
-]);
+//     \Log::debug('UPLOAD DEBUG', [
+//         'table'   => $request->table,
+//         'column'  => $request->column,
+//         'is_imgdir' => $request->is_imgdir,
+//         'ulpath'  => $request->ulpath,
+//         'hasFile' => $request->hasFile('image'),
+//         'Message' => $request->Message,
+//     ]);
+//     \Log::debug('FILES', [
+//     'files' => $request->files->all(),
+//     'content_length' => $request->server('CONTENT_LENGTH'),
+//     'post_max_size' => ini_get('post_max_size'),
+//     'upload_max_filesize' => ini_get('upload_max_filesize'),
+// ]);
 
 //     \Log::info("IMA: ".$request->ulpath);
     if (!$request->hasFile('image')) {
@@ -143,13 +143,13 @@ class ImageUploadController extends Controller
         $rp2 = "/images/_{$subdomain}/{$table_ori}/{$column}/{$fileName}";
         $rp = basename($is_imgdir);
 
-        \Log::debug("Creating image for size {$size}", [
-            'path' => $rp,
-            'Message' => $Message,
-            'table_ori' => $table_ori,
-            'table' => $table,
-            'is_imgdir' => $is_imgdir
-        ]);
+        // \Log::debug("Creating image for size {$size}", [
+        //     'path' => $rp,
+        //     'Message' => $Message,
+        //     'table_ori' => $table_ori,
+        //     'table' => $table,
+        //     'is_imgdir' => $is_imgdir
+        // ]);
 
         if (!File::exists(dirname($resizedPath))) {
             File::makeDirectory(dirname($resizedPath), 0777, true, true);
@@ -170,8 +170,9 @@ class ImageUploadController extends Controller
                 $watermarkPath = public_path("images/copyleft/" . $watermarkfile . ".png");
                 if (file_exists($watermarkPath)) {
                     $watermark = $this->imageManager->read($watermarkPath);
-                    $watermark->scale(height: 50);
-                    $img->place($watermark, 'bottom-right', 10, 10);
+                    $width = (int) ($watermark->width() * 0.25);
+                    $watermark->scale(width: $width);
+                    $img->place($watermark, 'bottom-right', 20, 20);
                 }
             }
 
