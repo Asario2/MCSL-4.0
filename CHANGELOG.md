@@ -401,3 +401,4 @@
 ![Version](https://img.shields.io/badge/version-6.55.1-orange) Hotfix / Feature - Changed CSS Files (#605)  
 ![Version](https://img.shields.io/badge/version-6.56.6-orange) Hotfix - Update Social Vues (#607)  
 ![Version](https://img.shields.io/badge/version-6.57.6-orange) Feature - New Version of images (#606)  
+![Version](https://img.shields.io/badge/version-6.58.2-orange) Bug - Have to Fix mobile nav on ab (#586)  
