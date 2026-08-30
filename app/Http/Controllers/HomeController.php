@@ -334,7 +334,7 @@ class HomeController extends Controller
         // Zusätzlich: nie größer als lastPage
         $totalItems = Blog::whereDate('blog_date', '<=', $zeitpunkt)
             ->whereIn('pub', [1,2])->count();
-        $lastPage = ceil($totalItems / 19);
+        $lastPage = ceil($totalItems / Settings::$blog_pages['ab']);
         if ($page > $lastPage) $page = 1;
 
 //         \Log::info('[HomeController] Requested Page after validation: ' . $page);
@@ -375,7 +375,7 @@ class HomeController extends Controller
 
         // Pagination: Page explizit übergeben
         $blogs = $query->distinct('blogs.id')
-            ->paginate(19, ['*'], 'page', $page);
+            ->paginate(Settings::$blog_pages['ab'], ['*'], 'page', $page);
 //
 
         // \Log::info('[HomeController] Pagination erstellt', [
@@ -474,7 +474,7 @@ class HomeController extends Controller
     // ->orderByDesc('images.created_at')
     // ->paginate(20);
     $rat = RatingController::getTotalRating("images");
-    $perPage = 25;
+    $perPage = Settings::$image_cat_pages[SD()];
 
     $query = Image::published()
         ->when(request('search'), function ($query) {
@@ -549,7 +549,7 @@ return Inertia::render('Homepage/Pictures', [
                 });
             })
             ->orderBy($ord[0], $ord[1])
-            ->paginate(20)      // <-- hier korrekt
+            ->paginate(Settings::$image_pages[SD()])      // <-- hier korrekt
 
             ->withQueryString();
 
@@ -615,7 +615,7 @@ return Inertia::render('Homepage/Pictures', [
             })
 
             ->orderBy("position")
-            ->paginate(20);
+            ->paginate(Settings::$image_pages['mfx']);
 
         // \Log::info("cr:".CheckRights(Auth::id(),"images","date"));
         // $rat = RatingController::getTotalRating("images");
@@ -643,7 +643,7 @@ return Inertia::render('Homepage/Pictures', [
     public function home_shortpoems(Request $request)
     {
         $rat = RatingController::getTotalRating("shortpoems");
-        $perPage = 25;
+        $perPage = Settings::$shortpoems_pages[SD()];
         $page = filter_var(
             $request->input('page', 1),
             FILTER_VALIDATE_INT,
@@ -659,7 +659,7 @@ return Inertia::render('Homepage/Pictures', [
             })
             ->orderBy('created_at', 'desc');
 
-        $paginated = $query->paginate(19, ['*'], 'page', $page);
+        $paginated = $query->paginate(Settings::$shortpoems_pages['ab'], ['*'], 'page', $page);
 
         $data = [
             'data' => $paginated->items(), // die aktuellen Items
@@ -749,7 +749,7 @@ return Inertia::render('Homepage/Pictures', [
             })
             ->orderBy('created_at', 'desc');
 
-        $paginated = $query->paginate(19, ['*'], 'page', $page);
+        $paginated = $query->paginate(Settings::$didyouknow_pages['ab'], ['*'], 'page', $page);
 
         $data = [
             'data' => $paginated->items(), // die aktuellen Items
@@ -941,7 +941,7 @@ return Inertia::render('Homepage/Pictures', [
                 });
             })
             ->orderBy($ord[0], $ord[1])
-            ->paginate(10)      // <-- hier korrekt
+            ->paginate(Settings::$image_pages['pna'])      // <-- hier korrekt
 
             ->withQueryString();
 
@@ -993,7 +993,7 @@ return Inertia::render('Homepage/Pictures', [
                 });
             })
             ->orderBy($ord[0], $ord[1])
-            ->paginate(10)      // <-- hier korrekt
+            ->paginate(Settings::$image_pages['pna'])      // <-- hier korrekt
 
             ->withQueryString();
 
@@ -1045,7 +1045,7 @@ return Inertia::render('Homepage/Pictures', [
                 });
             })
             ->orderBy($ord[0], $ord[1])
-            ->paginate(10)      // <-- hier korrekt
+            ->paginate(Settings::$image_pages['pna'])      // <-- hier korrekt
 
             ->withQueryString();
 
@@ -1076,7 +1076,7 @@ return Inertia::render('Homepage/Pictures', [
                   ->orWhere("users.about", "like", "%{$search}%")
                   ->orWhere("users.created_at", "like", "%{$search}%");
             });
-        })->select("users.*")->orderBy("name","ASC")->paginate(18);
+        })->select("users.*")->orderBy("name","ASC")->paginate(Settings::$user_pages[SD()]);
         return Inertia::render('Homepage/Users', [
             'users' => $users, // statt 'data'
             'filters' => Request()->all('search'),
@@ -1344,7 +1344,7 @@ public function imprint_dag()
     }
         public function contacts_pna(){
         $text = DB::connection("mariadb_pna")->table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
-        $contacts = DB::connection("mariadb")->table("kontaktdaten")->where("dom", "pna")->first();
+        $contacts = DB::connection("mariadb")->table("kontaktdaten")->where("dom", "pna2    ")->first();
         // \Log::info("TT:".json_encode($text));
 
         return Inertia::render('Homepage/pna/contacts', [
@@ -1454,7 +1454,7 @@ public function imprint_dag()
         // );
 
         // if ($dbExists) {
-            \Log::info("CALLLLLLLLLLED: ".$dom);
+            // \Log::info("CALLLLLLLLLLED: ".$dom);
             Artisan::call('sitemap:generate', [
                 'SD' => $dom
             ]);

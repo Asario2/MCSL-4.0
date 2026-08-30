@@ -176,8 +176,8 @@
         'GoogleSitemap' => 'Sitemaps für Google',
     ];
     public static array $regdom =   ['ab'=>true];
-    public static array $domss =   ['ab',"mfx","dag","chh","pna"];
-    public static array $connect_dbname = ["ab"=>"mariadb","dag"=>"mariadb_dag","mfx"=>"mariadb_mfx","chh"=>"mariadb_chh","pna"=>"mariadb_pna"];
+    public static array $domss =   ['ab',"mfx","dag","pna"];
+    public static array $connect_dbname = ["ab"=>"mariadb","dag"=>"mariadb_dag","mfx"=>"mariadb_mfx","pna"=>"mariadb_pna"];
     public static array $loginpages = ["login","register"];
     /*
 
@@ -246,7 +246,7 @@
 
         public static array $impath = ["users"=>'profile_photo_path','default'=>"image_path"];
 
-        public static array $dom = ["ab"=>'www.asario.de','mfx'=>"www.marblefx.net",'dag'=>"www.monikadargies.de",'chh'=>"www.ra-c-henning.de",'mjs'=>"mjs.marblefx.net","pna"=>"paulnadler@marblefx.net"];
+        public static array $dom = ["ab"=>'www.asario.de','mfx'=>"www.marblefx.net",'dag'=>"www.monikadargies.de",'chh'=>"www.ra-c-henning.de",'mjs'=>"mjs.marblefx.net","pna"=>"www.paulnadler.marblefx.net"];
 
         //
         // RSS FEEDS
@@ -437,6 +437,21 @@
         "blogs"=>"author",
     ];
 
+    // ========= Registable =========== //
+    public static array $isRegistable = [
+        "ab"=>"1",
+        "pna"=>"1",
+    ];
+
+    // ======== Pages ========== //
+    public static array $image_pages = ["ab"=>10,"pna"=>10,"mfx"=>20];
+    public static array $user_pages = ["ab"=>18,"pna"=>18,"mfx"=>18];
+    public static array $image_cat_pages = ["ab"=>25,"mfx"=>25,"pna"=>25];
+    public static array $blog_pages = ["ab"=>19];
+    public static array $shortpoems_pages = ["ab"=>20];
+    public static array $didyouknow_pages = ["ab"=>20];
+
+
 public static array $image_sizes =
         [
             'blog_posts' => [
@@ -515,6 +530,11 @@ public static array $image_sizes =
     27 => 'pna_users_remember_token',
     28 => 'pna_users_config_updated_at',
     29 => 'pna_users_birthday',
+    30 => 'pna_users_last_login_at',
+    31 => 'pna_users_rights_xkis_DumpDB',
+    32 => 'pna_users_rights_xkis_DumpGItDataBase',
+    33 => 'pna_users_rights_xkis_SQLUpdate',
+    34 => 'pna_users_rights_updated_at',
 ];
 public static array $doms = [
     "ab_lh"=>"http://ab.test.mcs",
