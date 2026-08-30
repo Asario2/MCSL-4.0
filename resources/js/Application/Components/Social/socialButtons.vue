@@ -337,25 +337,7 @@ methods: {
         .zi2{
         overflow:auto;height:auto;
         }
-        .bg-button {
-            background-color:#d00 !important;
-        }
-        .bg-button-600{
-            background-color:#a00 !important;
-        }
-        .dark .dark\:hover\:bg-button-700:hover{
-            background-color:#F00 !important;
-        }
-        .pna .bg-button{
-                background-color:darkred;
 
-        }
-        .pna .bg-button-600{
-            background-color: darkred;
-        }
-        .pna .dark .dark\:hover\:bg-button-700:hover{
-            background-color: #DD2222 !important;
-        }
 
         </style>
 

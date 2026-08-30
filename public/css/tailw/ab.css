@@ -51,6 +51,9 @@
 
 	}
 
+    .ab .bg-button{
+        background-color:#075783 !important;
+    }
     .glow-blue {
 
         color:#23ade7 !important;
@@ -1212,3 +1215,26 @@ A.tw{color:#fff !important;}
     --tw-text-opacity: 1;
     color: rgb(229 231 235 / var(--tw-text-opacity, 1));
     }
+
+        .bg-button {
+            background-color:#00d !important;
+        }
+        .bg-button-600{
+            background-color:#00a !important;
+        }
+        .dark .dark\:hover\:bg-button-700:hover{
+            background-color:#3395c2 !important;
+        }
+
+        .ab .dark .dark\:hover\:bg-button-700:hover{
+            background-color: #3395c2!important;
+        }
+
+    .ab a.bg-button:hover,.ab a.bg-button:visited:hover{
+		background-color:#3395c2 !important;
+
+	}
+    .ab .dark BUTTON.bg-button-700:hover{
+        background-color:#3395c2 !important;
+    }
+
