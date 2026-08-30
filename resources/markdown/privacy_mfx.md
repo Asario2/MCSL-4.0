@@ -17,7 +17,7 @@ Die Verarbeitung personenbezogener Daten, beispielsweise des Namens, der Anschri
 ## 2) Name und Anschrift des für die Verarbeitung Verantwortlichen
 
 Verantwortlicher im Sinne der Datenschutz-Grundverordnung, sonstiger in den Mitgliedstaaten der Europäischen Union geltenden Datenschutzgesetze und anderer Bestimmungen mit datenschutzrechtlichem Charakter ist|diee|
-<div class="vcard"><address class="mt-2"><div class="subheader"><b>Paul Rieser</b><br /><span class="adr">Dorfplatz 10<br /><span class="postalCode">24576</span>&nbsp;<span class="locality">Bim&ouml;hlen</span></span><div>Mobil: <a href="tel:+491627716325">+491627716325</a></div><div>E-Mail: <a href="mailto:paul.rieser@marblefx.de">paul.rieser [at] marblefx.de</a></div></div></address></div>
+<div class="vcard"><address class="mt-2"><div class="subheader"><b>Paul Rieser</b><br /><span class="adr">Dorfplatz 10<br /><span class="postalCode">24576</span>&nbsp;<span class="locality">Bimöhlen</span></span><div>Mobil: <a href="tel:+491627716325">+491627716325</a></div><div>E-Mail: <a href="mailto:paul.rieser@marblefx.net">paul.rieser [at] marblefx.net</a></div></div></address></div>
 
 <a id="begriffsbestimmungen"></a>
 ## 3) Begriffsbestimmungen

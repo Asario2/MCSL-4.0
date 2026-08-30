@@ -19,7 +19,7 @@ Die Verarbeitung personenbezogener Daten, beispielsweise des Namens, der Anschri
 ## 2) Name und Anschrift des für die Verarbeitung Verantwortlichen
 
 Verantwortlicher im Sinne der Datenschutz-Grundverordnung, sonstiger in den Mitgliedstaaten der Europäischen Union geltenden Datenschutzgesetze und anderer Bestimmungen mit datenschutzrechtlichem Charakter ist|diee|
-<div class="vcard"><address class="mt-2"><div class="subheader"><b></b><br /><span class="adr"><br /><span class="postalCode"></span>&nbsp;<span class="locality"></span></span></div></address></div>
+<div class="vcard"><address class="mt-2"><div class="subheader"><b>Paul Rieser</b><br /><span class="adr">Dorfplatz 10<br /><span class="postalCode">24576</span>&nbsp;<span class="locality">Bimöhlen</span></span><div>Mobil: <a href="tel:+49 1627716325">+49 1627716325</a></div><div>E-Mail: <a href="mailto:paul.rieser@marblefx.net">paul.rieser [at] marblefx.net</a></div></div></address></div>
 
 <a id="begriffsbestimmungen"></a>
 ## 3) Begriffsbestimmungen
@@ -186,11 +186,11 @@ Es werden <strong>keine Cookies</strong> gesetzt und <strong>keine vergleichbare
 <a id="datenschutzbestimmungen-zu-einsatz-und-verwendung-von-shariff"></a>
 ## 14) Datenschutzbestimmungen zu Einsatz und Verwendung von Shariff
 
-Der für die Verarbeitung Verantwortliche hat auf dieser Internetseite die Komponente Shariff integriert. Die Shariff-Komponente stellt Social-Media-buttons zur Verfügung, die datenschutzkonform sind. Shariff wurde für die deutsche Computerzeitschrift c't entwickelt und wird über die GitHub, Inc. publiziert.
+Der für die Verarbeitung Verantwortliche hat auf dieser Internetseite die Komponente Shariff integriert. Die Shariff-Komponente stellt Social-Media-Buttons zur Verfügung, die datenschutzkonform sind. Shariff wurde für die deutsche Computerzeitschrift c't entwickelt und wird über die GitHub, Inc. publiziert.
 
 Entwickler der Komponente ist GitHub, Inc. 88 Colin P. Kelly Junior Street, San Francisco, CA 94107, USA.
 
-Üblicherweise übertragen die von den sozialen Netzwerken bereitgestellten button-Lösungen bereits dann personenbezogene Daten an das jeweilige soziale Netzwerk, wenn ein Nutzer eine Internetseite besucht, in welche ein Social-Media-button integriert wurde. Durch die Nutzung der Shariff-Komponente werden erst dann personenbezogene Daten an soziale Netzwerke übermittelt, wenn der Besucher einer Internetseite aktiv einen der Social-Media-buttons betätigt. Weitere Informationen zur Shariff-Komponente werden von der Computerzeitschrift c't unter https://www.heise.de/newsticker/meldung/Datenschutz-und-Social-Media-Der-c-t-Shariff-ist-im-Einsatz-2470103.html bereitgehalten. Der Einsatz der Shariff-Komponente hat den Zweck, die personenbezogenen Daten der Besucher unserer Internetseite zu schützen und uns gleichzeitig zu ermöglichen, eine button-Lösung für soziale Netzwerke auf dieser Internetseite zu integrieren.
+Üblicherweise übertragen die von den sozialen Netzwerken bereitgestellten Button-Lösungen bereits dann personenbezogene Daten an das jeweilige soziale Netzwerk, wenn ein Nutzer eine Internetseite besucht, in welche ein Social-Media-Button integriert wurde. Durch die Nutzung der Shariff-Komponente werden erst dann personenbezogene Daten an soziale Netzwerke übermittelt, wenn der Besucher einer Internetseite aktiv einen der Social-Media-Buttons betätigt. Weitere Informationen zur Shariff-Komponente werden von der Computerzeitschrift c't unter https://www.heise.de/newsticker/meldung/Datenschutz-und-Social-Media-Der-c-t-Shariff-ist-im-Einsatz-2470103.html bereitgehalten. Der Einsatz der Shariff-Komponente hat den Zweck, die personenbezogenen Daten der Besucher unserer Internetseite zu schützen und uns gleichzeitig zu ermöglichen, eine Button-Lösung für soziale Netzwerke auf dieser Internetseite zu integrieren.
 
 Weitere Informationen und die geltenden Datenschutzbestimmungen von GitHub können unter https://help.github.com/articles/github-privacy-policy/ abgerufen werden.
 
