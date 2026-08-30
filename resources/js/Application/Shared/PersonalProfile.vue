@@ -170,12 +170,13 @@
                 <input-error :message="form?.errors?.newsl" />
 
             </input-container>
-            <input-container :full-width="true" v-if="isForm?.about">
+            <input-container :full-width="true" v-if="isform?.about">
                 <InputHtml
                 name="about"
                 v-model="form.about"
                 placeholder="Über dich"
                 ref="about"
+                label="Text über dich"
                 />
                 <input-error :message="form?.errors?.about" />
             </input-container>
@@ -251,7 +252,7 @@ export default {
   },
   data() {
     return {
-        isForm: {},
+        isform: {},
         inputBirthday: this.initialForm?.birthday
       ? dayjs(this.initialForm.birthday).format('DD.MM.YYYY')
       : '',

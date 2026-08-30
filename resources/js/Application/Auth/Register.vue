@@ -120,7 +120,7 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-
+import { router } from "@inertiajs/vue3";
 import Layout from "@/Application/Auth/Shared/Layout.vue";
 
 import PageContent from "@/Application/Components/Content/PageContent.vue";

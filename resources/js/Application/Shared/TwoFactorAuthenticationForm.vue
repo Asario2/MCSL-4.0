@@ -159,7 +159,7 @@
                         </confirms-password>
                     </button-group>
                     <div class="mt-4 text-sm text-gray-400">
-                    <!-- [DEBUG] confirming: {{ confirming }}, twoFactorEnabled: {{ twoFactorEnabled }}, qrCode: {{ qrCode ? 'loaded' : 'null' }} -->
+                    [DEBUG] confirming: {{ confirming }}, twoFactorEnabled: {{ twoFactorEnabled }}, qrCode: {{ qrCode ? 'loaded' : 'null' }}
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@ import axios from "axios";
 import SectionForm from "@/Application/Components/Content/SectionForm.vue";
 
 import ConfirmsPassword from "@/Application/Shared/ConfirmsPassword.vue";
-
+import { route } from 'ziggy-js';
 import InputGroup from "@/Application/Components/Form/InputGroup.vue";
 import InputContainer from "@/Application/Components/Form/InputContainer.vue";
 import InputLabel from "@/Application/Components/Form/InputLabel.vue";
@@ -223,7 +223,7 @@ export default {
             confirmationForm: useForm({
                 code: "",
             }),
-            twoFactorEnabled: this.$page.props.auth.user.two_factor_confirmed_at !== null,
+            twoFactorEnabled: this.$page.props.auth.user.two_factor_enabled == 1,
         };
     },
 
