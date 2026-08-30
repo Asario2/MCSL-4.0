@@ -4,14 +4,13 @@ import { cachen } from './cache';
 export async function GetColumns(table) {
     try {
         const response = await axios.get(`/api/table-columns/${table}`);
-        if (Array.isArray(response.data)) {
-            // Spaltenliste in ein Objekt konvertieren: { col1: true, col2: true }
-            return response.data.reduce((acc, col) => {
+
+        return Array.isArray(response.data)
+            ? response.data.reduce((acc, col) => {
                 acc[col] = true;
                 return acc;
-            }, {});
-        }
-        return {};
+            }, {})
+            : {};
     } catch (error) {
         console.error("Fehler beim Laden der Spalten:", error);
         return {};
@@ -288,56 +287,62 @@ if (!cachen.pending) cachen.pending = {};
  * @returns {Promise<number>} 0 oder 1
  */
 export async function CheckTRights(right, table) {
-
+        if (typeof window === "undefined") {
+        return 0;
+    }
     const cacheKey = `${right}_${table}`;
 
-    // 1. Cache vorhanden?
     if (cachen.batchRights[cacheKey] !== undefined) {
         return Promise.resolve(cachen.batchRights[cacheKey]);
     }
 
-    // 2. Pending Request prüfen
     if (cachen.pending[cacheKey]) {
         return cachen.pending[cacheKey];
     }
 
-    // 3. Host ermitteln
     const baseURL =
-        typeof window !== 'undefined'
+        typeof window !== "undefined"
             ? window.location.origin
-            : process.env.APP_URL;
-
-    if (!baseURL) {
-        console.error('CheckTRights: Kein Host verfügbar!');
-        return Promise.resolve(0);
-    }
+            : globalThis.APP_URL;
 
     const url = `${baseURL}/api/user/rights/des/${table}/${right}`;
 
-    console.log('CheckTRights URL:', url);
+    // console.log("CheckTRights URL:", url);
 
-    // 4. Request starten
     const request = axios.get(url)
         .then(({ data }) => {
+            // console.log(
+            //     "CheckTRights RESPONSE:",
+            //     table,
+            //     right,
+            //     data
+            // );
+
             cachen.batchRights[cacheKey] = data;
             delete cachen.pending[cacheKey];
+
             return data;
         })
         .catch(err => {
             delete cachen.pending[cacheKey];
 
-            console.error('CheckTRights Error:', err);
-            console.error('CheckTRights URL:', url);
+            // console.error("CheckTRights ERROR:", {
+            //     table,
+            //     right,
+            //     url,
+            //     message: err.message,
+            //     code: err.code,
+            //     status: err.response?.status,
+            //     response: err.response?.data
+            // });
 
             return 0;
         });
 
-    // 5. Pending speichern
     cachen.pending[cacheKey] = request;
 
     return request;
 }
-
 
 
 
@@ -604,7 +609,7 @@ export function SD(pn = '') {
 
         props = usePage().props;
 
-    } catch (e) {
+    } catch {
 
         props = globalThis.page?.props ?? {};
 
@@ -860,7 +865,10 @@ export function GetDomUrl(dom) {
 
     return doms[`${dom}_${type}`] ?? "";
 }
-
+export function killema(str)
+{
+    return str.replace(/<a\b[^>]*>\s*<\/a>/gi, '');
+}
 export async function loadRights() {
   if (cachedRights) return cachedRights;
 
@@ -876,7 +884,7 @@ export function nl2br(str)
 {
     if(!str) return;
     str = str.replace('%5B', '[').replace('%5D', ']');
-    return str.replace("\n","<br />");
+    return str.replace(/\n/gi,'<br />');
 }
 export function rumLaut(input, table = '') {
     let str = input;

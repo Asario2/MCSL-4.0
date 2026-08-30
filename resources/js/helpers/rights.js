@@ -3,7 +3,8 @@
 import { cache } from './cache';
 import { apiGet, apiPost } from './api';
 import { GetAuth } from './auth';
-
+import { cachen } from './cache';
+import axios from 'axios';
 /**
  * Initiales Laden (optional)
  */
@@ -129,35 +130,54 @@ export async function GetRightsParallel(tables, rightType = 'view') {
  * 🔥 WICHTIG: dein CheckTRights (mit Pending Cache)
  */
 export async function CheckTRights(right, table) {
-  const key = `${right}_${table}`;
+        if (typeof window === "undefined") {
+        return 0;
+    }
+    const cacheKey = `${right}_${table}`;
 
-  // Cache
-  if (cache.batchRights[key] !== undefined) {
-    return Promise.resolve(cache.batchRights[key]);
-  }
+    if (cachen.batchRights[cacheKey] !== undefined) {
+        return Promise.resolve(cachen.batchRights[cacheKey]);
+    }
 
-  // Pending Request vorhanden?
-  if (cache.pending[key]) {
-    return cache.pending[key];
-  }
+    if (cachen.pending[cacheKey]) {
+        return cachen.pending[cacheKey];
+    }
 
-  // Neuer Request
-  const request = apiGet(`/api/user/rights/des/${table}/${right}`)
-    .then(data => {
-      const val = data ?? 0;
+    const baseURL =
+        typeof window !== 'undefined'
+            ? globalThis.APP_URL
+            : globalThis.APP_URL;
 
-      cache.batchRights[key] = val;
-      delete cache.pending[key];
+    const url = `${baseURL}/api/user/rights/des/${table}/${right}`;
 
-      return val;
-    })
-    .catch(err => {
-      delete cache.pending[key];
-      console.error('CheckTRights Error:', err);
-      return 0;
-    });
+    // console.log('CheckTRights URL:', url);
 
-  cache.pending[key] = request;
+    const request = axios.get(url)
+        .then(({ data }) => {
+            // console.log('CheckTRights RESPONSE:', table, right, data);
 
-  return request;
+            cachen.batchRights[cacheKey] = data;
+            delete cachen.pending[cacheKey];
+
+            return data;
+        })
+        .catch(err => {
+            delete cachen.pending[cacheKey];
+
+            // console.error('CheckTRights ERROR:', {
+            //     table,
+            //     right,
+            //     url,
+            //     message: err.message,
+            //     code: err.code,
+            //     status: err.response?.status,
+            //     response: err.response?.data
+            // });
+
+            return 0;
+        });
+
+    cachen.pending[cacheKey] = request;
+
+    return request;
 }
