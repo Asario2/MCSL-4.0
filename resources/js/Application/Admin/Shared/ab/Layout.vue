@@ -376,7 +376,7 @@
             >
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <!-- Grid -->
-                    <FooterGrid />
+                    <FooterGrid :PageName="pname"/>
                     <!-- End Grid -->
                 </div>
             </footer>
@@ -446,6 +446,7 @@ export default {
             rights: {},
             mcslpoints: 0,   // ✅ jetzt im data statt props
             year: new Date().getFullYear(),
+            pname:'Asarios Blog', 
         };
     },
 
@@ -458,6 +459,7 @@ export default {
         //     localStorage.removeItem('reload_dashboard');
         //     window.location.reload();
         // }
+        this.pname = SD("1");
     },
 
     methods: {

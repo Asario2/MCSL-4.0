@@ -33,7 +33,7 @@
     <div v-if="SD() == 'mfx'" >
         <a href="/"><mfxlogo :ab="'_mfx_alt' + GetLogin()"></mfxlogo></a>
     </div>
-    <div v-if="SD() == 'pna'" class="dark:bg-layout-night-0 min-w-[100%]">
+    <div v-if="SD() == 'pna'" class="min-w-[100%]">
         <a href="/"><favicon :small="true" :ab="'_pna_alt' + GetLogin()"></favicon></a>
     </div>
 </template>

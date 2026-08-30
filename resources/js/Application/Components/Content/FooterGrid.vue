@@ -6,7 +6,7 @@
                 class="flex-none text-xl font-semibold"
                 href="#"
                 aria-label="Brand"
-                >{{ $page.props.version.brandname }}</a
+                >{{ SD("1") }}</a
             >
             <p
                 class="mt-3 text-xs sm:text-sm text-layout-sun-600 dark:text-layout-night-600"
@@ -24,7 +24,7 @@
             <h4
                 class="px-2 text-sm font-semibold text-layout-sun-800 dark:text-layout-night-800"
             >
-                Asarios Blog
+                {{ PageName }}
             </h4>
 
             <div class="mt-3 grid space-y-3 text-sm">
@@ -62,24 +62,24 @@
                         >Administrator</a
                     >
                 </p>
-                <p v-if="$page.props.userdata.is_employee">
-                    <a class="footer_link" :href="route('employee.dashboard')"
-                        >Mitarbeiter</a
-                    >
-                </p>
-                <p v-if="$page.props.userdata.is_customer">
-                    <a class="footer_link" :href="route('customer.dashboard')"
-                        >Kunde</a
-                    >
-                </p>
             </div>
         </div>
         <!-- End Col -->
     </div>
 </template>
 <script>
+import { SD } from "@/helpers";
 export default {
     name: "Components_Content_FooterGrid",
+    props:{
+        PageName:{
+            type:[String,Number],
+            default:'Asarios Blog3'
+        }
+    },
+    methods:{
+        SD,
+    }
 };
 </script>
 
