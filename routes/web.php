@@ -366,15 +366,21 @@ Route::get('/home/imprint_pna', [HomeController::class, 'home_imprint_pna'])->na
 
 });
 
+if(!empty(Settings::$isRegistable[SD()]))
+{
+    Route::get('register', [RegisteredUserController::class, 'create'])
+     ->name('register');
+}
+
 //
 //     AB- Asarios BLog
 //
 Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(function () {
 
     Route::get('/Kontakt', [HomeController::class, 'home_contacts'])->name('home.ab.contacts_alt');
-    Route::get('register', [RegisteredUserController::class, 'create'])
+    
     // ->middleware(HandleSocialitePlusProviders::class)
-    ->name('register');
+   
     Route::get('/rss.xml', [RssController::class, 'feed']);
     Route::get('/about/mcs-points', [HomeController::class, 'mcspoints'])->name('mcs.points');
     Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
@@ -593,36 +599,6 @@ Route::get('/db-check', function () {
 
 
 Route::get('/api/getVotez', [HomeController::class,"getVotez"])->name("mfx.getvotez");
-// MAILFORM SUBMIT
-
-// Route::post('/mail-test',[CommentController::class,"sendm"]);
-
-Route::get('/mail-test', function () {
-    // $nick = "Animal";
-    // $content = "test@example.com";
-
-    // Mail::to('parie@gmx.de')->send(
-    //     new RegisterMail(
-    //         '[MCSL] - Neuer Nutzer auf '.request()->getHost(),
-    //         'http://' . request()->getHost() . '/admin/tables/users/show?search=' . $nick,
-    //         $nick,
-    //         $content
-    //     )
-    // );
-
-    // return 'Mail wurde versendet (oder an Transport übergeben).';
-
-});
-
-// Route::post('/register', [RegisteredUserController::class, 'store'])
-//      ->name('register.override');
-
-
-
-// Route::get('/mail-test', function () {
-    // Mail::to('parie@gmx.de')->send(new CommentMail('Asario.de', 'http://localhost:8081/admin/tables/comments/show',auth()->user()->name,$comment->content));
-    // return 'Mail gesendet!';
-// });
 
 Route::get("/api/user/rights/des/{table}/{right}",[RightsController::class,"GetRights"])->name("GetRights");
 

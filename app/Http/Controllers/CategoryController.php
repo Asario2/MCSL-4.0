@@ -50,4 +50,4 @@ class CategoryController extends Controller
             'selected_medium_id' => $selectedMediumId,
         ]);
     }
-}
+}   
