@@ -3525,31 +3525,34 @@ return Inertia::render('Admin/Kontakte', [
     function GetSRights()
     {
         $userId = Auth::id();
+
         $xkisColumns = collect(Schema::getColumnListing('users_rights'))
-    ->filter(fn($col) => Str::startsWith($col, 'xkis_'))
-    ->values();
+            ->filter(fn($col) => Str::startsWith($col, 'xkis_'))
+            ->values();
 
-$user = DB::table('users')
-    ->leftJoin('users_rights', 'users.users_rights_id', '=', 'users_rights.id')
-    ->where('users.id', $userId)
-    ->select('users.*', ...$xkisColumns->map(fn($col) => "users_rights.$col")->toArray())
-    ->first();
+        $user = DB::table('users')
+            ->leftJoin('users_rights', 'users.users_rights_id', '=', 'users_rights.id')
+            ->where('users.id', $userId)
+            ->select(
+                'users.*',
+                'users_rights.id as rights_id',
+                ...$xkisColumns->map(fn($col) => "users_rights.$col")->toArray()
+            )
+            ->first();
 
-// Optional: Rechte auslagern als assoziatives Array
-$rights = [];
-foreach ($xkisColumns as $col) {
-    $rights[Str::after($col, 'xkis_')] = (bool) $user->$col;
-}
+        $rights = [];
 
-// Entferne ggf. die xkis_-Spalten aus $user
-foreach ($xkisColumns as $col) {
-    unset($user->$col);
-}
-    // \Log::info("ur__".json_encode($rights));
-// Füge Rechte als Objekt hinzu
-$user->rights = $rights;
+        foreach ($xkisColumns as $col) {
+            $rights[Str::after($col, 'xkis_')] = (bool) $user->$col;
+        }
 
-return response()->json($user);
+        foreach ($xkisColumns as $col) {
+            unset($user->$col);
+        }
+
+        $user->rights = $rights;
+
+        return response()->json($user);
     }
     // function GetSRights()
     // {
