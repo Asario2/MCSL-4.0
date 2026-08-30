@@ -23,16 +23,25 @@ class CommentMail extends Mailable
         $this->content = $content;
     }
 
-    public function build()
-    {
-        return  $this->from('no-reply@marblefx.net', 'MCSL Kommentare')
-                ->subject($this->domain)
-                ->markdown('emails.comments')
-                ->with([
-                    'domain' => $this->domain,
-                    'url' => $this->url,
-                    'nickname'=>$this->nickname,
-                    'content' => $this->content,
-                ]);
-    }
+public function build()
+{
+$mail = $this->from(
+    'no-reply@marblefx.net',
+    'MCSL Kommentare'
+)
+->subject($this->domain)
+->markdown('emails.comments')
+->with([
+    'domain' => $this->domain,
+    'url' => $this->url,
+    'nickname' => $this->nickname,
+    'content' => $this->content,
+]);
+
+if (SD() === 'pna') {
+    $mail->bcc(env('MAIL_MAINTAINER_BCC'));
+}
+
+return $mail;
+}
 }

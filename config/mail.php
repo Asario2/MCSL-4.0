@@ -33,7 +33,7 @@ return [
     |            "postmark", "log", "array", "failover", "roundrobin"
     |
     */
-    'maintainer' => env('MAIL_MAINTAINER', '[EMAIL]'),
+    'maintainer' => env('MAIL_MAINTAINER', 'user@example.com'),
 
     'mailers' => [
 
@@ -97,7 +97,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', '[EMAIL]'),
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 

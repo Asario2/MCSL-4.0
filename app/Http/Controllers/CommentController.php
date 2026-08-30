@@ -206,7 +206,7 @@ class CommentController extends Controller
                 "message" => "Eintrag exisitiert bereits",
             ]);
     }
-public function sendmc(Request $request)
+    public function sendmc(Request $request)
     {
         // Eingeloggte User brauchen kein Captcha & kein "accepted"
         if (Auth::check()) {
@@ -240,16 +240,24 @@ public function sendmc(Request $request)
             $message = strip_tags($message);
 
 
-    Mail::to(config('mail.maintainer'))->send(
+   $mail = Mail::to(config('mail.maintainer'));
+
+    if (SD() === 'pna') {
+        $mail->bcc(env('MAIL_MAINTAINER_BCC'));
+    }
+
+    $mail->send(
         (new ContactMail(
             $request->getHost(),
             $request->name,
             $request->email,
             $request->subject,
             $message,
-        ))->from('no-reply@marblefx.net', 'MCSL Kontaktformular ('.Settings::$dom[SD()].')')
+        ))->from(
+            'no-reply@marblefx.net',
+            'MCSL Kontaktformular (' . Settings::$dom[SD()] . ')'
+        )
     );
-
     return response()->json("1", 200);
 
 

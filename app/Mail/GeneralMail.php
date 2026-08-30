@@ -27,14 +27,20 @@ class GeneralMail extends Mailable
 
     public function build()
     {
-        return $this->subject($this->title)
-                    ->markdown($this->view)
-                    ->with([
-                        'link' => $this->link,
-                        'nick' => $this->nick,
-                        'content' => html_entity_decode($this->content),
-                        "signatur" => html_entity_decode($this->signatur),
-                    ]);
+        $mail = $this->subject($this->title)
+            ->markdown($this->view)
+            ->with([
+                'link' => $this->link,
+                'nick' => $this->nick,
+                'content' => html_entity_decode($this->content),
+                'signatur' => html_entity_decode($this->signatur),
+            ]);
+
+        if (SD() === 'pna') {
+            $mail->bcc(env('MAIL_MAINTAINER_BCC'));
+        }
+
+        return $mail;
     }
 }
 

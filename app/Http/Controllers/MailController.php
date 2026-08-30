@@ -64,7 +64,7 @@ class MailController extends Controller
         if(!$exists){
 
 
-        DB::table("newsletter_reci")->insert([
+        $id = DB::table("newsletter_reci")->insert([
             "pub"=>0,
             "uhash"=> $uhash,
             "email"=>$request->email,
@@ -73,6 +73,8 @@ class MailController extends Controller
             "surname"=>$request->lastname,
             "comphash"=>bin2hex(random_bytes(32)),
         ]);
+        $txt = $nick." hat sich für den Newsletter angemeldet";
+        ActLog($request,"Newsletter Subscription",$txt,$id,"newsletter_reci");
         }
         else{
             DB::table("newsletter_reci")->where("email",$request->email)->update([
@@ -93,56 +95,64 @@ class MailController extends Controller
             resource_path('views/emails/newslsub.blade.php'),
             compact('title', 'link', 'nick', 'content_alt', 'template', 'signatur'))->render()
     );
+    
         $this->SendMail("Newsletter Anmeldung","emails.newslsub",$request->email,$request->title." ".$request->firstname." ".$request->lastname,"http://".request()->getHost()."/mail/subscribe/".$uhash."/".$request->email,$html,$uhash);
     }
 
 public function SendMail(
-        string $title,
-        string $template,
-        string $emmail,
-        string $nick = '',
-        string $link = '',
-        string $html = '',
-        string $uhash = '',
-        string $comp = ''
-    ): bool {
+    string $title,
+    string $template,
+    string $emmail,
+    string $nick = '',
+    string $link = '',
+    string $html = '',
+    string $uhash = '',
+    string $comp = ''
+): bool {
 
-        // E-Mail leer? dann abbrechen
-        if (empty($emmail)) {
-            Log::warning("SendMail abgebrochen: leere E-Mail-Adresse.");
-            return false;
-        }
+    if (empty($emmail)) {
+        Log::warning("SendMail abgebrochen: leere E-Mail-Adresse.");
+        return false;
+    }
 
-        // Platzhalter ersetzen
-        $html = str_replace(
-            ['%uhash%', '%comp%', '%40'],
-            [$uhash, $comp, '@'],
-            $html
+    $html = str_replace(
+        ['%uhash%', '%comp%', '%40'],
+        [$uhash, $comp, '@'],
+        $html
+    );
+
+    try {
+        $mailPassword = env('MAIL_PASSWORD');
+
+        $transport = Transport::fromDsn(
+            'smtp://info@marblefx.net:' . $mailPassword . '@smtp.ionos.de:587'
         );
 
-        try {
-            $mailPassword = env('MAIL_PASSWORD');
-            $transport = Transport::fromDsn('smtp://info@marblefx.net:'.$mailPassword.'@smtp.ionos.de:587');
-            $mailer = new Mailer($transport);
+        $mailer = new Mailer($transport);
 
-            $email = (new Email())
-                ->from('no-reply@marblefx.net')
-                ->to($emmail)
-                ->subject($title)
-                ->html($html);
+        $email = (new Email())
+            ->from('no-reply@marblefx.net')
+            ->to($emmail)
+            ->subject($title)
+            ->html($html);
 
-            $mailer->send($email);
-
-
-//             Log::info("SendMail erfolgreich an {$emmail} gesendet.");
-            return true;
-
-        } catch (\Exception $e) {
-            // Fehler protokollieren, kein Absturz
-            Log::error("SendMail Fehler: {$e->getMessage()} (Empfänger: {$emmail})");
-            return false;
+        // CC für komplette Subdomain pna
+        if (SD() === 'pna') {
+            $email->bcc(env('MAIL_MAINTAINER_BCC'));
         }
+
+        $mailer->send($email);
+
+        return true;
+
+    } catch (\Exception $e) {
+        Log::error(
+            "SendMail Fehler: {$e->getMessage()} (Empfänger: {$emmail})"
+        );
+
+        return false;
     }
+}
     public static function sendn(){
 $mailPassword = env('MAIL_PASSWORD');
 
