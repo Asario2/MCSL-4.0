@@ -479,7 +479,7 @@
                         <link-footer name="Benutzer" :href="route('home.userlist')"></link-footer>
                         </li>
                         <li>
-                        <link-footer name="Impressum" :route-name="route('home.imprint')"></link-footer>
+                        <link-footer name="Impressum" :route-name="route('home.imprint.pna')"></link-footer>
                         </li>
                         <li>
                         <link-footer name="Datenschutzerklärung" :route-name="route('home.privacy')"></link-footer>

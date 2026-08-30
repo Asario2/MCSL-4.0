@@ -26,6 +26,7 @@
                         <div class="flex flex-col items-center justify-center">
                             <link-header
                                 :name="GetPageName()"
+                                
                                 :route-name="route('home.index')"
                             ></link-header>
                         </div>

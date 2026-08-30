@@ -238,7 +238,7 @@
                             :href="route('home.index')"
                             target="_self"
                         >
-                               <span class="flex items-center gap-2">
+                               <span class="flex items-center gap-1">
                                     <IconHome class="w-4 h-4" color="#ffa500" />
                                     <span>Home</span>
                                 </span>

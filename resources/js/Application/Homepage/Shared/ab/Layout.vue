@@ -46,7 +46,7 @@
     <div
         class="flex flex-col items-center w-full space-y-2 lg:mt-0 lg:flex-row lg:space-y-0 lg:space-x-1 z-[10000000]"
     >
-    <link-header :route-name="route('home.index')" name="Home"></link-header>
+    <link-header  :route-name="route('home.index')" name="Home" isFirst></link-header>
     <link-header :route-name="route('home.blog.index')" name="Mein Blog"></link-header>
     <link-header :route-name="route('home.about')" name="About Me"></link-header>
     <link-header :route-name="route('home.images.index')" name="Bilder"></link-header>
@@ -308,7 +308,24 @@
                             </LinkFooter> -->
 
                         </li>
-                    </ul>
+                        <li>
+                                <link-footer name="Kontakt" :route-name="route('home.contacts')"><IconContactsPublic width="18" height="18"/></link-footer>
+                            </li>
+                            <li>
+                                <button
+                                class="ToggleCookieLink cursor-pointer inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm
+                                text-layout-sun-700 hover:bg-primary-sun-300 hover:text-layout-sun-900 dark:text-layout-night-700 dark:hover:bg-primary-night-300 dark:hover:text-layout-night-900 ml-[-5px]"
+                                @click.prevent="copyUrl"
+                                >
+                                <IconRSS width="18" height="18" />
+                                <span style="color:#fb9d3a;" class="font-bold">Newsfeed abonnieren</span>
+                                </button>
+                            </li>
+                        </ul>
+                        <br />
+                        <NewsletterSubscribe class="ml-[8px] mb-[-2px] color-[#ffc800]" />
+                        
+                    
                     </div>
                     <div class="text-center md:text-left">
                     <h3 class="text-sm font-semibold leading-6 px-2">
@@ -370,59 +387,74 @@
     </template>
     <script>
     import axios from "axios";
-    // import { useLoadingStore } from '@/loading';
-    import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
-    import IconClose from "@/Application/Components/Icons/Close.vue";
-    import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-    import BrandHeader from "@/Application/Shared/BrandHeader.vue";
-    import Dropdown from "@/Application/Components/Content/Dropdown.vue";
-    import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
-    import LinkHeader from "@/Application/Shared/LinkHeader.vue";
-    import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
-    import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
-    import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
-    import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
-    import { router } from '@inertiajs/vue3'
-    import IconPM from "@/Application/Components/Icons/IconPM.vue";
-    import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
-    import BrandFooter from "@/Application/Shared/BrandFooter.vue";
-    import Loader from "@/Application/Components/Loader.vue";
-    import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
-    import LinkFooter from "@/Application/Shared/LinkFooter.vue";
-       import IconMenu from "@/Application/Components/Icons/Menu.vue"
-    import Toast from "@/Application/Components/Content/Toast.vue";
-    import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
-    import { SD,GetProfileImagePath,CheckTRights } from '@/helpers';
-    import throttle from 'lodash/throttle';
-    import pickBy from "lodash/pickBy";
-    import {showHideToggleCookiePreferencesModal} from "@/helpers"
-
+        // import { useLoadingStore } from "@/loading";
+        import IconRSS from "@/Application/Components/Icons/rss.vue";
+        import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
+        import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
+        import BrandHeader from "@/Application/Shared/BrandHeader.vue";
+        import Dropdown from "@/Application/Components/Content/Dropdown.vue";
+        import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
+        import LinkHeader from "@/Application/Shared/LinkHeader.vue";
+        import BrandFooter from "@/Application/Shared/BrandFooter.vue";
+        import { router } from '@inertiajs/vue3'
+        import LinkFooter from "@/Application/Shared/LinkFooter.vue";
+        import IconMenu from "@/Application/Components/Icons/Menu.vue";
+        import Toast from "@/Application/Components/Content/Toast.vue";
+        import ButtonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
+        import { SD,GetProfileImagePath,CheckTRights } from "@/helpers";
+        import IconUsers from "@/Application/Components/Icons/IconUsers.vue";
+        import IconContactsPublic from "@/Application/Components/Icons/IconContactsPublic.vue";
+        import IconPrivacy from "@/Application/Components/Icons/IconPrivacy.vue";
+        // import { Inertia } from "@inertiajs/vue3";
+        import Loader from "@/Application/Components/Loader.vue";
+        import NewsletterSubscribe from "@/Application/Components/Social/NewsletterSubscribe.vue";
+        import JrightArrow from "@/Application/Components/Icons/JrightArrow.vue";
+        import IconStar_thin from "@/Application/Components/Icons/IconStar_thin.vue";
+        import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
+        import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
+        import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
+        import IconPM from "@/Application/Components/Icons/IconPM.vue";
+        import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
+        import { userStore } from "@/utils/userStore";
+        import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
+        import IconClose from "@/Application/Components/Icons/Close.vue";
+import IconRegister from "@/Application/Components/Icons/IconRegister.vue";
+import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
+import {showHideToggleCookiePreferencesModal} from "@/helpers"
     export default {
         name: "Homepage_Shared_Layout_ab",
 
         components: {
-        MetaHeader,
-        BrandHeader,
-        LinkHeader,
-        BrandFooter,
-        LinkFooter,
-        Toast,
-        IconLogout,
-        Loader,
-        IconProfile,
-        IconPM,
-        IconContacts_alt,
-        IconStarThin,
-        IconCookies,
-        IconDashboard,
-        IconMenu,
-        IconMCSL,
-        Dropdown,
-        DropdownLink,
-        buttonChangeMode,
-        IconClose,
-    },
+            MetaHeader,
+            BrandHeader,
+            LinkHeader,
+            IconRSS,
+            BrandFooter,
+            IconLogout,
+            IconProfile,
+            IconPM,
+            Loader,
+            IconContacts_alt,
+            IconCookies,
+            IconPrivacy,
+            IconContactsPublic,
+            IconUsers,
+            IconStar_thin,
+            IconDashboard,
+            JrightArrow,
+            LinkFooter,
+            Toast,
+            IconMenu,
+            IconMCSL,
+            IconClose,
+            Dropdown,
+            DropdownLink,
+            ButtonChangeMode,
+            NewsletterSubscribe,
+            IconRegister,
+            IconLogin,
 
+        },
     props: {
         sd: {
         type: String,
