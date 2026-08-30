@@ -55,7 +55,7 @@
                                     <span>
                                         {{ contacts.name }}<br />
                                         {{ contacts.an }}:<br />
-                                        {{ contacts.strasse }}<br />
+                                        <span v-html="nl2br(contacts.strasse)"></span><br />
                                         {{ contacts.plz }} {{ contacts.ort }}<br />
                                         Email:
                                         <a :href="`mailto:${contacts.email}`">
@@ -113,7 +113,7 @@
 </template>
     <script>
     import { defineComponent, defineAsyncComponent } from "vue";
-    import {rumLaut,SD } from "@/helpers";
+    import {rumLaut,nl2br,stripTags } from "@/helpers";
     const Layout = defineAsyncComponent(() =>
         import(`@/Application/Homepage/Shared/pna/Layout.vue`)
     );
@@ -163,6 +163,8 @@
     },
 
         methods: {
+            nl2br,
+            stripTags,
             mupper(text) {
                return text;
             },
@@ -180,7 +182,10 @@
         async submitForm() {
         try {
             const response = await axios.post('/contact/send', this.form)
-            alert('Nachricht erfolgreich gesendet!')
+            if(response){
+                alert('Nachricht erfolgreich gesendet!')
+            }
+
             this.resetForm()
         } catch (error) {
             alert('Fehler beim Senden der Nachricht.')

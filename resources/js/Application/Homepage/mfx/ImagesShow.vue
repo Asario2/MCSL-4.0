@@ -19,7 +19,7 @@
           </div>
           <div v-else class="">
 
-            <photoswipe_new :images="im_cont" :basePath="'/images/_mfx/images/imgdir_content/' + def + '/'">
+            <photoswipe_new :images="im_cont" :basePath="'/images/_mfx/images/imgdir_content/' + def + '/'" mw="345">
 
             </photoswipe_new>
 

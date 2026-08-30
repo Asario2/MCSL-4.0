@@ -49,7 +49,7 @@
                 <p>
                     Hier gibt’s fast alles von mir: <a class='as' href="home/pictures" itemprop="hasOccupation">Bilder</a> & <a class='as' href="home/shortpoems" itemprop="hasOccupation">Gedichte</a>.<br />
                 </p><br />
-                <div class="border border-gray-300 dark:border-gray-700 text-center max-w-xl mx-auto my-8 p-8">
+                <div class="border border-gray-700 border-dotted dark:border-gray-700 text-center max-w-xl mx-auto my-8 p-8">
                ⭐⭐⭐ <strong>MCSL-Points.</strong> ⭐⭐⭐<br />
                 Registrierte Nutzer sammeln Punkte, indem sie lesen, bleiben und wiederkommen.
                 Die Punkte sind kein Spielzeug. Sie haben einen Zweck.

@@ -28,11 +28,11 @@
         <div id="teaser-img" class="p-6 space-y-2 lg:col-span-8 pb-0">
 
             <!-- Blog-Titel -->
-            <h2
-                class="text-xl font-semibold sm:text-2xl font-title"
+            <h1
+                class="text-xl font-semibold sm:text-4xl font-title"
             >
-                {{ users?.name }}&nbsp;&nbsp;<editbtns :id="users?.id" table="users" />
-            </h2>
+               {{ users?.name }}&nbsp;&nbsp;<editbtns :id="users?.id" table="users" />
+            </h1>
             <table class="table-auto text-left">
             <tbody>
                 <tr>

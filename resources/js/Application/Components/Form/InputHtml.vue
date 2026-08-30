@@ -81,7 +81,7 @@
                 @mouseup="saveSelection"
             ></div>
 
-            <input type="hidden" :id="name + '_alt'">
+            <input type="hidden" :id="name + '_alt'" :value="killema(modelValue)">
         </div>
 
         <ImageUploadModal
@@ -107,7 +107,7 @@
 // import tippy from 'tippy.js';
 // import 'tippy.js/dist/tippy.css';
 import ImageUploadModal from '@/Application/Components/ImageUploadModal.vue';
-import { GetSettings, rumLaut,nl2br } from "@/helpers";
+import { GetSettings, rumLaut,nl2br,killema } from "@/helpers";
 import IconPictures from "@/Application/Components/Icons/IconPictures.vue";
 import IconList from "@/Application/Components/Icons/IconList.vue";
 import IconOrdList from "@/Application/Components/Icons/IconOrdList.vue";
@@ -221,6 +221,7 @@ export default {
     },
 
     methods: {
+        killema,
         onFocus() {
             this.isFocused = true;
         },

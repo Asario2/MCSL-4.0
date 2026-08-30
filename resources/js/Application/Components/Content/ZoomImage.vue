@@ -1,7 +1,7 @@
 <template>
     <div
       class="relative overflow-hidden rounded"
-      :style="{ width:  'auto',maxWidth:'300px', height: 'auto', maxHeight: '320px' }"
+      :style="{ width:  'auto',maxWidth:'348px', height: 'auto', maxHeight: '320px' }"
     >
       <img
         :src="src"
@@ -73,7 +73,7 @@
     margin:0px !important;
 
     padding:0px !important;
-    margin-right:-10px !important;
+    /* margin-right:-10px !important; */
 }
 
 </style>
