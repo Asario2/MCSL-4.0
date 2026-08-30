@@ -51,7 +51,8 @@ export default {
 
     data() {
         return {
-            currentLayout: AbLayout
+            currentLayout: markRaw(AbLayout)
+
         };
     },
 

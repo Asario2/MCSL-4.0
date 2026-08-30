@@ -30,6 +30,8 @@ class hackinglogService
         6 => 1000,
         7 => 2000,
         8 => 5000,
+        9 =>  90000,
+        10 => 99000.
     ];
     public function banIp(Request $request,string $ip,int $score,$matches)
     {

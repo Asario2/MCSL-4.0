@@ -296,7 +296,7 @@ Layout: defineAsyncComponent(() => {
         if (!table.checkzrights)
         {
             // alert("asdddddddddddddd");
-            return true;
+            return false;
         }
 
 

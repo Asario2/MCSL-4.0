@@ -26,10 +26,10 @@
         <table class="w-full border-collapse text-sm md:text-base rounded overflow-hidden">
         <thead class="bg-layout-sun-300 dark:bg-layout-night-300 text-layout-sun-800 dark:text-layout-night-800">
             <tr>
-            <th class="px-4 py-3 text-left"><nobr>An/Aus</nobr></th>
+            <th class="px-4 py-3 text-left nobr">An/Aus</th>
             <th class="px-4 py-3 text-left">Tabelle</th>
             <th v-for="field in Object.keys(rights)" :key="field" class="px-4 py-3 text-left">
-                <nobr>{{ ucf2(field) }}</nobr>
+                <span class="nobr">{{ ucf2(field) }}</span>
             </th>
             </tr>
         </thead>
@@ -314,18 +314,18 @@ import InputCheckbox from "@/Application/Components/Form/InputCheckbox.vue";
 import IconDarr from "@/Application/Components/Icons/IconDarr.vue";
 import ErrorSVG from "@/Application/Components/Icons/ErrorSVG.vue";
 import SearchFilter from "@/Application/Components/Lists/SearchFilter.vue";
-import { route } from 'ziggy-js';
 import Trash from "@/Application/Components/Icons/Trash.vue";
 
 
 export default {
 name: "UserRights",
-components: { ErrorSVG, SearchFilter, InputSelect, InputCheckbox, IconDarr, InputFormText,Trash },
+components: { ErrorSVG, SearchFilter, InputSelect, InputCheckbox, IconDarr, InputFormText,Trash},
 props: {
     adminTables: { type: Array, default: () => [] },
     urid: [String, Number],
     roles: { type: Array, default: () => [] },
 },
+
 data() {
     const rights = {};
     const fields = [
@@ -372,6 +372,26 @@ computed: {
     },
 },
 methods: {
+togglerow(index) {
+    const fields = [
+        'view_table',
+        'add_table',
+        'edit_table',
+        'publish_table',
+        'date_table',
+        'delete_table'
+    ];
+
+    const allEnabled = fields.every(field => this.rights[field]?.[index]);
+
+    fields.forEach(field => {
+        if (this.rights[field]) {
+            this.rights[field][index] = !allEnabled;
+        }
+    });
+},
+
+
     // --- Funktionen / UI ---
     addFunc() {
     this.addF = !this.addF;
@@ -381,16 +401,12 @@ methods: {
 if (event) event.preventDefault(); // optional, @click.prevent reicht eigentlich
 
 try {
-    console.log({
-    name: this.addedF,
-    desc: this.fdesc
-});
+
     const res = await axios.post('/api/AddFunc', {
     name: this.addedF,
     desc: this.fdesc,
     });
-    console.log("res:", res);
-    console.log("res.data:", res.data);
+
     // console.log(this.fdesc);
     // Toast richtig benutzen
     window.toastBus.emit({
@@ -408,8 +424,8 @@ try {
 
     // Funktionen neu laden (sichtbar + reaktiv)
     await this.loadFunctions(this.selected);
-    console.log('LABELS', this.labels);
-    console.log('SETTINGS', this.settings.exl);
+    // console.log('LABELS', this.labels);
+    // console.log('SETTINGS', this.settings.exl);
 
 } catch (err) {
     console.error(err);
@@ -448,8 +464,8 @@ try {
         .catch(err => {
             console.error(err);
 
-            console.log("Status:", err.response?.status);
-            console.log("Data:", err.response?.data);
+            // console.log("Status:", err.response?.status);
+            // console.log("Data:", err.response?.data);
 
             window.toastBus.emit({
                 message: err.response?.data?.message || "Fehler beim Speichern!",
@@ -628,8 +644,8 @@ async fetchRights(urid) {
             res.data?.labels ||
             {};
 
-        console.log('USER RIGHTS:', this.userRights);
-        console.log('ADMIN TABLES:', this.adminTables);
+        // console.log('USER RIGHTS:', this.userRights);
+        // console.log('ADMIN TABLES:', this.adminTables);
 
         // WICHTIG:
         // erst initialisieren, wenn adminTables vorhanden sind
@@ -659,22 +675,22 @@ initializeRights() {
         });
     }
 
-    console.log(
-        'MATRIX FINAL:',
-        JSON.parse(JSON.stringify(this.rights))
-    );
-    console.table(
-    this.adminTables.map((table, index) => ({
-        position: table.position,
-        name: table.name,
-        view: this.rights.view_table[index],
-        add: this.rights.add_table[index],
-        edit: this.rights.edit_table[index],
-        publish: this.rights.publish_table[index],
-        date: this.rights.date_table[index],
-        delete: this.rights.delete_table[index],
-    }))
-);
+//     console.log(
+//         'MATRIX FINAL:',
+//         JSON.parse(JSON.stringify(this.rights))
+//     );
+//     console.table(
+//     this.adminTables.map((table, index) => ({
+//         position: table.position,
+//         name: table.name,
+//         view: this.rights.view_table[index],
+//         add: this.rights.add_table[index],
+//         edit: this.rights.edit_table[index],
+//         publish: this.rights.publish_table[index],
+//         date: this.rights.date_table[index],
+//         delete: this.rights.delete_table[index],
+//     }))
+// );
 },
 // --- Rechte speichern ---
 async saveRights() {
@@ -762,14 +778,14 @@ async saveRights() {
             }
         });
 
-        console.log('SAVE USER RIGHTS PAYLOAD:', payload);
+        // console.log('SAVE USER RIGHTS PAYLOAD:', payload);
 
         const res = await axios.post(
             '/api/admin/user-rights/save',
             payload
         );
 
-        console.log('SAVE USER RIGHTS RESPONSE:', res.data);
+        // console.log('SAVE USER RIGHTS RESPONSE:', res.data);
 
         if (res.data?.type === 'success') {
 
@@ -809,25 +825,25 @@ async saveRights() {
     // --- Funktionen ---
     async loadFunctions(urid) {
     try {
-        console.log('=== LOAD FUNCTIONS START ===');
-        console.log('URID:', urid);
+        // console.log('=== LOAD FUNCTIONS START ===');
+        // console.log('URID:', urid);
 
         const res = await axios.get(`/admin/user-rights/get?urid=${urid}`);
 
-        console.log('API RESPONSE:', res.data);
+        // console.log('API RESPONSE:', res.data);
 
         const data = res.data || {};
         const rights = data.rights ?? data ?? {};
 
-        console.log('RIGHTS:', rights);
-        console.log('RIGHT KEYS:', Object.keys(rights));
+        // console.log('RIGHTS:', rights);
+        // console.log('RIGHT KEYS:', Object.keys(rights));
 
         const functions = Object.entries(rights)
             .filter(([key]) => key.startsWith('xkis_'))
             .sort(([a], [b]) => a.localeCompare(b));
 
-        console.log('XKIS FUNCTIONS:', functions);
-        console.log('FUNCTION COUNT:', functions.length);
+        // console.log('XKIS FUNCTIONS:', functions);
+        // console.log('FUNCTION COUNT:', functions.length);
 
         this.lf = Object.fromEntries(functions);
 
@@ -843,11 +859,11 @@ async saveRights() {
 
         this.localFunc = local;
 
-        console.log('LF:', this.lf);
-        console.log('LOCALFUNC:', this.localFunc);
-        console.log('LABELS:', this.labels);
-        console.log('SETTINGS EXL:', this.settings?.exl);
-        console.log('=== LOAD FUNCTIONS END ===');
+        // console.log('LF:', this.lf);
+        // console.log('LOCALFUNC:', this.localFunc);
+        // console.log('LABELS:', this.labels);
+        // console.log('SETTINGS EXL:', this.settings?.exl);
+        // console.log('=== LOAD FUNCTIONS END ===');
 
     } catch (e) {
         console.error('=== LOAD FUNCTIONS ERROR ===');
@@ -901,9 +917,9 @@ try {
 
     // Funktionen neu laden
     await this.loadFunctions(this.selected);
-    console.log(res.data);
+
 await this.reloadSettings();
-console.log(this.settings.exl);
+
 
 } catch (e) {
     if (e.response?.status === 403 && e.response.data?.redirect) {
@@ -960,5 +976,10 @@ watch: {
 
 <style>
 .wff { min-width: 200px !important; }
+
+.nobr {
+    white-space: nowrap;
+}
+
 </style>
 

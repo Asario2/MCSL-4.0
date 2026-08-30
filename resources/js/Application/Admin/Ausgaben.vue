@@ -59,6 +59,7 @@
                             <editbtns :id="item?.id" table="ausgaben" />
                         </td>
                     </tr>
+                    <tr v-if="entries_in.length==0"><td class="p-3" colspan="4">Keine Einnahmen Vorhanden</td></tr>
                 </tbody>
 
             </table>
