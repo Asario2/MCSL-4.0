@@ -420,3 +420,4 @@
 ![Version](https://img.shields.io/badge/version-6.74.3-orange) Feature - Footer for Admin refreshed (#623)  
 ![Version](https://img.shields.io/badge/version-6.75.7-orange) Feature - Actualized Bootstrap Files (#622)  
 ![Version](https://img.shields.io/badge/version-6.76.1-orange) Removed Log output in upload File (#625)  
+![Version](https://img.shields.io/badge/version-6.77.8-orange) Hotfix - Added Tables in dashboard (#626)  
