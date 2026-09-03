@@ -262,6 +262,7 @@
         [
             "admin_table" => 'name',
             "blogs" => 'title',
+            "kontaktdaten" => 'name',
             "contacts" => "Gruppe",
             "blog_authors" => 'name',
             "blog_categories" => 'name',
@@ -311,6 +312,7 @@
             "blog_authors" => ['name',"Info"],
             "blog_categories" => ['name',"summary"],
             "blog_images" => ['name'],
+            "kontaktdaten" => ['name',"dom","email"],
             "types" => ['name,"name_en'],
             "images"=> ['name',"message"],
             "comments" => ['users.name','content',"email","admin_table.name"],
@@ -380,7 +382,8 @@
         "publikationen"=>"file_pdf",
         "quellen"=>'quellurl',
         "notifications"=>"text",
-        "visitcard"=>'slug'
+        "visitcard"=>'slug',
+        "kontaktdaten" => 'dom',
     ];
     public static array $namealias = [
         "comments"=>"Kommentar",
@@ -397,6 +400,7 @@
         "ausgaben"=>"Name",
         "visitcard"=>"Headline",
         'impressum'=>'Überschrift',
+        "kontaktdaten" => 'Name',
     ];
     public static array $descalias = [
         "comments"=>"Autor",
@@ -415,6 +419,7 @@
         "lostnfound"=>"Text",
         "sprueche"=>"Text",
         "links"=>"URL",
+        "kontaktdaten" => 'Subdomain',
         'contacts'=>"Name",
         'users_rights'=>"Kurzname",
         "ausgaben"=>"Autor",

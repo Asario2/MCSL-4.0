@@ -125,7 +125,11 @@ class CountPixelController extends Controller
             }
 
             $rawUrl = $this->SH($url) ?? '/';
-
+            if(substr_count($rawUrl,"&slug=") || substr_count($rawUrl,"?reload="))
+            {
+                return $this->pixelResponse();
+            }
+            $rawUrl = preg_replace('/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/', '', $rawUrl);
             // URL absichern
             if (!is_string($rawUrl) || $rawUrl === '') {
                 return $this->pixelResponse();

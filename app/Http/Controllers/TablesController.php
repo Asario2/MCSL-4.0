@@ -3245,13 +3245,17 @@ return Inertia::render('Admin/Kontakte', [
         {
             $formData['image_path'] = "008.jpg";
         }
-        if(Schema::hasColumn($table, 'img_x'))
+        if(Schema::hasColumn($table, 'img_x') && is_file(public_path()."/images/_".SD()."/".$table."/image_path/big/".$formData['image_path']))
         {
         list($width,$height) = getimagesize(public_path()."/images/_".SD()."/".$table."/image_path/big/".$formData['image_path']);
 
         $formData['img_x'] = $width;
         $formData['img_y'] = $height;
 
+        }
+        elseif(!is_file(public_path()."/images/_".SD()."/".$table."/image_path/big/".$formData['image_path']))
+        {
+            $formData['image_path'] = "008.jpg";
         }
         if(Schema::hasColumn($table, 'preis')|| isset($formData['preis']))
         {
@@ -3753,11 +3757,11 @@ return Inertia::render('Admin/Kontakte', [
         ->where('id', $urid)
         ->first();
 
-    \Log::debug('USER RIGHTS SAVE CHECK', [
-        'urid' => $urid,
-        'edit_table_sent' => $request->input('edit_table'),
-        'edit_table_db' => $check->edit_table ?? null,
-    ]);
+    // \Log::debug('USER RIGHTS SAVE CHECK', [
+    //     'urid' => $urid,
+    //     'edit_table_sent' => $request->input('edit_table'),
+    //     'edit_table_db' => $check->edit_table ?? null,
+    // ]);
 
     return response()->json([
         'type' => 'success',
