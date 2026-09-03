@@ -324,8 +324,8 @@
                         </ul>
                         <br />
                         <NewsletterSubscribe class="ml-[8px] mb-[-2px] color-[#ffc800]" />
-                        
-                    
+
+
                     </div>
                     <div class="text-center md:text-left">
                     <h3 class="text-sm font-semibold leading-6 px-2">
@@ -418,9 +418,10 @@
         import { userStore } from "@/utils/userStore";
         import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
         import IconClose from "@/Application/Components/Icons/Close.vue";
-import IconRegister from "@/Application/Components/Icons/IconRegister.vue";
-import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
-import {showHideToggleCookiePreferencesModal} from "@/helpers"
+        import IconRegister from "@/Application/Components/Icons/IconRegister.vue";
+        import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
+        import {showHideToggleCookiePreferencesModal} from "@/helpers"
+        import throttle from "lodash/throttle";
     export default {
         name: "Homepage_Shared_Layout_ab",
 

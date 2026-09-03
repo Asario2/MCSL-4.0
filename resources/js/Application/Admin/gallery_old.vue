@@ -31,7 +31,7 @@
             <option value="ab">Asario.de</option>
             <option value="mfx">MarbleFX</option>
             <option value="dag">Monikadargies.de</option>
-            <option value="chh">ra-c-henning.de</option>
+            <option value="pna">Paul Nadler</option>
           </select>
         </div>
 

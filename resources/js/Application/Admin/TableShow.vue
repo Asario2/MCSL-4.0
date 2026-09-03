@@ -201,7 +201,6 @@ import Layout from "@/Application/Admin/Shared/ab/Layout.vue";
 import CreatedAt from "@/Application/Components/Form/CreatedAt.vue";
 import Breadcrumb from "@/Application/Components/Content/Breadcrumb.vue";
 import ListContainer from "@/Application/Components/Lists/ListContainer.vue";
-
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
 import Publishbutton from "@/Application/Components/Form/PublishButton.vue";
 import IconStar from "@/Application/Components/Icons/IconStar.vue";
@@ -212,7 +211,7 @@ import {
     SD,
     GetSettings,
     rumLaut,
-    GetProfileImagePath
+GetProfileImagePath
 } from "@/helpers";
 
 import { router } from '@inertiajs/vue3';

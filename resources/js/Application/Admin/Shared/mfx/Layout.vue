@@ -161,7 +161,7 @@
                                         <form @submit.prevent="logoutUser">
                                             <button type="submit">
                                                 <dropdown-link>
-                                                    Abmelden 9
+                                                    Abmelden
                                                 </dropdown-link>
                                             </button>
                                         </form>

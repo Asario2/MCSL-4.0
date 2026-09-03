@@ -80,7 +80,7 @@
                 </form>
                 </div>
                 <template v-if="$page.props.userdata.user_id">
-                  <!-- <LinkHeader_mfx :route-name="route('applicationswitch')" name="Dashboard"></LinkHeader_mfx> -->
+                  <LinkHeader_mfx :route-name="route('applicationswitch')" name="Dashboard"></LinkHeader_mfx>
                 </template>
 
                <!-- <button-change-mode :mode="mode" @changeMode="changeMode"></button-change-mode>-->
@@ -397,7 +397,7 @@ import IconMenu from "@/Application/Components/Icons/Menu.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 // import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
 
-import { SD,showHideToggleCookiePreferencesModal } from "@/helpers";
+import { SD,showHideToggleCookiePreferencesModal,GetProfileImagePath } from "@/helpers";
 import Loader from "@/Application/Components/Loader.vue";
 import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
 // import { ref } from "vue";
@@ -497,6 +497,7 @@ mounted() {
   methods: {
     SD,
 showHideToggleCookiePreferencesModal,
+GetProfileImagePath,    
     setLoadingState(state) {
 //       console.log("🔄 setLoadingState:", state);
       this.isLoading = state;

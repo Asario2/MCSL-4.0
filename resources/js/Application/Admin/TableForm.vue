@@ -207,6 +207,10 @@
                                 alt="Vorschau1"
                                 :id="'com_'+field.name"
                                 style="float:left;margin-right:12px;max-height:120px;max-width:100px;"
+                                @error="event => {
+                                    event.target.onerror = null;
+                                    event.target.src = '/images/icons/upl.jpg';
+                                }"
                             />
                         </button>
                         <input type="hidden" :id="field.name" :name="field.name"  v-model="field.value" />
@@ -359,7 +363,12 @@
                                 class="max-w-[160px] min-w-[160px] max-h-[90px] object-contain"
                                 alt="Vorschau2"
                                 :id="'com_'+field.name"
+                                @error="event => {
+                                    event.target.onerror = null;
+                                    event.target.src = '/images/icons/upl.jpg';
+                                }"
                             />
+                            
                         </button>
                         <input type="hidden" :name="field.name" :id="field.name" v-model="field.value" />
                     </input-container>
@@ -1095,7 +1104,7 @@
                 return result;
             },
 
-            getPreviewSrc(field) {
+            getPreviewSrc(field,ispath='') {
                 if (this.previewImages[field.name]) {
                     return this.previewImages[field.name];
                 }
@@ -1108,8 +1117,11 @@
                 else{
                     this.thumb ='';
                 }
-
-                if (field.value && field.value !== '008.jpg') {
+                if(ispath)
+                {
+                    return `/images/_${this.subdomain}/${this.CleanTable_alt()}/${field.name}/${this.thumb}`;
+                }
+                else if (field.value && field.value !== '008.jpg') {
                     return `/images/_${this.subdomain}/${this.CleanTable_alt()}/${field.name}/${this.thumb}${field.value}`;
                 }
 
