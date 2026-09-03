@@ -27,6 +27,7 @@
                     <template #description>
                                 {{ table.db_desc }}
                     </template>
+
                 </navigation-card>
 
 
@@ -267,17 +268,20 @@ Layout: defineAsyncComponent(() => {
 
   data() {
     return {
-      modulRights: null,
-      rightsData: {},
-      rightsReady: false,
-      adminTables: [],
+        modulRights: null,
+        tableRights: {},
+        rightsData: {},
+        rightsReady: false,
+        adminTables: [],
     };
-  },
+},
 
   async mounted() {
-    this.modulRights = await loadRights();
-    // console.log("Geladene Rechte:", this.modulRights);
-    this.fetchAdminTables();
+
+   this.modulRights = await loadRights();
+    await this.fetchAdminTables();
+    await this.loadTableRights();
+
   },
   computed: {
         routeCreate() {
@@ -290,37 +294,47 @@ Layout: defineAsyncComponent(() => {
         hasRight() {
             return this.$hasRight; // Zugriff auf globale Methode
             },
+ visibleTables() {
+        return this.adminTables.filter(table =>
+            this.tableRights[table.name] === 1
+        );
+    },
+            // visibleTables() {
+        //     if (!this.modulRights) {
+        //         return [];
+        //     }
 
-  visibleTables() {
-        return this.adminTables.filter(table => {
-        if (!table.checkzrights)
-        {
-            // alert("asdddddddddddddd");
-            return false;
-        }
+        //     const rightsMap = {
+        //         comments: 'Comments',
+        //         images: 'Images',
+        //         ratings: 'Ratings',
+        //         texts: 'Texts',
+        //     };
 
+        //     return this.adminTables.filter(table => {
+        //         const right = rightsMap[table.name];
 
-      return !!this.modulRights?.[table.checkzrights];
-    });
-  }
-
+        //         return right && this.modulRights[right] === true;
+        //     });
+        // }
     },
     methods: {
         ucf,
         SD,
         CleanTable,
         GetRights,
-        fetchAdminTables() {
-            axios.get('/api/admin-tables')
-            .then(response => {
-                console.log(response.data);
-                console.log(Array.isArray(response.data));
+        async fetchAdminTables() {
+            try {
+                const response = await axios.get('/api/admin-tables');
 
                 this.adminTables = Array.isArray(response.data)
-                ? response.data
-                : Object.values(response.data);
-            });
+                    ? response.data
+                    : Object.values(response.data);
 
+                console.log('adminTables geladen:', this.adminTables);
+            } catch (error) {
+                console.error('Fehler beim Laden der Admin-Tables:', error);
+            }
         },
         async checkRight(right, table) {
             const value = await GetRights(right, table);
@@ -340,6 +354,13 @@ Layout: defineAsyncComponent(() => {
         async fetchtables(){
 
         },
+         async loadTableRights() {
+        for (const table of this.adminTables) {
+            this.tableRights[table.name] = await GetRights('view', table.name);
+        }
+
+        console.log('TABLE RIGHTS:', this.tableRights);
+    },
     },
 });
 
