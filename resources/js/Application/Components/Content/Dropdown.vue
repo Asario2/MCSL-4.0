@@ -14,7 +14,8 @@
         <!-- Overlay -->
         <div
             v-if="open"
-            class="fixed inset-0 z-40"
+            class="fixed inset-0"
+            style="z-index:1002"
             @click="closeDropdown"
         ></div>
 
@@ -30,12 +31,13 @@
             <div
                 v-if="open"
                 class="
-                    absolute z-50 mt-2
+                    absolute mt-2
                     left-0 right-0 w-full
                     rounded-md shadow-lg p-0.5
                     bg-layout-sun-0 dark:bg-layout-night-0
                     lg:left-auto lg:right-0 lg:w-72
                 "
+                style="z-index:1003"
                 @click.stop
             >
                 <div
@@ -43,6 +45,8 @@
                     :class="contentClasses"
                 >
                     <slot name="content"></slot>
+
+                    
                 </div>
             </div>
 

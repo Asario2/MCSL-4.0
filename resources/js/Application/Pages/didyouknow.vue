@@ -80,6 +80,7 @@ import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
 // import RatingWrapper from "@/Application/Components/Social/RatingWrapper.vue";
 import pickBy from "lodash/pickBy";
 import throttle from "lodash/throttle";
+import { router } from '@inertiajs/vue3';
 import Pagination from "@/Application/Components/Pagination.vue";
 
 export default {

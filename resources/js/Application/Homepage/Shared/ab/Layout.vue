@@ -409,7 +409,7 @@
         import Loader from "@/Application/Components/Loader.vue";
         import NewsletterSubscribe from "@/Application/Components/Social/NewsletterSubscribe.vue";
         import JrightArrow from "@/Application/Components/Icons/JrightArrow.vue";
-        import IconStar_thin from "@/Application/Components/Icons/IconStar_thin.vue";
+        import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
         import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
         import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
         import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
@@ -421,8 +421,12 @@
         import IconRegister from "@/Application/Components/Icons/IconRegister.vue";
         import IconLogin from "@/Application/Components/Icons/IconLogin.vue";
         import {showHideToggleCookiePreferencesModal} from "@/helpers"
-        import throttle from "lodash/throttle";
-    export default {
+        // RICHTIG:
+        import throttleFn from 'lodash/throttle';
+        import pickByFn from 'lodash/pickBy';
+
+
+        export default {
         name: "Homepage_Shared_Layout_ab",
 
         components: {
@@ -440,7 +444,7 @@
             IconPrivacy,
             IconContactsPublic,
             IconUsers,
-            IconStar_thin,
+            IconStarThin,
             IconDashboard,
             JrightArrow,
             LinkFooter,
@@ -577,29 +581,27 @@ this.loadmcslpoints(); // initial
         }
     },
     watch: {
-  form: {
-    handler: throttle(function () {
-      const query = pickBy(this.form); // Entfernt leere Felder
+        form: {
+            handler: function () {
+                const query = pickByFn(this.form);
 
-      router.get(
-        this.route(
-          "home.index",
-          Object.keys(query).length ? query : { search: null, table: this.table } // leere Suche zurücksetzen
-        ),
-        this.form,
-        {
-          preserveState: true,
-          replace: true,
-        }
-      );
-    }, 500),
-    deep: true,
-  },
-//  '$page.url'() {
-//         this.applyTheme();
-//     },
-
-},
+                router.get(
+                    this.route(
+                        "home.index",
+                        Object.keys(query).length
+                            ? query
+                            : { search: null, table: this.table }
+                    ),
+                    this.form,
+                    {
+                        preserveState: true,
+                        replace: true,
+                    }
+                );
+            },
+            deep: true,
+        },
+    },
 
     methods: {
         GetProfileImagePath,

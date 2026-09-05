@@ -169,7 +169,7 @@
                                             :route-name="route('admin.mcslpoints')"
                                         >
                                             <span class="flex items-center justify-start gap-1 w-full">
-                                                <IconStar_thin class="w-4 h-4" color="#ffa500" />
+                                                <IconStarThin class="w-4 h-4" color="#ffa500" />
                                                 <span>{{ mcslpoints }} MCSL Points</span>
                                             </span>
                                         </dropdown-link>
@@ -390,23 +390,30 @@
 
 <script>
 import { Head } from "@inertiajs/vue3";
+import { CheckTRights } from '@/helpers'; 
 import ClientOnly from "@/Application/Components/ClientOnly.vue";
 import BrandHeader from "@/Application/Shared/BrandHeader.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
+import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
 import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
-
+import IconPM from "@/Application/Components/Icons/IconPM.vue";
 import Dropdown from "@/Application/Components/Content/Dropdown.vue";
 import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
 import NavLink from "@/Application/Components/Content/NavLink.vue";
 import ResponsiveNavLink from "@/Application/Components/Content/ResponsiveNavLink.vue";
 import { router } from '@inertiajs/vue3'
 import FooterGrid from "@/Application/Components/Content/FooterGrid.vue";
+import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
+import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
+import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
+import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
 
 export default {
     name: "Admin_Shared_Layout",
 
     components: {
         Head,
+        IconProfile,
         BrandHeader,
         Toast,
         buttonChangeMode,
@@ -415,7 +422,13 @@ export default {
         NavLink,
         ResponsiveNavLink,
         FooterGrid,
+        IconContacts_alt,
+        IconStarThin,
         ClientOnly,
+        IconLogout,
+        IconPM,
+        
+        IconDashboard,
     },
 
     props: {
@@ -440,11 +453,12 @@ export default {
 
     },
     methods: {
+        CheckTRights,
         async loadmcslpoints() {
             try {
                     const { data } = await axios.get('/api/mcslpoints/');
                     this.mcslpoints = data; // automatisch reaktiv
-                  
+
                 } catch (err) {
                     console.error('Fehler beim Laden der MCSL Points:', err);
                 }

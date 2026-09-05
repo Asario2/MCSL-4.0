@@ -100,10 +100,8 @@
         >
                                     <template #trigger>
                                         <button
-                                            v-if="
-                                                $page.props.jetstream
-                                                    .managesProfilePhotos
-                                            "
+                                            
+                                        v-if="ab == ab"
                                             class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-layout-sun-300 dark:focus:border-layout-night-300 transition"
                                         >
                                             <img
@@ -205,12 +203,12 @@
                                             :route-name="route('admin.mcslpoints')"
                                         >
                                             <span class="flex items-center justify-start gap-1 w-full">
-                                                <IconStar_thin class="w-4 h-4" color="#ffa500" />
+                                                <IconStarThin class="w-4 h-4" color="#ffa500" />
                                                 <span>{{ mcslpoints }} MCSL Points</span>
                                             </span>
                                         </dropdown-link>
 
-                                             <dropdown-link v-if="rights.delete == 1"
+                                             <dropdown-link v-if="rights?.delete == 1"
                                                 :with-icon="false"
                                                 :with-route="true"
                                                 :route-name="route('pm.index', { tab: 'inbox' })"
@@ -380,9 +378,12 @@
 <script>
 // import axios from "axios";
 // import { router } from "@inertiajs/vue3";
+ import IconDashboard from "@/Application/Components/Icons/IconDashboard.vue";
 // import { useLoadingStore } from "@/loading";
+ import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
 import mfxlogo from "@/Application/Shared/mfxlogo.vue";
 import IconClose from "@/Application/Components/Icons/Close.vue";
+import IconPM from "@/Application/Components/Icons/IconPM.vue";
 import ClientOnly from "@/Application/Components/ClientOnly.vue"
 import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
 import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
@@ -396,11 +397,15 @@ import LinkFooter from "@/Application/Shared/LinkFooter.vue";
 import IconMenu from "@/Application/Components/Icons/Menu.vue";
 import Toast from "@/Application/Components/Content/Toast.vue";
 // import buttonChangeMode from "@/Application/Components/ButtonChangeMode.vue";
-
+import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
 import { SD,showHideToggleCookiePreferencesModal,GetProfileImagePath } from "@/helpers";
 import Loader from "@/Application/Components/Loader.vue";
+import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
 import IconCookies from "@/Application/Components/Icons/IconCookies.vue";
 // import { ref } from "vue";
+import { CheckTRights } from '@/helpers'; 
+import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
+
 
 export default {
   name: "Homepage_Shared_Layout_mfx",
@@ -421,7 +426,13 @@ export default {
     Dropdown,
     DropdownLink,
     ClientOnly,
+    IconContacts_alt,
     // buttonChangeMode,
+    IconProfile,
+    IconDashboard,
+    IconStarThin,
+    IconPM,
+    IconLogout,
   },
 
   props: {
@@ -443,9 +454,13 @@ export default {
         headerUrl: this.$page?.props?.url ?? null,
         headerImage: this.$page?.props?.image ?? null,
       mode: 'dark',
+      ab:false,
         isOpen_Menu: false,
       year: new Date().getFullYear(),
-
+        rights: {
+                edit: null,
+                delete: null,
+                },
     //   isLoading: localStorage.getItem("loading") === "true",
       search: "",
       isLoading: true,
@@ -497,7 +512,8 @@ mounted() {
   methods: {
     SD,
 showHideToggleCookiePreferencesModal,
-GetProfileImagePath,    
+GetProfileImagePath,
+CheckTRights,
     setLoadingState(state) {
 //       console.log("🔄 setLoadingState:", state);
       this.isLoading = state;

@@ -577,7 +577,7 @@
     import IconMCSL from "@/Application/Components/Icons/IconMCSL.vue";
     import IconClose from "@/Application/Components/Icons/Close.vue";
     import MetaHeader from "@/Application/Homepage/Shared/MetaHeader.vue";
-    import BrandHeader from "@/Application/Shared/BrandHeader.vue";
+    // import BrandHeader from "@/Application/Shared/BrandHeader.vue";
     import Dropdown from "@/Application/Components/Content/Dropdown.vue";
     import DropdownLink from "@/Application/Components/Content/DropdownLink.vue";
     import LinkHeader_mfx from "@/Application/Shared/LinkHeader_mfx.vue";
@@ -599,14 +599,13 @@
     import throttle from 'lodash/throttle';
     import pickBy from "lodash/pickBy";
     import {showHideToggleCookiePreferencesModal} from "@/helpers"
-import PnaLogo from "@/Application/Shared/pnalogo.vue";
+    import PnaLogo from "@/Application/Shared/pnalogo.vue";
 
     export default {
         name: "Homepage_Shared_Layout_pna",
 
         components: {
         MetaHeader,
-        BrandHeader,
         PnaLogo,
         LinkHeader_mfx,
         BrandFooter,
@@ -769,7 +768,9 @@ import PnaLogo from "@/Application/Shared/pnalogo.vue";
 //  '$page.url'() {
 //         this.applyTheme();
 //     },
+test:{
 
+}
 },
 
     methods: {

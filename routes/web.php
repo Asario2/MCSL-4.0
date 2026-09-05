@@ -366,21 +366,26 @@ Route::get('/home/imprint_pna', [HomeController::class, 'home_imprint_pna'])->na
 
 });
 
-if(!empty(Settings::$isRegistable[SD()]))
+if (isset(Settings::$isRegistable[SD()]))
 {
     Route::get('register', [RegisteredUserController::class, 'create'])
-     ->name('register');
+        ->name('register');
 }
-
+else
+{
+    Route::get('register', function () {
+        abort(404);
+    });
+}
 //
 //     AB- Asarios BLog
 //
 Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(function () {
 
     Route::get('/Kontakt', [HomeController::class, 'home_contacts'])->name('home.ab.contacts_alt');
-    
+
     // ->middleware(HandleSocialitePlusProviders::class)
-   
+
     Route::get('/rss.xml', [RssController::class, 'feed']);
     Route::get('/about/mcs-points', [HomeController::class, 'mcspoints'])->name('mcs.points');
     Route::get('/', [HomeController::class, 'home_index'])->name('home.index');

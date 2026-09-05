@@ -174,7 +174,7 @@
                                                 :route-name="route('admin.mcslpoints')"
                                             >
                                                 <span class="flex items-center justify-center gap-1 w-full">
-                                                    <IconStar_thin class="w-4 h-4" color="#ffa500" />
+                                                    <IconStarThin class="w-4 h-4" color="#ffa500" />
                                                     <span>{{ mcslpoints || userStore.user.mcsl_points }} MCSL Points</span>
                                                 </span>
                                             </dropdown-link>
@@ -384,7 +384,7 @@
         import Loader from "@/Application/Components/Loader.vue";
         import NewsletterSubscribe from "@/Application/Components/Social/NewsletterSubscribe.vue";
         import JrightArrow from "@/Application/Components/Icons/JrightArrow.vue";
-        import IconStar_thin from "@/Application/Components/Icons/IconStar_thin.vue";
+        import IconStarThin from "@/Application/Components/Icons/IconStarThin.vue";
         import IconContacts_alt from "@/Application/Components/Icons/IconContacts_alt.vue";
         import IconLogout from "@/Application/Components/Icons/IconLogout.vue";
         import IconProfile from "@/Application/Components/Icons/IconProfile.vue";
@@ -415,7 +415,7 @@ import {showHideToggleCookiePreferencesModal} from "@/helpers"
             IconPrivacy,
             IconContactsPublic,
             IconUsers,
-            IconStar_thin,
+            IconStarThin,
             IconDashboard,
             JrightArrow,
             LinkFooter,
