@@ -178,7 +178,7 @@ class ImageUploadController extends Controller
 
             $img->save($resizedPath, quality: 90);
 
-            \Log::debug("Image saved successfully", ['size' => $size, 'path' => $resizedPath]);
+            // \Log::debug("Image saved successfully", ['size' => $size, 'path' => $resizedPath]);
 
             // Größen für Response speichern
             if ($size == 1400 || $Message || $size == 500) {

@@ -219,14 +219,14 @@ public function allTableRights($right)
 
         $rights[$table->name] = ($bit === '1') ? 1 : 0;
     }
-    \Log::debug('ALL TABLE RIGHTS', [
-        'user_id'       => $userId,
-        'users_rights_id' => $rightfe->users_rights_id,
-        'rights_id'     => $rightfe->rights_id,
-        'column'        => $rightColumn,
-        'binary'        => $bin,
-        'images'        => $rights['images'] ?? null,
-    ]);
+    // \Log::debug('ALL TABLE RIGHTS', [
+    //     'user_id'       => $userId,
+    //     'users_rights_id' => $rightfe->users_rights_id,
+    //     'rights_id'     => $rightfe->rights_id,
+    //     'column'        => $rightColumn,
+    //     'binary'        => $bin,
+    //     'images'        => $rights['images'] ?? null,
+    // ]);
     return response()->json($rights);
 }
 // public function AddFunction(Request $request)
