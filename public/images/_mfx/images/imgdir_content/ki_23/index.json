@@ -2,7 +2,7 @@
     {
         "position": 1,
         "fileName": "child_bw.jpg",
-        "label": "Kind in S/W",
+        "label": "Kind in S\/W",
         "width": 1200,
         "height": 1200
     },
@@ -65,7 +65,7 @@
     {
         "position": 10,
         "fileName": "lamas_with_hats_big.jpg",
-        "label": "Lamas mit H\u00fcten",
+        "label": "Lamas mit Hüten",
         "width": 1200,
         "height": 1200
     },
@@ -82,5 +82,26 @@
         "label": "Polarlichter Island",
         "width": 1200,
         "height": 720
+    },
+    {
+        "position": 13,
+        "fileName": "c976328c37dff0063bdf0ae4853d615d.jpg",
+        "label": "Canada in Winter",
+        "width": 1400,
+        "height": 840
+    },
+    {
+        "position": 14,
+        "fileName": "dbbb3dc0333c089a1951c4457c8484a9.jpg",
+        "label": "Hedgehog",
+        "width": 1400,
+        "height": 800
+    },
+    {
+        "position": 15,
+        "fileName": "5799cba6caf0006bc7553785296f22d9.jpg",
+        "label": "Tofu Bowl",
+        "width": 1400,
+        "height": 800
     }
 ]
