@@ -8,7 +8,7 @@
     // import { ZiggyVue } from "../../vendor/tightenco/ziggy";
     // import { i18nVue } from "laravel-vue-i18n";
     // import { route as ziggyRoute } from 'ziggy-js';
-    // import { router } from '@inertiajs/inertia'
+    // import { router } from '@inertiajs/vue3';
     // import { createPinia } from "pinia";
 
     // // FontAwesome
@@ -31,7 +31,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import { i18nVue } from "laravel-vue-i18n";
 import { route as ziggyRoute } from 'ziggy-js';
-import { router } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3';
 import { createPinia } from "pinia";
 
 // FontAwesome
