@@ -421,3 +421,4 @@
 ![Version](https://img.shields.io/badge/version-6.75.7-orange) Feature - Actualized Bootstrap Files (#622)  
 ![Version](https://img.shields.io/badge/version-6.76.1-orange) Removed Log output in upload File (#625)  
 ![Version](https://img.shields.io/badge/version-6.77.8-orange) Hotfix - Added Tables in dashboard (#626)  
+![Version](https://img.shields.io/badge/version-6.78.4-orange) Added new images on some domains (#628)  
