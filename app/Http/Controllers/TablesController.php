@@ -3253,7 +3253,7 @@ return Inertia::render('Admin/Kontakte', [
         $formData['img_y'] = $height;
 
         }
-        elseif(!is_file(public_path()."/images/_".SD()."/".$table."/image_path/big/".$formData['image_path']))
+        elseif(!is_file(public_path()."/images/_".SD()."/".$table."/image_path/big/".@$formData['image_path']))
         {
             $formData['image_path'] = "008.jpg";
         }
