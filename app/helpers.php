@@ -372,14 +372,31 @@ if (!function_exists('Notify')) {
 
 
     if (!function_exists('KILLMD')) {
-    function KILLMD($text,$count='45') {
-        // Entferne Markdown (z. B. durch reguläre Ausdrücke)
-        $text = preg_replace('/\*\*(.*?)\*\*/', '$1', $text); // Entfernt **bold**
-        $text = preg_replace('/\*(.*?)\*/', '$1', $text); // Entfernt *italic*
-        $text = preg_replace('/\#\s?(.*)/', '$1', $text); // Entfernt # Überschriften
-        $text = preg_replace('/\[(.*?)\]\((.*?)\)/', '$1', $text); // Entfernt Links
-        $text = strip_tags($text,"<a>"); // Entfernt HTML-Tags
-        return shorter($text,$count);
+    function KILLMD($text, $count = '45',$asafe=false)
+    {
+        // HTML-Blockelemente in Zeilenumbrüche umwandeln
+        $text = preg_replace('/<div[^>]*>/i', '', $text);
+        $text = preg_replace('/<\/div>/i', "\n", $text);
+        $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
+
+        // Markdown entfernen
+        $text = preg_replace('/\*\*(.*?)\*\*/s', '$1', $text);
+        $text = preg_replace('/\*(.*?)\*/s', '$1', $text);
+        $text = preg_replace('/\#\s?(.*)/', '$1', $text);
+        $text = preg_replace('/\[(.*?)\]\((.*?)\)/s', '$1', $text);
+
+        // HTML-Tags entfernen, <a> zunächst behalten
+        if(!$asafe)
+        {
+            $text = strip_tags($text, '<a>');
+        }
+        else{
+            $text = strip_tags($text);
+        }
+        
+
+        return shorter($text, $count);
+
     }
 }
 if(!function_exists("SD_ALT")){
