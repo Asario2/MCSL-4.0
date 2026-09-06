@@ -37,7 +37,7 @@ export default {
         },
         AiRoute(){
             if(this.nohome){
-                return "/ai";
+            //    return "/ai";
             }
             return "/home/ai";
         },

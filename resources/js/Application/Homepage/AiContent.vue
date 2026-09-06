@@ -1,5 +1,6 @@
     <template>
         <component
+            v-if="layoutComponent"
             :is="layoutComponent"
             header-title="Blog"
             :header-url="$page.props.saas_url + '/blogs'"

@@ -5,7 +5,7 @@
             </template>
 
             <div class="flex items-center justify-between px-4 py-3">
-        <back-btn url="/home/pictures" r="r">Übersicht</back-btn>
+        
 
         <newbtn table="images"></newbtn>
     </div>

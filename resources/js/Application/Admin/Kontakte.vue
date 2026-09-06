@@ -187,7 +187,8 @@
                       <td colspan="9" class="px-4 py-2 bg-gray-800 text-gray-200">
                         <span v-html="`
                             ${contact.Kommentar ? contact.Kommentar + '<br />' : ''}
-                            ${contact.Adresse ? contact.Adresse + '<br />' : ''}
+                            ${contact.Plz ? contact.Strasse + '<br /> ' + contact?.Plz + '<br />' : ''}
+                            ${contact.Country ? contact.Country  : ''}
                             ${contact.Geburtsdatum ? 'Geburtstag: ' + contact.Geburtsdatum + '<br />' : ''}
                             ${contact.ripdate ? 'Todestag: ' + contact.ripdate : ''}
                                     `

@@ -260,7 +260,7 @@
                         </h3>
                         <ul role="list" class="mt-6 space-y-4 list-none">
                             <li>
-                            <link-footer name="Benutzer" :href="route('home.userlist')"><IconUsers  width="26" height="18"  /></link-footer>
+                            <link-footer v-if="SD() == 'ab'" name="Benutzer" :href="route('home.userlist')"><IconUsers  width="26" height="18"  /></link-footer>
                             </li>
                             <li>
                             <link-footer name="Impressum" :route-name="route('home.imprint')"><span style='font-size:20px' class="ml-[8px]">§</span></link-footer>

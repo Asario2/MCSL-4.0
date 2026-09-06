@@ -171,7 +171,7 @@ const layouts = {
     pna: LayoutPNA,
 };
 
-const currentSD = globalThis.SD;
+const currentSD = globalThis?.SD ?? "ab"; 
 
 console.log("SD():", currentSD);
 console.log("layouts:", layouts);
