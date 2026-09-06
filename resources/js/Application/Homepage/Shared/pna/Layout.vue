@@ -475,11 +475,11 @@
                         <span> Webseite </span>
                     </h3>
                     <ul role="list" class="mt-6 space-y-4 list-none">
-                        <li>
+                        <!-- <li>
                         <link-footer name="Benutzer" :href="route('home.userlist')"></link-footer>
-                        </li>
+                        </li> -->
                         <li>
-                        <link-footer name="Impressum" :route-name="route('home.imprint.pna')"></link-footer>
+                        <link-footer name="Impressum" :route-name="route('home.imprint')"></link-footer>
                         </li>
                         <li>
                         <link-footer name="Datenschutzerklärung" :route-name="route('home.privacy')"></link-footer>
@@ -768,9 +768,6 @@
 //  '$page.url'() {
 //         this.applyTheme();
 //     },
-test:{
-
-}
 },
 
     methods: {
