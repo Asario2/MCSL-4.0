@@ -3,7 +3,9 @@
     <MetaHeader title="Impressum" />
         <page-content>
             <template #content>
+                <div class="bg-layout-sun-100 dark:bg-layout-night-100 p-7">
                 <markdown :markdown="imprint"></markdown>
+                </div>
             </template>
         </page-content>
     </layout>

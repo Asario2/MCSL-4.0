@@ -387,7 +387,7 @@ class HomeController extends Controller
 
         // Transform data
         $blogs->getCollection()->transform(function ($blog) {
-            $blog->summary = KILLMD($blog->summary);
+            $blog->summary = KILLMD($blog->summary,45,1);
             $blog->title = RUMLAUT($blog->title);
             $blog->title = html_entity_decode($blog->title);
             return $blog;
@@ -1105,14 +1105,13 @@ return Inertia::render('Homepage/Pictures', [
         return Inertia::render('Homepage/Pricing');
     }
     //
-    public function home_imprint()
+    public function home_imprint_genx2()
     {
         $imprintFile = Jetstream::localizedMarkdownPath('imprint_'.SD().'.md');
         $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
         //
-        return Inertia::render('Homepage/Imprint', [
-            'imprint' => $imprint,
-        ]);
+        $coo = "home_imprint_".SD();
+        return $this->$coo();
     }
         public function home_imprint_pna()
     {
@@ -1133,12 +1132,31 @@ return Inertia::render('Homepage/Pictures', [
             'imprint' => $imprint,
         ]);
     }
+    public function home_imprint_ab()
+    {
+        $imprintFile = Jetstream::localizedMarkdownPath('imprint_ab.md');
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
+        $imprint = nl2br($imprint);
+        //
+        return Inertia::render('Homepage/ab/Imprint', [
+            'imprint' => $imprint,
+        ]);
+    }
 public function imprint_dag()
     {
         $imprintFile = Jetstream::localizedMarkdownPath('imprint.md');
         $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
         //
-        return Inertia::render('Homepage/Imprint', [
+        return Inertia::render('Homepage/dag/Imprint', [
+            'imprint' => $imprint,
+        ]);
+    }
+    public function home_imprint_dag()
+    {
+        $imprintFile = Jetstream::localizedMarkdownPath('imprint_dag.md');
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
+        //
+        return Inertia::render('Homepage/dag/Imprint', [
             'imprint' => $imprint,
         ]);
     }
