@@ -75,7 +75,6 @@ class hackinglog extends Controller
 
             return Inertia::render('Admin/HackingLog', [
                 'tables' => $data->toArray(),
-                'kbperpage'=>$KBperPage,
                 'breadcrumbs' => [
                     'MCSL IDS - Hacking Log' => route('admin.hackinglog'),
                 ],
