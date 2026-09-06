@@ -77,10 +77,10 @@
                 class="text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
                 <span v-if="CheckOL()">
-                {{ row.URL.substr(22,35).replace("/admin/tables",'') }}
+                {{ killdom(row.URL) }}
                 </span>
                 <span v-else>
-                    {{ row.URL.substr(18,34).replace("/admin/tables",'') }}
+                    {{ killdom(row.URL) }}
                 </span>
                 </button>
                 <span v-else class="text-gray-400">–</span>
@@ -401,7 +401,10 @@ beforeUnmount() {
     },
     },
 methods: {
-
+    killdom(url){
+        url = url.replace("admin/tables",'');
+        return url.replace(/^https?:\/\/(?:www\.)?[^/]+\//, '/');
+    },
     CleanTable, ucf, SD, rumLaut, GetProfileImagePath,CheckOL,
     bgcol(SID) {
         // einfache Hash-Funktion: wandelt String in Zahl, dann in hex
