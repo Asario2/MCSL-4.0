@@ -347,7 +347,7 @@ Route::post("/unsubsc_mail", [MailController::class, "UnSubsc"])->name("mail.uns
 
 
 Route::get("/mail/subscribe/{uhash}/{email}",[TablesController::class, "newsletter_save"])->name("mail.savenewsletter");
-Route::get('/home/ai', [HomeController::class, 'home_AI'])->name('home.ai');
+Route::get('home/ai', [HomeController::class, 'home_AI'])->name('home.ai');
 
 //
 //  PNA- Paul Nadler
@@ -358,9 +358,17 @@ Route::get('/', [HomeController::class, 'home_index'])->name('home.index');
 Route::get('/grafitti', [HomeController::class, 'home_grafitti'])->name('home.pna.grafitti');
 Route::get('/landschaft', [HomeController::class, 'home_landschaft'])->name('home.pna.landschaft');
 Route::get('/portraits', [HomeController::class, 'home_portraits'])->name('home.pna.portraits');
-Route::get('/kontakt', [HomeController::class, 'contacts_pna'])
-    ->name('home.pna.contacts');
-Route::get('/home/imprint_pna', [HomeController::class, 'home_imprint_pna'])->name('home.imprint.pna');
+Route::get('/kontakt', [HomeController::class, 'contacts_pna'])->name('home.pna.contacts');
+Route::get('/home/contacts', [HomeController::class, 'contacts_pna'])->name('home.pna.contacts2');
+// Route::get('/home/imprint', [HomeController::class, 'home_imprint_pna'])
+//     ->name('home.imprint.pna');
+// Route::get('/home/imprint_pna', [HomeController::class, 'home_imprint_pna'])
+//     ->name('home.imprint.pna');
+
+// Route::get('/home/imprint', function () {
+//     return redirect()->route('home.imprint.pna');
+// })->name('home.imprint.pna.redirect');
+
 // Route::get('/home/privacy', [HomeController::class, 'home_privacy'])->name('home.privacy.pnad');
 // Route::get('/home/show/pictures3/{slug}', [HomeController::class, 'home_images'])->name('home.images.gallery');
 
@@ -368,14 +376,14 @@ Route::get('/home/imprint_pna', [HomeController::class, 'home_imprint_pna'])->na
 
 if (isset(Settings::$isRegistable[SD()]))
 {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+    Route::get('/register', [RegisteredUserController::class, 'create']) 
         ->name('register');
 }
 else
 {
-    Route::get('register', function () {
+    Route::get('/register', function () {
         abort(404);
-    });
+    })->name('register');
 }
 //
 //     AB- Asarios BLog
@@ -400,7 +408,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     Route::get('/home/aboutme', [HomeController::class, 'home_about'])->name('home.about');
 
     // Imprint
-    Route::get('/home/imprint', [HomeController::class, 'home_imprint'])->name('home.imprint');
+    
     // Privacy
     // Terms
     // Route::get('/home/terms', [HomeController::class, 'home_terms'])->name('home.terms');
@@ -446,6 +454,7 @@ Route::middleware(\App\Http\Middleware\CheckSubd::class . ':ab,asario')->group(f
     // Route::get('/pictures/{pic}', [App\Http\Controllers\PagesController::class, 'ab_images_cat'])->name('pictures');
 
 }); // <-- schließt Middleware group
+Route::get('/home/imprint', [HomeController::class, 'home_imprint_genx2'])->name('home.imprint');
 Route::get('/home/no_application_found', [HomeController::class, 'home_no_application_found'])->name('home.no_application_found');
 Route::get('/home/user_is_no_admin', [HomeController::class, 'home_user_is_no_admin'])->name('home.user_is_no_admin');
 Route::get('/home/user_is_no_employee', [HomeController::class, 'home_user_is_no_employee'])->name('home.user_is_no_employee');

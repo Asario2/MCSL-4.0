@@ -53,7 +53,7 @@ export default {
         ":ugly:": "ugly",
         ":catch:": "catch",
         ":holy:": "holy",
-
+        ":MCSL:": "MCSL",
       }
     };
   },

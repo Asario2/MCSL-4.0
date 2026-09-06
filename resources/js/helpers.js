@@ -86,56 +86,58 @@ export async function loadRightsOnce() {
 
 export function replaceSmilies(text) {
     const smilies = {
-      ";)": "wink",
-      ":D": "biggrin",
-      ":)": "smile",
-      ":o": "surprised",
-      ":shock:": "eek",  // letzte Definition zählt im PHP-Array
-      ":?": "confused",
-      " 8)": "cool",
-      ":lol:": "lol",
-      ":x": "mad",
-      ":P": "razz",
-      ":mrgreen:": "mrgreen",
-      ":mcsl:":"mcsl",
-      ":arrow:": "arrow",
-      ":cry:": "cry",
-      ":evil:": "evil",
-      ":!:": "exclaim",
-      ":{": "frown",
-      ":idea:": "idea",
-      ":|": "neutral",
-      ":question:": "question",
-      ":shy:": "redface",
-      ":roll:": "rolleyes",
-      ":(": "sad",
-      "^^": "twisted",
-      ":diso:": "disor",
-      ":bankrob:": "bankrob",
-      ":jesus:": "jesus",
-      ":cyborg:": "cyborg",
-
-      ":blade:": "blade",
-      ":drugs:": "drugs",
-      ":ying:": "ying",
-      ":skull:": "skull",
-      ":bomb:": "bomb",
-      ":kiss:": "kiss",
-      ':ugly:':'ugly',
-      ":catch:": "catch",
-      ":holy:": "holy"
+        ";)": "wink",
+        ":D": "biggrin",
+        ":)": "smile",
+        ":o": "surprised",
+        ":shock:": "eek",
+        ":?": "confused",
+        " 8)": "cool",
+        ":lol:": "lol",
+        ":x": "mad",
+        ":P": "razz",
+        ":mrgreen:": "mrgreen",
+        ":mcsl:": "mcsl",
+        ":arrow:": "arrow",
+        ":cry:": "cry",
+        ":evil:": "evil",
+        ":!:": "exclaim",
+        ":{": "frown",
+        ":idea:": "idea",
+        ":|": "neutral",
+        ":question:": "question",
+        ":shy:": "redface",
+        ":roll:": "rolleyes",
+        ":(": "sad",
+        "^^": "twisted",
+        ":diso:": "disor",
+        ":bankrob:": "bankrob",
+        ":jesus:": "jesus",
+        ":cyborg:": "cyborg",
+        ":MCSL:": "MCSL",
+        ":blade:": "blade",
+        ":drugs:": "drugs",
+        ":ying:": "ying",
+        ":skull:": "skull",
+        ":bomb:": "bomb",
+        ":kiss:": "kiss",
+        ":ugly:": "ugly",
+        ":catch:": "catch",
+        ":holy:": "holy"
     };
 
-    // Ersetze jedes Smiley durch das entsprechende <img>
+    if (!text) return '';
+
     for (const [key, value] of Object.entries(smilies)) {
-      const escapedKey = key.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'); // für Regex escapen
-      const regex = new RegExp(escapedKey, 'g');
-      const img = `<img src="/images/smilies/icon_${value}.gif" class="inline" />`;
-      text = text?.replace(regex, img);
+        const escapedKey = key.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const regex = new RegExp(escapedKey, 'g');
+        const img = `<img src="/images/smilies/icon_${value}.gif" class="inline" />`;
+
+        text = text.replace(regex, img);
     }
 
     return text;
-  }
+}
 
 export async function initRights() {
   if (!cache.ready) {
@@ -980,6 +982,17 @@ export function remBrackets(str)
  * @param {String[]|String} allowed – Array oder kommaseparierte Liste erlaubter Tags (ohne < >)
  * @returns {String} – text ohne verbotene Tags
  */
+export function stripLinks(text) 
+{
+    return text
+        .replace(/\r\n|\r|\n/g, " ")
+        .replace(/<br\s*\/?>/gi, " ")
+        .replace(/\[([^\]]+)\]\([^)]+\)/gi, '$1')
+        .replace(/<a\b[^>]*>(.*?)<\/a>/gis, '$1')
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\s+/g, " ")
+        .trim();
+}
 export function stripTags(text, allowed = []) {
   if (!text) return '';
 

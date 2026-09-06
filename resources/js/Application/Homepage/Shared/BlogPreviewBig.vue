@@ -19,7 +19,7 @@
 
         />
       <figcaption class="sr-only">
-        {{ blog.title }} {{ blog.sumary }}
+        {{ blog.title }} {{blog.summary }}
       </figcaption>
     </figure>
 
@@ -72,7 +72,7 @@
 
 
             <!-- Blog-Zusammenfassung -->
-            <div v-html="smilies(blog.summary)" class="pb-2"></div>
+            <div v-html="blog.summary" class="pb-2"></div>
 
             <!-- Lesezeit anzeigen -->
             <div>
@@ -100,7 +100,7 @@ import DisplayNumber from "@/Application/Components/Content/DisplayNumber.vue";
 import Aibutton from "@/Application/Components/Content/AiButton.vue";
 import editbtns from "@/Application/Components/Form/editbtns.vue";
 import Socialbuttons from "@/Application/Components/Social/socialButtons.vue";
-import { replaceSmilies } from '@/helpers';
+import { replaceSmilies,stripLinks } from '@/helpers';
 export default {
     name: "Homepage_Shared_BlogPreviewBig",
     components: {
@@ -142,8 +142,9 @@ export default {
         }
     },
 methods:{
+    stripLinks,
     smilies(text){
-                    return replaceSmilies(this.nl2br(text));
+                    return replaceSmilies(text)?.replace(/\r\n|\r|\n/g, '<br>') ?? '';
                 },
             nl2br(text){
                 return text?.replace(/\n/g,"<br />");
