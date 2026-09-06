@@ -2591,6 +2591,7 @@ $data = DB::table('contacts')
     })
     ->orderBy('Gruppe')
     ->orderBy('Name')
+    ->select("contacts.*")
     ->get()
     ->map(function($item){
         foreach($item as $key=>$value){
@@ -3253,7 +3254,7 @@ return Inertia::render('Admin/Kontakte', [
         $formData['img_y'] = $height;
 
         }
-        elseif(!is_file(public_path()."/images/_".SD()."/".$table."/image_path/big/".@$formData['image_path']))
+        elseif(!is_file(public_path()."/images/_".SD()."/".$table."/image_path/big/".@$formData['image_path']) && Schema::hasColumn($table,"image_path"))
         {
             $formData['image_path'] = "008.jpg";
         }
