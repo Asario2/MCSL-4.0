@@ -1160,6 +1160,15 @@ public function imprint_dag()
             'imprint' => $imprint,
         ]);
     }
+    public function home_imprint_mfx()
+    {
+        $imprintFile = Jetstream::localizedMarkdownPath('imprint_mfx.md');
+        $imprint = RUMLAUT(Str::markdown(file_get_contents($imprintFile)));
+        //
+        return Inertia::render('Homepage/mfx/Imprint', [
+            'imprint' => $imprint,
+        ]);
+    }
     public function changelog_old(){
         $data = DB::table("texts")->select('texts.*','users.name as author_name')->leftJoin('users', 'users.id', '=', 'texts.users_id')->where("texts.id","15F")->first();
         $data->text = Str::markdown($data->text);
@@ -1352,7 +1361,12 @@ public function imprint_dag()
     }
     public function contacts(){
         $text = DB::table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
-        $contacts = DB::table("texts")->where("autoslug", "ContactsInfos")->select('headline', 'text')->first();
+        $dom = SD();
+        if(SD() == "pna")
+        {
+            $dom = "pna2";
+        }
+        $contacts = DB::connection("mariadb")->table("kontaktdaten")->where("dom", $dom)->first();
         // \Log::info("TT:".json_encode($text));
 
         return Inertia::render('Homepage/ab/contacts', [
@@ -1362,7 +1376,7 @@ public function imprint_dag()
     }
         public function contacts_pna(){
         $text = DB::connection("mariadb_pna")->table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
-        $contacts = DB::connection("mariadb")->table("kontaktdaten")->where("dom", "pna2    ")->first();
+        $contacts = DB::connection("mariadb")->table("kontaktdaten")->where("dom", "pna2")->first();
         // \Log::info("TT:".json_encode($text));
 
         return Inertia::render('Homepage/pna/contacts', [
@@ -1372,7 +1386,7 @@ public function imprint_dag()
     }
     public function contacts_mfx(){
         $text = DB::table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
-        $contacts = DB::table("texts")->where("autoslug", "ContactsInfos")->select('headline', 'text')->first();
+        $contacts = DB::connection("mariadb")->table("kontaktdaten")->where("dom", "mfx")->first();
         // \Log::info("TT:".json_encode($text));
 
         return Inertia::render('Homepage/mfx/contacts', [
@@ -1382,7 +1396,7 @@ public function imprint_dag()
     }
     public function dag_contacts(){
         $text = DB::table("texts")->where("autoslug", "ContactsHeader")->select('headline', 'text')->first();
-        $contacts = DB::table("texts")->where("autoslug", "ContactsInfos")->select('headline', 'text')->first();
+        $contacts = DB::connection("mariadb")->table("kontaktdaten")->where("dom", "dag")->first();
         // \Log::info("TT:".json_encode($text));
 
         return Inertia::render('Homepage/dag/contacts', [

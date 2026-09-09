@@ -43,22 +43,26 @@
                             <!-- LINKS -->
                             <div class="col-span-12 md:col-span-6">
 
-                                <h2
-                                    v-html="contacts.headline"
-                                    class="text-xl font-semibold mb-2 mt-0"
-                                ></h2>
-
-                                <section
-                                    class="bg-layout-sun-100 dark:bg-layout-night-50
-                                           border border-layout-sun-1000
-                                           dark:border-layout-night-1050
-                                           rounded-lg p-3"
-                                >
-                                    <p
-                                        v-html="rumLaut(contacts.text)"
-                                        class="text-layout-sun-900 dark:text-layout-night-900"
-                                    ></p>
-
+                               <span>
+                                        {{ contacts.name }}<br />
+                                        {{ contacts.an }}:<br />
+                                        <span v-html="nl2br(contacts.strasse)"></span><br />
+                                        {{ contacts.plz }} {{ contacts.ort }}<br />
+                                        Email:
+                                        <a :href="`mailto:${contacts.email}`">
+                                            {{ hideEmail(contacts.email) }}
+                                        </a>
+                                        <br />
+                                        <span v-if="contacts.festnetz">
+                                            Festnetz: {{contacts.festnetz}}<br />
+                                        </span>
+                                        <span v-if="contacts.mobil">
+                                            Mobil: {{ contacts.mobil }}<br />
+                                        </span>
+                                        <span v-if="contacts.fax">
+                                            Fax: {{ contacts.fax }}<br />
+                                        </span>
+                                    </span>
                                     <div class="relative">
                                         <img
                                             :src="'/images/_mfx/web/contacts_ai.jpg'"
@@ -67,7 +71,7 @@
 
                                         <Aibutton :dma="dmaa" />
                                     </div>
-                                </section>
+
 
                             </div>
 
@@ -98,7 +102,7 @@
 </template>
     <script>
     import { defineComponent, defineAsyncComponent } from "vue";
-    import {rumLaut,SD } from "@/helpers";
+    import {rumLaut,SD,nl2br} from "@/helpers";
     const Layout = defineAsyncComponent(() =>
         import(`@/Application/Homepage/Shared/${SD()}/Layout.vue`)
     );
@@ -151,6 +155,11 @@
     },
 
         methods: {
+            nl2br,
+             hideEmail(email) {
+      if (!email) return "";
+      return email.replace(/@/, " [at] ");
+    },
             mupper(text) {
                return text;
             },

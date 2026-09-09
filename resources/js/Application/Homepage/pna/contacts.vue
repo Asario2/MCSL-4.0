@@ -124,7 +124,7 @@
     import editbtns from "@/Application/Components/Form/editbtns.vue";
     import PageContent from "@/Application/Components/Content/PageContent.vue";
     import PageTitle from "@/Application/Components/Content/PageTitle.vue";
-    import PageParagraph from "@/Application/Components/Content/PageParagraph.vue";
+    // import PageParagraph from "@/Application/Components/Content/PageParagraph.vue";
     import emailview from "@/Application/Components/Form/email.vue";
     import axios from "axios";
     export default defineComponent({
@@ -134,7 +134,7 @@
             Layout,
             PageContent,
             PageTitle,
-            PageParagraph,
+            // PageParagraph,
             emailview,
             editbtns,
             Aibutton,
@@ -187,7 +187,7 @@
             }
 
             this.resetForm()
-        } catch (error) {
+        } catch {
             alert('Fehler beim Senden der Nachricht.')
         }
         },

@@ -44,15 +44,27 @@
                                        border border-layout-sun-1000 dark:border-layout-night-1050
                                        rounded-lg p-4"
                             >
-                                <h2
-                                    v-html="contacts.headline + 'sad'"
-                                    class="text-xl font-semibold mb-2 mt-0"
-                                ></h2>
+                                <span>
+                                        {{ contacts.name }}<br />
+                                        {{ contacts.an }}:<br />
+                                        <span v-html="nl2br(contacts.strasse)"></span><br />
+                                        {{ contacts.plz }} {{ contacts.ort }}<br />
+                                        Email:
+                                        <a :href="`mailto:${contacts.email}`">
+                                            {{ hideEmail(contacts.email) }}
+                                        </a>
+                                        <br />
+                                        <span v-if="contacts.festnetz">
+                                            Festnetz: {{contacts.festnetz}}<br />
+                                        </span>
+                                        <span v-if="contacts.mobil">
+                                            Mobil: {{ contacts.mobil }}<br />
+                                        </span>
+                                        <span v-if="contacts.fax">
+                                            Fax: {{ contacts.fax }}<br />
+                                        </span>
+                                    </span>
 
-                                <p
-                                    v-html="rumLaut(contacts.text)"
-                                    class="text-layout-sun-900 dark:text-layout-night-900"
-                                ></p>
 
                                 <div class="relative">
                                     <img
@@ -134,6 +146,10 @@
     },
 
         methods: {
+             hideEmail(email) {
+      if (!email) return "";
+      return email.replace(/@/, " [at] ");
+    },
     cleanHtml(html) {
         const result = rumLaut(html);
         const resu = stripTags(result);
